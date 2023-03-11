@@ -8,10 +8,35 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "GameLogic",
+"language": "GDScript",
+"path": "res://GameLogic.gd"
+} ]
+_global_script_class_icons={
+"GameLogic": ""
+}
+
 [application]
 
 config/name="Entwined Time"
+boot_splash/bg_color=Color( 0.133333, 0.235294, 0.321569, 1 )
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=512
+window/size/height=300
+window/size/resizable=false
+window/size/test_width=1024
+window/size/test_height=600
+
+[importer_defaults]
+
+texture={
+"flags/filter": false
+}
 
 [physics]
 
@@ -19,4 +44,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0.133333, 0.235294, 0.321569, 1 )
 environment/default_environment="res://default_env.tres"
