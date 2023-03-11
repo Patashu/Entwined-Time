@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/greeninteract.ogg-61f616efce4d972d5006472345af908b.oggstr"
+
+[deps]
+
+source_file="res://sfx/greeninteract.ogg"
+dest_files=[ "res://.import/greeninteract.ogg-61f616efce4d972d5006472345af908b.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

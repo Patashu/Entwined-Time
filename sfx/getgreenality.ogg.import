@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/getgreenality.ogg-8ec3dd4c21ce5784db0221ac84b56ab0.oggstr"
+
+[deps]
+
+source_file="res://sfx/getgreenality.ogg"
+dest_files=[ "res://.import/getgreenality.ogg-8ec3dd4c21ce5784db0221ac84b56ab0.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

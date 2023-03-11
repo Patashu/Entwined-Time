@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/greenplayer.ogg-81ac86752607ac5fb17430f5c7245022.oggstr"
+
+[deps]
+
+source_file="res://sfx/greenplayer.ogg"
+dest_files=[ "res://.import/greenplayer.ogg-81ac86752607ac5fb17430f5c7245022.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
