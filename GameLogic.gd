@@ -48,9 +48,16 @@ var muted = false;
 var won = false;
 var cell_size = 24;
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Call once when the game is booted up.
 	initialize_name_to_sprites();
+	prepare_audio();
+	
+	# Call whenever a new map is loaded.
+	ready_map();
+
+func ready_map() -> void:
+	calculate_map_size();
 	
 	# find heavy and light and turn them into actors
 	var heavy_id = terrainmap.tile_set.find_tile_by_name("HeavyIdle");
@@ -61,9 +68,6 @@ func _ready() -> void:
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
 	light_actor = make_actor("light", light_tile);
-	calculate_map_size();
-	prepare_audio();
-	update_targeter();
 
 func initialize_name_to_sprites() -> void:
 	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
@@ -78,9 +82,9 @@ func calculate_map_size() -> void:
 			map_y_max = tile.y;
 		
 func update_targeter() -> void:
-	if (heavy_selected):
+	if (heavy_selected and heavy_actor != null):
 		targeter.position = terrainmap.map_to_world(heavy_actor.pos);
-	else:
+	elif (light_actor != null):
 		targeter.position = terrainmap.map_to_world(light_actor.pos);
 		
 func prepare_audio() -> void:
@@ -144,6 +148,7 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELE
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> void:
 	actor.pos = pos;
 	actor.position = terrainmap.map_to_world(actor.pos);
+	update_targeter();
 	if (chrono < Chrono.META_UNDO):
 		print("TODO")
 		
@@ -164,7 +169,8 @@ func meta_undo() -> void:
 	pass
 	
 func character_switch() -> void:
-	pass
+	heavy_selected = !heavy_selected;
+	update_targeter();
 
 func restart() -> void:
 	pass
@@ -176,7 +182,10 @@ func cycle_level(impulse: int) -> void:
 	pass
 
 func character_move(dir: Vector2) -> void:
-	pass
+	if heavy_selected:
+		move_actor_relative(heavy_actor, dir, Chrono.MOVE);
+	else:
+		move_actor_relative(light_actor, dir, Chrono.MOVE);
 
 func _process(delta: float) -> void:
 	timer += delta;
