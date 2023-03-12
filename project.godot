@@ -9,12 +9,18 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Sprite",
+"class": "Actor",
+"language": "GDScript",
+"path": "res://Actor.gd"
+}, {
 "base": "Node",
 "class": "GameLogic",
 "language": "GDScript",
 "path": "res://GameLogic.gd"
 } ]
 _global_script_class_icons={
+"Actor": "",
 "GameLogic": ""
 }
 

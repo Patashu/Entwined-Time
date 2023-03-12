@@ -2,7 +2,7 @@ extends Node
 class_name GameLogic
 
 onready var levelscene : Node2D = get_node("/root/LevelScene");
-onready var actormap : TileMap = levelscene.get_node("ActorMap");
+onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
 onready var terrainmap : TileMap = levelscene.get_node("TerrainMap");
 onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
@@ -10,13 +10,26 @@ onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
 
+# distinguish between temporal layers when a move or state change happens
+enum Chrono {
+	MOVE
+	CHAR_UNDO
+	META_UNDO
+	TIMELESS
+}
+
 # information about the level and actors
-var heavy_loc : Vector2 = Vector2.ZERO;
-var light_loc : Vector2 = Vector2.ZERO;
-var heavy_coyote_time = -1;
-var light_coyote_time = -1;
+var heavy_actor : Actor = null
+var light_actor : Actor = null
+var actors = []
+# might move this into Actor.state or something
+#var heavy_coyote_time = -1;
+#var light_coyote_time = -1;
+var heavy_turn = 0;
 var heavy_undo_buffer : Array = [];
+var light_turn = 0;
 var light_undo_buffer : Array = [];
+var meta_turn = 0;
 var meta_undo_buffer : Array = [];
 var heavy_max_moves = -1;
 var light_max_moves = -1;
@@ -24,25 +37,37 @@ var map_x_max : int = 0; # 21
 var map_y_max : int = 0; # 10, kind of cramped, if it is then I can just add screen scrolling
 var heavy_selected = true;
 
+# names to sprites, I'll think of a better way another time
+var name_to_sprite = {};
+
 # song-and-dance state
 var timer = 0;
 var sounds = {}
 var speakers = [];
 var muted = false;
 var won = false;
+var cell_size = 24;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# find heavy and light
-	var heavy_id = actormap.tile_set.find_tile_by_name("HeavyIdle");
-	var heavy_tile = actormap.get_used_cells_by_id(heavy_id)[0];
-	heavy_loc = heavy_tile;
-	var light_id = actormap.tile_set.find_tile_by_name("LightIdle");
-	var light_tile = actormap.get_used_cells_by_id(light_id)[0];
-	light_loc = light_tile;
+	initialize_name_to_sprites();
+	
+	# find heavy and light and turn them into actors
+	var heavy_id = terrainmap.tile_set.find_tile_by_name("HeavyIdle");
+	var heavy_tile = terrainmap.get_used_cells_by_id(heavy_id)[0];
+	terrainmap.set_cellv(heavy_tile, -1);
+	heavy_actor = make_actor("heavy", heavy_tile);
+	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
+	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
+	terrainmap.set_cellv(light_tile, -1);
+	light_actor = make_actor("light", light_tile);
 	calculate_map_size();
 	prepare_audio();
 	update_targeter();
+
+func initialize_name_to_sprites() -> void:
+	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
+	name_to_sprite["light"] = preload("res://assets/light_idle.png");
 	
 func calculate_map_size() -> void:
 	var tiles = terrainmap.get_used_cells();
@@ -54,9 +79,9 @@ func calculate_map_size() -> void:
 		
 func update_targeter() -> void:
 	if (heavy_selected):
-		targeter.position = terrainmap.map_to_world(heavy_loc);
+		targeter.position = terrainmap.map_to_world(heavy_actor.pos);
 	else:
-		targeter.position = terrainmap.map_to_world(light_loc);
+		targeter.position = terrainmap.map_to_world(light_actor.pos);
 		
 func prepare_audio() -> void:
 	sounds["bump"] = preload("res://sfx/bump.ogg");
@@ -101,6 +126,36 @@ func play_sound(sound: String) -> void:
 func toggle_mute() -> void:
 	muted = !muted;
 	cut_sound();
+
+func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) -> Actor:
+	var actor = Actor.new();
+	actor.actorname = actorname;
+	actor.texture = name_to_sprite[actorname];
+	actor.offset = Vector2(cell_size/2, cell_size/2);
+	actorsfolder.add_child(actor);
+	move_actor_to(actor, pos, chrono);
+	if (chrono < Chrono.META_UNDO):
+		print("TODO")
+	return actor;
+	
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS) -> void:
+	move_actor_to(actor, actor.pos + dir, chrono);
+	
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> void:
+	actor.pos = pos;
+	actor.position = terrainmap.map_to_world(actor.pos);
+	if (chrono < Chrono.META_UNDO):
+		print("TODO")
+		
+func actors_in_tile(pos: Vector2) -> Array:
+	var result = [];
+	for actor in actors:
+		if actor.pos == pos:
+			result.append(actor);
+	return result;
+	
+func terrain_in_tile(pos: Vector2) -> String:
+	return terrainmap.tilemap.tile_get_name(terrainmap.get_cellv(pos));
 
 func character_undo() -> void:
 	pass
