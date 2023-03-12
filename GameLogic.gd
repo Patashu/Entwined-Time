@@ -138,6 +138,7 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 	actor.actorname = actorname;
 	actor.texture = name_to_sprite[actorname];
 	actor.offset = Vector2(cell_size/2, cell_size/2);
+	actors.append(actor);
 	actorsfolder.add_child(actor);
 	move_actor_to(actor, pos, chrono);
 	if (chrono < Chrono.META_UNDO):
@@ -172,10 +173,14 @@ func terrain_is_solid(pos: Vector2) -> bool:
 	return name == "Wall" || name == "LockClosed";
 	
 func try_enter(Actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> bool:
+	var dest = Actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return true
-	if (terrain_is_solid(Actor.pos + dir)):
+	if (terrain_is_solid(dest)):
+		return false
+	var actors_there = actors_in_tile(dest);
+	if (actors_there.size() > 0):
 		return false
 	return true
 
