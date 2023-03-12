@@ -88,6 +88,7 @@ func update_targeter() -> void:
 		targeter.position = terrainmap.map_to_world(light_actor.pos);
 		
 func prepare_audio() -> void:
+	# TODO: I could automate this if I can iterate the folder
 	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["dig"] = preload("res://sfx/dig.ogg");
 	sounds["fly"] = preload("res://sfx/fly.ogg");
@@ -101,6 +102,7 @@ func prepare_audio() -> void:
 	sounds["pickup"] = preload("res://sfx/pickup.ogg");
 	sounds["restart"] = preload("res://sfx/restart.ogg");
 	sounds["step"] = preload("res://sfx/step.ogg");
+	sounds["switch"] = preload("res://sfx/switch.ogg");
 	sounds["undo"] = preload("res://sfx/undo.ogg");
 	sounds["unlock"] = preload("res://sfx/unlock.ogg");
 	sounds["usegreenality"] = preload("res://sfx/usegreenality.ogg");
@@ -142,15 +144,18 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 		print("TODO")
 	return actor;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS) -> void:
-	move_actor_to(actor, actor.pos + dir, chrono);
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS) -> bool:
+	return move_actor_to(actor, actor.pos + dir, chrono);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> void:
-	actor.pos = pos;
-	actor.position = terrainmap.map_to_world(actor.pos);
-	update_targeter();
-	if (chrono < Chrono.META_UNDO):
-		print("TODO")
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> bool:
+	if (try_enter(actor, pos - actor.pos, chrono)):
+		actor.pos = pos;
+		actor.position = terrainmap.map_to_world(actor.pos);
+		update_targeter();
+		if (chrono < Chrono.META_UNDO):
+			print("TODO")
+		return true;
+	return false;
 		
 func actors_in_tile(pos: Vector2) -> Array:
 	var result = [];
@@ -160,7 +165,19 @@ func actors_in_tile(pos: Vector2) -> Array:
 	return result;
 	
 func terrain_in_tile(pos: Vector2) -> String:
-	return terrainmap.tilemap.tile_get_name(terrainmap.get_cellv(pos));
+	return terrainmap.tile_set.tile_get_name(terrainmap.get_cellv(pos));
+
+func terrain_is_solid(pos: Vector2) -> bool:
+	var name = terrain_in_tile(pos);
+	return name == "Wall" || name == "LockClosed";
+	
+func try_enter(Actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> bool:
+	if (chrono >= Chrono.META_UNDO):
+		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
+		return true
+	if (terrain_is_solid(Actor.pos + dir)):
+		return false
+	return true
 
 func character_undo() -> void:
 	pass
@@ -171,6 +188,7 @@ func meta_undo() -> void:
 func character_switch() -> void:
 	heavy_selected = !heavy_selected;
 	update_targeter();
+	play_sound("switch")
 
 func restart() -> void:
 	pass
@@ -181,11 +199,17 @@ func escape() -> void:
 func cycle_level(impulse: int) -> void:
 	pass
 
-func character_move(dir: Vector2) -> void:
+func character_move(dir: Vector2) -> bool:
+	var result = false;
 	if heavy_selected:
-		move_actor_relative(heavy_actor, dir, Chrono.MOVE);
+		result = move_actor_relative(heavy_actor, dir, Chrono.MOVE);
 	else:
-		move_actor_relative(light_actor, dir, Chrono.MOVE);
+		result = move_actor_relative(light_actor, dir, Chrono.MOVE);
+	if (result):
+		play_sound("step")
+	else:
+		play_sound("bump")
+	return result;
 
 func _process(delta: float) -> void:
 	timer += delta;

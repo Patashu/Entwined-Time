@@ -11,5 +11,5 @@ dest_files=[ "res://.import/greeninteract.ogg-61f616efce4d972d5006472345af908b.o
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

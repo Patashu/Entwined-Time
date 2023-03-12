@@ -11,5 +11,5 @@ dest_files=[ "res://.import/getgreenality.ogg-8ec3dd4c21ce5784db0221ac84b56ab0.o
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

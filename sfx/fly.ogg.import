@@ -11,5 +11,5 @@ dest_files=[ "res://.import/fly.ogg-252243f5b96bd8536220074917c94570.oggstr" ]
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

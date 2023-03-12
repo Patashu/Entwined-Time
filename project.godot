@@ -45,6 +45,12 @@ window/stretch/mode="2d"
 texture={
 "flags/filter": false
 }
+ogg_vorbis={
+"loop": false
+}
+mp3={
+"loop": false
+}
 
 [input]
 

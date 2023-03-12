@@ -11,5 +11,5 @@ dest_files=[ "res://.import/greenplayer.ogg-81ac86752607ac5fb17430f5c7245022.ogg
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -11,5 +11,5 @@ dest_files=[ "res://.import/metarestart.ogg-91f1cfbe3514d85429fabc33b46a8d12.ogg
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

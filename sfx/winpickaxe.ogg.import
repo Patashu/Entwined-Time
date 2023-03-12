@@ -11,5 +11,5 @@ dest_files=[ "res://.import/winpickaxe.ogg-6cc771950cb7ead4045d43b67d172d5d.oggs
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
