@@ -150,11 +150,11 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELE
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> bool:
 	if (try_enter(actor, pos - actor.pos, chrono)):
+		if (chrono == Chrono.MOVE):
+			add_undo_event(["move", actor, pos - actor.pos]);
 		actor.pos = pos;
 		actor.position = terrainmap.map_to_world(actor.pos);
 		update_targeter();
-		if (chrono < Chrono.META_UNDO):
-			print("TODO")
 		return true;
 	return false;
 		
@@ -184,10 +184,52 @@ func try_enter(Actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> bool:
 		return false
 	return true
 
-func character_undo() -> void:
-	pass
+func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
+	if (heavy_selected):
+		if (heavy_undo_buffer.size() <= heavy_turn):
+			heavy_undo_buffer.append([]);
+		heavy_undo_buffer[heavy_turn].push_front(event);
+	else:
+		if (light_undo_buffer.size() <= light_turn):
+			light_undo_buffer.append([]);
+		light_undo_buffer[light_turn].push_front(event);
+
+func character_undo(is_silent: bool = false) -> bool:
+	if (heavy_selected):
+		if (heavy_turn <= 0):
+			if !is_silent:
+				play_sound("bump");
+			return false;
+		var events = heavy_undo_buffer.pop_back();
+		for event in events:
+			character_undo_one_event(event);
+		heavy_turn -= 1;
+		meta_turn += 1;
+		if (!is_silent):
+			play_sound("undo");
+		return true;
+	else:
+		if (light_turn <= 0):
+			if !is_silent:
+				play_sound("bump");
+			return false;
+		var events = light_undo_buffer.pop_back();
+		for event in events:
+			character_undo_one_event(event);
+		light_turn -= 1;
+		meta_turn += 1;
+		if (!is_silent):
+			play_sound("undo");
+		return true;
 	
-func meta_undo() -> void:
+func character_undo_one_event(event: Array) -> void:
+	if (event[0] == "move"):
+		move_actor_relative(event[1], -event[2], Chrono.CHAR_UNDO);
+	
+func meta_undo(is_silent: bool = false) -> bool:
+	return false;
+	
+func meta_undo_one_event(event: Array) -> void:
 	pass
 	
 func character_switch() -> void:
@@ -207,28 +249,58 @@ func cycle_level(impulse: int) -> void:
 func character_move(dir: Vector2) -> bool:
 	var result = false;
 	if heavy_selected:
+		if (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0):
+			play_sound("bump");
+			return false;
 		result = move_actor_relative(heavy_actor, dir, Chrono.MOVE);
 	else:
+		if (light_turn >= light_max_moves and light_max_moves >= 0):
+			play_sound("bump");
+			return false;
 		result = move_actor_relative(light_actor, dir, Chrono.MOVE);
 	if (result):
 		play_sound("step")
+		if heavy_selected:
+			heavy_turn += 1;
+		else:
+			light_turn += 1;
 	else:
 		play_sound("bump")
 	return result;
+	
+func update_info_labels() -> void:
+	heavyinfolabel.text = "Heavy";
+	if (heavy_selected):
+		heavyinfolabel.text += " (Selected)"
+	heavyinfolabel.text += ": Turn "
+	heavyinfolabel.text += str(heavy_turn);
+	if heavy_max_moves >= 0:
+		heavyinfolabel.text += "/" + str(heavy_max_moves);
+	lightinfolabel.text = "Light";
+	if (!heavy_selected):
+		lightinfolabel.text += " (Selected)"
+	lightinfolabel.text += ": Turn "
+	lightinfolabel.text += str(light_turn);
+	if light_max_moves >= 0:
+		lightinfolabel.text += "/" + str(light_max_moves);
 
 func _process(delta: float) -> void:
 	timer += delta;
 	if (Input.is_action_just_pressed("mute")):
 		toggle_mute();
-	# character_undo, meta_undo, character_switch, restart, escape, next_level, previous_level
+	
 	if (Input.is_action_just_pressed("character_undo")):
 		character_undo();
+		update_info_labels();
 	if (Input.is_action_just_pressed("meta_undo")):
 		meta_undo();
+		update_info_labels();
 	if (Input.is_action_just_pressed("character_switch")):
 		character_switch();
+		update_info_labels();
 	if (Input.is_action_just_pressed("restart")):
 		restart();
+		update_info_labels();
 	if (Input.is_action_just_pressed("escape")):
 		escape();
 	if (Input.is_action_just_pressed("previous_level")):
@@ -248,3 +320,4 @@ func _process(delta: float) -> void:
 		
 	if dir != Vector2.ZERO:
 		character_move(dir);
+		update_info_labels();
