@@ -8,6 +8,7 @@ onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
 onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
+onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
 
 # distinguish between temporal layers when a move or state change happens
@@ -68,6 +69,8 @@ func ready_map() -> void:
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
 	light_actor = make_actor("light", light_tile);
+	
+	update_info_labels();
 
 func initialize_name_to_sprites() -> void:
 	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
@@ -150,13 +153,20 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELE
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> bool:
 	if (try_enter(actor, pos - actor.pos, chrono)):
-		if (chrono == Chrono.MOVE):
-			add_undo_event(["move", actor, pos - actor.pos]);
+		add_undo_event(["move", actor, pos - actor.pos], chrono);
 		actor.pos = pos;
 		actor.position = terrainmap.map_to_world(actor.pos);
 		update_targeter();
 		return true;
 	return false;
+		
+func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
+	if (is_heavy):
+		add_undo_event(["heavy_turn", amount], chrono);
+		heavy_turn += amount;
+	else:
+		add_undo_event(["light_turn", amount], chrono);
+		light_turn += amount;
 		
 func actors_in_tile(pos: Vector2) -> Array:
 	var result = [];
@@ -185,14 +195,22 @@ func try_enter(Actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> bool:
 	return true
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
-	if (heavy_selected):
-		if (heavy_undo_buffer.size() <= heavy_turn):
-			heavy_undo_buffer.append([]);
-		heavy_undo_buffer[heavy_turn].push_front(event);
-	else:
-		if (light_undo_buffer.size() <= light_turn):
-			light_undo_buffer.append([]);
-		light_undo_buffer[light_turn].push_front(event);
+	if chrono == Chrono.MOVE:
+		if (heavy_selected):
+			if (heavy_undo_buffer.size() <= heavy_turn):
+				heavy_undo_buffer.append([]);
+			heavy_undo_buffer[heavy_turn].push_front(event);
+			add_undo_event(["heavy_undo_event_add", heavy_turn], Chrono.CHAR_UNDO);
+		else:
+			if (light_undo_buffer.size() <= light_turn):
+				light_undo_buffer.append([]);
+			light_undo_buffer[light_turn].push_front(event);
+			add_undo_event(["light_undo_event_add", light_turn], Chrono.CHAR_UNDO);
+	
+	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
+		if (meta_undo_buffer.size() <= meta_turn):
+			meta_undo_buffer.append([]);
+		meta_undo_buffer[meta_turn].push_back(event);
 
 func character_undo(is_silent: bool = false) -> bool:
 	if (heavy_selected):
@@ -202,8 +220,8 @@ func character_undo(is_silent: bool = false) -> bool:
 			return false;
 		var events = heavy_undo_buffer.pop_back();
 		for event in events:
-			character_undo_one_event(event);
-		heavy_turn -= 1;
+			undo_one_event(event, Chrono.CHAR_UNDO);
+			add_undo_event(["heavy_undo_event_remove", heavy_turn, event], Chrono.CHAR_UNDO);
 		meta_turn += 1;
 		if (!is_silent):
 			play_sound("undo");
@@ -215,22 +233,47 @@ func character_undo(is_silent: bool = false) -> bool:
 			return false;
 		var events = light_undo_buffer.pop_back();
 		for event in events:
-			character_undo_one_event(event);
-		light_turn -= 1;
+			undo_one_event(event, Chrono.CHAR_UNDO);
+			add_undo_event(["light_undo_event_remove", light_turn, event], Chrono.CHAR_UNDO);
 		meta_turn += 1;
 		if (!is_silent):
 			play_sound("undo");
 		return true;
 	
-func character_undo_one_event(event: Array) -> void:
+func undo_one_event(event: Array, chrono : int) -> void:
 	if (event[0] == "move"):
-		move_actor_relative(event[1], -event[2], Chrono.CHAR_UNDO);
+		move_actor_relative(event[1], -event[2], chrono);
+	elif (event[0] == "heavy_turn"):
+		adjust_turn(true, -event[1], chrono);
+	elif (event[0] == "light_turn"):
+		adjust_turn(false, -event[1], chrono);
+	elif (event[0] == "heavy_undo_event_add"):
+		heavy_undo_buffer[event[1]].pop_front();
+	elif (event[0] == "light_undo_event_add"):
+		light_undo_buffer[event[1]].pop_front();
+	elif (event[0] == "heavy_undo_event_remove"):
+		# meta undo an undo creates a char undo event but not a meta undo event, it's special!
+		if (heavy_undo_buffer.size() <= event[1]):
+			heavy_undo_buffer.append([]);
+		heavy_undo_buffer[event[1]].push_front(event[2]);
+	elif (event[0] == "light_undo_event_remove"):
+		if (light_undo_buffer.size() <= event[1]):
+			light_undo_buffer.append([]);
+		light_undo_buffer[event[1]].push_front(event[2]);
 	
 func meta_undo(is_silent: bool = false) -> bool:
-	return false;
+	if (meta_turn <= 0):
+		if !is_silent:
+			play_sound("bump");
+		return false;
+	var events = meta_undo_buffer.pop_back();
+	for event in events:
+		undo_one_event(event, Chrono.META_UNDO);
+	meta_turn -= 1;
+	if (!is_silent):
+		play_sound("undo");
+	return true;
 	
-func meta_undo_one_event(event: Array) -> void:
-	pass
 	
 func character_switch() -> void:
 	heavy_selected = !heavy_selected;
@@ -261,9 +304,11 @@ func character_move(dir: Vector2) -> bool:
 	if (result):
 		play_sound("step")
 		if heavy_selected:
-			heavy_turn += 1;
+			adjust_turn(true, 1, Chrono.MOVE);
+			meta_turn += 1;
 		else:
-			light_turn += 1;
+			adjust_turn(false, 1, Chrono.MOVE);
+			meta_turn += 1;
 	else:
 		play_sound("bump")
 	return result;
@@ -283,6 +328,7 @@ func update_info_labels() -> void:
 	lightinfolabel.text += str(light_turn);
 	if light_max_moves >= 0:
 		lightinfolabel.text += "/" + str(light_max_moves);
+	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
 
 func _process(delta: float) -> void:
 	timer += delta;

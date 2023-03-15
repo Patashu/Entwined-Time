@@ -39,7 +39,7 @@ valign = 1
 [node name="HeavyInfoLabel" type="Label" parent="."]
 margin_left = 26.0
 margin_top = 268.0
-margin_right = 538.0
+margin_right = 506.0
 margin_bottom = 282.0
 theme = ExtResource( 2 )
 text = "Heavy"
@@ -47,10 +47,19 @@ text = "Heavy"
 [node name="LightInfoLabel" type="Label" parent="."]
 margin_left = 26.0
 margin_top = 250.0
-margin_right = 538.0
+margin_right = 507.0
 margin_bottom = 264.0
 theme = ExtResource( 2 )
 text = "Light"
+
+[node name="MetaInfoLabel" type="Label" parent="."]
+margin_left = 26.0
+margin_top = 250.0
+margin_right = 507.0
+margin_bottom = 264.0
+theme = ExtResource( 2 )
+text = "Meta"
+align = 2
 
 [node name="Targeter" type="Sprite" parent="."]
 position = Vector2( -28, -30 )
