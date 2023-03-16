@@ -118,6 +118,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
+	level_list.push_back(preload("res://levels/Firewall.tscn"));
 
 func ready_map() -> void:
 	for actor in actors:
@@ -249,9 +250,13 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 	if (is_heavy):
 		add_undo_event(["heavy_turn", amount], chrono);
 		heavy_turn += amount;
+		if (debug_prints):
+			print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
 		add_undo_event(["light_turn", amount], chrono);
 		light_turn += amount;
+		if (debug_prints):
+			print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
 		
 func actors_in_tile(pos: Vector2) -> Array:
 	var result = [];
@@ -265,7 +270,15 @@ func terrain_in_tile(pos: Vector2) -> String:
 
 func terrain_is_solid(pos: Vector2) -> bool:
 	var name = terrain_in_tile(pos);
-	return name == "Wall" || name == "LockClosed";
+	return name == "Wall" || name == "LockClosed" || name.begins_with("Spike");
+
+func terrain_is_hazardous(actor: Actor, pos: Vector2) -> bool:
+	var name = terrain_in_tile(pos);
+	if (pos.y > map_y_max and actor.durability <= Durability.PITS):
+		return true;
+	if (name.begins_with("Spike") and actor.durability <= Durability.SPIKES):
+		return true;
+	return false;
 	
 func strength_check(strength: int, heaviness: int) -> bool:
 	if (heaviness == Heaviness.WOODEN):
@@ -283,6 +296,10 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return Success.Yes;
+	if (terrain_is_hazardous(actor, dest)):
+		if (!hypothetical):
+			set_actor_var(actor, "broken", true, chrono);
+		return Success.Surprise;
 	if (terrain_is_solid(dest)):
 		return Success.No;
 	var actors_there = actors_in_tile(dest);
@@ -333,7 +350,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			if !is_silent:
 				play_sound("bump");
 			return false;
-		var events = heavy_undo_buffer.pop_back();
+		var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);
 			add_undo_event(["heavy_undo_event_remove", heavy_turn, event], Chrono.CHAR_UNDO);
@@ -347,7 +364,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			if !is_silent:
 				play_sound("bump");
 			return false;
-		var events = light_undo_buffer.pop_back();
+		var events = light_undo_buffer.pop_at(light_turn - 1);
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);
 			add_undo_event(["light_undo_event_remove", light_turn, event], Chrono.CHAR_UNDO);
@@ -359,6 +376,8 @@ func character_undo(is_silent: bool = false) -> bool:
 	
 func adjust_meta_turn(amount: int) -> void:
 	meta_turn += amount;
+	if (debug_prints):
+		print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	check_won();
 	
 func check_won() -> void:
@@ -433,7 +452,7 @@ func character_move(dir: Vector2) -> bool:
 	if (won): return false;
 	var result = false;
 	if heavy_selected:
-		if (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0):
+		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		# airborne == -1 characters can move up and set airborne to 2. airborne >= 0 characters can't move up but it does pass a turn ('Surprise')
@@ -442,7 +461,7 @@ func character_move(dir: Vector2) -> bool:
 		else:
 			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE);
 	else:
-		if (light_turn >= light_max_moves and light_max_moves >= 0):
+		if (light_actor.broken or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		# AD01: decided that Heavy and Light have the same 'airborne up' rule
@@ -483,6 +502,11 @@ func time_passes(chrono: int) -> void:
 			if (heavy_selected && actor != heavy_actor) || (!heavy_selected && actor != light_actor):
 				time_actors.push_back(actor);
 	
+	# Things in fire break.
+	for actor in time_actors:
+		if !actor.broken and terrain_in_tile(actor.pos) == "Fire" and actor.durability <= Durability.FIRE:
+			set_actor_var(actor, "broken", true, chrono);
+	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet.
 	for actor in time_actors:
@@ -498,7 +522,7 @@ func time_passes(chrono: int) -> void:
 	var something_happened = true;
 	var tries = 99;
 	while (something_happened and tries > 0):
-		--tries;
+		tries -= 1;
 		something_happened = false;
 		for actor in time_actors:
 			if (actor.floatiness == Floatiness.LIGHT and has_fallen.has(actor)):
@@ -507,7 +531,7 @@ func time_passes(chrono: int) -> void:
 				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or !has_fallen.has(actor))):
-					if actor.floatiness == Floatiness.LIGHT:
+					if actor.floatiness == Floatiness.LIGHT and !actor.broken:
 						set_actor_var(actor, "airborne", 1, chrono);
 					else:
 						set_actor_var(actor, "airborne", 0, chrono);
@@ -530,6 +554,8 @@ func update_info_labels() -> void:
 		heavyinfolabel.text += " (Selected)"
 	if (heavy_actor.airborne > -1):
 		heavyinfolabel.text += " (Airborne " + str(heavy_actor.airborne) + ")";
+	if (heavy_actor.broken):
+		heavyinfolabel.text += " (Broken)";
 	heavyinfolabel.text += ": Turn "
 	heavyinfolabel.text += str(heavy_turn);
 	if heavy_max_moves >= 0:
@@ -539,6 +565,8 @@ func update_info_labels() -> void:
 		lightinfolabel.text += " (Selected)"
 	if (light_actor.airborne > -1):
 		lightinfolabel.text += " (Airborne " + str(light_actor.airborne) + ")";
+	if (light_actor.broken):
+		lightinfolabel.text += " (Broken)";
 	lightinfolabel.text += ": Turn "
 	lightinfolabel.text += str(light_turn);
 	if light_max_moves >= 0:
