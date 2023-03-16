@@ -7,7 +7,9 @@
 
 [node name="LevelScene" type="Node2D"]
 
-[node name="TerrainMap" type="TileMap" parent="."]
+[node name="LevelFolder" type="Node2D" parent="."]
+
+[node name="TerrainMap" type="TileMap" parent="LevelFolder"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,7 +20,7 @@ tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 1
 [node name="GameLogic" type="Node" parent="."]
 script = ExtResource( 3 )
 
-[node name="ControlsLabel" type="Label" parent="."]
+[node name="LevelLabel" type="Label" parent="."]
 margin_top = 2.0
 margin_right = 512.0
 margin_bottom = 16.0
@@ -27,12 +29,12 @@ text = "Level 01 - Blah Blah Blah"
 align = 1
 valign = 1
 
-[node name="LevelLabel" type="Label" parent="."]
+[node name="ControlsLabel" type="Label" parent="."]
 margin_top = 286.0
 margin_right = 512.0
 margin_bottom = 300.0
 theme = ExtResource( 2 )
-text = "Z - [Character] Undo | X - Swap Character | C - Meta-Undo | R - Restart | Esc - Level Select"
+text = "Z - [Character] Undo | X - Swap Character | C - Meta-Undo | R - Restart | F1/F2 Change Level"
 align = 1
 valign = 1
 

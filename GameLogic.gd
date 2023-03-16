@@ -1,11 +1,12 @@
 extends Node
 class_name GameLogic
 
-var debug_prints = true;
+var debug_prints = false;
 
 onready var levelscene : Node2D = get_node("/root/LevelScene");
 onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
-onready var terrainmap : TileMap = levelscene.get_node("TerrainMap");
+onready var levelfolder : Node2D = levelscene.get_node("LevelFolder");
+onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
 onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
 onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
@@ -68,23 +69,24 @@ enum Success {
 }
 
 # information about the level and actors
+var level_number = 0
+var level_name = "Blah Blah Blah";
 var heavy_actor : Actor = null
 var light_actor : Actor = null
+
 var actors = []
-# might move this into Actor.state or something
-#var heavy_coyote_time = -1;
-#var light_coyote_time = -1;
 var heavy_turn = 0;
 var heavy_undo_buffer : Array = [];
 var light_turn = 0;
 var light_undo_buffer : Array = [];
 var meta_turn = 0;
 var meta_undo_buffer : Array = [];
+var heavy_selected = true;
+
 var heavy_max_moves = -1;
 var light_max_moves = -1;
 var map_x_max : int = 0; # 21
 var map_y_max : int = 0; # 10, kind of cramped, if it is then I can just add screen scrolling
-var heavy_selected = true;
 
 # names to sprites, I'll think of a better way another time
 var name_to_sprite = {};
@@ -97,15 +99,34 @@ var muted = false;
 var won = false;
 var cell_size = 24;
 
+# list of levels in the game
+var level_list = [];
+
 func _ready() -> void:
 	# Call once when the game is booted up.
+	initialize_level_list();
 	initialize_name_to_sprites();
 	prepare_audio();
 	
-	# Call whenever a new map is loaded.
-	ready_map();
+	# Load the first map.
+	load_level(0);
+	
+func initialize_level_list() -> void:
+	level_list.push_back(preload("res://levels/Orientation.tscn"));
 
 func ready_map() -> void:
+	actors = []
+	heavy_turn = 0;
+	heavy_undo_buffer.clear();
+	light_turn = 0;
+	light_undo_buffer.clear();
+	meta_turn = 0;
+	meta_undo_buffer.clear();
+	heavy_selected = true;
+	
+	level_name = terrainmap.get_child(0).level_name;
+	heavy_max_moves = terrainmap.get_child(0).heavy_max_moves;
+	light_max_moves = terrainmap.get_child(0).light_max_moves;
 	calculate_map_size();
 	
 	# find heavy and light and turn them into actors
@@ -366,7 +387,6 @@ func meta_undo(is_silent: bool = false) -> bool:
 		play_sound("undo");
 	return true;
 	
-	
 func character_switch() -> void:
 	heavy_selected = !heavy_selected;
 	update_targeter();
@@ -378,8 +398,15 @@ func restart() -> void:
 func escape() -> void:
 	pass
 	
-func cycle_level(impulse: int) -> void:
-	pass
+func load_level(impulse: int) -> void:
+	level_number += impulse;
+	level_number = posmod(int(level_number), level_list.size());
+	var level = level_list[level_number].instance();
+	levelfolder.remove_child(terrainmap);
+	terrainmap.queue_free();
+	levelfolder.add_child(level);
+	terrainmap = level;
+	ready_map();
 
 func character_move(dir: Vector2) -> bool:
 	var result = false;
@@ -475,6 +502,7 @@ func bottom_up(a, b) -> bool:
 	return a.pos.y > b.pos.y;
 	
 func update_info_labels() -> void:
+	levellabel.text = str(level_number) + " - " + level_name;
 	heavyinfolabel.text = "Heavy";
 	if (heavy_selected):
 		heavyinfolabel.text += " (Selected)"
@@ -515,9 +543,9 @@ func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("escape")):
 		escape();
 	if (Input.is_action_just_pressed("previous_level")):
-		cycle_level(-1);
+		load_level(-1);
 	if (Input.is_action_just_pressed("next_level")):
-		cycle_level(1);
+		load_level(1);
 	
 	var dir = Vector2.ZERO;
 	if (Input.is_action_just_pressed("ui_left")):

@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "GameLogic",
 "language": "GDScript",
 "path": "res://GameLogic.gd"
+}, {
+"base": "Node",
+"class": "LevelInfo",
+"language": "GDScript",
+"path": "res://levels/LevelInfo.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
-"GameLogic": ""
+"GameLogic": "",
+"LevelInfo": ""
 }
 
 [application]
