@@ -1,6 +1,8 @@
 extends Node
 class_name GameLogic
 
+var debug_prints = true;
+
 onready var levelscene : Node2D = get_node("/root/LevelScene");
 onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
 onready var terrainmap : TileMap = levelscene.get_node("TerrainMap");
@@ -53,8 +55,8 @@ enum Durability {
 # When gravity effects things, Light things only move down once.
 # Heavy things move down each iteration until settled.
 enum Floatiness {
-	LIGHT,
-	HEAVY
+	HEAVY,
+	LIGHT
 }
 
 # yes means 'do the thing you intended'. no means 'cancel it and this won't cause time to pass'.
@@ -114,6 +116,7 @@ func ready_map() -> void:
 	heavy_actor.heaviness = Heaviness.STEEL;
 	heavy_actor.strength = Strength.HEAVY;
 	heavy_actor.durability = Durability.FIRE;
+	heavy_actor.floatiness = Floatiness.HEAVY;
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
@@ -121,7 +124,7 @@ func ready_map() -> void:
 	light_actor.heaviness = Heaviness.IRON;
 	light_actor.strength = Strength.LIGHT;
 	light_actor.durability = Durability.SPIKES;
-	
+	light_actor.floatiness = Floatiness.LIGHT;
 	update_info_labels();
 
 func initialize_name_to_sprites() -> void:
@@ -200,12 +203,12 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 		print("TODO")
 	return actor;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS) -> int:
-	return move_actor_to(actor, actor.pos + dir, chrono);
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS, hypothetical: bool = false) -> int:
+	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> int:
-	var success = try_enter(actor, pos - actor.pos, chrono, true);
-	if (success == Success.Yes):
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS, hypothetical: bool = false) -> int:
+	var success = try_enter(actor, pos - actor.pos, chrono, true, hypothetical);
+	if (success == Success.Yes and !hypothetical):
 		add_undo_event(["move", actor, pos - actor.pos], chrono);
 		actor.pos = pos;
 		actor.position = terrainmap.map_to_world(actor.pos);
@@ -246,7 +249,7 @@ func strength_check(strength: int, heaviness: int) -> bool:
 		return strength >= Strength.GRAVITY;
 	return false;
 	
-func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool) -> int:
+func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool = false) -> int:
 	var dest = actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
@@ -265,7 +268,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool) -> int:
 		var result = Success.Yes;
 		for actor_there in actors_there:
 			# surprise takes precedent over no takes precedent over yes
-			result = max(result, move_actor_relative(actor_there, dir, chrono));
+			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical));
 		return result;
 	return Success.Yes;
 
@@ -275,6 +278,8 @@ func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
 	actor.set(prop, value);
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
+	if (debug_prints and chrono < Chrono.META_UNDO):
+		print("add_undo_event", " ", event, " ", chrono);
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
 			if (heavy_undo_buffer.size() <= heavy_turn):
@@ -290,7 +295,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
 		if (meta_undo_buffer.size() <= meta_turn):
 			meta_undo_buffer.append([]);
-		meta_undo_buffer[meta_turn].push_back(event);
+		meta_undo_buffer[meta_turn].push_front(event);
 
 func character_undo(is_silent: bool = false) -> bool:
 	if (heavy_selected):
@@ -302,6 +307,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);
 			add_undo_event(["heavy_undo_event_remove", heavy_turn, event], Chrono.CHAR_UNDO);
+		time_passes(Chrono.CHAR_UNDO);
 		meta_turn += 1;
 		if (!is_silent):
 			play_sound("undo");
@@ -315,12 +321,15 @@ func character_undo(is_silent: bool = false) -> bool:
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);
 			add_undo_event(["light_undo_event_remove", light_turn, event], Chrono.CHAR_UNDO);
+		time_passes(Chrono.CHAR_UNDO);
 		meta_turn += 1;
 		if (!is_silent):
 			play_sound("undo");
 		return true;
 	
 func undo_one_event(event: Array, chrono : int) -> void:
+	if (debug_prints):
+		print("undo_one_event", " ", event, " ", chrono);
 	if (event[0] == "move"):
 		move_actor_relative(event[1], -event[2], chrono);
 	elif (event[0] == "set_actor_var"):
@@ -351,6 +360,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 	var events = meta_undo_buffer.pop_back();
 	for event in events:
 		undo_one_event(event, Chrono.META_UNDO);
+	time_passes(Chrono.META_UNDO);
 	meta_turn -= 1;
 	if (!is_silent):
 		play_sound("undo");
@@ -399,6 +409,7 @@ func character_move(dir: Vector2) -> bool:
 			else:
 				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
 	if (result != Success.No):
+		time_passes(Chrono.MOVE);
 		if heavy_selected:
 			adjust_turn(true, 1, Chrono.MOVE);
 			meta_turn += 1;
@@ -408,6 +419,60 @@ func character_move(dir: Vector2) -> bool:
 	if (result != Success.Yes):
 		play_sound("bump")
 	return result;
+
+func time_passes(chrono: int) -> void:
+	if (chrono >= Chrono.META_UNDO):
+		return
+	var time_actors = []
+	for actor in actors:
+		# current rules:
+		# MOVE: time passes for everyone
+		# CHAR_UNDO: time passes for everyone but the undoing char
+		if (chrono == Chrono.MOVE):
+			time_actors.push_back(actor);
+		else:
+			if (heavy_selected && actor != heavy_actor) || (!heavy_selected && actor != light_actor):
+				time_actors.push_back(actor);
+	
+	# Decrement airborne by one (min zero).
+	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet.
+	for actor in time_actors:
+		if actor.airborne > 0:
+			set_actor_var(actor, "airborne", actor.airborne - 1, chrono);
+			
+	# GRAVITY
+	# For each actor in the list, in order of lowest down to highest up, repeat the following loop until nothing happens:
+	# * If airborne is -1 and it COULD push-move down, set airborne to (1 for light, 0 for heavy).
+	# * If airborne is 0, push-move down (unless this actor is light and already has this loop). If the push-move fails, set airborne to -1.
+	time_actors.sort_custom(self, "bottom_up");
+	var has_fallen = {};
+	var something_happened = true;
+	var tries = 99;
+	while (something_happened and tries > 0):
+		--tries;
+		something_happened = false;
+		for actor in time_actors:
+			if (actor.floatiness == Floatiness.LIGHT and has_fallen.has(actor)):
+				continue;
+			if actor.airborne == -1:
+				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true);
+				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
+				if (could_fall != Success.No and (could_fall == Success.Yes or !has_fallen.has(actor))):
+					if actor.floatiness == Floatiness.LIGHT:
+						set_actor_var(actor, "airborne", 1, chrono);
+					else:
+						set_actor_var(actor, "airborne", 0, chrono);
+					something_happened = true;
+			if actor.airborne == 0:
+				var did_fall = move_actor_relative(actor, Vector2.DOWN, chrono);
+				if (did_fall != Success.No):
+					something_happened = true;
+					has_fallen[actor] = true;
+				if (did_fall != Success.Yes):
+					set_actor_var(actor, "airborne", -1, chrono);
+	
+func bottom_up(a, b) -> bool:
+	return a.pos.y > b.pos.y;
 	
 func update_info_labels() -> void:
 	heavyinfolabel.text = "Heavy";
@@ -423,7 +488,7 @@ func update_info_labels() -> void:
 	if (!heavy_selected):
 		lightinfolabel.text += " (Selected)"
 	if (light_actor.airborne > -1):
-		heavyinfolabel.text += " (Airborne " + str(light_actor.airborne) + ")";
+		lightinfolabel.text += " (Airborne " + str(light_actor.airborne) + ")";
 	lightinfolabel.text += ": Turn "
 	lightinfolabel.text += str(light_turn);
 	if light_max_moves >= 0:
