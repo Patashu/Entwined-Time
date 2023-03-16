@@ -113,9 +113,12 @@ func _ready() -> void:
 	
 func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
+	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));
 
 func ready_map() -> void:
-	actors = []
+	for actor in actors:
+		actor.queue_free();
+	actors.clear();
 	heavy_turn = 0;
 	heavy_undo_buffer.clear();
 	light_turn = 0;
@@ -393,7 +396,7 @@ func character_switch() -> void:
 	play_sound("switch")
 
 func restart() -> void:
-	pass
+	load_level(0)
 	
 func escape() -> void:
 	pass
