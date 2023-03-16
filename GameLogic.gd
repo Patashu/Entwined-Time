@@ -19,6 +19,41 @@ enum Chrono {
 	TIMELESS
 }
 
+# distinguish between different strengths of movement. Gravity is also special in that it won't try to make
+# 'voluntary' movements like going past thin platforms.
+enum Strength {
+	NONE
+	FEEBLE
+	LIGHT
+	HEAVY
+	GRAVITY
+}
+
+# distinguish between different heaviness. Light is IRON and Heavy is STEEL.
+enum Heaviness {
+	WOODEN
+	IRON
+	STEEL
+	SUPERHEAVY
+	INFINITE
+}
+
+# distinguish between levels of durability by listing the first thing that will destroy you.
+enum Durability {
+	SPIKES
+	FIRE
+	PITS
+	NOTHING
+}
+
+# yes means 'do the thing you intended'. no means 'cancel it and this won't cause time to pass'.
+# surprise means 'cancel it but there was a side effect so time passes'.
+enum Success {
+	Yes,
+	No,
+	Surprise,
+}
+
 # information about the level and actors
 var heavy_actor : Actor = null
 var light_actor : Actor = null
@@ -65,10 +100,16 @@ func ready_map() -> void:
 	var heavy_tile = terrainmap.get_used_cells_by_id(heavy_id)[0];
 	terrainmap.set_cellv(heavy_tile, -1);
 	heavy_actor = make_actor("heavy", heavy_tile);
+	heavy_actor.heaviness = Heaviness.STEEL;
+	heavy_actor.strength = Strength.HEAVY;
+	heavy_actor.durability = Durability.FIRE;
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
 	light_actor = make_actor("light", light_tile);
+	light_actor.heaviness = Heaviness.IRON;
+	light_actor.strength = Strength.LIGHT;
+	light_actor.durability = Durability.SPIKES;
 	
 	update_info_labels();
 
@@ -148,17 +189,18 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 		print("TODO")
 	return actor;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS) -> bool:
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS) -> int:
 	return move_actor_to(actor, actor.pos + dir, chrono);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> bool:
-	if (try_enter(actor, pos - actor.pos, chrono)):
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> int:
+	var success = try_enter(actor, pos - actor.pos, chrono);
+	if (success == Success.Yes):
 		add_undo_event(["move", actor, pos - actor.pos], chrono);
 		actor.pos = pos;
 		actor.position = terrainmap.map_to_world(actor.pos);
 		update_targeter();
-		return true;
-	return false;
+		return success;
+	return success;
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 	if (is_heavy):
@@ -182,17 +224,37 @@ func terrain_is_solid(pos: Vector2) -> bool:
 	var name = terrain_in_tile(pos);
 	return name == "Wall" || name == "LockClosed";
 	
-func try_enter(Actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> bool:
-	var dest = Actor.pos + dir;
+func strength_check(strength: int, heaviness: int) -> bool:
+	if (heaviness == Heaviness.WOODEN):
+		return strength >= Strength.FEEBLE;
+	if (heaviness == Heaviness.IRON):
+		return strength >= Strength.LIGHT;
+	if (heaviness == Heaviness.STEEL):
+		return strength >= Strength.HEAVY;
+	if (heaviness == Heaviness.SUPERHEAVY):
+		return strength >= Strength.GRAVITY;
+	return false;
+	
+func try_enter(actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> int:
+	var dest = actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
-		return true
+		return Success.Yes;
 	if (terrain_is_solid(dest)):
-		return false
+		return Success.No;
 	var actors_there = actors_in_tile(dest);
 	if (actors_there.size() > 0):
-		return false
-	return true
+		# check if the current actor COULD push the next actor, then give them a push and return the result
+		# TODO: once crates are in we need to handle various multipush scenarios
+		for actor_there in actors_there:
+			if !strength_check(actor.strength, actor_there.heaviness):
+				return Success.No;
+		var result = Success.Yes;
+		for actor_there in actors_there:
+			# surprise takes precedent over no takes precedent over yes
+			result = max(result, move_actor_relative(actor_there, dir, chrono));
+		return result;
+	return Success.Yes;
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	if chrono == Chrono.MOVE:
@@ -301,15 +363,16 @@ func character_move(dir: Vector2) -> bool:
 			play_sound("bump");
 			return false;
 		result = move_actor_relative(light_actor, dir, Chrono.MOVE);
-	if (result):
+	if (result == Success.Yes):
 		play_sound("step")
+	if (result != Success.No):
 		if heavy_selected:
 			adjust_turn(true, 1, Chrono.MOVE);
 			meta_turn += 1;
 		else:
 			adjust_turn(false, 1, Chrono.MOVE);
 			meta_turn += 1;
-	else:
+	if (result == Success.No):
 		play_sound("bump")
 	return result;
 	
