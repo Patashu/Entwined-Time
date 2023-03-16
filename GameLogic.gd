@@ -46,6 +46,17 @@ enum Durability {
 	NOTHING
 }
 
+# Light becomes airborne_state 2 when it becomes airborne for any reason.
+# Heavy only becomes airborne_state 2 on an upward movement.
+# Light things with airborne_state 0+ can still try to move in any direction.
+# Heavy things can't move up under their own power, but still can if pushed.
+# When gravity effects things, Light things only move down once.
+# Heavy things move down each iteration until settled.
+enum Floatiness {
+	LIGHT,
+	HEAVY
+}
+
 # yes means 'do the thing you intended'. no means 'cancel it and this won't cause time to pass'.
 # surprise means 'cancel it but there was a side effect so time passes'.
 enum Success {
@@ -193,7 +204,7 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELE
 	return move_actor_to(actor, actor.pos + dir, chrono);
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS) -> int:
-	var success = try_enter(actor, pos - actor.pos, chrono);
+	var success = try_enter(actor, pos - actor.pos, chrono, true);
 	if (success == Success.Yes):
 		add_undo_event(["move", actor, pos - actor.pos], chrono);
 		actor.pos = pos;
@@ -235,7 +246,7 @@ func strength_check(strength: int, heaviness: int) -> bool:
 		return strength >= Strength.GRAVITY;
 	return false;
 	
-func try_enter(actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> int:
+func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool) -> int:
 	var dest = actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
@@ -244,6 +255,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> int:
 		return Success.No;
 	var actors_there = actors_in_tile(dest);
 	if (actors_there.size() > 0):
+		if (!can_push):
+			return Success.No;
 		# check if the current actor COULD push the next actor, then give them a push and return the result
 		# TODO: once crates are in we need to handle various multipush scenarios
 		for actor_there in actors_there:
@@ -255,6 +268,11 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int = Chrono.MOVE) -> int:
 			result = max(result, move_actor_relative(actor_there, dir, chrono));
 		return result;
 	return Success.Yes;
+
+func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
+	var old_value = actor.get(prop);
+	add_undo_event(["set_actor_var", actor, prop, old_value], chrono);
+	actor.set(prop, value);
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	if chrono == Chrono.MOVE:
@@ -305,6 +323,8 @@ func character_undo(is_silent: bool = false) -> bool:
 func undo_one_event(event: Array, chrono : int) -> void:
 	if (event[0] == "move"):
 		move_actor_relative(event[1], -event[2], chrono);
+	elif (event[0] == "set_actor_var"):
+		set_actor_var(event[1], event[2], event[3], chrono);
 	elif (event[0] == "heavy_turn"):
 		adjust_turn(true, -event[1], chrono);
 	elif (event[0] == "light_turn"):
@@ -357,14 +377,27 @@ func character_move(dir: Vector2) -> bool:
 		if (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0):
 			play_sound("bump");
 			return false;
-		result = move_actor_relative(heavy_actor, dir, Chrono.MOVE);
+		# airborne == -1 characters can move up and set airborne to 2. airborne >= 0 characters can't move up but it does pass a turn ('Surprise')
+		if (dir == Vector2.UP and heavy_actor.airborne >= 0):
+			result = Success.Surprise;
+		else:
+			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE);
 	else:
 		if (light_turn >= light_max_moves and light_max_moves >= 0):
 			play_sound("bump");
 			return false;
-		result = move_actor_relative(light_actor, dir, Chrono.MOVE);
+		# AD01: decided that Heavy and Light have the same 'airborne up' rule
+		if (dir == Vector2.UP and light_actor.airborne >= 0):
+			result = Success.Surprise;
+		else:
+			result = move_actor_relative(light_actor, dir, Chrono.MOVE);
 	if (result == Success.Yes):
 		play_sound("step")
+		if (dir == Vector2.UP):
+			if heavy_selected:
+				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
+			else:
+				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
 	if (result != Success.No):
 		if heavy_selected:
 			adjust_turn(true, 1, Chrono.MOVE);
@@ -372,7 +405,7 @@ func character_move(dir: Vector2) -> bool:
 		else:
 			adjust_turn(false, 1, Chrono.MOVE);
 			meta_turn += 1;
-	if (result == Success.No):
+	if (result != Success.Yes):
 		play_sound("bump")
 	return result;
 	
@@ -380,6 +413,8 @@ func update_info_labels() -> void:
 	heavyinfolabel.text = "Heavy";
 	if (heavy_selected):
 		heavyinfolabel.text += " (Selected)"
+	if (heavy_actor.airborne > -1):
+		heavyinfolabel.text += " (Airborne " + str(heavy_actor.airborne) + ")";
 	heavyinfolabel.text += ": Turn "
 	heavyinfolabel.text += str(heavy_turn);
 	if heavy_max_moves >= 0:
@@ -387,6 +422,8 @@ func update_info_labels() -> void:
 	lightinfolabel.text = "Light";
 	if (!heavy_selected):
 		lightinfolabel.text += " (Selected)"
+	if (light_actor.airborne > -1):
+		heavyinfolabel.text += " (Airborne " + str(light_actor.airborne) + ")";
 	lightinfolabel.text += ": Turn "
 	lightinfolabel.text += str(light_turn);
 	if light_max_moves >= 0:
