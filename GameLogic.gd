@@ -114,6 +114,7 @@ func _ready() -> void:
 func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));
+	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 
 func ready_map() -> void:
 	for actor in actors:
