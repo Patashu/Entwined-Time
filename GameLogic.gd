@@ -117,8 +117,14 @@ func _ready() -> void:
 func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));
+	level_list.push_back(preload("res://levels/CallACab.tscn"));
+	level_list.push_back(preload("res://levels/SnakePit.tscn"));
+	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
+	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
+	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
+	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 
 func ready_map() -> void:
 	for actor in actors:
@@ -162,18 +168,23 @@ func initialize_name_to_sprites() -> void:
 	name_to_sprite["light"] = preload("res://assets/light_idle.png");
 	
 func calculate_map_size() -> void:
+	map_x_max = 0;
+	map_y_max = 0;
 	var tiles = terrainmap.get_used_cells();
 	for tile in tiles:
 		if tile.x > map_x_max:
 			map_x_max = tile.x;
 		if tile.y > map_y_max:
 			map_y_max = tile.y;
+	terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2);
+	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2);
+	actorsfolder.position = terrainmap.position;
 		
 func update_targeter() -> void:
 	if (heavy_selected and heavy_actor != null):
-		targeter.position = terrainmap.map_to_world(heavy_actor.pos);
+		targeter.position = terrainmap.map_to_world(heavy_actor.pos) + terrainmap.position;
 	elif (light_actor != null):
-		targeter.position = terrainmap.map_to_world(light_actor.pos);
+		targeter.position = terrainmap.map_to_world(light_actor.pos) + terrainmap.position;
 		
 func prepare_audio() -> void:
 	# TODO: I could automate this if I can iterate the folder
@@ -237,12 +248,20 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELE
 	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical);
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS, hypothetical: bool = false) -> int:
-	var success = try_enter(actor, pos - actor.pos, chrono, true, hypothetical);
+	var dir = pos - actor.pos;
+	var success = try_enter(actor, dir, chrono, true, hypothetical);
 	if (success == Success.Yes and !hypothetical):
-		add_undo_event(["move", actor, pos - actor.pos], chrono);
+		add_undo_event(["move", actor, dir], chrono);
 		actor.pos = pos;
 		actor.position = terrainmap.map_to_world(actor.pos);
 		update_targeter();
+		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
+		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
+		if actor.actorname == "heavy" and chrono == Chrono.MOVE and dir.y >= 0:
+			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
+			for sticky_actor in sticky_actors:
+				if (strength_check(actor.strength, sticky_actor.heaviness)):
+					move_actor_relative(sticky_actor, dir, chrono);
 		return success;
 	return success;
 		
@@ -296,7 +315,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return Success.Yes;
-	if (terrain_is_hazardous(actor, dest)):
+	# AD04: being broken makes you immune to breaking :D
+	if (terrain_is_hazardous(actor, dest) and !actor.broken):
 		if (!hypothetical):
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
@@ -381,7 +401,7 @@ func adjust_meta_turn(amount: int) -> void:
 	check_won();
 	
 func check_won() -> void:
-	if (terrain_in_tile(heavy_actor.pos) == "HeavyGoal" and terrain_in_tile(light_actor.pos) == "LightGoal"):
+	if (!light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos) == "HeavyGoal" and terrain_in_tile(light_actor.pos) == "LightGoal"):
 		won = true;
 	else:
 		won = false;
