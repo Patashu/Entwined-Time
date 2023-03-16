@@ -29,6 +29,16 @@ text = "Level 01 - Blah Blah Blah"
 align = 1
 valign = 1
 
+[node name="WinLabel" type="Label" parent="."]
+visible = false
+margin_top = 137.0
+margin_right = 512.0
+margin_bottom = 151.0
+theme = ExtResource( 2 )
+text = "You have won! Press [Enter] to continue."
+align = 1
+valign = 1
+
 [node name="ControlsLabel" type="Label" parent="."]
 margin_top = 286.0
 margin_right = 512.0

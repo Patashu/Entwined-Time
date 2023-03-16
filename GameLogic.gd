@@ -9,6 +9,7 @@ onready var levelfolder : Node2D = levelscene.get_node("LevelFolder");
 onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
 onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
+onready var winlabel : Label = levelscene.get_node("WinLabel");
 onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
 onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
@@ -68,12 +69,19 @@ enum Success {
 	Surprise,
 }
 
-# information about the level and actors
+# information about the level
 var level_number = 0
 var level_name = "Blah Blah Blah";
+var heavy_max_moves = -1;
+var light_max_moves = -1;
+var map_x_max : int = 0;
+var map_y_max : int = 0;
+var map_x_max_max : int = 21;
+var map_y_max_max : int = 10; # is this cramped?, if it is then I can just add screen scrolling
+
+# information about the actors and their state
 var heavy_actor : Actor = null
 var light_actor : Actor = null
-
 var actors = []
 var heavy_turn = 0;
 var heavy_undo_buffer : Array = [];
@@ -82,11 +90,6 @@ var light_undo_buffer : Array = [];
 var meta_turn = 0;
 var meta_undo_buffer : Array = [];
 var heavy_selected = true;
-
-var heavy_max_moves = -1;
-var light_max_moves = -1;
-var map_x_max : int = 0; # 21
-var map_y_max : int = 0; # 10, kind of cramped, if it is then I can just add screen scrolling
 
 # names to sprites, I'll think of a better way another time
 var name_to_sprite = {};
@@ -151,6 +154,7 @@ func ready_map() -> void:
 	light_actor.durability = Durability.SPIKES;
 	light_actor.floatiness = Floatiness.LIGHT;
 	update_info_labels();
+	check_won();
 
 func initialize_name_to_sprites() -> void:
 	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
@@ -323,6 +327,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 		meta_undo_buffer[meta_turn].push_front(event);
 
 func character_undo(is_silent: bool = false) -> bool:
+	if (won): return false;
 	if (heavy_selected):
 		if (heavy_turn <= 0):
 			if !is_silent:
@@ -333,7 +338,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			undo_one_event(event, Chrono.CHAR_UNDO);
 			add_undo_event(["heavy_undo_event_remove", heavy_turn, event], Chrono.CHAR_UNDO);
 		time_passes(Chrono.CHAR_UNDO);
-		meta_turn += 1;
+		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
 		return true;
@@ -347,10 +352,21 @@ func character_undo(is_silent: bool = false) -> bool:
 			undo_one_event(event, Chrono.CHAR_UNDO);
 			add_undo_event(["light_undo_event_remove", light_turn, event], Chrono.CHAR_UNDO);
 		time_passes(Chrono.CHAR_UNDO);
-		meta_turn += 1;
+		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
 		return true;
+	
+func adjust_meta_turn(amount: int) -> void:
+	meta_turn += amount;
+	check_won();
+	
+func check_won() -> void:
+	if (terrain_in_tile(heavy_actor.pos) == "HeavyGoal" and terrain_in_tile(light_actor.pos) == "LightGoal"):
+		won = true;
+	else:
+		won = false;
+	winlabel.visible = won;
 	
 func undo_one_event(event: Array, chrono : int) -> void:
 	if (debug_prints):
@@ -386,12 +402,13 @@ func meta_undo(is_silent: bool = false) -> bool:
 	for event in events:
 		undo_one_event(event, Chrono.META_UNDO);
 	time_passes(Chrono.META_UNDO);
-	meta_turn -= 1;
+	adjust_meta_turn(-1);
 	if (!is_silent):
 		play_sound("undo");
 	return true;
 	
 func character_switch() -> void:
+	if (won): return;
 	heavy_selected = !heavy_selected;
 	update_targeter();
 	play_sound("switch")
@@ -413,6 +430,7 @@ func load_level(impulse: int) -> void:
 	ready_map();
 
 func character_move(dir: Vector2) -> bool:
+	if (won): return false;
 	var result = false;
 	if heavy_selected:
 		if (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0):
@@ -443,10 +461,10 @@ func character_move(dir: Vector2) -> bool:
 		time_passes(Chrono.MOVE);
 		if heavy_selected:
 			adjust_turn(true, 1, Chrono.MOVE);
-			meta_turn += 1;
+			adjust_meta_turn(1);
 		else:
 			adjust_turn(false, 1, Chrono.MOVE);
-			meta_turn += 1;
+			adjust_meta_turn(1);
 	if (result != Success.Yes):
 		play_sound("bump")
 	return result;
@@ -529,6 +547,10 @@ func update_info_labels() -> void:
 
 func _process(delta: float) -> void:
 	timer += delta;
+	
+	if (won and Input.is_action_just_pressed("ui_accept")):
+		load_level(1);
+	
 	if (Input.is_action_just_pressed("mute")):
 		toggle_mute();
 	
