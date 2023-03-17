@@ -23,11 +23,17 @@ _global_script_classes=[ {
 "class": "LevelInfo",
 "language": "GDScript",
 "path": "res://levels/LevelInfo.gd"
+}, {
+"base": "Node2D",
+"class": "LevelScene",
+"language": "GDScript",
+"path": "res://LevelScene.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
 "GameLogic": "",
-"LevelInfo": ""
+"LevelInfo": "",
+"LevelScene": ""
 }
 
 [application]

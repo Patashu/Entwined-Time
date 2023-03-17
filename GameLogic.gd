@@ -103,6 +103,9 @@ var speakers = [];
 var muted = false;
 var won = false;
 var cell_size = 24;
+var undo_effect_strength = 0;
+var undo_effect_per_second = 0;
+var undo_effect_color = Color(0, 0, 0, 0);
 
 #replay system
 var doing_replay = false;
@@ -390,6 +393,9 @@ func character_undo(is_silent: bool = false) -> bool:
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
+			undo_effect_strength = 0.25;
+			undo_effect_per_second = undo_effect_strength*(1/0.1);
+			undo_effect_color = Color(1.0, 0, 0, 0);
 		return true;
 	else:
 		if (light_turn <= 0):
@@ -404,6 +410,9 @@ func character_undo(is_silent: bool = false) -> bool:
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
+			undo_effect_strength = 0.25;
+			undo_effect_per_second = undo_effect_strength*(1/0.1);
+			undo_effect_color = Color(0, 0.58, 1.0, 0);
 		return true;
 	
 func adjust_meta_turn(amount: int) -> void:
@@ -456,6 +465,9 @@ func meta_undo(is_silent: bool = false) -> bool:
 	adjust_meta_turn(-1);
 	if (!is_silent):
 		play_sound("metaundo");
+	undo_effect_strength = 0.25;
+	undo_effect_per_second = undo_effect_strength*(1/0.1);
+	undo_effect_color = Color(0.5, 0.5, 0.5, 0);
 	return true;
 	
 func character_switch() -> void:
@@ -467,6 +479,9 @@ func character_switch() -> void:
 func restart(is_silent: bool = false) -> void:
 	load_level(0);
 	play_sound("restart");
+	undo_effect_strength = 0.5;
+	undo_effect_per_second = undo_effect_strength*(1/0.5);
+	undo_effect_color = Color(0.5, 0.5, 0.5, 0);
 	
 func escape() -> void:
 	pass
