@@ -12,5 +12,6 @@ tile_data = PoolIntArray( 0, 14, 0, 10, 14, 0, 131074, 7, 0, 131075, 2, 0, 13107
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "The First Pit"
+level_replay = "xaasxddwdddxzaaa"
 heavy_max_moves = 6
 light_max_moves = 5
