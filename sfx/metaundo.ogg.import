@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/metaundo.ogg-1a688b71412ccf558b47a45e67c8d84c.oggstr"
+
+[deps]
+
+source_file="res://sfx/metaundo.ogg"
+dest_files=[ "res://.import/metaundo.ogg-1a688b71412ccf558b47a45e67c8d84c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

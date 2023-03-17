@@ -209,6 +209,7 @@ func prepare_audio() -> void:
 	sounds["key"] = preload("res://sfx/key.ogg");
 	sounds["kill"] = preload("res://sfx/kill.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
+	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
 	sounds["pickup"] = preload("res://sfx/pickup.ogg");
 	sounds["restart"] = preload("res://sfx/restart.ogg");
 	sounds["step"] = preload("res://sfx/step.ogg");
@@ -454,7 +455,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 	time_passes(Chrono.META_UNDO);
 	adjust_meta_turn(-1);
 	if (!is_silent):
-		play_sound("undo");
+		play_sound("metaundo");
 	return true;
 	
 func character_switch() -> void:
