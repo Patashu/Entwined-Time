@@ -393,8 +393,8 @@ func character_undo(is_silent: bool = false) -> bool:
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
-			undo_effect_strength = 0.25;
-			undo_effect_per_second = undo_effect_strength*(1/0.1);
+			undo_effect_strength = 0.08;
+			undo_effect_per_second = undo_effect_strength*(1/0.2);
 			undo_effect_color = Color(1.0, 0, 0, 0);
 		return true;
 	else:
@@ -410,8 +410,8 @@ func character_undo(is_silent: bool = false) -> bool:
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
-			undo_effect_strength = 0.25;
-			undo_effect_per_second = undo_effect_strength*(1/0.1);
+			undo_effect_strength = 0.08;
+			undo_effect_per_second = undo_effect_strength*(1/0.2);
 			undo_effect_color = Color(0, 0.58, 1.0, 0);
 		return true;
 	
@@ -465,8 +465,8 @@ func meta_undo(is_silent: bool = false) -> bool:
 	adjust_meta_turn(-1);
 	if (!is_silent):
 		play_sound("metaundo");
-	undo_effect_strength = 0.25;
-	undo_effect_per_second = undo_effect_strength*(1/0.1);
+	undo_effect_strength = 0.08;
+	undo_effect_per_second = undo_effect_strength*(1/0.2);
 	undo_effect_color = Color(0.5, 0.5, 0.5, 0);
 	return true;
 	
