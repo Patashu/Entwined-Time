@@ -4,7 +4,6 @@ class_name LevelScene
 onready var gamelogic : GameLogic = self.get_node("GameLogic");
 var last_delta = 0;
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	last_delta = delta;
 	update();

@@ -19,6 +19,8 @@ tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 1
 
 [node name="ActorsFolder" type="Node2D" parent="."]
 
+[node name="GhostsFolder" type="Node2D" parent="."]
+
 [node name="GameLogic" type="Node" parent="."]
 script = ExtResource( 3 )
 

@@ -5,6 +5,7 @@ var debug_prints = false;
 
 onready var levelscene : Node2D = get_node("/root/LevelScene");
 onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
+onready var ghostsfolder : Node2D = levelscene.get_node("GhostsFolder");
 onready var levelfolder : Node2D = levelscene.get_node("LevelFolder");
 onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
 onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
@@ -16,11 +17,13 @@ onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
 
 # distinguish between temporal layers when a move or state change happens
+# ghosts is for undo trail ghosts
 enum Chrono {
 	MOVE
 	CHAR_UNDO
 	META_UNDO
 	TIMELESS
+	GHOSTS
 }
 
 # distinguish between different strengths of movement. Gravity is also special in that it won't try to make
@@ -93,6 +96,9 @@ var meta_turn = 0;
 var meta_undo_buffer : Array = [];
 var heavy_selected = true;
 
+# for undo trail ghosts
+var ghosts = []
+
 # names to sprites, I'll think of a better way another time
 var name_to_sprite = {};
 
@@ -145,6 +151,9 @@ func ready_map() -> void:
 	for actor in actors:
 		actor.queue_free();
 	actors.clear();
+	for ghost in ghosts:
+		ghost.queue_free();
+	ghosts.clear();
 	heavy_turn = 0;
 	heavy_undo_buffer.clear();
 	light_turn = 0;
@@ -196,6 +205,7 @@ func calculate_map_size() -> void:
 	terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2);
 	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2);
 	actorsfolder.position = terrainmap.position;
+	ghostsfolder.position = terrainmap.position;
 		
 func update_targeter() -> void:
 	if (heavy_selected and heavy_actor != null):
@@ -263,10 +273,18 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 	return actor;
 	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS, hypothetical: bool = false) -> int:
+	if (chrono == Chrono.GHOSTS):
+		var ghost = generate_ghost(actor);
+		ghost.ghost_dir = -dir;
+		ghost.pos = ghost.previous_ghost.pos + dir;
+		ghost.position = terrainmap.map_to_world(ghost.pos);
+		return Success.Yes;
+	
 	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical);
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS, hypothetical: bool = false) -> int:
 	var dir = pos - actor.pos;
+	
 	var success = try_enter(actor, dir, chrono, true, hypothetical);
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event(["move", actor, dir], chrono);
@@ -358,26 +376,30 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 
 func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
-	add_undo_event(["set_actor_var", actor, prop, old_value], chrono);
-	actor.set(prop, value);
+	if (chrono < Chrono.GHOSTS):
+		add_undo_event(["set_actor_var", actor, prop, old_value], chrono);
+		actor.set(prop, value);
+	else:
+		var ghost = get_deepest_ghost(actor);
+		ghost.set(prop, value);
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	if (debug_prints and chrono < Chrono.META_UNDO):
 		print("add_undo_event", " ", event, " ", chrono);
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
-			if (heavy_undo_buffer.size() <= heavy_turn):
+			while (heavy_undo_buffer.size() <= heavy_turn):
 				heavy_undo_buffer.append([]);
 			heavy_undo_buffer[heavy_turn].push_front(event);
 			add_undo_event(["heavy_undo_event_add", heavy_turn], Chrono.CHAR_UNDO);
 		else:
-			if (light_undo_buffer.size() <= light_turn):
+			while (light_undo_buffer.size() <= light_turn):
 				light_undo_buffer.append([]);
 			light_undo_buffer[light_turn].push_front(event);
 			add_undo_event(["light_undo_event_add", light_turn], Chrono.CHAR_UNDO);
 	
 	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
-		if (meta_undo_buffer.size() <= meta_turn):
+		while (meta_undo_buffer.size() <= meta_turn):
 			meta_undo_buffer.append([]);
 		meta_undo_buffer[meta_turn].push_front(event);
 
@@ -417,6 +439,65 @@ func character_undo(is_silent: bool = false) -> bool:
 			undo_effect_per_second = undo_effect_strength*(1/0.2);
 			undo_effect_color = light_color;
 		return true;
+
+func get_deepest_ghost(actor : Actor) -> Actor:
+	# also makes one if none exist
+	if (actor.next_ghost == null):
+		return generate_ghost(actor)
+	while actor.next_ghost != null:
+		actor = actor.next_ghost;
+	return actor;
+
+func generate_ghost(actor : Actor) -> Actor:
+	while actor.next_ghost != null:
+		actor = actor.next_ghost;
+	var ghost = clone_actor_but_dont_add_it(actor);
+	ghost.is_ghost = true;
+	ghost.modulate = Color(1, 1, 1, 0);
+	actor.next_ghost = ghost;
+	ghost.previous_ghost = actor;
+	ghost.ghost_index = actor.ghost_index + 1;
+	ghosts.append(ghost);
+	ghostsfolder.add_child(ghost);
+	return ghost;
+	
+func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
+	# TODO: poorly refactored with make_actor
+	var new = Actor.new();
+	new.actorname = actor.actorname;
+	new.texture = actor.texture;
+	new.offset = actor.offset;
+	new.position = actor.position;
+	new.pos = actor.pos;
+	new.state = actor.state.duplicate();
+	new.broken = actor.broken;
+	new.powered = actor.powered;
+	new.airborne = actor.airborne;
+	new.strength = actor.strength;
+	new.heaviness = actor.heaviness;
+	new.durability = actor.durability;
+	new.floatiness = actor.floatiness;
+	return new;
+
+func update_ghosts() -> void:
+	for ghost in ghosts:
+		ghost.queue_free();
+	ghosts.clear();
+	for actor in actors:
+		actor.next_ghost = null;
+	# overlaps with character_undo a lot, but I'll try to limit the damage
+	if (heavy_selected):
+		if (heavy_turn <= 0):
+			return;
+		var events = heavy_undo_buffer[heavy_turn - 1];
+		for event in events:
+			undo_one_event(event, Chrono.GHOSTS);
+	else:
+		if (light_turn <= 0):
+			return;
+		var events = light_undo_buffer[light_turn - 1];
+		for event in events:
+			undo_one_event(event, Chrono.GHOSTS);
 	
 func adjust_meta_turn(amount: int) -> void:
 	meta_turn += amount;
@@ -434,25 +515,34 @@ func check_won() -> void:
 func undo_one_event(event: Array, chrono : int) -> void:
 	if (debug_prints):
 		print("undo_one_event", " ", event, " ", chrono);
+		
+	# undo events that should create undo trails
+		
 	if (event[0] == "move"):
 		move_actor_relative(event[1], -event[2], chrono);
 	elif (event[0] == "set_actor_var"):
 		set_actor_var(event[1], event[2], event[3], chrono);
+		
+	# undo events that should not
+		
+	if (chrono >= Chrono.GHOSTS):
+		return;
+		
 	elif (event[0] == "heavy_turn"):
 		adjust_turn(true, -event[1], chrono);
 	elif (event[0] == "light_turn"):
 		adjust_turn(false, -event[1], chrono);
-	elif (event[0] == "heavy_undo_event_add"):
+	if (event[0] == "heavy_undo_event_add"):
 		heavy_undo_buffer[event[1]].pop_front();
 	elif (event[0] == "light_undo_event_add"):
 		light_undo_buffer[event[1]].pop_front();
 	elif (event[0] == "heavy_undo_event_remove"):
 		# meta undo an undo creates a char undo event but not a meta undo event, it's special!
-		if (heavy_undo_buffer.size() <= event[1]):
+		while (heavy_undo_buffer.size() <= event[1]):
 			heavy_undo_buffer.append([]);
 		heavy_undo_buffer[event[1]].push_front(event[2]);
 	elif (event[0] == "light_undo_event_remove"):
-		if (light_undo_buffer.size() <= event[1]):
+		while (light_undo_buffer.size() <= event[1]):
 			light_undo_buffer.append([]);
 		light_undo_buffer[event[1]].push_front(event[2]);
 	
@@ -474,7 +564,6 @@ func meta_undo(is_silent: bool = false) -> bool:
 	return true;
 	
 func character_switch() -> void:
-	if (won): return;
 	heavy_selected = !heavy_selected;
 	update_targeter();
 	play_sound("switch")
@@ -675,6 +764,8 @@ func update_info_labels() -> void:
 	if light_max_moves >= 0:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
+	
+	update_ghosts();
 
 func _process(delta: float) -> void:
 	timer += delta;
