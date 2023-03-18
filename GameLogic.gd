@@ -186,6 +186,7 @@ func ready_map() -> void:
 	light_actor.strength = Strength.LIGHT;
 	light_actor.durability = Durability.SPIKES;
 	light_actor.floatiness = Floatiness.LIGHT;
+	finish_animations();
 	update_info_labels();
 	check_won();
 
@@ -209,9 +210,9 @@ func calculate_map_size() -> void:
 		
 func update_targeter() -> void:
 	if (heavy_selected and heavy_actor != null):
-		targeter.position = terrainmap.map_to_world(heavy_actor.pos) + terrainmap.position;
+		targeter.position = heavy_actor.position + terrainmap.position;
 	elif (light_actor != null):
-		targeter.position = terrainmap.map_to_world(light_actor.pos) + terrainmap.position;
+		targeter.position = light_actor.position + terrainmap.position;
 		
 func prepare_audio() -> void:
 	# TODO: I could automate this if I can iterate the folder
@@ -289,8 +290,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS, hy
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event(["move", actor, dir], chrono);
 		actor.pos = pos;
-		actor.position = terrainmap.map_to_world(actor.pos);
-		update_targeter();
+		actor.animations.push_back(["move", dir]);
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
 		if actor.actorname == "heavy" and chrono == Chrono.MOVE and dir.y >= 0:
@@ -405,6 +405,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 
 func character_undo(is_silent: bool = false) -> bool:
 	if (won): return false;
+	finish_animations();
 	if (heavy_selected):
 		if (heavy_turn <= 0):
 			if !is_silent:
@@ -467,7 +468,7 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.actorname = actor.actorname;
 	new.texture = actor.texture;
 	new.offset = actor.offset;
-	new.position = actor.position;
+	new.position = terrainmap.map_to_world(actor.pos);
 	new.pos = actor.pos;
 	new.state = actor.state.duplicate();
 	new.broken = actor.broken;
@@ -478,6 +479,13 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.durability = actor.durability;
 	new.floatiness = actor.floatiness;
 	return new;
+
+func finish_animations() -> void:
+	for actor in actors:
+		actor.animation_timer = 0;
+		actor.animations.clear();
+		actor.position = terrainmap.map_to_world(actor.pos);
+		# TODO: handle sprite/state changes as well not even sure how I wanna do that yet
 
 func update_ghosts() -> void:
 	for ghost in ghosts:
@@ -547,6 +555,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		light_undo_buffer[event[1]].push_front(event[2]);
 	
 func meta_undo(is_silent: bool = false) -> bool:
+	finish_animations();
 	if (meta_turn <= 0):
 		if !is_silent:
 			play_sound("bump");
@@ -561,11 +570,11 @@ func meta_undo(is_silent: bool = false) -> bool:
 	undo_effect_strength = 0.08;
 	undo_effect_per_second = undo_effect_strength*(1/0.2);
 	undo_effect_color = meta_color;
+	finish_animations();
 	return true;
 	
 func character_switch() -> void:
 	heavy_selected = !heavy_selected;
-	update_targeter();
 	play_sound("switch")
 
 func restart(is_silent: bool = false) -> void:
@@ -574,6 +583,7 @@ func restart(is_silent: bool = false) -> void:
 	undo_effect_strength = 0.5;
 	undo_effect_per_second = undo_effect_strength*(1/0.5);
 	undo_effect_color = meta_color;
+	finish_animations();
 	
 func escape() -> void:
 	pass
@@ -590,6 +600,7 @@ func load_level(impulse: int) -> void:
 
 func character_move(dir: Vector2) -> bool:
 	if (won): return false;
+	finish_animations();
 	var result = false;
 	if heavy_selected:
 		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
@@ -829,3 +840,5 @@ func _process(delta: float) -> void:
 		doing_replay = false;
 		character_move(dir);
 		update_info_labels();
+		
+	update_targeter();
