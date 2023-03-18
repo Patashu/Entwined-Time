@@ -299,6 +299,8 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS, hy
 				if (strength_check(actor.strength, sticky_actor.heaviness)):
 					move_actor_relative(sticky_actor, dir, chrono);
 		return success;
+	elif (success != Success.Yes and !hypothetical):
+		actor.animations.push_back(["bump", dir]);
 	return success;
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
