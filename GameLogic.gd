@@ -149,8 +149,10 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
+	level_list.push_back(preload("res://levels/TheSecondPit.tscn"));
 
 func ready_map() -> void:
 	for actor in actors:
@@ -710,11 +712,11 @@ func time_passes(chrono: int) -> void:
 	for actor in actors:
 		# current rules:
 		# MOVE: time passes for everyone
-		# CHAR_UNDO: time passes for everyone but the undoing char
+		# CHAR_UNDO: AD06: time passes for things 'green relative to us' (the other character, green actors)
 		if (chrono == Chrono.MOVE):
 			time_actors.push_back(actor);
 		else:
-			if (heavy_selected && actor != heavy_actor) || (!heavy_selected && actor != light_actor):
+			if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
 				time_actors.push_back(actor);
 	
 	# Things in fire break.
