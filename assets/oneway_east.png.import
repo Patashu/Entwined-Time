@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/lock.png-962ebed8d2713bfc3a87b85adb53c15d.stex"
+path="res://.import/oneway_east.png-d0a3119d3697e6f746444793c96ad823.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/lock.png"
-dest_files=[ "res://.import/lock.png-962ebed8d2713bfc3a87b85adb53c15d.stex" ]
+source_file="res://assets/oneway_east.png"
+dest_files=[ "res://.import/oneway_east.png-d0a3119d3697e6f746444793c96ad823.stex" ]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -10,12 +10,18 @@
 [ext_resource path="res://assets/ladder_platform.png" type="Texture" id=8]
 [ext_resource path="res://assets/light_idle.png" type="Texture" id=9]
 [ext_resource path="res://assets/ladder.png" type="Texture" id=10]
-[ext_resource path="res://assets/lock.png" type="Texture" id=11]
+[ext_resource path="res://assets/oneway_south.png" type="Texture" id=11]
 [ext_resource path="res://assets/wooden_crate.png" type="Texture" id=12]
 [ext_resource path="res://assets/wall.png" type="Texture" id=13]
 [ext_resource path="res://assets/steel_crate.png" type="Texture" id=14]
 [ext_resource path="res://assets/lock_open.png" type="Texture" id=15]
 [ext_resource path="res://assets/spikeball.png" type="Texture" id=16]
+[ext_resource path="res://assets/oneway_west.png" type="Texture" id=17]
+[ext_resource path="res://assets/checkpoint_blue.png" type="Texture" id=18]
+[ext_resource path="res://assets/checkpoint.png" type="Texture" id=19]
+[ext_resource path="res://assets/checkpoint_red.png" type="Texture" id=20]
+[ext_resource path="res://assets/oneway_east.png" type="Texture" id=21]
+[ext_resource path="res://assets/oneway_north.png" type="Texture" id=22]
 
 [node name="TileSetScene" type="Node2D"]
 
@@ -55,10 +61,6 @@ texture = ExtResource( 1 )
 position = Vector2( 114, 88 )
 texture = ExtResource( 9 )
 
-[node name="Lock" type="Sprite" parent="."]
-position = Vector2( 114, 88 )
-texture = ExtResource( 11 )
-
 [node name="LockClosed" type="Sprite" parent="."]
 position = Vector2( 114, 88 )
 texture = ExtResource( 3 )
@@ -82,3 +84,31 @@ texture = ExtResource( 13 )
 [node name="WoodenCrate" type="Sprite" parent="."]
 position = Vector2( 114, 88 )
 texture = ExtResource( 12 )
+
+[node name="Checkpoint" type="Sprite" parent="."]
+position = Vector2( 145, 90 )
+texture = ExtResource( 19 )
+
+[node name="CheckpointBlue" type="Sprite" parent="."]
+position = Vector2( 145, 90 )
+texture = ExtResource( 18 )
+
+[node name="CheckpointRed" type="Sprite" parent="."]
+position = Vector2( 145, 90 )
+texture = ExtResource( 20 )
+
+[node name="OnewayEast" type="Sprite" parent="."]
+position = Vector2( 145, 90 )
+texture = ExtResource( 21 )
+
+[node name="OnewayNorth" type="Sprite" parent="."]
+position = Vector2( 145, 90 )
+texture = ExtResource( 22 )
+
+[node name="OnewaySouth" type="Sprite" parent="."]
+position = Vector2( 145, 90 )
+texture = ExtResource( 11 )
+
+[node name="OnewayWest" type="Sprite" parent="."]
+position = Vector2( 145, 90 )
+texture = ExtResource( 17 )

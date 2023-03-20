@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=17 format=2]
+[gd_resource type="TileSet" load_steps=23 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -10,12 +10,18 @@
 [ext_resource path="res://assets/ladder_platform.png" type="Texture" id=8]
 [ext_resource path="res://assets/light_idle.png" type="Texture" id=9]
 [ext_resource path="res://assets/ladder.png" type="Texture" id=10]
-[ext_resource path="res://assets/lock.png" type="Texture" id=11]
 [ext_resource path="res://assets/wooden_crate.png" type="Texture" id=12]
 [ext_resource path="res://assets/wall.png" type="Texture" id=13]
 [ext_resource path="res://assets/steel_crate.png" type="Texture" id=14]
 [ext_resource path="res://assets/lock_open.png" type="Texture" id=15]
 [ext_resource path="res://assets/spikeball.png" type="Texture" id=16]
+[ext_resource path="res://assets/oneway_south.png" type="Texture" id=17]
+[ext_resource path="res://assets/oneway_west.png" type="Texture" id=18]
+[ext_resource path="res://assets/checkpoint_blue.png" type="Texture" id=19]
+[ext_resource path="res://assets/checkpoint.png" type="Texture" id=20]
+[ext_resource path="res://assets/checkpoint_red.png" type="Texture" id=21]
+[ext_resource path="res://assets/oneway_east.png" type="Texture" id=22]
+[ext_resource path="res://assets/oneway_north.png" type="Texture" id=23]
 
 [resource]
 0/name = "Fire"
@@ -144,20 +150,6 @@
 8/shape_one_way_margin = 0.0
 8/shapes = [  ]
 8/z_index = 0
-9/name = "Lock"
-9/texture = ExtResource( 11 )
-9/tex_offset = Vector2( 0, 0 )
-9/modulate = Color( 1, 1, 1, 1 )
-9/region = Rect2( 0, 0, 24, 24 )
-9/tile_mode = 0
-9/occluder_offset = Vector2( 12, 12 )
-9/navigation_offset = Vector2( 12, 12 )
-9/shape_offset = Vector2( 0, 0 )
-9/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-9/shape_one_way = false
-9/shape_one_way_margin = 0.0
-9/shapes = [  ]
-9/z_index = 0
 10/name = "LockClosed"
 10/texture = ExtResource( 3 )
 10/tex_offset = Vector2( 0, 0 )
@@ -242,3 +234,101 @@
 15/shape_one_way_margin = 0.0
 15/shapes = [  ]
 15/z_index = 0
+16/name = "Checkpoint"
+16/texture = ExtResource( 20 )
+16/tex_offset = Vector2( 0, 0 )
+16/modulate = Color( 1, 1, 1, 1 )
+16/region = Rect2( 0, 0, 24, 24 )
+16/tile_mode = 0
+16/occluder_offset = Vector2( 12, 12 )
+16/navigation_offset = Vector2( 12, 12 )
+16/shape_offset = Vector2( 0, 0 )
+16/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+16/shape_one_way = false
+16/shape_one_way_margin = 0.0
+16/shapes = [  ]
+16/z_index = 0
+17/name = "CheckpointBlue"
+17/texture = ExtResource( 19 )
+17/tex_offset = Vector2( 0, 0 )
+17/modulate = Color( 1, 1, 1, 1 )
+17/region = Rect2( 0, 0, 24, 24 )
+17/tile_mode = 0
+17/occluder_offset = Vector2( 12, 12 )
+17/navigation_offset = Vector2( 12, 12 )
+17/shape_offset = Vector2( 0, 0 )
+17/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+17/shape_one_way = false
+17/shape_one_way_margin = 0.0
+17/shapes = [  ]
+17/z_index = 0
+18/name = "CheckpointRed"
+18/texture = ExtResource( 21 )
+18/tex_offset = Vector2( 0, 0 )
+18/modulate = Color( 1, 1, 1, 1 )
+18/region = Rect2( 0, 0, 24, 24 )
+18/tile_mode = 0
+18/occluder_offset = Vector2( 12, 12 )
+18/navigation_offset = Vector2( 12, 12 )
+18/shape_offset = Vector2( 0, 0 )
+18/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+18/shape_one_way = false
+18/shape_one_way_margin = 0.0
+18/shapes = [  ]
+18/z_index = 0
+19/name = "OnewayEast"
+19/texture = ExtResource( 22 )
+19/tex_offset = Vector2( 0, 0 )
+19/modulate = Color( 1, 1, 1, 1 )
+19/region = Rect2( 0, 0, 24, 24 )
+19/tile_mode = 0
+19/occluder_offset = Vector2( 12, 12 )
+19/navigation_offset = Vector2( 12, 12 )
+19/shape_offset = Vector2( 0, 0 )
+19/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+19/shape_one_way = false
+19/shape_one_way_margin = 0.0
+19/shapes = [  ]
+19/z_index = 0
+20/name = "OnewayNorth"
+20/texture = ExtResource( 23 )
+20/tex_offset = Vector2( 0, 0 )
+20/modulate = Color( 1, 1, 1, 1 )
+20/region = Rect2( 0, 0, 24, 24 )
+20/tile_mode = 0
+20/occluder_offset = Vector2( 12, 12 )
+20/navigation_offset = Vector2( 12, 12 )
+20/shape_offset = Vector2( 0, 0 )
+20/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+20/shape_one_way = false
+20/shape_one_way_margin = 0.0
+20/shapes = [  ]
+20/z_index = 0
+21/name = "OnewaySouth"
+21/texture = ExtResource( 17 )
+21/tex_offset = Vector2( 0, 0 )
+21/modulate = Color( 1, 1, 1, 1 )
+21/region = Rect2( 0, 0, 24, 24 )
+21/tile_mode = 0
+21/occluder_offset = Vector2( 12, 12 )
+21/navigation_offset = Vector2( 12, 12 )
+21/shape_offset = Vector2( 0, 0 )
+21/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+21/shape_one_way = false
+21/shape_one_way_margin = 0.0
+21/shapes = [  ]
+21/z_index = 0
+22/name = "OnewayWest"
+22/texture = ExtResource( 18 )
+22/tex_offset = Vector2( 0, 0 )
+22/modulate = Color( 1, 1, 1, 1 )
+22/region = Rect2( 0, 0, 24, 24 )
+22/tile_mode = 0
+22/occluder_offset = Vector2( 12, 12 )
+22/navigation_offset = Vector2( 12, 12 )
+22/shape_offset = Vector2( 0, 0 )
+22/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+22/shape_one_way = false
+22/shape_one_way_margin = 0.0
+22/shapes = [  ]
+22/z_index = 0
