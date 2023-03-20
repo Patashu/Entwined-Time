@@ -150,6 +150,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
+	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 
 func ready_map() -> void:
 	for actor in actors:
@@ -314,7 +315,7 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: 
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, pushers_list: Array = []) -> int:
 	var dir = pos - actor.pos;
 	
-	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity);
+	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, pushers_list);
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event(["move", actor, dir], chrono);
 		actor.pos = pos;

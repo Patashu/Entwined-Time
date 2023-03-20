@@ -11,7 +11,7 @@ tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 1
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Stepping Stool"
-level_replay = "xddddddxwaaaxzzzzzzxzxaaxaxzaaaaxzzwdxw"
-heavy_max_moves = 6
-light_max_moves = 6
+level_name = "Stepping Stool [VAR1]"
+level_replay = "xdddddxawaaaxzzzzzwdddxzzzzzxzzzzaxwaadxdxwxdxzzxzzzaaaaxzzadwdxw"
+heavy_max_moves = 5
+light_max_moves = 5
