@@ -12,6 +12,7 @@ var strength = 0
 var heaviness = 0
 var durability = 0
 var floatiness = 0
+var climbs = false
 # undo trails logic
 var is_ghost = false
 var next_ghost = null;

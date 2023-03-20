@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -22,12 +22,17 @@
 [ext_resource path="res://assets/checkpoint_red.png" type="Texture" id=20]
 [ext_resource path="res://assets/oneway_east.png" type="Texture" id=21]
 [ext_resource path="res://assets/oneway_north.png" type="Texture" id=22]
+[ext_resource path="res://assets/wooden_platform.png" type="Texture" id=23]
 
 [node name="TileSetScene" type="Node2D"]
 
 [node name="Fire" type="Sprite" parent="."]
 position = Vector2( 114, 88 )
 texture = ExtResource( 4 )
+
+[node name="WoodenPlatform" type="Sprite" parent="Fire"]
+position = Vector2( 63, 7 )
+texture = ExtResource( 23 )
 
 [node name="HeavyGoal" type="Sprite" parent="."]
 position = Vector2( 114, 88 )

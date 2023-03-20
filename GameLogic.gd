@@ -168,7 +168,13 @@ func ready_map() -> void:
 	heavy_max_moves = terrainmap.get_child(0).heavy_max_moves;
 	light_max_moves = terrainmap.get_child(0).light_max_moves;
 	calculate_map_size();
+	make_actors();
 	
+	finish_animations();
+	update_info_labels();
+	check_won();
+
+func make_actors() -> void:
 	# find heavy and light and turn them into actors
 	var heavy_id = terrainmap.tile_set.find_tile_by_name("HeavyIdle");
 	var heavy_tile = terrainmap.get_used_cells_by_id(heavy_id)[0];
@@ -178,6 +184,7 @@ func ready_map() -> void:
 	heavy_actor.strength = Strength.HEAVY;
 	heavy_actor.durability = Durability.FIRE;
 	heavy_actor.floatiness = Floatiness.HEAVY;
+	heavy_actor.climbs = true;
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
@@ -186,13 +193,29 @@ func ready_map() -> void:
 	light_actor.strength = Strength.LIGHT;
 	light_actor.durability = Durability.SPIKES;
 	light_actor.floatiness = Floatiness.LIGHT;
-	finish_animations();
-	update_info_labels();
-	check_won();
+	light_actor.climbs = true;
+	
+	# other actors
+	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, Floatiness.HEAVY, false);
+	extract_actors("SteelCrate", "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, Floatiness.HEAVY, false);
+	
+func extract_actors(tilename: String, actorname: String, heaviness: int, strength: int, durability: int, floatiness: int, climbs: bool) -> void:
+	var id = terrainmap.tile_set.find_tile_by_name(tilename);
+	var tiles = terrainmap.get_used_cells_by_id(id);
+	for tile in tiles:
+		terrainmap.set_cellv(tile, -1);
+		light_actor = make_actor(actorname, tile);
+		light_actor.heaviness = heaviness;
+		light_actor.strength = strength;
+		light_actor.durability = durability;
+		light_actor.floatiness = floatiness;
+		light_actor.climbs = climbs;
 
 func initialize_name_to_sprites() -> void:
 	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
 	name_to_sprite["light"] = preload("res://assets/light_idle.png");
+	name_to_sprite["iron_crate"] = preload("res://assets/iron_crate.png");
+	name_to_sprite["steel_crate"] = preload("res://assets/steel_crate.png");
 	
 func calculate_map_size() -> void:
 	map_x_max = 0;
@@ -268,12 +291,12 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 	actor.offset = Vector2(cell_size/2, cell_size/2);
 	actors.append(actor);
 	actorsfolder.add_child(actor);
-	move_actor_to(actor, pos, chrono);
+	move_actor_to(actor, pos, chrono, false, false);
 	if (chrono < Chrono.META_UNDO):
 		print("TODO")
 	return actor;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELESS, hypothetical: bool = false) -> int:
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = generate_ghost(actor);
 		ghost.ghost_dir = -dir;
@@ -281,12 +304,12 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int = Chrono.TIMELE
 		ghost.position = terrainmap.map_to_world(ghost.pos);
 		return Success.Yes;
 	
-	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical);
+	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS, hypothetical: bool = false) -> int:
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int , hypothetical: bool, is_gravity: bool) -> int:
 	var dir = pos - actor.pos;
 	
-	var success = try_enter(actor, dir, chrono, true, hypothetical);
+	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity);
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event(["move", actor, dir], chrono);
 		actor.pos = pos;
@@ -297,7 +320,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int = Chrono.TIMELESS, hy
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
 				if (strength_check(actor.strength, sticky_actor.heaviness)):
-					move_actor_relative(sticky_actor, dir, chrono);
+					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false);
 		return success;
 	elif (success != Success.Yes and !hypothetical):
 		actor.animations.push_back(["bump", dir]);
@@ -325,9 +348,24 @@ func actors_in_tile(pos: Vector2) -> Array:
 func terrain_in_tile(pos: Vector2) -> String:
 	return terrainmap.tile_set.tile_get_name(terrainmap.get_cellv(pos));
 
-func terrain_is_solid(pos: Vector2) -> bool:
+func terrain_is_solid(pos: Vector2, dir: Vector2, is_gravity: bool) -> bool:
 	var name = terrain_in_tile(pos);
-	return name == "Wall" || name == "LockClosed" || name.begins_with("Spike");
+	if name == "Wall" || name == "LockClosed" || name.begins_with("Spike"):
+		return true;
+	if name == "OnewayEast":
+		return dir == Vector2.LEFT;
+	if name == "OnewayWest":
+		return dir == Vector2.RIGHT;
+	if name == "OnewayNorth":
+		return dir == Vector2.DOWN;
+	if name == "OnewaySouth":
+		return dir == Vector2.UP;
+	if name == "LadderPlatform" || name == "WoodenPlatform":
+		return dir == Vector2.DOWN and is_gravity;
+	return false;
+	
+func is_suspended(actor: Actor):
+	return actor.climbs and terrain_in_tile(actor.pos).begins_with("Ladder");
 
 func terrain_is_hazardous(actor: Actor, pos: Vector2) -> bool:
 	var name = terrain_in_tile(pos);
@@ -348,7 +386,7 @@ func strength_check(strength: int, heaviness: int) -> bool:
 		return strength >= Strength.GRAVITY;
 	return false;
 	
-func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool = false) -> int:
+func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool) -> int:
 	var dest = actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
@@ -358,7 +396,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		if (!hypothetical):
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
-	if (terrain_is_solid(dest)):
+	if (terrain_is_solid(dest, dir, is_gravity)):
 		return Success.No;
 	var actors_there = actors_in_tile(dest);
 	if (actors_there.size() > 0):
@@ -372,7 +410,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		var result = Success.Yes;
 		for actor_there in actors_there:
 			# surprise takes precedent over no takes precedent over yes
-			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical));
+			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity));
 		return result;
 	return Success.Yes;
 
@@ -480,6 +518,7 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.heaviness = actor.heaviness;
 	new.durability = actor.durability;
 	new.floatiness = actor.floatiness;
+	new.climbs = actor.climbs;
 	return new;
 
 func finish_animations() -> void:
@@ -529,7 +568,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	# undo events that should create undo trails
 		
 	if (event[0] == "move"):
-		move_actor_relative(event[1], -event[2], chrono);
+		move_actor_relative(event[1], -event[2], chrono, false, false);
 	elif (event[0] == "set_actor_var"):
 		set_actor_var(event[1], event[2], event[3], chrono);
 		
@@ -612,7 +651,7 @@ func character_move(dir: Vector2) -> bool:
 		if (dir == Vector2.UP and heavy_actor.airborne >= 0):
 			result = Success.Surprise;
 		else:
-			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE);
+			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE, false, false);
 	else:
 		if (light_actor.broken or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
@@ -621,13 +660,13 @@ func character_move(dir: Vector2) -> bool:
 		if (dir == Vector2.UP and light_actor.airborne >= 0):
 			result = Success.Surprise;
 		else:
-			result = move_actor_relative(light_actor, dir, Chrono.MOVE);
+			result = move_actor_relative(light_actor, dir, Chrono.MOVE, false, false);
 	if (result == Success.Yes):
 		play_sound("step")
 		if (dir == Vector2.UP):
-			if heavy_selected:
+			if heavy_selected and !is_suspended(heavy_actor):
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
-			else:
+			elif !is_suspended(light_actor):
 				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
 	if (result != Success.No):
 		time_passes(Chrono.MOVE);
@@ -680,8 +719,8 @@ func time_passes(chrono: int) -> void:
 		for actor in time_actors:
 			if (actor.floatiness == Floatiness.LIGHT and has_fallen.has(actor)):
 				continue;
-			if actor.airborne == -1:
-				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true);
+			if actor.airborne == -1 and !is_suspended(actor):
+				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or !has_fallen.has(actor))):
 					if actor.floatiness == Floatiness.LIGHT and !actor.broken:
@@ -690,7 +729,11 @@ func time_passes(chrono: int) -> void:
 						set_actor_var(actor, "airborne", 0, chrono);
 					something_happened = true;
 			if actor.airborne == 0:
-				var did_fall = move_actor_relative(actor, Vector2.DOWN, chrono);
+				var did_fall = Success.No;
+				if (is_suspended(actor)):
+					did_fall = Success.No;
+				else:
+					did_fall = move_actor_relative(actor, Vector2.DOWN, chrono, false, true);
 				if (did_fall != Success.No):
 					something_happened = true;
 					has_fallen[actor] = true;
