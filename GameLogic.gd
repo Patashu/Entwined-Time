@@ -149,6 +149,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
+	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
 
 func ready_map() -> void:
 	for actor in actors:
@@ -208,12 +209,12 @@ func extract_actors(tilename: String, actorname: String, heaviness: int, strengt
 	var tiles = terrainmap.get_used_cells_by_id(id);
 	for tile in tiles:
 		terrainmap.set_cellv(tile, -1);
-		light_actor = make_actor(actorname, tile);
-		light_actor.heaviness = heaviness;
-		light_actor.strength = strength;
-		light_actor.durability = durability;
-		light_actor.floatiness = floatiness;
-		light_actor.climbs = climbs;
+		var actor = make_actor(actorname, tile);
+		actor.heaviness = heaviness;
+		actor.strength = strength;
+		actor.durability = durability;
+		actor.floatiness = floatiness;
+		actor.climbs = climbs;
 
 func initialize_name_to_sprites() -> void:
 	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
@@ -300,7 +301,7 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 		print("TODO")
 	return actor;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool) -> int:
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, pushers_list: Array = []) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = generate_ghost(actor);
 		ghost.ghost_dir = -dir;
@@ -308,9 +309,9 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: 
 		ghost.position = terrainmap.map_to_world(ghost.pos);
 		return Success.Yes;
 	
-	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity);
+	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, pushers_list);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int , hypothetical: bool, is_gravity: bool) -> int:
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, pushers_list: Array = []) -> int:
 	var dir = pos - actor.pos;
 	
 	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity);
@@ -320,11 +321,12 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int , hypothetical: bool,
 		actor.animations.push_back(["move", dir]);
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
+		#(AD05: apparently I decided the sticky top can't move things you can't push, which is... valid ig?)
 		if actor.actorname == "heavy" and chrono == Chrono.MOVE and dir.y >= 0:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
 				if (strength_check(actor.strength, sticky_actor.heaviness)):
-					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false);
+					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, []);
 		return success;
 	elif (success != Success.Yes and !hypothetical):
 		actor.animations.push_back(["bump", dir]);
@@ -390,7 +392,7 @@ func strength_check(strength: int, heaviness: int) -> bool:
 		return strength >= Strength.GRAVITY;
 	return false;
 	
-func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool) -> int:
+func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, pushers_list: Array = []) -> int:
 	var dest = actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
@@ -407,14 +409,19 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		if (!can_push):
 			return Success.No;
 		# check if the current actor COULD push the next actor, then give them a push and return the result
-		# TODO: once crates are in we need to handle various multipush scenarios
+		# TODO: add logic for multi-push scenarios as they come up. for now, ban it
+		if (pushers_list.size() > 0):
+			return Success.No;
+		pushers_list.append(actor);
 		for actor_there in actors_there:
 			if !strength_check(actor.strength, actor_there.heaviness):
+				pushers_list.pop_front();
 				return Success.No;
 		var result = Success.Yes;
 		for actor_there in actors_there:
 			# surprise takes precedent over no takes precedent over yes
-			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity));
+			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, pushers_list));
+		pushers_list.pop_front();
 		return result;
 	return Success.Yes;
 
