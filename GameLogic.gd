@@ -117,6 +117,7 @@ var light_color = Color(0, 0.58, 1.0, 0);
 var meta_color = Color(0.5, 0.5, 0.5, 0);
 
 #replay system
+var user_replay = "";
 var doing_replay = false;
 var replay_turn = 0;
 var replay_interval = 0.5;
@@ -137,8 +138,9 @@ func _ready() -> void:
 	
 func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
-	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));
 	level_list.push_back(preload("res://levels/CallACab.tscn"));
+	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));
+	level_list.push_back(preload("res://levels/Downhill.tscn"));
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
@@ -161,6 +163,7 @@ func ready_map() -> void:
 	meta_turn = 0;
 	meta_undo_buffer.clear();
 	heavy_selected = true;
+	user_replay = "";
 	
 	level_name = terrainmap.get_child(0).level_name;
 	level_author = terrainmap.get_child(0).level_author;
@@ -445,6 +448,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 
 func character_undo(is_silent: bool = false) -> bool:
 	if (won): return false;
+	user_replay += "z";
 	finish_animations();
 	if (heavy_selected):
 		if (heavy_turn <= 0):
@@ -596,6 +600,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		light_undo_buffer[event[1]].push_front(event[2]);
 	
 func meta_undo(is_silent: bool = false) -> bool:
+	user_replay += "c";
 	finish_animations();
 	if (meta_turn <= 0):
 		if !is_silent:
@@ -616,6 +621,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 	
 func character_switch() -> void:
 	heavy_selected = !heavy_selected;
+	user_replay += "x";
 	play_sound("switch")
 
 func restart(is_silent: bool = false) -> void:
@@ -641,6 +647,14 @@ func load_level(impulse: int) -> void:
 
 func character_move(dir: Vector2) -> bool:
 	if (won): return false;
+	if (dir == Vector2.UP):
+		user_replay += "w";
+	elif (dir == Vector2.DOWN):
+		user_replay += "s";
+	elif (dir == Vector2.LEFT):
+		user_replay += "a";
+	elif (dir == Vector2.RIGHT):
+		user_replay += "d";
 	finish_animations();
 	var result = false;
 	if heavy_selected:
@@ -850,9 +864,12 @@ func _process(delta: float) -> void:
 		character_undo();
 		update_info_labels();
 	if (Input.is_action_just_pressed("meta_undo")):
-		doing_replay = false;
-		meta_undo();
-		update_info_labels();
+		if Input.is_action_pressed("ctrl"):
+			OS.set_clipboard(user_replay);
+		else:
+			doing_replay = false;
+			meta_undo();
+			update_info_labels();
 	if (Input.is_action_just_pressed("character_switch")):
 		doing_replay = false;
 		character_switch();

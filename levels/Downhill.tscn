@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131079, 8, 0, 131080, 2, 0, 196614, 14, 0, 196615, 14, 0, 196616, 14, 0, 262149, 14, 0, 262150, 14, 0, 262151, 14, 0, 262152, 14, 0, 327684, 14, 0, 327685, 14, 0, 327686, 14, 0, 327687, 14, 0, 327688, 14, 0, 393219, 14, 0, 393220, 14, 0, 393221, 14, 0, 393222, 14, 0, 393223, 14, 0, 393224, 14, 0, 458752, 1, 0, 458753, 7, 0, 458754, 14, 0, 458755, 14, 0, 458756, 14, 0, 458757, 14, 0, 458758, 14, 0, 458759, 14, 0, 458760, 14, 0, 524288, 14, 0, 524289, 14, 0, 524290, 14, 0, 524291, 14, 0, 524292, 14, 0, 524293, 14, 0, 524294, 14, 0, 524295, 14, 0, 524296, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Downhill"
+heavy_max_moves = 6
+light_max_moves = 6
