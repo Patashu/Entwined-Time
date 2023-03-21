@@ -85,6 +85,12 @@ enum Undo {
 	light_undo_event_remove,
 }
 
+# and same for animations
+enum Animation {
+	move,
+	bump,
+}
+
 # information about the level
 var level_number = 0
 var level_name = "Blah Blah Blah";
@@ -335,7 +341,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event([Undo.move, actor, dir], chrono);
 		actor.pos = pos;
-		actor.animations.push_back(["move", dir]);
+		actor.animations.push_back([Animation.move, dir]);
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
 		#(AD05: apparently I decided the sticky top can't move things you can't push, which is... valid ig?)
@@ -346,7 +352,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, []);
 		return success;
 	elif (success != Success.Yes and !hypothetical):
-		actor.animations.push_back(["bump", dir]);
+		actor.animations.push_back([Animation.bump, dir]);
 	return success;
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:

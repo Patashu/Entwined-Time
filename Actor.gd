@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
 		# animation system stuff
 		if (animations.size() > 0):
 			var current_animation = animations[0];
-			if (current_animation[0] == "move"):
+			if (current_animation[0] == 0): #move
 				animation_timer_max = 0.083;
 				position -= current_animation[1]*(animation_timer/animation_timer_max)*24;
 				animation_timer += delta;
@@ -75,7 +75,7 @@ func _process(delta: float) -> void:
 					animation_timer = 0;
 				else:
 					position += current_animation[1]*(animation_timer/animation_timer_max)*24;
-			elif (current_animation[0] == "bump"):
+			elif (current_animation[0] == 1): #bump
 				animation_timer_max = 0.1;
 				var bump_amount = (animation_timer/animation_timer_max);
 				if (bump_amount > 0.5):
