@@ -367,7 +367,7 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 		print("TODO")
 	return actor;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, pushers_list: Array = []) -> int:
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = []) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = generate_ghost(actor);
 		ghost.ghost_dir = -dir;
@@ -375,12 +375,12 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: 
 		ghost.position = terrainmap.map_to_world(ghost.pos);
 		return Success.Yes;
 	
-	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, pushers_list);
+	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, is_retro, pushers_list);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, pushers_list: Array = []) -> int:
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = []) -> int:
 	var dir = pos - actor.pos;
 	
-	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, pushers_list);
+	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list);
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event([Undo.move, actor, dir], chrono);
 		actor.pos = pos;
@@ -392,7 +392,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
 				if (strength_check(actor.strength, sticky_actor.heaviness)):
-					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, []);
+					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false);
 		return success;
 	elif (success != Success.Yes and !hypothetical):
 		actor.animations.push_back([Animation.bump, dir]);
@@ -420,18 +420,31 @@ func actors_in_tile(pos: Vector2) -> Array:
 func terrain_in_tile(pos: Vector2) -> int:
 	return terrainmap.get_cellv(pos);
 
-func terrain_is_solid(pos: Vector2, dir: Vector2, is_gravity: bool) -> bool:
+func terrain_is_solid(pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool = false) -> bool:
 	var id = terrain_in_tile(pos);
 	if id == Tiles.Wall || id == Tiles.LockClosed || id == Tiles.Spikeball:
 		return true;
-	if id == Tiles.OnewayEast:
-		return dir == Vector2.LEFT;
-	if id == Tiles.OnewayWest:
-		return dir == Vector2.RIGHT;
-	if id == Tiles.OnewayNorth:
-		return dir == Vector2.DOWN;
-	if id == Tiles.OnewaySouth:
-		return dir == Vector2.UP;
+	if (!is_retro):
+		if id == Tiles.OnewayEast:
+			return dir == Vector2.LEFT;
+		if id == Tiles.OnewayWest:
+			return dir == Vector2.RIGHT;
+		if id == Tiles.OnewayNorth:
+			return dir == Vector2.DOWN;
+		if id == Tiles.OnewaySouth:
+			return dir == Vector2.UP;
+	else:
+		# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
+		# so check that.
+		var retro_id = terrain_in_tile(pos - dir);
+		if id == Tiles.OnewayEast:
+			return dir == Vector2.RIGHT;
+		if id == Tiles.OnewayWest:
+			return dir == Vector2.LEFT;
+		if id == Tiles.OnewayNorth:
+			return dir == Vector2.UP;
+		if id == Tiles.OnewaySouth:
+			return dir == Vector2.DOWN;
 	if id == Tiles.LadderPlatform || id == Tiles.WoodenPlatform:
 		return dir == Vector2.DOWN and is_gravity;
 	return false;
@@ -462,7 +475,7 @@ func strength_check(strength: int, heaviness: int) -> bool:
 		return strength >= Strength.GRAVITY;
 	return false;
 	
-func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, pushers_list: Array = []) -> int:
+func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = []) -> int:
 	var dest = actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
@@ -472,7 +485,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		if (!hypothetical):
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
-	if (terrain_is_solid(dest, dir, is_gravity)):
+	if (terrain_is_solid(dest, dir, is_gravity, is_retro)):
 		return Success.No;
 	var actors_there = actors_in_tile(dest);
 	var pushables_there = [];
@@ -499,7 +512,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		# + try to push keys?
 		for actor_there in pushables_there:
 			# surprise takes precedent over no takes precedent over yes
-			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, pushers_list));
+			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list));
 		pushers_list.pop_front();
 		return result;
 	return Success.Yes;
@@ -659,7 +672,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	# undo events that should create undo trails
 		
 	if (event[0] == Undo.move):
-		move_actor_relative(event[1], -event[2], chrono, false, false);
+		move_actor_relative(event[1], -event[2], chrono, false, false, true);
 	elif (event[0] == Undo.set_actor_var):
 		set_actor_var(event[1], event[2], event[3], chrono);
 		
