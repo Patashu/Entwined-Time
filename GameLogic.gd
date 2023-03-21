@@ -211,6 +211,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
+	level_list.push_back(preload("res://levels/OverDestination.tscn"));
+	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
