@@ -72,6 +72,19 @@ enum Success {
 	Surprise,
 }
 
+# types of undo events
+
+enum Undo {
+	move,
+	set_actor_var,
+	heavy_turn,
+	light_turn,
+	heavy_undo_event_add,
+	light_undo_event_add,
+	heavy_undo_event_remove,
+	light_undo_event_remove,
+}
+
 # information about the level
 var level_number = 0
 var level_name = "Blah Blah Blah";
@@ -320,7 +333,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 	
 	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, pushers_list);
 	if (success == Success.Yes and !hypothetical):
-		add_undo_event(["move", actor, dir], chrono);
+		add_undo_event([Undo.move, actor, dir], chrono);
 		actor.pos = pos;
 		actor.animations.push_back(["move", dir]);
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
@@ -338,15 +351,15 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 	if (is_heavy):
-		add_undo_event(["heavy_turn", amount], chrono);
+		add_undo_event([Undo.heavy_turn, amount], chrono);
 		heavy_turn += amount;
-		if (debug_prints):
-			print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
+		#if (debug_prints):
+		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
-		add_undo_event(["light_turn", amount], chrono);
+		add_undo_event([Undo.light_turn, amount], chrono);
 		light_turn += amount;
-		if (debug_prints):
-			print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
+		#if (debug_prints):
+		#	print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
 		
 func actors_in_tile(pos: Vector2) -> Array:
 	var result = [];
@@ -441,26 +454,26 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
 	if (chrono < Chrono.GHOSTS):
-		add_undo_event(["set_actor_var", actor, prop, old_value], chrono);
+		add_undo_event([Undo.set_actor_var, actor, prop, old_value], chrono);
 		actor.set(prop, value);
 	else:
 		var ghost = get_deepest_ghost(actor);
 		ghost.set(prop, value);
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
-	if (debug_prints and chrono < Chrono.META_UNDO):
-		print("add_undo_event", " ", event, " ", chrono);
+	#if (debug_prints and chrono < Chrono.META_UNDO):
+	#	print("add_undo_event", " ", event, " ", chrono);
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
 			while (heavy_undo_buffer.size() <= heavy_turn):
 				heavy_undo_buffer.append([]);
 			heavy_undo_buffer[heavy_turn].push_front(event);
-			add_undo_event(["heavy_undo_event_add", heavy_turn], Chrono.CHAR_UNDO);
+			add_undo_event([Undo.heavy_undo_event_add, heavy_turn], Chrono.CHAR_UNDO);
 		else:
 			while (light_undo_buffer.size() <= light_turn):
 				light_undo_buffer.append([]);
 			light_undo_buffer[light_turn].push_front(event);
-			add_undo_event(["light_undo_event_add", light_turn], Chrono.CHAR_UNDO);
+			add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
 	
 	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
 		while (meta_undo_buffer.size() <= meta_turn):
@@ -479,7 +492,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);
-			add_undo_event(["heavy_undo_event_remove", heavy_turn, event], Chrono.CHAR_UNDO);
+			add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
 		time_passes(Chrono.CHAR_UNDO);
 		adjust_meta_turn(1);
 		if (!is_silent):
@@ -496,7 +509,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		var events = light_undo_buffer.pop_at(light_turn - 1);
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);
-			add_undo_event(["light_undo_event_remove", light_turn, event], Chrono.CHAR_UNDO);
+			add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
 		time_passes(Chrono.CHAR_UNDO);
 		adjust_meta_turn(1);
 		if (!is_silent):
@@ -575,8 +588,8 @@ func update_ghosts() -> void:
 	
 func adjust_meta_turn(amount: int) -> void:
 	meta_turn += amount;
-	if (debug_prints):
-		print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
+	#if (debug_prints):
+	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	check_won();
 	
 func check_won() -> void:
@@ -587,14 +600,14 @@ func check_won() -> void:
 	winlabel.visible = won;
 	
 func undo_one_event(event: Array, chrono : int) -> void:
-	if (debug_prints):
-		print("undo_one_event", " ", event, " ", chrono);
+	#if (debug_prints):
+	#	print("undo_one_event", " ", event, " ", chrono);
 		
 	# undo events that should create undo trails
 		
-	if (event[0] == "move"):
+	if (event[0] == Undo.move):
 		move_actor_relative(event[1], -event[2], chrono, false, false);
-	elif (event[0] == "set_actor_var"):
+	elif (event[0] == Undo.set_actor_var):
 		set_actor_var(event[1], event[2], event[3], chrono);
 		
 	# undo events that should not
@@ -602,20 +615,20 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	if (chrono >= Chrono.GHOSTS):
 		return;
 		
-	elif (event[0] == "heavy_turn"):
+	elif (event[0] == Undo.heavy_turn):
 		adjust_turn(true, -event[1], chrono);
-	elif (event[0] == "light_turn"):
+	elif (event[0] == Undo.light_turn):
 		adjust_turn(false, -event[1], chrono);
-	if (event[0] == "heavy_undo_event_add"):
+	if (event[0] == Undo.heavy_undo_event_add):
 		heavy_undo_buffer[event[1]].pop_front();
-	elif (event[0] == "light_undo_event_add"):
+	elif (event[0] == Undo.light_undo_event_add):
 		light_undo_buffer[event[1]].pop_front();
-	elif (event[0] == "heavy_undo_event_remove"):
+	elif (event[0] == Undo.heavy_undo_event_remove):
 		# meta undo an undo creates a char undo event but not a meta undo event, it's special!
 		while (heavy_undo_buffer.size() <= event[1]):
 			heavy_undo_buffer.append([]);
 		heavy_undo_buffer[event[1]].push_front(event[2]);
-	elif (event[0] == "light_undo_event_remove"):
+	elif (event[0] == Undo.light_undo_event_remove):
 		while (light_undo_buffer.size() <= event[1]):
 			light_undo_buffer.append([]);
 		light_undo_buffer[event[1]].push_front(event[2]);
@@ -741,13 +754,13 @@ func time_passes(chrono: int) -> void:
 			while light_turn > 0:
 				var events = light_undo_buffer.pop_at(light_turn - 1);
 				for event in events:
-					add_undo_event(["light_undo_event_remove", light_turn, event], Chrono.CHAR_UNDO);
+					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
 				adjust_turn(false, -1, chrono);
 		if actor == heavy_actor and (terrain_in_tile(actor.pos) == "CheckpointRed" or terrain_in_tile(actor.pos) == "Checkpoint"):
 			while heavy_turn > 0:
 				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 				for event in events:
-					add_undo_event(["heavy_undo_event_remove", heavy_turn, event], Chrono.CHAR_UNDO);
+					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
 				adjust_turn(true, -1, chrono);
 	
 	# Decrement airborne by one (min zero).
