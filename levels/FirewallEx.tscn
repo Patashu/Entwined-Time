@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 0, 10, 14, 0, 65536, 14, 0, 65546, 14, 0, 131072, 14, 0, 131075, 8, 0, 131082, 14, 0, 196608, 14, 0, 196609, 14, 0, 196610, 14, 0, 196611, 14, 0, 196615, 14, 0, 196616, 14, 0, 196618, 14, 0, 262144, 14, 0, 262145, 7, 0, 262146, 0, 0, 262147, 0, 0, 262149, 2, 0, 262152, 14, 0, 262153, 14, 0, 262154, 14, 0, 327680, 14, 0, 327681, 14, 0, 327682, 14, 0, 327683, 14, 0, 327684, 14, 0, 327685, 14, 0, 327686, 14, 0, 327688, 0, 0, 327689, 1, 0, 327690, 14, 0, 393222, 14, 0, 393223, 14, 0, 393224, 14, 0, 393225, 14, 0, 393226, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Firewall [VAR1]"
+level_replay = "xdxwzwzxxdxdxadxdxaddxdddxzzxzzzxzdxzzza"
+heavy_max_moves = 6
+light_max_moves = 6
