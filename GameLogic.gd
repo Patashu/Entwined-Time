@@ -208,6 +208,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
+	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
@@ -221,6 +222,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheSecondPitEx.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPitEx2.tscn"));
+	level_list.push_back(preload("res://levels/AcrobaticsEx2.tscn"));
 	#level_list.push_back(preload("res://levels/Levitation.tscn"));
 
 func ready_map() -> void:
@@ -982,6 +984,11 @@ func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("start_replay")):
 		toggle_replay();
 		update_info_labels();
+		
+	if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
+		doing_replay = false;
+		toggle_replay();
+		level_replay = OS.get_clipboard();
 	
 	if (Input.is_action_just_pressed("character_undo")):
 		doing_replay = false;
