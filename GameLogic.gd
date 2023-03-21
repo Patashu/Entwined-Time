@@ -664,6 +664,7 @@ func adjust_meta_turn(amount: int) -> void:
 	meta_turn += amount;
 	#if (debug_prints):
 	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
+	update_ghosts();
 	check_won();
 	
 func check_won() -> void:
@@ -730,6 +731,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 func character_switch() -> void:
 	heavy_selected = !heavy_selected;
 	user_replay += "x";
+	update_ghosts();
 	play_sound("switch")
 
 func restart(is_silent: bool = false) -> void:
@@ -960,8 +962,6 @@ func update_info_labels() -> void:
 	if light_max_moves >= 0:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
-	
-	update_ghosts();
 
 func _process(delta: float) -> void:
 	timer += delta;
