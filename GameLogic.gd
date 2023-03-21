@@ -91,6 +91,35 @@ enum Animation {
 	bump,
 }
 
+# attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
+# order SEEMS to be the same as in DefaultTiles
+enum Tiles {
+	Fire,
+	HeavyGoal,
+	HeavyIdle,
+	IronCrate,
+	Key,
+	Ladder,
+	LadderPlatform,
+	LightGoal,
+	LightIdle,
+	Lock,
+	LockClosed,
+	LockOpen,
+	Spikeball,
+	SteelCrate,
+	Wall,
+	WoodenCrate,
+	Checkpoint,
+	CheckpointBlue,
+	CheckpointRed,
+	OnewayEast,
+	OnewayNorth,
+	OnewaySouth,
+	OnewayWest,
+	WoodenPlatform,
+}
+
 # information about the level
 var level_number = 0
 var level_name = "Blah Blah Blah";
@@ -151,9 +180,23 @@ func _ready() -> void:
 	initialize_level_list();
 	initialize_name_to_sprites();
 	prepare_audio();
+	assert_tile_enum();
 	
 	# Load the first map.
 	load_level(0);
+	
+func assert_tile_enum() -> void:
+	for i in range (Tiles.size()):
+		var expected_tile_name = Tiles.keys()[i];
+		if (expected_tile_name == "Lock"):
+			continue
+		var expected_tile_id = Tiles.values()[i];
+		var actual_tile_id = terrainmap.tile_set.find_tile_by_name(expected_tile_name);
+		var actual_tile_name = terrainmap.tile_set.tile_get_name(expected_tile_id);
+		if (actual_tile_name != expected_tile_name):
+			print(expected_tile_name, ", ", expected_tile_id, ", ", actual_tile_name, ", ", actual_tile_id);
+		elif (actual_tile_id != expected_tile_id):
+			print(expected_tile_name, ", ", expected_tile_id, ", ", actual_tile_name, ", ", actual_tile_id);
 	
 func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
@@ -374,33 +417,37 @@ func actors_in_tile(pos: Vector2) -> Array:
 			result.append(actor);
 	return result;
 	
-func terrain_in_tile(pos: Vector2) -> String:
-	return terrainmap.tile_set.tile_get_name(terrainmap.get_cellv(pos));
+func terrain_in_tile(pos: Vector2) -> int:
+	return terrainmap.get_cellv(pos);
 
 func terrain_is_solid(pos: Vector2, dir: Vector2, is_gravity: bool) -> bool:
-	var name = terrain_in_tile(pos);
-	if name == "Wall" || name == "LockClosed" || name.begins_with("Spike"):
+	var id = terrain_in_tile(pos);
+	if id == Tiles.Wall || id == Tiles.LockClosed || id == Tiles.Spikeball:
 		return true;
-	if name == "OnewayEast":
+	if id == Tiles.OnewayEast:
 		return dir == Vector2.LEFT;
-	if name == "OnewayWest":
+	if id == Tiles.OnewayWest:
 		return dir == Vector2.RIGHT;
-	if name == "OnewayNorth":
+	if id == Tiles.OnewayNorth:
 		return dir == Vector2.DOWN;
-	if name == "OnewaySouth":
+	if id == Tiles.OnewaySouth:
 		return dir == Vector2.UP;
-	if name == "LadderPlatform" || name == "WoodenPlatform":
+	if id == Tiles.LadderPlatform || id == Tiles.WoodenPlatform:
 		return dir == Vector2.DOWN and is_gravity;
 	return false;
 	
 func is_suspended(actor: Actor):
-	return actor.climbs() and terrain_in_tile(actor.pos).begins_with("Ladder");
+	#PERF: could try caching this and only updating it when an actor moves or breaks
+	if (!actor.climbs()):
+		return false;
+	var id = terrain_in_tile(actor.pos);
+	return id == Tiles.Ladder || id == Tiles.LadderPlatform;
 
 func terrain_is_hazardous(actor: Actor, pos: Vector2) -> bool:
-	var name = terrain_in_tile(pos);
 	if (pos.y > map_y_max and actor.durability <= Durability.PITS):
 		return true;
-	if (name.begins_with("Spike") and actor.durability <= Durability.SPIKES):
+	var id = terrain_in_tile(pos);
+	if (id == Tiles.Spikeball and actor.durability <= Durability.SPIKES):
 		return true;
 	return false;
 	
@@ -599,7 +646,7 @@ func adjust_meta_turn(amount: int) -> void:
 	check_won();
 	
 func check_won() -> void:
-	if (!light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos) == "HeavyGoal" and terrain_in_tile(light_actor.pos) == "LightGoal"):
+	if (!light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos) == Tiles.HeavyGoal and terrain_in_tile(light_actor.pos) == Tiles.LightGoal):
 		won = true;
 	else:
 		won = false;
@@ -752,18 +799,18 @@ func time_passes(chrono: int) -> void:
 	for actor in time_actors:
 		var terrain = terrain_in_tile(actor.pos);
 		# Things in fire break.
-		if !actor.broken and terrain == "Fire" and actor.durability <= Durability.FIRE:
+		if !actor.broken and terrain == Tiles.Fire and actor.durability <= Durability.FIRE:
 			set_actor_var(actor, "broken", true, chrono);
 	
 		# Things on checkpoints are set back to turn 0 (losing their undo buffer).
 		# TODO: Horribly broken and it's not immediately obvious why. My basic idea is to 'defer' it to the end of turn so it can happen last.
-		if actor == light_actor and (terrain == "CheckpointBlue" or terrain == "Checkpoint"):
+		if actor == light_actor and (terrain == Tiles.CheckpointBlue or terrain == Tiles.Checkpoint):
 			while light_turn > 0:
 				var events = light_undo_buffer.pop_at(light_turn - 1);
 				for event in events:
 					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
 				adjust_turn(false, -1, chrono);
-		if actor == heavy_actor and (terrain == "CheckpointRed" or terrain == "Checkpoint"):
+		if actor == heavy_actor and (terrain == Tiles.CheckpointRed or terrain == Tiles.Checkpoint):
 			while heavy_turn > 0:
 				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 				for event in events:
