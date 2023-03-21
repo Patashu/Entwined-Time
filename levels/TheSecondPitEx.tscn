@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 0, 8, 1, 0, 10, 14, 0, 131073, 7, 0, 131074, 2, 0, 131075, 3, 0, 131077, 6, 0, 131079, 8, 0, 196608, 14, 0, 196609, 14, 0, 196610, 14, 0, 196611, 14, 0, 196612, 14, 0, 196614, 14, 0, 196615, 14, 0, 196616, 14, 0, 196617, 14, 0, 196618, 14, 0, 262148, 14, 0, 262150, 14, 0, 327684, 14, 0, 327685, 14, 0, 327686, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "The Second Pit [VAR1]"
+level_replay = "wdddxawaaaasdxzzzcxaxzzxzzzzzzzzzassxdxwxdwdddxzzzzxzzxaxzzdwdxaaaaxw"
+heavy_max_moves = 6
+light_max_moves = 9
