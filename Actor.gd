@@ -26,6 +26,20 @@ var animation_timer = 0;
 var animation_timer_max = 0.05;
 var animations = [];
 
+func floats() -> bool:
+	return floatiness == 1 and !broken;
+	
+func climbs() -> bool:
+	return climbs and !broken;
+
+func pushable() -> bool:
+	if (broken):
+		return actorname == "heavy" || actorname == "light";
+	return true;
+		
+func tiny_pushable() -> bool:
+	return actorname == "key" and !broken;
+
 func _process(delta: float) -> void:
 	if (is_ghost):
 		# undo previous position change

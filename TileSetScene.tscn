@@ -26,13 +26,13 @@
 
 [node name="TileSetScene" type="Node2D"]
 
+[node name="WoodenPlatform" type="Sprite" parent="."]
+position = Vector2( 177, 95 )
+texture = ExtResource( 23 )
+
 [node name="Fire" type="Sprite" parent="."]
 position = Vector2( 114, 88 )
 texture = ExtResource( 4 )
-
-[node name="WoodenPlatform" type="Sprite" parent="Fire"]
-position = Vector2( 63, 7 )
-texture = ExtResource( 23 )
 
 [node name="HeavyGoal" type="Sprite" parent="."]
 position = Vector2( 114, 88 )

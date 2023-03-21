@@ -153,6 +153,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPit.tscn"));
+	level_list.push_back(preload("res://levels/Levitation.tscn"));
 
 func ready_map() -> void:
 	for actor in actors:
@@ -374,7 +375,7 @@ func terrain_is_solid(pos: Vector2, dir: Vector2, is_gravity: bool) -> bool:
 	return false;
 	
 func is_suspended(actor: Actor):
-	return actor.climbs and terrain_in_tile(actor.pos).begins_with("Ladder");
+	return actor.climbs() and terrain_in_tile(actor.pos).begins_with("Ladder");
 
 func terrain_is_hazardous(actor: Actor, pos: Vector2) -> bool:
 	var name = terrain_in_tile(pos);
@@ -408,6 +409,13 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	if (terrain_is_solid(dest, dir, is_gravity)):
 		return Success.No;
 	var actors_there = actors_in_tile(dest);
+	var pushables_there = [];
+	var tiny_pushables_there = [];
+	for actor in actors_there:
+		if actor.tiny_pushable():
+			tiny_pushables_there.push_back(actor);
+		elif actor.pushable():
+			pushables_there.push_back(actor);
 	if (actors_there.size() > 0):
 		if (!can_push):
 			return Success.No;
@@ -416,12 +424,14 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		if (pushers_list.size() > 0):
 			return Success.No;
 		pushers_list.append(actor);
-		for actor_there in actors_there:
+		for actor_there in pushables_there:
 			if !strength_check(actor.strength, actor_there.heaviness):
 				pushers_list.pop_front();
 				return Success.No;
 		var result = Success.Yes;
-		for actor_there in actors_there:
+		# TODO: add logic for keys. I think this whole thing needs to do one hypothetical pass, and then if it succeeds we do the real push
+		# + try to push keys?
+		for actor_there in pushables_there:
 			# surprise takes precedent over no takes precedent over yes
 			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, pushers_list));
 		pushers_list.pop_front();
@@ -719,10 +729,26 @@ func time_passes(chrono: int) -> void:
 			if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
 				time_actors.push_back(actor);
 	
-	# Things in fire break.
+
 	for actor in time_actors:
+		# Things in fire break.
 		if !actor.broken and terrain_in_tile(actor.pos) == "Fire" and actor.durability <= Durability.FIRE:
 			set_actor_var(actor, "broken", true, chrono);
+	
+		# Things on checkpoints are set back to turn 0 (losing their undo buffer).
+		# TODO: Horribly broken and it's not immediately obvious why. My basic idea is to 'defer' it to the end of turn so it can happen last.
+		if actor == light_actor and (terrain_in_tile(actor.pos) == "CheckpointBlue" or terrain_in_tile(actor.pos) == "Checkpoint"):
+			while light_turn > 0:
+				var events = light_undo_buffer.pop_at(light_turn - 1);
+				for event in events:
+					add_undo_event(["light_undo_event_remove", light_turn, event], Chrono.CHAR_UNDO);
+				adjust_turn(false, -1, chrono);
+		if actor == heavy_actor and (terrain_in_tile(actor.pos) == "CheckpointRed" or terrain_in_tile(actor.pos) == "Checkpoint"):
+			while heavy_turn > 0:
+				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
+				for event in events:
+					add_undo_event(["heavy_undo_event_remove", heavy_turn, event], Chrono.CHAR_UNDO);
+				adjust_turn(true, -1, chrono);
 	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet.
@@ -742,13 +768,13 @@ func time_passes(chrono: int) -> void:
 		tries -= 1;
 		something_happened = false;
 		for actor in time_actors:
-			if (actor.floatiness == Floatiness.LIGHT and has_fallen.has(actor)):
+			if (actor.floats() and has_fallen.has(actor)):
 				continue;
 			if actor.airborne == -1 and !is_suspended(actor):
 				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or !has_fallen.has(actor))):
-					if actor.floatiness == Floatiness.LIGHT and !actor.broken:
+					if actor.floats():
 						set_actor_var(actor, "airborne", 1, chrono);
 					else:
 						set_actor_var(actor, "airborne", 0, chrono);
@@ -792,6 +818,7 @@ func do_one_replay_turn() -> void:
 			doing_replay = true;
 			replay_turn = 0;
 			next_replay = timer + replay_interval;
+			return;
 		else:
 			doing_replay = false;
 			return;
