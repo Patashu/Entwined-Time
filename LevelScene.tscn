@@ -34,21 +34,23 @@ align = 1
 valign = 1
 
 [node name="WinLabel" type="Label" parent="."]
-visible = false
-margin_top = 137.0
-margin_right = 512.0
-margin_bottom = 151.0
+margin_left = -2.0
+margin_top = 113.0
+margin_right = 510.0
+margin_bottom = 166.0
 theme = ExtResource( 2 )
-text = "You have won! Press [Enter] to continue."
+text = "You have won! Press [Enter] to continue.
+
+(Ctrl+C/Ctrl+V: Copy/Paste Replay)
+(F12: Author's Replay)"
 align = 1
-valign = 1
 
 [node name="ControlsLabel" type="Label" parent="."]
 margin_top = 286.0
 margin_right = 512.0
 margin_bottom = 300.0
 theme = ExtResource( 2 )
-text = "Z - [Character] Undo | X - Swap Character | C - Meta-Undo | R - Restart | F1/F2 Change Level"
+text = "Z: Undo | X: Swap Character | C: Meta-Undo | R: Restart | F1/F2: Change Level"
 align = 1
 valign = 1
 
