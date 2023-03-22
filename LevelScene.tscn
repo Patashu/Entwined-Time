@@ -34,6 +34,7 @@ align = 1
 valign = 1
 
 [node name="WinLabel" type="Label" parent="."]
+visible = false
 margin_left = -2.0
 margin_top = 113.0
 margin_right = 510.0

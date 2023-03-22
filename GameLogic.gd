@@ -166,11 +166,13 @@ var meta_color = Color(0.5, 0.5, 0.5, 0);
 
 #replay system
 var user_replay = "";
+var user_replay_before_restarts = [];
 var doing_replay = false;
 var replay_turn = 0;
 var replay_interval = 0.5;
 var next_replay = -1;
 var unit_test_mode = false;
+var meta_undo_a_restart_mode = false;
 
 # list of levels in the game
 var level_list = [];
@@ -351,7 +353,7 @@ func cut_sound() -> void:
 		speaker.stop();
 
 func play_sound(sound: String) -> void:
-	if muted:
+	if muted or (doing_replay and meta_undo_a_restart_mode):
 		return;
 	for speaker in speakers:
 		if !speaker.playing:
@@ -707,11 +709,24 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		while (light_undo_buffer.size() <= event[1]):
 			light_undo_buffer.append([]);
 		light_undo_buffer[event[1]].push_front(event[2]);
-	
+
+func meta_undo_a_restart() -> bool:
+	if (user_replay_before_restarts.size() > 0):
+		user_replay = "";
+		doing_replay = false;
+		toggle_replay();
+		level_replay = user_replay_before_restarts.pop_back();
+		meta_undo_a_restart_mode = true;
+		next_replay = -1;
+		return true;
+	return false;
+
 func meta_undo(is_silent: bool = false) -> bool:
 	user_replay += "c";
 	finish_animations();
 	if (meta_turn <= 0):
+		if (meta_undo_a_restart()):
+			return true;
 		if !is_silent:
 			play_sound("bump");
 		return false;
@@ -746,6 +761,10 @@ func escape() -> void:
 	pass
 	
 func load_level(impulse: int) -> void:
+	if (impulse != 0):
+		user_replay_before_restarts.clear();
+	elif user_replay.length() > 0:
+		user_replay_before_restarts.push_back(user_replay);
 	level_number += impulse;
 	level_number = posmod(int(level_number), level_list.size());
 	var level = level_list[level_number].instance();
@@ -884,6 +903,13 @@ func time_passes(chrono: int) -> void:
 func bottom_up(a, b) -> bool:
 	return a.pos.y > b.pos.y;
 	
+func replay_interval() -> float:
+	if unit_test_mode:
+		return 0.01;
+	if meta_undo_a_restart_mode:
+		return 0.01;
+	return replay_interval;
+	
 func toggle_replay() -> void:
 	if (doing_replay):
 		doing_replay = false;
@@ -891,12 +917,8 @@ func toggle_replay() -> void:
 	restart();
 	doing_replay = true;
 	replay_turn = 0;
-	next_replay = timer + replay_interval;
+	next_replay = timer + replay_interval();
 	var unit_test_mode_new = Input.is_action_pressed(("shift"));
-	if (unit_test_mode_new and !unit_test_mode):
-		replay_interval = 0.01;
-	elif (!unit_test_mode_new and unit_test_mode):
-		replay_interval = 0.5;
 	unit_test_mode = unit_test_mode_new;
 	
 func do_one_replay_turn() -> void:
@@ -907,12 +929,12 @@ func do_one_replay_turn() -> void:
 			load_level(1);
 			doing_replay = true;
 			replay_turn = 0;
-			next_replay = timer + replay_interval;
+			next_replay = timer + replay_interval();
 			return;
 		else:
 			doing_replay = false;
 			return;
-	next_replay = timer+replay_interval;
+	next_replay = timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
 	replay_turn += 1;
 	if (replay_char == "w"):
