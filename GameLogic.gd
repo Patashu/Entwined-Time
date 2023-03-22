@@ -492,9 +492,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return Success.Yes;
-	# AD04: being broken makes you immune to breaking :D
-	if (terrain_is_hazardous(actor, dest) and !actor.broken):
-		if (!hypothetical):
+	if (terrain_is_hazardous(actor, dest)):
+		# AD04: being broken makes you immune to breaking :D
+		if (!hypothetical and !actor.broken):
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
 	if (terrain_is_solid(dest, dir, is_gravity, is_retro)):
