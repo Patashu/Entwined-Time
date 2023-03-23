@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 14, 0, 6, 14, 0, 7, 14, 0, 8, 14, 0, 65538, 14, 0, 65541, 2, 0, 65544, 14, 0, 131073, 14, 0, 131074, 14, 0, 131076, 14, 0, 131077, 1, 0, 131078, 14, 0, 131080, 14, 0, 131081, 14, 0, 196609, 14, 0, 196613, 14, 0, 196617, 14, 0, 262144, 14, 0, 262145, 14, 0, 262147, 14, 0, 262151, 14, 0, 262153, 14, 0, 262154, 14, 0, 327680, 14, 0, 327690, 14, 0, 393216, 14, 0, 393217, 8, 0, 393225, 7, 0, 393226, 14, 0, 458752, 14, 0, 458753, 14, 0, 458754, 14, 0, 458755, 14, 0, 458756, 14, 0, 458757, 14, 0, 458758, 14, 0, 458759, 14, 0, 458760, 14, 0, 458761, 14, 0, 458762, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Pachinko"
+level_replay = "aaxddddxdxzzzzddddxzzzs"
+heavy_max_moves = 3
+light_max_moves = 4
