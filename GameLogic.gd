@@ -319,8 +319,8 @@ func calculate_map_size() -> void:
 			map_x_max = tile.x;
 		if tile.y > map_y_max:
 			map_y_max = tile.y;
-	terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2);
-	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2);
+	terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2)-8; # no idea why -16
+	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2); # will adjust after timeline UI is in
 	actorsfolder.position = terrainmap.position;
 	ghostsfolder.position = terrainmap.position;
 		
