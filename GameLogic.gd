@@ -237,6 +237,10 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/LandfillEx.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPitEx2.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx2.tscn"));
+	# WORLD 4 - Tools of the Trade
+	# WORLD 5 - There are many Colours
+	# WORLD 6 - What is This?
+	# WORLD X - Trial of your Peers (custom levels world)
 	#level_list.push_back(preload("res://levels/Levitation.tscn"));
 
 func ready_map() -> void:
@@ -305,6 +309,7 @@ func extract_actors(tilename: String, actorname: String, heaviness: int, strengt
 		actor.climbs = climbs;
 
 func initialize_name_to_sprites() -> void:
+	# TODO: actor names can be an enum like tiles
 	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
 	name_to_sprite["light"] = preload("res://assets/light_idle.png");
 	name_to_sprite["iron_crate"] = preload("res://assets/iron_crate.png");
@@ -332,6 +337,7 @@ func update_targeter() -> void:
 		
 func prepare_audio() -> void:
 	# TODO: I could automate this if I can iterate the folder
+	# TODO: replace this with an enum and assert on startup like tiles
 	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["dig"] = preload("res://sfx/dig.ogg");
 	sounds["fly"] = preload("res://sfx/fly.ogg");
