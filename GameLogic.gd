@@ -235,7 +235,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/LandfillEx.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPitEx2.tscn"));
-	level_list.push_back(preload("res://levels/AcrobaticsEx2.tscn"));
+	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
+	level_list.push_back(preload("res://levels/AcrobatsEscapeEx.tscn"));
 	# WORLD 4 - Tools of the Trade
 	# WORLD 5 - There are many Colours
 	# WORLD 6 - What is This?
