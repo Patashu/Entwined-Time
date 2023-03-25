@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 14, 0, 6, 14, 0, 7, 14, 0, 8, 14, 0, 9, 14, 0, 10, 14, 0, 11, 14, 0, 12, 14, 0, 65536, 14, 0, 65548, 14, 0, 131072, 14, 0, 131084, 14, 0, 196608, 14, 0, 196613, 2, 0, 196615, 8, 0, 196620, 14, 0, 262144, 14, 0, 262145, 14, 0, 262146, 14, 0, 262147, 20, 0, 262148, 20, 0, 262149, 20, 0, 262150, 6, 0, 262151, 20, 0, 262152, 20, 0, 262153, 20, 0, 262154, 14, 0, 262155, 14, 0, 262156, 14, 0, 327682, 14, 0, 327686, 5, 0, 327690, 14, 0, 393218, 14, 0, 393221, 14, 0, 393222, 5, 0, 393223, 14, 0, 393226, 14, 0, 458754, 14, 0, 458757, 1, 0, 458759, 7, 0, 458762, 14, 0, 524290, 14, 0, 524291, 27, 0, 524292, 27, 0, 524293, 14, 0, 524294, 27, 0, 524295, 14, 0, 524296, 27, 0, 524297, 27, 0, 524298, 14, 0, 589826, 14, 0, 589834, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Trophy Cabinet [VAR1]"
+level_replay = "xxxassaxdsswaaxzxzzzdxssd"
+heavy_max_moves = 6
+light_max_moves = 6

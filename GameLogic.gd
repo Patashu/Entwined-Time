@@ -108,6 +108,10 @@ enum Tiles {
 	OnewayWest,
 	WoodenPlatform,
 	Grate,
+	OnewayEastGreen,
+	OnewayNorthGreen,
+	OnewaySouthGreen,
+	OnewayWestGreen,
 }
 
 # information about the level
@@ -216,6 +220,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
 	# WORLD 3 - Iron Crates
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
@@ -449,6 +455,14 @@ func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool
 		return true;
 	if id == Tiles.Grate:
 		return actor.is_character;
+	if id == Tiles.OnewayEastGreen:
+		return dir == Vector2.LEFT;
+	if id == Tiles.OnewayWestGreen:
+		return dir == Vector2.RIGHT;
+	if id == Tiles.OnewayNorthGreen:
+		return dir == Vector2.DOWN;
+	if id == Tiles.OnewaySouthGreen:
+		return dir == Vector2.UP;
 	if (!is_retro):
 		if id == Tiles.OnewayEast:
 			return dir == Vector2.LEFT;

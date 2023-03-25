@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -24,6 +24,10 @@
 [ext_resource path="res://assets/oneway_north.png" type="Texture" id=22]
 [ext_resource path="res://assets/wooden_platform.png" type="Texture" id=23]
 [ext_resource path="res://assets/grate.png" type="Texture" id=24]
+[ext_resource path="res://assets/oneway_north_green.png" type="Texture" id=25]
+[ext_resource path="res://assets/oneway_east_green.png" type="Texture" id=26]
+[ext_resource path="res://assets/oneway_south_green.png" type="Texture" id=27]
+[ext_resource path="res://assets/oneway_west_green.png" type="Texture" id=28]
 
 [node name="TileSetScene" type="Node2D"]
 
@@ -122,3 +126,19 @@ texture = ExtResource( 17 )
 [node name="Grate" type="Sprite" parent="."]
 position = Vector2( 212, 90 )
 texture = ExtResource( 24 )
+
+[node name="OnewayEastGreen" type="Sprite" parent="."]
+position = Vector2( 258, 91 )
+texture = ExtResource( 26 )
+
+[node name="OnewayNorthGreen" type="Sprite" parent="."]
+position = Vector2( 258, 91 )
+texture = ExtResource( 25 )
+
+[node name="OnewaySouthGreen" type="Sprite" parent="."]
+position = Vector2( 258, 91 )
+texture = ExtResource( 27 )
+
+[node name="OnewayWestGreen" type="Sprite" parent="."]
+position = Vector2( 258, 91 )
+texture = ExtResource( 28 )
