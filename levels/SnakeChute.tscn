@@ -12,6 +12,6 @@ tile_data = PoolIntArray( 3, 7, 0, 65539, 6, 0, 65540, 2, 0, 65541, 3, 0, 65542,
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Snake Chute"
-level_replay = "aaaxawaasdwddsaddxddwddsaxzzzxdxzzzzzzxdddaaaaaw"
-heavy_max_moves = 30
-light_max_moves = 30
+level_replay = "axaxaxwaasdxwddddsxwxaaxzzzzzzzcxdxzxdxaaawxddxszszxaaaaaw"
+heavy_max_moves = 19
+light_max_moves = 19

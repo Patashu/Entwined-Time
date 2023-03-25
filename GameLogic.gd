@@ -53,17 +53,6 @@ enum Durability {
 	NOTHING
 }
 
-# Light becomes airborne_state 2 when it becomes airborne for any reason.
-# Heavy only becomes airborne_state 2 on an upward movement.
-# Light things with airborne_state 0+ can still try to move in any direction.
-# Heavy things can't move up under their own power, but still can if pushed.
-# When gravity effects things, Light things only move down once.
-# Heavy things move down each iteration until settled.
-enum Floatiness {
-	HEAVY,
-	LIGHT
-}
-
 # yes means 'do the thing you intended'. no means 'cancel it and this won't cause time to pass'.
 # surprise means 'cancel it but there was a side effect so time passes'.
 enum Success {
@@ -222,6 +211,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
+	#level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
@@ -281,7 +271,7 @@ func make_actors() -> void:
 	heavy_actor.heaviness = Heaviness.STEEL;
 	heavy_actor.strength = Strength.HEAVY;
 	heavy_actor.durability = Durability.FIRE;
-	heavy_actor.floatiness = Floatiness.HEAVY;
+	heavy_actor.fall_speed = 2;
 	heavy_actor.climbs = true;
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
@@ -290,14 +280,14 @@ func make_actors() -> void:
 	light_actor.heaviness = Heaviness.IRON;
 	light_actor.strength = Strength.LIGHT;
 	light_actor.durability = Durability.SPIKES;
-	light_actor.floatiness = Floatiness.LIGHT;
+	light_actor.fall_speed = 1;
 	light_actor.climbs = true;
 	
 	# other actors
-	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, Floatiness.HEAVY, false);
-	extract_actors("SteelCrate", "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, Floatiness.HEAVY, false);
+	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false);
+	extract_actors("SteelCrate", "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false);
 	
-func extract_actors(tilename: String, actorname: String, heaviness: int, strength: int, durability: int, floatiness: int, climbs: bool) -> void:
+func extract_actors(tilename: String, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool) -> void:
 	var id = terrainmap.tile_set.find_tile_by_name(tilename);
 	var tiles = terrainmap.get_used_cells_by_id(id);
 	for tile in tiles:
@@ -306,7 +296,7 @@ func extract_actors(tilename: String, actorname: String, heaviness: int, strengt
 		actor.heaviness = heaviness;
 		actor.strength = strength;
 		actor.durability = durability;
-		actor.floatiness = floatiness;
+		actor.fall_speed = fall_speed;
 		actor.climbs = climbs;
 
 func initialize_name_to_sprites() -> void:
@@ -650,7 +640,7 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.strength = actor.strength;
 	new.heaviness = actor.heaviness;
 	new.durability = actor.durability;
-	new.floatiness = actor.floatiness;
+	new.fall_speed = actor.fall_speed;
 	new.climbs = actor.climbs;
 	return new;
 
@@ -793,6 +783,26 @@ func load_level(impulse: int) -> void:
 	terrainmap = level;
 	ready_map();
 
+func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
+	if actor.fall_speed == 0:
+		return true;
+	if (actor.airborne <= -1):
+		return true;
+	if (actor.fall_speed == 1):
+		if dir == Vector2.UP:
+			return false;
+		return true;
+	# fall speed 2+ and -1 (infinite)
+	if actor.airborne == 0:
+		# no air control for fast falling actors
+		return false;
+	else: # airborne 2+ fall speed 2+ can only move left/right now
+		if dir == Vector2.LEFT:
+			return true;
+		if dir == Vector2.RIGHT:
+			return true;
+		return false;
+
 func character_move(dir: Vector2) -> bool:
 	if (won): return false;
 	if (dir == Vector2.UP):
@@ -809,8 +819,7 @@ func character_move(dir: Vector2) -> bool:
 		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
-		# airborne == -1 characters can move up and set airborne to 2. airborne >= 0 characters can't move up but it does pass a turn ('Surprise')
-		if (dir == Vector2.UP and heavy_actor.airborne >= 0):
+		if (!valid_voluntary_airborne_move(heavy_actor, dir)):
 			result = Success.Surprise;
 		else:
 			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE, false, false);
@@ -818,8 +827,7 @@ func character_move(dir: Vector2) -> bool:
 		if (light_actor.broken or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
-		# AD01: decided that Heavy and Light have the same 'airborne up' rule
-		if (dir == Vector2.UP and light_actor.airborne >= 0):
+		if (!valid_voluntary_airborne_move(light_actor, dir)):
 			result = Success.Surprise;
 		else:
 			result = move_actor_relative(light_actor, dir, Chrono.MOVE, false, false);
@@ -879,9 +887,11 @@ func time_passes(chrono: int) -> void:
 				adjust_turn(true, -1, chrono);
 	
 	# Decrement airborne by one (min zero).
-	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet.
+	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.
+	var has_fallen = {};
 	for actor in time_actors:
-		if actor.airborne > 0:
+		has_fallen[actor] = 0;
+		if actor.airborne > 0 and actor.fall_speed() != 0:
 			set_actor_var(actor, "airborne", actor.airborne - 1, chrono);
 			
 	# GRAVITY
@@ -889,20 +899,19 @@ func time_passes(chrono: int) -> void:
 	# * If airborne is -1 and it COULD push-move down, set airborne to (1 for light, 0 for heavy).
 	# * If airborne is 0, push-move down (unless this actor is light and already has this loop). If the push-move fails, set airborne to -1.
 	time_actors.sort_custom(self, "bottom_up");
-	var has_fallen = {};
 	var something_happened = true;
 	var tries = 99;
 	while (something_happened and tries > 0):
 		tries -= 1;
 		something_happened = false;
 		for actor in time_actors:
-			if (actor.floats() and has_fallen.has(actor)):
+			if (actor.fall_speed() >= 0 and has_fallen[actor] >= actor.fall_speed()):
 				continue;
 			if actor.airborne == -1 and !is_suspended(actor):
 				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
-				if (could_fall != Success.No and (could_fall == Success.Yes or !has_fallen.has(actor))):
-					if actor.floats():
+				if (could_fall != Success.No and (could_fall == Success.Yes or has_fallen[actor] <= 0)):
+					if actor.fall_speed() == 1:
 						set_actor_var(actor, "airborne", 1, chrono);
 					else:
 						set_actor_var(actor, "airborne", 0, chrono);
@@ -915,9 +924,23 @@ func time_passes(chrono: int) -> void:
 					did_fall = move_actor_relative(actor, Vector2.DOWN, chrono, false, true);
 				if (did_fall != Success.No):
 					something_happened = true;
-					has_fallen[actor] = true;
+					has_fallen[actor] += 1;
 				if (did_fall != Success.Yes):
 					set_actor_var(actor, "airborne", -1, chrono);
+	
+	# NEW (as part of AD07) post-gravity cleanups: If an actor is airborne 1 and would be grounded next fall,
+	# land.
+	# It was vaguely tolerable for Light but I don't know if it was ever a mechanic I was like 'whoo' about,
+	#and now it definitely sucks.
+	for actor in time_actors:
+		if (actor.airborne == 0):
+			if is_suspended(actor):
+				set_actor_var(actor, "airborne", -1, chrono);
+				continue;
+			var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
+			if (could_fall == Success.No):
+				set_actor_var(actor, "airborne", -1, chrono);
+				continue;
 	
 func bottom_up(a, b) -> bool:
 	return a.pos.y > b.pos.y;
