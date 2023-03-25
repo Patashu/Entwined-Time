@@ -456,13 +456,13 @@ func terrain_is_solid(pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bo
 		# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
 		# so check that.
 		var retro_id = terrain_in_tile(pos - dir);
-		if id == Tiles.OnewayEast:
+		if retro_id == Tiles.OnewayEast:
 			return dir == Vector2.RIGHT;
-		if id == Tiles.OnewayWest:
+		if retro_id == Tiles.OnewayWest:
 			return dir == Vector2.LEFT;
-		if id == Tiles.OnewayNorth:
+		if retro_id == Tiles.OnewayNorth:
 			return dir == Vector2.UP;
-		if id == Tiles.OnewaySouth:
+		if retro_id == Tiles.OnewaySouth:
 			return dir == Vector2.DOWN;
 	if id == Tiles.LadderPlatform || id == Tiles.WoodenPlatform:
 		return dir == Vector2.DOWN and is_gravity;
