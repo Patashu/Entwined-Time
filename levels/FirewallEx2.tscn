@@ -12,5 +12,6 @@ tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 11, 14, 0, 655
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Ultimate Firewall"
+level_replay = "wdxddxawxdxzzzzxzxwdxdwxaxwdxzzccccwxdxzzzzxzzzzzcccxwdxdwxawxdxzzzzzxzzxwdxdwxawxdczxwxdxzzzzzzxzaxaaxzzzzzzzadxzxazaxdw"
 heavy_max_moves = 6
 light_max_moves = 6
