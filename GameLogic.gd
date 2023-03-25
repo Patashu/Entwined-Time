@@ -107,6 +107,7 @@ enum Tiles {
 	OnewaySouth,
 	OnewayWest,
 	WoodenPlatform,
+	Grate,
 }
 
 # information about the level
@@ -273,6 +274,7 @@ func make_actors() -> void:
 	heavy_actor.durability = Durability.FIRE;
 	heavy_actor.fall_speed = 2;
 	heavy_actor.climbs = true;
+	heavy_actor.is_character = true;
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
@@ -282,6 +284,7 @@ func make_actors() -> void:
 	light_actor.durability = Durability.SPIKES;
 	light_actor.fall_speed = 1;
 	light_actor.climbs = true;
+	light_actor.is_character = true;
 	
 	# other actors
 	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false);
@@ -298,6 +301,7 @@ func extract_actors(tilename: String, actorname: String, heaviness: int, strengt
 		actor.durability = durability;
 		actor.fall_speed = fall_speed;
 		actor.climbs = climbs;
+		actor.is_character = false;
 
 func initialize_name_to_sprites() -> void:
 	# TODO: actor names can be an enum like tiles
@@ -439,10 +443,12 @@ func actors_in_tile(pos: Vector2) -> Array:
 func terrain_in_tile(pos: Vector2) -> int:
 	return terrainmap.get_cellv(pos);
 
-func terrain_is_solid(pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool = false) -> bool:
+func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool = false) -> bool:
 	var id = terrain_in_tile(pos);
 	if id == Tiles.Wall || id == Tiles.LockClosed || id == Tiles.Spikeball:
 		return true;
+	if id == Tiles.Grate:
+		return actor.is_character;
 	if (!is_retro):
 		if id == Tiles.OnewayEast:
 			return dir == Vector2.LEFT;
@@ -504,7 +510,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		if (!hypothetical and !actor.broken):
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
-	if (terrain_is_solid(dest, dir, is_gravity, is_retro)):
+	if (terrain_is_solid(actor, dest, dir, is_gravity, is_retro)):
 		return Success.No;
 	var actors_there = actors_in_tile(dest);
 	var pushables_there = [];
@@ -642,6 +648,7 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.durability = actor.durability;
 	new.fall_speed = actor.fall_speed;
 	new.climbs = actor.climbs;
+	new.is_character = actor.is_character;
 	return new;
 
 func finish_animations() -> void:

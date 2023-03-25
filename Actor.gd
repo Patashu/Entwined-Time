@@ -13,6 +13,7 @@ var heaviness = 0
 var durability = 0
 var fall_speed = -1
 var climbs = false
+var is_character = false
 # undo trails logic
 var is_ghost = false
 var next_ghost = null;
@@ -46,7 +47,7 @@ func climbs() -> bool:
 
 func pushable() -> bool:
 	if (broken):
-		return actorname == "heavy" || actorname == "light";
+		return is_character;
 	return true;
 		
 func tiny_pushable() -> bool:
