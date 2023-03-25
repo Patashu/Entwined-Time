@@ -112,6 +112,8 @@ enum Tiles {
 	OnewayNorthGreen,
 	OnewaySouthGreen,
 	OnewayWestGreen,
+	NoHeavy,
+	NoLight,
 }
 
 # information about the level
@@ -455,6 +457,10 @@ func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool
 	var id = terrain_in_tile(pos);
 	if id == Tiles.Wall || id == Tiles.LockClosed || id == Tiles.Spikeball:
 		return true;
+	if id == Tiles.NoHeavy:
+		return actor.actorname == "heavy";
+	if (id == Tiles.NoLight):
+		return actor.actorname == "light";
 	if id == Tiles.Grate:
 		return actor.is_character;
 	if id == Tiles.OnewayEastGreen:
@@ -976,6 +982,8 @@ func replay_interval() -> float:
 	return replay_interval;
 	
 func toggle_replay() -> void:
+	meta_undo_a_restart_mode = false;
+	unit_test_mode = false;
 	if (doing_replay):
 		doing_replay = false;
 		return;
@@ -983,8 +991,7 @@ func toggle_replay() -> void:
 	doing_replay = true;
 	replay_turn = 0;
 	next_replay = timer + replay_interval();
-	var unit_test_mode_new = Input.is_action_pressed(("shift"));
-	unit_test_mode = unit_test_mode_new;
+	unit_test_mode = Input.is_action_pressed(("shift"));
 	
 func do_one_replay_turn() -> void:
 	if (!doing_replay):
