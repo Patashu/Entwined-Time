@@ -886,28 +886,6 @@ func time_passes(chrono: int) -> void:
 			if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
 				time_actors.push_back(actor);
 	
-
-	for actor in time_actors:
-		var terrain = terrain_in_tile(actor.pos);
-		# Things in fire break.
-		if !actor.broken and terrain == Tiles.Fire and actor.durability <= Durability.FIRE:
-			set_actor_var(actor, "broken", true, chrono);
-	
-		# Things on checkpoints are set back to turn 0 (losing their undo buffer).
-		# TODO: Horribly broken and it's not immediately obvious why. My basic idea is to 'defer' it to the end of turn so it can happen last.
-		if actor == light_actor and (terrain == Tiles.CheckpointBlue or terrain == Tiles.Checkpoint):
-			while light_turn > 0:
-				var events = light_undo_buffer.pop_at(light_turn - 1);
-				for event in events:
-					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
-				adjust_turn(false, -1, chrono);
-		if actor == heavy_actor and (terrain == Tiles.CheckpointRed or terrain == Tiles.Checkpoint):
-			while heavy_turn > 0:
-				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
-				for event in events:
-					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
-				adjust_turn(true, -1, chrono);
-	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.
 	var has_fallen = {};
@@ -963,6 +941,28 @@ func time_passes(chrono: int) -> void:
 			if (could_fall == Success.No):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
+				
+	# AFTER-GRAVITY TILE ARRIVAL
+	for actor in time_actors:
+		var terrain = terrain_in_tile(actor.pos);
+		# Things in fire break.
+		if !actor.broken and terrain == Tiles.Fire and actor.durability <= Durability.FIRE:
+			set_actor_var(actor, "broken", true, chrono);
+	
+		# Things on checkpoints are set back to turn 0 (losing their undo buffer).
+		# TODO: Horribly broken and it's not immediately obvious why. My basic idea is to 'defer' it to the end of turn so it can happen last.
+		if actor == light_actor and (terrain == Tiles.CheckpointBlue or terrain == Tiles.Checkpoint):
+			while light_turn > 0:
+				var events = light_undo_buffer.pop_at(light_turn - 1);
+				for event in events:
+					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
+				adjust_turn(false, -1, chrono);
+		if actor == heavy_actor and (terrain == Tiles.CheckpointRed or terrain == Tiles.Checkpoint):
+			while heavy_turn > 0:
+				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
+				for event in events:
+					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
+				adjust_turn(true, -1, chrono);
 	
 func bottom_up(a, b) -> bool:
 	return a.pos.y > b.pos.y;
