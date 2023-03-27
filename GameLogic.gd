@@ -1059,6 +1059,14 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
 
+func floating_text(text: String) -> void:
+	var label = preload("res://FloatingText.tscn").instance();
+	levelscene.add_child(label);
+	label.rect_position.x = 0;
+	label.rect_size.x = get_viewport().size.x/2;
+	label.rect_position.y = get_viewport().size.y/4-16;
+	label.text = text;
+
 func _process(delta: float) -> void:
 	timer += delta;
 	
@@ -1093,6 +1101,7 @@ func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("meta_undo")):
 		if Input.is_action_pressed("ctrl"):
 			OS.set_clipboard(user_replay);
+			floating_text("Ctrl+C: Replay copied");
 		else:
 			doing_replay = false;
 			meta_undo();

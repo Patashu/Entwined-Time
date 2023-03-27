@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://FloatingText.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
+
+[node name="FloatingText" type="Label"]
+theme = ExtResource( 2 )
+align = 1
+valign = 1
+script = ExtResource( 1 )
