@@ -12,6 +12,6 @@ tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 1
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Snake Pit [VAR1]"
-level_replay = "wddxdsxdddxzddxdzzzzz"
+level_replay = "wddxdssxdddxzzzxdxddsxzzzzz"
 heavy_max_moves = 7
 light_max_moves = 3

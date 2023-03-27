@@ -819,15 +819,19 @@ func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 		return true;
 	if (actor.airborne <= -1):
 		return true;
+	# rule change for fall speed 1 actors:
+	# if airborne 0+ you can only move left or right.
 	if (actor.fall_speed == 1):
-		if dir == Vector2.UP:
-			return false;
-		return true;
+		if dir == Vector2.LEFT:
+			return true;
+		if dir == Vector2.RIGHT:
+			return true;
+		return false;
 	# fall speed 2+ and -1 (infinite)
 	if actor.airborne == 0:
 		# no air control for fast falling actors
 		return false;
-	else: # airborne 2+ fall speed 2+ can only move left/right now
+	else: # airborne 1+ fall speed 2+ can only move left/right now
 		if dir == Vector2.LEFT:
 			return true;
 		if dir == Vector2.RIGHT:

@@ -30,10 +30,10 @@ var animations = [];
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)
 # If fall speed is 0, airborne rules are ignored (WIP).
-# If fall speed is 1, state becomes airborne 2 when it stops being over ground for any reason.
-# If fall speed is 2 or higher, state becomes airborne 2 when it jumps, and airborne 1 when it stops being over ground
+# If fall speed is 1, state becomes airborne 2 when it jumps, 1 when it stops being airborne for any other reasn.
+# If fall speed is 2 or higher, state becomes airborne 2 when it jumps, and airborne 0 when it stops being over ground
 # for any other reason.
-# If fall speed is 1, actor may move sideways or downwards at airborne 1 or 0 freely,
+# If fall speed is 1, actor may move sideways at airborne 1 or 0 freely,
 # but not upwards unless grounded.
 # If fallspeed is 2 or higher, actor may move sideways at airborne 1 and in no direction at airborne 0.
 # (A forbidden direction is a null move and passes time.)
