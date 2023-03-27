@@ -753,6 +753,8 @@ func meta_undo_a_restart() -> bool:
 		user_replay = "";
 		doing_replay = false;
 		toggle_replay();
+		cut_sound();
+		play_sound("metarestart");
 		level_replay = user_replay_before_restarts.pop_back();
 		meta_undo_a_restart_mode = true;
 		next_replay = -1;
