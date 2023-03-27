@@ -1067,6 +1067,20 @@ func floating_text(text: String) -> void:
 	label.rect_position.y = get_viewport().size.y/4-16;
 	label.text = text;
 
+func replay_from_clipboard() -> void:
+	var replay = OS.get_clipboard();
+	replay = replay.strip_edges();
+	replay = replay.to_lower();
+	for letter in replay:
+		pass
+		if !(letter in "wasdzxc"):
+			pass
+			floating_text("Ctrl+V: Invalid replay");
+			return;
+	doing_replay = false;
+	toggle_replay();
+	level_replay = replay;
+
 func _process(delta: float) -> void:
 	timer += delta;
 	
@@ -1090,9 +1104,7 @@ func _process(delta: float) -> void:
 		update_info_labels();
 		
 	if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
-		doing_replay = false;
-		toggle_replay();
-		level_replay = OS.get_clipboard();
+		replay_from_clipboard();
 	
 	if (Input.is_action_just_pressed("character_undo")):
 		doing_replay = false;
