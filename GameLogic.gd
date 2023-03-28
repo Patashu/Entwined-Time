@@ -1077,29 +1077,39 @@ func update_info_labels() -> void:
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
 		levellabel.text += " (REPLAY) (F9/F10 ADJUST SPEED)"
-	heavyinfolabel.text = "Heavy";
-	if (heavy_selected):
-		heavyinfolabel.text += " (Selected)"
-	if (heavy_actor.airborne > -1):
-		heavyinfolabel.text += " (Airborne " + str(heavy_actor.airborne) + ")";
-	if (heavy_actor.broken):
-		heavyinfolabel.text += " (Broken)";
-	heavyinfolabel.text += ": Turn "
-	heavyinfolabel.text += str(heavy_turn);
+	
+	heavyinfolabel.text = "Heavy" + "\n" + str(heavy_turn);
 	if heavy_max_moves >= 0:
 		heavyinfolabel.text += "/" + str(heavy_max_moves);
-	lightinfolabel.text = "Light";
-	if (!heavy_selected):
-		lightinfolabel.text += " (Selected)"
-	if (light_actor.airborne > -1):
-		lightinfolabel.text += " (Airborne " + str(light_actor.airborne) + ")";
-	if (light_actor.broken):
-		lightinfolabel.text += " (Broken)";
-	lightinfolabel.text += ": Turn "
-	lightinfolabel.text += str(light_turn);
+	
+	lightinfolabel.text = "Light" + "\n" + str(light_turn);
 	if light_max_moves >= 0:
 		lightinfolabel.text += "/" + str(light_max_moves);
+	
 	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
+	
+#	heavyinfolabel.text = "Heavy";
+#	if (heavy_selected):
+#		heavyinfolabel.text += " (Selected)"
+#	if (heavy_actor.airborne > -1):
+#		heavyinfolabel.text += " (Airborne " + str(heavy_actor.airborne) + ")";
+#	if (heavy_actor.broken):
+#		heavyinfolabel.text += " (Broken)";
+#	heavyinfolabel.text += ": Turn "
+#	heavyinfolabel.text += str(heavy_turn);
+#	if heavy_max_moves >= 0:
+#		heavyinfolabel.text += "/" + str(heavy_max_moves);
+#	lightinfolabel.text = "Light";
+#	if (!heavy_selected):
+#		lightinfolabel.text += " (Selected)"
+#	if (light_actor.airborne > -1):
+#		lightinfolabel.text += " (Airborne " + str(light_actor.airborne) + ")";
+#	if (light_actor.broken):
+#		lightinfolabel.text += " (Broken)";
+#	lightinfolabel.text += ": Turn "
+#	lightinfolabel.text += str(light_turn);
+#	if light_max_moves >= 0:
+#		lightinfolabel.text += "/" + str(light_max_moves);
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
