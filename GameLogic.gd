@@ -997,7 +997,7 @@ func toggle_replay() -> void:
 	doing_replay = true;
 	replay_turn = 0;
 	next_replay = timer + replay_interval();
-	unit_test_mode = Input.is_action_pressed(("shift"));
+	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
 	
 func do_one_replay_turn() -> void:
 	if (!doing_replay):
