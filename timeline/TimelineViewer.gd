@@ -5,6 +5,8 @@ var is_heavy = false;
 var current_move = 0;
 var max_moves = 0;
 var yy = 24;
+var xx = 24;
+var y_max = 11;
 onready var timelineslots = self.get_node("TimelineSlots");
 onready var timelinedivider = self.get_node("TimelineDivider");
 
@@ -13,6 +15,7 @@ func _ready() -> void:
 	if (is_heavy):
 		timelinedivider.texture = preload("res://timeline/timeline-divider-heavy.png");
 	else:
+		xx = -24;
 		timelinedivider.texture = preload("res://timeline/timeline-divider-light.png");
 	reset();
 
@@ -20,6 +23,7 @@ func reset() -> void:
 	if (timelinedivider == null):
 		return
 	current_move = 0;
+	timelinedivider.position.x = 0;
 	timelinedivider.position.y = 0;
 	for slot in timelineslots.get_children():
 		slot.queue_free();
@@ -30,20 +34,23 @@ func reset() -> void:
 		else:
 			slot.texture = preload("res://timeline/timeline-slot-light-24.png");
 		timelineslots.add_child(slot);
-		slot.position.y += yy*i;
+		slot.position.y += yy*(i%y_max);
+		slot.position.x += xx*floor(i/y_max);
 
 func add_turn(buffer: Array) -> void:
-	if current_move >= (max_moves - 1):
+	if current_move >= (max_moves):
 		return
 	timelineslots.get_child(current_move).fill(buffer);
 	current_move += 1;
-	timelinedivider.position.y += yy;
+	timelinedivider.position.y = yy*(current_move%y_max);
+	timelinedivider.position.x = xx*floor(current_move/y_max);
 	
 func remove_turn(color: Color) -> void:
 	if current_move <= 0:
 		return
 	current_move -= 1;
-	timelinedivider.position.y -= yy;
+	timelinedivider.position.y = yy*(current_move%y_max);
+	timelinedivider.position.x = xx*floor(current_move/y_max);
 	timelineslots.get_child(current_move).clear(color);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

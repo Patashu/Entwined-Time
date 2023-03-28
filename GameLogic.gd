@@ -159,9 +159,9 @@ var cell_size = 24;
 var undo_effect_strength = 0;
 var undo_effect_per_second = 0;
 var undo_effect_color = Color(0, 0, 0, 0);
-var heavy_color = Color(1.0, 0, 0, 0);
-var light_color = Color(0, 0.58, 1.0, 0);
-var meta_color = Color(0.5, 0.5, 0.5, 0);
+var heavy_color = Color(1.0, 0, 0, 1);
+var light_color = Color(0, 0.58, 1.0, 1);
+var meta_color = Color(0.5, 0.5, 0.5, 1);
 var ui_stack = [];
 
 #replay system
@@ -353,6 +353,7 @@ func extract_actors(tilename: String, actorname: String, heaviness: int, strengt
 		actor.fall_speed = fall_speed;
 		actor.climbs = climbs;
 		actor.is_character = false;
+		actor.color = color;
 
 func initialize_name_to_sprites() -> void:
 	# TODO: actor names can be an enum like tiles
@@ -622,7 +623,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
 	if (chrono < Chrono.GHOSTS):
-		add_undo_event([Undo.set_actor_var, actor, prop, old_value], chrono);
+		add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
 		actor.set(prop, value);
 	else:
 		var ghost = get_deepest_ghost(actor);
