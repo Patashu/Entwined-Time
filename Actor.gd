@@ -22,6 +22,7 @@ var ghost_index = 0;
 var ghost_dir = Vector2.ZERO;
 var ghost_timer = 0;
 var ghost_timer_max = 2;
+var color = Color(1, 1, 1, 1);
 # animation system logic
 var animation_timer = 0;
 var animation_timer_max = 0.05;

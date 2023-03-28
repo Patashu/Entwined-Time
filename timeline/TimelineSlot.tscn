@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://timeline/timeline-slot-light-24.png" type="Texture" id=1]
+[ext_resource path="res://timeline/TimelineSlot.gd" type="Script" id=2]
+[ext_resource path="res://timeline/white-overlay.png" type="Texture" id=3]
+
+[node name="TimelineSlot" type="Sprite"]
+texture = ExtResource( 1 )
+offset = Vector2( 12, 12 )
+script = ExtResource( 2 )
+
+[node name="TimelineSymbols" type="Node2D" parent="."]
+
+[node name="Overlay" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 3 )
+offset = Vector2( 12, 12 )

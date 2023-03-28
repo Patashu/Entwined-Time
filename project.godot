@@ -43,6 +43,16 @@ _global_script_classes=[ {
 "class": "LevelSelect",
 "language": "GDScript",
 "path": "res://LevelSelect.gd"
+}, {
+"base": "Sprite",
+"class": "TimelineSlot",
+"language": "GDScript",
+"path": "res://timeline/TimelineSlot.gd"
+}, {
+"base": "Node2D",
+"class": "TimelineViewer",
+"language": "GDScript",
+"path": "res://timeline/TimelineViewer.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
@@ -51,7 +61,9 @@ _global_script_class_icons={
 "LevelButton": "",
 "LevelInfo": "",
 "LevelScene": "",
-"LevelSelect": ""
+"LevelSelect": "",
+"TimelineSlot": "",
+"TimelineViewer": ""
 }
 
 [application]

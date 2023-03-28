@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
 [ext_resource path="res://GameLogic.gd" type="Script" id=3]
 [ext_resource path="res://assets/targeter.png" type="Texture" id=4]
 [ext_resource path="res://LevelScene.gd" type="Script" id=5]
+[ext_resource path="res://timeline/TimelineViewer.tscn" type="PackedScene" id=6]
 
 [node name="LevelScene" type="Node2D"]
 script = ExtResource( 5 )
@@ -95,3 +96,9 @@ valign = 1
 position = Vector2( -28, -30 )
 texture = ExtResource( 4 )
 offset = Vector2( 12, 12 )
+
+[node name="HeavyTimeline" parent="." instance=ExtResource( 6 )]
+position = Vector2( 6, 26 )
+
+[node name="LightTimeline" parent="." instance=ExtResource( 6 )]
+position = Vector2( 482, 26 )

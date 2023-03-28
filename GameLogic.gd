@@ -15,6 +15,8 @@ onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
 onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
+onready var heavytimeline : Node2D = levelscene.get_node("HeavyTimeline");
+onready var lighttimeline : Node2D = levelscene.get_node("LightTimeline");
 
 # distinguish between temporal layers when a move or state change happens
 # ghosts is for undo trail ghosts
@@ -299,6 +301,16 @@ func ready_map() -> void:
 	finish_animations();
 	update_info_labels();
 	check_won();
+	
+	initialize_timeline_viewers();
+	
+func initialize_timeline_viewers() -> void:
+	heavytimeline.is_heavy = true;
+	lighttimeline.is_heavy = false;
+	heavytimeline.max_moves = heavy_max_moves;
+	lighttimeline.max_moves = light_max_moves;
+	heavytimeline.reset();
+	lighttimeline.reset();
 
 func make_actors() -> void:
 	# find heavy and light and turn them into actors
@@ -312,6 +324,7 @@ func make_actors() -> void:
 	heavy_actor.fall_speed = 2;
 	heavy_actor.climbs = true;
 	heavy_actor.is_character = true;
+	heavy_actor.color = heavy_color;
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
@@ -322,12 +335,13 @@ func make_actors() -> void:
 	light_actor.fall_speed = 1;
 	light_actor.climbs = true;
 	light_actor.is_character = true;
+	light_actor.color = light_color;
 	
 	# other actors
-	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false);
-	extract_actors("SteelCrate", "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false);
+	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
+	extract_actors("SteelCrate", "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
 	
-func extract_actors(tilename: String, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool) -> void:
+func extract_actors(tilename: String, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
 	var id = terrainmap.tile_set.find_tile_by_name(tilename);
 	var tiles = terrainmap.get_used_cells_by_id(id);
 	for tile in tiles:
@@ -460,11 +474,25 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 	if (is_heavy):
+		if (amount > 0):
+			heavytimeline.add_turn(heavy_undo_buffer[heavy_turn]);
+		else:
+			var color = heavy_color;
+			if (chrono >= Chrono.META_UNDO):
+				color = meta_color;
+			heavytimeline.remove_turn(color);
 		add_undo_event([Undo.heavy_turn, amount], chrono);
 		heavy_turn += amount;
 		#if (debug_prints):
 		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
+		if (amount > 0):
+			lighttimeline.add_turn(light_undo_buffer[light_turn]);
+		else:
+			var color = light_color;
+			if (chrono >= Chrono.META_UNDO):
+				color = meta_color;
+			lighttimeline.remove_turn(color);
 		add_undo_event([Undo.light_turn, amount], chrono);
 		light_turn += amount;
 		#if (debug_prints):
