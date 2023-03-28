@@ -117,6 +117,7 @@ enum Tiles {
 }
 
 # information about the level
+var chapter = 0
 var level_number = 0
 var level_name = "Blah Blah Blah";
 var level_replay = "";
@@ -159,6 +160,7 @@ var undo_effect_color = Color(0, 0, 0, 0);
 var heavy_color = Color(1.0, 0, 0, 0);
 var light_color = Color(0, 0.58, 1.0, 0);
 var meta_color = Color(0.5, 0.5, 0.5, 0);
+var ui_stack = [];
 
 #replay system
 var user_replay = "";
@@ -172,6 +174,10 @@ var meta_undo_a_restart_mode = false;
 
 # list of levels in the game
 var level_list = [];
+var level_names = [];
+var chapter_names = [];
+var chapter_standard_starting_levels = [];
+var chapter_advanced_starting_levels = [];
 
 func _ready() -> void:
 	# Call once when the game is booted up.
@@ -197,7 +203,9 @@ func assert_tile_enum() -> void:
 			print(expected_tile_name, ", ", expected_tile_id, ", ", actual_tile_name, ", ", actual_tile_id);
 	
 func initialize_level_list() -> void:
-	# WORLD 1 - Two Time
+	
+	chapter_names.push_back("Two Time");
+	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
 	level_list.push_back(preload("res://levels/Wall.tscn"));
 	level_list.push_back(preload("res://levels/Tall.tscn"));
@@ -209,29 +217,39 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/UncabYourself.tscn"));
 	level_list.push_back(preload("res://levels/Downhill.tscn"));
 	level_list.push_back(preload("res://levels/Spelunking.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/TheFirstPitEx.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPitEx2.tscn"));
-	# WORLD 2 - Platforming
+	
+	chapter_names.push_back("Platforming");
+	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
-	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
-	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
-	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
-	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
-	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
+	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
+	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
+	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
+	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
-	# WORLD 3 - Iron Crates
+	
+	chapter_names.push_back("Iron Crates");
+	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPit.tscn"));
 	level_list.push_back(preload("res://levels/OverDestination.tscn"));
 	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPitEx.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
@@ -239,11 +257,20 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheSecondPitEx2.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscapeEx.tscn"));
+	
+	# sentinel to make overflow checks easy
+	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	
 	# WORLD 4 - Tools of the Trade
 	# WORLD 5 - There are many Colours
 	# WORLD 6 - What is This?
 	# WORLD X - Trial of your Peers (custom levels world)
 	#level_list.push_back(preload("res://levels/Levitation.tscn"));
+	
+	for level_prototype in level_list:
+		var level = level_prototype.instance();
+		level_names.push_back(level.get_child(0).level_name);
 
 func ready_map() -> void:
 	for actor in actors:
@@ -798,7 +825,13 @@ func restart(is_silent: bool = false) -> void:
 	finish_animations();
 	
 func escape() -> void:
-	pass
+	var levelselect = preload("res://LevelSelect.tscn").instance();
+	ui_stack.push_back(levelselect);
+	levelscene.add_child(levelselect);
+	
+func load_level_direct(new_level: int) -> void:
+	var impulse = new_level - self.level_number;
+	load_level(impulse);
 	
 func load_level(impulse: int) -> void:
 	if (impulse != 0):
@@ -812,6 +845,11 @@ func load_level(impulse: int) -> void:
 	terrainmap.queue_free();
 	levelfolder.add_child(level);
 	terrainmap = level;
+	chapter = 0;
+	for i in range(chapter_names.size()):
+		if level_number < chapter_standard_starting_levels[i + 1]:
+			chapter = i;
+			break;
 	ready_map();
 
 func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
@@ -1088,71 +1126,72 @@ func replay_from_clipboard() -> void:
 func _process(delta: float) -> void:
 	timer += delta;
 	
-	if (doing_replay and timer > next_replay):
-		do_one_replay_turn();
-		update_info_labels();
-	
-	if (won and Input.is_action_just_pressed("ui_accept")):
-		doing_replay = false;
-		load_level(1);
-	
-	if (Input.is_action_just_pressed("mute")):
-		toggle_mute();
-		
-	if (Input.is_action_just_pressed("speedup_replay")):
-		replay_interval *= 0.8;
-	if (Input.is_action_just_pressed("slowdown_replay")):
-		replay_interval /= 0.8;
-	if (Input.is_action_just_pressed("start_replay")):
-		toggle_replay();
-		update_info_labels();
-		
-	if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
-		replay_from_clipboard();
-	
-	if (Input.is_action_just_pressed("character_undo")):
-		doing_replay = false;
-		character_undo();
-		update_info_labels();
-	if (Input.is_action_just_pressed("meta_undo")):
-		if Input.is_action_pressed("ctrl"):
-			OS.set_clipboard(user_replay);
-			floating_text("Ctrl+C: Replay copied");
-		else:
-			doing_replay = false;
-			meta_undo();
+	if ui_stack.size() == 0:
+		if (doing_replay and timer > next_replay):
+			do_one_replay_turn();
 			update_info_labels();
-	if (Input.is_action_just_pressed("character_switch")):
-		doing_replay = false;
-		character_switch();
-		update_info_labels();
-	if (Input.is_action_just_pressed("restart")):
-		doing_replay = false;
-		restart();
-		update_info_labels();
-	if (Input.is_action_just_pressed("escape")):
-		doing_replay = false;
-		escape();
-	if (Input.is_action_just_pressed("previous_level")):
-		doing_replay = false;
-		load_level(-1);
-	if (Input.is_action_just_pressed("next_level")):
-		doing_replay = false;
-		load_level(1);
-	
-	var dir = Vector2.ZERO;
-	if (Input.is_action_just_pressed("ui_left")):
-		dir = Vector2.LEFT;
-	if (Input.is_action_just_pressed("ui_right")):
-		dir = Vector2.RIGHT;
-	if (Input.is_action_just_pressed("ui_up")):
-		dir = Vector2.UP;
-	if (Input.is_action_just_pressed("ui_down")):
-		dir = Vector2.DOWN;
 		
-	if dir != Vector2.ZERO:
-		doing_replay = false;
-		character_move(dir);
-		update_info_labels();
+		if (won and Input.is_action_just_pressed("ui_accept")):
+			doing_replay = false;
+			load_level(1);
+		
+		if (Input.is_action_just_pressed("mute")):
+			toggle_mute();
+			
+		if (Input.is_action_just_pressed("speedup_replay")):
+			replay_interval *= 0.8;
+		if (Input.is_action_just_pressed("slowdown_replay")):
+			replay_interval /= 0.8;
+		if (Input.is_action_just_pressed("start_replay")):
+			toggle_replay();
+			update_info_labels();
+			
+		if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
+			replay_from_clipboard();
+		
+		if (Input.is_action_just_pressed("character_undo")):
+			doing_replay = false;
+			character_undo();
+			update_info_labels();
+		if (Input.is_action_just_pressed("meta_undo")):
+			if Input.is_action_pressed("ctrl"):
+				OS.set_clipboard(user_replay);
+				floating_text("Ctrl+C: Replay copied");
+			else:
+				doing_replay = false;
+				meta_undo();
+				update_info_labels();
+		if (Input.is_action_just_pressed("character_switch")):
+			doing_replay = false;
+			character_switch();
+			update_info_labels();
+		if (Input.is_action_just_pressed("restart")):
+			doing_replay = false;
+			restart();
+			update_info_labels();
+		if (Input.is_action_just_pressed("escape")):
+			doing_replay = false;
+			escape();
+		if (Input.is_action_just_pressed("previous_level")):
+			doing_replay = false;
+			load_level(-1);
+		if (Input.is_action_just_pressed("next_level")):
+			doing_replay = false;
+			load_level(1);
+		
+		var dir = Vector2.ZERO;
+		if (Input.is_action_just_pressed("ui_left")):
+			dir = Vector2.LEFT;
+		if (Input.is_action_just_pressed("ui_right")):
+			dir = Vector2.RIGHT;
+		if (Input.is_action_just_pressed("ui_up")):
+			dir = Vector2.UP;
+		if (Input.is_action_just_pressed("ui_down")):
+			dir = Vector2.DOWN;
+			
+		if dir != Vector2.ZERO:
+			doing_replay = false;
+			character_move(dir);
+			update_info_labels();
 		
 	update_targeter();

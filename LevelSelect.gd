@@ -1,0 +1,128 @@
+extends Node2D
+class_name LevelSelect
+
+onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var holder : Label = get_node("Holder");
+onready var chapter = gamelogic.chapter;
+onready var prevbutton : Button = get_node("Holder/PrevButton");
+onready var nextbutton : Button = get_node("Holder/NextButton");
+
+func _ready() -> void:
+	prepare_chapter();
+	prevbutton.connect("pressed", self, "_prevbutton_pressed");
+	nextbutton.connect("pressed", self, "_nextbutton_pressed");
+	
+func _prevbutton_pressed() -> void:
+	chapter -= 1;
+	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
+	prepare_chapter();
+
+func _nextbutton_pressed() -> void:
+	chapter += 1;
+	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
+	prepare_chapter();
+
+func prepare_chapter() -> void:
+	for child in holder.get_children():
+		if child != prevbutton and child != nextbutton:
+			child.queue_free();
+	holder.text = "Chapter " + str(chapter) + " - " + gamelogic.chapter_names[chapter];
+	var normal_start = gamelogic.chapter_standard_starting_levels[chapter];
+	var advanced_start = gamelogic.chapter_advanced_starting_levels[chapter];
+	var advanced_end = gamelogic.chapter_standard_starting_levels[chapter+1];
+	
+	var yy = 16;
+	var yyy = 16;
+	var xx = 4;
+	var xxx = (holder.rect_size.x / 2)-2;
+	var x = 0;
+	var y = 0;
+	var y_max = 12;
+	
+	var label = Label.new();
+	holder.add_child(label);
+	label.rect_position.x = xx + xxx*x;
+	label.rect_position.y = yy + yyy*y + 2;
+	label.text = "Standard:"
+	label.theme = holder.theme;
+	
+	y += 1;
+	if (y == y_max):
+		y = 0;
+		x += 1;
+		
+	for i in range(advanced_start - normal_start):
+		var button = preload("res://LevelButton.tscn").instance();
+		holder.add_child(button);
+		button.rect_position.x = xx + xxx*x;
+		button.rect_position.y = yy + yyy*y;
+		button.level_number = i + normal_start;
+		button.text = str(i) + " - " + gamelogic.level_names[button.level_number];
+		button.theme = holder.theme;
+		button.levelselect = self;
+		if (x == 0 and y == 1): # the first button
+			button.grab_focus();
+		if (button.level_number == gamelogic.level_number): # button corresponding to the current level
+			button.grab_focus();
+		
+		y += 1;
+		if (y == y_max):
+			y = 0;
+			x += 1;
+	
+	# don't put the advanced label at the bottom of a column
+	if (y == y_max - 1):
+		y = 0;
+		x += 1;
+	# in fact, if it'll fit on its own one, give it its own one
+	if (x == 0 and (advanced_end - advanced_start) < y_max):
+		y = 0;
+		x += 1;
+	
+	label = Label.new();
+	holder.add_child(label);
+	label.rect_position.x = xx + xxx*x;
+	label.rect_position.y = yy + yyy*y + 2;
+	label.text = "Advanced:"
+	label.theme = holder.theme;
+	
+	y += 1;
+	if (y == y_max):
+		y = 0;
+		x += 1;
+	
+	for i in range(advanced_end - advanced_start):
+		var button = preload("res://LevelButton.tscn").instance();
+		holder.add_child(button);
+		button.rect_position.x = xx + xxx*x;
+		button.rect_position.y = yy + yyy*y;
+		button.level_number = i + advanced_start;
+		button.text = str(i) + "-X - " + gamelogic.level_names[button.level_number];
+		button.theme = holder.theme;
+		button.levelselect = self;
+		if (x == 0 and y == 1): # the first button
+			button.grab_focus();
+		if (button.level_number == gamelogic.level_number): # button corresponding to the current level
+			button.grab_focus();
+		
+		y += 1;
+		if (y == y_max):
+			y = 0;
+			x += 1;
+
+func destroy() -> void:
+	self.queue_free();
+	gamelogic.ui_stack.erase(self);
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if (Input.is_action_just_pressed("escape")):
+		destroy();
+	if (Input.is_action_just_pressed("previous_level")):
+		_prevbutton_pressed();
+	if (Input.is_action_just_pressed("next_level")):
+		_nextbutton_pressed();
+
+func _draw() -> void:
+	draw_rect(Rect2(-get_viewport().size.x, -get_viewport().size.y,
+	get_viewport().size.x*2, get_viewport().size.y*2), Color(0, 0, 0, 0.5), true);

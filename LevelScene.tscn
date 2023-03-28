@@ -51,7 +51,7 @@ margin_top = 286.0
 margin_right = 512.0
 margin_bottom = 300.0
 theme = ExtResource( 2 )
-text = "Z: Undo | X: Swap Character | C: Meta-Undo | R: Restart | F1/F2: Change Level"
+text = "Z: Undo | X: Swap Character | C: Meta-Undo | R: Restart | Esc: Level Select"
 align = 1
 valign = 1
 

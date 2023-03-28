@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://default_styleboxtexture.tres" type="StyleBox" id=1]
+[ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
+[ext_resource path="res://LevelSelect.gd" type="Script" id=3]
+
+[node name="LevelSelect" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Holder" type="Label" parent="."]
+margin_left = 54.0
+margin_top = 30.0
+margin_right = 463.0
+margin_bottom = 273.0
+theme = ExtResource( 2 )
+custom_styles/normal = ExtResource( 1 )
+text = "Chapter 0 - Two Time"
+align = 1
+
+[node name="PrevButton" type="Button" parent="Holder"]
+margin_left = 5.0
+margin_top = 223.0
+margin_right = 95.0
+margin_bottom = 238.0
+text = "Previous Chapter (F1)"
+
+[node name="NextButton" type="Button" parent="Holder"]
+margin_left = 293.0
+margin_top = 223.0
+margin_right = 404.0
+margin_bottom = 238.0
+text = "Next Chapter (F2)"
