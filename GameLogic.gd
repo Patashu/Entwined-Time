@@ -146,9 +146,6 @@ var heavy_selected = true;
 # for undo trail ghosts
 var ghosts = []
 
-# names to sprites, I'll think of a better way another time
-var name_to_sprite = {};
-
 # song-and-dance state
 var timer = 0;
 var sounds = {}
@@ -184,7 +181,6 @@ var chapter_advanced_starting_levels = [];
 func _ready() -> void:
 	# Call once when the game is booted up.
 	initialize_level_list();
-	initialize_name_to_sprites();
 	prepare_audio();
 	assert_tile_enum();
 	
@@ -325,6 +321,8 @@ func make_actors() -> void:
 	heavy_actor.climbs = true;
 	heavy_actor.is_character = true;
 	heavy_actor.color = heavy_color;
+	heavy_actor.powered = heavy_max_moves != 0;
+	heavy_actor.update_graphics();
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
 	terrainmap.set_cellv(light_tile, -1);
@@ -336,6 +334,8 @@ func make_actors() -> void:
 	light_actor.climbs = true;
 	light_actor.is_character = true;
 	light_actor.color = light_color;
+	light_actor.powered = light_max_moves != 0;
+	light_actor.update_graphics();
 	
 	# other actors
 	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
@@ -354,13 +354,7 @@ func extract_actors(tilename: String, actorname: String, heaviness: int, strengt
 		actor.climbs = climbs;
 		actor.is_character = false;
 		actor.color = color;
-
-func initialize_name_to_sprites() -> void:
-	# TODO: actor names can be an enum like tiles
-	name_to_sprite["heavy"] = preload("res://assets/heavy_idle.png");
-	name_to_sprite["light"] = preload("res://assets/light_idle.png");
-	name_to_sprite["iron_crate"] = preload("res://assets/iron_crate.png");
-	name_to_sprite["steel_crate"] = preload("res://assets/steel_crate.png");
+		actor.update_graphics();
 	
 func calculate_map_size() -> void:
 	map_x_max = 0;
@@ -433,7 +427,6 @@ func toggle_mute() -> void:
 func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) -> Actor:
 	var actor = Actor.new();
 	actor.actorname = actorname;
-	actor.texture = name_to_sprite[actorname];
 	actor.offset = Vector2(cell_size/2, cell_size/2);
 	actors.append(actor);
 	actorsfolder.add_child(actor);
@@ -484,6 +477,10 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 			heavytimeline.remove_turn(color);
 		add_undo_event([Undo.heavy_turn, amount], chrono);
 		heavy_turn += amount;
+		if (heavy_turn == heavy_max_moves):
+			set_actor_var(heavy_actor, "powered", false, chrono);
+		elif (!heavy_actor.powered):
+			set_actor_var(heavy_actor, "powered", true, chrono);
 		#if (debug_prints):
 		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
@@ -496,6 +493,10 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 			lighttimeline.remove_turn(color);
 		add_undo_event([Undo.light_turn, amount], chrono);
 		light_turn += amount;
+		if (light_turn == light_max_moves):
+			set_actor_var(light_actor, "powered", false, chrono);
+		elif (!light_actor.powered):
+			set_actor_var(light_actor, "powered", true, chrono);
 		#if (debug_prints):
 		#	print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
 		
@@ -625,9 +626,11 @@ func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
 	if (chrono < Chrono.GHOSTS):
 		add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
 		actor.set(prop, value);
+		actor.update_graphics();
 	else:
 		var ghost = get_deepest_ghost(actor);
 		ghost.set(prop, value);
+		ghost.update_graphics();
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	#if (debug_prints and chrono < Chrono.META_UNDO):

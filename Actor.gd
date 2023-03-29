@@ -28,6 +28,44 @@ var animation_timer = 0;
 var animation_timer_max = 0.05;
 var animations = [];
 
+func update_graphics() -> void:
+	# powered
+	if is_character:
+		# this will get overriden by undo trail modulation for ghosts, which is perfectly fine by me
+		if powered:
+			self.modulate = Color(1, 1, 1, 1);
+		else:
+			self.modulate = Color(1, 1, 1, 0.5);
+	# airborne, broken
+	if actorname == "heavy":
+		if broken:
+			self.texture = preload("res://assets/heavy_broken.png");
+		elif airborne >= 1:
+			self.texture = preload("res://assets/heavy_rising.png");
+		elif airborne == 0:
+			self.texture = preload("res://assets/heavy_falling.png");
+		else:
+			self.texture = preload("res://assets/heavy_idle.png");
+	elif actorname == "light":
+		if broken:
+			self.texture = preload("res://assets/light_broken.png");
+		elif airborne >= 1:
+			self.texture = preload("res://assets/light_rising.png");
+		elif airborne == 0:
+			self.texture = preload("res://assets/light_falling.png");
+		else:
+			self.texture = preload("res://assets/light_idle.png");
+	elif actorname == "iron_crate":
+		if broken:
+			self.texture = preload("res://assets/iron_crate_broken.png");
+		else:
+			self.texture = preload("res://assets/iron_crate.png");
+	elif actorname == "steel_crate":
+		if broken:
+			self.texture = preload("res://assets/steel_crate_broken.png");
+		else:
+			self.texture = preload("res://assets/steel_crate.png");
+
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)
 # If fall speed is 0, airborne rules are ignored (WIP).
