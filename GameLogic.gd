@@ -437,7 +437,7 @@ func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) 
 	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = []) -> int:
 	if (chrono == Chrono.GHOSTS):
-		var ghost = generate_ghost(actor);
+		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.ghost_dir = -dir;
 		ghost.pos = ghost.previous_ghost.pos + dir;
 		ghost.position = terrainmap.map_to_world(ghost.pos);
@@ -628,7 +628,7 @@ func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
 		actor.set(prop, value);
 		actor.update_graphics();
 	else:
-		var ghost = get_deepest_ghost(actor);
+		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.set(prop, value);
 		ghost.update_graphics();
 
@@ -691,17 +691,11 @@ func character_undo(is_silent: bool = false) -> bool:
 			undo_effect_color = light_color;
 		return true;
 
-func get_deepest_ghost(actor : Actor) -> Actor:
-	# also makes one if none exist
-	if (actor.next_ghost == null):
-		return generate_ghost(actor)
+func get_ghost_that_hasnt_moved(actor : Actor) -> Actor:
 	while actor.next_ghost != null:
 		actor = actor.next_ghost;
-	return actor;
-
-func generate_ghost(actor : Actor) -> Actor:
-	while actor.next_ghost != null:
-		actor = actor.next_ghost;
+	if (actor.is_ghost and actor.ghost_dir == Vector2.ZERO):
+		return actor;
 	var ghost = clone_actor_but_dont_add_it(actor);
 	ghost.is_ghost = true;
 	ghost.modulate = Color(1, 1, 1, 0);

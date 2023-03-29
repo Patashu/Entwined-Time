@@ -35,7 +35,7 @@ func update_graphics() -> void:
 		if powered:
 			self.modulate = Color(1, 1, 1, 1);
 		else:
-			self.modulate = Color(1, 1, 1, 0.5);
+			self.modulate = Color(0.25, 0.25, 0.25, 1);
 	# airborne, broken
 	if actorname == "heavy":
 		if broken:
