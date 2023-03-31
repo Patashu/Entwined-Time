@@ -16,6 +16,9 @@ func fill(buffer: Array) -> void:
 	for event in buffer:
 		if event[0] == 0 or event[0] == 1: # move or set_actor_var
 			# also filter out airborne 2 for now
+			# and powered
+			if (event[0] == 1 and event[2] == "powered"):
+				continue
 			if event[0] == 1 and event[2] == "airborne" and event[4] == 2:
 				continue
 			# reverse order since undo buffer is 'in reverse order'
