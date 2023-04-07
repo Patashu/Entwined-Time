@@ -204,6 +204,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Two Time");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/Initiation.tscn"));
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
 	level_list.push_back(preload("res://levels/Wall.tscn"));
 	level_list.push_back(preload("res://levels/Tall.tscn"));
@@ -214,30 +215,38 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Roommates.tscn"));
 	level_list.push_back(preload("res://levels/UncabYourself.tscn"));
 	level_list.push_back(preload("res://levels/Downhill.tscn"));
-	level_list.push_back(preload("res://levels/Spelunking.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/Spelunking.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPitEx.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPitEx2.tscn"));
+	level_list.push_back(preload("res://levels/Graduation.tscn"));
 	
-	chapter_names.push_back("Platforming");
+	chapter_names.push_back("Hazards");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
-	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
+	
+	chapter_names.push_back("Platforming");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
+	level_list.push_back(preload("res://levels/SecurityDoor.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_list.size());
