@@ -493,11 +493,11 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 				color = meta_color;
 			heavytimeline.remove_turn(color);
 		add_undo_event([Undo.heavy_turn, amount], chrono);
-		heavy_turn += amount;
-		if (heavy_turn == heavy_max_moves):
+		if (heavy_turn == heavy_max_moves - 1):
 			set_actor_var(heavy_actor, "powered", false, chrono);
 		elif (!heavy_actor.powered):
 			set_actor_var(heavy_actor, "powered", true, chrono);
+		heavy_turn += amount;
 		#if (debug_prints):
 		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
@@ -509,11 +509,11 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 				color = meta_color;
 			lighttimeline.remove_turn(color);
 		add_undo_event([Undo.light_turn, amount], chrono);
-		light_turn += amount;
-		if (light_turn == light_max_moves):
+		if (light_turn == light_max_moves - 1):
 			set_actor_var(light_actor, "powered", false, chrono);
 		elif (!light_actor.powered):
 			set_actor_var(light_actor, "powered", true, chrono);
+		light_turn += amount;
 		#if (debug_prints):
 		#	print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
 		
