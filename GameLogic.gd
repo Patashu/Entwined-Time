@@ -1098,8 +1098,9 @@ func do_one_replay_turn() -> void:
 			next_replay = timer + replay_interval();
 			return;
 		else:
+			if (unit_test_mode):
+				floating_text("Tested up to level: " + str(level_number));
 			end_replay();
-			floating_text("Tested up to level: " + str(level_number));
 			return;
 	next_replay = timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
