@@ -292,6 +292,7 @@ func initialize_level_list() -> void:
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
 		level_names.push_back(level.get_child(0).level_name);
+		level.queue_free();
 
 func ready_map() -> void:
 	for actor in actors:
