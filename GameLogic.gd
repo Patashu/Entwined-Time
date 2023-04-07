@@ -265,6 +265,8 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/IronCrates.tscn"));
+	level_list.push_back(preload("res://levels/CrateExpectations.tscn"));
+	level_list.push_back(preload("res://levels/Bridge.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPit.tscn"));
 	level_list.push_back(preload("res://levels/OverDestination.tscn"));
