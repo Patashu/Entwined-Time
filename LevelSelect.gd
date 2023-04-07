@@ -97,7 +97,7 @@ func prepare_chapter() -> void:
 		button.rect_position.x = xx + xxx*x;
 		button.rect_position.y = yy + yyy*y;
 		button.level_number = i + advanced_start;
-		button.text = str(i) + "-X - " + gamelogic.level_names[button.level_number];
+		button.text = str(i) + "X - " + gamelogic.level_names[button.level_number];
 		button.theme = holder.theme;
 		button.levelselect = self;
 		if (x == 0 and y == 1): # the first button

@@ -120,6 +120,8 @@ enum Tiles {
 
 # information about the level
 var chapter = 0
+var level_in_chapter = 0;
+var level_is_extra = false;
 var level_number = 0
 var level_name = "Blah Blah Blah";
 var level_replay = "";
@@ -684,8 +686,8 @@ func character_undo(is_silent: bool = false) -> bool:
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
-			undo_effect_strength = 0.08;
-			undo_effect_per_second = undo_effect_strength*(1/0.2);
+			undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
+			undo_effect_per_second = undo_effect_strength*(1/0.4);
 			undo_effect_color = heavy_color;
 		return true;
 	else:
@@ -702,7 +704,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (!is_silent):
 			play_sound("undo");
 			undo_effect_strength = 0.08;
-			undo_effect_per_second = undo_effect_strength*(1/0.2);
+			undo_effect_per_second = undo_effect_strength*(1/0.4);
 			undo_effect_color = light_color;
 		return true;
 
@@ -819,7 +821,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
 		user_replay = "";
-		doing_replay = false;
+		end_replay();
 		toggle_replay();
 		cut_sound();
 		play_sound("metarestart");
@@ -887,11 +889,18 @@ func load_level(impulse: int) -> void:
 	levelfolder.add_child(level);
 	terrainmap = level;
 	chapter = 0;
+	level_is_extra = false;
 	for i in range(chapter_names.size()):
 		if level_number < chapter_standard_starting_levels[i + 1]:
 			chapter = i;
+			if level_number >= chapter_advanced_starting_levels[i]:
+				level_is_extra = true;
+				level_in_chapter = level_number - chapter_advanced_starting_levels[i];
+			else:
+				level_in_chapter = level_number - chapter_standard_starting_levels[i];
 			break;
 	ready_map();
+	update_level_label();
 
 func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 	if actor.fall_speed == 0:
@@ -1070,10 +1079,10 @@ func toggle_replay() -> void:
 	meta_undo_a_restart_mode = false;
 	unit_test_mode = false;
 	if (doing_replay):
-		doing_replay = false;
+		end_replay();
 		return;
-	restart();
 	doing_replay = true;
+	restart();
 	replay_turn = 0;
 	next_replay = timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
@@ -1083,13 +1092,14 @@ func do_one_replay_turn() -> void:
 		return;
 	if replay_turn >= level_replay.length():
 		if (unit_test_mode and won and level_number < (level_list.size() - 1)):
-			load_level(1);
 			doing_replay = true;
+			load_level(1);
 			replay_turn = 0;
 			next_replay = timer + replay_interval();
 			return;
 		else:
-			doing_replay = false;
+			end_replay();
+			floating_text("Tested up to level: " + str(level_number));
 			return;
 	next_replay = timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
@@ -1109,16 +1119,25 @@ func do_one_replay_turn() -> void:
 	elif (replay_char == "c"):
 		meta_undo();
 	
-func update_info_labels() -> void:
-	var levelnumberastext = str(level_number);
+func end_replay() -> void:
+	doing_replay = false;
+	update_level_label();
+	
+func update_level_label() -> void:
+	var levelnumberastext = ""
 	if (level_number < 0):
 		levelnumberastext = "CUSTOM";
-	levellabel.text = str(level_number) + " - " + level_name;
+	else:
+		levelnumberastext = str(chapter) + "-" + str(level_in_chapter);
+	if (level_is_extra):
+		levelnumberastext += "X";
+	levellabel.text = levelnumberastext + " - " + level_name;
 	if (level_author != "" and level_author != "Patashu"):
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
 		levellabel.text += " (REPLAY) (F9/F10 ADJUST SPEED)"
 	
+func update_info_labels() -> void:	
 	heavyinfolabel.text = "Heavy" + "\n" + str(heavy_turn);
 	if heavy_max_moves >= 0:
 		heavyinfolabel.text += "/" + str(heavy_max_moves);
@@ -1128,29 +1147,6 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
 	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
-	
-#	heavyinfolabel.text = "Heavy";
-#	if (heavy_selected):
-#		heavyinfolabel.text += " (Selected)"
-#	if (heavy_actor.airborne > -1):
-#		heavyinfolabel.text += " (Airborne " + str(heavy_actor.airborne) + ")";
-#	if (heavy_actor.broken):
-#		heavyinfolabel.text += " (Broken)";
-#	heavyinfolabel.text += ": Turn "
-#	heavyinfolabel.text += str(heavy_turn);
-#	if heavy_max_moves >= 0:
-#		heavyinfolabel.text += "/" + str(heavy_max_moves);
-#	lightinfolabel.text = "Light";
-#	if (!heavy_selected):
-#		lightinfolabel.text += " (Selected)"
-#	if (light_actor.airborne > -1):
-#		lightinfolabel.text += " (Airborne " + str(light_actor.airborne) + ")";
-#	if (light_actor.broken):
-#		lightinfolabel.text += " (Broken)";
-#	lightinfolabel.text += ": Turn "
-#	lightinfolabel.text += str(light_turn);
-#	if light_max_moves >= 0:
-#		lightinfolabel.text += "/" + str(light_max_moves);
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -1170,7 +1166,7 @@ func replay_from_clipboard() -> void:
 			pass
 			floating_text("Ctrl+V: Invalid replay");
 			return;
-	doing_replay = false;
+	end_replay();
 	toggle_replay();
 	level_replay = replay;
 
@@ -1183,7 +1179,7 @@ func _process(delta: float) -> void:
 			update_info_labels();
 		
 		if (won and Input.is_action_just_pressed("ui_accept")):
-			doing_replay = false;
+			end_replay();
 			load_level(1);
 		
 		if (Input.is_action_just_pressed("mute")):
@@ -1201,7 +1197,7 @@ func _process(delta: float) -> void:
 			replay_from_clipboard();
 		
 		if (Input.is_action_just_pressed("character_undo")):
-			doing_replay = false;
+			end_replay();
 			character_undo();
 			update_info_labels();
 		if (Input.is_action_just_pressed("meta_undo")):
@@ -1209,25 +1205,25 @@ func _process(delta: float) -> void:
 				OS.set_clipboard(user_replay);
 				floating_text("Ctrl+C: Replay copied");
 			else:
-				doing_replay = false;
+				end_replay();
 				meta_undo();
 				update_info_labels();
 		if (Input.is_action_just_pressed("character_switch")):
-			doing_replay = false;
+			end_replay();
 			character_switch();
 			update_info_labels();
 		if (Input.is_action_just_pressed("restart")):
-			doing_replay = false;
+			end_replay();
 			restart();
 			update_info_labels();
 		if (Input.is_action_just_pressed("escape")):
-			doing_replay = false;
+			end_replay();
 			escape();
 		if (Input.is_action_just_pressed("previous_level")):
-			doing_replay = false;
+			end_replay();
 			load_level(-1);
 		if (Input.is_action_just_pressed("next_level")):
-			doing_replay = false;
+			end_replay();
 			load_level(1);
 		
 		var dir = Vector2.ZERO;
@@ -1241,7 +1237,7 @@ func _process(delta: float) -> void:
 			dir = Vector2.DOWN;
 			
 		if dir != Vector2.ZERO:
-			doing_replay = false;
+			end_replay();
 			character_move(dir);
 			update_info_labels();
 		
