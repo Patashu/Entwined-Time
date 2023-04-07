@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 14, 0, 6, 14, 0, 7, 14, 0, 8, 14, 0, 9, 14, 0, 10, 14, 0, 11, 14, 0, 65536, 14, 0, 65547, 14, 0, 131072, 14, 0, 131083, 14, 0, 196608, 14, 0, 196619, 14, 0, 262144, 14, 0, 262145, 8, 0, 262146, 7, 0, 262147, 3, 0, 262149, 32, 0, 262150, 32, 0, 262152, 3, 0, 262153, 1, 0, 262154, 2, 0, 262155, 14, 0, 327680, 14, 0, 327681, 14, 0, 327682, 14, 0, 327683, 14, 0, 327684, 14, 0, 327685, 14, 0, 327686, 14, 0, 327687, 14, 0, 327688, 14, 0, 327689, 14, 0, 327690, 14, 0, 327691, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Iron Crates"
+level_replay = "aaaddxdddaa"
+heavy_max_moves = 5
+light_max_moves = 5
