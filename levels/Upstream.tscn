@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65534, 14, 0, 65535, 14, 0, 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 14, 0, 6, 14, 0, 7, 14, 0, 131070, 14, 0, 65538, 22, 0, 65541, 22, 0, 65543, 14, 0, 196606, 14, 0, 131074, 22, 0, 131077, 22, 0, 131078, 7, 0, 131079, 14, 0, 262142, 14, 0, 196608, 8, 0, 196609, 2, 0, 196610, 22, 0, 196611, 1, 0, 196613, 22, 0, 196615, 14, 0, 327678, 14, 0, 327679, 14, 0, 262144, 14, 0, 262145, 14, 0, 262146, 14, 0, 262147, 14, 0, 262148, 14, 0, 262149, 14, 0, 262150, 14, 0, 262151, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Upstream"
+level_replay = "xwxaadxasxzxwdxzcxdxzzxzzzzzzaxdxzdw"
+heavy_max_moves = 6
+light_max_moves = 6
