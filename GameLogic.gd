@@ -721,6 +721,7 @@ func get_ghost_that_hasnt_moved(actor : Actor) -> Actor:
 	ghost.ghost_index = actor.ghost_index + 1;
 	ghosts.append(ghost);
 	ghostsfolder.add_child(ghost);
+	ghost.update_graphics();
 	return ghost;
 	
 func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
@@ -741,6 +742,7 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.fall_speed = actor.fall_speed;
 	new.climbs = actor.climbs;
 	new.is_character = actor.is_character;
+	new.facing_left = actor.facing_left;
 	return new;
 
 func finish_animations() -> void:
@@ -959,8 +961,18 @@ func character_move(dir: Vector2) -> bool:
 		if (dir == Vector2.UP):
 			if heavy_selected and !is_suspended(heavy_actor):
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
-			elif !is_suspended(light_actor):
+			elif !heavy_selected and !is_suspended(light_actor):
 				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
+		elif (dir == Vector2.LEFT):
+			if (heavy_selected and !heavy_actor.facing_left):
+				set_actor_var(heavy_actor, "facing_left", true, Chrono.MOVE);
+			elif (!heavy_selected and !light_actor.facing_left):
+				set_actor_var(light_actor, "facing_left", true, Chrono.MOVE);
+		elif (dir == Vector2.RIGHT):
+			if (heavy_selected and heavy_actor.facing_left):
+				set_actor_var(heavy_actor, "facing_left", false, Chrono.MOVE);
+			elif (!heavy_selected and light_actor.facing_left):
+				set_actor_var(light_actor, "facing_left", false, Chrono.MOVE);
 	if (result != Success.No):
 		time_passes(Chrono.MOVE);
 		if heavy_selected:

@@ -27,8 +27,15 @@ var color = Color(1, 1, 1, 1);
 var animation_timer = 0;
 var animation_timer_max = 0.05;
 var animations = [];
+var facing_left = false;
 
 func update_graphics() -> void:
+	# TODO: when we build the animation server, we need this function to instead return a dictionary of properties to set
+	# facing
+	if facing_left:
+		flip_h = true;
+	else:
+		flip_h = false;
 	# powered
 	if is_character:
 		# this will get overriden by undo trail modulation for ghosts, which is perfectly fine by me
