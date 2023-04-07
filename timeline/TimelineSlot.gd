@@ -16,12 +16,16 @@ func fill(buffer: Array) -> void:
 	for event in buffer:
 		if event[0] == 0 or event[0] == 1: # move or set_actor_var
 			# whitelist: for set_actor_var, only consider airborne 1 or less and broken
+			var whitelisted = false;
+			if (event[0] == 0):
+				whitelisted = true;
 			if (event[0] == 1):
 				if (event[2] == "airborne"):
-					if event[4] == 2:
-						continue
+					if event[4] < 2:
+						whitelisted = true;
 				elif (event[2] == "broken"):
-					pass
+					whitelisted = true;
+			if (!whitelisted):
 				continue
 			# reverse order since undo buffer is 'in reverse order'
 			relevant_buffer.push_front(event);
