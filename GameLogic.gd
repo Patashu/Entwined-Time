@@ -227,10 +227,10 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Hazards");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
-	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
+	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
