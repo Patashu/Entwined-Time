@@ -247,14 +247,15 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Upstream.tscn"));
 	level_list.push_back(preload("res://levels/EventHorizon.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SecurityDoorEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
+	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
+	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_list.size());
