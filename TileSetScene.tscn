@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -30,6 +30,8 @@
 [ext_resource path="res://assets/oneway_west_green.png" type="Texture" id=28]
 [ext_resource path="res://assets/no_heavy.png" type="Texture" id=29]
 [ext_resource path="res://assets/no_light.png" type="Texture" id=30]
+[ext_resource path="res://assets/crate_goal.png" type="Texture" id=31]
+[ext_resource path="res://assets/power_crate.png" type="Texture" id=32]
 
 [node name="TileSetScene" type="Node2D"]
 
@@ -152,3 +154,11 @@ texture = ExtResource( 29 )
 [node name="NoLight" type="Sprite" parent="."]
 position = Vector2( 341, 92 )
 texture = ExtResource( 30 )
+
+[node name="PowerCrate" type="Sprite" parent="."]
+position = Vector2( 114, 129 )
+texture = ExtResource( 32 )
+
+[node name="CrateGoal" type="Sprite" parent="."]
+position = Vector2( 144, 130 )
+texture = ExtResource( 31 )

@@ -72,6 +72,11 @@ func update_graphics() -> void:
 			self.texture = preload("res://assets/steel_crate_broken.png");
 		else:
 			self.texture = preload("res://assets/steel_crate.png");
+	elif actorname == "power_crate":
+		if broken:
+			self.texture = preload("res://assets/power_crate_broken.png");
+		else:
+			self.texture = preload("res://assets/power_crate.png");
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)

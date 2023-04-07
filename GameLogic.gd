@@ -116,6 +116,8 @@ enum Tiles {
 	OnewayWestGreen,
 	NoHeavy,
 	NoLight,
+	PowerCrate,
+	CrateGoal,
 }
 
 # information about the level
@@ -361,6 +363,7 @@ func make_actors() -> void:
 	# other actors
 	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
 	extract_actors("SteelCrate", "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
+	extract_actors("PowerCrate", "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, -1, false, Color(1, 0, 0.86, 1));
 	
 func extract_actors(tilename: String, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
 	var id = terrainmap.tile_set.find_tile_by_name(tilename);
@@ -784,10 +787,22 @@ func adjust_meta_turn(amount: int) -> void:
 	check_won();
 	
 func check_won() -> void:
+	won = false;
 	if (!light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos) == Tiles.HeavyGoal and terrain_in_tile(light_actor.pos) == Tiles.LightGoal):
 		won = true;
-	else:
-		won = false;
+		# but wait!
+		# check for crate goals as well
+		var crate_goals = terrainmap.get_used_cells_by_id(Tiles.CrateGoal);
+		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
+		for crate_goal in crate_goals:
+			var crate_goal_satisfied = false;
+			for actor in actors:
+				if actor.pos == crate_goal:
+					crate_goal_satisfied = true;
+					break;
+			if (!crate_goal_satisfied):
+				won = false;
+			break;
 	winlabel.visible = won;
 	
 func undo_one_event(event: Array, chrono : int) -> void:

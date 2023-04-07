@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=31 format=2]
+[gd_resource type="TileSet" load_steps=33 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -30,6 +30,8 @@
 [ext_resource path="res://assets/oneway_west_green.png" type="Texture" id=28]
 [ext_resource path="res://assets/no_heavy.png" type="Texture" id=29]
 [ext_resource path="res://assets/no_light.png" type="Texture" id=30]
+[ext_resource path="res://assets/crate_goal.png" type="Texture" id=31]
+[ext_resource path="res://assets/power_crate.png" type="Texture" id=32]
 
 [resource]
 0/name = "Fire"
@@ -452,3 +454,31 @@
 30/shape_one_way_margin = 0.0
 30/shapes = [  ]
 30/z_index = 0
+31/name = "PowerCrate"
+31/texture = ExtResource( 32 )
+31/tex_offset = Vector2( 0, 0 )
+31/modulate = Color( 1, 1, 1, 1 )
+31/region = Rect2( 0, 0, 24, 24 )
+31/tile_mode = 0
+31/occluder_offset = Vector2( 12, 12 )
+31/navigation_offset = Vector2( 12, 12 )
+31/shape_offset = Vector2( 0, 0 )
+31/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+31/shape_one_way = false
+31/shape_one_way_margin = 0.0
+31/shapes = [  ]
+31/z_index = 0
+32/name = "CrateGoal"
+32/texture = ExtResource( 31 )
+32/tex_offset = Vector2( 0, 0 )
+32/modulate = Color( 1, 1, 1, 1 )
+32/region = Rect2( 0, 0, 24, 24 )
+32/tile_mode = 0
+32/occluder_offset = Vector2( 12, 12 )
+32/navigation_offset = Vector2( 12, 12 )
+32/shape_offset = Vector2( 0, 0 )
+32/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+32/shape_one_way = false
+32/shape_one_way_margin = 0.0
+32/shapes = [  ]
+32/z_index = 0
