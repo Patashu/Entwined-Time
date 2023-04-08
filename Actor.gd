@@ -28,6 +28,9 @@ var animation_timer = 0;
 var animation_timer_max = 0.05;
 var animations = [];
 var facing_left = false;
+# animated sprites logic
+var timer = 0;
+var timer_max = 0.1;
 
 func update_graphics() -> void:
 	# TODO: when we build the animation server, we need this function to instead return a dictionary of properties to set
@@ -55,13 +58,25 @@ func update_graphics() -> void:
 			self.texture = preload("res://assets/heavy_idle.png");
 	elif actorname == "light":
 		if broken:
+			timer = 0;
+			hframes = 1;
+			frame = 0;
 			self.texture = preload("res://assets/light_broken.png");
 		elif airborne >= 1:
+			timer = 0;
+			hframes = 7;
+			frame = 0;
 			self.texture = preload("res://assets/light_rising.png");
 		elif airborne == 0:
+			timer = 0;
+			hframes = 7;
+			frame = 0;
 			self.texture = preload("res://assets/light_falling.png");
 		else:
-			self.texture = preload("res://assets/light_idle.png");
+			timer = 0;
+			hframes = 13;
+			frame = 0;
+			self.texture = preload("res://assets/light_idle_animation.png");
 	elif actorname == "iron_crate":
 		if broken:
 			self.texture = preload("res://assets/iron_crate_broken.png");
@@ -105,6 +120,17 @@ func tiny_pushable() -> bool:
 	return actorname == "key" and !broken;
 
 func _process(delta: float) -> void:
+	#animated sprites
+	if hframes <= 1:
+		pass
+	else:
+		timer += delta;
+		if (timer > timer_max):
+			timer -= timer_max;
+			if (frame == hframes - 1):
+				frame = 0;
+			else:
+				frame += 1;
 	if (is_ghost):
 		# undo previous position change
 		# and fix rounding errors creeping in by, well, rounding
