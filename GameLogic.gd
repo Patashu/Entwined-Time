@@ -351,6 +351,8 @@ func make_actors() -> void:
 	heavy_actor.is_character = true;
 	heavy_actor.color = heavy_color;
 	heavy_actor.powered = heavy_max_moves != 0;
+	if (heavy_actor.pos.x > (map_x_max / 2)):
+		heavy_actor.facing_left = true;
 	heavy_actor.update_graphics();
 	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
 	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
@@ -364,6 +366,8 @@ func make_actors() -> void:
 	light_actor.is_character = true;
 	light_actor.color = light_color;
 	light_actor.powered = light_max_moves != 0;
+	if (light_actor.pos.x > (map_x_max / 2)):
+		light_actor.facing_left = true;
 	light_actor.update_graphics();
 	
 	# other actors
