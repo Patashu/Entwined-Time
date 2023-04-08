@@ -64,17 +64,17 @@ func update_graphics() -> void:
 			self.texture = preload("res://assets/light_broken.png");
 		elif airborne >= 1:
 			timer = 0;
-			hframes = 7;
+			hframes = 6;
 			frame = 0;
 			self.texture = preload("res://assets/light_rising.png");
 		elif airborne == 0:
 			timer = 0;
-			hframes = 7;
+			hframes = 6;
 			frame = 0;
 			self.texture = preload("res://assets/light_falling.png");
 		else:
 			timer = 0;
-			hframes = 13;
+			hframes = 12;
 			frame = 0;
 			self.texture = preload("res://assets/light_idle_animation.png");
 	elif actorname == "iron_crate":
