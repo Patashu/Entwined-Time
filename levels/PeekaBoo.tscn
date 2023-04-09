@@ -12,6 +12,6 @@ tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 7, 14, 0, 8, 14, 0, 9, 1
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Peek-a-Boo"
-level_replay = "ddxdddwxzdxwxdxzzzzzddwxzzzaw"
+level_replay = "ddxdddwxazxwxdxzzzzzddwxzzzaw"
 heavy_max_moves = 4
-light_max_moves = 6
+light_max_moves = 5
