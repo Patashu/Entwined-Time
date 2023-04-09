@@ -244,6 +244,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
+	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
 	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
 	
 	chapter_names.push_back("One-Ways");
@@ -261,7 +262,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
-	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
 	
 	chapter_names.push_back("Ladders and Wooden Platforms");
 	chapter_standard_starting_levels.push_back(level_list.size());
