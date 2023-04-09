@@ -244,7 +244,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
 	
-	chapter_names.push_back("Platforming");
+	chapter_names.push_back("One-Ways");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/OneWays.tscn"));
 	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
@@ -252,20 +252,26 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Jail.tscn"));
 	level_list.push_back(preload("res://levels/Upstream.tscn"));
 	level_list.push_back(preload("res://levels/EventHorizon.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/SecurityDoorEx.tscn"));
+	level_list.push_back(preload("res://levels/JailEx.tscn"));
+	level_list.push_back(preload("res://levels/JailEx2.tscn"));
+	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
+	
+	chapter_names.push_back("Ladders and Wooden Platforms");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/Down.tscn"));
 	level_list.push_back(preload("res://levels/LadderWorld.tscn"));
 	level_list.push_back(preload("res://levels/LadderLattice.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
 	level_list.push_back(preload("res://levels/Mole.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
-	level_list.push_back(preload("res://levels/SecurityDoorEx.tscn"));
-	level_list.push_back(preload("res://levels/JailEx.tscn"));
-	level_list.push_back(preload("res://levels/JailEx2.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
 	level_list.push_back(preload("res://levels/LadderLatticeEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
-	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_list.size());
