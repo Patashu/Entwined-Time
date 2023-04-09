@@ -226,7 +226,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheFirstPitEx.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPitEx2.tscn"));
 	level_list.push_back(preload("res://levels/RoommatesEx.tscn"));
-	level_list.push_back(preload("res://levels/Graduation.tscn"));
 	
 	chapter_names.push_back("Hazards");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -246,6 +245,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
 	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
 	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
+	level_list.push_back(preload("res://levels/Graduation.tscn"));
+	level_list.push_back(preload("res://levels/GraduationEx.tscn"));
 	
 	chapter_names.push_back("One-Ways");
 	chapter_standard_starting_levels.push_back(level_list.size());
