@@ -26,9 +26,8 @@ tile_data = PoolIntArray( 0, 14, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 1
 script = ExtResource( 3 )
 
 [node name="LevelLabel" type="Label" parent="."]
-margin_top = 2.0
 margin_right = 512.0
-margin_bottom = 16.0
+margin_bottom = 14.0
 theme = ExtResource( 2 )
 text = "Level 01 - Blah Blah Blah"
 align = 1
@@ -57,7 +56,6 @@ align = 1
 valign = 1
 
 [node name="HeavyInfoLabel" type="Label" parent="."]
-margin_left = 1.0
 margin_top = 1.0
 margin_right = 37.0
 margin_bottom = 26.0
@@ -70,9 +68,9 @@ align = 1
 valign = 1
 
 [node name="LightInfoLabel" type="Label" parent="."]
-margin_left = 477.0
+margin_left = 478.0
 margin_top = 1.0
-margin_right = 510.0
+margin_right = 511.0
 margin_bottom = 26.0
 theme = ExtResource( 2 )
 custom_colors/font_color = Color( 0, 0.87451, 1, 1 )
