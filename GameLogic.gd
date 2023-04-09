@@ -224,6 +224,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Spelunking.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPitEx.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPitEx2.tscn"));
+	level_list.push_back(preload("res://levels/RoommatesEx.tscn"));
 	level_list.push_back(preload("res://levels/Graduation.tscn"));
 	
 	chapter_names.push_back("Hazards");
