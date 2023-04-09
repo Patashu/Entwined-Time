@@ -244,6 +244,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Platforming");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/OneWays.tscn"));
 	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
 	level_list.push_back(preload("res://levels/SecurityDoor.tscn"));
 	level_list.push_back(preload("res://levels/Jail.tscn"));
