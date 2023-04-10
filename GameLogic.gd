@@ -260,6 +260,7 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SecurityDoorEx.tscn"));
+	level_list.push_back(preload("res://levels/SecurityDoorEx2.tscn"));
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
