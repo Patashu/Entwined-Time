@@ -83,6 +83,7 @@ enum Animation {
 	bump,
 	set_next_texture,
 	sfx,
+	fluster,
 }
 
 # attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
@@ -527,6 +528,9 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false);
 		return success;
 	elif (success != Success.Yes and !hypothetical):
+		# vanity bump goes here
+		if pushers_list.size() > 0 and actor.actorname == "light":
+			add_to_animation_server(actor, [Animation.fluster]);
 		add_to_animation_server(actor, [Animation.bump, dir]);
 	return success;
 		
@@ -796,8 +800,8 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.is_character = actor.is_character;
 	new.facing_left = actor.facing_left;
 	new.flip_h = actor.flip_h;
-	new.timer = actor.timer;
-	new.timer_max = actor.timer_max;
+	new.frame_timer = actor.frame_timer;
+	new.frame_timer_max = actor.frame_timer_max;
 	new.hframes = actor.hframes;
 	new.frame = actor.frame;
 	new.post_mortem = actor.post_mortem;

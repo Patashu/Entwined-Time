@@ -29,9 +29,12 @@ var animation_timer_max = 0.05;
 var animations = [];
 var facing_left = false;
 # animated sprites logic
-var timer = 0;
-var timer_max = 0.1;
+var frame_timer = 0;
+var frame_timer_max = 0.1;
 var post_mortem = -1;
+# light fluster logic
+var fluster_timer = 0;
+var fluster_timer_max = 0;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
@@ -103,26 +106,33 @@ func get_next_texture() -> Texture:
 func set_next_texture(tex: Texture) -> void:
 	if (self.texture == tex):
 		return;
+	if (fluster_timer_max > 0):
+		return;
 	self.texture = tex;
-	timer = 0;
+	frame_timer = 0;
 	frame = 0;
 	if texture == preload("res://assets/heavy_broken.png"):
-		timer_max = 0.4;
+		frame_timer_max = 0.4;
 		hframes = 6;
 	elif texture == preload("res://assets/light_broken.png"):
-		timer_max = 0.4;
+		frame_timer_max = 0.4;
 		hframes = 6;
 	elif texture == preload("res://assets/light_rising.png"):
-		timer_max = 0.1;
+		frame_timer_max = 0.1;
 		hframes = 6;
 	elif texture == preload("res://assets/light_falling.png"):
-		timer_max = 0.1;
+		frame_timer_max = 0.1;
 		hframes = 6;
 	elif texture == preload("res://assets/light_idle_animation.png"):
-		timer_max = 0.1;
+		frame_timer_max = 0.1;
 		hframes = 12;
 	else:
 		hframes = 1;
+
+func fluster():
+	set_next_texture(preload("res://assets/light_involuntary_bump.png"))
+	fluster_timer = 0;
+	fluster_timer_max = 0.3;
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)
@@ -151,13 +161,20 @@ func tiny_pushable() -> bool:
 	return actorname == "key" and !broken;
 
 func _process(delta: float) -> void:
+	#fluster timer
+	if fluster_timer_max > 0:
+		fluster_timer += delta;
+		if fluster_timer > fluster_timer_max:
+			fluster_timer_max = 0;
+			update_graphics();
+	
 	#animated sprites
 	if hframes <= 1:
 		pass
 	else:
-		timer += delta;
-		if (timer > timer_max):
-			timer -= timer_max;
+		frame_timer += delta;
+		if (frame_timer > frame_timer_max):
+			frame_timer -= frame_timer_max;
 			if (frame == hframes - 1) and !broken:
 				frame = 0;
 			else:
@@ -221,6 +238,10 @@ func _process(delta: float) -> void:
 					position += current_animation[1]*bump_amount*24;
 			elif (current_animation[0] == 2): #set_next_texture
 				set_next_texture(current_animation[1]);
+				animations.pop_front();
+				animation_timer = 0;
+			elif (current_animation[0] == 4): #fluster
+				fluster();
 				animations.pop_front();
 				animation_timer = 0;
 		
