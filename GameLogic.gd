@@ -74,6 +74,7 @@ enum Undo {
 	light_undo_event_add,
 	heavy_undo_event_remove,
 	light_undo_event_remove,
+	animation_substep
 }
 
 # and same for animations
@@ -891,6 +892,9 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		while (light_undo_buffer.size() <= event[1]):
 			light_undo_buffer.append([]);
 		light_undo_buffer[event[1]].push_front(event[2]);
+	elif (event[0] == Undo.animation_substep):
+		# don't need to emit a new event as meta undoing and beyond is a teleport
+		animation_substep += 1;
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
@@ -1060,7 +1064,7 @@ func character_move(dir: Vector2) -> bool:
 func time_passes(chrono: int) -> void:
 	if (chrono >= Chrono.META_UNDO):
 		return
-	animation_substep += 1;
+	animation_substep(chrono);
 	var time_actors = []
 	for actor in actors:
 		# current rules:
@@ -1088,7 +1092,7 @@ func time_passes(chrono: int) -> void:
 	var something_happened = true;
 	var tries = 99;
 	while (something_happened and tries > 0):
-		animation_substep += 1;
+		animation_substep(chrono);
 		tries -= 1;
 		something_happened = false;
 		for actor in time_actors:
@@ -1115,7 +1119,7 @@ func time_passes(chrono: int) -> void:
 				if (did_fall != Success.Yes):
 					set_actor_var(actor, "airborne", -1, chrono);
 	
-	animation_substep += 1;
+	animation_substep(chrono);
 	
 	# NEW (as part of AD07) post-gravity cleanups: If an actor is airborne 1 and would be grounded next fall,
 	# land.
@@ -1131,7 +1135,7 @@ func time_passes(chrono: int) -> void:
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
 				
-	animation_substep += 1;
+	animation_substep(chrono);
 				
 	# AFTER-GRAVITY TILE ARRIVAL
 	for actor in time_actors:
@@ -1239,6 +1243,10 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
 	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
+
+func animation_substep(chrono: int) -> void:
+	animation_substep += 1;
+	add_undo_event([Undo.animation_substep], chrono);
 
 func add_to_animation_server(actor: Actor, animation: Array) -> void:
 	while animation_server.size() <= animation_substep:
