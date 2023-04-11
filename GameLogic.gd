@@ -617,13 +617,13 @@ func is_suspended(actor: Actor):
 	var id = terrain_in_tile(actor.pos);
 	return id == Tiles.Ladder || id == Tiles.LadderPlatform;
 
-func terrain_is_hazardous(actor: Actor, pos: Vector2) -> bool:
+func terrain_is_hazardous(actor: Actor, pos: Vector2) -> int:
 	if (pos.y > map_y_max and actor.durability <= Durability.PITS):
-		return true;
+		return Durability.PITS;
 	var id = terrain_in_tile(pos);
 	if (id == Tiles.Spikeball and actor.durability <= Durability.SPIKES):
-		return true;
-	return false;
+		return Durability.SPIKES;
+	return -1;
 	
 func strength_check(strength: int, heaviness: int) -> bool:
 	if (heaviness == Heaviness.WOODEN):
@@ -641,9 +641,11 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return Success.Yes;
-	if (terrain_is_hazardous(actor, dest)):
+	var hazard = terrain_is_hazardous(actor, dest);
+	if (hazard > -1):
 		# AD04: being broken makes you immune to breaking :D
 		if (!hypothetical and !actor.broken):
+			actor.post_mortem = hazard;
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
 	if (terrain_is_solid(actor, dest, dir, is_gravity, is_retro)):
@@ -783,6 +785,12 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.climbs = actor.climbs;
 	new.is_character = actor.is_character;
 	new.facing_left = actor.facing_left;
+	new.flip_h = actor.flip_h;
+	new.timer = actor.timer;
+	new.timer_max = actor.timer_max;
+	new.hframes = actor.hframes;
+	new.frame = actor.frame;
+	new.post_mortem = actor.post_mortem;
 	return new;
 
 func finish_animations() -> void:
@@ -1113,6 +1121,7 @@ func time_passes(chrono: int) -> void:
 		var terrain = terrain_in_tile(actor.pos);
 		# Things in fire break.
 		if !actor.broken and terrain == Tiles.Fire and actor.durability <= Durability.FIRE:
+			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
 	
 		# Things on checkpoints are set back to turn 0 (losing their undo buffer).

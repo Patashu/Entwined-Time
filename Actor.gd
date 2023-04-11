@@ -31,6 +31,7 @@ var facing_left = false;
 # animated sprites logic
 var timer = 0;
 var timer_max = 0.1;
+var post_mortem = -1;
 
 func update_graphics() -> void:
 	# TODO: when we build the animation server, we need this function to instead return a dictionary of properties to set
@@ -45,38 +46,74 @@ func update_graphics() -> void:
 		if powered:
 			self.modulate = Color(1, 1, 1, 1);
 		else:
-			self.modulate = Color(0.25, 0.25, 0.25, 1);
+			self.modulate = Color(0.5, 0.5, 0.5, 1);
 	# airborne, broken
 	if actorname == "heavy":
 		if broken:
-			self.texture = preload("res://assets/heavy_broken.png");
+			if self.texture != preload("res://assets/heavy_broken.png"):
+				timer = 0;
+				timer_max = 0.4;
+				hframes = 6;
+				frame = 0;
+				self.texture = preload("res://assets/heavy_broken.png");
 		elif airborne >= 1:
-			self.texture = preload("res://assets/heavy_rising.png");
+			if self.texture != preload("res://assets/heavy_rising.png"):
+				hframes = 1;
+				frame = 0;
+				self.texture = preload("res://assets/heavy_rising.png");
 		elif airborne == 0:
-			self.texture = preload("res://assets/heavy_falling.png");
+			if self.texture != preload("res://assets/heavy_falling.png"):
+				hframes = 1;
+				frame = 0;
+				self.texture = preload("res://assets/heavy_falling.png");
 		else:
-			self.texture = preload("res://assets/heavy_idle.png");
+			if !powered:
+				if self.texture != preload("res://assets/heavy_unpowered.png"):
+					hframes = 1;
+					frame = 0;
+					self.texture = preload("res://assets/heavy_unpowered.png");
+			else:
+				if self.texture != preload("res://assets/heavy_idle.png"):
+					hframes = 1;
+					frame = 0;
+					self.texture = preload("res://assets/heavy_idle.png");
 	elif actorname == "light":
 		if broken:
-			timer = 0;
-			hframes = 1;
-			frame = 0;
-			self.texture = preload("res://assets/light_broken.png");
+			if self.texture != preload("res://assets/light_broken.png"):
+				timer = 0;
+				timer_max = 0.4;
+				hframes = 6;
+				frame = 0;
+				self.texture = preload("res://assets/light_broken.png");
 		elif airborne >= 1:
-			timer = 0;
-			hframes = 6;
-			frame = 0;
-			self.texture = preload("res://assets/light_rising.png");
+			if self.texture != preload("res://assets/light_rising.png"):
+				timer = 0;
+				timer_max = 0.1;
+				hframes = 6;
+				frame = 0;
+				self.texture = preload("res://assets/light_rising.png");
 		elif airborne == 0:
-			timer = 0;
-			hframes = 6;
-			frame = 0;
-			self.texture = preload("res://assets/light_falling.png");
+			if self.texture != preload("res://assets/light_falling.png"):
+				timer = 0;
+				timer_max = 0.1;
+				hframes = 6;
+				frame = 0;
+				self.texture = preload("res://assets/light_falling.png");
 		else:
-			timer = 0;
-			hframes = 12;
-			frame = 0;
-			self.texture = preload("res://assets/light_idle_animation.png");
+			if !powered:
+				if self.texture != preload("res://assets/light_unpowered.png"):
+					timer = 0;
+					timer_max = 0.1;
+					hframes = 1;
+					frame = 0;
+					self.texture = preload("res://assets/light_unpowered.png");
+			else:
+				if self.texture != preload("res://assets/light_idle_animation.png"):
+					timer = 0;
+					timer_max = 0.1;
+					hframes = 12;
+					frame = 0;
+					self.texture = preload("res://assets/light_idle_animation.png");
 	elif actorname == "iron_crate":
 		if broken:
 			self.texture = preload("res://assets/iron_crate_broken.png");
@@ -127,10 +164,13 @@ func _process(delta: float) -> void:
 		timer += delta;
 		if (timer > timer_max):
 			timer -= timer_max;
-			if (frame == hframes - 1):
+			if (frame == hframes - 1) and !broken:
 				frame = 0;
 			else:
-				frame += 1;
+				if broken and frame >= 2 and post_mortem != 1:
+					pass
+				else:
+					frame += 1;
 	if (is_ghost):
 		# undo previous position change
 		# and fix rounding errors creeping in by, well, rounding
