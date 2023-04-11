@@ -80,6 +80,8 @@ enum Undo {
 enum Animation {
 	move,
 	bump,
+	set_next_texture,
+	sfx,
 }
 
 # attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
@@ -164,6 +166,10 @@ var heavy_color = Color(1.0, 0, 0, 1);
 var light_color = Color(0, 0.58, 1.0, 1);
 var meta_color = Color(0.5, 0.5, 0.5, 1);
 var ui_stack = [];
+
+# animation server
+var animation_server = []
+var animation_substep = 0;
 
 #replay system
 var user_replay = "";
@@ -509,7 +515,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event([Undo.move, actor, dir], chrono);
 		actor.pos = pos;
-		actor.animations.push_back([Animation.move, dir]);
+		add_to_animation_server(actor, [Animation.move, dir]);
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
 		#(AD05: apparently I decided the sticky top can't move things you can't push, which is... valid ig?)
@@ -520,7 +526,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false);
 		return success;
 	elif (success != Success.Yes and !hypothetical):
-		actor.animations.push_back([Animation.bump, dir]);
+		add_to_animation_server(actor, [Animation.bump, dir]);
 	return success;
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
@@ -688,7 +694,7 @@ func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
 	if (chrono < Chrono.GHOSTS):
 		add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
 		actor.set(prop, value);
-		actor.update_graphics();
+		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture()])
 	else:
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.set(prop, value);
@@ -801,7 +807,9 @@ func finish_animations() -> void:
 		actor.animation_timer = 0;
 		actor.animations.clear();
 		actor.position = terrainmap.map_to_world(actor.pos);
-		# TODO: handle sprite/state changes as well not even sure how I wanna do that yet
+		actor.update_graphics();
+	animation_server.clear();
+	animation_substep = 0;
 
 func update_ghosts() -> void:
 	for ghost in ghosts:
@@ -1052,6 +1060,7 @@ func character_move(dir: Vector2) -> bool:
 func time_passes(chrono: int) -> void:
 	if (chrono >= Chrono.META_UNDO):
 		return
+	animation_substep += 1;
 	var time_actors = []
 	for actor in actors:
 		# current rules:
@@ -1079,6 +1088,7 @@ func time_passes(chrono: int) -> void:
 	var something_happened = true;
 	var tries = 99;
 	while (something_happened and tries > 0):
+		animation_substep += 1;
 		tries -= 1;
 		something_happened = false;
 		for actor in time_actors:
@@ -1105,6 +1115,8 @@ func time_passes(chrono: int) -> void:
 				if (did_fall != Success.Yes):
 					set_actor_var(actor, "airborne", -1, chrono);
 	
+	animation_substep += 1;
+	
 	# NEW (as part of AD07) post-gravity cleanups: If an actor is airborne 1 and would be grounded next fall,
 	# land.
 	# It was vaguely tolerable for Light but I don't know if it was ever a mechanic I was like 'whoo' about,
@@ -1119,6 +1131,8 @@ func time_passes(chrono: int) -> void:
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
 				
+	animation_substep += 1;
+				
 	# AFTER-GRAVITY TILE ARRIVAL
 	for actor in time_actors:
 		var terrain = terrain_in_tile(actor.pos);
@@ -1129,18 +1143,18 @@ func time_passes(chrono: int) -> void:
 	
 		# Things on checkpoints are set back to turn 0 (losing their undo buffer).
 		# TODO: Horribly broken and it's not immediately obvious why. My basic idea is to 'defer' it to the end of turn so it can happen last.
-		if actor == light_actor and (terrain == Tiles.CheckpointBlue or terrain == Tiles.Checkpoint):
-			while light_turn > 0:
-				var events = light_undo_buffer.pop_at(light_turn - 1);
-				for event in events:
-					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
-				adjust_turn(false, -1, chrono);
-		if actor == heavy_actor and (terrain == Tiles.CheckpointRed or terrain == Tiles.Checkpoint):
-			while heavy_turn > 0:
-				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
-				for event in events:
-					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
-				adjust_turn(true, -1, chrono);
+#		if actor == light_actor and (terrain == Tiles.CheckpointBlue or terrain == Tiles.Checkpoint):
+#			while light_turn > 0:
+#				var events = light_undo_buffer.pop_at(light_turn - 1);
+#				for event in events:
+#					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
+#				adjust_turn(false, -1, chrono);
+#		if actor == heavy_actor and (terrain == Tiles.CheckpointRed or terrain == Tiles.Checkpoint):
+#			while heavy_turn > 0:
+#				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
+#				for event in events:
+#					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
+#				adjust_turn(true, -1, chrono);
 	
 func bottom_up(a, b) -> bool:
 	return a.pos.y > b.pos.y;
@@ -1225,6 +1239,29 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
 	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
+
+func add_to_animation_server(actor: Actor, animation: Array) -> void:
+	while animation_server.size() <= animation_substep:
+		animation_server.push_back([]);
+	animation_server[animation_substep].push_back([actor, animation]);
+
+func update_animation_server() -> void:
+	# don't interrupt ongoing animations
+	for actor in actors:
+		if actor.animations.size() > 0:
+			return;
+	
+	# look for new animations to play
+	while animation_server.size() > 0 and animation_server[0].size() == 0:
+		animation_server.pop_front();
+	if animation_server.size() == 0:
+		return;
+	
+	# we found new animations - give them to everyone at once
+	var animations = animation_server.pop_front();
+	for animation in animations:
+		animation[0].animations.push_back(animation[1]);
+		pass
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -1320,3 +1357,4 @@ func _process(delta: float) -> void:
 			update_info_labels();
 		
 	update_targeter();
+	update_animation_server();

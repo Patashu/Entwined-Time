@@ -34,101 +34,95 @@ var timer_max = 0.1;
 var post_mortem = -1;
 
 func update_graphics() -> void:
-	# TODO: when we build the animation server, we need this function to instead return a dictionary of properties to set
+	var tex = get_next_texture();
+	set_next_texture(tex);
+
+func get_next_texture() -> Texture:
+	# facing and powered modulate also automatically update here, since I want that to be instant
+	
 	# facing
 	if facing_left:
 		flip_h = true;
 	else:
 		flip_h = false;
+	
 	# powered
-	if is_character:
-		# this will get overriden by undo trail modulation for ghosts, which is perfectly fine by me
+	if is_character and !is_ghost:
 		if powered:
 			self.modulate = Color(1, 1, 1, 1);
 		else:
 			self.modulate = Color(0.5, 0.5, 0.5, 1);
+	
 	# airborne, broken
 	if actorname == "heavy":
 		if broken:
-			if self.texture != preload("res://assets/heavy_broken.png"):
-				timer = 0;
-				timer_max = 0.4;
-				hframes = 6;
-				frame = 0;
-				self.texture = preload("res://assets/heavy_broken.png");
+			return preload("res://assets/heavy_broken.png");
 		elif airborne >= 1:
-			if self.texture != preload("res://assets/heavy_rising.png"):
-				hframes = 1;
-				frame = 0;
-				self.texture = preload("res://assets/heavy_rising.png");
+			return preload("res://assets/heavy_rising.png");
 		elif airborne == 0:
-			if self.texture != preload("res://assets/heavy_falling.png"):
-				hframes = 1;
-				frame = 0;
-				self.texture = preload("res://assets/heavy_falling.png");
+			return preload("res://assets/heavy_falling.png");
 		else:
 			if !powered:
-				if self.texture != preload("res://assets/heavy_unpowered.png"):
-					hframes = 1;
-					frame = 0;
-					self.texture = preload("res://assets/heavy_unpowered.png");
+				return preload("res://assets/heavy_unpowered.png");
 			else:
-				if self.texture != preload("res://assets/heavy_idle.png"):
-					hframes = 1;
-					frame = 0;
-					self.texture = preload("res://assets/heavy_idle.png");
+				return preload("res://assets/heavy_idle.png");
+	
 	elif actorname == "light":
 		if broken:
-			if self.texture != preload("res://assets/light_broken.png"):
-				timer = 0;
-				timer_max = 0.4;
-				hframes = 6;
-				frame = 0;
-				self.texture = preload("res://assets/light_broken.png");
+			return preload("res://assets/light_broken.png");
 		elif airborne >= 1:
-			if self.texture != preload("res://assets/light_rising.png"):
-				timer = 0;
-				timer_max = 0.1;
-				hframes = 6;
-				frame = 0;
-				self.texture = preload("res://assets/light_rising.png");
+			return preload("res://assets/light_rising.png");
 		elif airborne == 0:
-			if self.texture != preload("res://assets/light_falling.png"):
-				timer = 0;
-				timer_max = 0.1;
-				hframes = 6;
-				frame = 0;
-				self.texture = preload("res://assets/light_falling.png");
+			return preload("res://assets/light_falling.png");
 		else:
 			if !powered:
-				if self.texture != preload("res://assets/light_unpowered.png"):
-					timer = 0;
-					timer_max = 0.1;
-					hframes = 1;
-					frame = 0;
-					self.texture = preload("res://assets/light_unpowered.png");
+				return preload("res://assets/light_unpowered.png");
 			else:
-				if self.texture != preload("res://assets/light_idle_animation.png"):
-					timer = 0;
-					timer_max = 0.1;
-					hframes = 12;
-					frame = 0;
-					self.texture = preload("res://assets/light_idle_animation.png");
+				return preload("res://assets/light_idle_animation.png");
+	
 	elif actorname == "iron_crate":
 		if broken:
-			self.texture = preload("res://assets/iron_crate_broken.png");
+			return preload("res://assets/iron_crate_broken.png");
 		else:
-			self.texture = preload("res://assets/iron_crate.png");
+			return preload("res://assets/iron_crate.png");
+	
 	elif actorname == "steel_crate":
 		if broken:
-			self.texture = preload("res://assets/steel_crate_broken.png");
+			return preload("res://assets/steel_crate_broken.png");
 		else:
-			self.texture = preload("res://assets/steel_crate.png");
+			return preload("res://assets/steel_crate.png");
+	
 	elif actorname == "power_crate":
 		if broken:
-			self.texture = preload("res://assets/power_crate_broken.png");
+			return preload("res://assets/power_crate_broken.png");
 		else:
-			self.texture = preload("res://assets/power_crate.png");
+			return preload("res://assets/power_crate.png");
+	
+	return null;
+
+func set_next_texture(tex: Texture) -> void:
+	if (self.texture == tex):
+		return;
+	self.texture = tex;
+	timer = 0;
+	frame = 0;
+	if texture == preload("res://assets/heavy_broken.png"):
+		timer_max = 0.4;
+		hframes = 6;
+	elif texture == preload("res://assets/light_broken.png"):
+		timer_max = 0.4;
+		hframes = 6;
+	elif texture == preload("res://assets/light_rising.png"):
+		timer_max = 0.1;
+		hframes = 6;
+	elif texture == preload("res://assets/light_falling.png"):
+		timer_max = 0.1;
+		hframes = 6;
+	elif texture == preload("res://assets/light_idle_animation.png"):
+		timer_max = 0.1;
+		hframes = 12;
+	else:
+		hframes = 1;
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)
@@ -217,6 +211,7 @@ func _process(delta: float) -> void:
 					position.x = round(position.x); position.y = round(position.y);
 					animations.pop_front();
 					animation_timer -= animation_timer_max;
+					# see previous comment
 					animation_timer = 0;
 				else:
 					bump_amount = (animation_timer/animation_timer_max);
@@ -224,4 +219,8 @@ func _process(delta: float) -> void:
 						bump_amount = 1-bump_amount;
 					bump_amount *= 0.2;
 					position += current_animation[1]*bump_amount*24;
+			elif (current_animation[0] == 2): #set_next_texture
+				set_next_texture(current_animation[1]);
+				animations.pop_front();
+				animation_timer = 0;
 		
