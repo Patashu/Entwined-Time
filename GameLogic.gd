@@ -653,20 +653,23 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	var actors_there = actors_in_tile(dest);
 	var pushables_there = [];
 	var tiny_pushables_there = [];
-	for actor in actors_there:
-		if actor.tiny_pushable():
-			tiny_pushables_there.push_back(actor);
-		elif actor.pushable():
-			pushables_there.push_back(actor);
+	for actor_there in actors_there:
+		if actor_there.tiny_pushable():
+			tiny_pushables_there.push_back(actor_there);
+		elif actor_there.pushable():
+			pushables_there.push_back(actor_there);
 	if (actors_there.size() > 0):
 		if (!can_push):
 			return Success.No;
 		# check if the current actor COULD push the next actor, then give them a push and return the result
-		# TODO: add logic for multi-push scenarios as they come up. for now, ban it
+		# Multi Push Rule: Multipushes are allowed (even multiple things in a tile and etc) unless another rule prohibits it.
 		if (pushers_list.size() > 0):
-			return Success.No;
+			# Light Clumsiness Rule: A multi-push can start with Light, but can't continue past Light.
+			if actor.actorname == "light":
+				return Success.No;
 		pushers_list.append(actor);
 		for actor_there in pushables_there:
+			# Strength Rule
 			if !strength_check(actor.strength, actor_there.heaviness):
 				pushers_list.pop_front();
 				return Success.No;
