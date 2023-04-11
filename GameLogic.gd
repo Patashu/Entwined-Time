@@ -234,7 +234,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/No.tscn"));
-	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
@@ -242,11 +241,20 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
-	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
-	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
 	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
+	
+	chapter_names.push_back("Space and Time");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
+	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
+	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
 	level_list.push_back(preload("res://levels/Graduation.tscn"));
 	level_list.push_back(preload("res://levels/GraduationEx.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
+	level_list.push_back(preload("res://levels/AcrobatsEscapeEx.tscn"));
+	level_list.push_back(preload("res://levels/AcrobatsEscapeEx2.tscn"));
 	
 	chapter_names.push_back("One-Ways");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -297,8 +305,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/LandfillEx.tscn"));
 	level_list.push_back(preload("res://levels/TheSecondPitEx2.tscn"));
-	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
-	level_list.push_back(preload("res://levels/AcrobatsEscapeEx.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());

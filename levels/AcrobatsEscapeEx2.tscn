@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 7, 0, 65537, 14, 0, 65539, 14, 0, 131073, 14, 0, 131075, 14, 0, 196608, 14, 0, 196609, 14, 0, 196611, 14, 0, 196612, 14, 0, 262144, 14, 0, 262148, 14, 0, 327680, 14, 0, 327684, 14, 0, 393216, 14, 0, 393220, 14, 0, 458752, 14, 0, 458753, 2, 0, 458754, 1, 0, 458755, 8, 0, 458756, 14, 0, 524288, 14, 0, 524289, 14, 0, 524290, 14, 0, 524291, 14, 0, 524292, 14, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Acrobat's Escape [VAR2]"
+level_replay = "xaxwdwawxaxzzsswcxzzxwxdxzzzxaxxwxwzwxdxzzwawxzzcxzzssxxwxdxccxwdxzzxzcccccwdxzzzcxzzzcccccccwxaxzxdxxxasxzxzzxxdsxzxzzxzzzcxzdxsccxwdcxxzwd"
+heavy_max_moves = 7
+light_max_moves = 6
