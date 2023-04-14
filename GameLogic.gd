@@ -8,6 +8,7 @@ onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
 onready var ghostsfolder : Node2D = levelscene.get_node("GhostsFolder");
 onready var levelfolder : Node2D = levelscene.get_node("LevelFolder");
 onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
+onready var underactorsparticles : Node2D = levelscene.get_node("UnderActorsParticles");
 onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
 onready var winlabel : Label = levelscene.get_node("WinLabel");
@@ -84,6 +85,16 @@ enum Animation {
 	set_next_texture,
 	sfx,
 	fluster,
+	fire_roars,
+}
+
+enum TimeColour {
+	Gray,
+	Magenta,
+	Red,
+	Blue,
+	Green,
+	Timeless
 }
 
 # attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
@@ -337,6 +348,8 @@ func ready_map() -> void:
 	for ghost in ghosts:
 		ghost.queue_free();
 	ghosts.clear();
+	for whatever in underactorsparticles.get_children():
+		whatever.queue_free();
 	heavy_turn = 0;
 	heavy_undo_buffer.clear();
 	light_turn = 0;
@@ -434,6 +447,7 @@ func calculate_map_size() -> void:
 	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2)+12;
 	actorsfolder.position = terrainmap.position;
 	ghostsfolder.position = terrainmap.position;
+	underactorsparticles.position = terrainmap.position;
 		
 func update_targeter() -> void:
 	if (heavy_selected and heavy_actor != null):
@@ -932,6 +946,8 @@ func meta_undo(is_silent: bool = false) -> bool:
 	undo_effect_strength = 0.08;
 	undo_effect_per_second = undo_effect_strength*(1/0.2);
 	undo_effect_color = meta_color;
+	for whatever in underactorsparticles.get_children():
+		whatever.queue_free();
 	finish_animations();
 	return true;
 	
@@ -1138,13 +1154,22 @@ func time_passes(chrono: int) -> void:
 			if (could_fall == Success.No):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
-				
+	
 	animation_substep(chrono);
-				
+	
 	# AFTER-GRAVITY TILE ARRIVAL
+	
+	# Things in fire break.
+	# TODO: once colours exist this gets more complicated
+	if chrono <= Chrono.CHAR_UNDO:
+		var time_colour = TimeColour.Magenta;
+		if (heavy_selected and chrono == Chrono.CHAR_UNDO):
+			time_colour = TimeColour.Blue;
+		elif (!heavy_selected and chrono == Chrono.CHAR_UNDO):
+			time_colour = TimeColour.Red;
+		add_to_animation_server(null, [Animation.fire_roars, time_colour])
 	for actor in time_actors:
-		var terrain = terrain_in_tile(actor.pos);
-		# Things in fire break.
+		var terrain = terrain_in_tile(actor.pos);		
 		if !actor.broken and terrain == Tiles.Fire and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
@@ -1257,6 +1282,25 @@ func add_to_animation_server(actor: Actor, animation: Array) -> void:
 		animation_server.push_back([]);
 	animation_server[animation_substep].push_back([actor, animation]);
 
+func handle_global_animation(animation: Array) -> void:
+	if animation[0] == Animation.fire_roars:
+		var fires = terrainmap.get_used_cells_by_id(Tiles.Fire);
+		for fire in fires:
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://OneTimeSprite.gd"));
+			sprite.texture = preload("res://assets/fire_spritesheet.png");
+			sprite.position = terrainmap.map_to_world(fire);
+			sprite.vframes = 3;
+			sprite.hframes = 8;
+			sprite.frame = 0;
+			sprite.centered = false;
+			if animation[1] == TimeColour.Blue:
+				sprite.frame = 8;
+			elif animation[1] == TimeColour.Magenta:
+				sprite.frame = 16;
+			sprite.frame_max = sprite.frame + 8;
+			underactorsparticles.add_child(sprite);
+
 func update_animation_server() -> void:
 	# don't interrupt ongoing animations
 	for actor in actors:
@@ -1272,8 +1316,10 @@ func update_animation_server() -> void:
 	# we found new animations - give them to everyone at once
 	var animations = animation_server.pop_front();
 	for animation in animations:
-		animation[0].animations.push_back(animation[1]);
-		pass
+		if animation[0] == null:
+			handle_global_animation(animation[1]);
+		else:
+			animation[0].animations.push_back(animation[1]);
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();

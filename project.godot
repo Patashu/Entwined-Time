@@ -45,6 +45,11 @@ _global_script_classes=[ {
 "path": "res://LevelSelect.gd"
 }, {
 "base": "Sprite",
+"class": "OneTimeSprite",
+"language": "GDScript",
+"path": "res://OneTimeSprite.gd"
+}, {
+"base": "Sprite",
 "class": "TimelineSlot",
 "language": "GDScript",
 "path": "res://timeline/TimelineSlot.gd"
@@ -62,6 +67,7 @@ _global_script_class_icons={
 "LevelInfo": "",
 "LevelScene": "",
 "LevelSelect": "",
+"OneTimeSprite": "",
 "TimelineSlot": "",
 "TimelineViewer": ""
 }
