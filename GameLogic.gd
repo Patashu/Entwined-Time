@@ -250,6 +250,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/Spikes.tscn"));
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
+	level_list.push_back(preload("res://levels/Campfire.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/No.tscn"));
@@ -1161,6 +1162,7 @@ func time_passes(chrono: int) -> void:
 	
 	# Things in fire break.
 	# TODO: once colours exist this gets more complicated
+	# might be sufficient to just check which of Heavy/Light are in time_actors, since that's really what matters
 	if chrono <= Chrono.CHAR_UNDO:
 		var time_colour = TimeColour.Magenta;
 		if (heavy_selected and chrono == Chrono.CHAR_UNDO):
