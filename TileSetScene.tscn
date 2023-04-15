@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -38,6 +38,10 @@
 [ext_resource path="res://assets/crate_goal_1.png" type="Texture" id=36]
 [ext_resource path="res://assets/crate_goal_3.png" type="Texture" id=37]
 [ext_resource path="res://assets/crate_goal_4.png" type="Texture" id=38]
+[ext_resource path="res://assets/spikeball_5.png" type="Texture" id=39]
+[ext_resource path="res://assets/spikeball_4.png" type="Texture" id=40]
+[ext_resource path="res://assets/spikeball_2.png" type="Texture" id=41]
+[ext_resource path="res://assets/spikeball_3.png" type="Texture" id=42]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -47,6 +51,25 @@ frame_1/texture = ExtResource( 34 )
 frame_1/delay_sec = 0.0
 frame_2/texture = ExtResource( 33 )
 frame_2/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=3]
+frames = 8
+fps = 5.0
+frame_0/texture = ExtResource( 16 )
+frame_1/texture = ExtResource( 41 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 42 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 40 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 39 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 40 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 42 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 41 )
+frame_7/delay_sec = 0.0
 
 [sub_resource type="AnimatedTexture" id=2]
 frames = 8
@@ -119,7 +142,7 @@ texture = ExtResource( 15 )
 
 [node name="Spikeball" type="Sprite" parent="."]
 position = Vector2( 114, 88 )
-texture = ExtResource( 16 )
+texture = SubResource( 3 )
 
 [node name="SteelCrate" type="Sprite" parent="."]
 position = Vector2( 114, 88 )
