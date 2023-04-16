@@ -259,6 +259,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheSpikePit.tscn"));
 	level_list.push_back(preload("res://levels/Campfire.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
+	level_list.push_back(preload("res://levels/Hell.tscn"));
 	level_list.push_back(preload("res://levels/No.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
