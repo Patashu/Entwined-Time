@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -42,6 +42,7 @@
 [ext_resource path="res://assets/spikeball_4.png" type="Texture" id=40]
 [ext_resource path="res://assets/spikeball_2.png" type="Texture" id=41]
 [ext_resource path="res://assets/spikeball_3.png" type="Texture" id=42]
+[ext_resource path="res://assets/no_crate.png" type="Texture" id=43]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -219,3 +220,7 @@ texture = ExtResource( 32 )
 [node name="CrateGoal" type="Sprite" parent="."]
 position = Vector2( 144, 130 )
 texture = SubResource( 2 )
+
+[node name="NoCrate" type="Sprite" parent="."]
+position = Vector2( 304, 139 )
+texture = ExtResource( 43 )

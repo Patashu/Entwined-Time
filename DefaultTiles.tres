@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=46 format=2]
+[gd_resource type="TileSet" load_steps=47 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -42,6 +42,7 @@
 [ext_resource path="res://assets/spikeball_4.png" type="Texture" id=40]
 [ext_resource path="res://assets/spikeball_2.png" type="Texture" id=41]
 [ext_resource path="res://assets/spikeball_3.png" type="Texture" id=42]
+[ext_resource path="res://assets/no_crate.png" type="Texture" id=43]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -288,8 +289,8 @@ frame_7/delay_sec = 0.0
 14/autotile/navpoly_map = [  ]
 14/autotile/priority_map = [  ]
 14/autotile/z_index_map = [  ]
-14/occluder_offset = Vector2( 0, 0 )
-14/navigation_offset = Vector2( 0, 0 )
+14/occluder_offset = Vector2( 108, 180 )
+14/navigation_offset = Vector2( 108, 180 )
 14/shape_offset = Vector2( 0, 0 )
 14/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 14/shape_one_way = false
@@ -548,3 +549,17 @@ frame_7/delay_sec = 0.0
 32/shape_one_way_margin = 0.0
 32/shapes = [  ]
 32/z_index = 0
+33/name = "NoCrate"
+33/texture = ExtResource( 43 )
+33/tex_offset = Vector2( 0, 0 )
+33/modulate = Color( 1, 1, 1, 1 )
+33/region = Rect2( 0, 0, 24, 24 )
+33/tile_mode = 0
+33/occluder_offset = Vector2( 12, 12 )
+33/navigation_offset = Vector2( 12, 12 )
+33/shape_offset = Vector2( 0, 0 )
+33/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+33/shape_one_way = false
+33/shape_one_way_margin = 0.0
+33/shapes = [  ]
+33/z_index = 0

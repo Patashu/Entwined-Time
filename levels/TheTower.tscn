@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 33, 0, 6, 32, 0, 7, 33, 0, 65541, 33, 0, 65542, 6, 0, 65543, 33, 0, 131077, 33, 0, 131078, 5, 0, 131079, 33, 0, 196613, 33, 0, 196614, 5, 0, 196615, 33, 0, 262149, 33, 0, 262150, 5, 0, 262151, 33, 0, 327685, 33, 0, 327686, 5, 0, 327687, 33, 0, 393221, 33, 0, 393222, 5, 0, 393223, 33, 0, 458757, 33, 0, 458758, 3, 0, 458759, 33, 0, 524288, 1, 0, 524291, 2, 0, 524292, 8, 0, 524293, 33, 0, 524294, 6, 0, 524295, 33, 0, 524300, 7, 0, 589824, 14, 196613, 589825, 14, 196614, 589826, 14, 196614, 589827, 14, 196614, 589828, 14, 196614, 589829, 14, 196615, 589830, 29, 0, 589831, 14, 196613, 589832, 14, 196614, 589833, 14, 196614, 589834, 14, 196614, 589835, 14, 196614, 589836, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Tower"
+level_replay = "xwxddaxdsxzxzxdxxzwxzxzdxzxzxswxzcdxzzxzxsswxdxzzzxzxwwwxzdxzzccxdxzzzxzzcaxcwxaxzdwwxzzxzzzzxzdddxxzxzxzzdxdddxddxzzzxzxadxdxzzxzxaadxdxzzzdddxzzzaaa"
+heavy_max_moves = 3
+light_max_moves = 3

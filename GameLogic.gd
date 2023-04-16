@@ -137,6 +137,7 @@ enum Tiles {
 	NoLight,
 	PowerCrate,
 	CrateGoal,
+	NoCrate,
 }
 
 # information about the level
@@ -209,7 +210,8 @@ func _ready() -> void:
 	# Call once when the game is booted up.
 	initialize_level_list();
 	prepare_audio();
-	assert_tile_enum();
+	if (OS.is_debug_build()):
+		assert_tile_enum();
 	
 	# Load the first map.
 	load_level(0);
@@ -254,6 +256,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/Spikes.tscn"));
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
+	level_list.push_back(preload("res://levels/TheSpikePit.tscn"));
 	level_list.push_back(preload("res://levels/Campfire.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
@@ -318,7 +321,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/CrateExpectations.tscn"));
 	level_list.push_back(preload("res://levels/Bridge.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
-	level_list.push_back(preload("res://levels/TheSecondPit.tscn"));
+	level_list.push_back(preload("res://levels/TheCratePit.tscn"));
 	level_list.push_back(preload("res://levels/OverDestination.tscn"));
 	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
@@ -326,10 +329,11 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
-	level_list.push_back(preload("res://levels/TheSecondPitEx.tscn"));
+	level_list.push_back(preload("res://levels/TheCratePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/LandfillEx.tscn"));
-	level_list.push_back(preload("res://levels/TheSecondPitEx2.tscn"));
+	level_list.push_back(preload("res://levels/TheCratePitEx2.tscn"));
+	level_list.push_back(preload("res://levels/TheTower.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -613,6 +617,8 @@ func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool
 		return actor.actorname == "heavy";
 	if (id == Tiles.NoLight):
 		return actor.actorname == "light";
+	if (id == Tiles.NoCrate):
+		return !actor.is_character;
 	if id == Tiles.Grate:
 		return actor.is_character;
 	if id == Tiles.OnewayEastGreen:
