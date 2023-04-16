@@ -290,6 +290,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
 	level_list.push_back(preload("res://levels/SecurityDoor.tscn"));
 	level_list.push_back(preload("res://levels/Jail.tscn"));
+	level_list.push_back(preload("res://levels/TheOneWayPit.tscn"));
 	level_list.push_back(preload("res://levels/Upstream.tscn"));
 	level_list.push_back(preload("res://levels/Downstream.tscn"));
 	level_list.push_back(preload("res://levels/EventHorizon.tscn"));
@@ -299,6 +300,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SecurityDoorEx2.tscn"));
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
+	#level_list.push_back(preload("res://levels/TheOneWayPitEx.tscn")); #doesn't work without another mechanic, see notes
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
 	
 	chapter_names.push_back("Ladders and Wooden Platforms");
@@ -326,7 +328,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/OverDestination.tscn"));
 	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
-	#level_list.push_back(preload("res://levels/Sokoban.tscn"));
+	#level_list.push_back(preload("res://levels/Sokoban.tscn")); #need a good idea and probably layers
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
@@ -344,7 +346,7 @@ func initialize_level_list() -> void:
 	# WORLD 5 - There are many Colours
 	# WORLD 6 - What is This?
 	# WORLD X - Trial of your Peers (custom levels world)
-	#level_list.push_back(preload("res://levels/Levitation.tscn"));
+	#level_list.push_back(preload("res://levels/Levitation.tscn")); #checkpoints are broken, need to rework
 	
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
