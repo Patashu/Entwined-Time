@@ -279,6 +279,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Secrets of Space-Time");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
+	level_list.push_back(preload("res://levels/InvisibleBridge.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
 	level_list.push_back(preload("res://levels/Graduation.tscn"));

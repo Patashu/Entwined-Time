@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 8, 0, 2, 2, 0, 65536, 14, 2, 65537, 14, 3, 65538, 14, 4, 131072, 14, 65538, 131073, 14, 65539, 131074, 14, 65540, 196608, 14, 131074, 196609, 14, 131075, 196610, 14, 131076, 196614, 1, 0, 196615, 7, 0, 262150, 14, 2, 262151, 14, 3, 262152, 14, 4, 327686, 14, 65538, 327687, 14, 65539, 327688, 14, 65540, 393222, 14, 131074, 393223, 14, 131075, 393224, 14, 131076 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Invisible Bridge"
+level_replay = "xwxaadddxwxzzzzzdxzzddddddxwz"
+heavy_max_moves = 6
+light_max_moves = 6
