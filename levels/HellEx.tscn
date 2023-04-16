@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 12, 0, 1, 12, 0, 2, 12, 0, 3, 12, 0, 4, 12, 0, 5, 12, 0, 6, 12, 0, 7, 12, 0, 8, 12, 0, 65536, 12, 0, 65544, 12, 0, 131072, 12, 0, 131080, 12, 0, 196608, 12, 0, 196611, 2, 0, 196613, 8, 0, 196616, 12, 0, 262144, 12, 0, 262146, 14, 2, 262147, 14, 3, 262148, 14, 3, 262149, 14, 3, 262150, 14, 4, 262152, 12, 0, 327680, 12, 0, 327681, 0, 0, 327682, 14, 131074, 327683, 14, 131075, 327684, 14, 131075, 327685, 14, 131075, 327686, 14, 131076, 327687, 0, 0, 327688, 12, 0, 393216, 12, 0, 393217, 0, 0, 393218, 12, 0, 393219, 12, 0, 393220, 12, 0, 393221, 12, 0, 393222, 12, 0, 393223, 0, 0, 393224, 12, 0, 458752, 12, 0, 458753, 0, 0, 458755, 1, 0, 458756, 12, 0, 458757, 7, 0, 458759, 0, 0, 458760, 12, 0, 524288, 12, 0, 524289, 12, 0, 524290, 12, 0, 524291, 14, 262148, 524292, 12, 0, 524293, 14, 262148, 524294, 12, 0, 524295, 12, 0, 524296, 12, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Hell [VAR1]"
+level_replay = "xdxddxwxdwxwxzzdxzzaaaxzzzxzxaaxdzxzxdaxzxzzxd"
+heavy_max_moves = 6
+light_max_moves = 6
