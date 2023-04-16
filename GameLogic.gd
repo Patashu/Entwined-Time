@@ -138,6 +138,7 @@ enum Tiles {
 	PowerCrate,
 	CrateGoal,
 	NoCrate,
+	HeavyFire,
 }
 
 # information about the level
@@ -261,6 +262,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/Hell.tscn"));
 	level_list.push_back(preload("res://levels/No.tscn"));
+	level_list.push_back(preload("res://levels/TheBoundlessSky.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
@@ -271,6 +273,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
 	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
+	level_list.push_back(preload("res://levels/FireInTheSky.tscn"));
+	level_list.push_back(preload("res://levels/FireInTheSkyEx.tscn"));
 	
 	chapter_names.push_back("Secrets of Space-Time");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -1174,6 +1178,8 @@ func time_passes(chrono: int) -> void:
 	
 	# NEW (as part of AD07) post-gravity cleanups: If an actor is airborne 1 and would be grounded next fall,
 	# land.
+	# (UPDATE AD08: Now it's 'and the tile under you is no_push solid', so Heavy can land on Light, because
+	# it's an interesting mechanic)
 	# It was vaguely tolerable for Light but I don't know if it was ever a mechanic I was like 'whoo' about,
 	#and now it definitely sucks.
 	for actor in time_actors:
@@ -1181,7 +1187,7 @@ func time_passes(chrono: int) -> void:
 			if is_suspended(actor):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
-			var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
+			var could_fall = try_enter(actor, Vector2.DOWN, chrono, false, true, true);
 			if (could_fall == Success.No):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
@@ -1203,6 +1209,9 @@ func time_passes(chrono: int) -> void:
 	for actor in time_actors:
 		var terrain = terrain_in_tile(actor.pos);		
 		if !actor.broken and terrain == Tiles.Fire and actor.durability <= Durability.FIRE:
+			actor.post_mortem = Durability.FIRE;
+			set_actor_var(actor, "broken", true, chrono);
+		if !actor.broken and terrain == Tiles.HeavyFire and actor.durability <= Durability.FIRE and actor.actorname != "light":
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
 	
@@ -1339,6 +1348,19 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.frame = 16;
 			sprite.frame_max = sprite.frame + 8;
 			underactorsparticles.add_child(sprite);
+		if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Red):
+			fires = terrainmap.get_used_cells_by_id(Tiles.HeavyFire);
+			for fire in fires:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://OneTimeSprite.gd"));
+				sprite.texture = preload("res://assets/fire_spritesheet.png");
+				sprite.position = terrainmap.map_to_world(fire);
+				sprite.vframes = 3;
+				sprite.hframes = 8;
+				sprite.frame = 0;
+				sprite.centered = false;
+				sprite.frame_max = sprite.frame + 8;
+				underactorsparticles.add_child(sprite);
 
 func update_animation_server() -> void:
 	# don't interrupt ongoing animations
