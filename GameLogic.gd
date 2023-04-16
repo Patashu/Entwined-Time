@@ -321,6 +321,9 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
 	level_list.push_back(preload("res://levels/TrophyCabinetEx3.tscn"));
+	level_list.push_back(preload("res://levels/Bonfire.tscn"));
+	level_list.push_back(preload("res://levels/BonfireEx.tscn"));
+	level_list.push_back(preload("res://levels/BonfireEx2.tscn"));
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_list.size());
