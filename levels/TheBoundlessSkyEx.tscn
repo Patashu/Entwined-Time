@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 8, 0, 1, 2, 0, 65536, 14, 524290, 65537, 14, 196615, 131072, 14, 262145, 196608, 14, 327681, 327684, 7, 0, 327685, 1, 0, 393220, 14, 196613, 393221, 14, 524292, 458757, 14, 262145, 524293, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "The Boundless Sky [VAR1]"
+level_replay = "xwxaxzdxwzxzwxdxzxzxwxzxzxwxwddssxzcwdxwzxzzddxzzdxdxas"
+heavy_max_moves = 6
+light_max_moves = 6

@@ -285,6 +285,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GraduationEx.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/TheBoundlessSkyEx.tscn"));
+	level_list.push_back(preload("res://levels/TheBoundlessSkyEx2.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscapeEx.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscapeEx2.tscn"));
