@@ -309,7 +309,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SecurityDoorEx2.tscn"));
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
-	#level_list.push_back(preload("res://levels/TheOneWayPitEx.tscn")); #doesn't work without another mechanic, see notes
+	level_list.push_back(preload("res://levels/TheOneWayPitEx.tscn"));
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
 	
 	chapter_names.push_back("Ladders and Wooden Platforms");
