@@ -8,6 +8,7 @@ onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
 onready var ghostsfolder : Node2D = levelscene.get_node("GhostsFolder");
 onready var levelfolder : Node2D = levelscene.get_node("LevelFolder");
 onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
+onready var overactorsparticles : Node2D = levelscene.get_node("OverActorsParticles");
 onready var underactorsparticles : Node2D = levelscene.get_node("UnderActorsParticles");
 onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
@@ -86,6 +87,9 @@ enum Animation {
 	sfx,
 	fluster,
 	fire_roars,
+	spawn_onetimesprite_overactorsparticles,
+	ding,
+	unding,
 }
 
 enum TimeColour {
@@ -351,6 +355,8 @@ func ready_map() -> void:
 	ghosts.clear();
 	for whatever in underactorsparticles.get_children():
 		whatever.queue_free();
+	for whatever in overactorsparticles.get_children():
+		whatever.queue_free();
 	heavy_turn = 0;
 	heavy_undo_buffer.clear();
 	light_turn = 0;
@@ -449,6 +455,7 @@ func calculate_map_size() -> void:
 	actorsfolder.position = terrainmap.position;
 	ghostsfolder.position = terrainmap.position;
 	underactorsparticles.position = terrainmap.position;
+	overactorsparticles.position = terrainmap.position;
 		
 func update_targeter() -> void:
 	if (heavy_selected and heavy_actor != null):
@@ -533,6 +540,11 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		add_undo_event([Undo.move, actor, dir], chrono);
 		actor.pos = pos;
 		add_to_animation_server(actor, [Animation.move, dir]);
+		if (!actor.is_character):
+			if terrain_in_tile(actor.pos) == Tiles.CrateGoal:
+				add_to_animation_server_or_directly_animate_if_its_timeless(actor, [Animation.ding], chrono);
+			else:
+				add_to_animation_server_or_directly_animate_if_its_timeless(actor, [Animation.unding], chrono);
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
 		#(AD05: apparently I decided the sticky top can't move things you can't push, which is... valid ig?)
@@ -949,6 +961,8 @@ func meta_undo(is_silent: bool = false) -> bool:
 	undo_effect_color = meta_color;
 	for whatever in underactorsparticles.get_children():
 		whatever.queue_free();
+	for whatever in overactorsparticles.get_children():
+		whatever.queue_free();
 	finish_animations();
 	return true;
 	
@@ -1283,6 +1297,13 @@ func add_to_animation_server(actor: Actor, animation: Array) -> void:
 	while animation_server.size() <= animation_substep:
 		animation_server.push_back([]);
 	animation_server[animation_substep].push_back([actor, animation]);
+
+func add_to_animation_server_or_directly_animate_if_its_timeless(actor: Actor, animation: Array, chrono: int) -> void:
+	if chrono <= Chrono.CHAR_UNDO:
+		add_to_animation_server(actor, animation);
+	else:
+		actor.animations.push_back(animation);
+		actor._process(0);
 
 func handle_global_animation(animation: Array) -> void:
 	if animation[0] == Animation.fire_roars:

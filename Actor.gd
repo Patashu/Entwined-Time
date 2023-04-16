@@ -35,6 +35,8 @@ var post_mortem = -1;
 # light fluster logic
 var fluster_timer = 0;
 var fluster_timer_max = 0;
+# ding
+var ding = null;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
@@ -201,6 +203,7 @@ func _process(delta: float) -> void:
 		# animation system stuff
 		if (animations.size() > 0):
 			var current_animation = animations[0];
+			var is_done = true;
 			if (current_animation[0] == 0): #move
 				animation_timer_max = 0.083;
 				position -= current_animation[1]*(animation_timer/animation_timer_max)*24;
@@ -209,12 +212,8 @@ func _process(delta: float) -> void:
 					position += current_animation[1]*1*24;
 					# no rounding errors here! get rounded sucker!
 					position.x = round(position.x); position.y = round(position.y);
-					animations.pop_front();
-					animation_timer -= animation_timer_max;
-					# I think ideally we'd be part-way-through the next move but ugh I don't want to write this
-					# so ACTUALLY I'm just going to do this LMAO
-					animation_timer = 0;
 				else:
+					is_done = false;
 					position += current_animation[1]*(animation_timer/animation_timer_max)*24;
 			elif (current_animation[0] == 1): #bump
 				animation_timer_max = 0.1;
@@ -226,11 +225,8 @@ func _process(delta: float) -> void:
 				animation_timer += delta;
 				if (animation_timer > animation_timer_max):
 					position.x = round(position.x); position.y = round(position.y);
-					animations.pop_front();
-					animation_timer -= animation_timer_max;
-					# see previous comment
-					animation_timer = 0;
 				else:
+					is_done = false;
 					bump_amount = (animation_timer/animation_timer_max);
 					if (bump_amount > 0.5):
 						bump_amount = 1-bump_amount;
@@ -238,10 +234,36 @@ func _process(delta: float) -> void:
 					position += current_animation[1]*bump_amount*24;
 			elif (current_animation[0] == 2): #set_next_texture
 				set_next_texture(current_animation[1]);
-				animations.pop_front();
-				animation_timer = 0;
 			elif (current_animation[0] == 4): #fluster
 				fluster();
+			elif (current_animation[0] == 6): #spawn_onetimesprite_overactorsparticles
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://OneTimeSprite.gd"));
+				sprite.texture = current_animation[1];
+				sprite.position = position;
+				sprite.vframes = round(sprite.get_rect().size.y/24);
+				sprite.hframes = round(sprite.get_rect().size.x/24);
+				sprite.frame = 0;
+				sprite.centered = false;
+				sprite.frame_max = sprite.hframes*sprite.vframes;
+				sprite.frame_timer_max = current_animation[2];
+				self.get_parent().get_parent().get_node("OverActorsParticles").add_child(sprite);
+			elif (current_animation[0] == 7): #ding
+				if (ding == null):
+					var sprite = Sprite.new();
+					sprite.set_script(preload("res://OneTimeSprite.gd"));
+					sprite.texture = preload("res://assets/crate_goal_success.png");
+					sprite.hframes = 10;
+					sprite.centered = false;
+					sprite.frame_max = 99;
+					sprite.frame_timer_max = 0.05;
+					self.add_child(sprite);
+					ding = sprite;
+			elif (current_animation[0] == 8): #unding
+				if ding != null:
+					ding.queue_free();
+					ding = null;
+			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
 		
