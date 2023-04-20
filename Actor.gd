@@ -1,6 +1,7 @@
 extends ActorBase
 class_name Actor
 
+var gamelogic = null
 var actorname = ""
 var pos = Vector2.ZERO
 #var state = {}
@@ -129,10 +130,10 @@ func set_next_texture(tex: Texture) -> void:
 	frame_timer = 0;
 	frame = 0;
 	if texture == preload("res://assets/heavy_broken.png"):
-		frame_timer_max = 0.2;
+		frame_timer_max = 0.4;
 		hframes = 8;
 	elif texture == preload("res://assets/light_broken.png"):
-		frame_timer_max = 0.2;
+		frame_timer_max = 0.4;
 		hframes = 8;
 	elif texture == preload("res://assets/light_rising.png"):
 		frame_timer_max = 0.1;
@@ -251,6 +252,8 @@ func _process(delta: float) -> void:
 					position += current_animation[1]*bump_amount*24;
 			elif (current_animation[0] == 2): #set_next_texture
 				set_next_texture(current_animation[1]);
+			elif (current_animation[0] == 3): #sfx
+				gamelogic.play_sound(current_animation[1]);
 			elif (current_animation[0] == 4): #fluster
 				fluster();
 			elif (current_animation[0] == 6): #spawn_onetimesprite_overactorsparticles
@@ -265,6 +268,25 @@ func _process(delta: float) -> void:
 				sprite.frame_max = sprite.hframes*sprite.vframes;
 				sprite.frame_timer_max = current_animation[2];
 				self.get_parent().get_parent().get_node("OverActorsParticles").add_child(sprite);
+			elif (current_animation[0] == 7): #explode
+				if (is_character):
+						var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+						for i in range(10):
+							var sprite = Sprite.new();
+							sprite.set_script(preload("res://OneTimeSprite.gd"));
+							sprite.texture = preload("res://assets/broken_explosion.png")
+							sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+							sprite.vframes = round(sprite.get_rect().size.y/24);
+							sprite.hframes = round(sprite.get_rect().size.x/24);
+							sprite.frame = 0;
+							if (actorname == "heavy"):
+								sprite.frame = 4;
+							sprite.centered = true;
+							sprite.scale = Vector2(0.5, 0.5);
+							sprite.frame_max = sprite.frame + 4;
+							sprite.frame_timer_max = 0.2;
+							sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
+							overactorsparticles.add_child(sprite);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

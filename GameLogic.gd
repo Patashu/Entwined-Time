@@ -19,6 +19,7 @@ onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
 onready var heavytimeline : Node2D = levelscene.get_node("HeavyTimeline");
 onready var lighttimeline : Node2D = levelscene.get_node("LightTimeline");
+onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
 
 # distinguish between temporal layers when a move or state change happens
 # ghosts is for undo trail ghosts
@@ -88,6 +89,7 @@ enum Animation {
 	fluster,
 	fire_roars,
 	spawn_onetimesprite_overactorsparticles,
+	explode,
 }
 
 enum TimeColour {
@@ -571,6 +573,7 @@ func toggle_mute() -> void:
 
 func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) -> Actor:
 	var actor = Actor.new();
+	actor.gamelogic = self;
 	actor.actorname = actorname;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
 	actors.append(actor);
@@ -813,8 +816,8 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 		# special case - if we break or unbreak, we can ding or unding too
 		if prop == "broken":
 			if value == true:
-				if (chrono < Chrono.META_UNDO):
-					play_sound("broken");
+				add_to_animation_server(actor, [Animation.sfx, "broken"])
+				add_to_animation_server(actor, [Animation.explode])
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
 						for goal in goals:
@@ -828,8 +831,7 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 					if actor.dinged:
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
-				if (chrono < Chrono.META_UNDO):
-					play_sound("unbroken");
+				add_to_animation_server(actor, [Animation.sfx, "unbroken"])
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
 						for goal in goals:
@@ -928,6 +930,7 @@ func get_ghost_that_hasnt_moved(actor : Actor) -> Actor:
 func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	# TODO: poorly refactored with make_actor
 	var new = Actor.new();
+	new.gamelogic = self;
 	new.actorname = actor.actorname;
 	new.texture = actor.texture;
 	new.offset = actor.offset;
