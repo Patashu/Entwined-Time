@@ -66,7 +66,8 @@ func prepare_chapter() -> void:
 		if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
 			var star = Sprite.new();
 			star.texture = preload("res://assets/star.png");
-			star.position = Vector2(button.rect_position.x-16, button.rect_position.y);
+			star.scale = Vector2(0.5, 0.5);
+			star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
 			star.centered = false;
 			holder.add_child(star);
 			pass;

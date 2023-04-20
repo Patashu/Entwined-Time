@@ -1486,7 +1486,7 @@ func update_level_label() -> void:
 		var string_size = preload("res://standardfont.tres").get_string_size(levellabel.text);
 		var label_middle = levellabel.rect_position.x + levellabel.rect_size.x / 2;
 		var string_left = label_middle - string_size.x/2;
-		levelstar.position = Vector2(string_left-16, levellabel.rect_position.y);
+		levelstar.position = Vector2(string_left-14, levellabel.rect_position.y);
 	else:
 		levelstar.visible = false;
 	
