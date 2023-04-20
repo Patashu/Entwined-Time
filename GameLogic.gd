@@ -390,9 +390,9 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
 	level_list.push_back(preload("res://levels/TheCratePit.tscn"));
 	level_list.push_back(preload("res://levels/OverDestination.tscn"));
+	level_list.push_back(preload("res://levels/Sokoban.tscn"));
 	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
-	#level_list.push_back(preload("res://levels/Sokoban.tscn")); #need a good idea and probably layers
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
@@ -467,37 +467,14 @@ func initialize_timeline_viewers() -> void:
 	lighttimeline.reset();
 
 func make_actors() -> void:
-	# TODO: I don't find goals or actors on other layers yet
+	# TODO: I don't find actors on other layers yet
 	
 	# find goals and goal-ify them
-	var heavy_goal_tiles = terrainmap.get_used_cells_by_id(Tiles.HeavyGoal);
-	for tile in heavy_goal_tiles:
-		var goal = Goal.new();
-		goal.actorname = "heavy_goal";
-		goal.texture = preload("res://assets/BigPortalRed.png");
-		goal.centered = true;
-		goal.pos = tile;
-		goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
-		goal.modulate = Color(1, 1, 1, 0.8);
-		goal.instantly_reach_scalify();
-		goals.append(goal);
-		actorsfolder.add_child(goal);
-		goal.update_graphics();
+	find_goals(terrainmap);
+	for layer in terrainmap.get_children():
+		if layer is TileMap:
+			find_goals(layer);
 	
-	var light_goal_tiles = terrainmap.get_used_cells_by_id(Tiles.LightGoal);
-	for tile in light_goal_tiles:
-		var goal = Goal.new();
-		goal.actorname = "light_goal";
-		goal.texture = preload("res://assets/BigPortalBlue.png");
-		goal.centered = true;
-		goal.pos = tile;
-		goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
-		goal.modulate = Color(1, 1, 1, 0.8);
-		goal.instantly_reach_scalify();
-		goals.append(goal);
-		actorsfolder.add_child(goal);
-		goal.update_graphics();
-		
 	# find heavy and light and turn them into actors
 	var heavy_tile = terrainmap.get_used_cells_by_id(Tiles.HeavyIdle)[0];
 	terrainmap.set_cellv(heavy_tile, -1);
@@ -533,6 +510,35 @@ func make_actors() -> void:
 	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
 	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
 	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, -1, false, Color(1, 0, 0.86, 1));
+	
+func find_goals(layer: TileMap) -> void:
+	var heavy_goal_tiles = layer.get_used_cells_by_id(Tiles.HeavyGoal);
+	for tile in heavy_goal_tiles:
+		var goal = Goal.new();
+		goal.actorname = "heavy_goal";
+		goal.texture = preload("res://assets/BigPortalRed.png");
+		goal.centered = true;
+		goal.pos = tile;
+		goal.position = layer.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
+		goal.modulate = Color(1, 1, 1, 0.8);
+		goal.instantly_reach_scalify();
+		goals.append(goal);
+		actorsfolder.add_child(goal);
+		goal.update_graphics();
+	
+	var light_goal_tiles = layer.get_used_cells_by_id(Tiles.LightGoal);
+	for tile in light_goal_tiles:
+		var goal = Goal.new();
+		goal.actorname = "light_goal";
+		goal.texture = preload("res://assets/BigPortalBlue.png");
+		goal.centered = true;
+		goal.pos = tile;
+		goal.position = layer.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
+		goal.modulate = Color(1, 1, 1, 0.8);
+		goal.instantly_reach_scalify();
+		goals.append(goal);
+		actorsfolder.add_child(goal);
+		goal.update_graphics();
 	
 func extract_actors(id: int, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
 	var tiles = terrainmap.get_used_cells_by_id(id);
@@ -1077,6 +1083,9 @@ func check_won() -> void:
 		# check for crate goals as well
 		# PERF: if this ends up being slow, I can cache it on level load since it won't ever change. but it seems fast enough?
 		var crate_goals = terrainmap.get_used_cells_by_id(Tiles.CrateGoal);
+		for layer in terrainmap.get_children():
+			if layer is TileMap:
+				crate_goals.append_array(layer.get_used_cells_by_id(Tiles.CrateGoal));
 		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
 		for crate_goal in crate_goals:
 			var crate_goal_satisfied = false;
@@ -1672,8 +1681,7 @@ func _process(delta: float) -> void:
 		if (Input.is_action_just_pressed("start_saved_replay")):
 			if (OS.is_debug_build() and Input.is_action_pressed("shift")):
 				floating_text("Shift+F11: Unwin");
-				save_file["levels"][level_name]["won"] = null;
-				save_file["levels"][level_name]["replay"] = null;
+				save_file["levels"][level_name].clear();
 				save_game();
 				update_level_label();
 			else:
