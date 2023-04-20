@@ -321,7 +321,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscapeEx.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscapeEx2.tscn"));
-	level_list.push_back(preload("res://levels/TheSpikePitEx.tscn"));
 	
 	chapter_names.push_back("One-Ways");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -340,6 +339,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
 	level_list.push_back(preload("res://levels/TheOneWayPitEx.tscn"));
+	level_list.push_back(preload("res://levels/TheSpikePitEx.tscn"));
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
 	
 	chapter_names.push_back("Ladders and Wooden Platforms");
@@ -394,7 +394,7 @@ func initialize_level_list() -> void:
 	
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
-		level_names.push_back(level.get_child(0).level_name);
+		level_names.push_back(level.get_node("LevelInfo").level_name);
 		level.queue_free();
 
 func ready_map() -> void:
@@ -420,11 +420,12 @@ func ready_map() -> void:
 	heavy_selected = true;
 	user_replay = "";
 	
-	level_name = terrainmap.get_child(0).level_name;
-	level_author = terrainmap.get_child(0).level_author;
-	level_replay = terrainmap.get_child(0).level_replay;
-	heavy_max_moves = terrainmap.get_child(0).heavy_max_moves;
-	light_max_moves = terrainmap.get_child(0).light_max_moves;
+	var level_info = terrainmap.get_node("LevelInfo");
+	level_name = level_info.level_name;
+	level_author = level_info.level_author;
+	level_replay = level_info.level_replay;
+	heavy_max_moves = level_info.heavy_max_moves;
+	light_max_moves = level_info.light_max_moves;
 	calculate_map_size();
 	make_actors();
 	
@@ -627,27 +628,29 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		
 		#ding logic
 		if (!actor.broken):
+			var terrain = terrain_in_tile(actor.pos);
+			var old_terrain = terrain_in_tile(actor.pos - dir);
 			if (!actor.is_character):
-				if terrain_in_tile(actor.pos) == Tiles.CrateGoal:
+				if terrain.has(Tiles.CrateGoal):
 					if !actor.dinged:
 						set_actor_var(actor, "dinged", true, chrono);
 				else:
 					if actor.dinged:
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
-				if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
+				if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
 					for goal in goals:
 						if goal.actorname == "heavy_goal" and !goal.dinged:
 							set_actor_var(goal, "dinged", true, chrono);
-				if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
+				if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
 					for goal in goals:
 						if goal.actorname == "light_goal" and !goal.dinged:
 							set_actor_var(goal, "dinged", true, chrono);
-				if actor.actorname == "heavy" and terrain_in_tile(actor.pos - dir) == Tiles.HeavyGoal:
+				if actor.actorname == "heavy" and old_terrain.has(Tiles.HeavyGoal):
 					for goal in goals:
 						if goal.actorname == "heavy_goal" and goal.dinged:
 							set_actor_var(goal, "dinged", false, chrono);
-				if actor.actorname == "light" and terrain_in_tile(actor.pos - dir) == Tiles.LightGoal:
+				if actor.actorname == "light" and old_terrain.has(Tiles.LightGoal):
 					for goal in goals:
 						if goal.actorname == "light_goal" and goal.dinged:
 							set_actor_var(goal, "dinged", false, chrono);
@@ -709,66 +712,87 @@ func actors_in_tile(pos: Vector2) -> Array:
 			result.append(actor);
 	return result;
 	
-func terrain_in_tile(pos: Vector2) -> int:
-	return terrainmap.get_cellv(pos);
+func terrain_in_tile(pos: Vector2) -> Array:
+	var result = [];
+	result.append(terrainmap.get_cellv(pos));
+	for layer in terrainmap.get_children():
+		if layer is TileMap:
+			result.append(layer.get_cellv(pos));
+	return result;
 
-func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool = false) -> bool:
-	var id = terrain_in_tile(pos);
-	if id == Tiles.Wall || id == Tiles.LockClosed || id == Tiles.Spikeball:
-		return true;
-	if id == Tiles.NoHeavy:
-		return actor.actorname == "heavy";
-	if (id == Tiles.NoLight):
-		return actor.actorname == "light";
-	if (id == Tiles.NoCrate):
-		return !actor.is_character;
-	if id == Tiles.Grate:
-		return actor.is_character;
-	if id == Tiles.OnewayEastGreen:
-		return dir == Vector2.LEFT;
-	if id == Tiles.OnewayWestGreen:
-		return dir == Vector2.RIGHT;
-	if id == Tiles.OnewayNorthGreen:
-		return dir == Vector2.DOWN;
-	if id == Tiles.OnewaySouthGreen:
-		return dir == Vector2.UP;
-	if (!is_retro):
-		if id == Tiles.OnewayEast:
-			return dir == Vector2.LEFT;
-		if id == Tiles.OnewayWest:
-			return dir == Vector2.RIGHT;
-		if id == Tiles.OnewayNorth:
-			return dir == Vector2.DOWN;
-		if id == Tiles.OnewaySouth:
-			return dir == Vector2.UP;
-	else:
+func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool, solid_surprises_are_solid: bool) -> bool:
+	var terrain = terrain_in_tile(pos);
+	var result = false;
+	for id in terrain:
+		match id:
+			Tiles.Wall:
+				result = true;
+			Tiles.LockClosed:
+				result = true;
+			Tiles.Spikeball:
+				result = solid_surprises_are_solid;
+			Tiles.NoHeavy:
+				result = actor.actorname == "heavy";
+			Tiles.NoLight:
+				result = actor.actorname == "light";
+			Tiles.NoCrate:
+				result = !actor.is_character;
+			Tiles.Grate:
+				result = actor.is_character;
+			Tiles.OnewayEastGreen:
+				result = dir == Vector2.LEFT;
+			Tiles.OnewayWestGreen:
+				result = dir == Vector2.RIGHT;
+			Tiles.OnewayNorthGreen:
+				result = dir == Vector2.DOWN;
+			Tiles.OnewaySouthGreen:
+				result = dir == Vector2.UP;
+			Tiles.LadderPlatform:
+				result = dir == Vector2.DOWN and is_gravity;
+			Tiles.WoodenPlatform:
+				result = dir == Vector2.DOWN and is_gravity;
+			Tiles.OnewayEast:
+				result = !is_retro and dir == Vector2.LEFT;
+			Tiles.OnewayWest:
+				result = !is_retro and dir == Vector2.RIGHT;
+			Tiles.OnewayNorth:
+				result = !is_retro and dir == Vector2.DOWN;
+			Tiles.OnewaySouth:
+				result = !is_retro and dir == Vector2.UP;
+		if result:
+			return true;
+			
+	if (is_retro):
 		# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
 		# so check that.
-		var retro_id = terrain_in_tile(pos - dir);
-		if retro_id == Tiles.OnewayEast:
-			return dir == Vector2.RIGHT;
-		if retro_id == Tiles.OnewayWest:
-			return dir == Vector2.LEFT;
-		if retro_id == Tiles.OnewayNorth:
-			return dir == Vector2.UP;
-		if retro_id == Tiles.OnewaySouth:
-			return dir == Vector2.DOWN;
-	if id == Tiles.LadderPlatform || id == Tiles.WoodenPlatform:
-		return dir == Vector2.DOWN and is_gravity;
-	return false;
+		var retro_terrain = terrain_in_tile(pos - dir);
+		for retro_id in retro_terrain:
+			match retro_id:
+				Tiles.OnewayEast:
+					result = dir == Vector2.RIGHT;
+				Tiles.OnewayWest:
+					result = dir == Vector2.LEFT;
+				Tiles.OnewayNorth:
+					result = dir == Vector2.UP;
+				Tiles.OnewaySouth:
+					result = dir == Vector2.DOWN;
+		if result:
+			return true;
+	
+	return result;
 	
 func is_suspended(actor: Actor):
 	#PERF: could try caching this and only updating it when an actor moves or breaks
 	if (!actor.climbs()):
 		return false;
-	var id = terrain_in_tile(actor.pos);
-	return id == Tiles.Ladder || id == Tiles.LadderPlatform;
+	var terrain = terrain_in_tile(actor.pos);
+	return terrain.has(Tiles.Ladder) || terrain.has(Tiles.LadderPlatform);
 
 func terrain_is_hazardous(actor: Actor, pos: Vector2) -> int:
 	if (pos.y > map_y_max and actor.durability <= Durability.PITS):
 		return Durability.PITS;
-	var id = terrain_in_tile(pos);
-	if (id == Tiles.Spikeball and actor.durability <= Durability.SPIKES):
+	var terrain = terrain_in_tile(pos);
+	if (terrain.has(Tiles.Spikeball) and actor.durability <= Durability.SPIKES):
 		return Durability.SPIKES;
 	return -1;
 	
@@ -788,6 +812,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return Success.Yes;
+	if (terrain_is_solid(actor, dest, dir, is_gravity, is_retro, false)):
+		return Success.No;
 	var hazard = terrain_is_hazardous(actor, dest);
 	if (hazard > -1):
 		# AD04: being broken makes you immune to breaking :D
@@ -795,7 +821,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			actor.post_mortem = hazard;
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
-	if (terrain_is_solid(actor, dest, dir, is_gravity, is_retro)):
+	if (terrain_is_solid(actor, dest, dir, is_gravity, is_retro, true)):
 		return Success.No;
 	var actors_there = actors_in_tile(dest);
 	var pushables_there = [];
@@ -838,15 +864,16 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 		
 		# special case - if we break or unbreak, we can ding or unding too
 		if prop == "broken":
+			var terrain = terrain_in_tile(actor.pos);
 			if value == true:
 				add_to_animation_server(actor, [Animation.sfx, "broken"])
 				add_to_animation_server(actor, [Animation.explode])
 				if actor.is_character:
-					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
+					if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
 						for goal in goals:
 							if goal.actorname == "heavy_goal" and goal.dinged:
 								set_actor_var(goal, "dinged", false, chrono);
-					if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
+					if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
 						for goal in goals:
 							if goal.actorname == "light_goal" and goal.dinged:
 								set_actor_var(goal, "dinged", false, chrono);
@@ -856,16 +883,16 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 			else:
 				add_to_animation_server(actor, [Animation.sfx, "unbroken"])
 				if actor.is_character:
-					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
+					if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
 						for goal in goals:
 							if goal.actorname == "heavy_goal" and goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
-					if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
+					if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
 						for goal in goals:
 							if goal.actorname == "light_goal" and goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
 				else:
-					if terrain_in_tile(actor.pos) == Tiles.CrateGoal:
+					if terrain.has(Tiles.CrateGoal):
 						if !actor.dinged:
 							set_actor_var(actor, "dinged", true, chrono);
 		
@@ -1019,7 +1046,7 @@ func adjust_meta_turn(amount: int) -> void:
 	
 func check_won() -> void:
 	won = false;
-	if (!light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos) == Tiles.HeavyGoal and terrain_in_tile(light_actor.pos) == Tiles.LightGoal):
+	if (!light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos).has(Tiles.HeavyGoal) and terrain_in_tile(light_actor.pos).has(Tiles.LightGoal)):
 		won = true;
 		# but wait!
 		# check for crate goals as well
@@ -1357,10 +1384,10 @@ func time_passes(chrono: int) -> void:
 		add_to_animation_server(null, [Animation.fire_roars, time_colour])
 	for actor in time_actors:
 		var terrain = terrain_in_tile(actor.pos);		
-		if !actor.broken and terrain == Tiles.Fire and actor.durability <= Durability.FIRE:
+		if !actor.broken and terrain.has(Tiles.Fire) and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
-		if !actor.broken and terrain == Tiles.HeavyFire and actor.durability <= Durability.FIRE and actor.actorname != "light":
+		if !actor.broken and terrain.has(Tiles.HeavyFire) and actor.durability <= Durability.FIRE and actor.actorname != "light":
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
 	
