@@ -598,30 +598,31 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		add_to_animation_server(actor, [Animation.move, dir]);
 		
 		#ding logic
-		if (!actor.is_character):
-			if terrain_in_tile(actor.pos) == Tiles.CrateGoal:
-				if !actor.dinged:
-					set_actor_var(actor, "dinged", true, chrono);
+		if (!actor.broken):
+			if (!actor.is_character):
+				if terrain_in_tile(actor.pos) == Tiles.CrateGoal:
+					if !actor.dinged:
+						set_actor_var(actor, "dinged", true, chrono);
+				else:
+					if actor.dinged:
+						set_actor_var(actor, "dinged", false, chrono);
 			else:
-				if actor.dinged:
-					set_actor_var(actor, "dinged", false, chrono);
-		else:
-			if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
-				for goal in goals:
-					if goal.actorname == "heavy_goal" and !goal.dinged:
-						set_actor_var(goal, "dinged", true, chrono);
-			if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
-				for goal in goals:
-					if goal.actorname == "light_goal" and !goal.dinged:
-						set_actor_var(goal, "dinged", true, chrono);
-			if actor.actorname == "heavy" and terrain_in_tile(actor.pos - dir) == Tiles.HeavyGoal:
-				for goal in goals:
-					if goal.actorname == "heavy_goal" and goal.dinged:
-						set_actor_var(goal, "dinged", false, chrono);
-			if actor.actorname == "light" and terrain_in_tile(actor.pos - dir) == Tiles.LightGoal:
-				for goal in goals:
-					if goal.actorname == "light_goal" and goal.dinged:
-						set_actor_var(goal, "dinged", false, chrono);
+				if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
+					for goal in goals:
+						if goal.actorname == "heavy_goal" and !goal.dinged:
+							set_actor_var(goal, "dinged", true, chrono);
+				if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
+					for goal in goals:
+						if goal.actorname == "light_goal" and !goal.dinged:
+							set_actor_var(goal, "dinged", true, chrono);
+				if actor.actorname == "heavy" and terrain_in_tile(actor.pos - dir) == Tiles.HeavyGoal:
+					for goal in goals:
+						if goal.actorname == "heavy_goal" and goal.dinged:
+							set_actor_var(goal, "dinged", false, chrono);
+				if actor.actorname == "light" and terrain_in_tile(actor.pos - dir) == Tiles.LightGoal:
+					for goal in goals:
+						if goal.actorname == "light_goal" and goal.dinged:
+							set_actor_var(goal, "dinged", false, chrono);
 		
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
@@ -806,6 +807,37 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	if (chrono < Chrono.GHOSTS):
 		add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
 		actor.set(prop, value);
+		
+		# special case - if we break or unbreak, we can ding or unding too
+		if prop == "broken":
+			if value == true:
+				if actor.is_character:
+					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
+						for goal in goals:
+							if goal.actorname == "heavy_goal" and goal.dinged:
+								set_actor_var(goal, "dinged", false, chrono);
+					if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
+						for goal in goals:
+							if goal.actorname == "light_goal" and goal.dinged:
+								set_actor_var(goal, "dinged", false, chrono);
+				else:
+					if actor.dinged:
+						set_actor_var(actor, "dinged", false, chrono);
+			else:
+				if actor.is_character:
+					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
+						for goal in goals:
+							if goal.actorname == "heavy_goal" and goal.dinged:
+								set_actor_var(goal, "dinged", true, chrono);
+					if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
+						for goal in goals:
+							if goal.actorname == "light_goal" and goal.dinged:
+								set_actor_var(goal, "dinged", true, chrono);
+				else:
+					if terrain_in_tile(actor.pos) == Tiles.CrateGoal:
+						if !actor.dinged:
+							set_actor_var(actor, "dinged", true, chrono);
+		
 		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture()])
 	elif actor is Actor:
 		var ghost = get_ghost_that_hasnt_moved(actor);
