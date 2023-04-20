@@ -813,7 +813,8 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 		# special case - if we break or unbreak, we can ding or unding too
 		if prop == "broken":
 			if value == true:
-				play_sound("broken");
+				if (chrono < Chrono.META_UNDO):
+					play_sound("broken");
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
 						for goal in goals:
@@ -827,7 +828,8 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 					if actor.dinged:
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
-				play_sound("unbroken");
+				if (chrono < Chrono.META_UNDO):
+					play_sound("unbroken");
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
 						for goal in goals:
