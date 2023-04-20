@@ -9,10 +9,15 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Sprite",
+"base": "ActorBase",
 "class": "Actor",
 "language": "GDScript",
 "path": "res://Actor.gd"
+}, {
+"base": "Sprite",
+"class": "ActorBase",
+"language": "GDScript",
+"path": "res://ActorBase.gd"
 }, {
 "base": "Label",
 "class": "FloatingText",
@@ -23,6 +28,11 @@ _global_script_classes=[ {
 "class": "GameLogic",
 "language": "GDScript",
 "path": "res://GameLogic.gd"
+}, {
+"base": "ActorBase",
+"class": "Goal",
+"language": "GDScript",
+"path": "res://Goal.gd"
 }, {
 "base": "Button",
 "class": "LevelButton",
@@ -61,8 +71,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Actor": "",
+"ActorBase": "",
 "FloatingText": "",
 "GameLogic": "",
+"Goal": "",
 "LevelButton": "",
 "LevelInfo": "",
 "LevelScene": "",

@@ -158,6 +158,7 @@ var map_y_max_max : int = 10; # is this cramped?, if it is then I can just add s
 var heavy_actor : Actor = null
 var light_actor : Actor = null
 var actors = []
+var goals = []
 var heavy_turn = 0;
 var heavy_undo_buffer : Array = [];
 var light_turn = 0;
@@ -209,11 +210,17 @@ func _ready() -> void:
 	# Call once when the game is booted up.
 	initialize_level_list();
 	prepare_audio();
+	tile_changes();
 	if (OS.is_debug_build()):
 		assert_tile_enum();
 	
 	# Load the first map.
 	load_level(0);
+	
+func tile_changes() -> void:
+	# hide light and heavy goal sprites when in-game and not in-editor
+	terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, null);
+	terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, null);
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
@@ -369,6 +376,9 @@ func ready_map() -> void:
 	for actor in actors:
 		actor.queue_free();
 	actors.clear();
+	for goal in goals:
+		goal.queue_free();
+	goals.clear();
 	for ghost in ghosts:
 		ghost.queue_free();
 	ghosts.clear();
@@ -408,9 +418,37 @@ func initialize_timeline_viewers() -> void:
 	lighttimeline.reset();
 
 func make_actors() -> void:
-	# find heavy and light and turn them into actors
-	var heavy_id = terrainmap.tile_set.find_tile_by_name("HeavyIdle");
-	var heavy_tile = terrainmap.get_used_cells_by_id(heavy_id)[0];
+	# find goals and goal-ify them
+	var heavy_goal_tiles = terrainmap.get_used_cells_by_id(Tiles.HeavyGoal);
+	for tile in heavy_goal_tiles:
+		var goal = Goal.new();
+		goal.actorname = "heavy_goal";
+		goal.texture = preload("res://assets/BigPortalRed.png");
+		goal.centered = true;
+		goal.pos = tile;
+		goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
+		goal.modulate = Color(1, 1, 1, 0.8);
+		goal.instantly_reach_scalify();
+		goals.append(goal);
+		actorsfolder.add_child(goal);
+		goal.update_graphics();
+	
+	var light_goal_tiles = terrainmap.get_used_cells_by_id(Tiles.LightGoal);
+	for tile in light_goal_tiles:
+		var goal = Goal.new();
+		goal.actorname = "light_goal";
+		goal.texture = preload("res://assets/BigPortalBlue.png");
+		goal.centered = true;
+		goal.pos = tile;
+		goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
+		goal.modulate = Color(1, 1, 1, 0.8);
+		goal.instantly_reach_scalify();
+		goals.append(goal);
+		actorsfolder.add_child(goal);
+		goal.update_graphics();
+		
+	# find heavy and light and turn them into actorsn
+	var heavy_tile = terrainmap.get_used_cells_by_id(Tiles.HeavyIdle)[0];
 	terrainmap.set_cellv(heavy_tile, -1);
 	heavy_actor = make_actor("heavy", heavy_tile);
 	heavy_actor.heaviness = Heaviness.STEEL;
@@ -424,8 +462,8 @@ func make_actors() -> void:
 	if (heavy_actor.pos.x > (map_x_max / 2)):
 		heavy_actor.facing_left = true;
 	heavy_actor.update_graphics();
-	var light_id = terrainmap.tile_set.find_tile_by_name("LightIdle");
-	var light_tile = terrainmap.get_used_cells_by_id(light_id)[0];
+	
+	var light_tile = terrainmap.get_used_cells_by_id(Tiles.LightIdle)[0];
 	terrainmap.set_cellv(light_tile, -1);
 	light_actor = make_actor("light", light_tile);
 	light_actor.heaviness = Heaviness.IRON;
@@ -441,12 +479,11 @@ func make_actors() -> void:
 	light_actor.update_graphics();
 	
 	# other actors
-	extract_actors("IronCrate", "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
-	extract_actors("SteelCrate", "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
-	extract_actors("PowerCrate", "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, -1, false, Color(1, 0, 0.86, 1));
+	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
+	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
+	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, -1, false, Color(1, 0, 0.86, 1));
 	
-func extract_actors(tilename: String, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
-	var id = terrainmap.tile_set.find_tile_by_name(tilename);
+func extract_actors(id: int, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
 	var tiles = terrainmap.get_used_cells_by_id(id);
 	for tile in tiles:
 		terrainmap.set_cellv(tile, -1);
@@ -559,6 +596,8 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		add_undo_event([Undo.move, actor, dir], chrono);
 		actor.pos = pos;
 		add_to_animation_server(actor, [Animation.move, dir]);
+		
+		#ding logic
 		if (!actor.is_character):
 			if terrain_in_tile(actor.pos) == Tiles.CrateGoal:
 				if !actor.dinged:
@@ -566,6 +605,24 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			else:
 				if actor.dinged:
 					set_actor_var(actor, "dinged", false, chrono);
+		else:
+			if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
+				for goal in goals:
+					if goal.actorname == "heavy_goal" and !goal.dinged:
+						set_actor_var(goal, "dinged", true, chrono);
+			if actor.actorname == "light" and terrain_in_tile(actor.pos) == Tiles.LightGoal:
+				for goal in goals:
+					if goal.actorname == "light_goal" and !goal.dinged:
+						set_actor_var(goal, "dinged", true, chrono);
+			if actor.actorname == "heavy" and terrain_in_tile(actor.pos - dir) == Tiles.HeavyGoal:
+				for goal in goals:
+					if goal.actorname == "heavy_goal" and goal.dinged:
+						set_actor_var(goal, "dinged", false, chrono);
+			if actor.actorname == "light" and terrain_in_tile(actor.pos - dir) == Tiles.LightGoal:
+				for goal in goals:
+					if goal.actorname == "light_goal" and goal.dinged:
+						set_actor_var(goal, "dinged", false, chrono);
+		
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
 		#(AD05: apparently I decided the sticky top can't move things you can't push, which is... valid ig?)
@@ -744,13 +801,13 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		return result;
 	return Success.Yes;
 
-func set_actor_var(actor: Actor, prop: String, value, chrono: int) -> void:
+func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
 	if (chrono < Chrono.GHOSTS):
 		add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
 		actor.set(prop, value);
 		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture()])
-	else:
+	elif actor is Actor:
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.set(prop, value);
 		ghost.update_graphics();
@@ -838,7 +895,7 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.offset = actor.offset;
 	new.position = terrainmap.map_to_world(actor.pos);
 	new.pos = actor.pos;
-	new.state = actor.state.duplicate();
+	#new.state = actor.state.duplicate();
 	new.broken = actor.broken;
 	new.powered = actor.powered;
 	new.airborne = actor.airborne;
@@ -863,6 +920,9 @@ func finish_animations() -> void:
 		actor.animations.clear();
 		actor.position = terrainmap.map_to_world(actor.pos);
 		actor.update_graphics();
+	for goal in goals:
+		goal.animations.clear();
+		goal.update_graphics();
 	animation_server.clear();
 	animation_substep = 0;
 
@@ -1321,7 +1381,7 @@ func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
 	add_undo_event([Undo.animation_substep], chrono);
 
-func add_to_animation_server(actor: Actor, animation: Array) -> void:
+func add_to_animation_server(actor: ActorBase, animation: Array) -> void:
 	while animation_server.size() <= animation_substep:
 		animation_server.push_back([]);
 	animation_server[animation_substep].push_back([actor, animation]);

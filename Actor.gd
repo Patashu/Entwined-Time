@@ -1,9 +1,9 @@
-extends Sprite
+extends ActorBase
 class_name Actor
 
 var actorname = ""
 var pos = Vector2.ZERO
-var state = {}
+#var state = {}
 var broken = false
 var powered = false
 var dinged = false;
