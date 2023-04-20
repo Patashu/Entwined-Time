@@ -443,6 +443,9 @@ func ready_map() -> void:
 	level_name = level_info.level_name;
 	level_author = level_info.level_author;
 	level_replay = level_info.level_replay;
+	if ("$" in level_replay):
+		var level_replay_parts = level_replay.split("$");
+		level_replay = level_replay_parts[level_replay_parts.size()-1];
 	heavy_max_moves = level_info.heavy_max_moves;
 	light_max_moves = level_info.light_max_moves;
 	calculate_map_size();
@@ -1454,9 +1457,6 @@ func toggle_replay() -> void:
 	replay_turn = 0;
 	next_replay = timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
-	if ("$" in level_replay):
-		var level_replay_parts = level_replay.split("$");
-		level_replay = level_replay_parts[level_replay_parts.size()-1];
 	
 func do_one_replay_turn() -> void:
 	if (!doing_replay):
