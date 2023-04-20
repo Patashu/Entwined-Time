@@ -456,6 +456,8 @@ func initialize_timeline_viewers() -> void:
 	lighttimeline.reset();
 
 func make_actors() -> void:
+	# TODO: I don't find goals or actors on other layers yet
+	
 	# find goals and goal-ify them
 	var heavy_goal_tiles = terrainmap.get_used_cells_by_id(Tiles.HeavyGoal);
 	for tile in heavy_goal_tiles:
@@ -485,7 +487,7 @@ func make_actors() -> void:
 		actorsfolder.add_child(goal);
 		goal.update_graphics();
 		
-	# find heavy and light and turn them into actorsn
+	# find heavy and light and turn them into actors
 	var heavy_tile = terrainmap.get_used_cells_by_id(Tiles.HeavyIdle)[0];
 	terrainmap.set_cellv(heavy_tile, -1);
 	heavy_actor = make_actor("heavy", heavy_tile);
