@@ -129,11 +129,11 @@ func set_next_texture(tex: Texture) -> void:
 	frame_timer = 0;
 	frame = 0;
 	if texture == preload("res://assets/heavy_broken.png"):
-		frame_timer_max = 0.4;
-		hframes = 6;
+		frame_timer_max = 0.2;
+		hframes = 8;
 	elif texture == preload("res://assets/light_broken.png"):
-		frame_timer_max = 0.4;
-		hframes = 6;
+		frame_timer_max = 0.2;
+		hframes = 8;
 	elif texture == preload("res://assets/light_rising.png"):
 		frame_timer_max = 0.1;
 		hframes = 6;
@@ -147,6 +147,8 @@ func set_next_texture(tex: Texture) -> void:
 		hframes = 1;
 
 func fluster():
+	if (broken):
+		return;
 	set_next_texture(preload("res://assets/light_involuntary_bump.png"))
 	fluster_timer = 0;
 	fluster_timer_max = 0.3;
@@ -195,7 +197,7 @@ func _process(delta: float) -> void:
 			if (frame == hframes - 1) and !broken:
 				frame = 0;
 			else:
-				if broken and frame >= 2 and post_mortem != 1:
+				if broken and frame >= 4 and post_mortem != 1:
 					pass
 				else:
 					frame += 1;
