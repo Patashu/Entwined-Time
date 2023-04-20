@@ -478,13 +478,12 @@ func make_actors() -> void:
 	# find heavy and light and turn them into actors
 	var heavy_tile = terrainmap.get_used_cells_by_id(Tiles.HeavyIdle)[0];
 	terrainmap.set_cellv(heavy_tile, -1);
-	heavy_actor = make_actor("heavy", heavy_tile);
+	heavy_actor = make_actor("heavy", heavy_tile, true);
 	heavy_actor.heaviness = Heaviness.STEEL;
 	heavy_actor.strength = Strength.HEAVY;
 	heavy_actor.durability = Durability.FIRE;
 	heavy_actor.fall_speed = 2;
 	heavy_actor.climbs = true;
-	heavy_actor.is_character = true;
 	heavy_actor.color = heavy_color;
 	heavy_actor.powered = heavy_max_moves != 0;
 	if (heavy_actor.pos.x > (map_x_max / 2)):
@@ -493,13 +492,12 @@ func make_actors() -> void:
 	
 	var light_tile = terrainmap.get_used_cells_by_id(Tiles.LightIdle)[0];
 	terrainmap.set_cellv(light_tile, -1);
-	light_actor = make_actor("light", light_tile);
+	light_actor = make_actor("light", light_tile, true);
 	light_actor.heaviness = Heaviness.IRON;
 	light_actor.strength = Strength.LIGHT;
 	light_actor.durability = Durability.SPIKES;
 	light_actor.fall_speed = 1;
 	light_actor.climbs = true;
-	light_actor.is_character = true;
 	light_actor.color = light_color;
 	light_actor.powered = light_max_moves != 0;
 	if (light_actor.pos.x > (map_x_max / 2)):
@@ -544,7 +542,7 @@ func extract_actors(id: int, actorname: String, heaviness: int, strength: int, d
 	var tiles = terrainmap.get_used_cells_by_id(id);
 	for tile in tiles:
 		terrainmap.set_cellv(tile, -1);
-		var actor = make_actor(actorname, tile);
+		var actor = make_actor(actorname, tile, false);
 		actor.heaviness = heaviness;
 		actor.strength = strength;
 		actor.durability = durability;
@@ -626,8 +624,9 @@ func toggle_mute() -> void:
 	muted = !muted;
 	cut_sound();
 
-func make_actor(actorname: String, pos: Vector2, chrono: int = Chrono.TIMELESS) -> Actor:
+func make_actor(actorname: String, pos: Vector2, is_character: bool, chrono: int = Chrono.TIMELESS) -> Actor:
 	var actor = Actor.new();
+	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.actorname = actorname;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
