@@ -1355,6 +1355,9 @@ func toggle_replay() -> void:
 	replay_turn = 0;
 	next_replay = timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
+	if ("$" in level_replay):
+		var level_replay_parts = level_replay.split();
+		level_replay = level_replay[level_replay.size()-1];
 	
 func do_one_replay_turn() -> void:
 	if (!doing_replay):
@@ -1489,6 +1492,8 @@ func floating_text(text: String) -> void:
 
 func replay_from_clipboard() -> void:
 	var replay = OS.get_clipboard();
+	var replay_parts = replay.split("$");
+	replay = replay_parts[replay_parts.size()-1];
 	replay = replay.strip_edges();
 	replay = replay.to_lower();
 	for letter in replay:
@@ -1533,7 +1538,7 @@ func _process(delta: float) -> void:
 			update_info_labels();
 		if (Input.is_action_just_pressed("meta_undo")):
 			if Input.is_action_pressed("ctrl"):
-				OS.set_clipboard(user_replay);
+				OS.set_clipboard(level_name + "$" + "mturn=" + str(meta_turn) + "$" + user_replay);
 				floating_text("Ctrl+C: Replay copied");
 			else:
 				end_replay();
