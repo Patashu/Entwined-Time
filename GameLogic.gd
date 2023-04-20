@@ -751,8 +751,26 @@ func terrain_in_tile(pos: Vector2) -> Array:
 	return result;
 
 func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool, solid_surprises_are_solid: bool) -> bool:
-	var terrain = terrain_in_tile(pos);
 	var result = false;
+	
+	if (is_retro):
+		# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
+		# so check that.
+		var retro_terrain = terrain_in_tile(pos - dir);
+		for retro_id in retro_terrain:
+			match retro_id:
+				Tiles.OnewayEast:
+					result = dir == Vector2.RIGHT;
+				Tiles.OnewayWest:
+					result = dir == Vector2.LEFT;
+				Tiles.OnewayNorth:
+					result = dir == Vector2.UP;
+				Tiles.OnewaySouth:
+					result = dir == Vector2.DOWN;
+		if result:
+			return true;
+	
+	var terrain = terrain_in_tile(pos);
 	for id in terrain:
 		match id:
 			Tiles.Wall:
@@ -791,24 +809,6 @@ func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool
 				result = !is_retro and dir == Vector2.UP;
 		if result:
 			return true;
-			
-	if (is_retro):
-		# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
-		# so check that.
-		var retro_terrain = terrain_in_tile(pos - dir);
-		for retro_id in retro_terrain:
-			match retro_id:
-				Tiles.OnewayEast:
-					result = dir == Vector2.RIGHT;
-				Tiles.OnewayWest:
-					result = dir == Vector2.LEFT;
-				Tiles.OnewayNorth:
-					result = dir == Vector2.UP;
-				Tiles.OnewaySouth:
-					result = dir == Vector2.DOWN;
-		if result:
-			return true;
-	
 	return result;
 	
 func is_suspended(actor: Actor):
