@@ -6,6 +6,7 @@ var pos = Vector2.ZERO
 var state = {}
 var broken = false
 var powered = false
+var dinged = false;
 # -1 for grounded, 0 for falling, 1+ for turns of coyote time left
 var airborne = -1
 var strength = 0
@@ -57,6 +58,20 @@ func get_next_texture() -> Texture:
 			self.modulate = Color(1, 1, 1, 1);
 		else:
 			self.modulate = Color(0.5, 0.5, 0.5, 1);
+	elif (!is_character and !is_ghost):
+		if dinged and ding == null:
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://OneTimeSprite.gd"));
+			sprite.texture = preload("res://assets/crate_goal_success.png");
+			sprite.hframes = 10;
+			sprite.centered = false;
+			sprite.frame_max = 99;
+			sprite.frame_timer_max = 0.05;
+			self.add_child(sprite);
+			ding = sprite;
+		elif !dinged and ding != null:
+			ding.queue_free();
+			ding = null;
 	
 	# airborne, broken
 	if actorname == "heavy":
@@ -248,21 +263,6 @@ func _process(delta: float) -> void:
 				sprite.frame_max = sprite.hframes*sprite.vframes;
 				sprite.frame_timer_max = current_animation[2];
 				self.get_parent().get_parent().get_node("OverActorsParticles").add_child(sprite);
-			elif (current_animation[0] == 7): #ding
-				if (ding == null):
-					var sprite = Sprite.new();
-					sprite.set_script(preload("res://OneTimeSprite.gd"));
-					sprite.texture = preload("res://assets/crate_goal_success.png");
-					sprite.hframes = 10;
-					sprite.centered = false;
-					sprite.frame_max = 99;
-					sprite.frame_timer_max = 0.05;
-					self.add_child(sprite);
-					ding = sprite;
-			elif (current_animation[0] == 8): #unding
-				if ding != null:
-					ding.queue_free();
-					ding = null;
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
