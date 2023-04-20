@@ -209,6 +209,12 @@ var meta_undo_a_restart_mode = false;
 var level_list = [];
 var level_names = [];
 var chapter_names = [];
+var chapter_skies = [];
+var target_sky = Color("#223C52");
+var old_sky = Color("#223C52");
+var current_sky = Color("#223C52");
+var sky_timer = 0;
+var sky_timer_max = 0;
 var chapter_standard_starting_levels = [];
 var chapter_advanced_starting_levels = [];
 
@@ -264,6 +270,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Two Time");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#223C52"));
 	level_list.push_back(preload("res://levels/Initiation.tscn"));
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
 	level_list.push_back(preload("res://levels/Wall.tscn"));
@@ -285,6 +292,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Hazards");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#512E22"));
 	level_list.push_back(preload("res://levels/Spikes.tscn"));
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
 	level_list.push_back(preload("res://levels/TheSpikePit.tscn"));
@@ -308,6 +316,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Secrets of Space-Time");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#062138"));
 	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
 	level_list.push_back(preload("res://levels/InvisibleBridge.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
@@ -324,6 +333,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("One-Ways");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#1C3D19"));
 	level_list.push_back(preload("res://levels/OneWays.tscn"));
 	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
 	level_list.push_back(preload("res://levels/SecurityDoor.tscn"));
@@ -344,6 +354,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Ladders and Wooden Platforms");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#3B3F1A"));
 	level_list.push_back(preload("res://levels/Down.tscn"));
 	level_list.push_back(preload("res://levels/LadderWorld.tscn"));
 	level_list.push_back(preload("res://levels/LadderLattice.tscn"));
@@ -364,6 +375,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#424947"));
 	level_list.push_back(preload("res://levels/IronCrates.tscn"));
 	level_list.push_back(preload("res://levels/CrateExpectations.tscn"));
 	level_list.push_back(preload("res://levels/Bridge.tscn"));
@@ -1208,6 +1220,12 @@ func load_level(impulse: int) -> void:
 			else:
 				level_in_chapter = level_number - chapter_standard_starting_levels[i];
 			break;
+	if (target_sky != chapter_skies[chapter]):
+		sky_timer = 0;
+		sky_timer_max = 3.0;
+		old_sky = current_sky;
+		target_sky = chapter_skies[chapter];
+	
 	ready_map();
 	update_level_label();
 
@@ -1606,6 +1624,24 @@ func annotate_replay(replay: String) -> String:
 
 func _process(delta: float) -> void:
 	timer += delta;
+	if (sky_timer < sky_timer_max):
+		sky_timer += delta;
+		if (sky_timer > sky_timer_max):
+			sky_timer = sky_timer_max;
+		# angle_lerp hue, the others are just normal lerp
+		#var current_h = lerp(old_sky.h, target_sky.h, sky_timer/sky_timer_max);
+		#if (abs(old_sky.h - target_sky.h) > 0.5):
+		#	current_h = lerp(old_sky.h, target_sky.h-1.0, sky_timer/sky_timer_max);
+		#	if (current_h < 0):
+		#		current_h += 1.0;
+		#var current_s = lerp(old_sky.s, target_sky.s, sky_timer/sky_timer_max);
+		#var current_v = lerp(old_sky.v, target_sky.v, sky_timer/sky_timer_max);
+		# changed my mind and rgb hue is less weird I think
+		var current_r = lerp(old_sky.r, target_sky.r, sky_timer/sky_timer_max);
+		var current_g = lerp(old_sky.g, target_sky.g, sky_timer/sky_timer_max);
+		var current_b = lerp(old_sky.b, target_sky.b, sky_timer/sky_timer_max);
+		current_sky = Color(current_r, current_g, current_b);
+		VisualServer.set_default_clear_color(current_sky);
 	
 	if ui_stack.size() == 0:
 		if (doing_replay and timer > next_replay):
