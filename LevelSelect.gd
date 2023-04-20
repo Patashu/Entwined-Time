@@ -109,13 +109,24 @@ func prepare_chapter() -> void:
 		button.rect_position.x = xx + xxx*x;
 		button.rect_position.y = yy + yyy*y;
 		button.level_number = i + advanced_start;
-		button.text = str(i) + "X - " + gamelogic.level_names[button.level_number];
+		var level_name = gamelogic.level_names[button.level_number];
+		button.text = str(i) + "X - " + level_name;
 		button.theme = holder.theme;
 		button.levelselect = self;
 		if (x == 0 and y == 1): # the first button
 			button.grab_focus();
 		if (button.level_number == gamelogic.level_number): # button corresponding to the current level
 			button.grab_focus();
+			
+		# if we beat it, add a star :3
+		if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
+			var star = Sprite.new();
+			star.texture = preload("res://assets/star.png");
+			star.scale = Vector2(0.5, 0.5);
+			star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
+			star.centered = false;
+			holder.add_child(star);
+			pass;
 		
 		y += 1;
 		if (y == y_max):
