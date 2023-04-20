@@ -331,6 +331,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GraduationEx.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/TheFirstPitEx3.tscn"));
 	level_list.push_back(preload("res://levels/TheBoundlessSkyEx.tscn"));
 	level_list.push_back(preload("res://levels/TheBoundlessSkyEx2.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
@@ -1669,8 +1670,15 @@ func _process(delta: float) -> void:
 		if (Input.is_action_just_pressed("slowdown_replay")):
 			replay_interval /= 0.8;
 		if (Input.is_action_just_pressed("start_saved_replay")):
-			start_saved_replay();
-			update_info_labels();
+			if (OS.is_debug_build() and Input.is_action_pressed("shift")):
+				floating_text("Shift+F11: Unwin");
+				save_file["levels"][level_name]["won"] = null;
+				save_file["levels"][level_name]["replay"] = null;
+				save_game();
+				update_level_label();
+			else:
+				start_saved_replay();
+				update_info_labels();
 		if (Input.is_action_just_pressed("start_replay")):
 			toggle_replay();
 			update_info_labels();
