@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/broken.ogg-3c2c74abf8b5b2e6c4b513e3241e0a33.oggstr"
+
+[deps]
+
+source_file="res://sfx/broken.ogg"
+dest_files=[ "res://.import/broken.ogg-3c2c74abf8b5b2e6c4b513e3241e0a33.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

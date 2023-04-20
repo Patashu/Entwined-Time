@@ -523,6 +523,7 @@ func prepare_audio() -> void:
 	# TODO: I could automate this if I can iterate the folder
 	# TODO: replace this with an enum and assert on startup like tiles
 	sounds["bump"] = preload("res://sfx/bump.ogg");
+	sounds["broken"] = preload("res://sfx/broken.ogg");
 	sounds["dig"] = preload("res://sfx/dig.ogg");
 	sounds["fly"] = preload("res://sfx/fly.ogg");
 	sounds["getgreenality"] = preload("res://sfx/getgreenality.ogg");
@@ -537,6 +538,7 @@ func prepare_audio() -> void:
 	sounds["restart"] = preload("res://sfx/restart.ogg");
 	sounds["step"] = preload("res://sfx/step.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
+	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
 	sounds["undo"] = preload("res://sfx/undo.ogg");
 	sounds["unlock"] = preload("res://sfx/unlock.ogg");
 	sounds["usegreenality"] = preload("res://sfx/usegreenality.ogg");
@@ -811,6 +813,7 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 		# special case - if we break or unbreak, we can ding or unding too
 		if prop == "broken":
 			if value == true:
+				play_sound("broken");
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
 						for goal in goals:
@@ -824,6 +827,7 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 					if actor.dinged:
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
+				play_sound("unbroken");
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain_in_tile(actor.pos) == Tiles.HeavyGoal:
 						for goal in goals:
