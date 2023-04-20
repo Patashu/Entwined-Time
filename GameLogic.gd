@@ -307,6 +307,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
+	level_list.push_back(preload("res://levels/TheSpikePitEx.tscn"));
 	level_list.push_back(preload("res://levels/TrustFallEx.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
@@ -354,7 +355,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
 	level_list.push_back(preload("res://levels/TheOneWayPitEx.tscn"));
-	level_list.push_back(preload("res://levels/TheSpikePitEx.tscn"));
+	level_list.push_back(preload("res://levels/TheSpikePitEx2.tscn"));
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
 	
 	chapter_names.push_back("Ladders and Wooden Platforms");
