@@ -12,6 +12,7 @@ onready var overactorsparticles : Node2D = levelscene.get_node("OverActorsPartic
 onready var underactorsparticles : Node2D = levelscene.get_node("UnderActorsParticles");
 onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
+onready var levelstar : Sprite = levelscene.get_node("LevelStar");
 onready var winlabel : Label = levelscene.get_node("WinLabel");
 onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
@@ -1050,6 +1051,7 @@ func check_won() -> void:
 				var old_replay_mturn = int(old_replay[1]);
 				if (old_replay_mturn >= meta_turn):
 					level_save_data["replay"] = annotate_replay(user_replay);
+			update_level_label();
 			save_game();
 	
 	winlabel.visible = won;
@@ -1452,6 +1454,14 @@ func update_level_label() -> void:
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
 		levellabel.text += " (REPLAY) (F9/F10 ADJUST SPEED)"
+	if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
+		levelstar.visible = true;
+		var string_size = preload("res://standardfont.tres").get_string_size(levellabel.text);
+		var label_middle = levellabel.rect_position.x + levellabel.rect_size.x / 2;
+		var string_left = label_middle - string_size.x/2;
+		levelstar.position = Vector2(string_left-16, levellabel.rect_position.y);
+	else:
+		levelstar.visible = false;
 	
 func update_info_labels() -> void:	
 	heavyinfolabel.text = "Heavy" + "\n" + str(heavy_turn);
