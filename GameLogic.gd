@@ -172,6 +172,9 @@ var heavy_selected = true;
 # for undo trail ghosts
 var ghosts = []
 
+# save file, ooo!
+var save_file = {}
+
 # song-and-dance state
 var timer = 0;
 var sounds = {}
@@ -208,8 +211,27 @@ var chapter_names = [];
 var chapter_standard_starting_levels = [];
 var chapter_advanced_starting_levels = [];
 
+func save_game():
+	var file = File.new()
+	file.open("user://entwinedtime.sav", File.WRITE)
+	file.store_line(to_json(save_file))
+	file.close()
+
+func load_game():
+	var file = File.new()
+	if not file.file_exists("user://entwinedtime.sav"):
+		save_file = {}
+		save_file["level_number"] = 0
+		save_file["levels"] = {}
+		return
+	file.open("user://entwinedtime.sav", File.READ)
+	save_file = parse_json(file.get_as_text())
+	level_number = save_file["level_number"];
+	file.close();
+
 func _ready() -> void:
 	# Call once when the game is booted up.
+	load_game();
 	initialize_level_list();
 	prepare_audio();
 	tile_changes();
@@ -1012,6 +1034,24 @@ func check_won() -> void:
 			if (!crate_goal_satisfied):
 				won = false;
 			break;
+		if (won == true and !doing_replay):
+			var levels_save_data = save_file["levels"];
+			if (!levels_save_data.has(level_name)):
+				levels_save_data[level_name] = {};
+			var level_save_data = levels_save_data[level_name];
+			level_save_data["won"] = true;
+			if (!level_save_data.has("replay")):
+				level_save_data["replay"] = annotate_replay(user_replay);
+			else:
+				var old_replay = level_save_data["replay"];
+				var old_replay_parts = old_replay.split("$");
+				var old_replay_data = old_replay[old_replay_parts.size()-2];
+				var old_replay_mturn_parts = old_replay.split("=");
+				var old_replay_mturn = int(old_replay[1]);
+				if (old_replay_mturn >= meta_turn):
+					level_save_data["replay"] = annotate_replay(user_replay);
+			save_game();
+	
 	winlabel.visible = won;
 	
 func undo_one_event(event: Array, chrono : int) -> void:
@@ -1118,8 +1158,11 @@ func load_level(impulse: int) -> void:
 		user_replay_before_restarts.clear();
 	elif user_replay.length() > 0:
 		user_replay_before_restarts.push_back(user_replay);
-	level_number += impulse;
-	level_number = posmod(int(level_number), level_list.size());
+	if (impulse != 0):
+		level_number += impulse;
+		level_number = posmod(int(level_number), level_list.size());
+		save_file["level_number"] = level_number;
+		save_game();
 	var level = level_list[level_number].instance();
 	levelfolder.remove_child(terrainmap);
 	terrainmap.queue_free();
@@ -1490,8 +1533,7 @@ func floating_text(text: String) -> void:
 	label.rect_position.y = get_viewport().size.y/4-16;
 	label.text = text;
 
-func replay_from_clipboard() -> void:
-	var replay = OS.get_clipboard();
+func start_specific_replay(replay: String) -> void:
 	var replay_parts = replay.split("$");
 	replay = replay_parts[replay_parts.size()-1];
 	replay = replay.strip_edges();
@@ -1505,6 +1547,25 @@ func replay_from_clipboard() -> void:
 	end_replay();
 	toggle_replay();
 	level_replay = replay;
+
+func replay_from_clipboard() -> void:
+	var replay = OS.get_clipboard();
+	start_specific_replay(replay);
+
+func start_saved_replay() -> void:
+	var levels_save_data = save_file["levels"];
+	if (!levels_save_data.has(level_name)):
+		floating_text("F11: Level not beaten");
+		return;
+	var level_save_data = levels_save_data[level_name];
+	if (!level_save_data.has("replay")):
+		floating_text("F11: Level not beaten");
+		return;
+	var replay = level_save_data["replay"];
+	start_specific_replay(replay);
+
+func annotate_replay(replay: String) -> String:
+	return level_name + "$" + "mturn=" + str(meta_turn) + "$" + replay;
 
 func _process(delta: float) -> void:
 	timer += delta;
@@ -1525,6 +1586,9 @@ func _process(delta: float) -> void:
 			replay_interval *= 0.8;
 		if (Input.is_action_just_pressed("slowdown_replay")):
 			replay_interval /= 0.8;
+		if (Input.is_action_just_pressed("start_saved_replay")):
+			start_saved_replay();
+			update_info_labels();
 		if (Input.is_action_just_pressed("start_replay")):
 			toggle_replay();
 			update_info_labels();
@@ -1538,7 +1602,7 @@ func _process(delta: float) -> void:
 			update_info_labels();
 		if (Input.is_action_just_pressed("meta_undo")):
 			if Input.is_action_pressed("ctrl"):
-				OS.set_clipboard(level_name + "$" + "mturn=" + str(meta_turn) + "$" + user_replay);
+				OS.set_clipboard(annotate_replay(user_replay));
 				floating_text("Ctrl+C: Replay copied");
 			else:
 				end_replay();

@@ -51,8 +51,9 @@ margin_bottom = 166.0
 theme = ExtResource( 2 )
 text = "You have won! Press [Enter] to continue.
 
-(Ctrl+C/Ctrl+V: Copy/Paste Replay)
-(F12: Author's Replay)"
+Ctrl+C/Ctrl+V: Copy/Paste Replay
+F11: Your Best Replay
+F12: Author's Replay"
 align = 1
 
 [node name="ControlsLabel" type="Label" parent="."]
