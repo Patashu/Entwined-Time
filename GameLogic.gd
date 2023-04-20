@@ -230,6 +230,7 @@ func load_game():
 		save_file = {}
 		save_file["level_number"] = 0
 		save_file["levels"] = {}
+		save_file["version"] = 0
 		return
 	file.open("user://entwinedtime.sav", File.READ)
 	save_file = parse_json(file.get_as_text())
@@ -296,6 +297,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Spikes.tscn"));
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
 	level_list.push_back(preload("res://levels/TheSpikePit.tscn"));
+	level_list.push_back(preload("res://levels/TrustFall.tscn"));
 	level_list.push_back(preload("res://levels/Campfire.tscn"));
 	level_list.push_back(preload("res://levels/Firewall.tscn"));
 	level_list.push_back(preload("res://levels/Hell.tscn"));
@@ -305,11 +307,13 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
+	level_list.push_back(preload("res://levels/TrustFallEx.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
 	level_list.push_back(preload("res://levels/HellEx.tscn"));
-	level_list.push_back(preload("res://levels/UnderDestination.tscn"));
-	level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
+	#unfitting old puzzles
+	#level_list.push_back(preload("res://levels/UnderDestination.tscn"));
+	#level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
 	level_list.push_back(preload("res://levels/FireInTheSky.tscn"));
 	level_list.push_back(preload("res://levels/FireInTheSkyEx.tscn"));
@@ -1450,8 +1454,8 @@ func toggle_replay() -> void:
 	next_replay = timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
 	if ("$" in level_replay):
-		var level_replay_parts = level_replay.split();
-		level_replay = level_replay[level_replay.size()-1];
+		var level_replay_parts = level_replay.split("$");
+		level_replay = level_replay_parts[level_replay_parts.size()-1];
 	
 func do_one_replay_turn() -> void:
 	if (!doing_replay):
