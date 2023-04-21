@@ -200,7 +200,7 @@ func _process(delta: float) -> void:
 			else:
 				if broken and frame >= 4 and post_mortem != 1:
 					pass
-				else:
+				elif frame < (hframes * vframes) - 1:
 					frame += 1;
 	if (is_ghost):
 		# undo previous position change
