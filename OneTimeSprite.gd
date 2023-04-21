@@ -19,5 +19,5 @@ func _process(delta: float) -> void:
 		frame_timer -= frame_timer_max;
 		if (frame == frame_max - 1):
 			queue_free();
-		else:
+		elif frame < (hframes * vframes) - 1:
 			frame += 1;
