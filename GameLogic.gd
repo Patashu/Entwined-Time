@@ -140,6 +140,12 @@ enum Tiles {
 	CrateGoal,
 	NoCrate,
 	HeavyFire,
+	ColourRed,
+	ColourBlue,
+	ColourGray,
+	ColourMagenta,
+	ColourGreen,
+	ColourVoid
 }
 
 # information about the level
