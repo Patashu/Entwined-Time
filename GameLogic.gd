@@ -319,9 +319,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
 	level_list.push_back(preload("res://levels/HellEx.tscn"));
-	#unfitting old puzzles
-	#level_list.push_back(preload("res://levels/UnderDestination.tscn"));
-	#level_list.push_back(preload("res://levels/UnderDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
 	level_list.push_back(preload("res://levels/FireInTheSky.tscn"));
 	level_list.push_back(preload("res://levels/FireInTheSkyEx.tscn"));
@@ -1382,14 +1379,30 @@ func time_passes(chrono: int) -> void:
 	animation_substep(chrono);
 	var time_actors = []
 	for actor in actors:
-		# current rules:
-		# MOVE: time passes for everyone
-		# CHAR_UNDO: AD06: time passes for things 'green relative to us' (the other character, green actors)
-		if (chrono == Chrono.MOVE):
-			time_actors.push_back(actor);
-		else:
-			if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
+		#AD06: Characters are Magenta, other actors are Gray. (But with time colours you can make your own arbitrary rules!
+#		Red: Time passes only when red moves forward.
+#		Blue: Time passes only when blue moves forward.
+#		Magenta: The default unrendered colour of characters. Time passes except when I am undoing.
+#		Gray: The default unrendered colour of non-character actors. Time passes when a character moves forward and doesn't when a character undoes.
+#		Green: Time always passes, AND undo events are not generated/stored for this actor, AND if a green character takes a turn and no events are made, turn is not incremented. (So, having actor be green is equivalent to a no-time-shenanigans version of Entwined Time where time just always moves forward and you need to meta-undo to claw it back.) (Alternatively, I might have turns work as normal but there's a sentinel value for 'no turns, no timeline' like 100, since -1 actually will mean something)
+#		Void: Time passes every real time second, AND undo events AND meta undo events are not generated/stored for this actor, AND if a void actor takes a turn and no events are made, turn/meta-turn is not incremented. (In the main campaign this will probably only be used for the void cuckoo clock in the final level.)
+		if actor.time_colour == TimeColour.Red:
+			if chrono == Chrono.MOVE and heavy_selected:
 				time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Blue:
+			if chrono == Chrono.MOVE and !heavy_selected:
+				time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Green:
+			time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Gray:
+			if (chrono == Chrono.MOVE):
+				time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Magenta:
+			if (chrono == Chrono.MOVE):
+				time_actors.push_back(actor);
+			else:
+				if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
+					time_actors.push_back(actor);
 	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.

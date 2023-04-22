@@ -156,7 +156,7 @@ func fluster():
 	fluster_timer_max = 0.3;
 
 func native_colour():
-	if is_character:
+	if !is_character:
 		return 0; #Gray
 	return 1; #Magenta
 
