@@ -14,4 +14,4 @@ script = ExtResource( 1 )
 level_name = "Stairway to Hell"
 level_replay = "xdaxddddxzzxzzzzaadddzzxdzxdd"
 heavy_max_moves = 4
-light_max_moves = 3
+light_max_moves = 2
