@@ -16,6 +16,7 @@ var durability = 0
 var fall_speed = -1
 var climbs = false
 var is_character = false
+var time_colour = 0
 # undo trails logic
 var is_ghost = false
 var next_ghost = null;
@@ -153,6 +154,14 @@ func fluster():
 	set_next_texture(preload("res://assets/light_involuntary_bump.png"))
 	fluster_timer = 0;
 	fluster_timer_max = 0.3;
+
+func native_colour():
+	if is_character:
+		return 0; #Gray
+	return 1; #Magenta
+
+func is_native_colour():
+	return native_colour() == time_colour;
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)

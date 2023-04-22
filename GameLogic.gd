@@ -161,7 +161,8 @@ var light_max_moves = -1;
 var map_x_max : int = 0;
 var map_y_max : int = 0;
 var map_x_max_max : int = 21;
-var map_y_max_max : int = 10; # is this cramped?, if it is then I can just add screen scrolling
+var map_y_max_max : int = 10; #TODO: screen scrolling/zoom
+var terrain_layers = []
 
 # information about the actors and their state
 var heavy_actor : Actor = null
@@ -474,17 +475,25 @@ func initialize_timeline_viewers() -> void:
 	heavytimeline.reset();
 	lighttimeline.reset();
 
-func make_actors() -> void:
-	# TODO: I don't find actors on other layers yet
+func get_used_cells_by_id_all_layers(id: int) -> Array:
+	var results = []
+	for layer in terrain_layers:
+		results.append(layer.get_used_cells_by_id(id));
+	return results;
 	
+func get_used_cells_by_id_one_array(id: int) -> Array:
+	var results = []
+	for layer in terrain_layers:
+		results.append_array(layer.get_used_cells_by_id(id));
+	return results;
+
+func make_actors() -> void:
 	# find goals and goal-ify them
-	find_goals(terrainmap);
-	for layer in terrainmap.get_children():
-		if layer is TileMap:
-			find_goals(layer);
+	for layer in terrain_layers:
+		find_goals(terrainmap);
 	
 	# find heavy and light and turn them into actors
-	var heavy_tile = terrainmap.get_used_cells_by_id(Tiles.HeavyIdle)[0];
+	var heavy_tile = get_used_cells_by_id_one_array(Tiles.HeavyIdle)[0];
 	terrainmap.set_cellv(heavy_tile, -1);
 	heavy_actor = make_actor("heavy", heavy_tile, true);
 	heavy_actor.heaviness = Heaviness.STEEL;
@@ -498,7 +507,7 @@ func make_actors() -> void:
 		heavy_actor.facing_left = true;
 	heavy_actor.update_graphics();
 	
-	var light_tile = terrainmap.get_used_cells_by_id(Tiles.LightIdle)[0];
+	var light_tile = get_used_cells_by_id_one_array(Tiles.LightIdle)[0];
 	terrainmap.set_cellv(light_tile, -1);
 	light_actor = make_actor("light", light_tile, true);
 	light_actor.heaviness = Heaviness.IRON;
@@ -547,28 +556,31 @@ func find_goals(layer: TileMap) -> void:
 		goal.update_graphics();
 	
 func extract_actors(id: int, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
-	var tiles = terrainmap.get_used_cells_by_id(id);
-	for tile in tiles:
-		terrainmap.set_cellv(tile, -1);
-		var actor = make_actor(actorname, tile, false);
-		actor.heaviness = heaviness;
-		actor.strength = strength;
-		actor.durability = durability;
-		actor.fall_speed = fall_speed;
-		actor.climbs = climbs;
-		actor.is_character = false;
-		actor.color = color;
-		actor.update_graphics();
+	var layers_tiles = get_used_cells_by_id_all_layers(id);
+	for i in range(layers_tiles.size()):
+		var tiles = layers_tiles[i];
+		for tile in tiles:
+			terrain_layers[i].set_cellv(tile, -1);
+			var actor = make_actor(actorname, tile, false);
+			actor.heaviness = heaviness;
+			actor.strength = strength;
+			actor.durability = durability;
+			actor.fall_speed = fall_speed;
+			actor.climbs = climbs;
+			actor.is_character = false;
+			actor.color = color;
+			actor.update_graphics();
 	
 func calculate_map_size() -> void:
 	map_x_max = 0;
 	map_y_max = 0;
-	var tiles = terrainmap.get_used_cells();
-	for tile in tiles:
-		if tile.x > map_x_max:
-			map_x_max = tile.x;
-		if tile.y > map_y_max:
-			map_y_max = tile.y;
+	for layer in terrain_layers:
+		var tiles = layer.get_used_cells();
+		for tile in tiles:
+			if tile.x > map_x_max:
+				map_x_max = tile.x;
+			if tile.y > map_y_max:
+				map_y_max = tile.y;
 	terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2)-8;
 	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2)+12;
 	actorsfolder.position = terrainmap.position;
@@ -752,10 +764,8 @@ func actors_in_tile(pos: Vector2) -> Array:
 	
 func terrain_in_tile(pos: Vector2) -> Array:
 	var result = [];
-	result.append(terrainmap.get_cellv(pos));
-	for layer in terrainmap.get_children():
-		if layer is TileMap:
-			result.append(layer.get_cellv(pos));
+	for layer in terrain_layers:
+		result.append(layer.get_cellv(pos));
 	return result;
 
 func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool, solid_surprises_are_solid: bool) -> bool:
@@ -1089,10 +1099,7 @@ func check_won() -> void:
 		# but wait!
 		# check for crate goals as well
 		# PERF: if this ends up being slow, I can cache it on level load since it won't ever change. but it seems fast enough?
-		var crate_goals = terrainmap.get_used_cells_by_id(Tiles.CrateGoal);
-		for layer in terrainmap.get_children():
-			if layer is TileMap:
-				crate_goals.append_array(layer.get_used_cells_by_id(Tiles.CrateGoal));
+		var crate_goals = get_used_cells_by_id_one_array(Tiles.CrateGoal);
 		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
 		for crate_goal in crate_goals:
 			var crate_goal_satisfied = false;
@@ -1238,6 +1245,11 @@ func load_level(impulse: int) -> void:
 	terrainmap.queue_free();
 	levelfolder.add_child(level);
 	terrainmap = level;
+	terrain_layers.clear();
+	terrain_layers.append(terrainmap);
+	for child in terrainmap.get_children():
+		if child is TileMap:
+			terrain_layers.push_front(child);
 	chapter = 0;
 	level_is_extra = false;
 	for i in range(chapter_names.size()):
@@ -1556,7 +1568,7 @@ func add_to_animation_server(actor: ActorBase, animation: Array) -> void:
 
 func handle_global_animation(animation: Array) -> void:
 	if animation[0] == Animation.fire_roars:
-		var fires = terrainmap.get_used_cells_by_id(Tiles.Fire);
+		var fires = get_used_cells_by_id_one_array(Tiles.Fire);
 		for fire in fires:
 			var sprite = Sprite.new();
 			sprite.set_script(preload("res://OneTimeSprite.gd"));
@@ -1573,7 +1585,7 @@ func handle_global_animation(animation: Array) -> void:
 			sprite.frame_max = sprite.frame + 8;
 			underactorsparticles.add_child(sprite);
 		if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Red):
-			fires = terrainmap.get_used_cells_by_id(Tiles.HeavyFire);
+			fires = get_used_cells_by_id_one_array(Tiles.HeavyFire);
 			for fire in fires:
 				var sprite = Sprite.new();
 				sprite.set_script(preload("res://OneTimeSprite.gd"));
