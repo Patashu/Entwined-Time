@@ -99,7 +99,7 @@ enum TimeColour {
 	Red,
 	Blue,
 	Green,
-	Timeless
+	Void
 }
 
 # attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
@@ -401,6 +401,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/ThirdRoommate.tscn"));
 	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
+	#level_list.push_back(preload("res://levels/Levitation.tscn")); #checkpoints are broken, need to rework
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
@@ -411,15 +412,16 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheCratePitEx2.tscn"));
 	level_list.push_back(preload("res://levels/TheTower.tscn"));
 	
+	chapter_names.push_back("There Are Many Colours");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#37294F"));
+	level_list.push_back(preload("res://levels/RedAndBlue.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_advanced_starting_levels.push_back(level_list.size());
-	
-	# WORLD 4 - Tools of the Trade
-	# WORLD 5 - There are many Colours
-	# WORLD 6 - What is This?
-	# WORLD X - Trial of your Peers (custom levels world)
-	#level_list.push_back(preload("res://levels/Levitation.tscn")); #checkpoints are broken, need to rework
 	
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
@@ -526,6 +528,8 @@ func make_actors() -> void:
 	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
 	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, -1, false, Color(1, 0, 0.86, 1));
 	
+	find_colours();
+	
 func find_goals(layer: TileMap) -> void:
 	var heavy_goal_tiles = layer.get_used_cells_by_id(Tiles.HeavyGoal);
 	for tile in heavy_goal_tiles:
@@ -570,6 +574,26 @@ func extract_actors(id: int, actorname: String, heaviness: int, strength: int, d
 			actor.is_character = false;
 			actor.color = color;
 			actor.update_graphics();
+	
+func find_colours() -> void:
+	find_colour(Tiles.ColourRed, TimeColour.Red);
+	find_colour(Tiles.ColourBlue, TimeColour.Blue);
+	find_colour(Tiles.ColourMagenta, TimeColour.Magenta);
+	find_colour(Tiles.ColourGray, TimeColour.Gray);
+	find_colour(Tiles.ColourGreen, TimeColour.Green);
+	find_colour(Tiles.ColourVoid, TimeColour.Void);
+	
+func find_colour(id: int, TimeColour : int) -> void:
+	var layers_tiles = get_used_cells_by_id_all_layers(id);
+	for i in range(layers_tiles.size()):
+		var tiles = layers_tiles[i];
+		for tile in tiles:
+			terrain_layers[i].set_cellv(tile, -1);
+			# get first actor with the same pos and native colour and change their time_colour
+			for actor in actors:
+				if actor.pos == tile and actor.is_native_colour():
+					actor.time_colour = TimeColour;
+					break;
 	
 func calculate_map_size() -> void:
 	map_x_max = 0;
@@ -652,6 +676,7 @@ func make_actor(actorname: String, pos: Vector2, is_character: bool, chrono: int
 	actor.offset = Vector2(cell_size/2, cell_size/2);
 	actors.append(actor);
 	actorsfolder.add_child(actor);
+	actor.time_colour = actor.native_colour();
 	move_actor_to(actor, pos, chrono, false, false);
 	if (chrono < Chrono.META_UNDO):
 		print("TODO")
