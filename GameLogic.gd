@@ -417,6 +417,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/DownhillRedBlue.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingRedBlue.tscn"));
 	level_list.push_back(preload("res://levels/BlueAndRed.tscn"));
+	level_list.push_back(preload("res://levels/PaperPlanes.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
@@ -497,36 +498,42 @@ func get_used_cells_by_id_one_array(id: int) -> Array:
 func make_actors() -> void:
 	# find goals and goal-ify them
 	for layer in terrain_layers:
-		find_goals(terrainmap);
+		find_goals(layer);
 	
 	# find heavy and light and turn them into actors
-	var heavy_tile = get_used_cells_by_id_one_array(Tiles.HeavyIdle)[0];
-	terrainmap.set_cellv(heavy_tile, -1);
-	heavy_actor = make_actor("heavy", heavy_tile, true);
-	heavy_actor.heaviness = Heaviness.STEEL;
-	heavy_actor.strength = Strength.HEAVY;
-	heavy_actor.durability = Durability.FIRE;
-	heavy_actor.fall_speed = 2;
-	heavy_actor.climbs = true;
-	heavy_actor.color = heavy_color;
-	heavy_actor.powered = heavy_max_moves != 0;
-	if (heavy_actor.pos.x > (map_x_max / 2)):
-		heavy_actor.facing_left = true;
-	heavy_actor.update_graphics();
+	var layers_tiles = get_used_cells_by_id_all_layers(Tiles.HeavyIdle);
+	for i in range(layers_tiles.size()):
+		var tiles = layers_tiles[i];
+		for heavy_tile in tiles:
+			terrain_layers[i].set_cellv(heavy_tile, -1);
+			heavy_actor = make_actor("heavy", heavy_tile, true);
+			heavy_actor.heaviness = Heaviness.STEEL;
+			heavy_actor.strength = Strength.HEAVY;
+			heavy_actor.durability = Durability.FIRE;
+			heavy_actor.fall_speed = 2;
+			heavy_actor.climbs = true;
+			heavy_actor.color = heavy_color;
+			heavy_actor.powered = heavy_max_moves != 0;
+			if (heavy_actor.pos.x > (map_x_max / 2)):
+				heavy_actor.facing_left = true;
+			heavy_actor.update_graphics();
 	
-	var light_tile = get_used_cells_by_id_one_array(Tiles.LightIdle)[0];
-	terrainmap.set_cellv(light_tile, -1);
-	light_actor = make_actor("light", light_tile, true);
-	light_actor.heaviness = Heaviness.IRON;
-	light_actor.strength = Strength.LIGHT;
-	light_actor.durability = Durability.SPIKES;
-	light_actor.fall_speed = 1;
-	light_actor.climbs = true;
-	light_actor.color = light_color;
-	light_actor.powered = light_max_moves != 0;
-	if (light_actor.pos.x > (map_x_max / 2)):
-		light_actor.facing_left = true;
-	light_actor.update_graphics();
+	layers_tiles = get_used_cells_by_id_all_layers(Tiles.LightIdle);
+	for i in range(layers_tiles.size()):
+		var tiles = layers_tiles[i];
+		for light_tile in tiles:
+			terrain_layers[i].set_cellv(light_tile, -1);
+			light_actor = make_actor("light", light_tile, true);
+			light_actor.heaviness = Heaviness.IRON;
+			light_actor.strength = Strength.LIGHT;
+			light_actor.durability = Durability.SPIKES;
+			light_actor.fall_speed = 1;
+			light_actor.climbs = true;
+			light_actor.color = light_color;
+			light_actor.powered = light_max_moves != 0;
+			if (light_actor.pos.x > (map_x_max / 2)):
+				light_actor.facing_left = true;
+			light_actor.update_graphics();
 	
 	# other actors
 	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
