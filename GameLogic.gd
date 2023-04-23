@@ -1368,6 +1368,12 @@ func character_move(dir: Vector2) -> bool:
 				set_actor_var(heavy_actor, "facing_left", false, Chrono.MOVE);
 			elif (!heavy_selected and light_actor.facing_left):
 				set_actor_var(light_actor, "facing_left", false, Chrono.MOVE);
+		elif (dir == Vector2.DOWN):
+			if heavy_selected and !is_suspended(heavy_actor):
+				set_actor_var(heavy_actor, "airborne", 0, Chrono.MOVE);
+			#AD10: Light floats gracefully downwards
+			#elif !heavy_selected and !is_suspended(light_actor):
+			#	set_actor_var(light_actor, "airborne", 0, Chrono.MOVE);
 	if (result != Success.No):
 		time_passes(Chrono.MOVE);
 		if anything_happened_meta():
