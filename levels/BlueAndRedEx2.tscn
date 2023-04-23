@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 3, 7, 0, 4, 1, 0, 65539, 14, 196609, 131072, 2, 0, 131
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Blue and Red [VAR2]"
+level_replay = "Blue and Red [VAR2]$mturn=47$wxwxzwddxzxddxwxzzzzxzxaxwxwxwxwxzzwaaaxzzxaaxdaxzzzzzxzzxdwxdaxwxddzxz"
 heavy_max_moves = 6
 light_max_moves = 6
 
