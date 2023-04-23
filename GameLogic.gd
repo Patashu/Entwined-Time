@@ -421,6 +421,8 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
 	level_list.push_back(preload("res://levels/Freedom.tscn"));
+	level_list.push_back(preload("res://levels/BlueAndRedEx.tscn"));
+	level_list.push_back(preload("res://levels/BlueAndRedEx2.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
