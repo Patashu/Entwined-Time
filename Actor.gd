@@ -177,6 +177,7 @@ func update_time_bubble():
 		time_bubble.time_colour = time_colour;
 		time_bubble.position = Vector2(12, 12);
 		self.add_child(time_bubble);
+		time_bubble.time_bubble_colour()
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)

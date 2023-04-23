@@ -416,6 +416,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/LevelNotFound.tscn"));
 	level_list.push_back(preload("res://levels/DownhillRedBlue.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingRedBlue.tscn"));
+	level_list.push_back(preload("res://levels/BlueAndRed.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
@@ -1369,15 +1370,64 @@ func character_move(dir: Vector2) -> bool:
 				set_actor_var(light_actor, "facing_left", false, Chrono.MOVE);
 	if (result != Success.No):
 		time_passes(Chrono.MOVE);
-		if heavy_selected:
-			adjust_turn(true, 1, Chrono.MOVE);
-			adjust_meta_turn(1);
-		else:
-			adjust_turn(false, 1, Chrono.MOVE);
-			adjust_meta_turn(1);
+		if anything_happened_meta():
+			if heavy_selected:
+				if anything_happened_char():
+					adjust_turn(true, 1, Chrono.MOVE);
+				adjust_meta_turn(1);
+			else:
+				if anything_happened_char():
+					adjust_turn(false, 1, Chrono.MOVE);
+				adjust_meta_turn(1);
 	if (result != Success.Yes):
 		play_sound("bump")
 	return result;
+
+func anything_happened_char(destructive: bool = true) -> bool:
+	if (heavy_selected):
+		while (heavy_undo_buffer.size() <= heavy_turn):
+			heavy_undo_buffer.append([]);
+		for event in heavy_undo_buffer[heavy_turn]:
+			if event[0] != Undo.animation_substep:
+				return true;
+		#clear out now unnecessary animation_substeps if nothing else happened
+		if (destructive):
+			heavy_undo_buffer[heavy_turn].clear();
+	else:
+		while (light_undo_buffer.size() <= light_turn):
+			light_undo_buffer.append([]);
+		for event in light_undo_buffer[light_turn]:
+			if event[0] != Undo.animation_substep:
+				return true;
+		if (destructive):
+			light_undo_buffer[light_turn].clear();
+	return false;
+	
+func anything_happened_meta() -> bool:
+	if anything_happened_char(false):
+		return true;
+	while (meta_undo_buffer.size() <= meta_turn):
+		meta_undo_buffer.append([]);
+	var heavy_undo_event_add_count = 0;
+	var light_undo_event_add_count = 0;
+	for event in meta_undo_buffer[meta_turn]:
+		if event[0] == Undo.animation_substep:
+			continue;
+		elif event[0] == Undo.heavy_undo_event_add:
+			heavy_undo_event_add_count += 1;
+		elif event[0] == Undo.light_undo_event_add:
+			light_undo_event_add_count += 1;
+		else:
+			return true;
+	if heavy_undo_event_add_count > 0:
+		if heavy_undo_buffer[heavy_turn].size() != heavy_undo_event_add_count:
+			return true;
+	if light_undo_event_add_count > 0:
+		if light_undo_buffer[light_turn].size() != light_undo_event_add_count:
+			return true;
+	meta_undo_buffer[meta_turn].clear();
+	anything_happened_char(true); #to destroy
+	return false;
 
 func time_passes(chrono: int) -> void:
 	if (chrono >= Chrono.META_UNDO):
@@ -1417,6 +1467,11 @@ func time_passes(chrono: int) -> void:
 		has_fallen[actor] = 0;
 		if actor.airborne > 0 and actor.fall_speed() != 0:
 			set_actor_var(actor, "airborne", actor.airborne - 1, chrono);
+			
+	# AD09: ALL actors go from airborne 2 to 1. (blue/red levels are kind of fucky without this)
+	for actor in actors:
+		if actor.airborne >= 2:
+			set_actor_var(actor, "airborne", 1, chrono);
 			
 	# GRAVITY
 	# For each actor in the list, in order of lowest down to highest up, repeat the following loop until nothing happens:
