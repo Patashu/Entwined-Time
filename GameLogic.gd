@@ -595,6 +595,7 @@ func find_colour(id: int, TimeColour : int) -> void:
 			for actor in actors:
 				if actor.pos == tile and actor.is_native_colour():
 					actor.time_colour = TimeColour;
+					actor.update_time_bubble();
 					break;
 	
 func calculate_map_size() -> void:

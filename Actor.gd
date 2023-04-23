@@ -17,6 +17,7 @@ var fall_speed = -1
 var climbs = false
 var is_character = false
 var time_colour = 0
+var time_bubble = null
 # undo trails logic
 var is_ghost = false
 var next_ghost = null;
@@ -162,6 +163,20 @@ func native_colour():
 
 func is_native_colour():
 	return native_colour() == time_colour;
+
+func update_time_bubble():
+	if is_native_colour():
+		if time_bubble != null:
+			time_bubble.queue_free();
+			time_bubble = null;
+	else:
+		time_bubble = Sprite.new();
+		time_bubble.set_script(preload("res://TimeBubble.gd"));
+		time_bubble.texture = preload("res://assets/time_bubble.png");
+		time_bubble.centered = true;
+		time_bubble.time_colour = time_colour;
+		time_bubble.position = Vector2(12, 12);
+		self.add_child(time_bubble);
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite.)
