@@ -414,6 +414,8 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#37294F"));
 	level_list.push_back(preload("res://levels/RedAndBlue.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFound.tscn"));
+	level_list.push_back(preload("res://levels/DownhillRedBlue.tscn"));
+	level_list.push_back(preload("res://levels/SpelunkingRedBlue.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
