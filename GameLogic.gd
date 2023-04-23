@@ -1152,9 +1152,9 @@ func check_won() -> void:
 			else:
 				var old_replay = level_save_data["replay"];
 				var old_replay_parts = old_replay.split("$");
-				var old_replay_data = old_replay[old_replay_parts.size()-2];
-				var old_replay_mturn_parts = old_replay.split("=");
-				var old_replay_mturn = int(old_replay[1]);
+				var old_replay_data = old_replay_parts[old_replay_parts.size()-2];
+				var old_replay_mturn_parts = old_replay_data.split("=");
+				var old_replay_mturn = int(old_replay_mturn_parts[1]);
 				if (old_replay_mturn >= meta_turn):
 					level_save_data["replay"] = annotate_replay(user_replay);
 			update_level_label();
