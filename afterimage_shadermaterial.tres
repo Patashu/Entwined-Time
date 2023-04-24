@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=2]
+script/source = "
+"
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 color : hint_color;
+uniform float mixture;
+
+void fragment() 
+{
+	//vec4 color = vec4(0, 0.6, 1, 1);
+	//float mixture = 1.0;
+	vec4 tex = texture(TEXTURE, UV);
+	COLOR.a = tex.a;
+	COLOR.rgb = mix(tex.rgb, color.rgb, mixture);
+	COLOR.rgb = mix(tex.rgb, COLOR.rgb, floor(tex.a));
+}
+"
+script = SubResource( 2 )
+
+[resource]
+shader = SubResource( 1 )
+shader_param/color = null
+shader_param/mixture = null
+script = SubResource( 2 )

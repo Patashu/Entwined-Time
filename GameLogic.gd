@@ -180,11 +180,14 @@ var heavy_selected = true;
 # for undo trail ghosts
 var ghosts = []
 
+# afterimages
+var afterimages_timer = 0;
+var afterimages_timer_max = 0.05;
+
 # save file, ooo!
 var save_file = {}
 
 # song-and-dance state
-var timer = 0;
 var sounds = {}
 var speakers = [];
 var muted = false;
@@ -203,6 +206,7 @@ var animation_server = []
 var animation_substep = 0;
 
 #replay system
+var replay_timer = 0;
 var user_replay = "";
 var user_replay_before_restarts = [];
 var doing_replay = false;
@@ -250,11 +254,20 @@ func _ready() -> void:
 	initialize_level_list();
 	prepare_audio();
 	tile_changes();
+	initialize_shaders();
 	if (OS.is_debug_build()):
 		assert_tile_enum();
 	
 	# Load the first map.
 	load_level(0);
+	
+func initialize_shaders() -> void:
+	#each thing that uses a shader has to compile the first time it's used, so... use it now!
+	var afterimage = preload("Afterimage.tscn").instance();
+	afterimage.initialize(targeter, light_color);
+	levelscene.add_child(afterimage);
+	afterimage.position = Vector2(-99, -99);
+	pass
 	
 func tile_changes() -> void:
 	# hide light and heavy goal sprites when in-game and not in-editor
@@ -1098,6 +1111,8 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	return new;
 
 func finish_animations() -> void:
+	undo_effect_color = Color.transparent;
+	afterimages_timer = afterimages_timer_max;
 	for actor in actors:
 		actor.animation_timer = 0;
 		actor.animations.clear();
@@ -1606,7 +1621,7 @@ func toggle_replay() -> void:
 	doing_replay = true;
 	restart();
 	replay_turn = 0;
-	next_replay = timer + replay_interval();
+	next_replay = replay_timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
 	
 func do_one_replay_turn() -> void:
@@ -1617,14 +1632,14 @@ func do_one_replay_turn() -> void:
 			doing_replay = true;
 			load_level(1);
 			replay_turn = 0;
-			next_replay = timer + replay_interval();
+			next_replay = replay_timer + replay_interval();
 			return;
 		else:
 			if (unit_test_mode):
 				floating_text("Tested up to level: " + str(level_number));
 			end_replay();
 			return;
-	next_replay = timer+replay_interval();
+	next_replay = replay_timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
 	replay_turn += 1;
 	if (replay_char == "w"):
@@ -1782,8 +1797,28 @@ func start_saved_replay() -> void:
 func annotate_replay(replay: String) -> String:
 	return level_name + "$" + "mturn=" + str(meta_turn) + "$" + replay;
 
+func afterimages() -> void:
+	if undo_effect_color == Color.transparent:
+		return;
+	var any_animating = false;
+	for actor in actors:
+		if actor.animations.size() > 0:
+			any_animating = true;
+			break;
+	if !any_animating:
+		return;
+	# ok, we're mid undo.
+	for actor in actors:
+		var afterimage = preload("res://Afterimage.tscn").instance();
+		afterimage.initialize(actor, undo_effect_color);
+		underactorsparticles.add_child(afterimage);
+		
 func _process(delta: float) -> void:
-	timer += delta;
+	replay_timer += delta;
+	afterimages_timer += delta;
+	if afterimages_timer > afterimages_timer_max:
+		afterimages_timer -= afterimages_timer_max;
+		afterimages();
 	if (sky_timer < sky_timer_max):
 		sky_timer += delta;
 		if (sky_timer > sky_timer_max):
@@ -1804,7 +1839,7 @@ func _process(delta: float) -> void:
 		VisualServer.set_default_clear_color(current_sky);
 	
 	if ui_stack.size() == 0:
-		if (doing_replay and timer > next_replay):
+		if (doing_replay and replay_timer > next_replay):
 			do_one_replay_turn();
 			update_info_labels();
 		
