@@ -14,10 +14,8 @@ void fragment()
 {
 	//vec4 color = vec4(0, 0.6, 1, 1);
 	//float mixture = 1.0;
-	vec4 tex = texture(TEXTURE, UV);
-	COLOR.a = tex.a;
-	COLOR.rgb = mix(tex.rgb, color.rgb, mixture);
-	COLOR.rgb = mix(tex.rgb, COLOR.rgb, floor(tex.a));
+	COLOR = texture(TEXTURE, UV);
+    COLOR.rgb = mix(COLOR.rgb, color.rgb, mixture);
 }
 "
 script = SubResource( 2 )
