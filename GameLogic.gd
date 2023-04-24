@@ -398,7 +398,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/ThirdRoommate.tscn"));
 	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
-	#level_list.push_back(preload("res://levels/Levitation.tscn")); #checkpoints are broken, need to rework
+	level_list.push_back(preload("res://levels/Levitation.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
@@ -418,6 +418,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SpelunkingRedBlue.tscn"));
 	level_list.push_back(preload("res://levels/BlueAndRed.tscn"));
 	level_list.push_back(preload("res://levels/PaperPlanes.tscn"));
+	level_list.push_back(preload("res://levels/TimelessBridge.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
@@ -542,6 +543,7 @@ func make_actors() -> void:
 	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
 	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
 	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, -1, false, Color(1, 0, 0.86, 1));
+	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.FEEBLE, Durability.SPIKES, -1, false, Color(0.5, 0.25, 0, 1));
 	
 	find_colours();
 	

@@ -120,6 +120,12 @@ func get_next_texture() -> Texture:
 			return preload("res://assets/power_crate_broken.png");
 		else:
 			return preload("res://assets/power_crate.png");
+			
+	elif actorname == "wooden_crate":
+		if broken:
+			return preload("res://assets/wooden_crate_broken.png");
+		else:
+			return preload("res://assets/wooden_crate.png");
 	
 	return null;
 
