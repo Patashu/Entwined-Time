@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 65536, 2, 0, 65537, 8, 0, 458753, 7, 0, 589824, 38, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "LEVEL_NOT_FOUND [VAR2]"
+level_replay = "LEVEL_NOT_FOUND [VAR2]$mturn=19$xssxdxzzxzxsxdxzxzxwsxdxzzssxzw"
+heavy_max_moves = 2
+light_max_moves = 2
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65536, 35, 0, 65537, 36, 0 )
