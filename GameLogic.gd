@@ -1276,6 +1276,7 @@ func load_level_direct(new_level: int) -> void:
 	load_level(impulse);
 	
 func load_level(impulse: int) -> void:
+	level_number = posmod(int(level_number), level_list.size());
 	if (impulse != 0):
 		user_replay_before_restarts.clear();
 	elif user_replay.length() > 0:
