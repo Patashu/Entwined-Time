@@ -428,6 +428,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/BlueAndRedEx.tscn"));
 	level_list.push_back(preload("res://levels/BlueAndRedEx2.tscn"));
 	level_list.push_back(preload("res://levels/PaperPlanesEx.tscn"));
+	level_list.push_back(preload("res://levels/Towerplex.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -1144,6 +1145,7 @@ func check_won() -> void:
 		# PERF: if this ends up being slow, I can cache it on level load since it won't ever change. but it seems fast enough?
 		var crate_goals = get_used_cells_by_id_one_array(Tiles.CrateGoal);
 		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
+		# maybe use DINGED?
 		for crate_goal in crate_goals:
 			var crate_goal_satisfied = false;
 			for actor in actors:
@@ -1152,7 +1154,7 @@ func check_won() -> void:
 					break;
 			if (!crate_goal_satisfied):
 				won = false;
-			break;
+				break;
 		if (won == true and !doing_replay):
 			var levels_save_data = save_file["levels"];
 			if (!levels_save_data.has(level_name)):
