@@ -211,6 +211,9 @@ func pushable() -> bool:
 func tiny_pushable() -> bool:
 	return actorname == "key" and !broken;
 
+func afterimage() -> void:
+	gamelogic.afterimage(self);
+
 func _process(delta: float) -> void:
 	#fluster timer
 	if fluster_timer_max > 0:
@@ -254,6 +257,9 @@ func _process(delta: float) -> void:
 			var current_animation = animations[0];
 			var is_done = true;
 			if (current_animation[0] == 0): #move
+				# afterimage if it was a retro move
+				if (animation_timer == 0 and current_animation[2]):
+					afterimage();
 				animation_timer_max = 0.083;
 				position -= current_animation[1]*(animation_timer/animation_timer_max)*24;
 				animation_timer += delta;

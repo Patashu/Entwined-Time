@@ -180,10 +180,6 @@ var heavy_selected = true;
 # for undo trail ghosts
 var ghosts = []
 
-# afterimages
-var afterimages_timer = 0;
-var afterimages_timer_max = 0.05;
-
 # save file, ooo!
 var save_file = {}
 
@@ -731,7 +727,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 	if (success == Success.Yes and !hypothetical):
 		add_undo_event([Undo.move, actor, dir], chrono);
 		actor.pos = pos;
-		add_to_animation_server(actor, [Animation.move, dir]);
+		add_to_animation_server(actor, [Animation.move, dir, is_retro]);
 		
 		#ding logic
 		if (!actor.broken):
@@ -1112,7 +1108,6 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 
 func finish_animations() -> void:
 	undo_effect_color = Color.transparent;
-	afterimages_timer = afterimages_timer_max;
 	for actor in actors:
 		actor.animation_timer = 0;
 		actor.animations.clear();
@@ -1797,28 +1792,16 @@ func start_saved_replay() -> void:
 func annotate_replay(replay: String) -> String:
 	return level_name + "$" + "mturn=" + str(meta_turn) + "$" + replay;
 
-func afterimages() -> void:
+func afterimage(actor: Actor) -> void:
 	if undo_effect_color == Color.transparent:
 		return;
-	var any_animating = false;
-	for actor in actors:
-		if actor.animations.size() > 0:
-			any_animating = true;
-			break;
-	if !any_animating:
-		return;
 	# ok, we're mid undo.
-	for actor in actors:
-		var afterimage = preload("res://Afterimage.tscn").instance();
-		afterimage.initialize(actor, undo_effect_color);
-		underactorsparticles.add_child(afterimage);
+	var afterimage = preload("res://Afterimage.tscn").instance();
+	afterimage.initialize(actor, undo_effect_color);
+	underactorsparticles.add_child(afterimage);
 		
 func _process(delta: float) -> void:
 	replay_timer += delta;
-	afterimages_timer += delta;
-	if afterimages_timer > afterimages_timer_max:
-		afterimages_timer -= afterimages_timer_max;
-		afterimages();
 	if (sky_timer < sky_timer_max):
 		sky_timer += delta;
 		if (sky_timer > sky_timer_max):
