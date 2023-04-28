@@ -261,7 +261,7 @@ func initialize_shaders() -> void:
 	#each thing that uses a shader has to compile the first time it's used, so... use it now!
 	var afterimage = preload("Afterimage.tscn").instance();
 	afterimage.initialize(targeter, light_color);
-	levelscene.add_child(afterimage);
+	levelscene.call_deferred("add_child", afterimage);
 	afterimage.position = Vector2(-99, -99);
 	pass
 	
