@@ -443,6 +443,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/BlueAndRedEx2.tscn"));
 	level_list.push_back(preload("res://levels/PaperPlanesEx.tscn"));
 	level_list.push_back(preload("res://levels/TimelessBridgeEx.tscn"));
+	level_list.push_back(preload("res://levels/LevitationColours.tscn"));
 	level_list.push_back(preload("res://levels/Towerplex.tscn"));
 	
 	# sentinel to make overflow checks easy
