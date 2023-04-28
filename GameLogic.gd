@@ -370,6 +370,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/JailEx2.tscn"));
 	level_list.push_back(preload("res://levels/TheOneWayPitEx.tscn"));
 	level_list.push_back(preload("res://levels/TheSpikePitEx2.tscn"));
+	level_list.push_back(preload("res://levels/InvisibleBridgeEx.tscn"));
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
 	level_list.push_back(preload("res://levels/Heaven.tscn"));
 	
