@@ -21,13 +21,3 @@ tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 65538, 20, 0, 131074, 20, 0, 196610, 20, 0 )
-
-[node name="TileMap2" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 24, 24 )
-format = 1
-
-[node name="TileMap3" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 24, 24 )
-format = 1
