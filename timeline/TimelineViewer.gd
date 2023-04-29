@@ -42,15 +42,23 @@ func add_turn(buffer: Array) -> void:
 		return
 	timelineslots.get_child(current_move).fill(buffer);
 	current_move += 1;
-	timelinedivider.position.y = yy*(current_move%y_max);
-	timelinedivider.position.x = xx*floor(current_move/y_max);
+	if (current_move) == 0:
+		timelinedivider.position.y = 0;
+		timelinedivider.position.x = 0;
+	else:
+		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
+		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
 	
 func remove_turn(color: Color) -> void:
 	if current_move <= 0:
 		return
 	current_move -= 1;
-	timelinedivider.position.y = yy*(current_move%y_max);
-	timelinedivider.position.x = xx*floor(current_move/y_max);
+	if (current_move) == 0:
+		timelinedivider.position.y = 0;
+		timelinedivider.position.x = 0;
+	else:
+		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
+		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
 	timelineslots.get_child(current_move).clear(color);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
