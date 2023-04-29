@@ -4,6 +4,7 @@ class_name GameLogic
 var debug_prints = false;
 
 onready var levelscene : Node2D = get_node("/root/LevelScene");
+onready var underterrainfolder : Node2D = levelscene.get_node("UnderTerrainFolder");
 onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
 onready var ghostsfolder : Node2D = levelscene.get_node("GhostsFolder");
 onready var levelfolder : Node2D = levelscene.get_node("LevelFolder");
@@ -665,6 +666,7 @@ func calculate_map_size() -> void:
 				map_y_max = tile.y;
 	terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2)-8;
 	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2)+12;
+	underterrainfolder.position = terrainmap.position;
 	actorsfolder.position = terrainmap.position;
 	ghostsfolder.position = terrainmap.position;
 	underactorsparticles.position = terrainmap.position;
@@ -871,6 +873,12 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
 		# TODO: glass shattering SFX and particle effect in animation server,
 		# unshattering ghost, unshattering SFX(/particles?)
+		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
+		if new_tile != -1:
+			for actor in actors:
+				if actor.pos == pos and !actor.broken:
+					actor.post_mortem = Durability.PITS;
+					set_actor_var(actor, "broken", true, chrono);
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:

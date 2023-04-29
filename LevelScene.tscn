@@ -11,6 +11,8 @@
 [node name="LevelScene" type="Node2D"]
 script = ExtResource( 5 )
 
+[node name="UnderTerrainFolder" type="Node2D" parent="."]
+
 [node name="LevelFolder" type="Node2D" parent="."]
 
 [node name="TerrainMap" type="TileMap" parent="LevelFolder"]
