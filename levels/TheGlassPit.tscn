@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 45, 0, 10, 45, 0, 131074, 7, 0, 131075, 2, 0, 131079, 8, 0, 131080, 1, 0, 196609, 14, 196613, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 524292, 196614, 14, 524290, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196615, 262148, 14, 262145, 262150, 14, 262145, 327684, 14, 262145, 327685, 45, 0, 327686, 14, 262145, 393220, 14, 327681, 393221, 45, 0, 393222, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "The Glass Pit"
+level_replay = "The Glass Pit$mturn=17$ddxazazxzwdwxaaaaaxdd"
+heavy_max_moves = 6
+light_max_moves = 5
