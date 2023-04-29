@@ -464,8 +464,10 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Ahhh.tscn"));
 	level_list.push_back(preload("res://levels/Eeep.tscn"));
 	level_list.push_back(preload("res://levels/Interleave.tscn"));
+	level_list.push_back(preload("res://levels/SpelunkingGlass.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/SpelunkingGlassEx.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
