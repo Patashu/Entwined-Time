@@ -165,7 +165,7 @@ func fluster():
 func native_colour():
 	if !is_character:
 		return 0; #Gray
-	return 1; #Magenta
+	return 1; #Purple
 
 func is_native_colour():
 	return native_colour() == time_colour;

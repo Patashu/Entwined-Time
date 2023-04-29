@@ -95,11 +95,15 @@ enum Animation {
 
 enum TimeColour {
 	Gray,
+	Purple,
 	Magenta,
 	Red,
 	Blue,
 	Green,
-	Void
+	Void,
+	Cyan,
+	Orange,
+	Yellow,
 }
 
 # attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
@@ -145,7 +149,13 @@ enum Tiles {
 	ColourGray,
 	ColourMagenta,
 	ColourGreen,
-	ColourVoid
+	ColourVoid,
+	ColourCyan,
+	ColourOrange,
+	ColourYellow,
+	ColourPurple,
+	GlassBlock,
+	GreenGlassBlock,
 }
 
 # information about the level
@@ -616,6 +626,10 @@ func find_colours() -> void:
 	find_colour(Tiles.ColourGray, TimeColour.Gray);
 	find_colour(Tiles.ColourGreen, TimeColour.Green);
 	find_colour(Tiles.ColourVoid, TimeColour.Void);
+	find_colour(Tiles.ColourPurple, TimeColour.Purple);
+	find_colour(Tiles.ColourCyan, TimeColour.Cyan);
+	find_colour(Tiles.ColourOrange, TimeColour.Orange);
+	find_colour(Tiles.ColourYellow, TimeColour.Yellow);
 	
 func find_colour(id: int, TimeColour : int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -1475,14 +1489,27 @@ func time_passes(chrono: int) -> void:
 	animation_substep(chrono);
 	var time_actors = []
 	for actor in actors:
-		#AD06: Characters are Magenta, other actors are Gray. (But with time colours you can make your own arbitrary rules!
+		#AD06: Characters are Purple, other actors are Gray. (But with time colours you can make your own arbitrary rules!
 #		Red: Time passes only when red moves forward.
 #		Blue: Time passes only when blue moves forward.
-#		Magenta: The default unrendered colour of characters. Time passes except when I am undoing.
+#		Purple: The default unrendered colour of characters. Time passes except when I am undoing.
 #		Gray: The default unrendered colour of non-character actors. Time passes when a character moves forward and doesn't when a character undoes.
 #		Green: Time always passes, AND undo events are not generated/stored for this actor, AND if a green character takes a turn and no events are made, turn is not incremented. (So, having actor be green is equivalent to a no-time-shenanigans version of Entwined Time where time just always moves forward and you need to meta-undo to claw it back.) (Alternatively, I might have turns work as normal but there's a sentinel value for 'no turns, no timeline' like 100, since -1 actually will mean something)
 #		Void: Time passes every real time second, AND undo events AND meta undo events are not generated/stored for this actor, AND if a void actor takes a turn and no events are made, turn/meta-turn is not incremented. (In the main campaign this will probably only be used for the void cuckoo clock in the final level.)
-		if actor.time_colour == TimeColour.Red:
+#		Magenta: Time always passes.
+#		Orange: Time passes if Red is moving or undoing.
+#		Cyan: Time passes if Blue is moving or undoing.
+#		Yellow: Time passes if a character is undoing.
+		if actor.time_colour == TimeColour.Gray:
+			if (chrono == Chrono.MOVE):
+				time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Purple:
+			if (chrono == Chrono.MOVE):
+				time_actors.push_back(actor);
+			else:
+				if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
+					time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Red:
 			if chrono == Chrono.MOVE and heavy_selected:
 				time_actors.push_back(actor);
 		elif actor.time_colour == TimeColour.Blue:
@@ -1490,15 +1517,17 @@ func time_passes(chrono: int) -> void:
 				time_actors.push_back(actor);
 		elif actor.time_colour == TimeColour.Green:
 			time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Gray:
-			if (chrono == Chrono.MOVE):
-				time_actors.push_back(actor);
 		elif actor.time_colour == TimeColour.Magenta:
-			if (chrono == Chrono.MOVE):
+			time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Cyan:
+			if !heavy_selected:
 				time_actors.push_back(actor);
-			else:
-				if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
-					time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Orange:
+			if heavy_selected:
+				time_actors.push_back(actor);
+		elif actor.time_colour == TimeColour.Yellow:
+			if (chrono == Chrono.CHAR_UNDO):
+				time_actors.push_back(actor);
 	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.

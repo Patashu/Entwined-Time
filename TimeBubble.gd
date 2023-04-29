@@ -4,15 +4,21 @@ class_name TimeBubble
 var timer = 0;
 var time_colour = 5;
 # PERF: static/global/const or something
-var time_colours = [Color("808080"), Color("FF00DC"), Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040")];
+var time_colours = [Color("808080"), Color("B200FF"), Color("FF00DC"),
+Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040"),
+Color("00FFFF"), Color("FF6A00"), Color("FFD800")];
 
 #enum TimeColour {
 #	Gray,
+#	Purple,
 #	Magenta,
 #	Red,
 #	Blue,
 #	Green,
-#	Void
+#	Void,
+#	Cyan,
+#	Orange,
+#	Yellow,
 #}
 
 func time_bubble_colour() -> void:

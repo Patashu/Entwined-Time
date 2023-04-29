@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=2]
+[gd_scene load_steps=63 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -52,6 +52,12 @@
 [ext_resource path="res://assets/colour_red.png" type="Texture" id=50]
 [ext_resource path="res://assets/colour_gray.png" type="Texture" id=51]
 [ext_resource path="res://assets/colour_void.png" type="Texture" id=52]
+[ext_resource path="res://assets/glass_block.png" type="Texture" id=53]
+[ext_resource path="res://assets/green_glass_block.png" type="Texture" id=54]
+[ext_resource path="res://assets/colour_purple.png" type="Texture" id=55]
+[ext_resource path="res://assets/colour_orange.png" type="Texture" id=56]
+[ext_resource path="res://assets/colour_yellow.png" type="Texture" id=57]
+[ext_resource path="res://assets/colour_cyan.png" type="Texture" id=58]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -270,3 +276,27 @@ texture = ExtResource( 48 )
 [node name="ColourVoid" type="Sprite" parent="."]
 position = Vector2( 464, 175 )
 texture = ExtResource( 52 )
+
+[node name="ColourCyan" type="Sprite" parent="."]
+position = Vector2( 258, 238 )
+texture = ExtResource( 58 )
+
+[node name="ColourOrange" type="Sprite" parent="."]
+position = Vector2( 288, 238 )
+texture = ExtResource( 56 )
+
+[node name="ColourYellow" type="Sprite" parent="."]
+position = Vector2( 318, 240 )
+texture = ExtResource( 57 )
+
+[node name="ColourPurple" type="Sprite" parent="."]
+position = Vector2( 346, 242 )
+texture = ExtResource( 55 )
+
+[node name="GlassBlock" type="Sprite" parent="."]
+position = Vector2( 371, 242 )
+texture = ExtResource( 53 )
+
+[node name="GreenGlassBlock" type="Sprite" parent="."]
+position = Vector2( 406, 242 )
+texture = ExtResource( 54 )

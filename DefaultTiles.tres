@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=57 format=2]
+[gd_resource type="TileSet" load_steps=63 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -52,6 +52,12 @@
 [ext_resource path="res://assets/colour_red.png" type="Texture" id=50]
 [ext_resource path="res://assets/colour_gray.png" type="Texture" id=51]
 [ext_resource path="res://assets/colour_void.png" type="Texture" id=52]
+[ext_resource path="res://assets/colour_purple.png" type="Texture" id=53]
+[ext_resource path="res://assets/colour_orange.png" type="Texture" id=54]
+[ext_resource path="res://assets/colour_yellow.png" type="Texture" id=55]
+[ext_resource path="res://assets/colour_cyan.png" type="Texture" id=56]
+[ext_resource path="res://assets/glass_block.png" type="Texture" id=57]
+[ext_resource path="res://assets/green_glass_block.png" type="Texture" id=58]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -679,3 +685,87 @@ frame_2/delay_sec = 0.0
 40/shape_one_way_margin = 0.0
 40/shapes = [  ]
 40/z_index = 0
+41/name = "ColourCyan"
+41/texture = ExtResource( 56 )
+41/tex_offset = Vector2( 0, 0 )
+41/modulate = Color( 1, 1, 1, 1 )
+41/region = Rect2( 0, 0, 24, 24 )
+41/tile_mode = 0
+41/occluder_offset = Vector2( 12, 12 )
+41/navigation_offset = Vector2( 12, 12 )
+41/shape_offset = Vector2( 0, 0 )
+41/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+41/shape_one_way = false
+41/shape_one_way_margin = 0.0
+41/shapes = [  ]
+41/z_index = 0
+42/name = "ColourOrange"
+42/texture = ExtResource( 54 )
+42/tex_offset = Vector2( 0, 0 )
+42/modulate = Color( 1, 1, 1, 1 )
+42/region = Rect2( 0, 0, 24, 24 )
+42/tile_mode = 0
+42/occluder_offset = Vector2( 12, 12 )
+42/navigation_offset = Vector2( 12, 12 )
+42/shape_offset = Vector2( 0, 0 )
+42/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+42/shape_one_way = false
+42/shape_one_way_margin = 0.0
+42/shapes = [  ]
+42/z_index = 0
+43/name = "ColourYellow"
+43/texture = ExtResource( 55 )
+43/tex_offset = Vector2( 0, 0 )
+43/modulate = Color( 1, 1, 1, 1 )
+43/region = Rect2( 0, 0, 24, 24 )
+43/tile_mode = 0
+43/occluder_offset = Vector2( 12, 12 )
+43/navigation_offset = Vector2( 12, 12 )
+43/shape_offset = Vector2( 0, 0 )
+43/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+43/shape_one_way = false
+43/shape_one_way_margin = 0.0
+43/shapes = [  ]
+43/z_index = 0
+44/name = "ColourPurple"
+44/texture = ExtResource( 53 )
+44/tex_offset = Vector2( 0, 0 )
+44/modulate = Color( 1, 1, 1, 1 )
+44/region = Rect2( 0, 0, 24, 24 )
+44/tile_mode = 0
+44/occluder_offset = Vector2( 12, 12 )
+44/navigation_offset = Vector2( 12, 12 )
+44/shape_offset = Vector2( 0, 0 )
+44/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+44/shape_one_way = false
+44/shape_one_way_margin = 0.0
+44/shapes = [  ]
+44/z_index = 0
+45/name = "GlassBlock"
+45/texture = ExtResource( 57 )
+45/tex_offset = Vector2( 0, 0 )
+45/modulate = Color( 1, 1, 1, 1 )
+45/region = Rect2( 0, 0, 24, 24 )
+45/tile_mode = 0
+45/occluder_offset = Vector2( 12, 12 )
+45/navigation_offset = Vector2( 12, 12 )
+45/shape_offset = Vector2( 0, 0 )
+45/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+45/shape_one_way = false
+45/shape_one_way_margin = 0.0
+45/shapes = [  ]
+45/z_index = 0
+46/name = "GreenGlassBlock"
+46/texture = ExtResource( 58 )
+46/tex_offset = Vector2( 0, 0 )
+46/modulate = Color( 1, 1, 1, 1 )
+46/region = Rect2( 0, 0, 24, 24 )
+46/tile_mode = 0
+46/occluder_offset = Vector2( 12, 12 )
+46/navigation_offset = Vector2( 12, 12 )
+46/shape_offset = Vector2( 0, 0 )
+46/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+46/shape_one_way = false
+46/shape_one_way_margin = 0.0
+46/shapes = [  ]
+46/z_index = 0
