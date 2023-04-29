@@ -78,7 +78,8 @@ enum Undo {
 	light_undo_event_add,
 	heavy_undo_event_remove,
 	light_undo_event_remove,
-	animation_substep
+	animation_substep,
+	change_terrain,
 }
 
 # and same for animations
@@ -455,6 +456,14 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TimelessBridgeEx.tscn"));
 	level_list.push_back(preload("res://levels/LevitationColours.tscn"));
 	level_list.push_back(preload("res://levels/Towerplex.tscn"));
+	
+	chapter_names.push_back("Change");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#446570"));
+	level_list.push_back(preload("res://levels/Ahhh.tscn"));
+	level_list.push_back(preload("res://levels/Eeep.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -841,66 +850,110 @@ func terrain_in_tile(pos: Vector2) -> Array:
 	for layer in terrain_layers:
 		result.append(layer.get_cellv(pos));
 	return result;
+	
+func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, chrono: int) -> int:
+	# AD04: being broken makes you immune to breaking :D
+	if (!actor.broken and actor.durability <= hazard):
+		if (!hypothetical):
+			actor.post_mortem = hazard;
+			set_actor_var(actor, "broken", true, chrono);
+		return Success.Surprise;
+	else:
+		return Success.No;
 
-func terrain_is_solid(actor: Actor, pos: Vector2, dir: Vector2, is_gravity: bool, is_retro: bool, solid_surprises_are_solid: bool) -> bool:
-	var result = false;
-	
-	if (is_retro):
-		# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
-		# so check that.
-		var retro_terrain = terrain_in_tile(pos - dir);
-		for retro_id in retro_terrain:
-			match retro_id:
-				Tiles.OnewayEast:
-					result = dir == Vector2.RIGHT;
-				Tiles.OnewayWest:
-					result = dir == Vector2.LEFT;
-				Tiles.OnewayNorth:
-					result = dir == Vector2.UP;
-				Tiles.OnewaySouth:
-					result = dir == Vector2.DOWN;
-		if result:
-			return true;
-	
-	var terrain = terrain_in_tile(pos);
+func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, is_green: bool, chrono: int, new_tile: int) -> int:
+	if (!hypothetical):
+		var terrain_layer = terrain_layers[layer];
+		var old_tile = terrain_layer.get_cellv(pos);
+		terrain_layer.set_cellv(pos, new_tile);
+		if (is_green and chrono < Chrono.CHAR_UNDO):
+			chrono = Chrono.CHAR_UNDO;
+		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
+		# TODO: glass shattering SFX and particle effect in animation server,
+		# unshattering ghost, unshattering SFX(/particles?)
+		# timeline symbol
+	return Success.Surprise;
+
+func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:
+	var terrain = terrain_in_tile(actor.pos);
+	var blocked = false;
+	# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
+	# so check that.
+	# besides that, glass blocks prevent exit.
 	for id in terrain:
 		match id:
-			Tiles.Wall:
-				result = true;
-			Tiles.LockClosed:
-				result = true;
-			Tiles.Spikeball:
-				result = solid_surprises_are_solid;
-			Tiles.NoHeavy:
-				result = actor.actorname == "heavy";
-			Tiles.NoLight:
-				result = actor.actorname == "light";
-			Tiles.NoCrate:
-				result = !actor.is_character;
-			Tiles.Grate:
-				result = actor.is_character;
-			Tiles.OnewayEastGreen:
-				result = dir == Vector2.LEFT;
-			Tiles.OnewayWestGreen:
-				result = dir == Vector2.RIGHT;
-			Tiles.OnewayNorthGreen:
-				result = dir == Vector2.DOWN;
-			Tiles.OnewaySouthGreen:
-				result = dir == Vector2.UP;
-			Tiles.LadderPlatform:
-				result = dir == Vector2.DOWN and is_gravity;
-			Tiles.WoodenPlatform:
-				result = dir == Vector2.DOWN and is_gravity;
 			Tiles.OnewayEast:
-				result = !is_retro and dir == Vector2.LEFT;
+				blocked = is_retro and dir == Vector2.RIGHT;
 			Tiles.OnewayWest:
-				result = !is_retro and dir == Vector2.RIGHT;
+				blocked = is_retro and dir == Vector2.LEFT;
 			Tiles.OnewayNorth:
-				result = !is_retro and dir == Vector2.DOWN;
+				blocked = is_retro and dir == Vector2.UP;
 			Tiles.OnewaySouth:
-				result = !is_retro and dir == Vector2.UP;
-		if result:
+				blocked = is_retro and dir == Vector2.DOWN;
+			Tiles.GlassBlock:
+				blocked = true;
+			Tiles.GreenGlassBlock:
+				blocked = true;
+		if blocked:
 			return true;
+	return false;
+
+func no_if_true_yes_if_false(input: bool) -> int:
+	if (input):
+		return Success.No;
+	return Success.Yes;
+
+func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int) -> int:
+	var result = Success.Yes;
+	
+	# check for bottomless pits
+	if (pos.y > map_y_max):
+		return maybe_break_actor(actor, Durability.PITS, hypothetical, chrono);
+
+	var terrain = terrain_in_tile(pos);
+	for i in range(terrain.size()):
+		var id = terrain[i];
+		match id:
+			Tiles.Wall:
+				result = Success.No;
+			Tiles.LockClosed:
+				result = Success.No;
+			Tiles.Spikeball:
+				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, chrono);
+			Tiles.NoHeavy:
+				result = no_if_true_yes_if_false(actor.actorname == "heavy");
+			Tiles.NoLight:
+				result = no_if_true_yes_if_false(actor.actorname == "light");
+			Tiles.NoCrate:
+				result = no_if_true_yes_if_false(!actor.is_character);
+			Tiles.Grate:
+				result = no_if_true_yes_if_false(actor.is_character);
+			Tiles.OnewayEastGreen:
+				result = no_if_true_yes_if_false(dir == Vector2.LEFT);
+			Tiles.OnewayWestGreen:
+				result = no_if_true_yes_if_false(dir == Vector2.RIGHT);
+			Tiles.OnewayNorthGreen:
+				result = no_if_true_yes_if_false(dir == Vector2.DOWN);
+			Tiles.OnewaySouthGreen:
+				result = no_if_true_yes_if_false(dir == Vector2.UP);
+			Tiles.LadderPlatform:
+				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
+			Tiles.WoodenPlatform:
+				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
+			Tiles.OnewayEast:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.LEFT);
+			Tiles.OnewayWest:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.RIGHT);
+			Tiles.OnewayNorth:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.DOWN);
+			Tiles.OnewaySouth:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.UP);
+			Tiles.GlassBlock:
+				result = maybe_change_terrain(actor, pos, i, hypothetical, false, chrono, -1);
+			Tiles.GreenGlassBlock:
+				result = maybe_change_terrain(actor, pos, i, hypothetical, true, chrono, -1);
+		if result != Success.Yes:
+			return result;
 	return result;
 	
 func is_suspended(actor: Actor):
@@ -934,17 +987,15 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return Success.Yes;
-	if (terrain_is_solid(actor, dest, dir, is_gravity, is_retro, false)):
+	
+	# handle solidity in our tile, solidity in the tile over, hazards/surprises in the tile over
+	if (current_tile_is_solid(actor, dir, is_gravity, is_retro)):
 		return Success.No;
-	var hazard = terrain_is_hazardous(actor, dest);
-	if (hazard > -1):
-		# AD04: being broken makes you immune to breaking :D
-		if (!hypothetical and !actor.broken):
-			actor.post_mortem = hazard;
-			set_actor_var(actor, "broken", true, chrono);
-		return Success.Surprise;
-	if (terrain_is_solid(actor, dest, dir, is_gravity, is_retro, true)):
-		return Success.No;
+	var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono);
+	if (solidity_check != Success.Yes):
+		return solidity_check;
+	
+	# handle pushing
 	var actors_there = actors_in_tile(dest);
 	var pushables_there = [];
 	var tiny_pushables_there = [];
@@ -953,6 +1004,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			tiny_pushables_there.push_back(actor_there);
 		elif actor_there.pushable():
 			pushables_there.push_back(actor_there);
+	
 	if (actors_there.size() > 0):
 		if (!can_push):
 			return Success.No;
@@ -976,6 +1028,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list));
 		pushers_list.pop_front();
 		return result;
+	
 	return Success.Yes;
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
@@ -1243,6 +1296,13 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.animation_substep):
 		# don't need to emit a new event as meta undoing and beyond is a teleport
 		animation_substep += 1;
+	elif (event[0] == Undo.change_terrain):
+		var actor = event[1];
+		var pos = event[2];
+		var layer = event[3];
+		var old_tile = event[4];
+		#var new_tile = event[5];
+		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile);
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
@@ -1573,7 +1633,11 @@ func time_passes(chrono: int) -> void:
 					did_fall = move_actor_relative(actor, Vector2.DOWN, chrono, false, true);
 				if (did_fall != Success.No):
 					something_happened = true;
-					has_fallen[actor] += 1;
+					# so Heavy can break a glass block and not fall further, surprises break your fall immediately
+					if (did_fall == Success.Surprise):
+						has_fallen[actor] += 999;
+					else:
+						has_fallen[actor] += 1;
 				if (did_fall != Success.Yes):
 					set_actor_var(actor, "airborne", -1, chrono);
 	
