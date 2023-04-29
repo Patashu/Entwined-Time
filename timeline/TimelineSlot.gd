@@ -14,17 +14,19 @@ func _ready() -> void:
 func fill(buffer: Array) -> void:
 	var relevant_buffer = [];
 	for event in buffer:
-		if event[0] == 0 or event[0] == 1: # move or set_actor_var
+		if event[0] == 0 or event[0] == 1 or event[0] == 9: # move or set_actor_var or change_terrain
 			# whitelist: for set_actor_var, only consider airborne 1 or less and broken
 			var whitelisted = false;
 			if (event[0] == 0):
 				whitelisted = true;
-			if (event[0] == 1):
+			elif (event[0] == 1):
 				if (event[2] == "airborne"):
 					if event[4] < 2:
 						whitelisted = true;
 				elif (event[2] == "broken"):
 					whitelisted = true;
+			elif (event[0] == 9):
+				whitelisted = true;
 			if (!whitelisted):
 				continue
 			# reverse order since undo buffer is 'in reverse order'
@@ -83,7 +85,7 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 			elif size == 12:
 				return preload("res://timeline/timeline-down-12.png");
 		pass
-	if event[0] == 1: #set_actor_var
+	elif event[0] == 1: #set_actor_var
 		var prop = event[2];
 		var new_value = event[4];
 		if prop == "airborne":
@@ -111,6 +113,11 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 				elif size == 12:
 					return preload("res://timeline/timeline-broken-12.png");
 			pass
+	elif event[0] == 9: #change_terrain
+		if size == 8:
+			return preload("res://timeline/timeline-terrain-8.png");
+		elif size == 12:
+			return preload("res://timeline/timeline-terrain-12.png");
 		
 	return null
 

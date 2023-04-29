@@ -871,7 +871,6 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
 		# TODO: glass shattering SFX and particle effect in animation server,
 		# unshattering ghost, unshattering SFX(/particles?)
-		# timeline symbol
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:
