@@ -879,6 +879,14 @@ func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, chrono: in
 		return Success.No;
 
 func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, is_green: bool, chrono: int, new_tile: int) -> int:
+	if (chrono == Chrono.GHOSTS):
+		if new_tile != -1:
+			var ghost = make_ghost_here_with_texture(pos, terrainmap.tile_set.tile_get_texture(new_tile));
+		else:
+			var ghost = make_ghost_here_with_texture(pos, preload("res://timeline/timeline-broken-12.png"));
+			ghost.scale = Vector2(2, 2);
+		return Success.Surprise;
+	
 	if (!hypothetical):
 		var terrain_layer = terrain_layers[layer];
 		var old_tile = terrain_layer.get_cellv(pos);
@@ -887,7 +895,7 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 			chrono = Chrono.CHAR_UNDO;
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
 		# TODO: glass shattering SFX and particle effect in animation server,
-		# unshattering ghost, unshattering SFX(/particles?)
+		# unshattering SFX(/particles?)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
 		if new_tile != -1:
 			for actor in actors:
@@ -1158,6 +1166,21 @@ func character_undo(is_silent: bool = false) -> bool:
 			undo_effect_color = light_color;
 		return true;
 
+func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:
+	# TODO: another poor refactor but
+	var ghost = Actor.new();
+	ghost.gamelogic = self;
+	ghost.is_ghost = true;
+	ghost.modulate = Color(1, 1, 1, 0);
+	ghosts.append(ghost);
+	ghostsfolder.add_child(ghost);
+	ghost.texture = texture;
+	ghost.pos = pos;
+	ghost.position = terrainmap.map_to_world(ghost.pos);
+	# TODO: hardcoded but it's correct for tiles
+	ghost.offset = Vector2(12, 12)
+	return ghost;
+
 func get_ghost_that_hasnt_moved(actor : Actor) -> Actor:
 	while actor.next_ghost != null:
 		actor = actor.next_ghost;
@@ -1292,6 +1315,13 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		move_actor_relative(event[1], -event[2], chrono, false, false, true);
 	elif (event[0] == Undo.set_actor_var):
 		set_actor_var(event[1], event[2], event[3], chrono);
+	elif (event[0] == Undo.change_terrain):
+		var actor = event[1];
+		var pos = event[2];
+		var layer = event[3];
+		var old_tile = event[4];
+		#var new_tile = event[5];
+		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile);
 		
 	# undo events that should not
 		
@@ -1318,13 +1348,6 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.animation_substep):
 		# don't need to emit a new event as meta undoing and beyond is a teleport
 		animation_substep += 1;
-	elif (event[0] == Undo.change_terrain):
-		var actor = event[1];
-		var pos = event[2];
-		var layer = event[3];
-		var old_tile = event[4];
-		#var new_tile = event[5];
-		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile);
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
