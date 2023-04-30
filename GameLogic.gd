@@ -93,6 +93,8 @@ enum Animation {
 	fire_roars,
 	spawn_onetimesprite_overactorsparticles,
 	explode,
+	shatter,
+	unshatter,
 }
 
 enum TimeColour {
@@ -1064,7 +1066,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
 	if (chrono < Chrono.GHOSTS):
-		add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
+		# going to try this to fix a dinged bug - don't make undo events for dinged, since it's purely visual
+		if (prop != "dinged"):
+			add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
 		actor.set(prop, value);
 		
 		# special case - if we break or unbreak, we can ding or unding too
