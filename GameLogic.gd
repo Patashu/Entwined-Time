@@ -464,6 +464,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Ahhh.tscn"));
 	level_list.push_back(preload("res://levels/Eeep.tscn"));
 	level_list.push_back(preload("res://levels/DoubleGlazed.tscn"));
+	level_list.push_back(preload("res://levels/LetMeIn.tscn"));
 	level_list.push_back(preload("res://levels/Interleave.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingGlass.tscn"));
 	level_list.push_back(preload("res://levels/LadderWorldGlass.tscn"));
