@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 2, 0, 65541, 8, 0, 65542, 14, 262145, 131072, 14, 262145, 131078, 14, 262145, 196608, 14, 262145, 196611, 3, 0, 196614, 14, 262145, 262144, 14, 262145, 262150, 14, 262145, 327680, 14, 262145, 327681, 7, 0, 327683, 32, 0, 327685, 1, 0, 327686, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Treasure Hunt"
+heavy_max_moves = 6
+light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 45, 0, 65539, 45, 0, 65540, 45, 0, 131073, 45, 0, 131074, 45, 0, 131075, 45, 0, 131076, 45, 0, 131077, 45, 0, 196609, 45, 0, 196610, 45, 0, 196612, 45, 0, 196613, 45, 0, 262145, 45, 0, 262146, 45, 0, 262147, 45, 0, 262148, 45, 0, 262149, 45, 0, 327681, 45, 0, 327682, 45, 0, 327683, 45, 0, 327684, 45, 0, 327685, 45, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 45, 0, 65539, 45, 0, 65540, 45, 0, 131073, 45, 0, 131074, 45, 0, 131075, 45, 0, 131076, 45, 0, 131077, 45, 0, 196609, 45, 0, 196610, 45, 0, 196612, 45, 0, 196613, 45, 0, 262145, 45, 0, 262146, 45, 0, 262147, 45, 0, 262148, 45, 0, 262149, 45, 0, 327681, 45, 0, 327682, 45, 0, 327683, 45, 0, 327684, 45, 0, 327685, 45, 0 )
+
+[node name="TileMap3" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262147, 20, 0 )

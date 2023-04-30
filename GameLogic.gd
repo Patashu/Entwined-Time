@@ -471,6 +471,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/CampfireGlass.tscn"));
 	level_list.push_back(preload("res://levels/Aquarium.tscn"));
 	level_list.push_back(preload("res://levels/Deconstruct.tscn"));
+	level_list.push_back(preload("res://levels/TreasureHunt.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/HeavyMovingServiceGlass.tscn"));
