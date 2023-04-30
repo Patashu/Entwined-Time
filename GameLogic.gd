@@ -463,6 +463,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#446570"));
 	level_list.push_back(preload("res://levels/Ahhh.tscn"));
 	level_list.push_back(preload("res://levels/Eeep.tscn"));
+	level_list.push_back(preload("res://levels/DoubleGlazed.tscn"));
 	level_list.push_back(preload("res://levels/Interleave.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingGlass.tscn"));
 	level_list.push_back(preload("res://levels/LadderWorldGlass.tscn"));
