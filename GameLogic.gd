@@ -902,10 +902,13 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		# unshattering SFX(/particles?)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
 		if new_tile != -1:
+			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), new_tile]);
 			for actor in actors:
 				if actor.pos == pos and !actor.broken:
 					actor.post_mortem = Durability.PITS;
 					set_actor_var(actor, "broken", true, chrono);
+		else:
+			add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), new_tile]);
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:
@@ -1957,15 +1960,7 @@ func _process(delta: float) -> void:
 		sky_timer += delta;
 		if (sky_timer > sky_timer_max):
 			sky_timer = sky_timer_max;
-		# angle_lerp hue, the others are just normal lerp
-		#var current_h = lerp(old_sky.h, target_sky.h, sky_timer/sky_timer_max);
-		#if (abs(old_sky.h - target_sky.h) > 0.5):
-		#	current_h = lerp(old_sky.h, target_sky.h-1.0, sky_timer/sky_timer_max);
-		#	if (current_h < 0):
-		#		current_h += 1.0;
-		#var current_s = lerp(old_sky.s, target_sky.s, sky_timer/sky_timer_max);
-		#var current_v = lerp(old_sky.v, target_sky.v, sky_timer/sky_timer_max);
-		# changed my mind and rgb hue is less weird I think
+		# rgb lerp (I tried hsv lerp but the hue changing feels super nonlinear)
 		var current_r = lerp(old_sky.r, target_sky.r, sky_timer/sky_timer_max);
 		var current_g = lerp(old_sky.g, target_sky.g, sky_timer/sky_timer_max);
 		var current_b = lerp(old_sky.b, target_sky.b, sky_timer/sky_timer_max);

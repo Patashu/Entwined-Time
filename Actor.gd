@@ -307,23 +307,59 @@ func _process(delta: float) -> void:
 				self.get_parent().get_parent().get_node("OverActorsParticles").add_child(sprite);
 			elif (current_animation[0] == 7): #explode
 				if (is_character):
-						var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
-						for i in range(10):
-							var sprite = Sprite.new();
-							sprite.set_script(preload("res://OneTimeSprite.gd"));
-							sprite.texture = preload("res://assets/broken_explosion.png")
-							sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
-							sprite.vframes = round(sprite.get_rect().size.y/24);
-							sprite.hframes = round(sprite.get_rect().size.x/24);
-							sprite.frame = 0;
-							if (actorname == "heavy"):
-								sprite.frame = 4;
-							sprite.centered = true;
-							sprite.scale = Vector2(0.5, 0.5);
-							sprite.frame_max = sprite.frame + 4;
-							sprite.frame_timer_max = 0.2;
-							sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
-							overactorsparticles.add_child(sprite);
+					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+					for i in range(10):
+						var sprite = Sprite.new();
+						sprite.set_script(preload("res://OneTimeSprite.gd"));
+						sprite.texture = preload("res://assets/broken_explosion.png")
+						sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+						sprite.vframes = round(sprite.get_rect().size.y/24);
+						sprite.hframes = round(sprite.get_rect().size.x/24);
+						sprite.frame = 0;
+						if (actorname == "heavy"):
+							sprite.frame = 4;
+						sprite.centered = true;
+						sprite.scale = Vector2(0.5, 0.5);
+						sprite.frame_max = sprite.frame + 4;
+						sprite.frame_timer_max = 0.2;
+						sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
+						overactorsparticles.add_child(sprite);
+			elif (current_animation[0] == 8): #shatter
+				var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+				for i in range(4):
+					var sprite = Sprite.new();
+					sprite.set_script(preload("res://FadingSprite.gd"));
+					sprite.texture = preload("res://assets/glass_block.png")
+					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+					sprite.position.x += -6+(i%2)*12;
+					sprite.position.y += -6+floor(i/2)*12;
+					sprite.centered = true;
+					sprite.scale = Vector2(0.5, 0.5);
+					sprite.velocity = Vector2(gamelogic.rng.randf_range(0, 48), gamelogic.rng.randf_range(0, 48));
+					if (i % 2 == 0):
+						sprite.velocity.x *= -1;
+					if (floor(i / 2) == 0):
+						sprite.velocity.y *= -1;
+					overactorsparticles.add_child(sprite);
+			elif (current_animation[0] == 9): #unshatter
+				var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+				for i in range(4):
+					var sprite = Sprite.new();
+					sprite.set_script(preload("res://FadingSprite.gd"));
+					sprite.texture = preload("res://assets/glass_block.png")
+					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+					sprite.position.x += -6+(i%2)*12;
+					sprite.position.y += -6+floor(i/2)*12;
+					sprite.centered = true;
+					sprite.scale = Vector2(0.5, 0.5);
+					sprite.velocity = Vector2(gamelogic.rng.randf_range(0, 48), gamelogic.rng.randf_range(0, 48));
+					if (i % 2 == 0):
+						sprite.velocity.x *= -1;
+					if (floor(i / 2) == 0):
+						sprite.velocity.y *= -1;
+					sprite.position += sprite.velocity;
+					sprite.velocity = -sprite.velocity;
+					overactorsparticles.add_child(sprite);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
