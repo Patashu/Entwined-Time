@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 131073, 8, 0, 131074, 2, 0, 131076, 0, 0, 131078, 7, 0
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Campfrost"
+level_replay = "Campfrost$mturn=13$xwdxdxdsxdxzxzdddxzs"
 heavy_max_moves = 4
 light_max_moves = 4
 
