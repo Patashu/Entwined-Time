@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/shatter.ogg-6a3ff5f7d4a89a2ba71c93bc321fc238.oggstr"
+
+[deps]
+
+source_file="res://sfx/shatter.ogg"
+dest_files=[ "res://.import/shatter.ogg-6a3ff5f7d4a89a2ba71c93bc321fc238.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

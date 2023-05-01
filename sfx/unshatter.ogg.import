@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/unshatter.ogg-60eaa509157b6313e0f81b1a8c33a2ed.oggstr"
+
+[deps]
+
+source_file="res://sfx/unshatter.ogg"
+dest_files=[ "res://.import/unshatter.ogg-60eaa509157b6313e0f81b1a8c33a2ed.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

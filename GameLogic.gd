@@ -698,8 +698,21 @@ func update_targeter() -> void:
 func prepare_audio() -> void:
 	# TODO: I could automate this if I can iterate the folder
 	# TODO: replace this with an enum and assert on startup like tiles
+	
+	#used
 	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
+	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
+	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
+	sounds["restart"] = preload("res://sfx/restart.ogg");
+	sounds["shatter"] = preload("res://sfx/shatter.ogg");
+	sounds["step"] = preload("res://sfx/step.ogg");
+	sounds["switch"] = preload("res://sfx/switch.ogg");
+	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
+	sounds["undo"] = preload("res://sfx/undo.ogg");
+	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
+
+	#unused
 	sounds["dig"] = preload("res://sfx/dig.ogg");
 	sounds["fly"] = preload("res://sfx/fly.ogg");
 	sounds["getgreenality"] = preload("res://sfx/getgreenality.ogg");
@@ -708,14 +721,7 @@ func prepare_audio() -> void:
 	sounds["greensmall"] = preload("res://sfx/greensmall.ogg");
 	sounds["key"] = preload("res://sfx/key.ogg");
 	sounds["kill"] = preload("res://sfx/kill.ogg");
-	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
-	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
 	sounds["pickup"] = preload("res://sfx/pickup.ogg");
-	sounds["restart"] = preload("res://sfx/restart.ogg");
-	sounds["step"] = preload("res://sfx/step.ogg");
-	sounds["switch"] = preload("res://sfx/switch.ogg");
-	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
-	sounds["undo"] = preload("res://sfx/undo.ogg");
 	sounds["unlock"] = preload("res://sfx/unlock.ogg");
 	sounds["usegreenality"] = preload("res://sfx/usegreenality.ogg");
 	sounds["wingreen"] = preload("res://sfx/wingreen.ogg");
@@ -898,8 +904,8 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		if (is_green and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
-		# TODO: glass shattering SFX and particle effect in animation server,
-		# unshattering SFX(/particles?)
+		# TODO: glass shattering/unshattering SFX in animation server,
+		# presentation/data terrain layer update (see notes),
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
 		if new_tile != -1:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), new_tile]);

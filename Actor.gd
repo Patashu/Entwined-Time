@@ -329,6 +329,7 @@ func _process(delta: float) -> void:
 				for i in range(4):
 					var sprite = Sprite.new();
 					sprite.set_script(preload("res://FadingSprite.gd"));
+					#TODO: use correct texture (unshatter too)
 					sprite.texture = preload("res://assets/glass_block.png")
 					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
 					sprite.position.x += -6+(i%2)*12;
@@ -341,6 +342,7 @@ func _process(delta: float) -> void:
 					if (floor(i / 2) == 0):
 						sprite.velocity.y *= -1;
 					overactorsparticles.add_child(sprite);
+				gamelogic.play_sound("shatter");
 			elif (current_animation[0] == 9): #unshatter
 				var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
 				for i in range(4):
@@ -360,6 +362,7 @@ func _process(delta: float) -> void:
 					sprite.position += sprite.velocity;
 					sprite.velocity = -sprite.velocity;
 					overactorsparticles.add_child(sprite);
+				gamelogic.play_sound("unshatter");
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
