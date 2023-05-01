@@ -882,6 +882,8 @@ func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, chrono: in
 
 func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, is_green: bool, chrono: int, new_tile: int) -> int:
 	if (chrono == Chrono.GHOSTS):
+		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
+		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
 		if new_tile != -1:
 			var ghost = make_ghost_here_with_texture(pos, terrainmap.tile_set.tile_get_texture(new_tile));
 		else:
