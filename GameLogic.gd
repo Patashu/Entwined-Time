@@ -245,18 +245,36 @@ func save_game():
 	file.store_line(to_json(save_file))
 	file.close()
 
+func default_save_file() -> void:
+	if (save_file == null or typeof(save_file) != TYPE_DICTIONARY):
+		save_file = {};
+	if (!save_file.has("level_number")):
+		save_file["level_number"] = 0
+	if (!save_file.has("levels")):
+		save_file["levels"] = {}
+	if (!save_file.has("version")):
+		save_file["version"] = 0
+
 func load_game():
 	var file = File.new()
 	if not file.file_exists("user://entwinedtime.sav"):
-		save_file = {}
-		save_file["level_number"] = 0
-		save_file["levels"] = {}
-		save_file["version"] = 0
-		return
+		return default_save_file();
+		
 	file.open("user://entwinedtime.sav", File.READ)
-	save_file = parse_json(file.get_as_text())
-	level_number = save_file["level_number"];
+	var json_parse_result = JSON.parse(file.get_as_text())
 	file.close();
+	
+	if json_parse_result.error == OK:
+		var data = json_parse_result.result;
+		if typeof(data) == TYPE_DICTIONARY:
+			save_file = data;
+		else:
+			return default_save_file();
+	else:
+		return default_save_file();
+	
+	default_save_file();
+	level_number = save_file["level_number"];
 
 func _ready() -> void:
 	# Call once when the game is booted up.
