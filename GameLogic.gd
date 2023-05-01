@@ -478,6 +478,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TreasureHunt.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/DoubleGlazedEx.tscn"));
 	level_list.push_back(preload("res://levels/LetMeInEx.tscn"));
 	level_list.push_back(preload("res://levels/HeavyMovingServiceGlass.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingGlassEx.tscn"));
@@ -595,10 +596,10 @@ func make_actors() -> void:
 			light_actor.update_graphics();
 	
 	# other actors
-	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, -1, false, Color(0.5, 0.5, 0.5, 1));
-	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, -1, false, Color(0.25, 0.25, 0.25, 1));
-	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, -1, false, Color(1, 0, 0.86, 1));
-	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.FEEBLE, Durability.SPIKES, -1, false, Color(0.5, 0.25, 0, 1));
+	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
+	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
+	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
+	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.FEEBLE, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
 	
 	find_colours();
 	

@@ -7,16 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131073, 8, 0, 131074, 3, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196615, 196612, 45, 0, 196613, 45, 0, 196614, 45, 0, 196615, 45, 0, 196616, 45, 0, 196617, 14, 196613, 196618, 14, 196614, 196619, 14, 524292, 262155, 14, 262145, 262157, 2, 0, 327691, 14, 655362, 327692, 14, 196614, 327693, 14, 196615 )
+tile_data = PoolIntArray( 131073, 8, 0, 131074, 3, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196615, 196612, 45, 0, 196613, 45, 0, 196614, 45, 0, 196615, 45, 0, 196616, 45, 0, 196617, 14, 196613, 196618, 14, 196614, 196619, 14, 196614, 196620, 14, 524292, 262156, 14, 262145, 262158, 2, 0, 327692, 14, 655362, 327693, 14, 196614, 327694, 14, 196615 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Double Glazed"
-heavy_max_moves = 10
-light_max_moves = 10
+level_replay = "Double Glazed$mturn=52$xdddddddddddxwawaaxzdxwaaxzzzzzzzzzzzwddsxzzzzzzaaaaaaaaaa"
+heavy_max_moves = 14
+light_max_moves = 11
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131073, 1, 0, 131074, 32, 0, 196612, 45, 0, 196613, 45, 0, 196614, 45, 0, 196615, 45, 0, 196616, 45, 0, 262157, 7, 0 )
+tile_data = PoolIntArray( 131074, 32, 0, 131075, 1, 0, 196612, 45, 0, 196613, 45, 0, 196614, 45, 0, 196615, 45, 0, 196616, 45, 0, 262158, 7, 0 )

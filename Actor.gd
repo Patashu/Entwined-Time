@@ -186,7 +186,7 @@ func update_time_bubble():
 		time_bubble.time_bubble_colour()
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
-# (-1 fall speed is infinite.)
+# (-1 fall speed is infinite. It's so infinite it breaks glass and keeps going!)
 # If fall speed is 0, airborne rules are ignored (WIP).
 # If fall speed is 1, state becomes airborne 2 when it jumps, 1 when it stops being airborne for any other reasn.
 # If fall speed is 2 or higher, state becomes airborne 2 when it jumps, and airborne 0 when it stops being over ground
@@ -197,7 +197,7 @@ func update_time_bubble():
 # (A forbidden direction is a null move and passes time.)
 func fall_speed() -> int:
 	if broken:
-		return -1;
+		return 99;
 	return fall_speed;
 	
 func climbs() -> bool:
