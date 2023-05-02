@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/green_fire_spreadsheet.png-355729f888d7f7eb774984d1c822170b.stex"
+path="res://.import/green_fire_spritesheet.png-9cf07e58e8bf3c6691350df6c28db3ac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/green_fire_spreadsheet.png"
-dest_files=[ "res://.import/green_fire_spreadsheet.png-355729f888d7f7eb774984d1c822170b.stex" ]
+source_file="res://assets/green_fire_spritesheet.png"
+dest_files=[ "res://.import/green_fire_spritesheet.png-9cf07e58e8bf3c6691350df6c28db3ac.stex" ]
 
 [params]
 

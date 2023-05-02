@@ -900,17 +900,19 @@ func terrain_in_tile(pos: Vector2) -> Array:
 		result.append(layer.get_cellv(pos));
 	return result;
 	
-func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, chrono: int) -> int:
+func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terrain: bool, chrono: int) -> int:
 	# AD04: being broken makes you immune to breaking :D
 	if (!actor.broken and actor.durability <= hazard):
 		if (!hypothetical):
 			actor.post_mortem = hazard;
+			if (green_terrain and chrono < Chrono.CHAR_UNDO):
+				chrono = Chrono.CHAR_UNDO;
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
 	else:
 		return Success.No;
 
-func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, is_green: bool, chrono: int, new_tile: int) -> int:
+func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: bool, chrono: int, new_tile: int) -> int:
 	if (chrono == Chrono.GHOSTS):
 		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
 		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
@@ -925,7 +927,7 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		var terrain_layer = terrain_layers[layer];
 		var old_tile = terrain_layer.get_cellv(pos);
 		terrain_layer.set_cellv(pos, new_tile);
-		if (is_green and chrono < Chrono.CHAR_UNDO):
+		if (green_terrain and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
 		# TODO: glass shattering/unshattering SFX in animation server,
@@ -975,7 +977,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 	
 	# check for bottomless pits
 	if (pos.y > map_y_max):
-		return maybe_break_actor(actor, Durability.PITS, hypothetical, chrono);
+		return maybe_break_actor(actor, Durability.PITS, hypothetical, false, chrono);
 
 	var terrain = terrain_in_tile(pos);
 	for i in range(terrain.size()):
@@ -986,7 +988,9 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.LockClosed:
 				result = Success.No;
 			Tiles.Spikeball:
-				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, chrono);
+				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, false, chrono);
+			Tiles.GreenSpikeball:
+				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, false, chrono);
 			Tiles.NoHeavy:
 				result = no_if_true_yes_if_false(actor.actorname == "heavy");
 			Tiles.NoLight:
@@ -1765,7 +1769,7 @@ func time_passes(chrono: int) -> void:
 		if !actor.broken and terrain.has(Tiles.HeavyFire) and actor.durability <= Durability.FIRE and actor.actorname != "light":
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
-	
+			
 		# Things on checkpoints are set back to turn 0 (losing their undo buffer).
 		# TODO: Horribly broken and it's not immediately obvious why. My basic idea is to 'defer' it to the end of turn so it can happen last.
 #		if actor == light_actor and (terrain == Tiles.CheckpointBlue or terrain == Tiles.Checkpoint):
@@ -1780,8 +1784,17 @@ func time_passes(chrono: int) -> void:
 #				for event in events:
 #					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
 #				adjust_turn(true, -1, chrono);
+		
+	# Green fire happens after regular fire, so you can have that matter if you'd like it to :D	
+	if chrono <= Chrono.CHAR_UNDO:
+		for actor in actors:
+			var terrain = terrain_in_tile(actor.pos);
+			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
+				actor.post_mortem = Durability.FIRE;
+				set_actor_var(actor, "broken", true, Chrono.CHAR_UNDO);
 	
 func bottom_up(a, b) -> bool:
+	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
 	return a.pos.y > b.pos.y;
 	
 func replay_interval() -> float:
@@ -1884,6 +1897,19 @@ func add_to_animation_server(actor: ActorBase, animation: Array) -> void:
 
 func handle_global_animation(animation: Array) -> void:
 	if animation[0] == Animation.fire_roars:
+		#have green fires animate first so if someone puts green and non-green fires in the same tile they layer correctly
+		var green_fires = get_used_cells_by_id_one_array(Tiles.GreenFire);
+		for fire in green_fires:
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://OneTimeSprite.gd"));
+			sprite.texture = preload("res://assets/green_fire_spritesheet.png");
+			sprite.position = terrainmap.map_to_world(fire);
+			sprite.vframes = 1;
+			sprite.hframes = 8;
+			sprite.frame = 0;
+			sprite.centered = false;
+			sprite.frame_max = sprite.frame + 8;
+			underactorsparticles.add_child(sprite);
 		var fires = get_used_cells_by_id_one_array(Tiles.Fire);
 		for fire in fires:
 			var sprite = Sprite.new();

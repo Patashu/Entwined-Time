@@ -330,7 +330,10 @@ func _process(delta: float) -> void:
 					var sprite = Sprite.new();
 					sprite.set_script(preload("res://FadingSprite.gd"));
 					#TODO: use correct texture (unshatter too)
-					sprite.texture = preload("res://assets/glass_block.png")
+					if (current_animation[2] == 46):
+						sprite.texture = preload("res://assets/green_glass_block.png")
+					else:
+						sprite.texture = preload("res://assets/glass_block.png")
 					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
 					sprite.position.x += -6+(i%2)*12;
 					sprite.position.y += -6+floor(i/2)*12;
