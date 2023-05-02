@@ -11,7 +11,13 @@ tile_data = PoolIntArray( 6, 14, 196613, 7, 14, 393219, 8, 14, 3, 9, 14, 3, 10, 
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Graduation"
+level_name = "Graduation [VAR1]"
 level_replay = "ddxddssxzxzzzdddxzcwzxzxwxzxwzxzzxzxdddxdddxzzzwxdxzdxwxzxzxaxaxzdddwxzxzdddxzzzzzaaaaa"
 heavy_max_moves = 6
 light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65547, 19, 0, 131083, 19, 0, 196619, 19, 0 )

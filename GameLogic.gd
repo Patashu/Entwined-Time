@@ -372,8 +372,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/InvisibleBridge.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
-	level_list.push_back(preload("res://levels/Graduation.tscn"));
-	level_list.push_back(preload("res://levels/GraduationEx.tscn"));
+	level_list.push_back(preload("res://levels/GraduationPure.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/TheFirstPitEx3.tscn"));
@@ -405,6 +404,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/InvisibleBridgeEx.tscn"));
 	level_list.push_back(preload("res://levels/InvisibleBridgeEx2.tscn"));
 	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
+	level_list.push_back(preload("res://levels/GraduationSpicy.tscn"));
 	level_list.push_back(preload("res://levels/Heaven.tscn"));
 	
 	chapter_names.push_back("Ladders and Wooden Platforms");
