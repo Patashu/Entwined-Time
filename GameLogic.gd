@@ -158,8 +158,10 @@ enum Tiles {
 	ColourOrange,
 	ColourYellow,
 	ColourPurple,
-	GlassBlock,
-	GreenGlassBlock,
+	GlassBlock, #45
+	GreenGlassBlock, #46
+	GreenSpikeball, #47
+	GreenFire, #48
 }
 
 # information about the level

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=63 format=2]
+[gd_resource type="TileSet" load_steps=73 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -58,6 +58,14 @@
 [ext_resource path="res://assets/colour_cyan.png" type="Texture" id=56]
 [ext_resource path="res://assets/glass_block.png" type="Texture" id=57]
 [ext_resource path="res://assets/green_glass_block.png" type="Texture" id=58]
+[ext_resource path="res://assets/green_fire_idle_3.png" type="Texture" id=59]
+[ext_resource path="res://assets/green_fire_idle_2.png" type="Texture" id=60]
+[ext_resource path="res://assets/green_spikeball_1.png" type="Texture" id=61]
+[ext_resource path="res://assets/green_spikeball_3.png" type="Texture" id=62]
+[ext_resource path="res://assets/green_spikeball_5.png" type="Texture" id=63]
+[ext_resource path="res://assets/green_fire_idle_1.png" type="Texture" id=64]
+[ext_resource path="res://assets/green_spikeball_2.png" type="Texture" id=65]
+[ext_resource path="res://assets/green_spikeball_4.png" type="Texture" id=66]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -113,6 +121,34 @@ frame_0/texture = ExtResource( 44 )
 frame_1/texture = ExtResource( 46 )
 frame_1/delay_sec = 0.0
 frame_2/texture = ExtResource( 45 )
+frame_2/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=5]
+frames = 8
+fps = 5.0
+frame_0/texture = ExtResource( 61 )
+frame_1/texture = ExtResource( 65 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 62 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 66 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 63 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 66 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 62 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 65 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=6]
+frames = 3
+fps = 5.0
+frame_0/texture = ExtResource( 64 )
+frame_1/texture = ExtResource( 60 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 59 )
 frame_2/delay_sec = 0.0
 
 [resource]
@@ -769,3 +805,31 @@ frame_2/delay_sec = 0.0
 46/shape_one_way_margin = 0.0
 46/shapes = [  ]
 46/z_index = 0
+47/name = "GreenSpikeball"
+47/texture = SubResource( 5 )
+47/tex_offset = Vector2( 0, 0 )
+47/modulate = Color( 1, 1, 1, 1 )
+47/region = Rect2( 0, 0, 24, 24 )
+47/tile_mode = 0
+47/occluder_offset = Vector2( 12, 12 )
+47/navigation_offset = Vector2( 12, 12 )
+47/shape_offset = Vector2( 0, 0 )
+47/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+47/shape_one_way = false
+47/shape_one_way_margin = 0.0
+47/shapes = [  ]
+47/z_index = 0
+48/name = "GreenFire"
+48/texture = SubResource( 6 )
+48/tex_offset = Vector2( 0, 0 )
+48/modulate = Color( 1, 1, 1, 1 )
+48/region = Rect2( 0, 0, 24, 24 )
+48/tile_mode = 0
+48/occluder_offset = Vector2( 12, 12 )
+48/navigation_offset = Vector2( 12, 12 )
+48/shape_offset = Vector2( 0, 0 )
+48/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+48/shape_one_way = false
+48/shape_one_way_margin = 0.0
+48/shapes = [  ]
+48/z_index = 0
