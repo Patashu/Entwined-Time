@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 46, 0, 1, 46, 0, 2, 46, 0, 3, 46, 0, 4, 46, 0, 5, 46, 0, 6, 46, 0, 7, 46, 0, 8, 46, 0, 9, 46, 0, 10, 46, 0, 11, 46, 0, 12, 46, 0, 13, 46, 0, 14, 46, 0, 15, 46, 0, 16, 46, 0, 17, 46, 0, 131072, 7, 0, 131073, 8, 0, 131079, 3, 0, 131082, 3, 0, 131088, 2, 0, 131089, 1, 0, 196608, 14, 524290, 196609, 14, 196615, 196610, 46, 0, 196611, 46, 0, 196612, 46, 0, 196613, 46, 0, 196614, 14, 196613, 196615, 14, 524291, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 524291, 196619, 14, 196615, 196620, 46, 0, 196621, 46, 0, 196622, 46, 0, 196623, 46, 0, 196624, 14, 196613, 196625, 14, 524292, 262144, 14, 262145, 262151, 14, 262145, 262154, 14, 262145, 262161, 14, 262145, 327680, 14, 327681, 327687, 14, 327681, 327690, 14, 327681, 327697, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Green Glass"
+heavy_max_moves = 22
+light_max_moves = 22
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 32, 0, 131088, 32, 0, 196610, 46, 0, 196611, 46, 0, 196612, 46, 0, 196613, 46, 0, 196620, 46, 0, 196621, 46, 0, 196622, 46, 0, 196623, 46, 0 )
