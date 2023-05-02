@@ -804,7 +804,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 	
 	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list);
 	if (success == Success.Yes and !hypothetical):
-		add_undo_event([Undo.move, actor, dir], chrono);
+		add_undo_event([Undo.move, actor, dir], chrono_for_maybe_green_actor(actor, chrono));
 		actor.pos = pos;
 		add_to_animation_server(actor, [Animation.move, dir, is_retro]);
 		
@@ -899,6 +899,13 @@ func terrain_in_tile(pos: Vector2) -> Array:
 	for layer in terrain_layers:
 		result.append(layer.get_cellv(pos));
 	return result;
+
+func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
+	if (chrono >= Chrono.CHAR_UNDO):
+		return chrono;
+	elif (actor.time_colour == TimeColour.Green):
+		return Chrono.CHAR_UNDO;
+	return chrono;
 	
 func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terrain: bool, chrono: int) -> int:
 	# AD04: being broken makes you immune to breaking :D
@@ -1107,7 +1114,7 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	if (chrono < Chrono.GHOSTS):
 		# going to try this to fix a dinged bug - don't make undo events for dinged, since it's purely visual
 		if (prop != "dinged"):
-			add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono);
+			add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono_for_maybe_green_actor(actor, chrono));
 		actor.set(prop, value);
 		
 		# special case - if we break or unbreak, we can ding or unding too
