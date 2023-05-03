@@ -12,5 +12,6 @@ tile_data = PoolIntArray( 0, 14, 196609, 8, 14, 196609, 65536, 14, 262145, 65544
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Skip"
+level_replay = "Skip$mturn=15$axddsxdxzzzssxzzddxa"
 heavy_max_moves = 6
 light_max_moves = 4
