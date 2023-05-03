@@ -955,13 +955,13 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		# presentation/data terrain layer update (see notes),
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
 		if new_tile != -1:
-			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), new_tile]);
+			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
 			for actor in actors:
 				if actor.pos == pos and !actor.broken:
 					actor.post_mortem = Durability.PITS;
 					set_actor_var(actor, "broken", true, chrono);
 		else:
-			add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), new_tile]);
+			add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:

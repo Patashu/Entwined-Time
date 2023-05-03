@@ -7,10 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 4, 0, 0, 131073, 8, 0, 131074, 2, 0, 131076, 48, 0, 131077, 0, 0, 131078, 1, 0, 131079, 7, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196615 )
+tile_data = PoolIntArray( 4, 0, 0, 131073, 8, 0, 131074, 2, 0, 131076, 48, 0, 131078, 1, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196615 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Green Campfire"
+level_replay = "Green Campfire$mturn=13$xwdxdwxdxwzwdddxzz"
 heavy_max_moves = 6
 light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 7, 0 )

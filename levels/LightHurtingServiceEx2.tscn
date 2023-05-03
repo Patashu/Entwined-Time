@@ -12,5 +12,6 @@ tile_data = PoolIntArray( 0, 12, 0, 1, 12, 0, 2, 12, 0, 3, 12, 0, 4, 12, 0, 5, 1
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Light Hurting Service (fixed) (final)"
+level_replay = "Light Hurting Service (fixed) (final)$mturn=40$xwxaxdxdwxwxzzzxzxdwxasxaxzzwxzzzdxzasxdaxzzwxzzzaaaxzaas"
 heavy_max_moves = 3
 light_max_moves = 6
