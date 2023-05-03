@@ -520,6 +520,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/LightHurtingServiceEx.tscn"));
 	level_list.push_back(preload("res://levels/LightHurtingServiceEx2.tscn"));
 	level_list.push_back(preload("res://levels/GreenGrass.tscn"));
+	level_list.push_back(preload("res://levels/SpikesGreenEx.tscn"));
 	level_list.push_back(preload("res://levels/Skip.tscn"));
 	
 	# sentinel to make overflow checks easy
@@ -1012,7 +1013,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.Spikeball:
 				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, false, chrono);
 			Tiles.GreenSpikeball:
-				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, false, chrono);
+				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, true, chrono);
 			Tiles.NoHeavy:
 				result = no_if_true_yes_if_false(actor.actorname == "heavy");
 			Tiles.NoLight:
