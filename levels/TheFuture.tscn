@@ -11,10 +11,9 @@ tile_data = PoolIntArray( 4, 32, 0, 5, 3, 0, 7, 3, 0, 8, 32, 0, 65540, 23, 0, 65
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Spikes!"
-level_replay = "xddxaaaxwdddxzwddd"
-heavy_max_moves = 6
-light_max_moves = 6
+level_name = "The Future"
+heavy_max_moves = 2
+light_max_moves = 2
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
