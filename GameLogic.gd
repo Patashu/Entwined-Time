@@ -537,6 +537,11 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
+	#post-game levels
+	#level_list.push_back(preload("res://levels/InsightCoyoteTime.tscn"));
+	#level_list.push_back(preload("res://levels/InsightDontPushIt.tscn"));
+	#level_list.push_back(preload("res://levels/InsightDidntPushIt.tscn"));
+	
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
 		level_names.push_back(level.get_node("LevelInfo").level_name);

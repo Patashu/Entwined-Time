@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap2" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65535, 1, 0, 1, 2, 0, 2, 8, 0, 5, 7, 0, 131071, 10, 0, 65536, 10, 0, 65537, 14, 262148, 65538, 10, 0, 65539, 10, 0, 65540, 10, 0, 65541, 10, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Insight: Didn't Push It"
+level_replay = "Insight: Didn't Push It$mturn=11$xdxdxzdxdxzdxzzaa"
+heavy_max_moves = 6
+light_max_moves = 1
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 4, 0 )
