@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 45, 0, 1, 45, 0, 2, 45, 0, 3, 45, 0, 4, 45, 0, 5, 45, 0, 6, 45, 0, 65536, 45, 0, 65537, 7, 0, 65541, 1, 0, 65542, 45, 0, 131072, 45, 0, 131073, 23, 0, 131077, 23, 0, 131078, 45, 0, 196608, 45, 0, 196611, 45, 0, 196614, 45, 0, 262144, 45, 0, 262150, 45, 0, 327680, 45, 0, 327681, 2, 0, 327682, 5, 0, 327683, 5, 0, 327684, 5, 0, 327685, 8, 0, 327686, 45, 0, 393216, 45, 0, 393217, 45, 0, 393218, 45, 0, 393219, 45, 0, 393220, 45, 0, 393221, 45, 0, 393222, 45, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Ladderworld (ladder shortage)"
+heavy_max_moves = 6
+light_max_moves = 6

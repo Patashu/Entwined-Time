@@ -506,6 +506,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheGlassPitEx.tscn"));
 	level_list.push_back(preload("res://levels/CampfireGlassEx.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingGlassEx2.tscn"));
+	level_list.push_back(preload("res://levels/LadderWorldGlassEx.tscn"));
 	
 	chapter_names.push_back("Permanence");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -521,6 +522,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/LightHurtingServiceEx2.tscn"));
 	level_list.push_back(preload("res://levels/GreenGrass.tscn"));
 	level_list.push_back(preload("res://levels/SpikesGreenEx.tscn"));
+	level_list.push_back(preload("res://levels/CampfireGreenEx.tscn"));
+	level_list.push_back(preload("res://levels/FirewallGreenEx.tscn"));
 	level_list.push_back(preload("res://levels/Skip.tscn"));
 	
 	# sentinel to make overflow checks easy
