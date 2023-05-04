@@ -132,6 +132,24 @@ func prepare_chapter() -> void:
 		if (y == y_max):
 			y = 0;
 			x += 1;
+		
+	# chapter 0 notice
+	if chapter == 0:
+		label = Label.new();
+		holder.add_child(label);
+		label.rect_position.x = xx + xxx;
+		label.rect_position.y = yy + yyy*7;
+		label.text = "(Advanced puzzles are optional,\nfor those seeking a challenge.)"
+		label.theme = holder.theme;
+		
+	# chapter 2 notice
+	if chapter == 2:
+		label = Label.new();
+		holder.add_child(label);
+		label.rect_position.x = 8;
+		label.rect_position.y = yy + yyy*8;
+		label.text = "(This is a difficult but rewarding chapter. If you get stuck, try the next chapters\nand come back later. The secrets of space-time will be here when you're ready.)"
+		label.theme = holder.theme;
 
 func destroy() -> void:
 	self.queue_free();
