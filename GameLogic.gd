@@ -518,6 +518,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheFuture.tscn"));
 	level_list.push_back(preload("res://levels/FasterThanLight.tscn"));
 	level_list.push_back(preload("res://levels/HelpYourself.tscn"));
+	level_list.push_back(preload("res://levels/Mundane.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/LightHurtingService.tscn"));

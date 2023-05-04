@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 30, 0, 12, 30, 0, 65538, 30, 0, 65548, 30, 0, 131072, 1, 0, 131073, 3, 0, 131074, 30, 0, 131076, 3, 0, 131084, 30, 0, 131085, 3, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 524292, 196618, 3, 0, 196619, 7, 0, 196620, 30, 0, 196621, 3, 0, 262149, 14, 262145, 262153, 14, 524290, 262154, 14, 196614, 262155, 14, 196614, 262156, 14, 196614, 262157, 14, 196614, 262158, 14, 196614, 262159, 14, 196614, 262160, 14, 196615, 327685, 14, 262145, 327689, 14, 262145, 393221, 14, 262145, 393222, 2, 0, 393224, 8, 0, 393225, 14, 262145, 458757, 14, 655362, 458758, 14, 196614, 458759, 14, 196614, 458760, 14, 196614, 458761, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Mundane"
+level_replay = "Mundane$mturn=172$dxwxdwxwdwddsaaxaaxaaaxwxwxwxwawaasddxdcdwawxdxwxwdddxddaxaaasdxwdxaxwxdxwddddddccdaaaaaaxaxwdxaxwxdxwdddddwddaaaaazcwaaaaxwxwxawaxwdxwdwddsaaxwxaxawaxdxwxaxwaaaawaadddwddddxdxwaxwawaasddxdxdssddwdxwaxaasxxzwdxdxaxwaxdxwxaxwaaaaaaxdwdwdwdddddd"
+heavy_max_moves = 1
+light_max_moves = 1
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 39, 0, 131076, 39, 0, 131085, 39, 0, 196618, 39, 0, 196621, 39, 0, 393222, 39, 0, 393224, 39, 0 )
