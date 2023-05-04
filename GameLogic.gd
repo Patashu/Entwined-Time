@@ -605,7 +605,15 @@ func make_actors() -> void:
 		find_goals(layer);
 	
 	# find heavy and light and turn them into actors
+	# as a you-fucked-up backup, put them in 0,0 if there seems to be none
 	var layers_tiles = get_used_cells_by_id_all_layers(Tiles.HeavyIdle);
+	var found_one = false;
+	for i in range(layers_tiles.size()):
+		var tiles = layers_tiles[i];
+		if (tiles.size() > 0):
+			found_one = true;
+	if !found_one:
+		layers_tiles = [[Vector2(0, 0)]];
 	for i in range(layers_tiles.size()):
 		var tiles = layers_tiles[i];
 		for heavy_tile in tiles:
@@ -623,6 +631,13 @@ func make_actors() -> void:
 			heavy_actor.update_graphics();
 	
 	layers_tiles = get_used_cells_by_id_all_layers(Tiles.LightIdle);
+	found_one = false;
+	for i in range(layers_tiles.size()):
+		var tiles = layers_tiles[i];
+		if (tiles.size() > 0):
+			found_one = true;
+	if !found_one:
+		layers_tiles = [[Vector2(0, 0)]];
 	for i in range(layers_tiles.size()):
 		var tiles = layers_tiles[i];
 		for light_tile in tiles:
@@ -736,9 +751,9 @@ func calculate_map_size() -> void:
 	overactorsparticles.position = terrainmap.position;
 		
 func update_targeter() -> void:
-	if (heavy_selected and heavy_actor != null):
+	if (heavy_selected):
 		targeter.position = heavy_actor.position + terrainmap.position;
-	elif (light_actor != null):
+	else:
 		targeter.position = light_actor.position + terrainmap.position;
 		
 func prepare_audio() -> void:
