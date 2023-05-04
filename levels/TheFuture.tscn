@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 4, 32, 0, 5, 3, 0, 7, 3, 0, 8, 32, 0, 65540, 23, 0, 65
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "The Future"
+level_replay = "The Future$mturn=36$dssssaddzxawwwwaddzxawwwwddddxassssaaaa"
 heavy_max_moves = 2
 light_max_moves = 2
 
