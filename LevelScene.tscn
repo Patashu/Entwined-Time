@@ -158,6 +158,37 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 19
 
 [node name="UnderActorsParticles" type="Node2D" parent="."]
 
+[node name="HeavyInfoLabel" type="Label" parent="."]
+margin_top = 1.0
+margin_right = 37.0
+margin_bottom = 26.0
+theme = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.517647, 0.172549, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Heavy
+99/99"
+align = 1
+valign = 1
+
+[node name="LightInfoLabel" type="Label" parent="."]
+margin_left = 478.0
+margin_top = 1.0
+margin_right = 511.0
+margin_bottom = 26.0
+theme = ExtResource( 2 )
+custom_colors/font_color = Color( 0, 0.87451, 1, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Light
+99/99"
+align = 1
+valign = 1
+
+[node name="HeavyTimeline" parent="." instance=ExtResource( 6 )]
+position = Vector2( 6, 26 )
+
+[node name="LightTimeline" parent="." instance=ExtResource( 6 )]
+position = Vector2( 482, 26 )
+
 [node name="ActorsFolder" type="Node2D" parent="."]
 
 [node name="GhostsFolder" type="Node2D" parent="."]
@@ -221,31 +252,6 @@ X: Swap Character
 Z: Undo Character"
 align = 1
 
-[node name="HeavyInfoLabel" type="Label" parent="."]
-margin_top = 1.0
-margin_right = 37.0
-margin_bottom = 26.0
-theme = ExtResource( 2 )
-custom_colors/font_color = Color( 1, 0.517647, 0.172549, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Heavy
-99/99"
-align = 1
-valign = 1
-
-[node name="LightInfoLabel" type="Label" parent="."]
-margin_left = 478.0
-margin_top = 1.0
-margin_right = 511.0
-margin_bottom = 26.0
-theme = ExtResource( 2 )
-custom_colors/font_color = Color( 0, 0.87451, 1, 1 )
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Light
-99/99"
-align = 1
-valign = 1
-
 [node name="MetaInfoLabel" type="Label" parent="."]
 margin_top = 266.0
 margin_right = 511.0
@@ -255,12 +261,6 @@ custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 text = "Meta"
 align = 1
 valign = 1
-
-[node name="HeavyTimeline" parent="." instance=ExtResource( 6 )]
-position = Vector2( 6, 26 )
-
-[node name="LightTimeline" parent="." instance=ExtResource( 6 )]
-position = Vector2( 482, 26 )
 
 [node name="DownArrow" type="Sprite" parent="."]
 visible = false
