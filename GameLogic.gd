@@ -212,6 +212,7 @@ var heavy_color = Color(1.0, 0, 0, 1);
 var light_color = Color(0, 0.58, 1.0, 1);
 var meta_color = Color(0.5, 0.5, 0.5, 1);
 var ui_stack = [];
+var win_label_default_y = 113;
 
 # animation server
 var animation_server = []
@@ -1424,6 +1425,27 @@ func check_won() -> void:
 			save_game();
 	
 	winlabel.visible = won;
+	if (won):
+		adjust_winlabel();
+	
+func adjust_winlabel() -> void:
+	winlabel.rect_position.y = win_label_default_y;
+	var tries = 1;
+	var heavy_actor_rect = heavy_actor.get_rect();
+	var light_actor_rect = light_actor.get_rect();
+	var label_rect = Rect2(winlabel.rect_position, winlabel.rect_size);
+	heavy_actor_rect.position = terrainmap.map_to_world(heavy_actor.pos) + terrainmap.global_position;
+	light_actor_rect.position = terrainmap.map_to_world(light_actor.pos) + terrainmap.global_position;
+	while (tries < 99):
+		if heavy_actor_rect.intersects(label_rect) or light_actor_rect.intersects(label_rect):
+			var polarity = 1;
+			if (tries % 2 == 0):
+				polarity = -1;
+			winlabel.rect_position.y += 8*tries*polarity;
+			label_rect.position.y += 8*tries*polarity;
+		else:
+			break;
+		tries += 1;
 	
 func undo_one_event(event: Array, chrono : int) -> void:
 	#if (debug_prints):

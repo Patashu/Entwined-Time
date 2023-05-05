@@ -60,12 +60,13 @@ theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
 [node name="WinLabel" type="Label" parent="."]
-visible = false
-margin_left = -2.0
+margin_left = 209.0
 margin_top = 113.0
-margin_right = 510.0
+margin_right = 302.0
 margin_bottom = 166.0
 theme = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
 text = "You have won!
 
 [Enter]: Continue
