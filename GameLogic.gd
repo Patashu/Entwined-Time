@@ -22,6 +22,9 @@ onready var tutoriallabel : Label = levelscene.get_node("TutorialLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
 onready var heavytimeline : Node2D = levelscene.get_node("HeavyTimeline");
 onready var lighttimeline : Node2D = levelscene.get_node("LightTimeline");
+onready var downarrow : Sprite = levelscene.get_node("DownArrow");
+onready var leftarrow : Sprite = levelscene.get_node("LeftArrow");
+onready var rightarrow : Sprite = levelscene.get_node("RightArrow");
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
 
 # distinguish between temporal layers when a move or state change happens
@@ -609,8 +612,14 @@ func ready_tutorial() -> void:
 		
 	if level_number > 5:
 		tutoriallabel.visible = false;
+		downarrow.visible = false;
+		leftarrow.visible = false;
+		rightarrow.visible = false;
 	else:
 		tutoriallabel.visible = true;
+		downarrow.visible = true;
+		leftarrow.visible = true;
+		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
 		if (level_number == 0):
 			tutoriallabel.text = "Arrows: Move Character";
@@ -845,6 +854,18 @@ func update_targeter() -> void:
 		targeter.position = heavy_actor.position + terrainmap.position;
 	else:
 		targeter.position = light_actor.position + terrainmap.position;
+	
+	downarrow.position = targeter.position - Vector2(0, 24);
+	
+	if (heavy_turn > 0 and heavy_selected):
+		rightarrow.position = heavytimeline.position - Vector2(24, 24) + Vector2(0, 24)*heavy_turn;
+	else:
+		rightarrow.position = Vector2(-48, -48);
+	
+	if (light_turn > 0 and !heavy_selected):
+		leftarrow.position = lighttimeline.position + Vector2(24, -24) + Vector2(0, 24)*light_turn;
+	else:
+		leftarrow.position = Vector2(-48, -48);
 		
 func prepare_audio() -> void:
 	# TODO: I could automate this if I can iterate the folder

@@ -1,0 +1,35 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/arrow_down_9.png-4d63eaa3d4a0bec419fc3ee9a8c1e24e.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/tutorial_arrows/arrow_down_9.png"
+dest_files=[ "res://.import/arrow_down_9.png-4d63eaa3d4a0bec419fc3ee9a8c1e24e.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+process/normal_map_invert_y=false
+stream=false
+size_limit=0
+detect_3d=true
+svg/scale=1.0
