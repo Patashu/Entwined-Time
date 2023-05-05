@@ -620,8 +620,13 @@ func initialize_timeline_viewers() -> void:
 	lightinfolabel.rect_position = LightInfoLabel_default_position;
 	lighttimeline.position = LightTimeline_default_position;
 	
-	# for now, don't try to squash if...
-	if (heavy_max_moves > 10 or light_max_moves > 10 or map_x_max >= 16):
+	# horizontal squish check
+	var effective_width = map_x_max;
+	var heavy_extra_width = (heavy_max_moves-1)/11;
+	var light_extra_width = (light_max_moves-1)/11;
+	effective_width += max(0, heavy_extra_width);
+	effective_width += max(0, light_extra_width);
+	if (effective_width > 16):
 		return;
 		
 	# calculation: the screen is 512 pixels wide. each cell is 24 pixels.
@@ -629,10 +634,14 @@ func initialize_timeline_viewers() -> void:
 	var center = 256;
 	var left = center-map_x_max*24/2;
 	var right = center+map_x_max*24/2;
-	heavyinfolabel.rect_position.x += left-48;
-	heavytimeline.position.x += left-48;
-	lightinfolabel.rect_position.x -= left-48;
-	lighttimeline.position.x -= left-48;
+	heavyinfolabel.rect_position.x += left-48-24*heavy_extra_width;
+	heavytimeline.position.x += left-48-24*heavy_extra_width;
+	lightinfolabel.rect_position.x -= left-48-24*light_extra_width;
+	lighttimeline.position.x -= left-48-24*light_extra_width;
+	
+	# vertical squish check
+	if (heavy_max_moves > 10 or light_max_moves > 10):
+		return;
 	
 	# now for vertical squish. screen is 300 pixels tall.
 	var heavy_tallness = heavy_max_moves*24 + heavyinfolabel.rect_size.y;
