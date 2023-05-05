@@ -810,6 +810,8 @@ func prepare_audio() -> void:
 		speakers.append(speaker);
 
 func cut_sound() -> void:
+	if (doing_replay and meta_undo_a_restart_mode):
+		return;
 	for speaker in speakers:
 		speaker.stop();
 
@@ -1479,6 +1481,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 	time_passes(Chrono.META_UNDO);
 	adjust_meta_turn(-1);
 	if (!is_silent):
+		cut_sound();
 		play_sound("metaundo");
 	undo_effect_strength = 0.08;
 	undo_effect_per_second = undo_effect_strength*(1/0.2);
@@ -1498,6 +1501,7 @@ func character_switch() -> void:
 
 func restart(is_silent: bool = false) -> void:
 	load_level(0);
+	cut_sound();
 	play_sound("restart");
 	undo_effect_strength = 0.5;
 	undo_effect_per_second = undo_effect_strength*(1/0.5);
