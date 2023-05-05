@@ -2,7 +2,7 @@
 
 [ext_resource path="res://default_styleboxtexture.tres" type="StyleBox" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
-[ext_resource path="res://LevelSelect.gd" type="Script" id=3]
+[ext_resource path="res://Controls.gd" type="Script" id=3]
 
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource( 3 )
@@ -14,26 +14,27 @@ margin_right = 463.0
 margin_bottom = 273.0
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
-text = "Chapter 0 - Two Time"
+text = "Controls:
+Arrows: Move Character
+X: Swap Character
+Z: Undo Character
+C: Meta-Undo
+R: Restart
+
+Esc: Open/Close Menu
+F1/F2: Change Level
+M: Mute/Unmute Audio
+
+Ctrl+C/Ctrl+V: Copy/Paste Replay
+F11: Your Best Replay
+F12: Author's Replay
+F9/F10: Adjust Replay Speed
+"
 align = 1
 
-[node name="PrevButton" type="Button" parent="Holder"]
-margin_left = 5.0
-margin_top = 223.0
-margin_right = 95.0
-margin_bottom = 238.0
-text = "Previous Chapter (F1)"
-
-[node name="NextButton" type="Button" parent="Holder"]
-margin_left = 293.0
-margin_top = 223.0
-margin_right = 404.0
-margin_bottom = 238.0
-text = "Next Chapter (F2)"
-
-[node name="ControlsButton" type="Button" parent="Holder"]
+[node name="OkButton" type="Button" parent="Holder"]
 margin_left = 150.0
 margin_top = 223.0
 margin_right = 261.0
 margin_bottom = 238.0
-text = "Controls"
+text = "Ok"

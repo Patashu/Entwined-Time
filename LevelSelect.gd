@@ -6,11 +6,13 @@ onready var holder : Label = get_node("Holder");
 onready var chapter = gamelogic.chapter;
 onready var prevbutton : Button = get_node("Holder/PrevButton");
 onready var nextbutton : Button = get_node("Holder/NextButton");
+onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 
 func _ready() -> void:
 	prepare_chapter();
 	prevbutton.connect("pressed", self, "_prevbutton_pressed");
 	nextbutton.connect("pressed", self, "_nextbutton_pressed");
+	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
 	
 func _prevbutton_pressed() -> void:
 	chapter -= 1;
@@ -22,9 +24,14 @@ func _nextbutton_pressed() -> void:
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
 
+func _controlsbutton_pressed() -> void:
+	var controls = preload("res://Controls.tscn").instance();
+	gamelogic.ui_stack.push_back(controls);
+	self.add_child(controls);
+
 func prepare_chapter() -> void:
 	for child in holder.get_children():
-		if child != prevbutton and child != nextbutton:
+		if child != prevbutton and child != nextbutton and child != controlsbutton:
 			child.queue_free();
 	holder.text = "Chapter " + str(chapter) + " - " + gamelogic.chapter_names[chapter];
 	var normal_start = gamelogic.chapter_standard_starting_levels[chapter];
@@ -157,6 +164,9 @@ func destroy() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	if (Input.is_action_just_pressed("escape")):
 		destroy();
 	if (Input.is_action_just_pressed("previous_level")):

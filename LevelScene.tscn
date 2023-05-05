@@ -51,6 +51,14 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 7 )
 centered = false
 
+[node name="MenuButton" type="Button" parent="."]
+margin_left = 450.0
+margin_top = 278.0
+margin_right = 510.0
+margin_bottom = 298.0
+theme = ExtResource( 2 )
+text = "Menu (Esc)"
+
 [node name="WinLabel" type="Label" parent="."]
 visible = false
 margin_left = -2.0
@@ -58,21 +66,11 @@ margin_top = 113.0
 margin_right = 510.0
 margin_bottom = 166.0
 theme = ExtResource( 2 )
-text = "You have won! Press [Enter] to continue.
+text = "You have won!
 
-Ctrl+C/Ctrl+V: Copy/Paste Replay
-F11: Your Best Replay
-F12: Author's Replay"
+[Enter]: Continue
+[F11]: Watch Replay"
 align = 1
-
-[node name="ControlsLabel" type="Label" parent="."]
-margin_top = 286.0
-margin_right = 512.0
-margin_bottom = 300.0
-theme = ExtResource( 2 )
-text = "Z: Undo | X: Swap Character | C: Meta-Undo | R: Restart | Esc: Level Select"
-align = 1
-valign = 1
 
 [node name="HeavyInfoLabel" type="Label" parent="."]
 margin_top = 1.0
@@ -100,9 +98,9 @@ align = 1
 valign = 1
 
 [node name="MetaInfoLabel" type="Label" parent="."]
-margin_top = 274.0
+margin_top = 288.0
 margin_right = 511.0
-margin_bottom = 288.0
+margin_bottom = 302.0
 theme = ExtResource( 2 )
 custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 text = "Meta"

@@ -11,7 +11,7 @@ onready var levelfolder : Node2D = levelscene.get_node("LevelFolder");
 onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
 onready var overactorsparticles : Node2D = levelscene.get_node("OverActorsParticles");
 onready var underactorsparticles : Node2D = levelscene.get_node("UnderActorsParticles");
-onready var controlslabel : Label = levelscene.get_node("ControlsLabel");
+onready var menubutton : Button = levelscene.get_node("MenuButton");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
 onready var levelstar : Sprite = levelscene.get_node("LevelStar");
 onready var winlabel : Label = levelscene.get_node("WinLabel");
@@ -280,6 +280,7 @@ func load_game():
 
 func _ready() -> void:
 	# Call once when the game is booted up.
+	menubutton.connect("pressed", self, "escape");
 	load_game();
 	initialize_level_list();
 	prepare_audio();
@@ -1528,6 +1529,12 @@ func restart(is_silent: bool = false) -> void:
 	finish_animations();
 	
 func escape() -> void:
+	if (ui_stack.size() > 0):
+		# can happen if we click the button directly
+		var topmost_ui = ui_stack.pop_front();
+		topmost_ui.queue_free();
+		return;
+	end_replay();
 	var levelselect = preload("res://LevelSelect.tscn").instance();
 	ui_stack.push_back(levelselect);
 	levelscene.add_child(levelselect);
@@ -1966,7 +1973,7 @@ func update_info_labels() -> void:
 	if light_max_moves >= 0:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
-	metainfolabel.text = "(Meta-Turn: " + str(meta_turn) + ")"
+	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
@@ -2070,6 +2077,10 @@ func replay_from_clipboard() -> void:
 	start_specific_replay(replay);
 
 func start_saved_replay() -> void:
+	if (doing_replay):
+		end_replay();
+		return;
+	
 	var levels_save_data = save_file["levels"];
 	if (!levels_save_data.has(level_name)):
 		floating_text("F11: Level not beaten");
@@ -2168,7 +2179,7 @@ func _process(delta: float) -> void:
 			restart();
 			update_info_labels();
 		if (Input.is_action_just_pressed("escape")):
-			end_replay();
+			#end_replay(); #done in escape();
 			escape();
 		if (Input.is_action_just_pressed("previous_level")):
 			end_replay();
