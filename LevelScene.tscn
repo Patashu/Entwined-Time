@@ -220,7 +220,7 @@ centered = false
 
 [node name="MenuButton" type="Button" parent="."]
 margin_left = 226.0
-margin_top = 279.0
+margin_top = 284.0
 margin_right = 286.0
 margin_bottom = 299.0
 theme = ExtResource( 2 )
@@ -254,9 +254,9 @@ Z: Undo Character"
 align = 1
 
 [node name="MetaInfoLabel" type="Label" parent="."]
-margin_top = 266.0
+margin_top = 271.0
 margin_right = 511.0
-margin_bottom = 280.0
+margin_bottom = 285.0
 theme = ExtResource( 2 )
 custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 text = "Meta"
