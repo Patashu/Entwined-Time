@@ -842,7 +842,7 @@ func make_actor(actorname: String, pos: Vector2, is_character: bool, chrono: int
 		print("TODO")
 	return actor;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = []) -> int:
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.ghost_dir = -dir;
@@ -850,15 +850,26 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: 
 		ghost.position = terrainmap.map_to_world(ghost.pos);
 		return Success.Yes;
 	
-	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, is_retro, pushers_list);
+	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, is_retro, pushers_list, was_push, was_fall);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = []) -> int:
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false) -> int:
 	var dir = pos - actor.pos;
 	
 	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list);
 	if (success == Success.Yes and !hypothetical):
-		add_undo_event([Undo.move, actor, dir], chrono_for_maybe_green_actor(actor, chrono));
+		if (!is_retro):
+			was_push = pushers_list.size() > 0;
+			was_fall = is_gravity;
+		add_undo_event([Undo.move, actor, dir, was_push, was_fall], chrono_for_maybe_green_actor(actor, chrono));
 		actor.pos = pos;
+		if (was_push and is_retro):
+			add_to_animation_server(actor, [Animation.sfx, "unpush"]);
+		if (was_push and !is_retro):
+			add_to_animation_server(actor, [Animation.sfx, "push"]);
+		if (was_fall and is_retro):
+			add_to_animation_server(actor, [Animation.sfx, "unfall"]);
+		if (was_fall and !is_retro):
+			add_to_animation_server(actor, [Animation.sfx, "fall"]);
 		add_to_animation_server(actor, [Animation.move, dir, is_retro]);
 		
 		#ding logic
@@ -1420,7 +1431,11 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	# undo events that should create undo trails
 		
 	if (event[0] == Undo.move):
-		move_actor_relative(event[1], -event[2], chrono, false, false, true);
+		#[Undo.move, actor, dir, was_push, was_fall]
+		#func move_actor_relative(actor: Actor, dir: Vector2, chrono: int,
+		#hypothetical: bool, is_gravity: bool, is_retro: bool = false,
+		#pushers_list: Array = [], was_fall = false, was_push = false) -> int:
+		move_actor_relative(event[1], -event[2], chrono, false, false, true, [], event[3], event[4]);
 	elif (event[0] == Undo.set_actor_var):
 		set_actor_var(event[1], event[2], event[3], chrono);
 	elif (event[0] == Undo.change_terrain):
