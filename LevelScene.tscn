@@ -185,6 +185,7 @@ valign = 1
 
 [node name="HeavyTimeline" parent="." instance=ExtResource( 6 )]
 position = Vector2( 6, 26 )
+is_heavy = true
 
 [node name="LightTimeline" parent="." instance=ExtResource( 6 )]
 position = Vector2( 482, 26 )

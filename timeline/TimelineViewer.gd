@@ -1,7 +1,7 @@
 extends Node2D
 class_name TimelineViewer
 
-var is_heavy = false;
+export var is_heavy = false;
 var current_move = 0;
 var max_moves = 0;
 var yy = 24;

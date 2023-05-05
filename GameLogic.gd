@@ -641,8 +641,6 @@ func ready_tutorial() -> void:
 			tutoriallabel.text = "Esc: Level Select/Controls Help";
 	
 func initialize_timeline_viewers() -> void:
-	heavytimeline.is_heavy = true;
-	lighttimeline.is_heavy = false;
 	heavytimeline.max_moves = heavy_max_moves;
 	lighttimeline.max_moves = light_max_moves;
 	heavytimeline.reset();
