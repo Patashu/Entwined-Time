@@ -1386,6 +1386,7 @@ func check_won() -> void:
 				won = false;
 				break;
 		if (won == true and !doing_replay):
+			play_sound("winentwined");
 			var levels_save_data = save_file["levels"];
 			if (!levels_save_data.has(level_name)):
 				levels_save_data[level_name] = {};
