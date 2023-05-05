@@ -638,7 +638,7 @@ func ready_tutorial() -> void:
 			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart!)";
 		if (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.text = "Esc: Level Select/Controls Help";
+			tutoriallabel.text = "Esc: Level Select/Controls List";
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.max_moves = heavy_max_moves;
