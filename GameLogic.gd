@@ -598,6 +598,13 @@ func ready_map() -> void:
 	check_won();
 	
 	initialize_timeline_viewers();
+	ready_tutorial();
+	
+func ready_tutorial() -> void:
+	if level_number > 1:
+		metainfolabel.visible = true;
+	else:
+		metainfolabel.visible = false;
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.is_heavy = true;
