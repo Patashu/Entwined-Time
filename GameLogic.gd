@@ -18,6 +18,7 @@ onready var winlabel : Label = levelscene.get_node("WinLabel");
 onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
 onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
+onready var tutoriallabel : Label = levelscene.get_node("TutorialLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
 onready var heavytimeline : Node2D = levelscene.get_node("HeavyTimeline");
 onready var lighttimeline : Node2D = levelscene.get_node("LightTimeline");
@@ -601,10 +602,33 @@ func ready_map() -> void:
 	ready_tutorial();
 	
 func ready_tutorial() -> void:
-	if level_number > 1:
+	if level_number > 2:
 		metainfolabel.visible = true;
 	else:
 		metainfolabel.visible = false;
+		
+	if level_number > 5:
+		tutoriallabel.visible = false;
+	else:
+		tutoriallabel.visible = true;
+		tutoriallabel.rect_position = Vector2(0, 69);
+		if (level_number == 0):
+			tutoriallabel.text = "Arrows: Move Character";
+		if (level_number == 1):
+			tutoriallabel.rect_position.y -= 24;
+			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character";
+		if (level_number == 2):
+			tutoriallabel.rect_position.y -= 24;
+			tutoriallabel.text = "Z: Undo Character\nR: Restart";
+		if (level_number == 3):
+			tutoriallabel.rect_position.y -= 48;
+			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(Meta-Undo undoes your last Move or Undo.)";
+		if (level_number == 4):
+			tutoriallabel.rect_position.y -= 48;
+			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart!)";
+		if (level_number == 5):
+			tutoriallabel.rect_position.y -= 48;
+			tutoriallabel.text = "Esc: Level Select/Controls Help";
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.is_heavy = true;
@@ -1478,6 +1502,7 @@ func check_won() -> void:
 	
 	winlabel.visible = won;
 	if (won):
+		tutoriallabel.visible = false;
 		adjust_winlabel();
 	
 func adjust_winlabel() -> void:
@@ -2048,6 +2073,14 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
 	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
+	
+	if level_number == 0:
+		if meta_turn < 3:
+			tutoriallabel.text = "Arrows: Move Character";
+		elif meta_turn < 6:
+			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character";
+		else:
+			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character";
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;

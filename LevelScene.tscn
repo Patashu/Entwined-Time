@@ -74,6 +74,18 @@ text = "You have won!
 [F11]: Watch Replay"
 align = 1
 
+[node name="TutorialLabel" type="Label" parent="."]
+margin_top = 69.0
+margin_right = 512.0
+margin_bottom = 122.0
+theme = ExtResource( 2 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "Arrows: Move Character
+X: Swap Character
+Z: Undo Character"
+align = 1
+
 [node name="HeavyInfoLabel" type="Label" parent="."]
 margin_top = 1.0
 margin_right = 37.0
