@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/winentwined.ogg-3ef8b0dbe40c889771545dea77556789.oggstr"
+
+[deps]
+
+source_file="res://sfx/winentwined.ogg"
+dest_files=[ "res://.import/winentwined.ogg-3ef8b0dbe40c889771545dea77556789.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

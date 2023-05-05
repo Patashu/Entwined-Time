@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/unfall.ogg-b4c21be180265714b03826fd154d0473.oggstr"
+
+[deps]
+
+source_file="res://sfx/unfall.ogg"
+dest_files=[ "res://.import/unfall.ogg-b4c21be180265714b03826fd154d0473.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

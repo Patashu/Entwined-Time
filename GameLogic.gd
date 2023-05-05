@@ -775,15 +775,21 @@ func prepare_audio() -> void:
 	#used
 	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
+	sounds["fall"] = preload("res://sfx/fall.ogg");
+	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
 	sounds["restart"] = preload("res://sfx/restart.ogg");
+	sounds["push"] = preload("res://sfx/push.ogg");
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["step"] = preload("res://sfx/step.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
 	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
 	sounds["undo"] = preload("res://sfx/undo.ogg");
+	sounds["unfall"] = preload("res://sfx/unfall.ogg");
+	sounds["unpush"] = preload("res://sfx/unpush.ogg");
 	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
+	sounds["winentwined"] = preload("res://sfx/winentwined.ogg");
 
 	#unused
 	sounds["dig"] = preload("res://sfx/dig.ogg");
@@ -797,10 +803,6 @@ func prepare_audio() -> void:
 	sounds["pickup"] = preload("res://sfx/pickup.ogg");
 	sounds["unlock"] = preload("res://sfx/unlock.ogg");
 	sounds["usegreenality"] = preload("res://sfx/usegreenality.ogg");
-	sounds["wingreen"] = preload("res://sfx/wingreen.ogg");
-	sounds["winnormal"] = preload("res://sfx/winnormal.ogg");
-	sounds["winpickaxe"] = preload("res://sfx/winpickaxe.ogg");
-	sounds["winwings"] = preload("res://sfx/winwings.ogg");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
