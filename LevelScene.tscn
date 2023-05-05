@@ -263,16 +263,19 @@ position = Vector2( 6, 26 )
 position = Vector2( 482, 26 )
 
 [node name="DownArrow" type="Sprite" parent="."]
+visible = false
 position = Vector2( -48, -48 )
 texture = SubResource( 1 )
 centered = false
 
 [node name="LeftArrow" type="Sprite" parent="."]
+visible = false
 position = Vector2( -48, -48 )
 texture = SubResource( 2 )
 centered = false
 
 [node name="RightArrow" type="Sprite" parent="."]
+visible = false
 position = Vector2( -48, -48 )
 texture = SubResource( 3 )
 centered = false

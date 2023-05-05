@@ -404,11 +404,12 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#1C3D19"));
 	level_list.push_back(preload("res://levels/OneWays.tscn"));
 	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
+	level_list.push_back(preload("res://levels/CoyoteTime.tscn"));
 	level_list.push_back(preload("res://levels/SecurityDoor.tscn"));
 	level_list.push_back(preload("res://levels/Jail.tscn"));
-	level_list.push_back(preload("res://levels/TheOneWayPit.tscn"));
 	level_list.push_back(preload("res://levels/Upstream.tscn"));
 	level_list.push_back(preload("res://levels/Downstream.tscn"));
+	level_list.push_back(preload("res://levels/TheOneWayPit.tscn"));
 	level_list.push_back(preload("res://levels/EventHorizon.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
@@ -553,7 +554,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	#post-game levels
-	#level_list.push_back(preload("res://levels/InsightCoyoteTime.tscn"));
 	#level_list.push_back(preload("res://levels/InsightDontPushIt.tscn"));
 	#level_list.push_back(preload("res://levels/InsightDidntPushIt.tscn"));
 	
