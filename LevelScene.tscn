@@ -52,14 +52,15 @@ texture = ExtResource( 7 )
 centered = false
 
 [node name="MenuButton" type="Button" parent="."]
-margin_left = 450.0
-margin_top = 278.0
-margin_right = 510.0
-margin_bottom = 298.0
+margin_left = 226.0
+margin_top = 279.0
+margin_right = 286.0
+margin_bottom = 299.0
 theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
 [node name="WinLabel" type="Label" parent="."]
+visible = false
 margin_left = 209.0
 margin_top = 113.0
 margin_right = 302.0
@@ -99,9 +100,9 @@ align = 1
 valign = 1
 
 [node name="MetaInfoLabel" type="Label" parent="."]
-margin_top = 288.0
+margin_top = 266.0
 margin_right = 511.0
-margin_bottom = 302.0
+margin_bottom = 280.0
 theme = ExtResource( 2 )
 custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 text = "Meta"
