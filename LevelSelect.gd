@@ -138,7 +138,7 @@ func prepare_chapter() -> void:
 		label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = xx + xxx;
-		label.rect_position.y = yy + yyy*7;
+		label.rect_position.y = yy + yyy*y;
 		label.text = "(Advanced puzzles are optional,\nfor those seeking a challenge.)"
 		label.theme = holder.theme;
 		
@@ -147,7 +147,7 @@ func prepare_chapter() -> void:
 		label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = 8;
-		label.rect_position.y = yy + yyy*8;
+		label.rect_position.y = yy + yyy*(y+1);
 		label.text = "(This is a difficult but rewarding chapter. If you get stuck, try the next chapters\nand come back later. The secrets of space-time will be here when you're ready.)"
 		label.theme = holder.theme;
 

@@ -324,12 +324,15 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	level_list.push_back(preload("res://levels/Initiation.tscn"));
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
+	level_list.push_back(preload("res://levels/PushingIt.tscn"));
 	level_list.push_back(preload("res://levels/Wall.tscn"));
 	level_list.push_back(preload("res://levels/Tall.tscn"));
-	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));	
+	level_list.push_back(preload("res://levels/Braid.tscn"));
 	level_list.push_back(preload("res://levels/CallACab.tscn"));
 	level_list.push_back(preload("res://levels/ShouldveCalledaCab.tscn"));
+	level_list.push_back(preload("res://levels/CarryingIt.tscn"));
 	level_list.push_back(preload("res://levels/Pachinko.tscn"));
+	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));	
 	level_list.push_back(preload("res://levels/Roommates.tscn"));
 	level_list.push_back(preload("res://levels/Downhill.tscn"));
 	level_list.push_back(preload("res://levels/Uphill.tscn"));
