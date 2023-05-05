@@ -1957,7 +1957,7 @@ func update_level_label() -> void:
 	else:
 		levelstar.visible = false;
 	
-func update_info_labels() -> void:	
+func update_info_labels() -> void:
 	heavyinfolabel.text = "Heavy" + "\n" + str(heavy_turn);
 	if heavy_max_moves >= 0:
 		heavyinfolabel.text += "/" + str(heavy_max_moves);
@@ -2092,6 +2092,13 @@ func afterimage(actor: Actor) -> void:
 	afterimage.initialize(actor, undo_effect_color);
 	underactorsparticles.add_child(afterimage);
 		
+func last_level_of_section() -> bool:
+	var chapter_standard_starting_level = chapter_standard_starting_levels[chapter+1];
+	var chapter_advanced_starting_level = chapter_advanced_starting_levels[chapter];
+	if (level_number+1 == chapter_standard_starting_level or level_number+1 == chapter_advanced_starting_level):
+		return true;
+	return false;
+		
 func _process(delta: float) -> void:
 	replay_timer += delta;
 	if (sky_timer < sky_timer_max):
@@ -2112,7 +2119,10 @@ func _process(delta: float) -> void:
 		
 		if (won and Input.is_action_just_pressed("ui_accept")):
 			end_replay();
-			load_level(1);
+			if last_level_of_section():
+				escape();
+			else:
+				load_level(1);
 		
 		if (Input.is_action_just_pressed("mute")):
 			toggle_mute();
