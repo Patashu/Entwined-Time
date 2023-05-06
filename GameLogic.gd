@@ -387,6 +387,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
 	level_list.push_back(preload("res://levels/LightMovingService.tscn"));
 	level_list.push_back(preload("res://levels/LightMovingServiceEx.tscn"));
+	level_list.push_back(preload("res://levels/InvisibleBridgeL.tscn"));
 	level_list.push_back(preload("res://levels/InvisibleBridge.tscn"));
 	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
 	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));

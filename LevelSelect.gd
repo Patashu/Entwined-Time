@@ -154,7 +154,7 @@ func prepare_chapter() -> void:
 		label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = 8;
-		label.rect_position.y = yy + yyy*(y+1);
+		label.rect_position.y = yy + yyy*(y+2);
 		label.text = "(This is a difficult but rewarding chapter. If you get stuck, try the next chapters\nand come back later. The secrets of space-time will be here when you're ready.)"
 		label.theme = holder.theme;
 
