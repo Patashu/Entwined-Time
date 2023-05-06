@@ -641,6 +641,12 @@ func ready_tutorial() -> void:
 		if (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.text = "Esc: Level Select/Controls List";
+			
+	if level_name == "Snake Pit":
+		tutoriallabel.visible = true;
+		tutoriallabel.rect_position = Vector2(0, 69);
+		tutoriallabel.rect_position.y -= 24;
+		tutoriallabel.text = "You can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay";
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.max_moves = heavy_max_moves;
