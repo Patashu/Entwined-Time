@@ -792,6 +792,7 @@ func find_goals(layer: TileMap) -> void:
 		goal.pos = tile;
 		goal.position = layer.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
 		goal.modulate = Color(1, 1, 1, 0.8);
+		goal.rotate_magnitude = -1;
 		goal.instantly_reach_scalify();
 		goals.append(goal);
 		actorsfolder.add_child(goal);

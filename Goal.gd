@@ -7,6 +7,7 @@ var dinged = false;
 var animations = [];
 var scalify_target = 0.1;
 var scalify_current = 0.1;
+var rotate_magnitude = 1;
 
 func update_scalify_target() -> void:
 	scalify_target = 0.1;
@@ -31,7 +32,7 @@ func set_next_texture(tex: Texture) -> void:
 
 func _process(delta: float) -> void:
 	# by cosmological coincidence this is roughly what I wanted!
-	self.rotation += delta;
+	self.rotation += rotate_magnitude*delta;
 	# scale
 	if (scalify_target != scalify_current):
 		if (scalify_current < scalify_target):
