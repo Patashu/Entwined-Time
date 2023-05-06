@@ -7,12 +7,14 @@ onready var chapter = gamelogic.chapter;
 onready var prevbutton : Button = get_node("Holder/PrevButton");
 onready var nextbutton : Button = get_node("Holder/NextButton");
 onready var controlsbutton : Button = get_node("Holder/ControlsButton");
+onready var closebutton : Button = get_node("Holder/CloseButton");
 
 func _ready() -> void:
 	prepare_chapter();
 	prevbutton.connect("pressed", self, "_prevbutton_pressed");
 	nextbutton.connect("pressed", self, "_nextbutton_pressed");
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
+	closebutton.connect("pressed", self, "destroy");
 	
 func _prevbutton_pressed() -> void:
 	chapter -= 1;
@@ -31,7 +33,7 @@ func _controlsbutton_pressed() -> void:
 
 func prepare_chapter() -> void:
 	for child in holder.get_children():
-		if child != prevbutton and child != nextbutton and child != controlsbutton:
+		if child != prevbutton and child != nextbutton and child != controlsbutton and child != closebutton:
 			child.queue_free();
 	holder.text = "Chapter " + str(chapter) + " - " + gamelogic.chapter_names[chapter];
 	var normal_start = gamelogic.chapter_standard_starting_levels[chapter];
