@@ -637,7 +637,7 @@ func ready_tutorial() -> void:
 			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(Meta-Undo undoes your last Move or Undo.)";
 		if (level_number == 4):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart!)";
+			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart.)";
 		if (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.text = "Esc: Level Select/Controls List";
