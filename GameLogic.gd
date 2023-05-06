@@ -2096,8 +2096,14 @@ func update_info_labels() -> void:
 	
 	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
 	
+	if level_number == 1:
+		if meta_turn > 30 or heavy_actor.broken or light_actor.broken:
+			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+	
 	if level_number == 0:
-		if meta_turn < 3:
+		if meta_turn > 30 or heavy_actor.broken or light_actor.broken:
+			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+		elif meta_turn < 3:
 			tutoriallabel.text = "Arrows: Move Character";
 		elif meta_turn < 6:
 			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character";
