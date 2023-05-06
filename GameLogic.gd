@@ -772,6 +772,7 @@ func find_goals(layer: TileMap) -> void:
 	var heavy_goal_tiles = layer.get_used_cells_by_id(Tiles.HeavyGoal);
 	for tile in heavy_goal_tiles:
 		var goal = Goal.new();
+		goal.gamelogic = self;
 		goal.actorname = "heavy_goal";
 		goal.texture = preload("res://assets/BigPortalRed.png");
 		goal.centered = true;
@@ -786,6 +787,7 @@ func find_goals(layer: TileMap) -> void:
 	var light_goal_tiles = layer.get_used_cells_by_id(Tiles.LightGoal);
 	for tile in light_goal_tiles:
 		var goal = Goal.new();
+		goal.gamelogic = self;
 		goal.actorname = "light_goal";
 		goal.texture = preload("res://assets/BigPortalBlue.png");
 		goal.centered = true;

@@ -329,7 +329,6 @@ func _process(delta: float) -> void:
 				for i in range(4):
 					var sprite = Sprite.new();
 					sprite.set_script(preload("res://FadingSprite.gd"));
-					#TODO: use correct texture (unshatter too)
 					if (current_animation[2] == 46):
 						sprite.texture = preload("res://assets/green_glass_block.png")
 					else:

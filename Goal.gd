@@ -1,6 +1,7 @@
 extends ActorBase
 class_name Goal
 
+var gamelogic = null;
 var actorname = ""
 var pos = Vector2.ZERO
 var dinged = false;
@@ -8,6 +9,9 @@ var animations = [];
 var scalify_target = 0.1;
 var scalify_current = 0.1;
 var rotate_magnitude = 1;
+var particle_timer = 1;
+var particle_timer_max = 1;
+var last_particle_angle = 0;
 
 func update_scalify_target() -> void:
 	scalify_target = 0.1;
@@ -31,6 +35,34 @@ func set_next_texture(tex: Texture) -> void:
 	pass
 
 func _process(delta: float) -> void:
+	particle_timer += delta;
+	if (particle_timer > particle_timer_max):
+		var underactorsparticles = self.get_parent().get_parent().get_node("UnderActorsParticles");
+		particle_timer -= particle_timer_max;
+		var sprite = Sprite.new();
+		sprite.set_script(preload("res://GoalParticle.gd"));
+		sprite.texture = self.texture;
+		sprite.position = self.position;
+		sprite.centered = true;
+		sprite.rotation = gamelogic.rng.randf_range(0, 2*PI);
+		sprite.rotate_magnitude = self.rotate_magnitude*4;
+		sprite.alpha_max = 0.4;
+		sprite.modulate = Color(0, 0, 0, 0);
+		var next_particle_angle = last_particle_angle + 2*PI/6 + gamelogic.rng.randf_range(0, 2*PI*4/6)
+		last_particle_angle = next_particle_angle;
+		if (dinged):
+			sprite.scale = scale / 3;
+			particle_timer_max = 0.5;
+			sprite.fadeout_timer_max = 2;
+			sprite.velocity = Vector2(0, 18).rotated(next_particle_angle);
+		else:
+			sprite.scale = scale / 2.2;
+			particle_timer_max = 1;
+			sprite.fadeout_timer_max = 4;
+			sprite.velocity = Vector2(0, 6).rotated(next_particle_angle);
+		sprite.position -= sprite.velocity*sprite.fadeout_timer_max;
+		underactorsparticles.add_child(sprite);
+	
 	# by cosmological coincidence this is roughly what I wanted!
 	self.rotation += rotate_magnitude*delta;
 	# scale
