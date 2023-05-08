@@ -100,6 +100,7 @@ enum Animation {
 	shatter,
 	unshatter,
 	afterimage_at,
+	fade,
 }
 
 enum TimeColour {
@@ -212,6 +213,7 @@ var sounds = {}
 var speakers = [];
 var muted = false;
 var won = false;
+var won_fade_started = false;
 var cell_size = 24;
 var undo_effect_strength = 0;
 var undo_effect_per_second = 0;
@@ -1649,8 +1651,13 @@ func check_won() -> void:
 	
 	winlabel.visible = won;
 	if (won):
+		won_fade_started = false;
 		tutoriallabel.visible = false;
 		adjust_winlabel();
+	elif won_fade_started:
+		won_fade_started = false;
+		heavy_actor.modulate.a = 1;
+		light_actor.modulate.a = 1;
 	
 func adjust_winlabel() -> void:
 	winlabel.rect_position.y = win_label_default_y;
@@ -2299,6 +2306,11 @@ func update_animation_server() -> void:
 	while animation_server.size() > 0 and animation_server[0].size() == 0:
 		animation_server.pop_front();
 	if animation_server.size() == 0:
+		# won_fade starts here
+		if (won and !won_fade_started):
+			won_fade_started = true;
+			add_to_animation_server(heavy_actor, [Animation.fade]);
+			add_to_animation_server(light_actor, [Animation.fade]);
 		return;
 	
 	# we found new animations - give them to everyone at once

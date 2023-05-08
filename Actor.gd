@@ -371,6 +371,14 @@ func _process(delta: float) -> void:
 				gamelogic.play_sound("unshatter");
 			elif (current_animation[0] == 10): #afterimage_at
 				gamelogic.afterimage_terrain(current_animation[1], current_animation[2], current_animation[3]);
+			elif (current_animation[0] == 11): #fade
+				animation_timer_max = 3;
+				animation_timer += delta;
+				if (animation_timer > animation_timer_max):
+					self.modulate.a = 0;
+				else:
+					is_done = false;
+					self.modulate.a = 1-(animation_timer/animation_timer_max);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
