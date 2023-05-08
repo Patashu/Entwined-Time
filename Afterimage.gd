@@ -4,6 +4,7 @@ var timer = 0;
 var timer_max = 0.5;
 var undo_color = null;
 var actor = null;
+var texture = null;
 
 func initialize(actor: Sprite, undo_color: Color) -> void:
 	self.actor = actor;
@@ -12,12 +13,13 @@ func initialize(actor: Sprite, undo_color: Color) -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var child = self.get_child(0);
-	child.texture = actor.texture;
-	child.hframes = actor.hframes;
-	child.vframes = actor.vframes;
-	child.frame = actor.frame;
 	child.centered = false;
-	self.position = actor.position;
+	child.texture = texture;
+	if (actor != null):
+		child.hframes = actor.hframes;
+		child.vframes = actor.vframes;
+		child.frame = actor.frame;
+		self.position = actor.position;
 	child.get_material().set_shader_param("color", undo_color);
 	child.get_material().set_shader_param("mixture", 1.0);
 

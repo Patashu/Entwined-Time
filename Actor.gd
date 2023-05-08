@@ -367,6 +367,8 @@ func _process(delta: float) -> void:
 					sprite.velocity = -sprite.velocity;
 					overactorsparticles.add_child(sprite);
 				gamelogic.play_sound("unshatter");
+			elif (current_animation[0] == 10): #afterimage_at
+				gamelogic.afterimage_terrain(current_animation[1], current_animation[2], current_animation[3]);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
