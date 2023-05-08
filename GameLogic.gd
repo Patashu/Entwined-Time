@@ -1150,32 +1150,32 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 				blocked = is_retro and dir == Vector2.RIGHT;
 				if (blocked):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.OnewayWest:
 				blocked = is_retro and dir == Vector2.LEFT;
 				if (blocked):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.OnewayNorth:
 				blocked = is_retro and dir == Vector2.UP;
 				if (blocked):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.OnewaySouth:
 				blocked = is_retro and dir == Vector2.DOWN;
 				if (blocked):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.GlassBlock:
 				blocked = true;
 				if (blocked):
 					flash_terrain = id;
-					flash_colour = Color(1, 1, 1, 1);
+					flash_colour = no_foo_flash;
 			Tiles.GreenGlassBlock:
 				blocked = true;
 				if (blocked):
 					flash_terrain = id;
-					flash_colour = Color(1, 1, 1, 1);
+					flash_colour = no_foo_flash;
 		if blocked:
 			return true;
 	return false;
@@ -1188,6 +1188,9 @@ func no_if_true_yes_if_false(input: bool) -> int:
 #helper variable for 'did we just bonk on something that should flash'
 var flash_terrain = -1;
 var flash_colour = Color(1, 1, 1, 1);
+var oneway_flash = Color(1, 0, 0, 1);
+var oneway_green_flash = Color(1, 0, 0, 1);
+var no_foo_flash = Color(1, 1, 1, 1);
 
 func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int) -> int:
 	var result = Success.Yes;
@@ -1213,42 +1216,42 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = no_if_true_yes_if_false(actor.actorname == "heavy");
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(1, 1, 1, 1);
+					flash_colour = no_foo_flash;
 			Tiles.NoLight:
 				result = no_if_true_yes_if_false(actor.actorname == "light");
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(1, 1, 1, 1);
+					flash_colour = no_foo_flash;
 			Tiles.NoCrate:
 				result = no_if_true_yes_if_false(!actor.is_character);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(1, 1, 1, 1);
+					flash_colour = no_foo_flash;
 			Tiles.Grate:
 				result = no_if_true_yes_if_false(actor.is_character);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(1, 1, 1, 1);
+					flash_colour = no_foo_flash;
 			Tiles.OnewayEastGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.LEFT);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_green_flash;
 			Tiles.OnewayWestGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.RIGHT);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_green_flash;
 			Tiles.OnewayNorthGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_green_flash;
 			Tiles.OnewaySouthGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.UP);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_green_flash;
 			Tiles.LadderPlatform:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
 			Tiles.WoodenPlatform:
@@ -1257,22 +1260,22 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.LEFT);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.OnewayWest:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.RIGHT);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.OnewayNorth:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.DOWN);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.OnewaySouth:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.UP);
 				if (result == Success.No):
 					flash_terrain = id;
-					flash_colour = Color(0, 0, 0, 1);
+					flash_colour = oneway_flash;
 			Tiles.GlassBlock:
 				result = maybe_change_terrain(actor, pos, i, hypothetical, false, chrono, -1);
 			Tiles.GreenGlassBlock:
