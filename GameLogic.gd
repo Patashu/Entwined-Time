@@ -427,7 +427,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GraduationSpicy.tscn"));
 	level_list.push_back(preload("res://levels/Heaven.tscn"));
 	
-	chapter_names.push_back("Ladders and Wooden Platforms");
+	chapter_names.push_back("Trap Doors and Ladders");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#3B3F1A"));
 	level_list.push_back(preload("res://levels/Down.tscn"));
