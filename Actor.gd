@@ -119,7 +119,7 @@ func get_next_texture() -> Texture:
 		if broken:
 			return preload("res://assets/power_crate_broken.png");
 		else:
-			return preload("res://assets/power_crate.png");
+			return preload("res://assets/power_crate_animation.png");
 			
 	elif actorname == "wooden_crate":
 		if broken:
@@ -152,6 +152,9 @@ func set_next_texture(tex: Texture) -> void:
 	elif texture == preload("res://assets/light_idle_animation.png"):
 		frame_timer_max = 0.1;
 		hframes = 12;
+	elif texture == preload("res://assets/power_crate_animation.png"):
+		frame_timer_max = 0.1;
+		hframes = 4;
 	else:
 		hframes = 1;
 
