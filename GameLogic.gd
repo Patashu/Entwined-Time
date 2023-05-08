@@ -1150,22 +1150,32 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 				blocked = is_retro and dir == Vector2.RIGHT;
 				if (blocked):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewayWest:
 				blocked = is_retro and dir == Vector2.LEFT;
 				if (blocked):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewayNorth:
 				blocked = is_retro and dir == Vector2.UP;
 				if (blocked):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewaySouth:
 				blocked = is_retro and dir == Vector2.DOWN;
 				if (blocked):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.GlassBlock:
 				blocked = true;
+				if (blocked):
+					flash_terrain = id;
+					flash_colour = Color(1, 1, 1, 1);
 			Tiles.GreenGlassBlock:
 				blocked = true;
+				if (blocked):
+					flash_terrain = id;
+					flash_colour = Color(1, 1, 1, 1);
 		if blocked:
 			return true;
 	return false;
@@ -1177,6 +1187,7 @@ func no_if_true_yes_if_false(input: bool) -> int:
 
 #helper variable for 'did we just bonk on something that should flash'
 var flash_terrain = -1;
+var flash_colour = Color(1, 1, 1, 1);
 
 func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int) -> int:
 	var result = Success.Yes;
@@ -1202,32 +1213,42 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = no_if_true_yes_if_false(actor.actorname == "heavy");
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(1, 1, 1, 1);
 			Tiles.NoLight:
 				result = no_if_true_yes_if_false(actor.actorname == "light");
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(1, 1, 1, 1);
 			Tiles.NoCrate:
 				result = no_if_true_yes_if_false(!actor.is_character);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(1, 1, 1, 1);
 			Tiles.Grate:
 				result = no_if_true_yes_if_false(actor.is_character);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = Color(1, 1, 1, 1);
 			Tiles.OnewayEastGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.LEFT);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewayWestGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.RIGHT);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewayNorthGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewaySouthGreen:
 				result = no_if_true_yes_if_false(dir == Vector2.UP);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.LadderPlatform:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
 			Tiles.WoodenPlatform:
@@ -1236,18 +1257,22 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.LEFT);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewayWest:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.RIGHT);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewayNorth:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.DOWN);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.OnewaySouth:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.UP);
 				if (result == Success.No):
 					flash_terrain = id;
+					flash_colour = Color(0, 0, 0, 1);
 			Tiles.GlassBlock:
 				result = maybe_change_terrain(actor, pos, i, hypothetical, false, chrono, -1);
 			Tiles.GreenGlassBlock:
@@ -1291,12 +1316,12 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	# handle solidity in our tile, solidity in the tile over, hazards/surprises in the tile over
 	if (current_tile_is_solid(actor, dir, is_gravity, is_retro)):
 		if (flash_terrain > -1 and !hypothetical):
-			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), Color(1, 1, 1, 1)]);
+			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
 		return Success.No;
 	var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono);
 	if (solidity_check != Success.Yes):
 		if (flash_terrain > -1 and !hypothetical):
-			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), Color(1, 1, 1, 1)]);
+			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), flash_colour]);
 		return solidity_check;
 	
 	# handle pushing
