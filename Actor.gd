@@ -296,18 +296,17 @@ func _process(delta: float) -> void:
 				gamelogic.play_sound(current_animation[1]);
 			elif (current_animation[0] == 4): #fluster
 				fluster();
-			elif (current_animation[0] == 6): #spawn_onetimesprite_overactorsparticles
+			elif (current_animation[0] == 6): #trapdoor_opens
 				var sprite = Sprite.new();
-				sprite.set_script(preload("res://OneTimeSprite.gd"));
-				sprite.texture = current_animation[1];
-				sprite.position = position;
+				sprite.set_script(preload("res://PingPongSprite.gd"));
+				sprite.texture = preload("res://assets/trapdoor_animation_spritesheet.png");
 				sprite.vframes = round(sprite.get_rect().size.y/24);
 				sprite.hframes = round(sprite.get_rect().size.x/24);
 				sprite.frame = 0;
 				sprite.centered = false;
-				sprite.frame_max = sprite.hframes*sprite.vframes;
-				sprite.frame_timer_max = current_animation[2];
-				self.get_parent().get_parent().get_node("OverActorsParticles").add_child(sprite);
+				sprite.frame_timer_max = 0.05;
+				sprite.position = current_animation[1];
+				self.get_parent().get_parent().get_node("UnderActorsParticles").add_child(sprite);
 			elif (current_animation[0] == 7): #explode
 				if (is_character):
 					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");

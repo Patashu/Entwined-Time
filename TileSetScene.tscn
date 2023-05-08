@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/ladder_platform.png" type="Texture" id=8]
 [ext_resource path="res://assets/light_idle.png" type="Texture" id=9]
 [ext_resource path="res://assets/ladder.png" type="Texture" id=10]
-[ext_resource path="res://assets/oneway_south.png" type="Texture" id=11]
+[ext_resource path="res://assets/oneway_south_1.png" type="Texture" id=11]
 [ext_resource path="res://assets/wooden_crate.png" type="Texture" id=12]
 [ext_resource path="res://assets/WallPlaceholderProtoType1Dark.png" type="Texture" id=13]
 [ext_resource path="res://assets/steel_crate.png" type="Texture" id=14]
@@ -26,7 +26,7 @@
 [ext_resource path="res://assets/grate.png" type="Texture" id=24]
 [ext_resource path="res://assets/oneway_north_green.png" type="Texture" id=25]
 [ext_resource path="res://assets/oneway_east_green.png" type="Texture" id=26]
-[ext_resource path="res://assets/oneway_south_green.png" type="Texture" id=27]
+[ext_resource path="res://assets/oneway_south_green_1.png" type="Texture" id=27]
 [ext_resource path="res://assets/oneway_west_green.png" type="Texture" id=28]
 [ext_resource path="res://assets/no_heavy.png" type="Texture" id=29]
 [ext_resource path="res://assets/no_light.png" type="Texture" id=30]
@@ -66,6 +66,20 @@
 [ext_resource path="res://assets/green_fire_idle_3.png" type="Texture" id=64]
 [ext_resource path="res://assets/green_fire_idle_2.png" type="Texture" id=65]
 [ext_resource path="res://assets/green_fire_idle_1.png" type="Texture" id=66]
+[ext_resource path="res://assets/oneway_south_3.png" type="Texture" id=67]
+[ext_resource path="res://assets/oneway_south_4.png" type="Texture" id=68]
+[ext_resource path="res://assets/oneway_south_6.png" type="Texture" id=69]
+[ext_resource path="res://assets/oneway_south_7.png" type="Texture" id=70]
+[ext_resource path="res://assets/oneway_south_8.png" type="Texture" id=71]
+[ext_resource path="res://assets/oneway_south_5.png" type="Texture" id=72]
+[ext_resource path="res://assets/oneway_south_2.png" type="Texture" id=73]
+[ext_resource path="res://assets/oneway_south_green_3.png" type="Texture" id=74]
+[ext_resource path="res://assets/oneway_south_green_2.png" type="Texture" id=75]
+[ext_resource path="res://assets/oneway_south_green_4.png" type="Texture" id=76]
+[ext_resource path="res://assets/oneway_south_green_5.png" type="Texture" id=77]
+[ext_resource path="res://assets/oneway_south_green_7.png" type="Texture" id=78]
+[ext_resource path="res://assets/oneway_south_green_6.png" type="Texture" id=79]
+[ext_resource path="res://assets/oneway_south_green_8.png" type="Texture" id=80]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -93,6 +107,44 @@ frame_5/delay_sec = 0.0
 frame_6/texture = ExtResource( 42 )
 frame_6/delay_sec = 0.0
 frame_7/texture = ExtResource( 41 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=7]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 11 )
+frame_1/texture = ExtResource( 73 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 67 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 68 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 72 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 69 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 70 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 71 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=8]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 27 )
+frame_1/texture = ExtResource( 75 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 74 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 76 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 77 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 79 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 78 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 80 )
 frame_7/delay_sec = 0.0
 
 [sub_resource type="AnimatedTexture" id=2]
@@ -239,7 +291,7 @@ texture = ExtResource( 22 )
 
 [node name="OnewaySouth" type="Sprite" parent="."]
 position = Vector2( 145, 90 )
-texture = ExtResource( 11 )
+texture = SubResource( 7 )
 
 [node name="OnewayWest" type="Sprite" parent="."]
 position = Vector2( 145, 90 )
@@ -259,7 +311,7 @@ texture = ExtResource( 25 )
 
 [node name="OnewaySouthGreen" type="Sprite" parent="."]
 position = Vector2( 258, 91 )
-texture = ExtResource( 27 )
+texture = SubResource( 8 )
 
 [node name="OnewayWestGreen" type="Sprite" parent="."]
 position = Vector2( 258, 91 )

@@ -75,6 +75,11 @@ _global_script_classes=[ {
 "path": "res://OneTimeSprite.gd"
 }, {
 "base": "Sprite",
+"class": "PingPongSprite",
+"language": "GDScript",
+"path": "res://PingPongSprite.gd"
+}, {
+"base": "Sprite",
 "class": "TimeBubble",
 "language": "GDScript",
 "path": "res://TimeBubble.gd"
@@ -103,6 +108,7 @@ _global_script_class_icons={
 "LevelScene": "",
 "LevelSelect": "",
 "OneTimeSprite": "",
+"PingPongSprite": "",
 "TimeBubble": "",
 "TimelineSlot": "",
 "TimelineViewer": ""

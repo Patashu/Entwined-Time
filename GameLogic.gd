@@ -95,7 +95,7 @@ enum Animation {
 	sfx,
 	fluster,
 	fire_roars,
-	spawn_onetimesprite_overactorsparticles,
+	trapdoor_opens,
 	explode,
 	shatter,
 	unshatter,
@@ -971,6 +971,8 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			was_fall = is_gravity;
 		add_undo_event([Undo.move, actor, dir, was_push, was_fall], chrono_for_maybe_green_actor(actor, chrono));
 		actor.pos = pos;
+		
+		#do sound effects for special moves and their undoes
 		if (was_push and is_retro):
 			add_to_animation_server(actor, [Animation.sfx, "unpush"]);
 		if (was_push and !is_retro):
@@ -979,6 +981,12 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			add_to_animation_server(actor, [Animation.sfx, "unfall"]);
 		if (was_fall and !is_retro):
 			add_to_animation_server(actor, [Animation.sfx, "fall"]);
+		
+		#do trapdoor animation (removed until Teal Knight draws something better)
+		#if (dir == Vector2.DOWN):
+		#	var new_terrain = terrain_in_tile(actor.pos);
+		#	if new_terrain.has(Tiles.WoodenPlatform) or new_terrain.has(Tiles.LadderPlatform):
+		#		add_to_animation_server(actor, [Animation.trapdoor_opens, terrainmap.map_to_world(actor.pos)]);
 		add_to_animation_server(actor, [Animation.move, dir, is_retro]);
 		
 		#ding logic
