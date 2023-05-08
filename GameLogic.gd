@@ -167,6 +167,9 @@ enum Tiles {
 	GreenGlassBlock, #46
 	GreenSpikeball, #47
 	GreenFire, #48
+	NoRetro,
+	NoUndo,
+	OneUndo, #51
 }
 
 # information about the level
@@ -1123,10 +1126,9 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		if (green_terrain and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
-		# TODO: glass shattering/unshattering SFX in animation server,
-		# presentation/data terrain layer update (see notes),
+		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
-		if new_tile != -1:
+		if new_tile == Tiles.GlassBlock:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
 			for actor in actors:
 				if actor.pos == pos and !actor.broken:
@@ -1273,6 +1275,11 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					flash_colour = oneway_flash;
 			Tiles.OnewaySouth:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.UP);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.NoRetro:
+				result = no_if_true_yes_if_false(is_retro);
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_flash;
@@ -1436,10 +1443,26 @@ func character_undo(is_silent: bool = false) -> bool:
 	user_replay += "z";
 	finish_animations();
 	if (heavy_selected):
+		
+		# check if we can undo
+		var terrain = terrain_in_tile(heavy_actor.pos);
 		if (heavy_turn <= 0):
 			if !is_silent:
 				play_sound("bump");
 			return false;
+		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
+			if !is_silent:
+				play_sound("bump");
+			add_to_animation_server(heavy_actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.NoUndo), terrainmap.map_to_world(heavy_actor.pos), Color(0, 0, 0, 1)]);
+			return false;
+		
+		# before undo effects
+		
+		if (terrain.has(Tiles.OneUndo)):
+			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
+		
+		#the undo itself
+		
 		var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);
@@ -1453,10 +1476,26 @@ func character_undo(is_silent: bool = false) -> bool:
 			undo_effect_color = heavy_color;
 		return true;
 	else:
+		
+		# check if we can undo
+		var terrain = terrain_in_tile(light_actor.pos);
 		if (light_turn <= 0):
 			if !is_silent:
 				play_sound("bump");
 			return false;
+		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
+			if !is_silent:
+				play_sound("bump");
+			add_to_animation_server(light_actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.NoUndo), terrainmap.map_to_world(light_actor.pos), Color(0, 0, 0, 1)]);
+			return false;
+			
+		# before undo effects
+		
+		if (terrain.has(Tiles.OneUndo)):
+			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
+		
+		#the undo itself
+		
 		var events = light_undo_buffer.pop_at(light_turn - 1);
 		for event in events:
 			undo_one_event(event, Chrono.CHAR_UNDO);

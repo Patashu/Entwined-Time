@@ -333,6 +333,8 @@ func _process(delta: float) -> void:
 					sprite.set_script(preload("res://FadingSprite.gd"));
 					if (current_animation[2] == 46):
 						sprite.texture = preload("res://assets/green_glass_block.png")
+					elif (current_animation[2] == 51):
+						sprite.texture = preload("res://assets/one_undo.png")
 					else:
 						sprite.texture = preload("res://assets/glass_block.png")
 					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
