@@ -558,6 +558,31 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Airdodging.tscn"));
 	level_list.push_back(preload("res://levels/DragonsGate.tscn"));
 	
+	chapter_names.push_back("Victory Lap");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#223C52"));
+	level_list.push_back(preload("res://levels/RoommatesExL2.tscn"));
+	level_list.push_back(preload("res://levels/SpelunkingL2.tscn"));
+	level_list.push_back(preload("res://levels/UphillL2.tscn"));
+	level_list.push_back(preload("res://levels/DownhillL2.tscn"));
+	level_list.push_back(preload("res://levels/RoommatesL2.tscn"));
+	level_list.push_back(preload("res://levels/CarryingItL2.tscn"));
+#	level_list.push_back(preload("res://levels/CallACabL2.tscn"));
+#	level_list.push_back(preload("res://levels/TheFirstPitL2.tscn"));
+#	level_list.push_back(preload("res://levels/PachinkoL2.tscn"));
+#	level_list.push_back(preload("res://levels/BraidL2.tscn"));
+#	level_list.push_back(preload("res://levels/TallL2.tscn"));
+#	level_list.push_back(preload("res://levels/WallL2.tscn"));
+#	level_list.push_back(preload("res://levels/WallL2Ex.tscn"));
+#	level_list.push_back(preload("res://levels/PushingItL2.tscn"));
+#	level_list.push_back(preload("res://levels/OrientationL2.tscn"));
+#	level_list.push_back(preload("res://levels/OrientationL2Ex.tscn"));
+#	level_list.push_back(preload("res://levels/OrientationL2Ex2.tscn"));
+#	level_list.push_back(preload("res://levels/Joke.tscn"));
+#	level_list.push_back(preload("res://levels/ThanksForPlaying.tscn"));
+	
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_advanced_starting_levels.push_back(level_list.size());
