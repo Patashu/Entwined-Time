@@ -91,56 +91,57 @@ func prepare_chapter() -> void:
 			y = 0;
 			x += 1;
 	
-	# don't put the advanced label at the bottom of a column
-	if (y == y_max - 1):
-		y = 0;
-		x += 1;
-	# in fact, if it'll fit on its own one, give it its own one
-	if (x == 0 and (advanced_end - advanced_start) < y_max):
-		y = 0;
-		x += 1;
-	
-	label = Label.new();
-	holder.add_child(label);
-	label.rect_position.x = xx + xxx*x;
-	label.rect_position.y = yy + yyy*y + 2;
-	label.text = "Advanced:"
-	label.theme = holder.theme;
-	
-	y += 1;
-	if (y == y_max):
-		y = 0;
-		x += 1;
-	
-	for i in range(advanced_end - advanced_start):
-		var button = preload("res://LevelButton.tscn").instance();
-		holder.add_child(button);
-		button.rect_position.x = xx + xxx*x;
-		button.rect_position.y = yy + yyy*y;
-		button.level_number = i + advanced_start;
-		var level_name = gamelogic.level_names[button.level_number];
-		button.text = str(i) + "X - " + level_name;
-		button.theme = holder.theme;
-		button.levelselect = self;
-		if (x == 0 and y == 1): # the first button
-			button.grab_focus();
-		if (button.level_number == gamelogic.level_number): # button corresponding to the current level
-			button.grab_focus();
-			
-		# if we beat it, add a star :3
-		if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
-			var star = Sprite.new();
-			star.texture = preload("res://assets/star.png");
-			star.scale = Vector2(0.5, 0.5);
-			star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
-			star.centered = false;
-			holder.add_child(star);
-			pass;
+	if (advanced_end - advanced_start) > 0:
+		# don't put the advanced label at the bottom of a column
+		if (y == y_max - 1):
+			y = 0;
+			x += 1;
+		# in fact, if it'll fit on its own one, give it its own one
+		if (x == 0 and (advanced_end - advanced_start) < y_max):
+			y = 0;
+			x += 1;
+		
+		label = Label.new();
+		holder.add_child(label);
+		label.rect_position.x = xx + xxx*x;
+		label.rect_position.y = yy + yyy*y + 2;
+		label.text = "Advanced:"
+		label.theme = holder.theme;
 		
 		y += 1;
 		if (y == y_max):
 			y = 0;
 			x += 1;
+		
+		for i in range(advanced_end - advanced_start):
+			var button = preload("res://LevelButton.tscn").instance();
+			holder.add_child(button);
+			button.rect_position.x = xx + xxx*x;
+			button.rect_position.y = yy + yyy*y;
+			button.level_number = i + advanced_start;
+			var level_name = gamelogic.level_names[button.level_number];
+			button.text = str(i) + "X - " + level_name;
+			button.theme = holder.theme;
+			button.levelselect = self;
+			if (x == 0 and y == 1): # the first button
+				button.grab_focus();
+			if (button.level_number == gamelogic.level_number): # button corresponding to the current level
+				button.grab_focus();
+				
+			# if we beat it, add a star :3
+			if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
+				var star = Sprite.new();
+				star.texture = preload("res://assets/star.png");
+				star.scale = Vector2(0.5, 0.5);
+				star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
+				star.centered = false;
+				holder.add_child(star);
+				pass;
+			
+			y += 1;
+			if (y == y_max):
+				y = 0;
+				x += 1;
 		
 	# chapter 0 notice
 	if chapter == 0:
