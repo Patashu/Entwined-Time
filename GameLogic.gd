@@ -571,13 +571,13 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheFirstPitL2.tscn"));
 	level_list.push_back(preload("res://levels/PachinkoL2.tscn"));
 #	level_list.push_back(preload("res://levels/BraidL2.tscn"));
-#	level_list.push_back(preload("res://levels/TallL2.tscn"));
-#	level_list.push_back(preload("res://levels/WallL2.tscn"));
-#	level_list.push_back(preload("res://levels/WallL2Ex.tscn"));
+	#level_list.push_back(preload("res://levels/TallL2.tscn")); #I did this with 2H/3L but I think 4H/2L or something would be better.
+#	level_list.push_back(preload("res://levels/WallL2.tscn")); #borked
+#	level_list.push_back(preload("res://levels/WallL2Ex.tscn")); #borked
 #	level_list.push_back(preload("res://levels/PushingItL2.tscn"));
-#	level_list.push_back(preload("res://levels/OrientationL2.tscn"));
-#	level_list.push_back(preload("res://levels/OrientationL2Ex.tscn"));
-#	level_list.push_back(preload("res://levels/OrientationL2Ex2.tscn"));
+	level_list.push_back(preload("res://levels/OrientationL2.tscn"));
+#	level_list.push_back(preload("res://levels/OrientationL2Ex.tscn")); #borked
+	level_list.push_back(preload("res://levels/OrientationL2Ex2.tscn"));
 #	level_list.push_back(preload("res://levels/Joke.tscn"));
 #	level_list.push_back(preload("res://levels/ThanksForPlaying.tscn"));
 	
