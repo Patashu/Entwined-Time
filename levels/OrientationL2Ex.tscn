@@ -12,7 +12,7 @@ tile_data = PoolIntArray( 1, 7, 0, 4, 14, 196609, 7, 1, 0, 65536, 14, 196613, 65
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Orientation (Loop 2) [VAR1]"
-level_replay = "Orientation$mturn=57$xaawaaxwzwzdxzzzzzwdxdxzzasxwxdxzddxzzzdddxzxaxdxzzzzxzzzzwxaxdxzwxzzxzaaaxd"
+level_replay = "Orientation (Loop 2) [VAR1]$mturn=57$xaawaaxwzwzdxzzzzzwdxdxzzasxwxdxzddxzzzdddxzxaxdxzzzzxzzzzwxaxdxzwxzzxzaaaxdd"
 heavy_max_moves = 4
 light_max_moves = 5
 
