@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 3, 2, 14, 3, 3, 14, 458755, 4, 14, 196614, 5, 14, 393219, 6, 14, 4, 65536, 14, 65538, 65537, 14, 65539, 65538, 14, 917511, 65539, 14, 131076, 65540, 7, 0, 65541, 14, 65538, 65542, 14, 65540, 131072, 14, 65538, 131073, 14, 917511, 131074, 14, 131076, 131077, 14, 65538, 131078, 14, 65540, 196608, 14, 589825, 196609, 14, 131076, 196612, 14, 2, 196613, 14, 917509, 196614, 14, 65540, 262144, 14, 262145, 262147, 14, 2, 262148, 14, 917509, 262149, 14, 65539, 262150, 14, 65540, 327680, 14, 262145, 327682, 14, 196613, 327683, 14, 720899, 327684, 14, 131075, 327685, 14, 131075, 327686, 14, 589829, 393216, 14, 262145, 393220, 8, 0, 393221, 2, 0, 393222, 14, 262145, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Pushing It (Loop 2)"
+level_replay = "Pushing It (Loop 2)$mturn=19$aaaxwxaxzxwxdxzzxzxzxwxzxzwxzxzw"
+heavy_max_moves = 5
+light_max_moves = 1
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 393221, 1, 0 )
