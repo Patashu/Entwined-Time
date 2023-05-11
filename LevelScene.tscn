@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -34,6 +34,7 @@
 [ext_resource path="res://assets/tutorial_arrows/arrow_right_2.png" type="Texture" id=32]
 [ext_resource path="res://assets/tutorial_arrows/arrow_right_6.png" type="Texture" id=33]
 [ext_resource path="res://assets/tutorial_arrows/arrow_right_8.png" type="Texture" id=34]
+[ext_resource path="res://assets/screen-static.png" type="Texture" id=35]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 16
@@ -142,6 +143,29 @@ frame_14/texture = ExtResource( 31 )
 frame_14/delay_sec = 0.05
 frame_15/texture = ExtResource( 32 )
 frame_15/delay_sec = 0.1
+
+[sub_resource type="Shader" id=4]
+code = "//Shader by: Jordancjb (https://linktr.ee/jordancjb)
+//Licensed under Creative Commons 0, Use as you like c:
+shader_type canvas_item;
+
+//Noise Texture
+uniform sampler2D Noise;
+
+//Settings
+uniform float Transparency = 2.0;
+uniform float Slow = 25.0;
+
+//Shader Code
+void fragment() {
+	COLOR = texture(SCREEN_TEXTURE, SCREEN_UV) * texture(Noise, texture(Noise, UV).xy + cos(TIME) / Slow) / Transparency;
+}"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/Transparency = 0.8
+shader_param/Slow = 25.0
+shader_param/Noise = ExtResource( 35 )
 
 [node name="LevelScene" type="Node2D"]
 script = ExtResource( 5 )
@@ -279,4 +303,11 @@ centered = false
 visible = false
 position = Vector2( -48, -48 )
 texture = SubResource( 3 )
+centered = false
+
+[node name="Static" type="Sprite" parent="."]
+visible = false
+material = SubResource( 5 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 35 )
 centered = false

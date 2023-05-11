@@ -4,6 +4,8 @@ class_name TimelineSlot
 var undo_effect_strength = 0;
 var undo_effect_loss_per_second = 0.5;
 var undo_effect_color = Color(1, 1, 1, 1);
+var showing_fuzz = false;
+var fuzz_timer = 0;
 onready var timelinesymbols : Node2D = get_node("TimelineSymbols");
 onready var overlay : Sprite = get_node("Overlay");
 
@@ -121,6 +123,20 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 		
 	return null
 
+func fuzz_on() -> void:
+	if (!showing_fuzz):
+		showing_fuzz = true;
+		fuzz_timer = 0;
+		undo_effect_strength = 1;
+		undo_effect_color = Color(1, 1, 1, 1);
+		overlay.texture = preload("res://timeline/FuzzOverlayAnimatedTexture.tres");
+	
+func fuzz_off() -> void:
+	if (showing_fuzz):
+		showing_fuzz = false;
+		undo_effect_strength = 0;
+		overlay.texture = preload("res://timeline/white-overlay.png");
+
 func clear(color: Color) -> void:
 	for sprite in timelinesymbols.get_children():
 		sprite.queue_free();
@@ -129,7 +145,10 @@ func clear(color: Color) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if (undo_effect_strength > 0):
+	if (showing_fuzz):
+		fuzz_timer += delta;
+		overlay.modulate = Color(1, 1, 1, 0.25+cos(fuzz_timer*3)/4);
+	elif (undo_effect_strength > 0):
 		undo_effect_strength -= delta*undo_effect_loss_per_second;
 		if (undo_effect_strength > 0):
 			overlay.modulate = Color(undo_effect_color.r, undo_effect_color.g, undo_effect_color.b, undo_effect_strength);

@@ -40,6 +40,8 @@ func reset() -> void:
 func add_turn(buffer: Array) -> void:
 	if current_move >= (max_moves):
 		return
+	if (current_move > 0):
+		timelineslots.get_child(current_move-1).fuzz_off();
 	timelineslots.get_child(current_move).fill(buffer);
 	current_move += 1;
 	if (current_move) == 0:
@@ -52,6 +54,8 @@ func add_turn(buffer: Array) -> void:
 func remove_turn(color: Color) -> void:
 	if current_move <= 0:
 		return
+	if (current_move > 0):
+		timelineslots.get_child(current_move-1).fuzz_off();
 	current_move -= 1;
 	if (current_move) == 0:
 		timelinedivider.position.y = 0;
@@ -60,6 +64,17 @@ func remove_turn(color: Color) -> void:
 		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
 		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
 	timelineslots.get_child(current_move).clear(color);
+
+func fuzz_on() -> void:
+	if (current_move <= 0):
+		return;
+	timelineslots.get_child(current_move-1).fuzz_on();
+	
+func fuzz_off() -> void:
+	if (current_move <= 0):
+		return;
+	timelineslots.get_child(current_move-1).fuzz_off();
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:

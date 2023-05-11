@@ -25,6 +25,7 @@ onready var lighttimeline : Node2D = levelscene.get_node("LightTimeline");
 onready var downarrow : Sprite = levelscene.get_node("DownArrow");
 onready var leftarrow : Sprite = levelscene.get_node("LeftArrow");
 onready var rightarrow : Sprite = levelscene.get_node("RightArrow");
+onready var Static : Sprite = levelscene.get_node("Static");
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
 
 # distinguish between temporal layers when a move or state change happens
@@ -222,6 +223,8 @@ var undo_effect_color = Color(0, 0, 0, 0);
 var heavy_color = Color(1.0, 0, 0, 1);
 var light_color = Color(0, 0.58, 1.0, 1);
 var meta_color = Color(0.5, 0.5, 0.5, 1);
+var fuzz_timer = 0;
+var fuzz_timer_max = 0;
 var ui_stack = [];
 
 #UI defaults
@@ -1500,6 +1503,8 @@ func character_undo(is_silent: bool = false) -> bool:
 		#the undo itself
 		
 		if (terrain.has(Tiles.Fuzz)):
+			fuzz_timer = 0;
+			fuzz_timer_max = 1.0;
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
 			var events = heavy_undo_buffer[heavy_turn - 1];
 			for event in events:
@@ -1541,6 +1546,8 @@ func character_undo(is_silent: bool = false) -> bool:
 		#the undo itself
 		
 		if (terrain.has(Tiles.Fuzz)):
+			fuzz_timer = 0;
+			fuzz_timer_max = 1.0;
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
 			var events = light_undo_buffer[light_turn - 1];
 			for event in events:
@@ -2268,6 +2275,17 @@ func update_level_label() -> void:
 		levelstar.visible = false;
 	
 func update_info_labels() -> void:
+	#also do fuzz indicator here
+	if terrain_in_tile(heavy_actor.pos).has(Tiles.Fuzz):
+		heavytimeline.fuzz_on();
+	else:
+		heavytimeline.fuzz_off();
+		
+	if terrain_in_tile(light_actor.pos).has(Tiles.Fuzz):
+		lighttimeline.fuzz_on();
+	else:
+		lighttimeline.fuzz_off();
+	
 	heavyinfolabel.text = "Heavy" + "\n" + str(heavy_turn);
 	if heavy_max_moves >= 0:
 		heavyinfolabel.text += "/" + str(heavy_max_moves);
@@ -2451,6 +2469,15 @@ func _process(delta: float) -> void:
 		var current_b = lerp(old_sky.b, target_sky.b, sky_timer/sky_timer_max);
 		current_sky = Color(current_r, current_g, current_b);
 		VisualServer.set_default_clear_color(current_sky);
+		
+	if (fuzz_timer_max > 0):
+		fuzz_timer += delta;
+		if (fuzz_timer < fuzz_timer_max):
+			Static.visible = true;
+			Static.modulate = Color(1, 1, 1, 1-(fuzz_timer/fuzz_timer_max));
+		else:
+			Static.visible = false;
+			Static.modulate = Color(1, 1, 1, 1);
 	
 	if ui_stack.size() == 0:
 		if (doing_replay and replay_timer > next_replay):
