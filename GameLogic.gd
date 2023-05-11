@@ -1494,11 +1494,18 @@ func character_undo(is_silent: bool = false) -> bool:
 		
 		#the undo itself
 		
-		var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
-		for event in events:
-			undo_one_event(event, Chrono.CHAR_UNDO);
-			add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
-		time_passes(Chrono.CHAR_UNDO);
+		if (terrain.has(Tiles.Fuzz)):
+			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
+			var events = heavy_undo_buffer[heavy_turn - 1];
+			for event in events:
+				undo_one_event(event, Chrono.CHAR_UNDO);
+		else:
+			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
+			for event in events:
+				undo_one_event(event, Chrono.CHAR_UNDO);
+				add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
+			time_passes(Chrono.CHAR_UNDO);
+		
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
@@ -1527,11 +1534,18 @@ func character_undo(is_silent: bool = false) -> bool:
 		
 		#the undo itself
 		
-		var events = light_undo_buffer.pop_at(light_turn - 1);
-		for event in events:
-			undo_one_event(event, Chrono.CHAR_UNDO);
-			add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
-		time_passes(Chrono.CHAR_UNDO);
+		if (terrain.has(Tiles.Fuzz)):
+			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
+			var events = light_undo_buffer[light_turn - 1];
+			for event in events:
+				undo_one_event(event, Chrono.CHAR_UNDO);
+		else:
+			var events = light_undo_buffer.pop_at(light_turn - 1);
+			for event in events:
+				undo_one_event(event, Chrono.CHAR_UNDO);
+				add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
+			time_passes(Chrono.CHAR_UNDO);
+			
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
