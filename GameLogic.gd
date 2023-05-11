@@ -171,6 +171,7 @@ enum Tiles {
 	NoRetro,
 	NoUndo,
 	OneUndo, #51
+	Fuzz, #52
 }
 
 # information about the level
