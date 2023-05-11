@@ -12,5 +12,6 @@ tile_data = PoolIntArray( 1, 52, 0, 14, 52, 0, 65536, 14, 196613, 65537, 14, 524
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "The Fuzz"
+level_replay = "The Fuzz$mturn=20$awazzzzdddxdwdzzzzaaa"
 heavy_max_moves = 3
 light_max_moves = 3
