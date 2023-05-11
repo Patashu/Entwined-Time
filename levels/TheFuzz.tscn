@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 52, 0, 14, 52, 0, 65536, 14, 196613, 65537, 14, 524292, 65539, 2, 0, 65543, 1, 0, 65544, 7, 0, 65548, 8, 0, 65550, 14, 524290, 65551, 14, 196615, 131073, 14, 655362, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 196614, 131082, 14, 196614, 131083, 14, 196614, 131084, 14, 196614, 131085, 14, 196614, 131086, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "The Fuzz"
+heavy_max_moves = 3
+light_max_moves = 3

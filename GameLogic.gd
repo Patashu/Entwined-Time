@@ -557,7 +557,13 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Skip.tscn"));
 	level_list.push_back(preload("res://levels/HelpYourselfEx.tscn"));
 	level_list.push_back(preload("res://levels/Airdodging.tscn"));
-	level_list.push_back(preload("res://levels/DragonsGate.tscn"));
+	level_list.push_back(preload("res://levels/DragonsGate.tscn"))
+	
+	chapter_names.push_back("Exotic Matter");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#351731"));
+	level_list.push_back(preload("res://levels/TheFuzz.tscn"));
+	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -584,7 +590,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/OrientationL2Ex2.tscn"));
 #	level_list.push_back(preload("res://levels/Joke.tscn"));
 #	level_list.push_back(preload("res://levels/ThanksForPlaying.tscn"));
-	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	# sentinel to make overflow checks easy
@@ -1498,7 +1503,8 @@ func character_undo(is_silent: bool = false) -> bool:
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
 			var events = heavy_undo_buffer[heavy_turn - 1];
 			for event in events:
-				undo_one_event(event, Chrono.CHAR_UNDO);
+				if event[0] != Undo.heavy_turn and event[0] != Undo.light_turn:
+					undo_one_event(event, Chrono.CHAR_UNDO);
 		else:
 			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 			for event in events:
@@ -1538,7 +1544,8 @@ func character_undo(is_silent: bool = false) -> bool:
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
 			var events = light_undo_buffer[light_turn - 1];
 			for event in events:
-				undo_one_event(event, Chrono.CHAR_UNDO);
+				if event[0] != Undo.heavy_turn and event[0] != Undo.light_turn:
+					undo_one_event(event, Chrono.CHAR_UNDO);
 		else:
 			var events = light_undo_buffer.pop_at(light_turn - 1);
 			for event in events:
