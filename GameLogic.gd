@@ -1485,6 +1485,7 @@ func character_undo(is_silent: bool = false) -> bool:
 	if (won): return false;
 	user_replay += "z";
 	finish_animations();
+	var fuzzed = false;
 	if (heavy_selected):
 		
 		# check if we can undo
@@ -1507,8 +1508,9 @@ func character_undo(is_silent: bool = false) -> bool:
 		#the undo itself
 		
 		if (terrain.has(Tiles.Fuzz)):
+			fuzzed = true;
 			fuzz_timer = 0;
-			fuzz_timer_max = 1.0;
+			fuzz_timer_max = 1.5;
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
 			var events = heavy_undo_buffer[heavy_turn - 1];
 			for event in events:
@@ -1524,9 +1526,14 @@ func character_undo(is_silent: bool = false) -> bool:
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
-			undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
-			undo_effect_per_second = undo_effect_strength*(1/0.4);
-			undo_effect_color = heavy_color;
+			if (fuzzed):
+				undo_effect_strength = 0.25;
+				undo_effect_per_second = undo_effect_strength*(1/0.5);
+				undo_effect_color = meta_color;
+			else:
+				undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
+				undo_effect_per_second = undo_effect_strength*(1/0.4);
+				undo_effect_color = heavy_color;
 		return true;
 	else:
 		
@@ -1550,8 +1557,9 @@ func character_undo(is_silent: bool = false) -> bool:
 		#the undo itself
 		
 		if (terrain.has(Tiles.Fuzz)):
+			fuzzed = true;
 			fuzz_timer = 0;
-			fuzz_timer_max = 1.0;
+			fuzz_timer_max = 1.5;
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
 			var events = light_undo_buffer[light_turn - 1];
 			for event in events:
@@ -1566,10 +1574,15 @@ func character_undo(is_silent: bool = false) -> bool:
 			
 		adjust_meta_turn(1);
 		if (!is_silent):
-			play_sound("undo");
-			undo_effect_strength = 0.08;
-			undo_effect_per_second = undo_effect_strength*(1/0.4);
-			undo_effect_color = light_color;
+			if (fuzzed):
+				undo_effect_strength = 0.25;
+				undo_effect_per_second = undo_effect_strength*(1/0.5);
+				undo_effect_color = meta_color;
+			else:
+				play_sound("undo");
+				undo_effect_strength = 0.08;
+				undo_effect_per_second = undo_effect_strength*(1/0.4);
+				undo_effect_color = light_color;
 		return true;
 
 func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:

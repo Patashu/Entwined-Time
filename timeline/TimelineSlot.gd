@@ -134,7 +134,8 @@ func fuzz_on() -> void:
 func fuzz_off() -> void:
 	if (showing_fuzz):
 		showing_fuzz = false;
-		undo_effect_strength = 0;
+		undo_effect_strength = 0.6;
+		undo_effect_color = Color(1, 1, 1, 1);
 		overlay.texture = preload("res://timeline/white-overlay.png");
 
 func clear(color: Color) -> void:
