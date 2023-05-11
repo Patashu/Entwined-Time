@@ -928,6 +928,7 @@ func prepare_audio() -> void:
 	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
 	sounds["fall"] = preload("res://sfx/fall.ogg");
+	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
 	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
@@ -1174,7 +1175,10 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 					actor.post_mortem = Durability.PITS;
 					set_actor_var(actor, "broken", true, chrono);
 		else:
-			add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
+			if (old_tile == Tiles.Fuzz):
+				play_sound("fuzz");
+			else:
+				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:
