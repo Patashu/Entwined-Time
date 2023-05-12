@@ -566,9 +566,11 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#351731"));
 	level_list.push_back(preload("res://levels/TheFuzz.tscn"));
-	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
 	level_list.push_back(preload("res://levels/PushingItFurther.tscn"));
+	level_list.push_back(preload("res://levels/KingCrimson.tscn"));
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/KingCrimsonEx.tscn"));
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
