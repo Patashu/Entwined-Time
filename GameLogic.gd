@@ -567,6 +567,8 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#351731"));
 	level_list.push_back(preload("res://levels/TheFuzz.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
+	level_list.push_back(preload("res://levels/PushingItFurther.tscn"));
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -1512,10 +1514,14 @@ func character_undo(is_silent: bool = false) -> bool:
 			fuzz_timer = 0;
 			fuzz_timer_max = 1.5;
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
+			heavytimeline.fuzz_activate();
 			var events = heavy_undo_buffer[heavy_turn - 1];
 			for event in events:
-				if event[0] != Undo.heavy_turn and event[0] != Undo.light_turn:
-					undo_one_event(event, Chrono.CHAR_UNDO);
+				if event[0] == Undo.heavy_turn or event[0] == Undo.light_turn:
+					continue
+				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
+					continue
+				undo_one_event(event, Chrono.CHAR_UNDO);
 		else:
 			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 			for event in events:
@@ -1561,10 +1567,14 @@ func character_undo(is_silent: bool = false) -> bool:
 			fuzz_timer = 0;
 			fuzz_timer_max = 1.5;
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.Fuzz), false, true, Chrono.CHAR_UNDO, -1);
+			lighttimeline.fuzz_activate();
 			var events = light_undo_buffer[light_turn - 1];
 			for event in events:
-				if event[0] != Undo.heavy_turn and event[0] != Undo.light_turn:
-					undo_one_event(event, Chrono.CHAR_UNDO);
+				if event[0] == Undo.heavy_turn or event[0] == Undo.light_turn:
+					continue
+				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
+					continue
+				undo_one_event(event, Chrono.CHAR_UNDO);
 		else:
 			var events = light_undo_buffer.pop_at(light_turn - 1);
 			for event in events:

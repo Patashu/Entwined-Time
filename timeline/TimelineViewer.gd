@@ -70,6 +70,11 @@ func fuzz_on() -> void:
 		return;
 	timelineslots.get_child(current_move-1).fuzz_on();
 	
+func fuzz_activate() -> void:
+	if (current_move <= 0):
+		return;
+	timelineslots.get_child(current_move-1).fuzz_activate();
+	
 func fuzz_off() -> void:
 	if (current_move <= 0):
 		return;

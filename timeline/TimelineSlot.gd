@@ -131,10 +131,17 @@ func fuzz_on() -> void:
 		undo_effect_color = Color(1, 1, 1, 1);
 		overlay.texture = preload("res://timeline/FuzzOverlayAnimatedTexture.tres");
 	
-func fuzz_off() -> void:
+func fuzz_activate() -> void:
 	if (showing_fuzz):
 		showing_fuzz = false;
 		undo_effect_strength = 0.6;
+		undo_effect_color = Color(1, 1, 1, 1);
+		overlay.texture = preload("res://timeline/white-overlay.png");
+	
+func fuzz_off() -> void:
+	if (showing_fuzz):
+		showing_fuzz = false;
+		undo_effect_strength = 0.01;
 		undo_effect_color = Color(1, 1, 1, 1);
 		overlay.texture = preload("res://timeline/white-overlay.png");
 
