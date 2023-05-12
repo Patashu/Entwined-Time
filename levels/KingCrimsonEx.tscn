@@ -12,8 +12,9 @@ tile_data = PoolIntArray( 5, 14, 196609, 15, 14, 196609, 65541, 14, 262145, 6555
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "King Crimson [VAR1]"
+level_replay = "King Crimson [VAR1]$mturn=63$xwxdxwxwxdxddxaxaxdsxawaxaawxdsxaxwdxaaasaxsaaaxzzzzzzzzzzxzzzzzxwaxzzxaxzzzxaxzzzzzddd"
 heavy_max_moves = 22
-light_max_moves = 10
+light_max_moves = 22
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
