@@ -1475,11 +1475,11 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
 						for goal in goals:
-							if goal.actorname == "heavy_goal" and goal.dinged:
+							if goal.actorname == "heavy_goal" and !goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
 					if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
 						for goal in goals:
-							if goal.actorname == "light_goal" and goal.dinged:
+							if goal.actorname == "light_goal" and !goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
 				else:
 					if terrain.has(Tiles.CrateGoal):
