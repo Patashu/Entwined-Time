@@ -1757,7 +1757,7 @@ func check_won() -> void:
 				var old_replay_data = old_replay_parts[old_replay_parts.size()-2];
 				var old_replay_mturn_parts = old_replay_data.split("=");
 				var old_replay_mturn = int(old_replay_mturn_parts[1]);
-				if (old_replay_mturn >= meta_turn):
+				if (old_replay_mturn > meta_turn):
 					level_save_data["replay"] = annotate_replay(user_replay);
 			update_level_label();
 			save_game();
