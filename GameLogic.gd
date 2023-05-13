@@ -570,6 +570,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/PushingItFurther.tscn"));
 	level_list.push_back(preload("res://levels/KingCrimson.tscn"));
 	level_list.push_back(preload("res://levels/LimitedUndo.tscn"));
+	level_list.push_back(preload("res://levels/UnfathomableGlass.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/PushingItFurtherEx.tscn"));
 	level_list.push_back(preload("res://levels/KingCrimsonEx.tscn"));
@@ -1155,7 +1156,23 @@ func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terr
 	else:
 		return Success.No;
 
-func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: bool, chrono: int, new_tile: int) -> int:
+func find_or_create_layer_having_this_tile(pos: Vector2, assumed_old_tile: int) -> int:
+	for layer in range(terrain_layers.size()):
+		var terrain_layer = terrain_layers[layer];
+		var old_tile = terrain_layer.get_cellv(pos);
+		if (old_tile == assumed_old_tile):
+			return layer;
+	# create a new one.
+	var new_layer = TileMap.new();
+	new_layer.tile_set = terrainmap.tile_set;
+	new_layer.cell_size = terrainmap.cell_size;
+	# new layer will have to be at the back (first cihld, last terrain_layer), so I don't desync existing memories of layers.
+	terrainmap.add_child(new_layer);
+	terrainmap.move_child(new_layer, 0);
+	terrain_layers.push_back(new_layer);
+	return terrain_layers.size() - 1;
+
+func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: bool, chrono: int, new_tile: int, assumed_old_tile: int = -2) -> int:
 	if (chrono == Chrono.GHOSTS):
 		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
 		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
@@ -1169,6 +1186,10 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 	if (!hypothetical):
 		var terrain_layer = terrain_layers[layer];
 		var old_tile = terrain_layer.get_cellv(pos);
+		if (assumed_old_tile != -2 and assumed_old_tile != old_tile):
+			# desync (probably due to fuzz doubled glass mechanic). find or create the first layer where assumed_old_tile is correct.
+			layer = find_or_create_layer_having_this_tile(pos, assumed_old_tile);
+			terrain_layer = terrain_layers[layer];
 		terrain_layer.set_cellv(pos, new_tile);
 		if (green_terrain and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
@@ -1786,8 +1807,8 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		var pos = event[2];
 		var layer = event[3];
 		var old_tile = event[4];
-		#var new_tile = event[5];
-		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile);
+		var new_tile = event[5];
+		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile, new_tile);
 		
 	# undo events that should not
 		
