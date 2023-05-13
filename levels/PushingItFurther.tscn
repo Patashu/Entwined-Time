@@ -12,7 +12,7 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 19
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Pushing It Further"
-level_replay = "Pushing It Further$mturn=29$aaaxwxaxdxwxaxzdxzzzwxawxwdxzzzzzzzzzzs"
+level_replay = "Pushing It Further$mturn=32$aaaxwxaxzdxwxaxzddxzzxzxwxaxzxwxwddxzzzzzzzzzs"
 heavy_max_moves = 7
 light_max_moves = 3
 
