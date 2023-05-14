@@ -15,3 +15,15 @@ level_name = "Bonfire [VAR2]"
 level_replay = "wxaxzwdddwxdddxzzcxaxswxzxzzwxzzzzzzddwwdxdxzsxzzzzzcxsxzzxzzzzzzddwwdxsxzzzzzxwddxdssddxcxdcxdddxxccczzzzczczxzzzxddxdssdxdddxd"
 heavy_max_moves = 6
 light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196612, 25, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196612, 28, 0 )
