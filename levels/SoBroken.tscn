@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196615, 4, 47, 0, 5, 47, 0, 6, 47, 0, 7, 14, 196613, 8, 14, 196615, 9, 12, 0, 10, 47, 0, 11, 47, 0, 12, 47, 0, 13, 14, 196613, 14, 14, 196614, 15, 14, 524292, 65536, 14, 262145, 65537, 2, 0, 65538, 8, 0, 65540, 19, 0, 65541, 19, 0, 65542, 19, 0, 65546, 19, 0, 65547, 19, 0, 65548, 19, 0, 65549, 1, 0, 65550, 7, 0, 65551, 14, 262145, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 196615, 131075, 12, 0, 131076, 47, 0, 131077, 47, 0, 131078, 47, 0, 131079, 14, 196613, 131080, 14, 196614, 131081, 14, 196615, 131082, 47, 0, 131083, 47, 0, 131084, 47, 0, 131085, 14, 196613, 131086, 14, 196614, 131087, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "So Broken"
+level_replay = "So Broken$mturn=16$dxsxddddxzxddxwxdddddxz"
+heavy_max_moves = 12
+light_max_moves = 6

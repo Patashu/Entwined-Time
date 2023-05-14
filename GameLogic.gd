@@ -539,13 +539,14 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Permanence");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#14492A"));
+	level_list.push_back(preload("res://levels/HelpYourself.tscn"));
 	level_list.push_back(preload("res://levels/SpikesGreen.tscn"));
+	level_list.push_back(preload("res://levels/SoBroken.tscn"));
 	level_list.push_back(preload("res://levels/CampfireGreen.tscn"));
 	level_list.push_back(preload("res://levels/FirewallGreen.tscn"));
 	level_list.push_back(preload("res://levels/GreenGlass.tscn"));
 	level_list.push_back(preload("res://levels/TheFuture.tscn"));
 	level_list.push_back(preload("res://levels/FasterThanLight.tscn"));
-	level_list.push_back(preload("res://levels/HelpYourself.tscn"));
 	level_list.push_back(preload("res://levels/Mundane.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
@@ -553,12 +554,12 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/LightHurtingServiceEx.tscn"));
 	level_list.push_back(preload("res://levels/LightHurtingServiceEx2.tscn"));
 	level_list.push_back(preload("res://levels/GreenGrass.tscn"));
+	level_list.push_back(preload("res://levels/HelpYourselfEx.tscn"));
 	level_list.push_back(preload("res://levels/SpikesGreenEx.tscn"));
 	level_list.push_back(preload("res://levels/CampfireGreenEx.tscn"));
 	level_list.push_back(preload("res://levels/CampfireGreenEx2.tscn"));
 	level_list.push_back(preload("res://levels/FirewallGreenEx.tscn"));
 	level_list.push_back(preload("res://levels/Skip.tscn"));
-	level_list.push_back(preload("res://levels/HelpYourselfEx.tscn"));
 	level_list.push_back(preload("res://levels/LeadPlanes.tscn"))
 	level_list.push_back(preload("res://levels/Airdodging.tscn"));
 	level_list.push_back(preload("res://levels/DragonsGate.tscn"))
@@ -567,11 +568,11 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#351731"));
 	level_list.push_back(preload("res://levels/TheFuzz.tscn"));
-	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
 	level_list.push_back(preload("res://levels/PushingItFurther.tscn"));
+	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
 	level_list.push_back(preload("res://levels/KingCrimson.tscn"));
-	level_list.push_back(preload("res://levels/LeadBalloon.tscn"));
 	level_list.push_back(preload("res://levels/DontLookDown.tscn"));
+	level_list.push_back(preload("res://levels/LeadBalloon.tscn"));
 	level_list.push_back(preload("res://levels/Durability.tscn"));
 	level_list.push_back(preload("res://levels/LimitedUndo.tscn"));
 	level_list.push_back(preload("res://levels/UnfathomableGlass.tscn"));
