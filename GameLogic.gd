@@ -581,9 +581,9 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
 	level_list.push_back(preload("res://levels/PushingItFurtherEx.tscn"));
-	level_list.push_back(preload("res://levels/KingCrimsonEx.tscn"));
 	level_list.push_back(preload("res://levels/LimitedUndoEx.tscn"));
 	level_list.push_back(preload("res://levels/LimitedUndoEx2.tscn"));
+	level_list.push_back(preload("res://levels/KingCrimsonEx.tscn"));
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
