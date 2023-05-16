@@ -218,6 +218,7 @@ var save_file = {}
 # song-and-dance state
 var sounds = {}
 var speakers = [];
+var sounds_played_this_frame = {};
 var muted = false;
 var won = false;
 var won_fade_started = false;
@@ -1007,9 +1008,12 @@ func cut_sound() -> void:
 func play_sound(sound: String) -> void:
 	if muted or (doing_replay and meta_undo_a_restart_mode):
 		return;
+	if (sounds_played_this_frame.has(sound)):
+		return;
 	for speaker in speakers:
 		if !speaker.playing:
 			speaker.stream = sounds[sound];
+			sounds_played_this_frame[sound] = true;
 			speaker.play();
 			return;
 
@@ -2576,6 +2580,8 @@ func last_level_of_section() -> bool:
 	return false;
 		
 func _process(delta: float) -> void:
+	sounds_played_this_frame.clear();
+	
 	replay_timer += delta;
 	if (sky_timer < sky_timer_max):
 		sky_timer += delta;
