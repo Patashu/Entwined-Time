@@ -107,6 +107,8 @@ enum Animation {
 	unshatter,
 	afterimage_at,
 	fade,
+	heavy_green_time_crystal_raw, #12
+	light_green_time_crystal_raw, #13
 }
 
 enum TimeColour {
@@ -1547,16 +1549,12 @@ func eat_crystal(eater: Actor, eatee: Actor) -> void:
 		# TODO: green time crystal after magenta effect
 		if heavy_actor == eater:
 			heavy_max_moves += 1;
-			# TODO: background flash, particle effects
-			# TODO: should happen at animation_server timing
-			heavytimeline.add_max_turn();
-			timeline_squish();
 			add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
+			add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw]);
 		elif light_actor == eater:
 			light_max_moves += 1;
-			lighttimeline.add_max_turn();
-			timeline_squish();
 			add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
+			add_to_animation_server(eater, [Animation.light_green_time_crystal_raw]);
 	else:
 		#TODO: magenta time crystal effect
 		pass

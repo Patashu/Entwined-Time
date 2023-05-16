@@ -424,6 +424,14 @@ func _process(delta: float) -> void:
 				else:
 					is_done = false;
 					self.modulate.a = 1-(animation_timer/animation_timer_max);
+			elif (current_animation[0] == 12): #heavy_green_time_crystal_raw
+				gamelogic.heavytimeline.add_max_turn();
+				gamelogic.timeline_squish();
+				# TODO: background flash, particle effects
+			elif (current_animation[0] == 13): #light_green_time_crystal_raw
+				gamelogic.lighttimeline.add_max_turn();
+				gamelogic.timeline_squish();
+				# TODO: background flash, particle effects
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
