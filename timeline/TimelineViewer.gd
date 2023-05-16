@@ -42,7 +42,9 @@ func add_max_turn() -> void:
 	var i = max_moves -1;
 	var slot = preload("res://timeline/TimelineSlot.tscn").instance();
 	slot.texture = preload("res://assets/TestCrystalFrame.png");
-	# TODO: should do the 'growing region' animation
+	slot.region_enabled = true;
+	slot.region_rect = Rect2(20, 20, 32, 0);
+	slot.region_timer_max = 0.5;
 	timelineslots.add_child(slot);
 	slot.position.y += yy*(i%y_max);
 	slot.position.x += xx*floor(i/y_max);

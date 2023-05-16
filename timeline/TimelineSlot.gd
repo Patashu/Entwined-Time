@@ -9,6 +9,9 @@ var fuzz_timer = 0;
 onready var timelinesymbols : Node2D = get_node("TimelineSymbols");
 onready var overlay : Sprite = get_node("Overlay");
 
+var region_timer = 0;
+var region_timer_max = 0;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -153,6 +156,15 @@ func clear(color: Color) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (region_timer < region_timer_max):
+		region_timer += delta;
+		if (region_timer > region_timer_max):
+			region_enabled = false;
+			offset = Vector2(12, 12);
+		else:
+			region_rect = Rect2(20, 20, 32, 32*(region_timer/region_timer_max));
+			offset = Vector2(12, 12-16+32*(region_timer/region_timer_max)/2);
+	
 	if (showing_fuzz):
 		fuzz_timer += delta;
 		overlay.modulate = Color(1, 1, 1, 0.25+cos(fuzz_timer*3)/4);
