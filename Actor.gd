@@ -259,7 +259,6 @@ func _process(delta: float) -> void:
 			sprite.scale = Vector2(0.25, 0.25);
 			sprite.modulate = color;
 			self.add_child(sprite)
-			pass
 		#bob up and down
 		self.offset = Vector2(12, 12+3*sin(crystal_timer));
 	
@@ -425,13 +424,27 @@ func _process(delta: float) -> void:
 					is_done = false;
 					self.modulate.a = 1-(animation_timer/animation_timer_max);
 			elif (current_animation[0] == 12): #heavy_green_time_crystal_raw
+				var color = current_animation[1].color;
 				gamelogic.heavytimeline.add_max_turn();
 				gamelogic.timeline_squish();
-				# TODO: background flash, particle effects
+				gamelogic.undo_effect_strength = 0.4;
+				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+				gamelogic.undo_effect_color = color;
+				var sparklespawner = Node2D.new();
+				sparklespawner.script = preload("res://SparkleSpawner.gd");
+				sparklespawner.color = color;
+				self.add_child(sparklespawner);
 			elif (current_animation[0] == 13): #light_green_time_crystal_raw
+				var color = current_animation[1].color;
 				gamelogic.lighttimeline.add_max_turn();
 				gamelogic.timeline_squish();
-				# TODO: background flash, particle effects
+				gamelogic.undo_effect_strength = 0.4;
+				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+				gamelogic.undo_effect_color = color;
+				var sparklespawner = Node2D.new();
+				sparklespawner.script = preload("res://SparkleSpawner.gd");
+				sparklespawner.color = color;
+				self.add_child(sparklespawner);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

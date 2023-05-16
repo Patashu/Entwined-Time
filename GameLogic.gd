@@ -1550,11 +1550,11 @@ func eat_crystal(eater: Actor, eatee: Actor) -> void:
 		if heavy_actor == eater:
 			heavy_max_moves += 1;
 			add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
-			add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw]);
+			add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw, eatee]);
 		elif light_actor == eater:
 			light_max_moves += 1;
 			add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
-			add_to_animation_server(eater, [Animation.light_green_time_crystal_raw]);
+			add_to_animation_server(eater, [Animation.light_green_time_crystal_raw, eatee]);
 	else:
 		#TODO: magenta time crystal effect
 		pass
