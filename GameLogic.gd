@@ -42,7 +42,8 @@ enum Chrono {
 # 'voluntary' movements like going past thin platforms.
 enum Strength {
 	NONE
-	FEEBLE
+	CRYSTAL
+	WOODEN
 	LIGHT
 	HEAVY
 	GRAVITY
@@ -50,6 +51,8 @@ enum Strength {
 
 # distinguish between different heaviness. Light is IRON and Heavy is STEEL.
 enum Heaviness {
+	NONE
+	CRYSTAL
 	WOODEN
 	IRON
 	STEEL
@@ -173,6 +176,8 @@ enum Tiles {
 	NoUndo,
 	OneUndo, #51
 	Fuzz, #52
+	TimeCrystalGreen, #53
+	TimeCrystalMagenta, #54
 }
 
 # information about the level
@@ -320,6 +325,7 @@ func initialize_shaders() -> void:
 	levelscene.call_deferred("add_child", afterimage);
 	afterimage.position = Vector2(-99, -99);
 	pass
+	# TODO: compile the Static shader by flicking it on for a single frame?
 	
 func tile_changes() -> void:
 	# hide light and heavy goal sprites when in-game and not in-editor
@@ -586,6 +592,12 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/LimitedUndoEx2.tscn"));
 	level_list.push_back(preload("res://levels/KingCrimsonEx.tscn"));
 	
+	chapter_names.push_back("Time Crystals");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#2A1F82"));
+	level_list.push_back(preload("res://levels/Growth.tscn"));
+	chapter_advanced_starting_levels.push_back(level_list.size());
+	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#223C52"));
@@ -610,14 +622,14 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/OrientationL2Ex.tscn"));
 	level_list.push_back(preload("res://levels/OrientationL2Ex2.tscn"));
 #	level_list.push_back(preload("res://levels/Joke.tscn"));
-#	level_list.push_back(preload("res://levels/ThanksForPlaying.tscn"));
+#	level_list.push_back(preload("res://levels/ThanksForPlaying.tscn")); #might just be a custom win message for Joke
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
-	#post-game levels
+	#needs keys/locks
 	#level_list.push_back(preload("res://levels/InsightDontPushIt.tscn"));
 	#level_list.push_back(preload("res://levels/InsightDidntPushIt.tscn"));
 	
@@ -821,11 +833,15 @@ func make_actors() -> void:
 				light_actor.facing_left = true;
 			light_actor.update_graphics();
 	
-	# other actors
-	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.FEEBLE, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
-	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.FEEBLE, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
+	# crates
+	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
+	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.WOODEN, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
 	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
-	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.FEEBLE, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
+	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
+	
+	# time crystals
+	extract_actors(Tiles.TimeCrystalGreen, "time_crystal_green", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#A9F05F"));
+	extract_actors(Tiles.TimeCrystalMagenta, "time_crystal_magenta", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#9966CC"));
 	
 	find_colours();
 	
@@ -1084,6 +1100,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
 		#(AD05: apparently I decided the sticky top can't move things you can't push, which is... valid ig?)
 		#(AD12: Sticky top is now considered the 'pusher', which matters for e.g. the light flustered rule)
+		# TODO: Should time crystals be sticky top-able? It seems weird but they ARE pushable and it's not bumping them...
 		if actor.actorname == "heavy" and chrono == Chrono.MOVE and dir.y >= 0:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
@@ -1209,6 +1226,7 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		if new_tile == Tiles.GlassBlock:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
 			for actor in actors:
+				# TODO: time crystal/glass chronofrag interaction? don't even want to think about it atm
 				if actor.pos == pos and !actor.broken:
 					actor.post_mortem = Durability.PITS;
 					set_actor_var(actor, "broken", true, chrono);
@@ -1388,8 +1406,12 @@ func terrain_is_hazardous(actor: Actor, pos: Vector2) -> int:
 	return -1;
 	
 func strength_check(strength: int, heaviness: int) -> bool:
+	if (heaviness == Heaviness.NONE):
+		return strength >= Strength.NONE;
+	if (heaviness == Heaviness.CRYSTAL):
+		return strength >= Strength.CRYSTAL;
 	if (heaviness == Heaviness.WOODEN):
-		return strength >= Strength.FEEBLE;
+		return strength >= Strength.WOODEN;
 	if (heaviness == Heaviness.IRON):
 		return strength >= Strength.LIGHT;
 	if (heaviness == Heaviness.STEEL):

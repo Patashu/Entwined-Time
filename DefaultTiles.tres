@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=151 format=2]
+[gd_resource type="TileSet" load_steps=153 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -135,6 +135,8 @@
 [ext_resource path="res://assets/fuzz6.png" type="Texture" id=133]
 [ext_resource path="res://assets/fuzz7.png" type="Texture" id=134]
 [ext_resource path="res://assets/fuzz9.png" type="Texture" id=135]
+[ext_resource path="res://assets/timecrystalmagenta.png" type="Texture" id=136]
+[ext_resource path="res://assets/timecrystalgreen.png" type="Texture" id=137]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1133,3 +1135,31 @@ frame_9/delay_sec = 0.0
 52/shape_one_way_margin = 0.0
 52/shapes = [  ]
 52/z_index = 0
+53/name = "TimeCrystalGreen"
+53/texture = ExtResource( 137 )
+53/tex_offset = Vector2( 0, 0 )
+53/modulate = Color( 1, 1, 1, 1 )
+53/region = Rect2( 0, 0, 24, 24 )
+53/tile_mode = 0
+53/occluder_offset = Vector2( 12, 12 )
+53/navigation_offset = Vector2( 12, 12 )
+53/shape_offset = Vector2( 0, 0 )
+53/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+53/shape_one_way = false
+53/shape_one_way_margin = 0.0
+53/shapes = [  ]
+53/z_index = 0
+54/name = "TimeCrystalMagenta"
+54/texture = ExtResource( 136 )
+54/tex_offset = Vector2( 0, 0 )
+54/modulate = Color( 1, 1, 1, 1 )
+54/region = Rect2( 0, 0, 24, 24 )
+54/tile_mode = 0
+54/occluder_offset = Vector2( 12, 12 )
+54/navigation_offset = Vector2( 12, 12 )
+54/shape_offset = Vector2( 0, 0 )
+54/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+54/shape_one_way = false
+54/shape_one_way_margin = 0.0
+54/shapes = [  ]
+54/z_index = 0

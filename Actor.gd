@@ -126,6 +126,18 @@ func get_next_texture() -> Texture:
 			return preload("res://assets/wooden_crate_broken.png");
 		else:
 			return preload("res://assets/wooden_crate.png");
+			
+	elif actorname == "time_crystal_green":
+		if broken:
+			return null;
+		else:
+			return preload("res://assets/timecrystalgreen.png");
+			
+	elif actorname == "time_crystal_magenta":
+		if broken:
+			return null;
+		else:
+			return preload("res://assets/timecrystalmagenta.png");
 	
 	return null;
 
@@ -134,7 +146,14 @@ func set_next_texture(tex: Texture) -> void:
 		return;
 	if (fluster_timer_max > 0):
 		return;
+		
+	if tex == null:
+		visible = false;
+	elif self.texture == null:
+		visible = true;
+		
 	self.texture = tex;
+	
 	frame_timer = 0;
 	frame = 0;
 	if texture == preload("res://assets/heavy_broken.png"):
@@ -166,6 +185,8 @@ func fluster():
 	fluster_timer_max = 0.3;
 
 func native_colour():
+	if (actorname == "time_crystal_green" or actorname == "time_crystal_magenta"):
+		return 5; #Green
 	if !is_character:
 		return 0; #Gray
 	return 1; #Purple
