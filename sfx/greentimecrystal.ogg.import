@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/greentimecrystal.ogg-4970754976f3bbb9cd172a5542133c2a.oggstr"
+
+[deps]
+
+source_file="res://sfx/greentimecrystal.ogg"
+dest_files=[ "res://.import/greentimecrystal.ogg-4970754976f3bbb9cd172a5542133c2a.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
