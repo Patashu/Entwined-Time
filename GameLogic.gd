@@ -678,7 +678,7 @@ func ready_map() -> void:
 	calculate_map_size();
 	make_actors();
 	
-	finish_animations();
+	finish_animations(Chrono.TIMELESS);
 	update_info_labels();
 	check_won();
 	
@@ -1644,7 +1644,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 func character_undo(is_silent: bool = false) -> bool:
 	if (won): return false;
 	user_replay += "z";
-	finish_animations();
+	finish_animations(Chrono.CHAR_UNDO);
 	var fuzzed = false;
 	if (heavy_selected):
 		
@@ -1812,11 +1812,25 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	new.post_mortem = actor.post_mortem;
 	return new;
 
-func finish_animations() -> void:
+func finish_animations(chrono: int) -> void:
 	undo_effect_color = Color.transparent;
+	
+	if (chrono >= Chrono.META_UNDO):
+		for actor in actors:
+			actor.animation_timer = 0;
+			actor.animations.clear();
+	else:
+		# new logic instead of clearing animations - run animations over and over until we're done
+		# this should get rid of all bugs of the form 'if an animation is skipped over some side effect never completes' 5ever
+		while animation_server.size() > 0:
+			update_animation_server(true);
+			for actor in actors:
+				while (actor.animations.size() > 0):
+					actor.animation_timer = 99;
+					actor._process(0);
+				actor.animation_timer = 0;
+			
 	for actor in actors:
-		actor.animation_timer = 0;
-		actor.animations.clear();
 		actor.position = terrainmap.map_to_world(actor.pos);
 		actor.update_graphics();
 	for goal in goals:
@@ -2002,7 +2016,7 @@ func meta_undo_a_restart() -> bool:
 
 func meta_undo(is_silent: bool = false) -> bool:
 	user_replay += "c";
-	finish_animations();
+	finish_animations(Chrono.MOVE);
 	if (meta_turn <= 0):
 		if (meta_undo_a_restart()):
 			return true;
@@ -2024,7 +2038,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 		whatever.queue_free();
 	for whatever in overactorsparticles.get_children():
 		whatever.queue_free();
-	finish_animations();
+	finish_animations(Chrono.META_UNDO);
 	return true;
 	
 func character_switch() -> void:
@@ -2040,7 +2054,7 @@ func restart(is_silent: bool = false) -> void:
 	undo_effect_strength = 0.5;
 	undo_effect_per_second = undo_effect_strength*(1/0.5);
 	undo_effect_color = meta_color;
-	finish_animations();
+	finish_animations(Chrono.TIMELESS);
 	
 func escape() -> void:
 	if (ui_stack.size() > 0):
@@ -2132,7 +2146,7 @@ func character_move(dir: Vector2) -> bool:
 		user_replay += "a";
 	elif (dir == Vector2.RIGHT):
 		user_replay += "d";
-	finish_animations();
+	finish_animations(Chrono.MOVE);
 	var result = false;
 	if heavy_selected:
 		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
@@ -2568,7 +2582,7 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.frame_max = sprite.frame + 8;
 				underactorsparticles.add_child(sprite);
 
-func update_animation_server() -> void:
+func update_animation_server(skip_globals: bool = false) -> void:
 	# don't interrupt ongoing animations
 	for actor in actors:
 		if actor.animations.size() > 0:
@@ -2589,7 +2603,8 @@ func update_animation_server() -> void:
 	var animations = animation_server.pop_front();
 	for animation in animations:
 		if animation[0] == null:
-			handle_global_animation(animation[1]);
+			if !skip_globals:
+				handle_global_animation(animation[1]);
 		else:
 			animation[0].animations.push_back(animation[1]);
 
