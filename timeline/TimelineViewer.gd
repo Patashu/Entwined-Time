@@ -7,6 +7,7 @@ var max_moves = 0;
 var yy = 24;
 var xx = 24;
 var y_max = 11;
+var animating_children = [];
 onready var timelineslots = self.get_node("TimelineSlots");
 onready var timelinedivider = self.get_node("TimelineDivider");
 
@@ -37,7 +38,14 @@ func reset() -> void:
 		slot.position.y += yy*(i%y_max);
 		slot.position.x += xx*floor(i/y_max);
 
+func finish_animations() -> void:
+	for child in animating_children:
+		if is_instance_valid(child):
+			child.finish_animations();
+	animating_children.clear();
+
 func add_max_turn() -> void:
+	finish_animations();
 	max_moves += 1;
 	var i = max_moves -1;
 	var slot = preload("res://timeline/TimelineSlot.tscn").instance();
@@ -45,11 +53,13 @@ func add_max_turn() -> void:
 	slot.region_enabled = true;
 	slot.region_rect = Rect2(20, 20, 32, 0);
 	slot.region_timer_max = 0.5;
+	animating_children.append(slot);
 	timelineslots.add_child(slot);
 	slot.position.y += yy*(i%y_max);
 	slot.position.x += xx*floor(i/y_max);
 	
 func undo_add_max_turn() -> void:
+	finish_animations();
 	max_moves -= 1;
 	var last_slot = timelineslots.get_children().pop_back();
 	last_slot.queue_free();

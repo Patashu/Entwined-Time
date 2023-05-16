@@ -154,6 +154,12 @@ func clear(color: Color) -> void:
 	undo_effect_color = color;
 	undo_effect_strength = 0.5;
 
+func finish_animations() -> void:
+	if (region_timer < region_timer_max):
+		region_timer = region_timer_max;
+		region_enabled = false;
+		offset = Vector2(12, 12);
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (region_timer < region_timer_max):
