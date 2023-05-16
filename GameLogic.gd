@@ -1017,9 +1017,11 @@ func toggle_mute() -> void:
 
 func make_actor(actorname: String, pos: Vector2, is_character: bool, chrono: int = Chrono.TIMELESS) -> Actor:
 	var actor = Actor.new();
+	actor.actorname = actorname;
+	if actor.actorname == "time_crystal_green" or actor.actorname == "time_crystal_magenta":
+		actor.is_crystal = true;
 	actor.is_character = is_character;
 	actor.gamelogic = self;
-	actor.actorname = actorname;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
 	actors.append(actor);
 	actorsfolder.add_child(actor);

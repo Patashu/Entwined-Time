@@ -41,6 +41,10 @@ var fluster_timer = 0;
 var fluster_timer_max = 0;
 # ding
 var ding = null;
+# crystal effects
+var is_crystal = false;
+var crystal_timer = 0;
+var crystal_timer_max = 1.6;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
@@ -185,7 +189,7 @@ func fluster():
 	fluster_timer_max = 0.3;
 
 func native_colour():
-	if (actorname == "time_crystal_green" or actorname == "time_crystal_magenta"):
+	if (is_crystal):
 		return 5; #Green
 	if !is_character:
 		return 0; #Gray
@@ -239,6 +243,26 @@ func afterimage() -> void:
 	gamelogic.afterimage(self);
 
 func _process(delta: float) -> void:
+	#crystal effects
+	if (is_crystal):
+		var old_times = floor(crystal_timer/crystal_timer_max);
+		crystal_timer += delta;
+		var new_times = floor(crystal_timer/crystal_timer_max);
+		if (old_times != new_times):
+			# one sparkle
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://FadingSprite.gd"));
+			sprite.texture = preload("res://assets/Sparkle.png")
+			sprite.position = self.offset + Vector2(gamelogic.rng.randf_range(-6, 6), gamelogic.rng.randf_range(-6, 6));
+			sprite.frame = 0;
+			sprite.centered = true;
+			sprite.scale = Vector2(0.25, 0.25);
+			sprite.modulate = color;
+			self.add_child(sprite)
+			pass
+		#bob up and down
+		self.offset = Vector2(12, 12+3*sin(crystal_timer));
+	
 	#fluster timer
 	if fluster_timer_max > 0:
 		fluster_timer += delta;
