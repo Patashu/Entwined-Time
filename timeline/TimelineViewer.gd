@@ -37,6 +37,21 @@ func reset() -> void:
 		slot.position.y += yy*(i%y_max);
 		slot.position.x += xx*floor(i/y_max);
 
+func add_max_turn() -> void:
+	max_moves += 1;
+	var i = max_moves -1;
+	var slot = preload("res://timeline/TimelineSlot.tscn").instance();
+	slot.texture = preload("res://assets/TestCrystalFrame.png");
+	# TODO: should do the 'growing region' animation
+	timelineslots.add_child(slot);
+	slot.position.y += yy*(i%y_max);
+	slot.position.x += xx*floor(i/y_max);
+	
+func undo_add_max_turn() -> void:
+	max_moves -= 1;
+	var last_slot = timelineslots.get_children().pop_back();
+	last_slot.queue_free();
+
 func add_turn(buffer: Array) -> void:
 	if current_move >= (max_moves):
 		return

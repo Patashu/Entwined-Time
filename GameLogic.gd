@@ -89,6 +89,8 @@ enum Undo {
 	light_undo_event_remove,
 	animation_substep,
 	change_terrain,
+	heavy_green_time_crystal_raw,
+	light_green_time_crystal_raw,
 }
 
 # and same for animations
@@ -728,6 +730,9 @@ func initialize_timeline_viewers() -> void:
 	heavytimeline.reset();
 	lighttimeline.reset();
 	
+	timeline_squish();
+	
+func timeline_squish() -> void:
 	# timeline squish time
 	heavyinfolabel.rect_position = HeavyInfoLabel_default_position;
 	heavytimeline.position = HeavyTimeline_default_position;
@@ -765,7 +770,6 @@ func initialize_timeline_viewers() -> void:
 	heavytimeline.position.y += (300-max_tallness)/2
 	lightinfolabel.rect_position.y += (300-max_tallness)/2
 	lighttimeline.position.y += (300-max_tallness)/2
-	
 
 func get_used_cells_by_id_all_layers(id: int) -> Array:
 	var results = []
@@ -1487,15 +1491,75 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				pushers_list.pop_front();
 				return Success.No;
 		var result = Success.Yes;
-		# TODO: add logic for keys. I think this whole thing needs to do one hypothetical pass, and then if it succeeds we do the real push
-		# + try to push keys?
+		
+		# logic to handle time crystals and actor stacks:
+		#* for each pushable, hypothetically push-or-eat it.
+		#* if any is No: return Success.No
+		#* if any is Surprise: if !hypothetical, do all the surprises. then return Suprise.
+		#* (if any is Yes): if !hypothetical, do all the push-or-eats, then return Yes
+		
+		# TODO: logic for wooden crates special moves, logic for keys
+		
+		var surprises = [];
+		result = Success.Yes;
 		for actor_there in pushables_there:
-			# surprise takes precedent over no takes precedent over yes
-			result = max(result, move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list));
+			if can_eat(actor, actor_there):
+				continue;
+			var actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
+			if actor_there_result == Success.No:
+				pushers_list.pop_front();
+				return Success.No;
+			if actor_there_result == Success.Surprise:
+				result = Success.Surprise;
+				surprises.append(actor_there);
+		
+		if (!hypothetical):
+			if (result == Success.Surprise):
+				for actor_there in surprises:
+					move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
+			else:
+				for actor_there in pushables_there:
+					if (can_eat(actor, actor_there)):
+						eat_crystal(actor, actor_there);
+					else:
+						move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
+		
 		pushers_list.pop_front();
 		return result;
 	
 	return Success.Yes;
+
+func can_eat(eater: Actor, eatee: Actor) -> bool:
+	if !eatee.is_crystal:
+		return false;
+	if (!eater.is_character):
+		return false;
+	if (eatee.actorname == "time_crystal_green"):
+		return true;
+	if (heavy_actor == eater and heavy_max_moves > 0 or light_actor == eater and light_max_moves > 0):
+		return true;
+	# TODO: what to do in the case of eating a magenta time crystal when at 0/0 turns? can't eat, eat but do nothing, eat and go into negative moves, lose (time paradox)?
+	return false;
+	
+func eat_crystal(eater: Actor, eatee: Actor) -> void:
+	set_actor_var(eatee, "broken", true, Chrono.CHAR_UNDO);
+	if (eatee.actorname == "time_crystal_green"):
+		# TODO: green time crystal after magenta effect
+		if heavy_actor == eater:
+			heavy_max_moves += 1;
+			# TODO: background flash, particle effects
+			# TODO: should happen at animation_server timing
+			heavytimeline.add_max_turn();
+			timeline_squish();
+			add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
+		elif light_actor == eater:
+			light_max_moves += 1;
+			lighttimeline.add_max_turn();
+			timeline_squish();
+			add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
+	else:
+		#TODO: magenta time crystal effect
+		pass
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
@@ -1513,8 +1577,13 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 			
 			var terrain = terrain_in_tile(actor.pos);
 			if value == true:
-				add_to_animation_server(actor, [Animation.sfx, "broken"])
-				add_to_animation_server(actor, [Animation.explode])
+				if (actor.actorname == "time_crystal_green"):
+					add_to_animation_server(actor, [Animation.sfx, "greentimecrystal"])
+				elif (actor.actorname == "time_crystal_magenta"):
+					add_to_animation_server(actor, [Animation.sfx, "magentatimecrystal"])
+				else:
+					add_to_animation_server(actor, [Animation.sfx, "broken"])
+					add_to_animation_server(actor, [Animation.explode])
 				if actor.is_character:
 					if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
 						for goal in goals:
@@ -1904,6 +1973,16 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.animation_substep):
 		# don't need to emit a new event as meta undoing and beyond is a teleport
 		animation_substep += 1;
+	elif (event[0] == Undo.heavy_green_time_crystal_raw):
+		# don't need to emit a new event as this can't be char undone
+		heavy_max_moves -= 1;
+		heavytimeline.undo_add_max_turn();
+		timeline_squish();
+	elif (event[0] == Undo.light_green_time_crystal_raw):
+		# don't need to emit a new event as this can't be char undone
+		light_max_moves -= 1;
+		lighttimeline.undo_add_max_turn();
+		timeline_squish();
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
