@@ -1020,6 +1020,7 @@ func make_actor(actorname: String, pos: Vector2, is_character: bool, chrono: int
 	actor.actorname = actorname;
 	if actor.actorname == "time_crystal_green" or actor.actorname == "time_crystal_magenta":
 		actor.is_crystal = true;
+		update_goal_lock();
 	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
@@ -1030,6 +1031,21 @@ func make_actor(actorname: String, pos: Vector2, is_character: bool, chrono: int
 	if (chrono < Chrono.META_UNDO):
 		print("TODO")
 	return actor;
+	
+func update_goal_lock() -> void:
+	var locked = false;
+	for actor in actors:
+		if actor.is_crystal and !actor.broken:
+			locked = true;
+			break;
+	if (!locked):
+		for goal in goals:
+			if goal.locked:
+				goal.unlock();
+	else:
+		for goal in goals:
+			if !goal.locked:
+				goal.lock();
 	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false) -> int:
 	if (chrono == Chrono.GHOSTS):
@@ -1485,6 +1501,10 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 		
 		# special case - if we break or unbreak, we can ding or unding too
 		if prop == "broken":
+			#check goal lock when a crystal breaks or unbreaks
+			if (actor.is_crystal):
+				update_goal_lock();
+			
 			var terrain = terrain_in_tile(actor.pos);
 			if value == true:
 				add_to_animation_server(actor, [Animation.sfx, "broken"])
@@ -1756,7 +1776,16 @@ func adjust_meta_turn(amount: int) -> void:
 	
 func check_won() -> void:
 	won = false;
-	if (!light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos).has(Tiles.HeavyGoal) and terrain_in_tile(light_actor.pos).has(Tiles.LightGoal)):
+	var locked = false;
+	
+	#check goal lock:
+	for goal in goals:
+		if goal.locked:
+			locked = true;
+			won = false;
+			break;
+	
+	if (!locked and !light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos).has(Tiles.HeavyGoal) and terrain_in_tile(light_actor.pos).has(Tiles.LightGoal)):
 		won = true;
 		# but wait!
 		# check for crate goals as well

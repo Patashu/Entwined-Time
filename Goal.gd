@@ -5,6 +5,7 @@ var gamelogic = null;
 var actorname = ""
 var pos = Vector2.ZERO
 var dinged = false;
+var locked = false;
 var animations = [];
 var scalify_target = 0.1;
 var scalify_current = 0.1;
@@ -13,11 +14,23 @@ var particle_timer = 1;
 var particle_timer_max = 1;
 var last_particle_angle = 0;
 
+func lock() -> void:
+	locked = true;
+	modulate.r = 0.4;
+	modulate.g = 0.4;
+	modulate.b = 0.4;
+	
+func unlock() -> void:
+	locked = false;
+	modulate.r = 1;
+	modulate.g = 1;
+	modulate.b = 1;
+
 func update_scalify_target() -> void:
 	scalify_target = 0.1;
 	if (actorname == "heavy_goal"):
 		scalify_target *= 1.7;
-	if (dinged):
+	if (dinged and !locked):
 		scalify_target *= 2;
 
 func instantly_reach_scalify() -> void:
@@ -47,7 +60,7 @@ func _process(delta: float) -> void:
 		sprite.rotation = gamelogic.rng.randf_range(0, 2*PI);
 		sprite.rotate_magnitude = self.rotate_magnitude*4;
 		sprite.alpha_max = 0.4;
-		sprite.modulate = Color(0, 0, 0, 0);
+		sprite.modulate = Color(modulate.r, modulate.g, modulate.b, 0);
 		var next_particle_angle = last_particle_angle + 2*PI/6 + gamelogic.rng.randf_range(0, 2*PI*4/6)
 		last_particle_angle = next_particle_angle;
 		if (dinged):
