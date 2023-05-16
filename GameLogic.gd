@@ -1482,14 +1482,15 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			return Success.No;
 		# check if the current actor COULD push the next actor, then give them a push and return the result
 		# Multi Push Rule: Multipushes are allowed (even multiple things in a tile and etc) unless another rule prohibits it.
+		var strength_modifier = 0;
 		if (pushers_list.size() > 0):
-			# Light Clumsiness Rule: A multi-push can start with Light, but can't continue past Light.
 			if actor.actorname == "light":
-				return Success.No;
+				strength_modifier = -1;
 		pushers_list.append(actor);
 		for actor_there in pushables_there:
 			# Strength Rule
-			if !strength_check(actor.strength, actor_there.heaviness):
+			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
+			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness):
 				pushers_list.pop_front();
 				return Success.No;
 		var result = Success.Yes;
@@ -1549,10 +1550,14 @@ func eat_crystal(eater: Actor, eatee: Actor) -> void:
 		# TODO: green time crystal after magenta effect
 		if heavy_actor == eater:
 			heavy_max_moves += 1;
+			if (!heavy_actor.powered):
+				set_actor_var(heavy_actor, "powered", true, Chrono.CHAR_UNDO);
 			add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw, eatee]);
 		elif light_actor == eater:
 			light_max_moves += 1;
+			if (!light_actor.powered):
+				set_actor_var(light_actor, "powered", true, Chrono.CHAR_UNDO);
 			add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.light_green_time_crystal_raw, eatee]);
 	else:

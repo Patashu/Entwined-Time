@@ -224,7 +224,7 @@ func update_time_bubble():
 # If fallspeed is 2 or higher, actor may move sideways at airborne 1 and in no direction at airborne 0.
 # (A forbidden direction is a null move and passes time.)
 func fall_speed() -> int:
-	if broken:
+	if broken and !is_crystal:
 		return 99;
 	return fall_speed;
 	
