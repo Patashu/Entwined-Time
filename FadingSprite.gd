@@ -17,4 +17,4 @@ func _process(delta: float) -> void:
 	if (fadeout_timer > fadeout_timer_max):
 		queue_free();
 	else:
-		self.modulate = Color(1, 1, 1, 1-fadeout_timer/fadeout_timer_max);
+		self.modulate.a = 1-fadeout_timer/fadeout_timer_max;
