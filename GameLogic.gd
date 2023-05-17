@@ -1822,13 +1822,15 @@ func finish_animations(chrono: int) -> void:
 	else:
 		# new logic instead of clearing animations - run animations over and over until we're done
 		# this should get rid of all bugs of the form 'if an animation is skipped over some side effect never completes' 5ever
-		while animation_server.size() > 0:
+		while true:
 			update_animation_server(true);
 			for actor in actors:
 				while (actor.animations.size() > 0):
 					actor.animation_timer = 99;
 					actor._process(0);
 				actor.animation_timer = 0;
+			if animation_server.size() <= 0:
+				break;
 			
 	for actor in actors:
 		actor.position = terrainmap.map_to_world(actor.pos);
