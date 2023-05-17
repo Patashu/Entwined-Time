@@ -1599,9 +1599,9 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 	set_actor_var(eatee, "broken", true, Chrono.CHAR_UNDO);
 	if (eatee.actorname == "time_crystal_green"):
 		if heavy_actor == eater:
+			heavy_max_moves += 1;
 			if (heavy_locked_turns.size() == 0):
 				# raw: just add a turn to the end
-				heavy_max_moves += 1;
 				if (!heavy_actor.powered):
 					set_actor_var(heavy_actor, "powered", true, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
@@ -1642,8 +1642,8 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, heavy_turn]);
 		elif light_actor == eater:
+			light_max_moves += 1;
 			if (light_locked_turns.size() == 0):
-				light_max_moves += 1;
 				if (!light_actor.powered):
 					set_actor_var(light_actor, "powered", true, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
@@ -2278,6 +2278,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		else:
 			heavy_locked_turns.append(heavy_undo_buffer.pop_at(was_turn));
 		heavytimeline.undo_unlock_turn(event[1]);
+		heavy_max_moves -= 1;
 	elif (event[0] == Undo.light_turn_unlocked):
 		var was_turn = event[1];
 		if (was_turn == -1):
@@ -2285,6 +2286,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		else:
 			light_locked_turns.append(light_undo_buffer.pop_at(was_turn));
 		lighttimeline.undo_unlock_turn(event[1]);
+		light_max_moves -= 1;
 	
 
 func meta_undo_a_restart() -> bool:
