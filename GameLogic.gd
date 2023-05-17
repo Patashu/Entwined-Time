@@ -2086,7 +2086,7 @@ func adjust_meta_turn(amount: int) -> void:
 		heavy_filling_locked_turn_index = -1;
 	#and unlock:
 	if (light_filling_turn_actual > -1):
-		add_undo_event([Undo.light_filling_turn_actual, light_filling_turn_actual -1], Chrono.CHAR_UNDO);
+		add_undo_event([Undo.light_filling_turn_actual, light_filling_turn_actual, -1], Chrono.CHAR_UNDO);
 		light_filling_turn_actual = -1;
 	if (heavy_filling_turn_actual > -1):
 		add_undo_event([Undo.heavy_filling_turn_actual, heavy_filling_turn_actual, -1], Chrono.CHAR_UNDO);
@@ -2269,7 +2269,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.heavy_filling_turn_actual):
 		heavy_filling_turn_actual = event[1]; #the old value, event[2] is the new value
 	elif (event[0] == Undo.light_filling_turn_actual):
-		light_filling_turn_actual= event[1]; #the old value, event[2] is the new value
+		light_filling_turn_actual = event[1]; #the old value, event[2] is the new value
 	elif (event[0] == Undo.heavy_turn_unlocked):
 		# just lock it again ig
 		var was_turn = event[1];
