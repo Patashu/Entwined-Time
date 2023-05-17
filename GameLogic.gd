@@ -102,6 +102,10 @@ enum Undo {
 	light_turn_locked,
 	heavy_turn_direct,
 	light_turn_direct,
+	heavy_turn_unlocked,
+	light_turn_unlocked,
+	heavy_filling_turn_actual,
+	light_filling_turn_actual,
 }
 
 # and same for animations
@@ -122,6 +126,8 @@ enum Animation {
 	light_green_time_crystal_raw, #13
 	heavy_magenta_time_crystal, #14
 	light_magenta_time_crystal, #15
+	heavy_green_time_crystal_unlock, #16
+	light_green_time_crystal_unlock, #17
 }
 
 enum TimeColour {
@@ -221,10 +227,12 @@ var goals = []
 var heavy_turn = 0;
 var heavy_undo_buffer : Array = [];
 var heavy_filling_locked_turn_index = -1;
+var heavy_filling_turn_actual = -1;
 var heavy_locked_turns : Array = [];
 var light_turn = 0;
 var light_undo_buffer : Array = [];
 var light_filling_locked_turn_index = -1;
+var light_filling_turn_actual = -1;
 var light_locked_turns : Array = [];
 var meta_turn = 0;
 var meta_undo_buffer : Array = [];
@@ -619,6 +627,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#2A1F82"));
 	level_list.push_back(preload("res://levels/Growth.tscn"));
 	level_list.push_back(preload("res://levels/Wither.tscn"));
+	level_list.push_back(preload("res://levels/Test.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	chapter_names.push_back("Victory Lap");
@@ -682,8 +691,10 @@ func ready_map() -> void:
 	meta_turn = 0;
 	meta_undo_buffer.clear();
 	heavy_filling_locked_turn_index = -1;
+	heavy_filling_turn_actual = -1;
 	heavy_locked_turns.clear();
 	light_filling_locked_turn_index = -1;
+	light_filling_turn_actual = -1;
 	light_locked_turns.clear();
 	heavy_selected = true;
 	user_replay = "";
@@ -1583,19 +1594,71 @@ func can_eat(eater: Actor, eatee: Actor) -> bool:
 func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 	set_actor_var(eatee, "broken", true, Chrono.CHAR_UNDO);
 	if (eatee.actorname == "time_crystal_green"):
-		# TODO: green time crystal after magenta effect
 		if heavy_actor == eater:
-			heavy_max_moves += 1;
-			if (!heavy_actor.powered):
-				set_actor_var(heavy_actor, "powered", true, Chrono.CHAR_UNDO);
-			add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
-			add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw, eatee]);
+			if (heavy_locked_turns.size() == 0):
+				# raw: just add a turn to the end
+				heavy_max_moves += 1;
+				if (!heavy_actor.powered):
+					set_actor_var(heavy_actor, "powered", true, Chrono.CHAR_UNDO);
+				add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
+				add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw, eatee]);
+			else:
+				# unlock the most recently locked move.
+				var unlocked_move = heavy_locked_turns.pop_back();
+				var unlocked_move_being_filled_this_turn = false;
+				# if we were in the middle of filling it, mark that we're now filling a normal move again.
+				if (heavy_filling_locked_turn_index == heavy_locked_turns.size()):
+					unlocked_move_being_filled_this_turn = true;
+					add_undo_event([Undo.heavy_filling_locked_turn_index, heavy_filling_locked_turn_index, -1], Chrono.CHAR_UNDO);
+					heavy_filling_locked_turn_index = -1;
+				# elif we were filling a move and just unlocked a new move on top of it, mark that fact.
+				elif (heavy_selected and chrono == Chrono.MOVE and heavy_filling_locked_turn_index == -1 and heavy_filling_turn_actual == -1):
+					heavy_filling_turn_actual = heavy_turn;
+					add_undo_event([Undo.heavy_filling_turn_actual, -1, heavy_filling_turn_actual], Chrono.CHAR_UNDO);
+				
+				# did we just pop an empty locked move?
+				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
+					add_undo_event([Undo.heavy_turn_unlocked, -1, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
+					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, -1]);
+				# or a locked move with contents?
+				else:
+					heavy_undo_buffer.insert(heavy_turn, unlocked_move);
+					add_undo_event([Undo.heavy_turn_unlocked, heavy_turn, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
+					heavy_turn += 1;
+					add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
+					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, heavy_turn]);
 		elif light_actor == eater:
-			light_max_moves += 1;
-			if (!light_actor.powered):
-				set_actor_var(light_actor, "powered", true, Chrono.CHAR_UNDO);
-			add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
-			add_to_animation_server(eater, [Animation.light_green_time_crystal_raw, eatee]);
+			if (light_locked_turns.size() == 0):
+				light_max_moves += 1;
+				if (!light_actor.powered):
+					set_actor_var(light_actor, "powered", true, Chrono.CHAR_UNDO);
+				add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
+				add_to_animation_server(eater, [Animation.light_green_time_crystal_raw, eatee]);
+			else:
+				# unlock the most recently locked move.
+				var unlocked_move = light_locked_turns.pop_back();
+				var unlocked_move_being_filled_this_turn = false;
+				# if we were in the middle of filling it, mark that we're now filling a normal move again.
+				if (light_filling_locked_turn_index == light_locked_turns.size()):
+					unlocked_move_being_filled_this_turn = true;
+					add_undo_event([Undo.light_filling_locked_turn_index, light_filling_locked_turn_index, -1], Chrono.CHAR_UNDO);
+					light_filling_locked_turn_index = -1;
+				# elif we were filling a move and just unlocked a new move on top of it, mark that fact.
+				elif (!heavy_selected and chrono == Chrono.MOVE and light_filling_locked_turn_index == -1 and light_filling_turn_actual == -1):
+					light_filling_turn_actual = light_turn;
+					add_undo_event([Undo.light_filling_turn_actual, -1, light_filling_turn_actual], Chrono.CHAR_UNDO);
+				
+				# did we just pop an empty locked move?
+				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
+					add_undo_event([Undo.light_turn_unlocked, -1, light_locked_turns.size()], Chrono.CHAR_UNDO);
+					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, -1]);
+				# or a locked move with contents?
+				else:
+					light_undo_buffer.insert(light_turn, unlocked_move);
+					add_undo_event([Undo.light_turn_unlocked, light_turn, light_locked_turns.size()], Chrono.CHAR_UNDO);
+					light_turn += 1;
+					add_undo_event([Undo.light_turn_direct, 1], Chrono.CHAR_UNDO);
+					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, light_turn]);
 	else: # magenta time crystal
 		var just_locked = false;
 		var turn_moved = -1;
@@ -1607,12 +1670,14 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# accessible timeline is now one move shorter.
 			heavy_max_moves -= 1;
 			add_undo_event([Undo.heavy_max_moves, -1], Chrono.CHAR_UNDO);
-			if (heavy_selected and chrono == Chrono.MOVE and heavy_filling_locked_turn_index == -1):
+			if (heavy_selected and chrono == Chrono.MOVE and heavy_filling_locked_turn_index == -1 and (heavy_filling_turn_actual == -1 or heavy_filling_turn_actual == heavy_turn)):
 				# if we're moving and the turn buffer we're filling up isn't locked, then we need to move that one
 				# but continue to fill it up (so mark a variable)
 				just_locked = true;
 				heavy_filling_locked_turn_index = heavy_locked_turns.size();
 				add_undo_event([Undo.heavy_filling_locked_turn_index, -1, heavy_filling_locked_turn_index], Chrono.CHAR_UNDO);
+				if (heavy_filling_turn_actual != -1):
+					add_undo_event([Undo.heavy_filling_turn_actual, heavy_filling_turn_actual, -1], Chrono.CHAR_UNDO);
 			if (heavy_turn > 0 or just_locked):
 				# if we have a slot to move: move it and decrement turn
 				turn_moved = heavy_turn;
@@ -1644,12 +1709,14 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# accessible timeline is now one move shorter.
 			light_max_moves -= 1;
 			add_undo_event([Undo.light_max_moves, -1], Chrono.CHAR_UNDO);
-			if (!heavy_selected and chrono == Chrono.MOVE and light_filling_locked_turn_index == -1):
+			if (!heavy_selected and chrono == Chrono.MOVE and light_filling_locked_turn_index == -1 and (light_filling_turn_actual == -1 or light_filling_turn_actual == light_turn)):
 				# if we're moving and the turn buffer we're filling up isn't locked, then we need to move that one
 				# but continue to fill it up (so mark a variable)
 				just_locked = true;
 				light_filling_locked_turn_index = light_locked_turns.size();
 				add_undo_event([Undo.light_filling_locked_turn_index, -1, light_filling_locked_turn_index], Chrono.CHAR_UNDO);
+				if (light_filling_turn_actual != -1):
+					add_undo_event([Undo.light_filling_turn_actual, light_filling_turn_actual, -1], Chrono.CHAR_UNDO);
 			if (light_turn > 0 or just_locked):
 				# if we have a slot to move: move it and decrement turn
 				turn_moved = light_turn;
@@ -1739,6 +1806,9 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			if (heavy_filling_locked_turn_index > -1):
 				heavy_locked_turns[heavy_filling_locked_turn_index].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add_locked, heavy_filling_locked_turn_index], Chrono.CHAR_UNDO)
+			elif (heavy_filling_turn_actual > -1):
+				heavy_undo_buffer[heavy_filling_turn_actual].push_front(event);
+				add_undo_event([Undo.heavy_undo_event_add, heavy_filling_turn_actual], Chrono.CHAR_UNDO);
 			else:
 				while (heavy_undo_buffer.size() <= heavy_turn):
 					heavy_undo_buffer.append([]);
@@ -1748,6 +1818,9 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			if (light_filling_locked_turn_index > -1):
 				light_locked_turns[light_filling_locked_turn_index].push_front(event);
 				add_undo_event([Undo.light_undo_event_add_locked, light_filling_locked_turn_index], Chrono.CHAR_UNDO)
+			elif (light_filling_turn_actual > -1):
+				light_undo_buffer[light_filling_turn_actual].push_front(event);
+				add_undo_event([Undo.light_undo_event_add, light_filling_turn_actual], Chrono.CHAR_UNDO);
 			else:
 				while (light_undo_buffer.size() <= light_turn):
 					light_undo_buffer.append([]);
@@ -1987,6 +2060,13 @@ func adjust_meta_turn(amount: int) -> void:
 	if (heavy_filling_locked_turn_index > -1):
 		add_undo_event([Undo.heavy_filling_locked_turn_index, heavy_filling_locked_turn_index, -1], Chrono.CHAR_UNDO);
 		heavy_filling_locked_turn_index = -1;
+	#and unlock:
+	if (light_filling_turn_actual > -1):
+		add_undo_event([Undo.light_filling_turn_actual, light_filling_turn_actual -1], Chrono.CHAR_UNDO);
+		light_filling_turn_actual = -1;
+	if (heavy_filling_turn_actual > -1):
+		add_undo_event([Undo.heavy_filling_turn_actual, heavy_filling_turn_actual, -1], Chrono.CHAR_UNDO);
+		heavy_filling_turn_actual = -1;
 	
 	meta_turn += amount;
 	#if (debug_prints):
@@ -2162,6 +2242,26 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			pass
 		else:
 			light_undo_buffer.insert(event[1], locked_turn);
+	elif (event[0] == Undo.heavy_filling_turn_actual):
+		heavy_filling_turn_actual = event[1]; #the old value, event[2] is the new value
+	elif (event[0] == Undo.light_filling_turn_actual):
+		light_filling_turn_actual= event[1]; #the old value, event[2] is the new value
+	elif (event[0] == Undo.heavy_turn_unlocked):
+		# just lock it again ig
+		var was_turn = event[1];
+		if (was_turn == -1):
+			heavy_locked_turns.append([]);
+		else:
+			heavy_locked_turns.append(heavy_undo_buffer.pop_at(was_turn));
+		heavytimeline.undo_unlock_turn(event[1]);
+	elif (event[0] == Undo.light_turn_unlocked):
+		var was_turn = event[1];
+		if (was_turn == -1):
+			light_locked_turns.append([]);
+		else:
+			light_locked_turns.append(light_undo_buffer.pop_at(was_turn));
+		lighttimeline.undo_unlock_turn(event[1]);
+	
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):

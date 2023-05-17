@@ -98,7 +98,7 @@ func lock_turn(turn_locked: int) -> void:
 	finish_divider_position();
 	finish_slot_positions();
 	
-func undo_lock_turn() -> void:
+func undo_lock_turn() -> TimelineSlot:
 	# We know which turn we most recently locked, it's the one at the bottom - so just move it back
 	var slot_to_move = timelineslots.get_child(timelineslots.get_children().size()-1);
 	# no animation since this is a meta undo function only
@@ -128,6 +128,17 @@ func undo_lock_turn() -> void:
 	slot_to_move.locked = false;
 	finish_divider_position();
 	finish_slot_positions();
+	return slot_to_move;
+
+func unlock_turn(turn: int) -> void:
+	# just re-use all that code I wrote real quick and...
+	var slot_to_move = undo_lock_turn();
+	slot_to_move.texture = preload("res://assets/TestCrystalFrame.png");
+	# TODO: fancy animation of slot unlocking
+	
+func undo_unlock_turn(turn: int) -> void:
+	# the opposite of unlocking is locking again, so let's try that and see if it works...
+	lock_turn(turn);
 
 func add_turn(buffer: Array) -> void:
 	if current_move >= (max_moves):
