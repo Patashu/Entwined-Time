@@ -1827,6 +1827,8 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	#	print("add_undo_event", " ", event, " ", chrono);
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
+			while (heavy_undo_buffer.size() <= heavy_turn):
+				heavy_undo_buffer.append([]);
 			if (heavy_filling_locked_turn_index > -1):
 				heavy_locked_turns[heavy_filling_locked_turn_index].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add_locked, heavy_filling_locked_turn_index], Chrono.CHAR_UNDO)
@@ -1834,11 +1836,11 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 				heavy_undo_buffer[heavy_filling_turn_actual].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add, heavy_filling_turn_actual], Chrono.CHAR_UNDO);
 			else:
-				while (heavy_undo_buffer.size() <= heavy_turn):
-					heavy_undo_buffer.append([]);
 				heavy_undo_buffer[heavy_turn].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add, heavy_turn], Chrono.CHAR_UNDO);
 		else:
+			while (light_undo_buffer.size() <= light_turn):
+				light_undo_buffer.append([]);
 			if (light_filling_locked_turn_index > -1):
 				light_locked_turns[light_filling_locked_turn_index].push_front(event);
 				add_undo_event([Undo.light_undo_event_add_locked, light_filling_locked_turn_index], Chrono.CHAR_UNDO)
@@ -1846,8 +1848,6 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 				light_undo_buffer[light_filling_turn_actual].push_front(event);
 				add_undo_event([Undo.light_undo_event_add, light_filling_turn_actual], Chrono.CHAR_UNDO);
 			else:
-				while (light_undo_buffer.size() <= light_turn):
-					light_undo_buffer.append([]);
 				light_undo_buffer[light_turn].push_front(event);
 				add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
 	
