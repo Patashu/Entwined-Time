@@ -1637,7 +1637,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
 					heavy_undo_buffer.insert(heavy_turn, unlocked_move);
 					add_undo_event([Undo.heavy_turn_unlocked, heavy_turn, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
-					if (filling_turn_actual_set):
+					if (!filling_turn_actual_set):
 						heavy_turn += 1;
 						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, heavy_turn]);
