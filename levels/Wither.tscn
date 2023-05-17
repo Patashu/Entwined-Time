@@ -12,5 +12,6 @@ tile_data = PoolIntArray( 4, 54, 0, 65539, 54, 0, 65541, 54, 0, 131074, 54, 0, 1
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Wither"
+level_replay = "Wither$mturn=17$xwaxwxwddzzdxzawszaaa"
 heavy_max_moves = 5
 light_max_moves = 5

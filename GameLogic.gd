@@ -763,10 +763,13 @@ func timeline_squish() -> void:
 	lightinfolabel.rect_position = LightInfoLabel_default_position;
 	lighttimeline.position = LightTimeline_default_position;
 	
+	var heavy_max = heavy_max_moves+heavy_locked_turns.size();
+	var light_max = light_max_moves+light_locked_turns.size();
+	
 	# horizontal squish check
 	var effective_width = map_x_max;
-	var heavy_extra_width = (heavy_max_moves-1)/11;
-	var light_extra_width = (light_max_moves-1)/11;
+	var heavy_extra_width = (heavy_max-1)/11;
+	var light_extra_width = (light_max-1)/11;
 	effective_width += max(0, heavy_extra_width);
 	effective_width += max(0, light_extra_width);
 	if (effective_width > 16):
@@ -783,12 +786,12 @@ func timeline_squish() -> void:
 	lighttimeline.position.x -= left-48-24*light_extra_width;
 	
 	# vertical squish check
-	if (heavy_max_moves > 10 or light_max_moves > 10):
+	if (heavy_max > 10 or light_max > 10):
 		return;
 	
 	# now for vertical squish. screen is 300 pixels tall.
-	var heavy_tallness = heavy_max_moves*24 + heavyinfolabel.rect_size.y;
-	var light_tallness = light_max_moves*24 + lightinfolabel.rect_size.y;
+	var heavy_tallness = heavy_max*24 + heavyinfolabel.rect_size.y;
+	var light_tallness = light_max*24 + lightinfolabel.rect_size.y;
 	var max_tallness = max(heavy_tallness, light_tallness);
 	heavyinfolabel.rect_position.y += (300-max_tallness)/2;
 	heavytimeline.position.y += (300-max_tallness)/2
