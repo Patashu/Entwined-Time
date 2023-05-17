@@ -85,12 +85,23 @@ enum Undo {
 	light_turn,
 	heavy_undo_event_add,
 	light_undo_event_add,
+	heavy_undo_event_add_locked,
+	light_undo_event_add_locked,
 	heavy_undo_event_remove,
 	light_undo_event_remove,
 	animation_substep,
 	change_terrain,
+	# crystal undos
 	heavy_green_time_crystal_raw,
 	light_green_time_crystal_raw,
+	heavy_max_moves,
+	light_max_moves,
+	heavy_filling_locked_turn_index,
+	light_filling_locked_turn_index,
+	heavy_turn_locked,
+	light_turn_locked,
+	heavy_turn_direct,
+	light_turn_direct,
 }
 
 # and same for animations
@@ -109,6 +120,8 @@ enum Animation {
 	fade,
 	heavy_green_time_crystal_raw, #12
 	light_green_time_crystal_raw, #13
+	heavy_magenta_time_crystal, #14
+	light_magenta_time_crystal, #15
 }
 
 enum TimeColour {
@@ -207,8 +220,12 @@ var actors = []
 var goals = []
 var heavy_turn = 0;
 var heavy_undo_buffer : Array = [];
+var heavy_filling_locked_turn_index = -1;
+var heavy_locked_turns : Array = [];
 var light_turn = 0;
 var light_undo_buffer : Array = [];
+var light_filling_locked_turn_index = -1;
+var light_locked_turns : Array = [];
 var meta_turn = 0;
 var meta_undo_buffer : Array = [];
 var heavy_selected = true;
@@ -664,6 +681,10 @@ func ready_map() -> void:
 	light_undo_buffer.clear();
 	meta_turn = 0;
 	meta_undo_buffer.clear();
+	heavy_filling_locked_turn_index = -1;
+	heavy_locked_turns.clear();
+	light_filling_locked_turn_index = -1;
+	light_locked_turns.clear();
 	heavy_selected = true;
 	user_replay = "";
 	
@@ -950,6 +971,9 @@ func update_targeter() -> void:
 	else:
 		targeter.position = light_actor.position + terrainmap.position;
 	
+	if (!downarrow.visible):
+		return;
+	
 	downarrow.position = targeter.position - Vector2(0, 24);
 	
 	if (heavy_turn > 0 and heavy_selected):
@@ -1151,12 +1175,15 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 	if (is_heavy):
 		if (amount > 0):
-			heavytimeline.add_turn(heavy_undo_buffer[heavy_turn]);
+			if heavy_filling_locked_turn_index > -1:
+				heavytimeline.add_turn(heavy_locked_turns[heavy_filling_locked_turn_index]);
+			else:
+				heavytimeline.add_turn(heavy_undo_buffer[heavy_turn]);
 		else:
 			var color = heavy_color;
 			if (chrono >= Chrono.META_UNDO):
 				color = meta_color;
-			heavytimeline.remove_turn(color);
+			heavytimeline.remove_turn(color, heavy_filling_locked_turn_index);
 		add_undo_event([Undo.heavy_turn, amount], chrono);
 		if (heavy_turn + amount == heavy_max_moves):
 			set_actor_var(heavy_actor, "powered", false, chrono);
@@ -1167,12 +1194,15 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
 		if (amount > 0):
-			lighttimeline.add_turn(light_undo_buffer[light_turn]);
+			if light_filling_locked_turn_index > -1:
+				lighttimeline.add_turn(light_locked_turns[light_filling_locked_turn_index]);
+			else:
+				lighttimeline.add_turn(light_undo_buffer[light_turn]);
 		else:
 			var color = light_color;
 			if (chrono >= Chrono.META_UNDO):
 				color = meta_color;
-			lighttimeline.remove_turn(color);
+			lighttimeline.remove_turn(color, light_filling_locked_turn_index);
 		add_undo_event([Undo.light_turn, amount], chrono);
 		if (light_turn + amount == light_max_moves):
 			set_actor_var(light_actor, "powered", false, chrono);
@@ -1524,7 +1554,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			else:
 				for actor_there in pushables_there:
 					if (can_eat(actor, actor_there)):
-						eat_crystal(actor, actor_there);
+						eat_crystal(actor, actor_there, chrono);
 					else:
 						move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
 		
@@ -1538,14 +1568,16 @@ func can_eat(eater: Actor, eatee: Actor) -> bool:
 		return false;
 	if (!eater.is_character):
 		return false;
-	if (eatee.actorname == "time_crystal_green"):
-		return true;
-	if (heavy_actor == eater and heavy_max_moves > 0 or light_actor == eater and light_max_moves > 0):
-		return true;
-	# TODO: what to do in the case of eating a magenta time crystal when at 0/0 turns? can't eat, eat but do nothing, eat and go into negative moves, lose (time paradox)?
-	return false;
+	# for now I've decided you can always eat a time crystal - it'll just break you if it's nega and you're at 0/0 turns
+	# other options: push, eat but do nothing, eat and go into negative moves, lose (time paradox)
+	return true;
+	#if (eatee.actorname == "time_crystal_green"):
+	#	return true;
+	#if (heavy_actor == eater and heavy_max_moves > 0 or light_actor == eater and light_max_moves > 0):
+#		return true;
+	#return false;
 	
-func eat_crystal(eater: Actor, eatee: Actor) -> void:
+func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 	set_actor_var(eatee, "broken", true, Chrono.CHAR_UNDO);
 	if (eatee.actorname == "time_crystal_green"):
 		# TODO: green time crystal after magenta effect
@@ -1561,8 +1593,82 @@ func eat_crystal(eater: Actor, eatee: Actor) -> void:
 				set_actor_var(light_actor, "powered", true, Chrono.CHAR_UNDO);
 			add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.light_green_time_crystal_raw, eatee]);
-	else:
-		#TODO: magenta time crystal effect
+	else: # magenta time crystal
+		var just_locked = false;
+		var turn_moved = -1;
+		if (heavy_actor == eater):
+			# for now, just blow up a character that tries to eat to below 0 turns. might turn it into Lose (Paradox) later.
+			if (heavy_max_moves <= 0):
+				set_actor_var(heavy_actor, "broken", true, Chrono.CHAR_UNDO);
+				return;
+			# accessible timeline is now one move shorter.
+			heavy_max_moves -= 1;
+			add_undo_event([Undo.heavy_max_moves, -1], Chrono.CHAR_UNDO);
+			if (heavy_selected and chrono == Chrono.MOVE and heavy_filling_locked_turn_index == -1):
+				# if we're moving and the turn buffer we're filling up isn't locked, then we need to move that one
+				# but continue to fill it up (so mark a variable)
+				just_locked = true;
+				heavy_filling_locked_turn_index = heavy_locked_turns.size();
+				add_undo_event([Undo.heavy_filling_locked_turn_index, -1, heavy_filling_locked_turn_index], Chrono.CHAR_UNDO);
+			if (heavy_turn > 0 or just_locked):
+				# if we have a slot to move: move it and decrement turn
+				turn_moved = heavy_turn;
+				# maybe character hasn't created any events this turn yet
+				while (heavy_undo_buffer.size() <= heavy_turn):
+					heavy_undo_buffer.append([]);
+				var turn_buffer = heavy_undo_buffer.pop_at(heavy_turn);
+				heavy_locked_turns.append(turn_buffer);
+				add_undo_event([Undo.heavy_turn_locked, heavy_turn, heavy_locked_turns.size() - 1], Chrono.CHAR_UNDO);
+				heavy_turn -= 1;
+				add_undo_event([Undo.heavy_turn_direct, -1], Chrono.CHAR_UNDO);
+			else:
+				# if we don't have a slot to move: just lock an empty slot
+				heavy_locked_turns.append([]);
+				add_undo_event([Undo.heavy_turn_locked, -1, heavy_locked_turns.size() - 1], Chrono.CHAR_UNDO);
+			# only way eating a magenta time crystal can depower you is if you go to 0 moves,
+			#since it always locks a filled turn first.
+			if (heavy_max_moves <= 0):
+				set_actor_var(heavy_actor, "powered", false, Chrono.CHAR_UNDO);
+			
+			# animation
+			add_to_animation_server(eater, [Animation.heavy_magenta_time_crystal, eatee, turn_moved]);
+			
+		elif (light_actor == eater):
+			# for now, just blow up a character that tries to eat to below 0 turns. might turn it into Lose (Paradox) later.
+			if (light_max_moves <= 0):
+				set_actor_var(light_actor, "broken", true, Chrono.CHAR_UNDO);
+				return;
+			# accessible timeline is now one move shorter.
+			light_max_moves -= 1;
+			add_undo_event([Undo.light_max_moves, -1], Chrono.CHAR_UNDO);
+			if (!heavy_selected and chrono == Chrono.MOVE and light_filling_locked_turn_index == -1):
+				# if we're moving and the turn buffer we're filling up isn't locked, then we need to move that one
+				# but continue to fill it up (so mark a variable)
+				just_locked = true;
+				light_filling_locked_turn_index = light_locked_turns.size();
+				add_undo_event([Undo.light_filling_locked_turn_index, -1, light_filling_locked_turn_index], Chrono.CHAR_UNDO);
+			if (light_turn > 0 or just_locked):
+				# if we have a slot to move: move it and decrement turn
+				turn_moved = light_turn;
+				# maybe character hasn't created any events this turn yet
+				while (light_undo_buffer.size() <= light_turn):
+					light_undo_buffer.append([]);
+				var turn_buffer = light_undo_buffer.pop_at(light_turn);
+				light_locked_turns.append(turn_buffer);
+				add_undo_event([Undo.light_turn_locked, light_turn, light_locked_turns.size() - 1], Chrono.CHAR_UNDO);
+				light_turn -= 1;
+				add_undo_event([Undo.light_turn_direct, -1], Chrono.CHAR_UNDO);
+			else:
+				# if we don't have a slot to move: just lock an empty slot
+				light_locked_turns.append([]);
+				add_undo_event([Undo.light_turn_locked, -1, light_locked_turns.size() - 1], Chrono.CHAR_UNDO);
+			# only way eating a magenta time crystal can depower you is if you go to 0 moves,
+			#since it always locks a filled turn first.
+			if (light_max_moves <= 0):
+				set_actor_var(light_actor, "powered", false, Chrono.CHAR_UNDO);
+			
+			# animation
+			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
 		pass
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
@@ -1627,15 +1733,23 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	#	print("add_undo_event", " ", event, " ", chrono);
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
-			while (heavy_undo_buffer.size() <= heavy_turn):
-				heavy_undo_buffer.append([]);
-			heavy_undo_buffer[heavy_turn].push_front(event);
-			add_undo_event([Undo.heavy_undo_event_add, heavy_turn], Chrono.CHAR_UNDO);
+			if (heavy_filling_locked_turn_index > -1):
+				heavy_locked_turns[heavy_filling_locked_turn_index].push_front(event);
+				add_undo_event([Undo.heavy_undo_event_add_locked, heavy_filling_locked_turn_index], Chrono.CHAR_UNDO)
+			else:
+				while (heavy_undo_buffer.size() <= heavy_turn):
+					heavy_undo_buffer.append([]);
+				heavy_undo_buffer[heavy_turn].push_front(event);
+				add_undo_event([Undo.heavy_undo_event_add, heavy_turn], Chrono.CHAR_UNDO);
 		else:
-			while (light_undo_buffer.size() <= light_turn):
-				light_undo_buffer.append([]);
-			light_undo_buffer[light_turn].push_front(event);
-			add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
+			if (light_filling_locked_turn_index > -1):
+				light_locked_turns[light_filling_locked_turn_index].push_front(event);
+				add_undo_event([Undo.light_undo_event_add_locked, light_filling_locked_turn_index], Chrono.CHAR_UNDO)
+			else:
+				while (light_undo_buffer.size() <= light_turn):
+					light_undo_buffer.append([]);
+				light_undo_buffer[light_turn].push_front(event);
+				add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
 	
 	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
 		while (meta_undo_buffer.size() <= meta_turn):
@@ -1863,6 +1977,14 @@ func update_ghosts() -> void:
 			undo_one_event(event, Chrono.GHOSTS);
 	
 func adjust_meta_turn(amount: int) -> void:
+	#check ongoing 'magenta crystaled the current move' and clear:
+	if (light_filling_locked_turn_index > -1):
+		add_undo_event([Undo.light_filling_locked_turn_index, light_filling_locked_turn_index, -1], Chrono.CHAR_UNDO);
+		light_filling_locked_turn_index = -1;
+	if (heavy_filling_locked_turn_index > -1):
+		add_undo_event([Undo.heavy_filling_locked_turn_index, heavy_filling_locked_turn_index, -1], Chrono.CHAR_UNDO);
+		heavy_filling_locked_turn_index = -1;
+	
 	meta_turn += amount;
 	#if (debug_prints):
 	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
@@ -1977,10 +2099,18 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		adjust_turn(true, -event[1], chrono);
 	elif (event[0] == Undo.light_turn):
 		adjust_turn(false, -event[1], chrono);
-	if (event[0] == Undo.heavy_undo_event_add):
+	elif (event[0] == Undo.heavy_turn_direct):
+		heavy_turn -= event[1];
+	elif (event[0] == Undo.light_turn_direct):
+		light_turn -= event[1];
+	elif (event[0] == Undo.heavy_undo_event_add):
 		heavy_undo_buffer[event[1]].pop_front();
 	elif (event[0] == Undo.light_undo_event_add):
 		light_undo_buffer[event[1]].pop_front();
+	elif (event[0] == Undo.heavy_undo_event_add_locked):
+		heavy_locked_turns[event[1]].pop_front();
+	elif (event[0] == Undo.light_undo_event_add_locked):
+		light_locked_turns[event[1]].pop_front();
 	elif (event[0] == Undo.heavy_undo_event_remove):
 		# meta undo an undo creates a char undo event but not a meta undo event, it's special!
 		while (heavy_undo_buffer.size() <= event[1]):
@@ -1995,14 +2125,40 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		animation_substep += 1;
 	elif (event[0] == Undo.heavy_green_time_crystal_raw):
 		# don't need to emit a new event as this can't be char undone
+		# (comment repeats for all other time crystal stuff)
 		heavy_max_moves -= 1;
 		heavytimeline.undo_add_max_turn();
 		timeline_squish();
 	elif (event[0] == Undo.light_green_time_crystal_raw):
-		# don't need to emit a new event as this can't be char undone
 		light_max_moves -= 1;
 		lighttimeline.undo_add_max_turn();
 		timeline_squish();
+	elif (event[0] == Undo.heavy_max_moves):
+		heavy_max_moves -= event[1];
+		heavytimeline.undo_lock_turn();
+	elif (event[0] == Undo.light_max_moves):
+		light_max_moves -= event[1];
+		lighttimeline.undo_lock_turn();
+	elif (event[0] == Undo.heavy_filling_locked_turn_index):
+		heavy_filling_locked_turn_index = event[1]; #the old value, event[2] is the new value
+	elif (event[0] == Undo.light_filling_locked_turn_index):
+		light_filling_locked_turn_index = event[1]; #the old value, event[2] is the new value
+	elif (event[0] == Undo.heavy_turn_locked):
+		# don't have to do turn adjustment as a separate undo event was emitted for it
+		var locked_turn = heavy_locked_turns.pop_at(event[2]);
+		# put it back if we locked an actual turn
+		if event[1] == -1:
+			pass
+		else:
+			heavy_undo_buffer.insert(event[1], locked_turn);
+	elif (event[0] == Undo.light_turn_locked):
+		# don't have to do turn adjustment as a separate undo event was emitted for it
+		var locked_turn = light_locked_turns.pop_at(event[2]);
+		# put it back if we locked an actual turn
+		if event[1] == -1:
+			pass
+		else:
+			light_undo_buffer.insert(event[1], locked_turn);
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
@@ -2206,6 +2362,10 @@ func character_move(dir: Vector2) -> bool:
 	return result;
 
 func anything_happened_char(destructive: bool = true) -> bool:
+	# time crystals fuck this logic up and obviously mean something happened, so just say 'yes' if they happened
+	# (and hopefully this doesn't come bite me in the ass later)
+	if (heavy_filling_locked_turn_index > -1 or light_filling_locked_turn_index > -1):
+		return true;
 	if (heavy_selected):
 		while (heavy_undo_buffer.size() <= heavy_turn):
 			heavy_undo_buffer.append([]);
@@ -2389,21 +2549,6 @@ func time_passes(chrono: int) -> void:
 		if !actor.broken and terrain.has(Tiles.HeavyFire) and actor.durability <= Durability.FIRE and actor.actorname != "light":
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
-			
-		# Things on checkpoints are set back to turn 0 (losing their undo buffer).
-		# TODO: Horribly broken and it's not immediately obvious why. My basic idea is to 'defer' it to the end of turn so it can happen last.
-#		if actor == light_actor and (terrain == Tiles.CheckpointBlue or terrain == Tiles.Checkpoint):
-#			while light_turn > 0:
-#				var events = light_undo_buffer.pop_at(light_turn - 1);
-#				for event in events:
-#					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
-#				adjust_turn(false, -1, chrono);
-#		if actor == heavy_actor and (terrain == Tiles.CheckpointRed or terrain == Tiles.Checkpoint):
-#			while heavy_turn > 0:
-#				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
-#				for event in events:
-#					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
-#				adjust_turn(true, -1, chrono);
 		
 	# Green fire happens after regular fire, so you can have that matter if you'd like it to :D	
 	if chrono <= Chrono.CHAR_UNDO:

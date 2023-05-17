@@ -445,6 +445,28 @@ func _process(delta: float) -> void:
 				sparklespawner.script = preload("res://SparkleSpawner.gd");
 				sparklespawner.color = color;
 				self.add_child(sparklespawner);
+			elif (current_animation[0] == 14): #heavy_magenta_time_crystal
+				var color = current_animation[1].color;
+				gamelogic.heavytimeline.lock_turn(current_animation[2]);
+				gamelogic.timeline_squish();
+				gamelogic.undo_effect_strength = 0.4;
+				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+				gamelogic.undo_effect_color = color;
+				var sparklespawner = Node2D.new();
+				sparklespawner.script = preload("res://SparkleSpawner.gd");
+				sparklespawner.color = color;
+				self.add_child(sparklespawner);
+			elif (current_animation[0] == 15): #light_magenta_time_crystal
+				var color = current_animation[1].color;
+				gamelogic.lighttimeline.lock_turn(current_animation[2]);
+				gamelogic.timeline_squish();
+				gamelogic.undo_effect_strength = 0.4;
+				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+				gamelogic.undo_effect_color = color;
+				var sparklespawner = Node2D.new();
+				sparklespawner.script = preload("res://SparkleSpawner.gd");
+				sparklespawner.color = color;
+				self.add_child(sparklespawner);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

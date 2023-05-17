@@ -38,6 +38,21 @@ func reset() -> void:
 		slot.position.y += yy*(i%y_max);
 		slot.position.x += xx*floor(i/y_max);
 
+func finish_slot_positions() -> void:
+	var i = 0;
+	for slot in timelineslots.get_children():
+		slot.position.y = yy*(i%y_max);
+		slot.position.x = xx*floor(i/y_max);
+		i += 1;
+
+func finish_divider_position() -> void:
+	if (current_move) == 0:
+		timelinedivider.position.y = 0;
+		timelinedivider.position.x = 0;
+	else:
+		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
+		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
+
 func finish_animations() -> void:
 	for child in animating_children:
 		if is_instance_valid(child):
@@ -63,6 +78,47 @@ func undo_add_max_turn() -> void:
 	max_moves -= 1;
 	var last_slot = timelineslots.get_children().pop_back();
 	last_slot.queue_free();
+	
+func lock_turn(turn_locked: int) -> void:
+	# I didn't actually end up using turn_locked since it's unambiguous, but I COULD.
+	# this will have happened AFTER add_turn. So we just lock the appropriate turn or an empty slot at the end.
+	var slot_to_move = null;
+	if current_move > 0:
+		slot_to_move = timelineslots.get_child(current_move-1);
+		current_move -= 1;
+	else:
+		slot_to_move = timelineslots.get_child(max_moves-1);
+	max_moves -= 1; # NOTE: this means max_moves isn't the same as 'number of slots' anymore
+	# TODO: fancy animation of slots sliding
+	timelineslots.remove_child(slot_to_move);
+	timelineslots.add_child(slot_to_move);
+	# TODO: animate slot texture changing
+	slot_to_move.texture = preload("res://assets/TestCrystalFrameP.png");
+	finish_divider_position();
+	finish_slot_positions();
+	
+func undo_lock_turn() -> void:
+	# We know which turn we most recently locked, it's the one at the bottom - so just move it back
+	var slot_to_move = timelineslots.get_child(timelineslots.get_children().size()-1);
+	# no animation since this is a meta undo function only
+	if (is_heavy):
+		slot_to_move.texture = preload("res://timeline/timeline-slot-heavy-24.png");
+	else:
+		slot_to_move.texture = preload("res://timeline/timeline-slot-light-24.png");
+	# TODO: fancy animation of slots sliding
+	# if it's empty, move it just after max_moves.
+	if (slot_to_move.timelinesymbols.get_children().size() == 0):
+		# TODO: might be an off-by-one
+		timelineslots.move_child(slot_to_move, max_moves-1);
+	# if it's not empty, move it just after current_move and increment current_move by 1.
+	else:
+		# TODO: might be an off-by-one
+		timelineslots.move_child(slot_to_move, current_move-1);
+		current_move += 1;
+	# either way, now increment max_moves by 1.
+	max_moves += 1;
+	finish_divider_position();
+	finish_slot_positions();
 
 func add_turn(buffer: Array) -> void:
 	if current_move >= (max_moves):
@@ -71,25 +127,23 @@ func add_turn(buffer: Array) -> void:
 		timelineslots.get_child(current_move-1).fuzz_off();
 	timelineslots.get_child(current_move).fill(buffer);
 	current_move += 1;
-	if (current_move) == 0:
-		timelinedivider.position.y = 0;
-		timelinedivider.position.x = 0;
-	else:
-		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
-		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
+	finish_divider_position();
 	
-func remove_turn(color: Color) -> void:
+func remove_turn(color: Color, locked_turn: int) -> void:
+	# 'we're meta-undoing a turn we took that ended up locked' has different behaviour.
+	# I THINK this is correct.
+	if (locked_turn > -1):
+		timelineslots.get_child(max_moves + locked_turn).clear(color);
+		current_move -= 1;
+		finish_divider_position();
+		return;
+	
 	if current_move <= 0:
 		return
-	if (current_move > 0):
+	elif (current_move > 0):
 		timelineslots.get_child(current_move-1).fuzz_off();
 	current_move -= 1;
-	if (current_move) == 0:
-		timelinedivider.position.y = 0;
-		timelinedivider.position.x = 0;
-	else:
-		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
-		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
+	finish_divider_position();
 	timelineslots.get_child(current_move).clear(color);
 
 func fuzz_on() -> void:
