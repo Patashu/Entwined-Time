@@ -1191,6 +1191,8 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 		if (amount > 0):
 			if heavy_filling_locked_turn_index > -1:
 				heavytimeline.add_turn(heavy_locked_turns[heavy_filling_locked_turn_index]);
+			elif heavy_filling_turn_actual > -1:
+				heavytimeline.add_turn(heavy_undo_buffer[heavy_filling_turn_actual]);
 			else:
 				heavytimeline.add_turn(heavy_undo_buffer[heavy_turn]);
 		else:
@@ -1210,6 +1212,8 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 		if (amount > 0):
 			if light_filling_locked_turn_index > -1:
 				lighttimeline.add_turn(light_locked_turns[light_filling_locked_turn_index]);
+			elif light_filling_turn_actual > -1:
+				lighttimeline.add_turn(light_undo_buffer[light_filling_turn_actual]);
 			else:
 				lighttimeline.add_turn(light_undo_buffer[light_turn]);
 		else:
@@ -1606,6 +1610,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				# unlock the most recently locked move.
 				var unlocked_move = heavy_locked_turns.pop_back();
 				var unlocked_move_being_filled_this_turn = false;
+				var filling_turn_actual_set = false;
 				# if we were in the middle of filling it, mark that we're now filling a normal move again.
 				if (heavy_filling_locked_turn_index == heavy_locked_turns.size()):
 					unlocked_move_being_filled_this_turn = true;
@@ -1614,6 +1619,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				# elif we were filling a move and just unlocked a new move on top of it, mark that fact.
 				elif (heavy_selected and chrono == Chrono.MOVE and heavy_filling_locked_turn_index == -1 and heavy_filling_turn_actual == -1):
 					heavy_filling_turn_actual = heavy_turn;
+					filling_turn_actual_set = true;
 					add_undo_event([Undo.heavy_filling_turn_actual, -1, heavy_filling_turn_actual], Chrono.CHAR_UNDO);
 				
 				# did we just pop an empty locked move?
@@ -1622,10 +1628,18 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, -1]);
 				# or a locked move with contents?
 				else:
+					# maybe character hasn't created any events this turn yet
+					while (heavy_undo_buffer.size() <= heavy_turn):
+						heavy_undo_buffer.append([]);
+					# if we're filling a move, we put the unlocked time crystal AFTER the filled move.
+					if (filling_turn_actual_set):
+						heavy_turn += 1;
+						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
 					heavy_undo_buffer.insert(heavy_turn, unlocked_move);
 					add_undo_event([Undo.heavy_turn_unlocked, heavy_turn, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
-					heavy_turn += 1;
-					add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
+					if (filling_turn_actual_set):
+						heavy_turn += 1;
+						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, heavy_turn]);
 		elif light_actor == eater:
 			if (light_locked_turns.size() == 0):
@@ -1638,6 +1652,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				# unlock the most recently locked move.
 				var unlocked_move = light_locked_turns.pop_back();
 				var unlocked_move_being_filled_this_turn = false;
+				var filling_turn_actual_set = false;
 				# if we were in the middle of filling it, mark that we're now filling a normal move again.
 				if (light_filling_locked_turn_index == light_locked_turns.size()):
 					unlocked_move_being_filled_this_turn = true;
@@ -1646,6 +1661,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				# elif we were filling a move and just unlocked a new move on top of it, mark that fact.
 				elif (!heavy_selected and chrono == Chrono.MOVE and light_filling_locked_turn_index == -1 and light_filling_turn_actual == -1):
 					light_filling_turn_actual = light_turn;
+					filling_turn_actual_set = true;
 					add_undo_event([Undo.light_filling_turn_actual, -1, light_filling_turn_actual], Chrono.CHAR_UNDO);
 				
 				# did we just pop an empty locked move?
@@ -1654,10 +1670,18 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, -1]);
 				# or a locked move with contents?
 				else:
+					# maybe character hasn't created any events this turn yet
+					while (light_undo_buffer.size() <= light_turn):
+						light_undo_buffer.append([]);
+					# if we're filling a move, we put the unlocked time crystal AFTER the filled move.
+					if (filling_turn_actual_set):
+						light_turn += 1;
+						add_undo_event([Undo.light_turn_direct, 1], Chrono.CHAR_UNDO);
 					light_undo_buffer.insert(light_turn, unlocked_move);
 					add_undo_event([Undo.light_turn_unlocked, light_turn, light_locked_turns.size()], Chrono.CHAR_UNDO);
-					light_turn += 1;
-					add_undo_event([Undo.light_turn_direct, 1], Chrono.CHAR_UNDO);
+					if (!filling_turn_actual_set):
+						light_turn += 1;
+						add_undo_event([Undo.light_turn_direct, 1], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, light_turn]);
 	else: # magenta time crystal
 		var just_locked = false;
