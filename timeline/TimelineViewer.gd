@@ -138,6 +138,7 @@ func unlock_turn(turn: int) -> void:
 	
 func undo_unlock_turn(turn: int) -> void:
 	# the opposite of unlocking is locking again, so let's try that and see if it works...
+	# have to adjust current_move first. hopefully this ain't TOO hacky.
 	lock_turn(turn);
 
 func add_turn(buffer: Array) -> void:
@@ -149,10 +150,22 @@ func add_turn(buffer: Array) -> void:
 	current_move += 1;
 	finish_divider_position();
 	
-func remove_turn(color: Color, locked_turn: int) -> void:
+func remove_turn(color: Color, locked_turn: int, turn_filled_actual: int) -> void:
+	# 'we're meta-undoing a turn that ended up stuck behind an unlocked turn' is ALSO weird.
+	# Let me try and figure this out...
+	if turn_filled_actual > -1:
+		var slot = timelineslots.get_child(turn_filled_actual);
+		slot.clear(color);
+		# then slide everything unlocked above it down one...
+		timelineslots.move_child(slot, max_moves);
+		current_move -= 1;
+		finish_divider_position();
+		finish_slot_positions();
+		return;
+	
 	# 'we're meta-undoing a turn we took that ended up locked' has different behaviour.
 	# I THINK this is correct.
-	if (locked_turn > -1):
+	elif (locked_turn > -1):
 		timelineslots.get_child(max_moves + locked_turn).clear(color);
 		current_move -= 1;
 		finish_divider_position();
