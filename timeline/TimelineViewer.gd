@@ -109,11 +109,11 @@ func undo_lock_turn() -> void:
 	# if it's empty, move it just after max_moves.
 	if (slot_to_move.timelinesymbols.get_children().size() == 0):
 		# TODO: might be an off-by-one
-		timelineslots.move_child(slot_to_move, max_moves-1);
+		timelineslots.move_child(slot_to_move, max_moves);
 	# if it's not empty, move it just after current_move and increment current_move by 1.
 	else:
 		# TODO: might be an off-by-one
-		timelineslots.move_child(slot_to_move, current_move-1);
+		timelineslots.move_child(slot_to_move, current_move+1);
 		current_move += 1;
 	# either way, now increment max_moves by 1.
 	max_moves += 1;
