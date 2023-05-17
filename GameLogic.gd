@@ -601,6 +601,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#2A1F82"));
 	level_list.push_back(preload("res://levels/Growth.tscn"));
+	level_list.push_back(preload("res://levels/Wither.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	chapter_names.push_back("Victory Lap");
@@ -1256,8 +1257,8 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 		if new_tile == Tiles.GlassBlock:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
 			for actor in actors:
-				# TODO: time crystal/glass chronofrag interaction? don't even want to think about it atm
-				if actor.pos == pos and !actor.broken:
+				# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
+				if actor.pos == pos and !actor.broken and actor.durability <= Durability.PITS:
 					actor.post_mortem = Durability.PITS;
 					set_actor_var(actor, "broken", true, chrono);
 		else:
