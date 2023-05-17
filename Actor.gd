@@ -480,7 +480,7 @@ func _process(delta: float) -> void:
 				self.add_child(sparklespawner);
 			elif (current_animation[0] == 17): #light_green_time_crystal_unlock
 				var color = current_animation[1].color;
-				gamelogic.heavytimeline.unlock_turn(current_animation[2]);
+				gamelogic.lighttimeline.unlock_turn(current_animation[2]);
 				gamelogic.timeline_squish();
 				gamelogic.undo_effect_strength = 0.4;
 				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
