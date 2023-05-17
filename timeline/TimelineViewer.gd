@@ -157,7 +157,7 @@ func remove_turn(color: Color, locked_turn: int, turn_filled_actual: int) -> voi
 		var slot = timelineslots.get_child(turn_filled_actual);
 		slot.clear(color);
 		# then slide everything unlocked above it down one...
-		timelineslots.move_child(slot, max_moves);
+		timelineslots.move_child(slot, max_moves-1);
 		current_move -= 1;
 		finish_divider_position();
 		finish_slot_positions();
