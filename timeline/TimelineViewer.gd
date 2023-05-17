@@ -94,6 +94,7 @@ func lock_turn(turn_locked: int) -> void:
 	timelineslots.add_child(slot_to_move);
 	# TODO: animate slot texture changing
 	slot_to_move.texture = preload("res://assets/TestCrystalFrameP.png");
+	slot_to_move.locked = true;
 	finish_divider_position();
 	finish_slot_positions();
 	
@@ -108,15 +109,23 @@ func undo_lock_turn() -> void:
 	# TODO: fancy animation of slots sliding
 	# if it's empty, move it just after max_moves.
 	if (slot_to_move.timelinesymbols.get_children().size() == 0):
-		# TODO: might be an off-by-one
 		timelineslots.move_child(slot_to_move, max_moves);
 	# if it's not empty, move it just after current_move and increment current_move by 1.
 	else:
-		# TODO: might be an off-by-one
-		timelineslots.move_child(slot_to_move, current_move+1);
+		# for some reason we need to distinguish between 'entered a nega time crystal on our move' and 'otherwise'.
+		# quickest to just count timelineslots until they stop having children.
+		# or is locked.
+		var i = 0;
+		for slot in timelineslots.get_children():
+			if slot.timelinesymbols.get_children().size() == 0 or slot.locked:
+				break;
+			i += 1;
+		timelineslots.move_child(slot_to_move, i);
 		current_move += 1;
 	# either way, now increment max_moves by 1.
 	max_moves += 1;
+	# and finally unlock.
+	slot_to_move.locked = false;
 	finish_divider_position();
 	finish_slot_positions();
 

@@ -6,6 +6,7 @@ var undo_effect_loss_per_second = 0.5;
 var undo_effect_color = Color(1, 1, 1, 1);
 var showing_fuzz = false;
 var fuzz_timer = 0;
+var locked = false;
 onready var timelinesymbols : Node2D = get_node("TimelineSymbols");
 onready var overlay : Sprite = get_node("Overlay");
 
