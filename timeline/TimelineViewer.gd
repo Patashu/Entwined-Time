@@ -133,7 +133,9 @@ func undo_lock_turn() -> TimelineSlot:
 func unlock_turn(turn: int) -> void:
 	# just re-use all that code I wrote real quick and...
 	var slot_to_move = undo_lock_turn();
-	slot_to_move.texture = preload("res://assets/TestCrystalFrame.png");
+	# I have decreed it, to fix a visual bug and make my life easier: just set it to have no frame if it's empty
+	if (slot_to_move.timelinesymbols.get_children().size() > 0):
+		slot_to_move.texture = preload("res://assets/TestCrystalFrame.png");
 	# TODO: fancy animation of slot unlocking
 	
 func undo_unlock_turn(turn: int) -> void:
