@@ -12,6 +12,6 @@ tile_data = PoolIntArray( 131073, 53, 0, 131077, 54, 0, 131078, 53, 0, 131079, 5
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Time Crystal Stress Test"
-level_replay = "Test$mturn=10$xwddwdxaaawa"
+level_replay = "Time Crystal Stress Test$mturn=12$xwddwdxaaawaza"
 heavy_max_moves = 6
 light_max_moves = 6

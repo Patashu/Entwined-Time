@@ -626,6 +626,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#2A1F82"));
 	level_list.push_back(preload("res://levels/Growth.tscn"));
+	level_list.push_back(preload("res://levels/Delivery.tscn"));
 	level_list.push_back(preload("res://levels/Wither.tscn"));
 	level_list.push_back(preload("res://levels/Test.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
@@ -1546,7 +1547,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		for actor_there in pushables_there:
 			# Strength Rule
 			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
-			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness):
+			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness) and !can_eat(actor_there, actor):
 				pushers_list.pop_front();
 				return Success.No;
 		var result = Success.Yes;
@@ -1562,7 +1563,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		var surprises = [];
 		result = Success.Yes;
 		for actor_there in pushables_there:
-			if can_eat(actor, actor_there):
+			if can_eat(actor, actor_there) or can_eat(actor_there, actor):
 				continue;
 			var actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
 			if actor_there_result == Success.No:
@@ -1578,8 +1579,15 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
 			else:
 				for actor_there in pushables_there:
-					if (can_eat(actor, actor_there)):
-						eat_crystal(actor, actor_there, chrono);
+					#AD13: Heavy prefers to push crystals up instead of eat them. Sticky top baby ;D
+					#this definitely won't bite me in the ass I want to make a PUZZLE ok
+					if (can_eat(actor, actor_there) or can_eat(actor_there, actor)):
+						if actor.actorname == "heavy" and !is_retro and dir == Vector2.UP:
+							var crystal_carry = move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
+							if (crystal_carry == Success.No):
+								eat_crystal(actor, actor_there, chrono);
+						else:
+							eat_crystal(actor, actor_there, chrono);
 					else:
 						move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
 		
@@ -1603,6 +1611,11 @@ func can_eat(eater: Actor, eatee: Actor) -> bool:
 	#return false;
 	
 func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
+	# might be called backwards, so swap them around
+	if eater.is_crystal:
+		var temp = eatee;
+		eatee = eater;
+		eater = temp;
 	set_actor_var(eatee, "broken", true, Chrono.CHAR_UNDO);
 	if (eatee.actorname == "time_crystal_green"):
 		if heavy_actor == eater:

@@ -7,11 +7,11 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 4, 53, 0, 65539, 53, 0, 65541, 53, 0, 131072, 1, 0, 131074, 53, 0, 131076, 2, 0, 131077, 8, 0, 131078, 53, 0, 131080, 7, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196615 )
+tile_data = PoolIntArray( 3, 53, 0, 5, 53, 0, 65536, 1, 0, 65538, 53, 0, 65540, 2, 0, 65541, 8, 0, 65542, 53, 0, 65544, 7, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196615 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Growth"
-level_replay = "Growth$mturn=22$dzxwzxwxaxzwaxzdxzzdxzxzaaaaxdd"
+level_replay = "Growth$mturn=27$dzwxaxzdzaaxzxzzxdzdxdxzdxdxzxzzaaaaxd"
 heavy_max_moves = 1
 light_max_moves = 0
