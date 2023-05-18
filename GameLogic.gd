@@ -1462,9 +1462,16 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					flash_terrain = id;
 					flash_colour = oneway_flash;
 			Tiles.GlassBlock:
-				result = maybe_change_terrain(actor, pos, i, hypothetical, false, chrono, -1);
+				# rule I've been thinking about for a while - things lighter than iron can't break glass
+				if (actor.heaviness >= Heaviness.IRON):
+					result = maybe_change_terrain(actor, pos, i, hypothetical, false, chrono, -1);
+				else:
+					return Success.No;
 			Tiles.GreenGlassBlock:
-				result = maybe_change_terrain(actor, pos, i, hypothetical, true, chrono, -1);
+				if (actor.heaviness >= Heaviness.IRON):
+					result = maybe_change_terrain(actor, pos, i, hypothetical, true, chrono, -1);
+				else:
+					return Success.No;
 		if result != Success.Yes:
 			return result;
 	return result;
