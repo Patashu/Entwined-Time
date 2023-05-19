@@ -1739,12 +1739,16 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			if (heavy_turn > 0 or just_locked):
 				# if we have a slot to move: move it and decrement turn
 				turn_moved = heavy_turn;
+				# haven't 100% convinced me of this but seems to be true - if it's not our turn, we actually want to move the turn one lower
+				# (e.g. if light_turn is 2, we're creating [2] if it's light's turn, but [1] is what we'd lock next if it's heavy's turn)
+				if (!heavy_selected):
+					turn_moved -= 1;
 				# maybe character hasn't created any events this turn yet
-				while (heavy_undo_buffer.size() <= heavy_turn):
+				while (heavy_undo_buffer.size() <= turn_moved):
 					heavy_undo_buffer.append([]);
-				var turn_buffer = heavy_undo_buffer.pop_at(heavy_turn);
+				var turn_buffer = heavy_undo_buffer.pop_at(turn_moved);
 				heavy_locked_turns.append(turn_buffer);
-				add_undo_event([Undo.heavy_turn_locked, heavy_turn, heavy_locked_turns.size() - 1], Chrono.CHAR_UNDO);
+				add_undo_event([Undo.heavy_turn_locked, turn_moved, heavy_locked_turns.size() - 1], Chrono.CHAR_UNDO);
 				heavy_turn -= 1;
 				add_undo_event([Undo.heavy_turn_direct, -1], Chrono.CHAR_UNDO);
 			else:
@@ -1778,12 +1782,16 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			if (light_turn > 0 or just_locked):
 				# if we have a slot to move: move it and decrement turn
 				turn_moved = light_turn;
+				# haven't 100% convinced me of this but seems to be true - if it's not our turn, we actually want to move the turn one lower
+				# (e.g. if light_turn is 2, we're creating [2] if it's light's turn, but [1] is what we'd lock next if it's heavy's turn)
+				if (heavy_selected):
+					turn_moved -= 1;
 				# maybe character hasn't created any events this turn yet
-				while (light_undo_buffer.size() <= light_turn):
+				while (light_undo_buffer.size() <= turn_moved):
 					light_undo_buffer.append([]);
-				var turn_buffer = light_undo_buffer.pop_at(light_turn);
+				var turn_buffer = light_undo_buffer.pop_at(turn_moved);
 				light_locked_turns.append(turn_buffer);
-				add_undo_event([Undo.light_turn_locked, light_turn, light_locked_turns.size() - 1], Chrono.CHAR_UNDO);
+				add_undo_event([Undo.light_turn_locked, turn_moved, light_locked_turns.size() - 1], Chrono.CHAR_UNDO);
 				light_turn -= 1;
 				add_undo_event([Undo.light_turn_direct, -1], Chrono.CHAR_UNDO);
 			else:
