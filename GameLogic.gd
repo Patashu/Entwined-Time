@@ -612,6 +612,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/UphillLimited.tscn"));
 	level_list.push_back(preload("res://levels/KingCrimson.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/ElevatorEx.tscn"));
 	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
 	level_list.push_back(preload("res://levels/DontLookDown.tscn"));
 	level_list.push_back(preload("res://levels/LeadBalloon.tscn"));
@@ -1572,6 +1573,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			if actor_there_result == Success.Surprise:
 				result = Success.Surprise;
 				surprises.append(actor_there);
+		
 		
 		if (!hypothetical):
 			if (result == Success.Surprise):
