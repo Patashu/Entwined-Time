@@ -633,6 +633,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Test.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/BlockageEx.tscn"));
+	level_list.push_back(preload("res://levels/Elementary.tscn"));
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -1602,6 +1603,10 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 
 func can_eat(eater: Actor, eatee: Actor) -> bool:
 	if !eatee.is_crystal:
+		return false;
+	# right, don't re-eat broken crystals if e.g. Heavy sticky tops them around
+	# (I need to decide how sticky topping broken actors works later, but I don't have to right now <w<)
+	if eatee.broken:
 		return false;
 	if (!eater.is_character):
 		return false;
