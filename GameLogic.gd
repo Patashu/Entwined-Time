@@ -530,6 +530,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/BlueAndRed.tscn"));
 	level_list.push_back(preload("res://levels/TheRedPit.tscn"));
 	level_list.push_back(preload("res://levels/TheBluePit.tscn"));
+	level_list.push_back(preload("res://levels/TheMagentaPit.tscn"));
+	level_list.push_back(preload("res://levels/TheGrayPit.tscn"));
 	level_list.push_back(preload("res://levels/PaperPlanes.tscn"));
 	level_list.push_back(preload("res://levels/TimelessBridge.tscn"));
 	
@@ -544,6 +546,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TimelessBridgeEx.tscn"));
 	level_list.push_back(preload("res://levels/LevitationColours.tscn"));
 	level_list.push_back(preload("res://levels/Towerplex.tscn"));
+	level_list.push_back(preload("res://levels/TheMagentaPitEx.tscn"));
 	
 	chapter_names.push_back("Change");
 	chapter_standard_starting_levels.push_back(level_list.size());
