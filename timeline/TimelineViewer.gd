@@ -93,6 +93,7 @@ func lock_turn(turn_locked: int) -> void:
 	timelineslots.remove_child(slot_to_move);
 	timelineslots.add_child(slot_to_move);
 	# TODO: animate slot texture changing
+	slot_to_move.fuzz_off();
 	slot_to_move.texture = preload("res://assets/TestCrystalFrameP.png");
 	slot_to_move.locked = true;
 	finish_divider_position();
