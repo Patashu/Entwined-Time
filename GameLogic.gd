@@ -560,7 +560,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/LadderWorldGlass.tscn"));
 	level_list.push_back(preload("res://levels/TheGlassPit.tscn"));
 	level_list.push_back(preload("res://levels/DemolitionSquad.tscn"));
-	level_list.push_back(preload("res://levels/CampfireGlass.tscn"));
 	level_list.push_back(preload("res://levels/Aquarium.tscn"));
 	level_list.push_back(preload("res://levels/Deconstruct.tscn"));
 	level_list.push_back(preload("res://levels/TreasureHunt.tscn"));
@@ -572,6 +571,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/SpelunkingGlassEx.tscn"));
 	level_list.push_back(preload("res://levels/DemolitionSquadEx.tscn"));
 	level_list.push_back(preload("res://levels/TheGlassPitEx.tscn"));
+	level_list.push_back(preload("res://levels/CampfireGlass.tscn"));
 	level_list.push_back(preload("res://levels/CampfireGlassEx.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingGlassEx2.tscn"));
 	level_list.push_back(preload("res://levels/LadderWorldGlassEx.tscn"));
@@ -645,6 +645,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/BlockageEx.tscn"));
 	level_list.push_back(preload("res://levels/Smuggler.tscn"));
 	level_list.push_back(preload("res://levels/SmugglerEx.tscn"));
+	level_list.push_back(preload("res://levels/Frangible.tscn"));
 	level_list.push_back(preload("res://levels/Switcheroo.tscn"));
 	level_list.push_back(preload("res://levels/SwitcherooEx.tscn"));
 	level_list.push_back(preload("res://levels/StairwayToHeaven.tscn"));
@@ -1756,7 +1757,8 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				turn_moved = heavy_turn;
 				# haven't 100% convinced me of this but seems to be true - if it's not our turn, we actually want to move the turn one lower
 				# (e.g. if light_turn is 2, we're creating [2] if it's light's turn, but [1] is what we'd lock next if it's heavy's turn)
-				if (!heavy_selected):
+				# the spaghetti continues: we also want to -1 if it is our turn and we're undoing
+				if (!heavy_selected or chrono == Chrono.CHAR_UNDO):
 					turn_moved -= 1;
 				# maybe character hasn't created any events this turn yet
 				while (heavy_undo_buffer.size() <= turn_moved):
@@ -1799,7 +1801,8 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				turn_moved = light_turn;
 				# haven't 100% convinced me of this but seems to be true - if it's not our turn, we actually want to move the turn one lower
 				# (e.g. if light_turn is 2, we're creating [2] if it's light's turn, but [1] is what we'd lock next if it's heavy's turn)
-				if (heavy_selected):
+				# the spaghetti continues: we also want to -1 if it is our turn and we're undoing
+				if (heavy_selected or chrono == Chrono.CHAR_UNDO):
 					turn_moved -= 1;
 				# maybe character hasn't created any events this turn yet
 				while (light_undo_buffer.size() <= turn_moved):
