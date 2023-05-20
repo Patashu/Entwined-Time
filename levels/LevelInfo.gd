@@ -6,3 +6,4 @@ export var level_author = "Patashu";
 export var level_replay = "";
 export var heavy_max_moves = -1;
 export var light_max_moves = -1;
+export var clock_turns = "";

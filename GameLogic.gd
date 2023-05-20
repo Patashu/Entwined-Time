@@ -201,6 +201,7 @@ enum Tiles {
 	Fuzz, #52
 	TimeCrystalGreen, #53
 	TimeCrystalMagenta, #54
+	CuckooClock, #55
 }
 
 # information about the level
@@ -650,6 +651,12 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Switcheroo.tscn"));
 	level_list.push_back(preload("res://levels/SwitcherooEx.tscn"));
 	level_list.push_back(preload("res://levels/StairwayToHeaven.tscn"));
+	
+	chapter_names.push_back("Deadline");
+	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_skies.push_back(Color("#2D0E07"));
+	level_list.push_back(preload("res://levels/CuckooClock.tscn"));
+	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
