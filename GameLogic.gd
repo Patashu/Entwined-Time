@@ -1187,6 +1187,11 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		#(AD03: Chrono.CHAR_UNDO will sticky top green things but not the other character because I don't like the spring effect it'd cause)
 		#(AD05: apparently I decided the sticky top can't move things you can't push, which is... valid ig?)
 		#(AD12: Sticky top is now considered the 'pusher', which matters for e.g. the light flustered rule)
+		#(AD14: I realized too late that this should be 'is_retro' not 'chrono == Chrono.MOVE', whoops.
+		#I invented this mechanic before the concept of is_retro and never noticed it was weird until now.
+		#(e.g. light on heavy, light jumps, heavy jumps, light undoes, light isn't pulled down by Heavy falling.)
+		#Multiple replays rely on this behaviour now I think, I could do a full game pass but EHHH.
+		#(Also I just now realized I never did AD03 so???)
 		# TODO: Should time crystals be sticky top-able? It seems weird but they ARE pushable and it's not bumping them...
 		if actor.actorname == "heavy" and chrono == Chrono.MOVE and dir.y >= 0:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
