@@ -13,8 +13,8 @@ tile_data = PoolIntArray( 0, 14, 196609, 8, 14, 196609, 65536, 14, 262145, 65544
 script = ExtResource( 1 )
 level_name = "Green Firewall"
 level_replay = "Green Firewall$mturn=18$xdxdxdddxdaawdxzzcxzxzzzxzdd"
-heavy_max_moves = 6
-light_max_moves = 4
+heavy_max_moves = 8
+light_max_moves = 6
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
