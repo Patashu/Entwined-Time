@@ -131,6 +131,12 @@ func get_next_texture() -> Texture:
 		else:
 			return preload("res://assets/wooden_crate.png");
 			
+	elif actorname == "cuckoo_clock":
+		if broken:
+			return preload("res://assets/cuckoo_clock_broken.png");
+		else:
+			return preload("res://assets/cuckoo_clock.png");
+			
 	elif actorname == "time_crystal_green":
 		if broken:
 			return null;
@@ -227,6 +233,10 @@ func fall_speed() -> int:
 	if broken and !is_crystal:
 		return 99;
 	return fall_speed;
+	
+# because I want Light to float but not cuckoo clocks <w<
+func floats() -> bool:
+	return fall_speed() == 1 and is_character;
 	
 func climbs() -> bool:
 	return climbs and !broken;

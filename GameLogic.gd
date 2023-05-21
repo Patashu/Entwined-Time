@@ -910,6 +910,9 @@ func make_actors() -> void:
 	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
 	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
 	
+	# cuckoo clocks
+	extract_actors(Tiles.CuckooClock, "cuckoo_clock", Heaviness.IRON, Strength.WOODEN, Durability.SPIKES, 1, false, Color("#AD8255"));
+	
 	# time crystals
 	extract_actors(Tiles.TimeCrystalGreen, "time_crystal_green", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#A9F05F"));
 	extract_actors(Tiles.TimeCrystalMagenta, "time_crystal_magenta", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#9966CC"));
@@ -2677,7 +2680,7 @@ func time_passes(chrono: int) -> void:
 				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or has_fallen[actor] <= 0)):
-					if actor.fall_speed() == 1:
+					if actor.floats():
 						set_actor_var(actor, "airborne", 1, chrono);
 					else:
 						set_actor_var(actor, "airborne", 0, chrono);
