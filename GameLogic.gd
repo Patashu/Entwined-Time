@@ -1198,11 +1198,12 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		#(e.g. light on heavy, light jumps, heavy jumps, light undoes, light isn't pulled down by Heavy falling.)
 		#Multiple replays rely on this behaviour now I think, I could do a full game pass but EHHH.
 		#(Also I just now realized I never did AD03 so???)
-		# TODO: Should time crystals be sticky top-able? It seems weird but they ARE pushable and it's not bumping them...
+		#(AD15: Non-broken time crystals are sticky toppable! In fact, Heavy can PUSH them upwards thanks to some special logic elsewhere :D)
+		#(FIX: Broken time crystals can't be sticky top'd because they're basically not things
 		if actor.actorname == "heavy" and chrono == Chrono.MOVE and dir.y >= 0:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
-				if (strength_check(actor.strength, sticky_actor.heaviness)):
+				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
 		return success;
 	elif (success != Success.Yes and !hypothetical):
