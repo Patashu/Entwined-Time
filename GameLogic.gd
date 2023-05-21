@@ -1174,19 +1174,19 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			else:
 				if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
 					for goal in goals:
-						if goal.actorname == "heavy_goal" and !goal.dinged:
+						if goal.actorname == "heavy_goal" and !goal.dinged and goal.pos == actor.pos:
 							set_actor_var(goal, "dinged", true, chrono);
 				if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
 					for goal in goals:
-						if goal.actorname == "light_goal" and !goal.dinged:
+						if goal.actorname == "light_goal" and !goal.dinged and goal.pos == actor.pos:
 							set_actor_var(goal, "dinged", true, chrono);
 				if actor.actorname == "heavy" and old_terrain.has(Tiles.HeavyGoal):
 					for goal in goals:
-						if goal.actorname == "heavy_goal" and goal.dinged:
+						if goal.actorname == "heavy_goal" and goal.dinged and goal.pos != actor.pos:
 							set_actor_var(goal, "dinged", false, chrono);
 				if actor.actorname == "light" and old_terrain.has(Tiles.LightGoal):
 					for goal in goals:
-						if goal.actorname == "light_goal" and goal.dinged:
+						if goal.actorname == "light_goal" and goal.dinged and goal.pos != actor.pos:
 							set_actor_var(goal, "dinged", false, chrono);
 		
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
