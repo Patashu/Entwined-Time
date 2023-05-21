@@ -656,6 +656,9 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#2D0E07"));
 	level_list.push_back(preload("res://levels/CuckooClock.tscn"));
+	level_list.push_back(preload("res://levels/GreenCuckoo1.tscn"));
+	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
+	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
 	chapter_names.push_back("Victory Lap");
