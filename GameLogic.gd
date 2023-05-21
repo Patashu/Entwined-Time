@@ -1039,6 +1039,7 @@ func prepare_audio() -> void:
 	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
 	sounds["greentimecrystal"] = preload("res://sfx/greentimecrystal.ogg");
 	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
+	sounds["lose"] = preload("res://sfx/lose.ogg");
 	sounds["magentatimecrystal"] = preload("res://sfx/magentatimecrystal.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
@@ -1047,25 +1048,15 @@ func prepare_audio() -> void:
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["step"] = preload("res://sfx/step.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
+	sounds["tick"] = preload("res://sfx/tick.ogg");
+	sounds["timesup"] = preload("res://sfx/timesup.ogg");
 	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
 	sounds["undo"] = preload("res://sfx/undo.ogg");
 	sounds["unfall"] = preload("res://sfx/unfall.ogg");
 	sounds["unpush"] = preload("res://sfx/unpush.ogg");
 	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
+	sounds["untick"] = preload("res://sfx/untick.ogg");
 	sounds["winentwined"] = preload("res://sfx/winentwined.ogg");
-
-	#unused
-	sounds["dig"] = preload("res://sfx/dig.ogg");
-	sounds["fly"] = preload("res://sfx/fly.ogg");
-	sounds["getgreenality"] = preload("res://sfx/getgreenality.ogg");
-	sounds["greeninteract"] = preload("res://sfx/greeninteract.ogg");
-	sounds["greenplayer"] = preload("res://sfx/greenplayer.ogg");
-	sounds["greensmall"] = preload("res://sfx/greensmall.ogg");
-	sounds["key"] = preload("res://sfx/key.ogg");
-	sounds["kill"] = preload("res://sfx/kill.ogg");
-	sounds["pickup"] = preload("res://sfx/pickup.ogg");
-	sounds["unlock"] = preload("res://sfx/unlock.ogg");
-	sounds["usegreenality"] = preload("res://sfx/usegreenality.ogg");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
