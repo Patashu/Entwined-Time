@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 8, 0, 4, 14, 262148, 7, 2, 0, 65536, 14, 2, 65537, 14, 3, 65538, 14, 4, 65542, 14, 524290, 65543, 14, 196615, 131072, 14, 589825, 131073, 14, 131075, 131074, 14, 131076, 131078, 14, 262145, 196608, 14, 262145, 196614, 14, 262145, 262144, 14, 262145, 262145, 27, 0, 262149, 27, 0, 262150, 14, 262145, 327680, 14, 262145, 327681, 23, 0, 327682, 14, 524290, 327683, 14, 196614, 327684, 14, 196615, 327685, 23, 0, 327686, 14, 262145, 393216, 14, 327681, 393218, 14, 262145, 393222, 14, 262145, 458752, 29, 0, 458754, 14, 327681, 458758, 14, 262145, 524288, 29, 0, 524294, 14, 262145, 589824, 29, 0, 589828, 14, 196609, 589829, 1, 0, 589830, 14, 262145, 655360, 7, 0, 655361, 14, 196613, 655362, 14, 196614, 655363, 14, 196614, 655364, 14, 655363, 655365, 14, 196614, 655366, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Lunar Gravity"
+level_replay = "Lunar Gravity$mturn=51$xdssxaasaawsaxzzzsszzxzzzzzszzzzsswaaxsssxawaxzzzsssxzzzzzz"
+heavy_max_moves = 8
+light_max_moves = 3
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 36, 0, 7, 35, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327681, 29, 0, 327685, 30, 0 )
