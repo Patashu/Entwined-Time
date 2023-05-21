@@ -1046,6 +1046,7 @@ func prepare_audio() -> void:
 	sounds["restart"] = preload("res://sfx/restart.ogg");
 	sounds["push"] = preload("res://sfx/push.ogg");
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
+	sounds["shroud"] = preload("res://sfx/shroud.ogg");
 	sounds["step"] = preload("res://sfx/step.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
 	sounds["tick"] = preload("res://sfx/tick.ogg");
