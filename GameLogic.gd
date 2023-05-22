@@ -1797,9 +1797,10 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		var just_locked = false;
 		var turn_moved = -1;
 		if (heavy_actor == eater):
-			# for now, just blow up a character that tries to eat to below 0 turns. might turn it into Lose (Paradox) later.
+			# Lose (Paradox)
 			if (heavy_max_moves <= 0):
 				set_actor_var(heavy_actor, "broken", true, Chrono.CHAR_UNDO);
+				lose("Paradox: A character can't have less than 0 moves.")
 				return;
 			# accessible timeline is now one move shorter.
 			heavy_max_moves -= 1;
@@ -1841,9 +1842,10 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			add_to_animation_server(eater, [Animation.heavy_magenta_time_crystal, eatee, turn_moved]);
 			
 		elif (light_actor == eater):
-			# for now, just blow up a character that tries to eat to below 0 turns. might turn it into Lose (Paradox) later.
+			# Lose (Paradox)
 			if (light_max_moves <= 0):
 				set_actor_var(light_actor, "broken", true, Chrono.CHAR_UNDO);
+				lose("Paradox: A character can't have less than 0 moves.")
 				return;
 			# accessible timeline is now one move shorter.
 			light_max_moves -= 1;
