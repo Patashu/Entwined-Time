@@ -55,7 +55,7 @@ func initialize(time_colour: int, ticks: int) -> void:
 	self.vframes = 1;
 	label = Label.new();
 	label.align = Label.ALIGN_CENTER;
-	label.rect_position = Vector2(-24, -6);
+	label.rect_position = Vector2(-24, -7);
 	label.rect_size = Vector2(48, 24);
 	self.add_child(label);
 	label.text = str(self.ticks);
