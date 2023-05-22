@@ -137,7 +137,9 @@ func get_next_texture() -> Texture:
 			return preload("res://assets/wooden_crate.png");
 			
 	elif actorname == "cuckoo_clock":
-		if broken:
+		if ticks == 0:
+			return preload("res://assets/cuckoo_clock_end.png");
+		elif broken:
 			return preload("res://assets/cuckoo_clock_broken.png");
 		else:
 			return preload("res://assets/cuckoo_clock.png");
@@ -189,6 +191,9 @@ func set_next_texture(tex: Texture) -> void:
 	elif texture == preload("res://assets/power_crate_animation.png"):
 		frame_timer_max = 0.1;
 		hframes = 4;
+	elif texture == preload("res://assets/cuckoo_clock_end.png"):
+		frame_timer_max = 0.4;
+		hframes = 3;
 	else:
 		hframes = 1;
 
@@ -303,7 +308,7 @@ func _process(delta: float) -> void:
 		frame_timer += delta;
 		if (frame_timer > frame_timer_max):
 			frame_timer -= frame_timer_max;
-			if (frame == hframes - 1) and !broken:
+			if (frame == hframes - 1) and !broken and ticks != 0:
 				frame = 0;
 			else:
 				if broken and frame >= 4 and post_mortem != 1:
@@ -519,7 +524,10 @@ func _process(delta: float) -> void:
 			elif (current_animation[0] == 18): #tick
 				var amount = current_animation[1];
 				thought_bubble.update_ticks(ticks);
-				if (amount < 0):
+				if (ticks == 0):
+					gamelogic.play_sound("timesup");
+					self.update_graphics();
+				elif (amount < 0):
 					gamelogic.play_sound("tick");
 				else:
 					gamelogic.play_sound("untick");

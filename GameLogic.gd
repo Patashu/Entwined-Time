@@ -255,6 +255,7 @@ var sounds = {}
 var speakers = [];
 var music_speaker = null;
 var lost_speaker = null;
+var lost_speaker_volume_tween;
 var sounds_played_this_frame = {};
 var muted = false;
 var won = false;
@@ -711,7 +712,8 @@ func initialize_level_list() -> void:
 
 func ready_map() -> void:
 	won = false;
-	lost = false;
+	end_lose();
+	lost_speaker.stop();
 	for actor in actors:
 		actor.queue_free();
 	actors.clear();
@@ -1098,15 +1100,30 @@ func prepare_audio() -> void:
 		self.add_child(speaker);
 		speakers.append(speaker);
 	lost_speaker = AudioStreamPlayer.new();
+	lost_speaker.stream = sounds["lose"];
+	lost_speaker_volume_tween = Tween.new();
+	self.add_child(lost_speaker_volume_tween);
 	self.add_child(lost_speaker);
 	music_speaker = AudioStreamPlayer.new();
 	self.add_child(music_speaker);
+
+func fade_in_lost():
+	winlabel.visible = true;
+	adjust_winlabel();
+	call_deferred("adjust_winlabel");
+	Shade.on = true;
+	
+	lost_speaker.volume_db = -40;
+	lost_speaker_volume_tween.interpolate_property(lost_speaker, "volume_db", -40, -10, 3.00, 1, Tween.EASE_IN, 0)
+	lost_speaker_volume_tween.start();
+	lost_speaker.play();
 
 func cut_sound() -> void:
 	if (doing_replay and meta_undo_a_restart_mode):
 		return;
 	for speaker in speakers:
 		speaker.stop();
+	lost_speaker.stop();
 
 func play_sound(sound: String) -> void:
 	if muted or (doing_replay and meta_undo_a_restart_mode):
@@ -1871,18 +1888,18 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int) -> void:
 	if (actor.ticks == 0):
 		if actor.actorname == "cuckoo_clock":
 			# end the world
-			# TODO: animation, sfx, ripple shader
+			# TODO: ripple shader
 			lose("You didn't make it back to the Chrono Lab Reactor in time.");
 	add_undo_event([Undo.tick, actor, amount], chrono_for_maybe_green_actor(actor, chrono));
 	add_to_animation_server(actor, [Animation.tick, amount]);
 
 func lose(reason: String) -> void:
 	lost = true;
-	winlabel.visible = true;
 	winlabel.text = reason + "\n\nMeta-Undo or Restart to continue."
-	adjust_winlabel();
-	call_deferred("adjust_winlabel");
-	Shade.on = true;
+	
+func end_lose() -> void:
+	lost = false;
+	lost_speaker.stop();
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
@@ -2431,7 +2448,7 @@ func meta_undo_a_restart() -> bool:
 	return false;
 
 func meta_undo(is_silent: bool = false) -> bool:
-	lost = false;
+	end_lose();
 	user_replay += "c";
 	finish_animations(Chrono.MOVE);
 	if (meta_turn <= 0):
@@ -3006,6 +3023,7 @@ func update_animation_server(skip_globals: bool = false) -> void:
 		# won_fade starts here
 		if ((won or lost) and !won_fade_started):
 			won_fade_started = true;
+			fade_in_lost();
 			add_to_animation_server(heavy_actor, [Animation.fade]);
 			add_to_animation_server(light_actor, [Animation.fade]);
 		return;
