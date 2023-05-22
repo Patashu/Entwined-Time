@@ -1549,12 +1549,12 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	
 	# handle solidity in our tile, solidity in the tile over, hazards/surprises in the tile over
 	if (current_tile_is_solid(actor, dir, is_gravity, is_retro)):
-		if (flash_terrain > -1 and !hypothetical):
+		if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
 			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
 		return Success.No;
 	var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono);
 	if (solidity_check != Success.Yes):
-		if (flash_terrain > -1 and !hypothetical):
+		if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
 			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), flash_colour]);
 		return solidity_check;
 	
