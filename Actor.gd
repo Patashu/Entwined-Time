@@ -45,6 +45,8 @@ var ding = null;
 var is_crystal = false;
 var crystal_timer = 0;
 var crystal_timer_max = 1.6;
+# cuckoo clock
+var ticks = 10000;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
@@ -251,6 +253,15 @@ func tiny_pushable() -> bool:
 
 func afterimage() -> void:
 	gamelogic.afterimage(self);
+	
+func set_ticks(ticks: int) -> void:
+	self.ticks = ticks;
+	# thought bubble
+	var sprite = Sprite.new();
+	sprite.set_script(preload("res://ThoughtBubble.gd"));
+	sprite.initialize(self.time_colour, self.ticks);
+	sprite.position = Vector2(12, -12);
+	self.add_child(sprite);
 
 func _process(delta: float) -> void:
 	#crystal effects

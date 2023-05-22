@@ -214,6 +214,7 @@ var level_replay = "";
 var level_author = "";
 var heavy_max_moves = -1;
 var light_max_moves = -1;
+var clock_turns : String = "";
 var map_x_max : int = 0;
 var map_y_max : int = 0;
 var map_x_max_max : int = 21;
@@ -739,6 +740,7 @@ func ready_map() -> void:
 		level_replay = level_replay_parts[level_replay_parts.size()-1];
 	heavy_max_moves = level_info.heavy_max_moves;
 	light_max_moves = level_info.light_max_moves;
+	clock_turns = level_info.clock_turns;
 	calculate_map_size();
 	make_actors();
 	
@@ -921,6 +923,23 @@ func make_actors() -> void:
 	extract_actors(Tiles.TimeCrystalMagenta, "time_crystal_magenta", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#9966CC"));
 	
 	find_colours();
+	
+	tick_clocks();
+	
+func tick_clocks() -> void:
+	if clock_turns == null or clock_turns == "":
+		return
+	var clock_turns_array = clock_turns.split(",");
+	var i = 0;
+	if (clock_turns_array.size() <= 0):
+		return
+	# I'll stable sort if needed
+	for actor in actors:
+		if actor.actorname == "cuckoo_clock":
+			actor.set_ticks(int(clock_turns_array[i]));
+			i += 1;
+			if i >= clock_turns_array.size():
+				return
 	
 func find_goals(layer: TileMap) -> void:
 	var heavy_goal_tiles = layer.get_used_cells_by_id(Tiles.HeavyGoal);
