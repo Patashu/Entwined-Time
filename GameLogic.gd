@@ -1113,6 +1113,8 @@ func fade_in_lost():
 	call_deferred("adjust_winlabel");
 	Shade.on = true;
 	
+	if muted or (doing_replay and meta_undo_a_restart_mode):
+		return;
 	lost_speaker.volume_db = -40;
 	lost_speaker_volume_tween.interpolate_property(lost_speaker, "volume_db", -40, -10, 3.00, 1, Tween.EASE_IN, 0)
 	lost_speaker_volume_tween.start();
@@ -3023,7 +3025,8 @@ func update_animation_server(skip_globals: bool = false) -> void:
 		# won_fade starts here
 		if ((won or lost) and !won_fade_started):
 			won_fade_started = true;
-			fade_in_lost();
+			if (lost):
+				fade_in_lost();
 			add_to_animation_server(heavy_actor, [Animation.fade]);
 			add_to_animation_server(light_actor, [Animation.fade]);
 		return;
