@@ -35,7 +35,10 @@ func prepare_chapter() -> void:
 	for child in holder.get_children():
 		if child != prevbutton and child != nextbutton and child != controlsbutton and child != closebutton:
 			child.queue_free();
-	holder.text = "Chapter " + str(chapter) + " - " + gamelogic.chapter_names[chapter];
+	var chapter_string = str(chapter);
+	if gamelogic.chapter_replacements.has(chapter):
+		chapter_string = gamelogic.chapter_replacements[chapter];
+	holder.text = "Chapter " + chapter_string + " - " + gamelogic.chapter_names[chapter];
 	var normal_start = gamelogic.chapter_standard_starting_levels[chapter];
 	var advanced_start = gamelogic.chapter_advanced_starting_levels[chapter];
 	var advanced_end = gamelogic.chapter_standard_starting_levels[chapter+1];

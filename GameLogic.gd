@@ -299,6 +299,7 @@ var level_list = [];
 var level_names = [];
 var chapter_names = [];
 var chapter_skies = [];
+var chapter_replacements = {};
 var target_sky = Color("#223C52");
 var old_sky = Color("#223C52");
 var current_sky = Color("#223C52");
@@ -664,6 +665,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Deadline");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#2D0E07"));
+	chapter_replacements[chapter_names.size() - 1] = "Ω";
 	level_list.push_back(preload("res://levels/CuckooClock.tscn"));
 	level_list.push_back(preload("res://levels/GreenCuckoo1.tscn"));
 	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
@@ -673,6 +675,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_skies.push_back(Color("#223C52"));
+	chapter_replacements[chapter_names.size() - 1] = "-1";
 	level_list.push_back(preload("res://levels/RoommatesExL2.tscn"));
 	level_list.push_back(preload("res://levels/SpelunkingL2.tscn"));
 	level_list.push_back(preload("res://levels/UphillL2.tscn"));
@@ -2907,7 +2910,10 @@ func update_level_label() -> void:
 	if (level_number < 0):
 		levelnumberastext = "CUSTOM";
 	else:
-		levelnumberastext = str(chapter) + "-" + str(level_in_chapter);
+		var chapter_string = str(chapter);
+		if chapter_replacements.has(chapter):
+			chapter_string = chapter_replacements[chapter];
+		levelnumberastext = chapter_string + "-" + str(level_in_chapter);
 	if (level_is_extra):
 		levelnumberastext += "X";
 	levellabel.text = levelnumberastext + " - " + level_name;
