@@ -20,18 +20,20 @@ func _ready() -> void:
 func fill(buffer: Array) -> void:
 	var relevant_buffer = [];
 	for event in buffer:
-		if event[0] == 0 or event[0] == 1 or event[0] == 9: # move or set_actor_var or change_terrain
+		if event[0] == GameLogic.Undo.move or event[0] == GameLogic.Undo.set_actor_var or event[0] == GameLogic.Undo.change_terrain or event[0] == GameLogic.Undo.tick: # move or set_actor_var or change_terrain or tick
 			# whitelist: for set_actor_var, only consider airborne 1 or less and broken
 			var whitelisted = false;
-			if (event[0] == 0):
+			if (event[0] == GameLogic.Undo.move):
 				whitelisted = true;
-			elif (event[0] == 1):
+			elif (event[0] == GameLogic.Undo.set_actor_var):
 				if (event[2] == "airborne"):
 					if event[4] < 2:
 						whitelisted = true;
 				elif (event[2] == "broken"):
 					whitelisted = true;
-			elif (event[0] == 9):
+			elif (event[0] == GameLogic.Undo.change_terrain):
+				whitelisted = true;
+			elif (event[0] == GameLogic.Undo.tick):
 				whitelisted = true;
 			if (!whitelisted):
 				continue
@@ -68,7 +70,7 @@ func fill(buffer: Array) -> void:
 func get_texture_for_event(event: Array, size: int) -> Texture:
 	#add_undo_event([Undo.move, actor, dir], chrono);
 	#add_undo_event([Undo.set_actor_var, actor, prop, old_value], chrono);
-	if event[0] == 0: #move
+	if event[0] == GameLogic.Undo.move:
 		var dir = event[2];
 		if dir == Vector2.LEFT:
 			if size == 8:
@@ -91,7 +93,7 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 			elif size == 12:
 				return preload("res://timeline/timeline-down-12.png");
 		pass
-	elif event[0] == 1: #set_actor_var
+	elif event[0] == GameLogic.Undo.set_actor_var:
 		var prop = event[2];
 		var new_value = event[4];
 		if prop == "airborne":
@@ -119,11 +121,16 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 				elif size == 12:
 					return preload("res://timeline/timeline-broken-12.png");
 			pass
-	elif event[0] == 9: #change_terrain
+	elif event[0] == GameLogic.Undo.change_terrain:
 		if size == 8:
 			return preload("res://timeline/timeline-terrain-8.png");
 		elif size == 12:
 			return preload("res://timeline/timeline-terrain-12.png");
+	elif event[0] == GameLogic.Undo.tick:
+		if size == 8:
+			return preload("res://timeline/timeline-tick-8.png");
+		elif size == 12:
+			return preload("res://timeline/timeline-tick-12.png");
 		
 	return null
 

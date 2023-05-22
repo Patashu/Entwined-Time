@@ -63,10 +63,14 @@ func initialize(time_colour: int, ticks: int) -> void:
 	label.add_color_override("font_color", time_colours[time_colour]);
 	#label.add_color_override("font_color_shadow", Color(0, 0, 0, 1));
 	poof_in();
+	
+func update_ticks(ticks: int) -> void:
+	self.ticks = ticks;
+	label.text = str(self.ticks);
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+#func _ready() -> void:
+#	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

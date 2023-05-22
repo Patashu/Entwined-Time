@@ -47,10 +47,13 @@ var crystal_timer = 0;
 var crystal_timer_max = 1.6;
 # cuckoo clock
 var ticks = 10000;
+var thought_bubble = null;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
 	set_next_texture(tex);
+	if (thought_bubble != null):
+		thought_bubble.update_ticks(ticks);
 
 func get_next_texture() -> Texture:
 	# facing and powered modulate also automatically update here, since I want that to be instant
@@ -254,14 +257,17 @@ func tiny_pushable() -> bool:
 func afterimage() -> void:
 	gamelogic.afterimage(self);
 	
+func update_ticks(ticks: int) -> void:
+	self.ticks = ticks;
+	
 func set_ticks(ticks: int) -> void:
 	self.ticks = ticks;
 	# thought bubble
-	var sprite = Sprite.new();
-	sprite.set_script(preload("res://ThoughtBubble.gd"));
-	sprite.initialize(self.time_colour, self.ticks);
-	sprite.position = Vector2(12, -12);
-	self.add_child(sprite);
+	thought_bubble = Sprite.new();
+	thought_bubble.set_script(preload("res://ThoughtBubble.gd"));
+	thought_bubble.initialize(self.time_colour, self.ticks);
+	thought_bubble.position = Vector2(12, -12);
+	self.add_child(thought_bubble);
 
 func _process(delta: float) -> void:
 	#crystal effects
@@ -510,6 +516,13 @@ func _process(delta: float) -> void:
 				sparklespawner.script = preload("res://SparkleSpawner.gd");
 				sparklespawner.color = color;
 				self.add_child(sparklespawner);
+			elif (current_animation[0] == 18): #tick
+				var amount = current_animation[1];
+				thought_bubble.update_ticks(ticks);
+				if (amount < 0):
+					gamelogic.play_sound("tick");
+				else:
+					gamelogic.play_sound("untick");
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

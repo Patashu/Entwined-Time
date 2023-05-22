@@ -79,19 +79,19 @@ enum Success {
 # types of undo events
 
 enum Undo {
-	move,
-	set_actor_var,
+	move, #0
+	set_actor_var, #1
 	heavy_turn,
 	light_turn,
 	heavy_undo_event_add,
 	light_undo_event_add,
-	heavy_undo_event_add_locked,
-	light_undo_event_add_locked,
 	heavy_undo_event_remove,
 	light_undo_event_remove,
 	animation_substep,
-	change_terrain,
+	change_terrain, #9
 	# crystal undos
+	heavy_undo_event_add_locked,
+	light_undo_event_add_locked,
 	heavy_green_time_crystal_raw,
 	light_green_time_crystal_raw,
 	heavy_max_moves,
@@ -106,6 +106,8 @@ enum Undo {
 	light_turn_unlocked,
 	heavy_filling_turn_actual,
 	light_filling_turn_actual,
+	# crystal undos over
+	tick, #26
 }
 
 # and same for animations
@@ -128,6 +130,7 @@ enum Animation {
 	light_magenta_time_crystal, #15
 	heavy_green_time_crystal_unlock, #16
 	light_green_time_crystal_unlock, #17
+	tick, #18
 }
 
 enum TimeColour {
@@ -1853,6 +1856,15 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
 		pass
 
+func clock_ticks(actor: ActorBase, amount: int, chrono: int) -> void:
+	actor.ticks += amount;
+	if (actor.ticks == 0):
+		if actor.actorname == "cuckoo_clock":
+			#TODO: end the world
+			pass
+	add_undo_event([Undo.tick, actor, amount], chrono_for_maybe_green_actor(actor, chrono));
+	add_to_animation_server(actor, [Animation.tick, amount]);
+
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
 	if (chrono < Chrono.GHOSTS):
@@ -2375,7 +2387,10 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			light_locked_turns.append(light_undo_buffer.pop_at(was_turn));
 		lighttimeline.undo_unlock_turn(event[1]);
 		light_max_moves -= 1;
-	
+	elif (event[0] == Undo.tick):
+		var actor = event[1];
+		var amount = event[2];
+		clock_ticks(actor, -amount, chrono);
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
@@ -2774,6 +2789,11 @@ func time_passes(chrono: int) -> void:
 			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
 				actor.post_mortem = Durability.FIRE;
 				set_actor_var(actor, "broken", true, Chrono.CHAR_UNDO);
+				
+	# Lucky last - clocks tick.
+	for actor in time_actors:
+		if actor.ticks < 10000 and !actor.broken:
+			clock_ticks(actor, -1, chrono);
 	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
