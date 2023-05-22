@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -35,6 +35,7 @@
 [ext_resource path="res://assets/tutorial_arrows/arrow_right_6.png" type="Texture" id=33]
 [ext_resource path="res://assets/tutorial_arrows/arrow_right_8.png" type="Texture" id=34]
 [ext_resource path="res://assets/screen-static.png" type="Texture" id=35]
+[ext_resource path="res://Shade.gd" type="Script" id=36]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 16
@@ -227,6 +228,9 @@ offset = Vector2( 12, 12 )
 
 [node name="GameLogic" type="Node" parent="."]
 script = ExtResource( 3 )
+
+[node name="Shade" type="Node2D" parent="."]
+script = ExtResource( 36 )
 
 [node name="LevelLabel" type="Label" parent="."]
 margin_right = 512.0

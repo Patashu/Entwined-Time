@@ -15,7 +15,7 @@ Color("00FFFF"), Color("FF6A00"), Color("FFD800")];
 var label = null;
 
 func poof_in() -> void:
-	self.modulate.a = 1;
+	self.modulate.a = 0.95;
 	label.modulate.a = 1;
 	self.texture = preload("res://assets/PoofAwayThought1.png");
 	poofing_in = true;
@@ -25,7 +25,7 @@ func poof_in() -> void:
 	frame_timer = 0;
 	
 func poof_out() -> void:
-	self.modulate.a = 1;
+	self.modulate.a = 0.95;
 	label.modulate.a = 0;
 	self.texture = preload("res://assets/PoofAwayThought1.png");
 	poofing_in = false;
@@ -35,7 +35,7 @@ func poof_out() -> void:
 	frame_timer = 0;
 
 func nominal() -> void:
-	self.modulate.a = 1;
+	self.modulate.a = 0.95;
 	label.modulate.a = 1;
 	self.texture = preload("res://assets/Thought1.png");
 	poofing_in = false;
@@ -55,7 +55,7 @@ func initialize(time_colour: int, ticks: int) -> void:
 	self.vframes = 1;
 	label = Label.new();
 	label.align = Label.ALIGN_CENTER;
-	label.rect_position = Vector2(-22, -4);
+	label.rect_position = Vector2(-24, -6);
 	label.rect_size = Vector2(48, 24);
 	self.add_child(label);
 	label.text = str(self.ticks);

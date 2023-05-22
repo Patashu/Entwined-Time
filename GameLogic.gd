@@ -26,6 +26,7 @@ onready var downarrow : Sprite = levelscene.get_node("DownArrow");
 onready var leftarrow : Sprite = levelscene.get_node("LeftArrow");
 onready var rightarrow : Sprite = levelscene.get_node("RightArrow");
 onready var Static : Sprite = levelscene.get_node("Static");
+onready var Shade : Node2D = levelscene.get_node("Shade");
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
 
 # distinguish between temporal layers when a move or state change happens
@@ -252,9 +253,12 @@ var save_file = {}
 # song-and-dance state
 var sounds = {}
 var speakers = [];
+var music_speaker = null;
+var lost_speaker = null;
 var sounds_played_this_frame = {};
 var muted = false;
 var won = false;
+var lost = false;
 var won_fade_started = false;
 var cell_size = 24;
 var undo_effect_strength = 0;
@@ -706,6 +710,8 @@ func initialize_level_list() -> void:
 		level.queue_free();
 
 func ready_map() -> void:
+	won = false;
+	lost = false;
 	for actor in actors:
 		actor.queue_free();
 	actors.clear();
@@ -1091,6 +1097,10 @@ func prepare_audio() -> void:
 		var speaker = AudioStreamPlayer.new();
 		self.add_child(speaker);
 		speakers.append(speaker);
+	lost_speaker = AudioStreamPlayer.new();
+	self.add_child(lost_speaker);
+	music_speaker = AudioStreamPlayer.new();
+	self.add_child(music_speaker);
 
 func cut_sound() -> void:
 	if (doing_replay and meta_undo_a_restart_mode):
@@ -1860,10 +1870,19 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int) -> void:
 	actor.ticks += amount;
 	if (actor.ticks == 0):
 		if actor.actorname == "cuckoo_clock":
-			#TODO: end the world
-			pass
+			# end the world
+			# TODO: animation, sfx, ripple shader
+			lose("You didn't make it back to the Chrono Lab Reactor in time.");
 	add_undo_event([Undo.tick, actor, amount], chrono_for_maybe_green_actor(actor, chrono));
 	add_to_animation_server(actor, [Animation.tick, amount]);
+
+func lose(reason: String) -> void:
+	lost = true;
+	winlabel.visible = true;
+	winlabel.text = reason + "\n\nMeta-Undo or Restart to continue."
+	adjust_winlabel();
+	call_deferred("adjust_winlabel");
+	Shade.on = true;
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 	var old_value = actor.get(prop);
@@ -1957,7 +1976,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 		meta_undo_buffer[meta_turn].push_front(event);
 
 func character_undo(is_silent: bool = false) -> bool:
-	if (won): return false;
+	if (won or lost): return false;
 	user_replay += "z";
 	finish_animations(Chrono.CHAR_UNDO);
 	var fuzzed = false;
@@ -2202,6 +2221,10 @@ func check_won() -> void:
 	won = false;
 	var locked = false;
 	
+	if (lost):
+		return
+	Shade.on = false;
+	
 	#check goal lock:
 	for goal in goals:
 		if goal.locked:
@@ -2248,6 +2271,7 @@ func check_won() -> void:
 	
 	winlabel.visible = won;
 	if (won):
+		winlabel.text = "You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay"
 		won_fade_started = false;
 		tutoriallabel.visible = false;
 		adjust_winlabel();
@@ -2258,6 +2282,7 @@ func check_won() -> void:
 	
 func adjust_winlabel() -> void:
 	winlabel.rect_position.y = win_label_default_y;
+	winlabel.rect_position.x = 256 - winlabel.rect_size.x/2;
 	var tries = 1;
 	var heavy_actor_rect = heavy_actor.get_rect();
 	var light_actor_rect = light_actor.get_rect();
@@ -2406,6 +2431,7 @@ func meta_undo_a_restart() -> bool:
 	return false;
 
 func meta_undo(is_silent: bool = false) -> bool:
+	lost = false;
 	user_replay += "c";
 	finish_animations(Chrono.MOVE);
 	if (meta_turn <= 0):
@@ -2528,7 +2554,7 @@ func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 		return false;
 
 func character_move(dir: Vector2) -> bool:
-	if (won): return false;
+	if (won or lost): return false;
 	if (dir == Vector2.UP):
 		user_replay += "w";
 	elif (dir == Vector2.DOWN):
@@ -2978,7 +3004,7 @@ func update_animation_server(skip_globals: bool = false) -> void:
 		animation_server.pop_front();
 	if animation_server.size() == 0:
 		# won_fade starts here
-		if (won and !won_fade_started):
+		if ((won or lost) and !won_fade_started):
 			won_fade_started = true;
 			add_to_animation_server(heavy_actor, [Animation.fade]);
 			add_to_animation_server(light_actor, [Animation.fade]);
