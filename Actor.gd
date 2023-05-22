@@ -48,6 +48,9 @@ var crystal_timer_max = 1.6;
 # cuckoo clock
 var ticks = 10000;
 var thought_bubble = null;
+var ripple = null;
+var ripple_timer = 0;
+var ripple_timer_max = 1;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
@@ -294,6 +297,17 @@ func _process(delta: float) -> void:
 		#bob up and down
 		self.offset = Vector2(12, 12+3*sin(crystal_timer));
 	
+	#ripple
+	if (ripple != null):
+		ripple_timer += delta;
+		if (ripple_timer > ripple_timer_max):
+			ripple.queue_free();
+			ripple = null;
+		else:
+			ripple.get_material().set_shader_param("height", ((ripple_timer_max-ripple_timer)/ripple_timer_max)*0.003);
+			#child.get_material().set_shader_param("color", undo_color);
+			#child.get_material().set_shader_param("mixture", 1.0);
+	
 	#fluster timer
 	if fluster_timer_max > 0:
 		fluster_timer += delta;
@@ -526,6 +540,10 @@ func _process(delta: float) -> void:
 				thought_bubble.update_ticks(ticks);
 				if (ticks == 0):
 					gamelogic.play_sound("timesup");
+					ripple = preload("res://Ripple.tscn").instance();
+					ripple_timer = 0;
+					ripple.rect_position += Vector2(12, 12);
+					self.add_child(ripple);
 					self.update_graphics();
 				elif (amount < 0):
 					gamelogic.play_sound("tick");
