@@ -1209,13 +1209,15 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
 		return success;
-	elif (success != Success.Yes and !hypothetical):
-		# vanity bump goes here
+	elif (success != Success.Yes):
+		# vanity bump goes here, even if it's hypothetical, muahaha
 		if pushers_list.size() > 0 and actor.actorname == "light":
 			add_to_animation_server(actor, [Animation.fluster]);
-		# involuntary bump sfx
-		if (pushers_list.size() > 0 or is_retro):
-			add_to_animation_server(actor, [Animation.sfx, "involuntarybump"]);
+		if (!hypothetical):
+			# involuntary bump sfx
+			if (pushers_list.size() > 0 or is_retro):
+				add_to_animation_server(actor, [Animation.sfx, "involuntarybump"]);
+		# bump animation always happens, I think?
 		add_to_animation_server(actor, [Animation.bump, dir]);
 	return success;
 		
