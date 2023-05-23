@@ -16,6 +16,7 @@ var time_colours = [Color("808080"), Color("B200FF"), Color("FF00DC"),
 Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040"),
 Color("00FFFF"), Color("FF6A00"), Color("FFD800")];
 var label = null;
+var shadow_labels = [];
 var alpha = 0.85;
 
 func poof_in() -> void:
@@ -59,6 +60,20 @@ func initialize(time_colour: int, ticks: int) -> void:
 	self.ticks = ticks;
 	self.hframes = 3;
 	self.vframes = 1;
+	
+	var offsets = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT];
+	
+	for offset in offsets:
+		var sl = Label.new();
+		shadow_labels.append(sl);
+		sl.align = Label.ALIGN_CENTER;
+		sl.rect_position = Vector2(-24, -7) + offset;
+		sl.rect_size = Vector2(48, 24);
+		self.add_child(sl);
+		sl.text = str(self.ticks);
+		sl.theme = preload("res://DefaultTheme.tres");
+		sl.add_color_override("font_color", Color(0, 0, 0, 1));
+	
 	label = Label.new();
 	label.align = Label.ALIGN_CENTER;
 	label.rect_position = Vector2(-24, -7);
@@ -68,11 +83,14 @@ func initialize(time_colour: int, ticks: int) -> void:
 	label.theme = preload("res://DefaultTheme.tres");
 	label.add_color_override("font_color", time_colours[time_colour]);
 	#label.add_color_override("font_color_shadow", Color(0, 0, 0, 1));
+	#label.add_constant_override("shadow_as_outline", 1);
 	poof_in();
 	
 func update_ticks(ticks: int) -> void:
 	self.ticks = ticks;
 	label.text = str(self.ticks);
+	for sl in shadow_labels:
+		sl.text = label.text;
 
 # Called when the node enters the scene tree for the first time.
 #func _ready() -> void:
