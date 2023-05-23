@@ -133,6 +133,7 @@ enum Animation {
 	light_green_time_crystal_unlock, #17
 	tick, #18
 	undo_immunity, #19
+	grayscale, #20
 }
 
 enum TimeColour {
@@ -1214,9 +1215,12 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		actor.in_stars = false;
 		if terrain.has(Tiles.TheNight):
 			actor.in_night = true;
+			if (!actor_was_in_night):
+				add_to_animation_server(actor, [Animation.grayscale, true]);
 		if terrain.has(Tiles.TheStars):
 			actor.in_stars = true;
-		# TODO: animations
+		if (actor_was_in_night and !actor.in_night):
+			add_to_animation_server(actor, [Animation.grayscale, false]);
 		
 		#do sound effects for special moves and their undoes
 		if (was_push and is_retro):

@@ -60,6 +60,7 @@ func update_graphics() -> void:
 	set_next_texture(tex);
 	if (thought_bubble != null):
 		thought_bubble.update_ticks(ticks);
+	update_grayscale(in_stars);
 
 func get_next_texture() -> Texture:
 	# facing and powered modulate also automatically update here, since I want that to be instant
@@ -285,6 +286,12 @@ func set_ticks(ticks: int) -> void:
 	thought_bubble.initialize(self.time_colour, self.ticks);
 	thought_bubble.position = Vector2(12, -12);
 	self.add_child(thought_bubble);
+
+func update_grayscale(yes: bool) -> void:
+	if yes and self.material == null:
+		self.material = preload("res://GrayscaleMaterial.tres");
+	elif !yes and self.material != null:
+		self.material = null;
 
 func _process(delta: float) -> void:
 	#crystal effects
@@ -568,6 +575,9 @@ func _process(delta: float) -> void:
 					position = pos*24;
 				else:
 					is_done = false;
+			elif (current_animation[0] == 20): #grayscale
+				var new_value = current_animation[1];
+				update_grayscale(new_value);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
