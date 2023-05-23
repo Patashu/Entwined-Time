@@ -7,12 +7,12 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 1, 8, 0, 2, 2, 0, 3, 56, 0, 4, 56, 0, 6, 56, 0, 7, 56, 0, 8, 1, 0, 9, 7, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196615, 65541, 14, 262148, 65544, 14, 196613, 65545, 14, 196614, 65546, 14, 196615, 131072, 56, 0, 131073, 56, 0, 131074, 56, 0, 131080, 56, 0, 131081, 56, 0, 131082, 56, 0, 262144, 56, 0, 262145, 56, 0, 262146, 56, 0, 262152, 56, 0, 262153, 56, 0, 262154, 56, 0 )
+tile_data = PoolIntArray( 1, 8, 0, 2, 2, 0, 3, 56, 0, 4, 56, 0, 6, 56, 0, 7, 56, 0, 8, 1, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196615, 65541, 14, 262148, 65544, 14, 196613, 65545, 14, 196614, 65546, 14, 196615, 131072, 56, 0, 131073, 56, 0, 131074, 56, 0, 131080, 56, 0, 131081, 56, 0, 131082, 56, 0, 196617, 7, 0, 262144, 56, 0, 262145, 56, 0, 262146, 56, 0, 262152, 56, 0, 262153, 56, 0, 262154, 56, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "The Shroud"
-level_replay = "The Shroud$mturn=26$ddzzddzddxdddzzzddzdzzwddxzd"
+level_name = "The Shroud [VAR1]"
+level_replay = "The Shroud [VAR1]$mturn=35$ddzzddzddxdddzzddzzdzzssdzazzzcsaxzxzzdsxdccdxs"
 heavy_max_moves = 3
 light_max_moves = 3
 

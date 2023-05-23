@@ -132,6 +132,7 @@ enum Animation {
 	heavy_green_time_crystal_unlock, #16
 	light_green_time_crystal_unlock, #17
 	tick, #18
+	undo_immunity, #19
 }
 
 enum TimeColour {
@@ -675,6 +676,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheShroud.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
+	level_list.push_back(preload("res://levels/TheShroudEx.tscn"));
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -1204,6 +1206,18 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		add_undo_event([Undo.move, actor, dir, was_push, was_fall], chrono_for_maybe_green_actor(actor, chrono));
 		actor.pos = pos;
 		
+		# update night and stars state
+		var terrain = terrain_in_tile(actor.pos);
+		var actor_was_in_night = actor.in_night;
+		var actor_was_in_stars = actor.in_stars;
+		actor.in_night = false;
+		actor.in_stars = false;
+		if terrain.has(Tiles.TheNight):
+			actor.in_night = true;
+		if terrain.has(Tiles.TheStars):
+			actor.in_stars = true;
+		# TODO: animations
+		
 		#do sound effects for special moves and their undoes
 		if (was_push and is_retro):
 			add_to_animation_server(actor, [Animation.sfx, "unpush"]);
@@ -1223,7 +1237,6 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		
 		#ding logic
 		if (!actor.broken):
-			var terrain = terrain_in_tile(actor.pos);
 			var old_terrain = terrain_in_tile(actor.pos - dir);
 			if (!actor.is_character):
 				if terrain.has(Tiles.CrateGoal):
@@ -1899,7 +1912,6 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int) -> void:
 	if (actor.ticks == 0):
 		if actor.actorname == "cuckoo_clock":
 			# end the world
-			# TODO: ripple shader
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
 	add_undo_event([Undo.tick, actor, amount], chrono_for_maybe_green_actor(actor, chrono));
 	add_to_animation_server(actor, [Animation.tick, amount]);
@@ -2344,9 +2356,17 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		#func move_actor_relative(actor: Actor, dir: Vector2, chrono: int,
 		#hypothetical: bool, is_gravity: bool, is_retro: bool = false,
 		#pushers_list: Array = [], was_fall = false, was_push = false) -> int:
-		move_actor_relative(event[1], -event[2], chrono, false, false, true, [], event[3], event[4]);
+		var actor = event[1];
+		if (chrono < Chrono.META_UNDO and actor.in_stars):
+			add_to_animation_server(actor, [Animation.undo_immunity]);
+		else:
+			move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4]);
 	elif (event[0] == Undo.set_actor_var):
-		set_actor_var(event[1], event[2], event[3], chrono);
+		var actor = event[1];
+		if (chrono < Chrono.META_UNDO and actor.in_stars):
+			add_to_animation_server(actor, [Animation.undo_immunity]);
+		else:
+			set_actor_var(actor, event[2], event[3], chrono);
 	elif (event[0] == Undo.change_terrain):
 		var actor = event[1];
 		var pos = event[2];
@@ -2448,7 +2468,10 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.tick):
 		var actor = event[1];
 		var amount = event[2];
-		clock_ticks(actor, -amount, chrono);
+		if (chrono < Chrono.META_UNDO and actor.in_stars):
+			add_to_animation_server(actor, [Animation.undo_immunity]);
+		else:
+			clock_ticks(actor, -amount, chrono);
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):
@@ -2756,7 +2779,7 @@ func time_passes(chrono: int) -> void:
 	var has_fallen = {};
 	for actor in time_actors:
 		has_fallen[actor] = 0;
-		if actor.airborne > 0 and actor.fall_speed() != 0:
+		if !actor.in_night and actor.airborne > 0 and actor.fall_speed() != 0:
 			set_actor_var(actor, "airborne", actor.airborne - 1, chrono);
 			
 	# AD09: ALL actors go from airborne 2 to 1. (blue/red levels are kind of fucky without this)
@@ -2777,6 +2800,8 @@ func time_passes(chrono: int) -> void:
 		something_happened = false;
 		for actor in time_actors:
 			if (actor.fall_speed() >= 0 and has_fallen[actor] >= actor.fall_speed()):
+				continue;
+			if (actor.in_night):
 				continue;
 			if actor.airborne == -1 and !is_suspended(actor):
 				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
@@ -2812,6 +2837,8 @@ func time_passes(chrono: int) -> void:
 	# It was vaguely tolerable for Light but I don't know if it was ever a mechanic I was like 'whoo' about,
 	#and now it definitely sucks.
 	for actor in time_actors:
+		if (actor.in_night):
+			continue;
 		if (actor.airborne == 0):
 			if is_suspended(actor):
 				set_actor_var(actor, "airborne", -1, chrono);
@@ -2836,6 +2863,9 @@ func time_passes(chrono: int) -> void:
 			time_colour = TimeColour.Red;
 		add_to_animation_server(null, [Animation.fire_roars, time_colour])
 	for actor in time_actors:
+		if (actor.in_night):
+			# why would you ever put fire in night? but yet...
+			continue;
 		var terrain = terrain_in_tile(actor.pos);		
 		if !actor.broken and terrain.has(Tiles.Fire) and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
@@ -2847,6 +2877,9 @@ func time_passes(chrono: int) -> void:
 	# Green fire happens after regular fire, so you can have that matter if you'd like it to :D	
 	if chrono <= Chrono.CHAR_UNDO:
 		for actor in actors:
+			if (actor.in_night):
+				# GREEN fire in night? now you're just making fun of me...
+				continue;
 			var terrain = terrain_in_tile(actor.pos);
 			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
 				actor.post_mortem = Durability.FIRE;
@@ -2854,6 +2887,8 @@ func time_passes(chrono: int) -> void:
 				
 	# Lucky last - clocks tick.
 	for actor in time_actors:
+		if actor.in_night:
+			continue;
 		if actor.ticks < 10000 and !actor.broken:
 			clock_ticks(actor, -1, chrono);
 	

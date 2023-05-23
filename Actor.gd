@@ -51,6 +51,9 @@ var thought_bubble = null;
 var ripple = null;
 var ripple_timer = 0;
 var ripple_timer_max = 1;
+# night and stars
+var in_night = false;
+var in_stars = false;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
@@ -555,6 +558,16 @@ func _process(delta: float) -> void:
 					gamelogic.play_sound("tick");
 				else:
 					gamelogic.play_sound("untick");
+			elif (current_animation[0] == 19): #undo_immunity
+				if (animation_timer == 0):
+					gamelogic.play_sound("shroud");
+				animation_timer_max = 0.083;
+				position = pos*24 + Vector2(gamelogic.rng.randf_range(-2, 2), gamelogic.rng.randf_range(-2, 2));
+				animation_timer += delta;
+				if (animation_timer > animation_timer_max):
+					position = pos*24;
+				else:
+					is_done = false;
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
