@@ -930,7 +930,7 @@ func make_actors() -> void:
 	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
 	
 	# cuckoo clocks
-	extract_actors(Tiles.CuckooClock, "cuckoo_clock", Heaviness.IRON, Strength.WOODEN, Durability.SPIKES, 1, false, Color("#AD8255"));
+	extract_actors(Tiles.CuckooClock, "cuckoo_clock", Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 1, false, Color("#AD8255"));
 	
 	# time crystals
 	extract_actors(Tiles.TimeCrystalGreen, "time_crystal_green", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#A9F05F"));
