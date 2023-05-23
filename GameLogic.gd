@@ -1188,7 +1188,7 @@ func update_goal_lock() -> void:
 			if !goal.locked:
 				goal.lock();
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false) -> int:
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of = null) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.ghost_dir = -dir;
@@ -1196,18 +1196,28 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: 
 		ghost.position = terrainmap.map_to_world(ghost.pos);
 		return Success.Yes;
 	
-	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, is_retro, pushers_list, was_push, was_fall);
+	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false) -> int:
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of = null) -> int:
 	var dir = pos - actor.pos;
+	var old_pos = actor.pos;
 	
-	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list);
+	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list, phased_out_of);
 	if (success == Success.Yes and !hypothetical):
 		if (!is_retro):
 			was_push = pushers_list.size() > 0;
 			was_fall = is_gravity;
-		add_undo_event([Undo.move, actor, dir, was_push, was_fall], chrono_for_maybe_green_actor(actor, chrono));
 		actor.pos = pos;
+		# 'phased out of' mechanic: If two actors stack, one actor moves out and then undoes,
+		# it should phase back in rather than retro-push since no desyncing or timefuck has happened.
+		# (Remember, character undo ALWAYS returns you to the state you were in on that turn... IF nothing changed.)
+		phased_out_of = null;
+		if (chrono == Chrono.MOVE):
+			phased_out_of = [];
+			for actor in actors:
+				if actor.pushable() and actor.pos == old_pos:
+					phased_out_of.append(actor);
+		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of], chrono_for_maybe_green_actor(actor, chrono));
 		
 		# update night and stars state
 		var terrain = terrain_in_tile(actor.pos);
@@ -1622,7 +1632,7 @@ func strength_check(strength: int, heaviness: int) -> bool:
 		return strength >= Strength.GRAVITY;
 	return false;
 	
-func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = []) -> int:
+func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], phased_out_of = null) -> int:
 	var dest = actor.pos + dir;
 	if (chrono >= Chrono.META_UNDO):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
@@ -1644,6 +1654,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	var pushables_there = [];
 	var tiny_pushables_there = [];
 	for actor_there in actors_there:
+		if (phased_out_of != null and phased_out_of.has(actor_there)):
+			continue
 		if actor_there.tiny_pushable():
 			tiny_pushables_there.push_back(actor_there);
 		elif actor_there.pushable():
@@ -2365,12 +2377,12 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		#[Undo.move, actor, dir, was_push, was_fall]
 		#func move_actor_relative(actor: Actor, dir: Vector2, chrono: int,
 		#hypothetical: bool, is_gravity: bool, is_retro: bool = false,
-		#pushers_list: Array = [], was_fall = false, was_push = false) -> int:
+		#pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of: Array = null) -> int:
 		var actor = event[1];
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
 			add_to_animation_server(actor, [Animation.undo_immunity]);
 		else:
-			move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4]);
+			move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5]);
 	elif (event[0] == Undo.set_actor_var):
 		var actor = event[1];
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
