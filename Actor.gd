@@ -199,6 +199,12 @@ func set_next_texture(tex: Texture) -> void:
 		hframes = 3;
 	else:
 		hframes = 1;
+		
+	if (thought_bubble != null):
+		if broken:
+			thought_bubble.poof_out();
+		else:
+			thought_bubble.poof_in();
 
 func fluster():
 	if (broken):

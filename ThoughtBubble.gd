@@ -3,8 +3,11 @@ class_name ThoughtBubble
 
 var frame_timer = 0;
 var frame_timer_max = 0.4;
-var poofing_in = true;
-var poofing_out = false;
+
+enum State { In, Out, Nominal, Hide };
+
+var state = State.Hide;
+
 var rising = true;
 var ticks = 10000;
 # REFACTOR: same as in TimeBubble.gd
@@ -16,21 +19,23 @@ var label = null;
 var alpha = 0.85;
 
 func poof_in() -> void:
+	if (state == State.In or state == State.Nominal):
+		return;
 	self.self_modulate.a = alpha;
 	#label.modulate.a = 1;
 	self.texture = preload("res://assets/PoofAwayThought1.png");
-	poofing_in = true;
-	poofing_out = false;
+	state = State.In;
 	rising = false;
 	frame = 2;
 	frame_timer = 0;
 	
 func poof_out() -> void:
+	if (state == State.Out or state == State.Hide):
+		return;
 	self.self_modulate.a = alpha;
 	#label.modulate.a = 1;
 	self.texture = preload("res://assets/PoofAwayThought1.png");
-	poofing_in = false;
-	poofing_out = true;
+	state = State.Out;
 	rising = true;
 	frame = 0;
 	frame_timer = 0;
@@ -39,8 +44,7 @@ func nominal() -> void:
 	self.self_modulate.a = alpha;
 	#label.modulate.a = 1;
 	self.texture = preload("res://assets/Thought1.png");
-	poofing_in = false;
-	poofing_out = false;
+	state = State.Nominal;
 	rising = true;
 	frame = 0;
 	frame_timer = 0;
@@ -48,6 +52,7 @@ func nominal() -> void:
 func hide() -> void:
 	self.self_modulate.a = 0;
 	#label.modulate.a = 1;
+	state = State.Hide;
 
 func initialize(time_colour: int, ticks: int) -> void:
 	self.time_colour = time_colour;
@@ -82,7 +87,7 @@ func _process(delta: float) -> void:
 			if (frame < self.hframes - 1):
 				frame += 1;
 			else:
-				if (poofing_out):
+				if (state == State.Out):
 					hide();
 				else:
 					rising = false;
@@ -90,7 +95,7 @@ func _process(delta: float) -> void:
 			if (frame > 0):
 				frame -= 1;
 			else:
-				if (poofing_in):
+				if (state == State.In):
 					nominal();
 				else:
 					rising = true;
