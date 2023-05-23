@@ -206,6 +206,8 @@ enum Tiles {
 	TimeCrystalGreen, #53
 	TimeCrystalMagenta, #54
 	CuckooClock, #55
+	TheNight, #56
+	TheStars, #57
 }
 
 # information about the level
