@@ -13,10 +13,11 @@ var time_colours = [Color("808080"), Color("B200FF"), Color("FF00DC"),
 Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040"),
 Color("00FFFF"), Color("FF6A00"), Color("FFD800")];
 var label = null;
+var alpha = 0.85;
 
 func poof_in() -> void:
-	self.modulate.a = 0.95;
-	label.modulate.a = 1;
+	self.self_modulate.a = alpha;
+	#label.modulate.a = 1;
 	self.texture = preload("res://assets/PoofAwayThought1.png");
 	poofing_in = true;
 	poofing_out = false;
@@ -25,8 +26,8 @@ func poof_in() -> void:
 	frame_timer = 0;
 	
 func poof_out() -> void:
-	self.modulate.a = 0.95;
-	label.modulate.a = 0;
+	self.self_modulate.a = alpha;
+	#label.modulate.a = 1;
 	self.texture = preload("res://assets/PoofAwayThought1.png");
 	poofing_in = false;
 	poofing_out = true;
@@ -35,8 +36,8 @@ func poof_out() -> void:
 	frame_timer = 0;
 
 func nominal() -> void:
-	self.modulate.a = 0.95;
-	label.modulate.a = 1;
+	self.self_modulate.a = alpha;
+	#label.modulate.a = 1;
 	self.texture = preload("res://assets/Thought1.png");
 	poofing_in = false;
 	poofing_out = false;
@@ -45,8 +46,8 @@ func nominal() -> void:
 	frame_timer = 0;
 	
 func hide() -> void:
-	self.modulate.a = 0;
-	label.modulate.a = 1;
+	self.self_modulate.a = 0;
+	#label.modulate.a = 1;
 
 func initialize(time_colour: int, ticks: int) -> void:
 	self.time_colour = time_colour;
