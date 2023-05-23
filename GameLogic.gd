@@ -1356,7 +1356,11 @@ func terrain_in_tile(pos: Vector2) -> Array:
 	return result;
 
 func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
-	if (chrono >= Chrono.CHAR_UNDO):
+	if (chrono >= Chrono.META_UNDO):
+		return chrono;
+	elif (actor.time_colour == TimeColour.Void):
+		return Chrono.META_UNDO;
+	elif (chrono >= Chrono.CHAR_UNDO):
 		return chrono;
 	elif (actor.time_colour == TimeColour.Green):
 		return Chrono.CHAR_UNDO;
