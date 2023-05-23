@@ -260,6 +260,7 @@ var sounds_played_this_frame = {};
 var muted = false;
 var won = false;
 var lost = false;
+var lost_void = false;
 var won_fade_started = false;
 var cell_size = 24;
 var undo_effect_strength = 0;
@@ -1803,7 +1804,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# Lose (Paradox)
 			if (heavy_max_moves <= 0):
 				set_actor_var(heavy_actor, "broken", true, Chrono.CHAR_UNDO);
-				lose("Paradox: A character can't have less than 0 moves.")
+				lose("Paradox: A character can't have less than 0 moves.", heavy_actor)
 				return;
 			# accessible timeline is now one move shorter.
 			heavy_max_moves -= 1;
@@ -1848,7 +1849,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# Lose (Paradox)
 			if (light_max_moves <= 0):
 				set_actor_var(light_actor, "broken", true, Chrono.CHAR_UNDO);
-				lose("Paradox: A character can't have less than 0 moves.")
+				lose("Paradox: A character can't have less than 0 moves.", light_actor)
 				return;
 			# accessible timeline is now one move shorter.
 			light_max_moves -= 1;
@@ -1896,13 +1897,18 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int) -> void:
 		if actor.actorname == "cuckoo_clock":
 			# end the world
 			# TODO: ripple shader
-			lose("You didn't make it back to the Chrono Lab Reactor in time.");
+			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
 	add_undo_event([Undo.tick, actor, amount], chrono_for_maybe_green_actor(actor, chrono));
 	add_to_animation_server(actor, [Animation.tick, amount]);
 
-func lose(reason: String) -> void:
+func lose(reason: String, suspect: Actor) -> void:
 	lost = true;
-	winlabel.text = reason + "\n\nMeta-Undo or Restart to continue."
+	if (suspect != null and suspect.time_colour == TimeColour.Void):
+		lost_void = true;
+		winlabel.text = reason + "\n\nRestart to continue."
+	else:
+		lost_void = false;
+		winlabel.text = reason + "\n\nMeta-Undo or Restart to continue."
 	
 func end_lose() -> void:
 	lost = false;
@@ -2455,6 +2461,9 @@ func meta_undo_a_restart() -> bool:
 	return false;
 
 func meta_undo(is_silent: bool = false) -> bool:
+	if (lost and lost_void):
+		play_sound("bump");
+		return false;
 	end_lose();
 	user_replay += "c";
 	finish_animations(Chrono.MOVE);
