@@ -554,7 +554,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFoundEx2.tscn"));
-	level_list.push_back(preload("res://levels/LevelNotFoundEx3.tscn"));
 	level_list.push_back(preload("res://levels/Freedom.tscn"));
 	level_list.push_back(preload("res://levels/BlueAndRedEx.tscn"));
 	level_list.push_back(preload("res://levels/BlueAndRedEx2.tscn"));
@@ -676,6 +675,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
 	level_list.push_back(preload("res://levels/TheShroud.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_list.push_back(preload("res://levels/LevelNotFoundEx3.tscn"));
 	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
 	level_list.push_back(preload("res://levels/TheShroudEx.tscn"));
 	
