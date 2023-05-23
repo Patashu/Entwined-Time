@@ -54,6 +54,10 @@ var ripple_timer_max = 1;
 # night and stars
 var in_night = false;
 var in_stars = false;
+# transient multi-push/multi-fall state:
+# basically, things that move become non-colliding until the end of the multi-push/fall tick they're
+# a part of, so other things that shared their tile can move with them
+var just_moved = false;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
@@ -265,12 +269,16 @@ func climbs() -> bool:
 	return climbs and !broken;
 
 func pushable() -> bool:
+	if (just_moved):
+		return false;
 	if (broken):
 		return is_character;
 	return true;
 		
-func tiny_pushable() -> bool:
-	return actorname == "key" and !broken;
+#func tiny_pushable() -> bool:
+#	if (just_moved):
+#		return false;
+#	return actorname == "key" and !broken;
 
 func afterimage() -> void:
 	gamelogic.afterimage(self);

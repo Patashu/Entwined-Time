@@ -1294,7 +1294,10 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
 				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
+					sticky_actor.just_moved = true;
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
+			for sticky_actor in sticky_actors:
+				sticky_actor.just_moved = false;
 		return success;
 	elif (success != Success.Yes):
 		# vanity bump goes here, even if it's hypothetical, muahaha
@@ -1652,12 +1655,12 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	# handle pushing
 	var actors_there = actors_in_tile(dest);
 	var pushables_there = [];
-	var tiny_pushables_there = [];
+	#var tiny_pushables_there = [];
 	for actor_there in actors_there:
 		if (phased_out_of != null and phased_out_of.has(actor_there)):
 			continue
-		if actor_there.tiny_pushable():
-			tiny_pushables_there.push_back(actor_there);
+		#if actor_there.tiny_pushable():
+		#	tiny_pushables_there.push_back(actor_there);
 		elif actor_there.pushable():
 			pushables_there.push_back(actor_there);
 	
@@ -1707,6 +1710,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
 			else:
 				for actor_there in pushables_there:
+					actor_there.just_moved = true;
 					#AD13: Heavy prefers to push crystals up instead of eat them. Sticky top baby ;D
 					#this definitely won't bite me in the ass I want to make a PUZZLE ok
 					if (can_eat(actor, actor_there) or can_eat(actor_there, actor)):
@@ -1718,6 +1722,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 							eat_crystal(actor, actor_there, chrono);
 					else:
 						move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
+				for actor_there in pushables_there:
+					actor_there.just_moved = false;
 		
 		pushers_list.pop_front();
 		return result;
@@ -2816,15 +2822,36 @@ func time_passes(chrono: int) -> void:
 	time_actors.sort_custom(self, "bottom_up");
 	var something_happened = true;
 	var tries = 99;
+	# just_moved logic for stacked actors falling together without clipping through e.g. Heavies sticky topping them down:
+	# 1) Peek one time_actor ahead.
+	# 1a) If it shares our pos, we're part of a stack - before we try to move, set just_moved, and keep it set if we did move.
+	# 1b) If it doesn't or it's empty, then we're ending a stack or were never in a stack - unset all just_moveds at the end of the tick
+	# This will probably break in some esoteric level editor cases with Heavy sticky top or boost pads, but it's good enough for my needs.
+	var just_moveds = [];
+	var clear_just_moveds = false;
 	while (something_happened and tries > 0):
 		animation_substep(chrono);
 		tries -= 1;
 		something_happened = false;
-		for actor in time_actors:
+		var size = time_actors.size();
+		for i in range(size):
+			var actor = time_actors[i];
 			if (actor.fall_speed() >= 0 and has_fallen[actor] >= actor.fall_speed()):
 				continue;
 			if (actor.in_night):
 				continue;
+			
+			# multi-falling stack check
+			if (i < (size - 1)):
+				var next_actor = time_actors[i+1];
+				if actor.pos != next_actor.pos:
+					clear_just_moveds = true;
+				else:
+					actor.just_moved = true;
+					just_moveds.append(actor);
+			else:
+				clear_just_moveds = true;
+			
 			if actor.airborne == -1 and !is_suspended(actor):
 				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
@@ -2834,12 +2861,14 @@ func time_passes(chrono: int) -> void:
 					else:
 						set_actor_var(actor, "airborne", 0, chrono);
 					something_happened = true;
+			
 			if actor.airborne == 0:
 				var did_fall = Success.No;
 				if (is_suspended(actor)):
 					did_fall = Success.No;
 				else:
 					did_fall = move_actor_relative(actor, Vector2.DOWN, chrono, false, true);
+				
 				if (did_fall != Success.No):
 					something_happened = true;
 					# so Heavy can break a glass block and not fall further, surprises break your fall immediately
@@ -2848,7 +2877,18 @@ func time_passes(chrono: int) -> void:
 					else:
 						has_fallen[actor] += 1;
 				if (did_fall != Success.Yes):
+					actor.just_moved = false;
 					set_actor_var(actor, "airborne", -1, chrono);
+			
+			if clear_just_moveds:
+				clear_just_moveds = false;
+				for a in just_moveds:
+					a.just_moved = false;
+				just_moveds.clear();
+	
+	#possible to leak this out the for loop
+	for a in just_moveds:
+		a.just_moved = false;
 	
 	animation_substep(chrono);
 	
