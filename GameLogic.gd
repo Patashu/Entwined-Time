@@ -671,6 +671,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#2D0E07"));
 	chapter_replacements[chapter_names.size() - 1] = "Ω";
 	level_list.push_back(preload("res://levels/CuckooClock.tscn"));
+	level_list.push_back(preload("res://levels/ItDoesntAddUp.tscn"));
 	level_list.push_back(preload("res://levels/GreenCuckoo1.tscn"));
 	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
 	level_list.push_back(preload("res://levels/TheShroud.tscn"));

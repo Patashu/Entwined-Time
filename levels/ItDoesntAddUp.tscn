@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65537, 14, 262145, 65538, 19, 0, 65539, 19, 0, 65540, 19, 0, 65541, 7, 0, 65542, 14, 262145, 131073, 14, 262145, 131074, 26, 0, 131075, 14, 196613, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 589828, 196608, 12, 0, 196609, 14, 327681, 196610, 26, 0, 196614, 14, 262145, 262144, 12, 0, 262145, 55, 0, 262146, 22, 0, 262150, 14, 262145, 327680, 12, 0, 327681, 14, 196609, 327683, 2, 0, 327684, 8, 0, 327685, 27, 0, 327686, 14, 262145, 393217, 14, 589826, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196615, 393221, 27, 0, 393222, 14, 262145, 458753, 14, 262145, 458754, 1, 0, 458755, 22, 0, 458756, 22, 0, 458757, 22, 0, 458758, 14, 262145, 524289, 14, 655362, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196614, 524293, 14, 196614, 524294, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "It Doesn't Add Up"
+level_replay = "It Doesn't Add Up$mturn=32$awaxawaxzxwxzzawaxzzzzwzdddxzzzddzzaaa"
+heavy_max_moves = 4
+light_max_moves = 4
+clock_turns = "5"
