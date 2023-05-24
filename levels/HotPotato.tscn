@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65537, 32, 0, 65540, 30, 0, 65542, 29, 0, 65545, 32, 0, 65546, 14, 262145, 131072, 14, 262145, 131073, 3, 0, 131076, 30, 0, 131078, 29, 0, 131081, 3, 0, 131082, 14, 262145, 196608, 14, 262145, 196609, 23, 0, 196612, 30, 0, 196614, 29, 0, 196617, 23, 0, 196618, 14, 262145, 262144, 14, 589826, 262145, 14, 196615, 262148, 30, 0, 262150, 29, 0, 262153, 14, 196613, 262154, 14, 589828, 327680, 14, 262145, 327681, 1, 0, 327683, 2, 0, 327684, 30, 0, 327685, 55, 0, 327686, 29, 0, 327687, 8, 0, 327689, 7, 0, 327690, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Hot Potato"
+level_replay = "Hot Potato$mturn=54$xaaxwddxdxzzzxzxwawaxzzxwzzzzzadddxwaxaxaxaxzzzxzzxwdwdxzzzzxwzzzzzddxaa"
+heavy_max_moves = 6
+light_max_moves = 6
+clock_turns = "9"
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 39, 0, 131081, 39, 0, 327685, 32, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 23, 0, 131081, 23, 0 )
