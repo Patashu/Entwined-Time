@@ -64,7 +64,7 @@ func update_graphics() -> void:
 	set_next_texture(tex);
 	if (thought_bubble != null):
 		thought_bubble.update_ticks(ticks);
-	update_grayscale(in_stars);
+	update_grayscale(in_night);
 
 func get_next_texture() -> Texture:
 	# facing and powered modulate also automatically update here, since I want that to be instant

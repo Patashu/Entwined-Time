@@ -678,6 +678,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
 	level_list.push_back(preload("res://levels/DST.tscn"));
 	level_list.push_back(preload("res://levels/TheShroud.tscn"));
+	level_list.push_back(preload("res://levels/ControlledDemolition.tscn"));
+	level_list.push_back(preload("res://levels/Cascade.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/HotPotato.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFoundEx3.tscn"));
