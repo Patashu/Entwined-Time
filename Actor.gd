@@ -586,6 +586,24 @@ func _process(delta: float) -> void:
 			elif (current_animation[0] == 20): #grayscale
 				var new_value = current_animation[1];
 				update_grayscale(new_value);
+			elif (current_animation[0] == 21): #generic_green_time_crystal
+				var color = current_animation[1].color;
+				gamelogic.undo_effect_strength = 0.4;
+				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+				gamelogic.undo_effect_color = color;
+				var sparklespawner = Node2D.new();
+				sparklespawner.script = preload("res://SparkleSpawner.gd");
+				sparklespawner.color = color;
+				self.add_child(sparklespawner);
+			elif (current_animation[0] == 22): #generic_magenta_time_crystal;
+				var color = current_animation[1].color;
+				gamelogic.undo_effect_strength = 0.4;
+				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+				gamelogic.undo_effect_color = color;
+				var sparklespawner = Node2D.new();
+				sparklespawner.script = preload("res://SparkleSpawner.gd");
+				sparklespawner.color = color;
+				self.add_child(sparklespawner);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

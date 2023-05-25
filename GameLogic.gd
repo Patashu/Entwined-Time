@@ -134,6 +134,8 @@ enum Animation {
 	tick, #18
 	undo_immunity, #19
 	grayscale, #20
+	generic_green_time_crystal, #21
+	generic_magenta_time_crystal, #22
 }
 
 enum TimeColour {
@@ -677,6 +679,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GreenCuckoo1.tscn"));
 	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
 	level_list.push_back(preload("res://levels/DST.tscn"));
+	level_list.push_back(preload("res://levels/EngineRoom.tscn"));
 	level_list.push_back(preload("res://levels/TheShroud.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolition.tscn"));
 	level_list.push_back(preload("res://levels/Cascade.tscn"));
@@ -1744,7 +1747,11 @@ func can_eat(eater: Actor, eatee: Actor) -> bool:
 	if eatee.broken:
 		return false;
 	if (!eater.is_character):
-		return false;
+		# new: cuckoo clocks can eat time crystals :9
+		if eater.actorname == "cuckoo_clock" and !eater.broken:
+			pass
+		else:
+			return false;
 	# for now I've decided you can always eat a time crystal - it'll just break you if it's nega and you're at 0/0 turns
 	# other options: push, eat but do nothing, eat and go into negative moves, lose (time paradox)
 	return true;
@@ -1847,6 +1854,9 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 						light_turn += 1;
 						add_undo_event([Undo.light_turn_direct, 1], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, light_turn]);
+		else: #cuckoo clock
+			clock_ticks(eater, 1, Chrono.CHAR_UNDO);
+			add_to_animation_server(eater, [Animation.generic_green_time_crystal, eatee]);
 	else: # magenta time crystal
 		var just_locked = false;
 		var turn_moved = -1;
@@ -1939,7 +1949,9 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			
 			# animation
 			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
-		pass
+		else: #cuckoo clock
+			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
+			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee]);
 
 func clock_ticks(actor: ActorBase, amount: int, chrono: int) -> void:
 	actor.ticks += amount;
