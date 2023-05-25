@@ -684,11 +684,13 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Rewind.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolition.tscn"));
 	level_list.push_back(preload("res://levels/Cascade.tscn"));
+	level_list.push_back(preload("res://levels/AWayIn.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/HotPotato.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFoundEx3.tscn"));
 	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
 	level_list.push_back(preload("res://levels/Collectathon.tscn"));
+	level_list.push_back(preload("res://levels/Rink.tscn"));
 	level_list.push_back(preload("res://levels/Hassle.tscn"));
 	level_list.push_back(preload("res://levels/TheShroudEx.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolitionEx.tscn"));
