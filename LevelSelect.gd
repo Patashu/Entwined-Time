@@ -70,7 +70,10 @@ func prepare_chapter() -> void:
 		button.rect_position.y = yy + yyy*y;
 		button.level_number = i + normal_start;
 		var level_name = gamelogic.level_names[button.level_number];
-		button.text = str(i) + " - " + level_name;
+		var level_string = str(i);
+		if (gamelogic.level_replacements.has(button.level_number)):
+			level_string = gamelogic.level_replacements[button.level_number];
+		button.text = level_string + " - " + level_name;
 		button.theme = holder.theme;
 		button.levelselect = self;
 		
@@ -123,7 +126,10 @@ func prepare_chapter() -> void:
 			button.rect_position.y = yy + yyy*y;
 			button.level_number = i + advanced_start;
 			var level_name = gamelogic.level_names[button.level_number];
-			button.text = str(i) + "X - " + level_name;
+			var level_string = str(i);
+			if (gamelogic.level_replacements.has(button.level_number)):
+				level_string = gamelogic.level_replacements[button.level_number];
+			button.text = level_string + "X - " + level_name;
 			button.theme = holder.theme;
 			button.levelselect = self;
 			if (x == 0 and y == 1): # the first button

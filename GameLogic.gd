@@ -307,6 +307,7 @@ var level_names = [];
 var chapter_names = [];
 var chapter_skies = [];
 var chapter_replacements = {};
+var level_replacements = {};
 var target_sky = Color("#223C52");
 var old_sky = Color("#223C52");
 var current_sky = Color("#223C52");
@@ -684,6 +685,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Rewind.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolition.tscn"));
 	level_list.push_back(preload("res://levels/Cascade.tscn"));
+	level_replacements[level_list.size()] = "Ω";
 	level_list.push_back(preload("res://levels/AWayIn.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	level_list.push_back(preload("res://levels/HotPotato.tscn"));
@@ -3045,7 +3047,10 @@ func update_level_label() -> void:
 		var chapter_string = str(chapter);
 		if chapter_replacements.has(chapter):
 			chapter_string = chapter_replacements[chapter];
-		levelnumberastext = chapter_string + "-" + str(level_in_chapter);
+		var level_string = str(level_in_chapter);
+		if (level_replacements.has(level_number)):
+			level_string = level_replacements[level_number];
+		levelnumberastext = chapter_string + "-" + level_string;
 	if (level_is_extra):
 		levelnumberastext += "X";
 	levellabel.text = levelnumberastext + " - " + level_name;
