@@ -690,6 +690,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
 	level_list.push_back(preload("res://levels/Hassle.tscn"));
 	level_list.push_back(preload("res://levels/TheShroudEx.tscn"));
+	level_list.push_back(preload("res://levels/ControlledDemolitionEx.tscn"));
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
