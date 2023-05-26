@@ -9,6 +9,7 @@ var flash_timer = 0;
 var flash_timer_max = 0.1;
 var viewer = null;
 var fading = false;
+var flashed_to_enter = false;
 var flashed_while_fading = false;
 
 # Called when the node enters the scene tree for the first time.
@@ -35,6 +36,16 @@ func _process(delta: float) -> void:
 		viewer.broadcast_remove_sprite(self);
 		queue_free();
 
+func finish_animations() -> void:
+	if (fading):
+		viewer.broadcast_remove_sprite(self);
+		queue_free();
+	elif (!flashed_to_enter):
+		flashed_to_enter = true;
+		next_modulates.clear();
+		previous_modulate = destination_colour;
+		modulate = destination_colour;
+
 func flash() -> void:
 	flash_timer = 0;
 	next_modulates.clear();
@@ -44,5 +55,6 @@ func flash() -> void:
 		flashed_while_fading = true;
 		next_modulates.append(Color(1, 1, 1, 0));
 	else:
+		flashed_to_enter = true;
 		next_modulates.append(destination_colour);
 		

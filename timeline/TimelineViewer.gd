@@ -70,6 +70,9 @@ func finish_animations() -> void:
 		if is_instance_valid(child):
 			child.finish_animations();
 	animating_children.clear();
+	for sprite in nonce_to_sprite_dictionary.values():
+		if is_instance_valid(sprite):
+			sprite.finish_animations();
 
 func add_max_turn() -> void:
 	finish_animations();

@@ -2364,6 +2364,8 @@ func finish_animations(chrono: int) -> void:
 		goal.update_graphics();
 	animation_server.clear();
 	animation_substep = 0;
+	heavytimeline.finish_animations();
+	lighttimeline.finish_animations();
 
 func update_ghosts() -> void:
 	for ghost in ghosts:
