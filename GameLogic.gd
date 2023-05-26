@@ -670,6 +670,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/FuzzyTrick.tscn"));
 	level_list.push_back(preload("res://levels/LimitedUndo.tscn"));
 	level_list.push_back(preload("res://levels/UphillLimited.tscn"));
+	level_list.push_back(preload("res://levels/TimeStop.tscn"));
 	level_list.push_back(preload("res://levels/KingCrimson.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	chapter_advanced_unlock_requirements.push_back(72);
