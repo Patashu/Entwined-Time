@@ -3457,7 +3457,8 @@ func _process(delta: float) -> void:
 				floating_text("Shift+F11: Unwin");
 				if (save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]):
 					puzzles_completed -= 1;
-				save_file["levels"][level_name].clear();
+				if (save_file["levels"].has(level_name)):
+					save_file["levels"][level_name].clear();
 				save_game();
 				update_level_label();
 			else:
