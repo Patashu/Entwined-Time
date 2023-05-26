@@ -266,6 +266,7 @@ var ghosts = []
 
 # save file, ooo!
 var save_file = {}
+var puzzles_completed = 0;
 
 # song-and-dance state
 var sounds = {}
@@ -746,7 +747,10 @@ func initialize_level_list() -> void:
 	
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
-		level_names.push_back(level.get_node("LevelInfo").level_name);
+		var level_name = level.get_node("LevelInfo").level_name;
+		level_names.push_back(level_name);
+		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
+			puzzles_completed += 1;
 		level.queue_free();
 
 func ready_map() -> void:
@@ -2379,7 +2383,11 @@ func check_won() -> void:
 			if (!levels_save_data.has(level_name)):
 				levels_save_data[level_name] = {};
 			var level_save_data = levels_save_data[level_name];
-			level_save_data["won"] = true;
+			if (level_save_data.has("won") and level_save_data["won"]):
+				pass
+			else:
+				level_save_data["won"] = true;
+				puzzles_completed += 1;
 			if (!level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
 			else:
@@ -3343,6 +3351,8 @@ func _process(delta: float) -> void:
 		if (Input.is_action_just_pressed("start_saved_replay")):
 			if (OS.is_debug_build() and Input.is_action_pressed("shift")):
 				floating_text("Shift+F11: Unwin");
+				if (save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]):
+					puzzles_completed -= 1;
 				save_file["levels"][level_name].clear();
 				save_game();
 				update_level_label();
