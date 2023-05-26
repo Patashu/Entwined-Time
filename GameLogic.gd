@@ -302,6 +302,7 @@ var win_label_default_y = 113;
 # animation server
 var animation_server = []
 var animation_substep = 0;
+var animation_nonce_fountain = 0;
 
 #replay system
 var replay_timer = 0;
@@ -929,6 +930,12 @@ func timeline_squish() -> void:
 	lightinfolabel.rect_position.y += (300-max_tallness)/2
 	lighttimeline.position.y += (300-max_tallness)/2
 
+func broadcast_animation_nonce(animation_nonce: int) -> void:
+	if (heavy_selected):
+		heavytimeline.broadcast_animation_nonce(animation_nonce);
+	else:
+		lighttimeline.broadcast_animation_nonce(animation_nonce);
+
 func get_used_cells_by_id_all_layers(id: int) -> Array:
 	var results = []
 	for layer in terrain_layers:
@@ -1253,8 +1260,15 @@ func update_goal_lock() -> void:
 		for goal in goals:
 			if !goal.locked:
 				goal.lock();
+
+func animation_nonce_fountain_dispense() -> int:
+	var result = animation_nonce_fountain;
+	animation_nonce_fountain += 1;
+	return result;
 	
-func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of = null) -> int:
+func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
+is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
+phased_out_of = null, animation_nonce = -1) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.ghost_dir = -dir;
@@ -1262,13 +1276,17 @@ func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: 
 		ghost.position = terrainmap.map_to_world(ghost.pos);
 		return Success.Yes;
 	
-	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical, is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of);
+	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical,
+	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce);
 	
-func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of = null) -> int:
+func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
+is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
+phased_out_of = null, animation_nonce = -1) -> int:
 	var dir = pos - actor.pos;
 	var old_pos = actor.pos;
 	
-	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list, phased_out_of);
+	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list,
+	phased_out_of);
 	if (success == Success.Yes and !hypothetical):
 		if (!is_retro):
 			was_push = pushers_list.size() > 0;
@@ -1283,7 +1301,11 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			for actor in actors:
 				if actor.pushable() and actor.pos == old_pos:
 					phased_out_of.append(actor);
-		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of], chrono_for_maybe_green_actor(actor, chrono));
+		if (animation_nonce == -1):
+			animation_nonce = animation_nonce_fountain_dispense();
+			
+		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of, animation_nonce],
+		chrono_for_maybe_green_actor(actor, chrono));
 		
 		# update night and stars state
 		var terrain = terrain_in_tile(actor.pos);
@@ -1315,7 +1337,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 		#	var new_terrain = terrain_in_tile(actor.pos);
 		#	if new_terrain.has(Tiles.WoodenPlatform) or new_terrain.has(Tiles.LadderPlatform):
 		#		add_to_animation_server(actor, [Animation.trapdoor_opens, terrainmap.map_to_world(actor.pos)]);
-		add_to_animation_server(actor, [Animation.move, dir, is_retro]);
+		add_to_animation_server(actor, [Animation.move, dir, is_retro, animation_nonce]);
 		
 		#ding logic
 		if (!actor.broken):
@@ -1374,7 +1396,7 @@ func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, 
 			if (pushers_list.size() > 0 or is_retro):
 				add_to_animation_server(actor, [Animation.sfx, "involuntarybump"]);
 		# bump animation always happens, I think?
-		add_to_animation_server(actor, [Animation.bump, dir]);
+		add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
 	return success;
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
@@ -1475,7 +1497,8 @@ func find_or_create_layer_having_this_tile(pos: Vector2, assumed_old_tile: int) 
 	terrain_layers.push_back(new_layer);
 	return terrain_layers.size() - 1;
 
-func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int, chrono: int, new_tile: int, assumed_old_tile: int = -2) -> int:
+func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int,
+chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -1) -> int:
 	if (chrono == Chrono.GHOSTS):
 		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
 		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
@@ -1498,11 +1521,15 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 			chrono = Chrono.CHAR_UNDO;
 		if (green_terrain == Greenness.Void and chrono < Chrono.META_UNDO):
 			chrono = Chrono.META_UNDO;
-		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
+		
+		if (animation_nonce == -1):
+			animation_nonce = animation_nonce_fountain_dispense();
+		
+		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile, animation_nonce], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
 		if new_tile == Tiles.GlassBlock:
-			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
+			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			for actor in actors:
 				# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
 				if actor.pos == pos and !actor.broken and actor.durability <= Durability.PITS:
@@ -1512,7 +1539,7 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 			if (old_tile == Tiles.Fuzz):
 				play_sound("fuzz");
 			else:
-				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile]);
+				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:
@@ -2021,14 +2048,16 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee]);
 
-func clock_ticks(actor: ActorBase, amount: int, chrono: int) -> void:
+func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: int = -1) -> void:
+	if (animation_nonce == -1):
+		animation_nonce = animation_nonce_fountain_dispense();
 	actor.ticks += amount;
 	if (actor.ticks == 0):
 		if actor.actorname == "cuckoo_clock":
 			# end the world
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
-	add_undo_event([Undo.tick, actor, amount], chrono_for_maybe_green_actor(actor, chrono));
-	add_to_animation_server(actor, [Animation.tick, amount]);
+	add_undo_event([Undo.tick, actor, amount, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
+	add_to_animation_server(actor, [Animation.tick, amount, animation_nonce]);
 
 func lose(reason: String, suspect: Actor) -> void:
 	lost = true;
@@ -2043,12 +2072,14 @@ func end_lose() -> void:
 	lost = false;
 	lost_speaker.stop();
 
-func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
+func set_actor_var(actor: ActorBase, prop: String, value, chrono: int, animation_nonce: int = -1) -> void:
 	var old_value = actor.get(prop);
+	if animation_nonce == -1:
+		animation_nonce = animation_nonce_fountain_dispense();
 	if (chrono < Chrono.GHOSTS):
 		# going to try this to fix a dinged bug - don't make undo events for dinged, since it's purely visual
 		if (prop != "dinged"):
-			add_undo_event([Undo.set_actor_var, actor, prop, old_value, value], chrono_for_maybe_green_actor(actor, chrono));
+			add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
 		actor.set(prop, value);
 		
 		# special case - if we break or unbreak, we can ding or unding too
@@ -2094,7 +2125,7 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int) -> void:
 						if !actor.dinged:
 							set_actor_var(actor, "dinged", true, chrono);
 		
-		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture()])
+		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), animation_nonce])
 	elif actor is Actor:
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.set(prop, value);
@@ -2481,22 +2512,24 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		#pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of: Array = null) -> int:
 		var actor = event[1];
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
-			add_to_animation_server(actor, [Animation.undo_immunity]);
+			add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
 		else:
-			move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5]);
+			move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5],
+			event[6]);
 	elif (event[0] == Undo.set_actor_var):
 		var actor = event[1];
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
-			add_to_animation_server(actor, [Animation.undo_immunity]);
+			add_to_animation_server(actor, [Animation.undo_immunity, event[4]]);
 		else:
-			set_actor_var(actor, event[2], event[3], chrono);
+			set_actor_var(actor, event[2], event[3], chrono, event[4]);
 	elif (event[0] == Undo.change_terrain):
 		var actor = event[1];
 		var pos = event[2];
 		var layer = event[3];
 		var old_tile = event[4];
 		var new_tile = event[5];
-		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile, new_tile);
+		var animation_nonce = event[6];
+		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile, new_tile, animation_nonce);
 		
 	# undo events that should not
 		
@@ -2591,10 +2624,11 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.tick):
 		var actor = event[1];
 		var amount = event[2];
+		var animation_nonce = event[3];
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
-			add_to_animation_server(actor, [Animation.undo_immunity]);
+			add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
 		else:
-			clock_ticks(actor, -amount, chrono);
+			clock_ticks(actor, -amount, chrono, animation_nonce);
 
 func meta_undo_a_restart() -> bool:
 	if (user_replay_before_restarts.size() > 0):

@@ -375,8 +375,10 @@ func _process(delta: float) -> void:
 			var is_done = true;
 			if (current_animation[0] == 0): #move
 				# afterimage if it was a retro move
-				if (animation_timer == 0 and current_animation[2]):
-					afterimage();
+				if (animation_timer == 0):
+					gamelogic.broadcast_animation_nonce(current_animation[3]);
+					if current_animation[2]:
+						afterimage();
 				animation_timer_max = 0.083;
 				position -= current_animation[1]*(animation_timer/animation_timer_max)*24;
 				animation_timer += delta;
@@ -388,6 +390,8 @@ func _process(delta: float) -> void:
 					is_done = false;
 					position += current_animation[1]*(animation_timer/animation_timer_max)*24;
 			elif (current_animation[0] == 1): #bump
+				if (animation_timer == 0):
+					gamelogic.broadcast_animation_nonce(current_animation[2]);
 				animation_timer_max = 0.1;
 				var bump_amount = (animation_timer/animation_timer_max);
 				if (bump_amount > 0.5):
@@ -406,6 +410,7 @@ func _process(delta: float) -> void:
 					position += current_animation[1]*bump_amount*24;
 			elif (current_animation[0] == 2): #set_next_texture
 				set_next_texture(current_animation[1]);
+				gamelogic.broadcast_animation_nonce(current_animation[2]);
 			elif (current_animation[0] == 3): #sfx
 				gamelogic.play_sound(current_animation[1]);
 			elif (current_animation[0] == 4): #fluster
@@ -442,6 +447,7 @@ func _process(delta: float) -> void:
 						overactorsparticles.add_child(sprite);
 			elif (current_animation[0] == 8): #shatter
 				var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+				gamelogic.broadcast_animation_nonce(current_animation[4]);
 				for i in range(4):
 					var sprite = Sprite.new();
 					sprite.set_script(preload("res://FadingSprite.gd"));
@@ -465,6 +471,7 @@ func _process(delta: float) -> void:
 				gamelogic.play_sound("shatter");
 			elif (current_animation[0] == 9): #unshatter
 				var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+				gamelogic.broadcast_animation_nonce(current_animation[4]);
 				for i in range(4):
 					var sprite = Sprite.new();
 					sprite.set_script(preload("res://FadingSprite.gd"));
@@ -561,6 +568,7 @@ func _process(delta: float) -> void:
 				self.add_child(sparklespawner);
 			elif (current_animation[0] == 18): #tick
 				var amount = current_animation[1];
+				gamelogic.broadcast_animation_nonce(current_animation[2]);
 				thought_bubble.update_ticks(ticks);
 				if (ticks == 0):
 					gamelogic.play_sound("timesup");
@@ -574,6 +582,7 @@ func _process(delta: float) -> void:
 				else:
 					gamelogic.play_sound("untick");
 			elif (current_animation[0] == 19): #undo_immunity
+				gamelogic.broadcast_animation_nonce(current_animation[1]);
 				if (animation_timer == 0):
 					gamelogic.play_sound("shroud");
 				animation_timer_max = 0.083;

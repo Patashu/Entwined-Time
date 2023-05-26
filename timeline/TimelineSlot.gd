@@ -7,6 +7,7 @@ var undo_effect_color = Color(1, 1, 1, 1);
 var showing_fuzz = false;
 var fuzz_timer = 0;
 var locked = false;
+var parent = null;
 onready var timelinesymbols : Node2D = get_node("TimelineSymbols");
 onready var overlay : Sprite = get_node("Overlay");
 
@@ -59,13 +60,28 @@ func fill(buffer: Array) -> void:
 	for i in range(relevant_buffer.size()):
 		var event = relevant_buffer[i];
 		var sprite = Sprite.new();
+		sprite.set_script(preload("res://timeline/TimelineSprite.gd"));
 		timelinesymbols.add_child(sprite);
 		sprite.offset = Vector2(size/2, size/2);
 		sprite.position.x = 0 + (i%(24/size))*size;
 		sprite.position.y = y_start + floor(i/(24/size))*size;
 		sprite.scale = Vector2(scale, scale);
-		sprite.modulate = event[1].color;
+		sprite.destination_colour = event[1].color;
+		sprite.modulate = Color(1, 1, 1, 0);
 		sprite.texture = get_texture_for_event(event, size);
+		sprite.animation_nonce = get_animation_nonce_for_event(event);
+		parent.broadcast_sprite(sprite);
+
+func get_animation_nonce_for_event(event) -> int:
+	if event[0] == GameLogic.Undo.move:
+		return event[6];
+	elif event[0] == GameLogic.Undo.set_actor_var:
+		return event[4];
+	elif event[0] == GameLogic.Undo.change_terrain:
+		return event[6];
+	elif event[0] == GameLogic.Undo.tick:
+		return event[3];
+	return -1;
 
 func get_texture_for_event(event: Array, size: int) -> Texture:
 	#add_undo_event([Undo.move, actor, dir], chrono);

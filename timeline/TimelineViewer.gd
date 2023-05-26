@@ -10,6 +10,7 @@ var y_max = 11;
 var animating_children = [];
 onready var timelineslots = self.get_node("TimelineSlots");
 onready var timelinedivider = self.get_node("TimelineDivider");
+var nonce_to_sprite_dictionary = {};
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -30,6 +31,7 @@ func reset() -> void:
 		slot.queue_free();
 	for i in range(max_moves):
 		var slot = preload("res://timeline/TimelineSlot.tscn").instance();
+		slot.parent = self;
 		if (is_heavy):
 			slot.texture = preload("res://timeline/timeline-slot-heavy-24.png");
 		else:
@@ -53,6 +55,13 @@ func finish_divider_position() -> void:
 		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
 		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
 
+func broadcast_animation_nonce(animation_nonce: int) -> void:
+	if nonce_to_sprite_dictionary.has(animation_nonce) and is_instance_valid(nonce_to_sprite_dictionary[animation_nonce]):
+		nonce_to_sprite_dictionary[animation_nonce].flash();
+	
+func broadcast_sprite(sprite: TimelineSprite) -> void:
+	nonce_to_sprite_dictionary[sprite.animation_nonce] = sprite;
+
 func finish_animations() -> void:
 	for child in animating_children:
 		if is_instance_valid(child):
@@ -64,6 +73,7 @@ func add_max_turn() -> void:
 	max_moves += 1;
 	var i = max_moves -1;
 	var slot = preload("res://timeline/TimelineSlot.tscn").instance();
+	slot.parent = self;
 	slot.texture = preload("res://assets/TestCrystalFrame.png");
 	slot.region_enabled = true;
 	slot.region_rect = Rect2(20, 20, 32, 0);
