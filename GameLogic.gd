@@ -244,6 +244,9 @@ var heavy_actor : Actor = null
 var light_actor : Actor = null
 var actors = []
 var goals = []
+var void_cuckoo_clocks = [];
+var void_cuckoo_clock_timer = 0;
+var void_cuckoo_clock_timer_max = 1;
 var heavy_turn = 0;
 var heavy_undo_buffer : Array = [];
 var heavy_filling_locked_turn_index = -1;
@@ -759,6 +762,8 @@ func ready_map() -> void:
 	for ghost in ghosts:
 		ghost.queue_free();
 	ghosts.clear();
+	void_cuckoo_clocks.clear();
+	void_cuckoo_clock_timer = 0;
 	for whatever in underactorsparticles.get_children():
 		whatever.queue_free();
 	for whatever in overactorsparticles.get_children():
@@ -1048,7 +1053,7 @@ func find_colours() -> void:
 	find_colour(Tiles.ColourOrange, TimeColour.Orange);
 	find_colour(Tiles.ColourYellow, TimeColour.Yellow);
 	
-func find_colour(id: int, TimeColour : int) -> void:
+func find_colour(id: int, time_colour : int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
 	for i in range(layers_tiles.size()):
 		var tiles = layers_tiles[i];
@@ -1057,7 +1062,9 @@ func find_colour(id: int, TimeColour : int) -> void:
 			# get first actor with the same pos and native colour and change their time_colour
 			for actor in actors:
 				if actor.pos == tile and actor.is_native_colour():
-					actor.time_colour = TimeColour;
+					actor.time_colour = time_colour;
+					if (actor.time_colour == TimeColour.Void and actor.actorname == "cuckoo_clock"):
+						void_cuckoo_clocks.append(actor);
 					actor.update_time_bubble();
 					break;
 	
@@ -3003,6 +3010,13 @@ func time_passes(chrono: int) -> void:
 		if actor.ticks < 10000 and !actor.broken:
 			clock_ticks(actor, -1, chrono);
 	
+func void_cuckoo_clocks_time_passes() -> void:
+	for actor in void_cuckoo_clocks:
+		if actor.in_night:
+			continue;
+		if actor.ticks < 10000 and !actor.broken:
+			clock_ticks(actor, -1, Chrono.META_UNDO);
+	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
 	return a.pos.y > b.pos.y;
@@ -3302,6 +3316,12 @@ func _process(delta: float) -> void:
 			Static.modulate = Color(1, 1, 1, 1);
 	
 	if ui_stack.size() == 0:
+		if (void_cuckoo_clocks.size() > 0 and !won and !lost):
+			void_cuckoo_clock_timer += delta;
+			if (void_cuckoo_clock_timer > void_cuckoo_clock_timer_max):
+				void_cuckoo_clock_timer -= void_cuckoo_clock_timer_max;
+				void_cuckoo_clocks_time_passes();
+		
 		if (doing_replay and replay_timer > next_replay):
 			do_one_replay_turn();
 			update_info_labels();
