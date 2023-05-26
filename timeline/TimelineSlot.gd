@@ -19,6 +19,10 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 func fill(buffer: Array) -> void:
+	for sprite in timelinesymbols.get_children():
+		parent.broadcast_remove_sprite(sprite);
+		sprite.queue_free();
+	
 	var relevant_buffer = [];
 	for event in buffer:
 		if event[0] == GameLogic.Undo.move or event[0] == GameLogic.Undo.set_actor_var or event[0] == GameLogic.Undo.change_terrain or event[0] == GameLogic.Undo.tick: # move or set_actor_var or change_terrain or tick
@@ -70,6 +74,7 @@ func fill(buffer: Array) -> void:
 		sprite.modulate = Color(1, 1, 1, 0);
 		sprite.texture = get_texture_for_event(event, size);
 		sprite.animation_nonce = get_animation_nonce_for_event(event);
+		sprite.viewer = parent;
 		parent.broadcast_sprite(sprite);
 
 func get_animation_nonce_for_event(event) -> int:
@@ -174,7 +179,7 @@ func fuzz_off() -> void:
 
 func clear(color: Color) -> void:
 	for sprite in timelinesymbols.get_children():
-		sprite.queue_free();
+		sprite.fading = true;
 	undo_effect_color = color;
 	undo_effect_strength = 0.5;
 

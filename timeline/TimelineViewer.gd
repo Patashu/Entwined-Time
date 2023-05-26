@@ -59,6 +59,9 @@ func broadcast_animation_nonce(animation_nonce: int) -> void:
 	if nonce_to_sprite_dictionary.has(animation_nonce) and is_instance_valid(nonce_to_sprite_dictionary[animation_nonce]):
 		nonce_to_sprite_dictionary[animation_nonce].flash();
 	
+func broadcast_remove_sprite(sprite: TimelineSprite) -> void:
+	nonce_to_sprite_dictionary.erase(sprite.animation_nonce);
+	
 func broadcast_sprite(sprite: TimelineSprite) -> void:
 	nonce_to_sprite_dictionary[sprite.animation_nonce] = sprite;
 
