@@ -20,23 +20,39 @@ align = 1
 [node name="PrevButton" type="Button" parent="Holder"]
 margin_left = 5.0
 margin_top = 223.0
-margin_right = 95.0
+margin_right = 100.0
 margin_bottom = 238.0
-text = "Previous Chapter (F1)"
+text = "Prev. Chapter (F1)"
 
 [node name="NextButton" type="Button" parent="Holder"]
-margin_left = 293.0
+margin_left = 308.0
 margin_top = 223.0
 margin_right = 404.0
 margin_bottom = 238.0
 text = "Next Chapter (F2)"
 
 [node name="ControlsButton" type="Button" parent="Holder"]
-margin_left = 150.0
+margin_left = 250.0
 margin_top = 223.0
-margin_right = 261.0
+margin_right = 296.0
 margin_bottom = 238.0
 text = "Controls"
+
+[node name="SettingsButton" type="Button" parent="Holder"]
+margin_left = 112.0
+margin_top = 223.0
+margin_right = 157.0
+margin_bottom = 238.0
+disabled = true
+text = "Settings"
+
+[node name="LevelEditorButton" type="Button" parent="Holder"]
+margin_left = 172.0
+margin_top = 223.0
+margin_right = 236.0
+margin_bottom = 238.0
+disabled = true
+text = "Level Editor"
 
 [node name="CloseButton" type="Button" parent="Holder"]
 margin_left = 391.0

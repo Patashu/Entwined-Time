@@ -22,13 +22,13 @@ C: Meta-Undo
 R: Restart
 
 Esc: Open/Close Menu
-F1/F2: Change Level
+F1/F2: Change Level/Chapter
 M: Mute/Unmute Audio
 
 Ctrl+C/Ctrl+V: Copy/Paste Replay
 F11: Your Best Replay
 F12: Author's Replay
-F9/F10: Adjust Replay Speed
+F9/F10: Adjust Replay Speed (25% multiplicative)
 "
 align = 1
 

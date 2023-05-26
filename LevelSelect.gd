@@ -7,13 +7,18 @@ onready var chapter = gamelogic.chapter;
 onready var prevbutton : Button = get_node("Holder/PrevButton");
 onready var nextbutton : Button = get_node("Holder/NextButton");
 onready var controlsbutton : Button = get_node("Holder/ControlsButton");
+onready var settingsbutton : Button = get_node("Holder/SettingsButton");
+onready var leveleditorbutton : Button = get_node("Holder/LevelEditorButton");
 onready var closebutton : Button = get_node("Holder/CloseButton");
+onready var specialbuttons = [prevbutton, nextbutton, controlsbutton, settingsbutton, leveleditorbutton, closebutton];
 
 func _ready() -> void:
 	prepare_chapter();
 	prevbutton.connect("pressed", self, "_prevbutton_pressed");
 	nextbutton.connect("pressed", self, "_nextbutton_pressed");
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
+	settingsbutton.connect("pressed", self, "_settingsbutton_pressed");
+	leveleditorbutton.connect("pressed", self, "_leveleditorbutton_pressed");
 	closebutton.connect("pressed", self, "destroy");
 	
 func _prevbutton_pressed() -> void:
@@ -30,10 +35,16 @@ func _controlsbutton_pressed() -> void:
 	var controls = preload("res://Controls.tscn").instance();
 	gamelogic.ui_stack.push_back(controls);
 	self.add_child(controls);
+	
+func _settingsbutton_pressed() -> void:
+	pass
+	
+func _leveleditorbutton_pressed() -> void:
+	pass
 
 func prepare_chapter() -> void:
 	for child in holder.get_children():
-		if child != prevbutton and child != nextbutton and child != controlsbutton and child != closebutton:
+		if !specialbuttons.has(child):
 			child.queue_free();
 	var chapter_string = str(chapter);
 	if gamelogic.chapter_replacements.has(chapter):
