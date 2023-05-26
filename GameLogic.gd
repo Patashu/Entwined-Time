@@ -2521,7 +2521,9 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
 			add_to_animation_server(actor, [Animation.undo_immunity, event[4]]);
 		else:
-			set_actor_var(actor, event[2], event[3], chrono, event[4]);
+			#[Undo.set_actor_var, actor, prop, old_value, value, animation_nonce]
+			var animation_nonce = event[5];
+			set_actor_var(actor, event[2], event[3], chrono, animation_nonce);
 	elif (event[0] == Undo.change_terrain):
 		var actor = event[1];
 		var pos = event[2];
