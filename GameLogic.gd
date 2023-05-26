@@ -151,6 +151,12 @@ enum TimeColour {
 	Yellow,
 }
 
+enum Greenness {
+	Mundane,
+	Green,
+	Void
+}
+
 # attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
 # order SEEMS to be the same as in DefaultTiles
 enum Tiles {
@@ -212,6 +218,8 @@ enum Tiles {
 	CuckooClock, #55
 	TheNight, #56
 	TheStars, #57
+	VoidSpikeball, #58
+	VoidGlassBlock, #59
 }
 
 # information about the level
@@ -1395,13 +1403,15 @@ func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
 		return Chrono.CHAR_UNDO;
 	return chrono;
 	
-func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terrain: bool, chrono: int) -> int:
+func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terrain: int, chrono: int) -> int:
 	# AD04: being broken makes you immune to breaking :D
 	if (!actor.broken and actor.durability <= hazard):
 		if (!hypothetical):
 			actor.post_mortem = hazard;
-			if (green_terrain and chrono < Chrono.CHAR_UNDO):
+			if (green_terrain == Greenness.Green and chrono < Chrono.CHAR_UNDO):
 				chrono = Chrono.CHAR_UNDO;
+			if (green_terrain == Greenness.Void and chrono < Chrono.META_UNDO):
+				chrono = Chrono.META_UNDO;
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
 	else:
@@ -1423,7 +1433,7 @@ func find_or_create_layer_having_this_tile(pos: Vector2, assumed_old_tile: int) 
 	terrain_layers.push_back(new_layer);
 	return terrain_layers.size() - 1;
 
-func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: bool, chrono: int, new_tile: int, assumed_old_tile: int = -2) -> int:
+func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int, chrono: int, new_tile: int, assumed_old_tile: int = -2) -> int:
 	if (chrono == Chrono.GHOSTS):
 		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
 		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
@@ -1442,8 +1452,10 @@ func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: 
 			layer = find_or_create_layer_having_this_tile(pos, assumed_old_tile);
 			terrain_layer = terrain_layers[layer];
 		terrain_layer.set_cellv(pos, new_tile);
-		if (green_terrain and chrono < Chrono.CHAR_UNDO):
+		if (green_terrain == Greenness.Green and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
+		if (green_terrain == Greenness.Void and chrono < Chrono.META_UNDO):
+			chrono = Chrono.META_UNDO;
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
@@ -1523,7 +1535,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 	
 	# check for bottomless pits
 	if (pos.y > map_y_max):
-		return maybe_break_actor(actor, Durability.PITS, hypothetical, false, chrono);
+		return maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Mundane, chrono);
 
 	var terrain = terrain_in_tile(pos);
 	for i in range(terrain.size()):
@@ -1534,9 +1546,11 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.LockClosed:
 				result = Success.No;
 			Tiles.Spikeball:
-				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, false, chrono);
+				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, Greenness.Mundane, chrono);
 			Tiles.GreenSpikeball:
-				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, true, chrono);
+				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, Greenness.Green, chrono);
+			Tiles.VoidSpikeball:
+				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, Greenness.Void, chrono);
 			Tiles.NoHeavy:
 				result = no_if_true_yes_if_false(actor.actorname == "heavy");
 				if (result == Success.No):
@@ -1609,12 +1623,17 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.GlassBlock:
 				# rule I've been thinking about for a while - things lighter than iron can't break glass
 				if (actor.heaviness >= Heaviness.IRON):
-					result = maybe_change_terrain(actor, pos, i, hypothetical, false, chrono, -1);
+					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Mundane, chrono, -1);
 				else:
 					return Success.No;
 			Tiles.GreenGlassBlock:
 				if (actor.heaviness >= Heaviness.IRON):
-					result = maybe_change_terrain(actor, pos, i, hypothetical, true, chrono, -1);
+					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Green, chrono, -1);
+				else:
+					return Success.No;
+			Tiles.VoidGlassBlock:
+				if (actor.heaviness >= Heaviness.IRON):
+					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Void, chrono, -1);
 				else:
 					return Success.No;
 		if result != Success.Yes:
@@ -2777,7 +2796,7 @@ func anything_happened_meta() -> bool:
 	if light_undo_event_add_count > 0:
 		if light_undo_buffer[light_turn].size() != light_undo_event_add_count:
 			return true;
-	meta_undo_buffer[meta_turn].clear();
+	meta_undo_buffer.pop_at(meta_turn);
 	anything_happened_char(true); #to destroy
 	return false;
 

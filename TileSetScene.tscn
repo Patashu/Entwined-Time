@@ -1,4 +1,4 @@
-[gd_scene load_steps=170 format=2]
+[gd_scene load_steps=175 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -139,6 +139,7 @@
 [ext_resource path="res://assets/timecrystalgreen.png" type="Texture" id=137]
 [ext_resource path="res://assets/cuckoo_clock.png" type="Texture" id=138]
 [ext_resource path="res://assets/the_night_1.png" type="Texture" id=139]
+[ext_resource path="res://assets/void_glass.png" type="Texture" id=140]
 [ext_resource path="res://assets/the_night_2.png" type="Texture" id=141]
 [ext_resource path="res://assets/the_night_3.png" type="Texture" id=142]
 [ext_resource path="res://assets/the_stars_3.png" type="Texture" id=143]
@@ -152,6 +153,9 @@
 [ext_resource path="res://assets/the_stars_8.png" type="Texture" id=151]
 [ext_resource path="res://assets/the_stars_11.png" type="Texture" id=152]
 [ext_resource path="res://assets/the_stars_12.png" type="Texture" id=153]
+[ext_resource path="res://assets/void_spikeball_1.png" type="Texture" id=154]
+[ext_resource path="res://assets/void_spikeball_2.png" type="Texture" id=155]
+[ext_resource path="res://assets/void_spikeball_3.png" type="Texture" id=156]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -452,6 +456,17 @@ frame_9/delay_sec = 0.0
 frame_10/texture = ExtResource( 152 )
 frame_10/delay_sec = 0.0
 
+[sub_resource type="AnimatedTexture" id=19]
+frames = 4
+fps = 2.5
+frame_0/texture = ExtResource( 154 )
+frame_1/texture = ExtResource( 155 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 156 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 155 )
+frame_3/delay_sec = 0.0
+
 [node name="TileSetScene" type="Node2D"]
 
 [node name="WoodenPlatform" type="Sprite" parent="."]
@@ -681,3 +696,11 @@ texture = SubResource( 17 )
 [node name="TheStars" type="Sprite" parent="."]
 position = Vector2( 261, 304 )
 texture = SubResource( 18 )
+
+[node name="VoidSpikeball" type="Sprite" parent="."]
+position = Vector2( 223, 299 )
+texture = SubResource( 19 )
+
+[node name="VoidGlassBlock" type="Sprite" parent="."]
+position = Vector2( 186, 299 )
+texture = ExtResource( 140 )
