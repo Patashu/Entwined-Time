@@ -290,6 +290,7 @@ var meta_color = Color(0.5, 0.5, 0.5, 1);
 var fuzz_timer = 0;
 var fuzz_timer_max = 0;
 var ui_stack = [];
+var ready_done = false;
 
 #UI defaults
 var HeavyInfoLabel_default_position = Vector2(0, 1);
@@ -327,10 +328,13 @@ var sky_timer = 0;
 var sky_timer_max = 0;
 var chapter_standard_starting_levels = [];
 var chapter_advanced_starting_levels = [];
+var chapter_standard_unlock_requirements = [];
+var chapter_advanced_unlock_requirements = [];
+var save_file_string = "user://entwinedtime.sav";
 
 func save_game():
 	var file = File.new()
-	file.open("user://entwinedtime.sav", File.WRITE)
+	file.open(save_file_string, File.WRITE)
 	file.store_line(to_json(save_file))
 	file.close()
 
@@ -346,10 +350,10 @@ func default_save_file() -> void:
 
 func load_game():
 	var file = File.new()
-	if not file.file_exists("user://entwinedtime.sav"):
+	if not file.file_exists(save_file_string):
 		return default_save_file();
 		
-	file.open("user://entwinedtime.sav", File.READ)
+	file.open(save_file_string, File.READ)
 	var json_parse_result = JSON.parse(file.get_as_text())
 	file.close();
 	
@@ -378,6 +382,7 @@ func _ready() -> void:
 	
 	# Load the first map.
 	load_level(0);
+	ready_done = true;
 	
 func initialize_shaders() -> void:
 	#each thing that uses a shader has to compile the first time it's used, so... use it now!
@@ -410,6 +415,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Two Time");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(0);
 	chapter_skies.push_back(Color("#223C52"));
 	level_list.push_back(preload("res://levels/Initiation.tscn"));
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
@@ -427,6 +433,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Uphill.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(8);
 	level_list.push_back(preload("res://levels/Spelunking.tscn"));
 	level_list.push_back(preload("res://levels/UncabYourself.tscn"));
 	level_list.push_back(preload("res://levels/TheFirstPitEx.tscn"));
@@ -435,6 +442,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Hazards");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(8);
 	chapter_skies.push_back(Color("#512E22"));
 	level_list.push_back(preload("res://levels/Spikes.tscn"));
 	level_list.push_back(preload("res://levels/SnakePit.tscn"));
@@ -447,6 +455,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TheBoundlessSky.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(16);
 	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
 	level_list.push_back(preload("res://levels/TheSpikePitEx.tscn"));
@@ -460,6 +469,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Secrets of Space-Time");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(16);
 	chapter_skies.push_back(Color("#062138"));
 	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
 	level_list.push_back(preload("res://levels/LightMovingService.tscn"));
@@ -471,6 +481,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GraduationPure.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(24);
 	level_list.push_back(preload("res://levels/TheFirstPitEx3.tscn"));
 	level_list.push_back(preload("res://levels/TheBoundlessSkyEx.tscn"));
 	level_list.push_back(preload("res://levels/TheBoundlessSkyEx2.tscn"));
@@ -480,6 +491,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("One-Ways");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(16);
 	chapter_skies.push_back(Color("#1C3D19"));
 	level_list.push_back(preload("res://levels/OneWays.tscn"));
 	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
@@ -492,6 +504,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/EventHorizon.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(24);
 	level_list.push_back(preload("res://levels/SecurityDoorEx.tscn"));
 	level_list.push_back(preload("res://levels/SecurityDoorEx2.tscn"));
 	level_list.push_back(preload("res://levels/JailEx.tscn"));
@@ -506,6 +519,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Trap Doors and Ladders");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(24);
 	chapter_skies.push_back(Color("#3B3F1A"));
 	level_list.push_back(preload("res://levels/Down.tscn"));
 	level_list.push_back(preload("res://levels/LadderWorld.tscn"));
@@ -517,6 +531,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/DoubleJump.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(32);
 	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
 	level_list.push_back(preload("res://levels/LadderWorldEx.tscn"));
 	level_list.push_back(preload("res://levels/LadderLatticeEx.tscn"));
@@ -530,6 +545,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(32);
 	chapter_skies.push_back(Color("#424947"));
 	level_list.push_back(preload("res://levels/IronCrates.tscn"));
 	level_list.push_back(preload("res://levels/CrateExpectations.tscn"));
@@ -544,6 +560,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Levitation.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(40);
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/TheCratePitEx.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
@@ -554,6 +571,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("There Are Many Colours");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(40);
 	chapter_skies.push_back(Color("#37294F"));
 	level_list.push_back(preload("res://levels/RedAndBlue.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFound.tscn"));
@@ -568,6 +586,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TimelessBridge.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(48);
 	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFoundEx2.tscn"));
 	level_list.push_back(preload("res://levels/Freedom.tscn"));
@@ -581,6 +600,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Change");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(48);
 	chapter_skies.push_back(Color("#446570"));
 	level_list.push_back(preload("res://levels/Ahhh.tscn"));
 	level_list.push_back(preload("res://levels/Eeep.tscn"));
@@ -596,6 +616,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TreasureHunt.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(56);
 	level_list.push_back(preload("res://levels/LetMeInEx.tscn"));
 	level_list.push_back(preload("res://levels/HeavyMovingServiceGlass.tscn"));
 	level_list.push_back(preload("res://levels/DoubleGlazedEx.tscn"));
@@ -609,6 +630,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Permanence");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(56);
 	chapter_skies.push_back(Color("#14492A"));
 	level_list.push_back(preload("res://levels/HelpYourself.tscn"));
 	level_list.push_back(preload("res://levels/SpikesGreen.tscn"));
@@ -621,6 +643,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Mundane.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(64);
 	level_list.push_back(preload("res://levels/LightHurtingService.tscn"));
 	level_list.push_back(preload("res://levels/LightHurtingServiceEx.tscn"));
 	level_list.push_back(preload("res://levels/LightHurtingServiceEx2.tscn"));
@@ -637,6 +660,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Exotic Matter");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(64);
 	chapter_skies.push_back(Color("#351731"));
 	level_list.push_back(preload("res://levels/TheFuzz.tscn"));
 	level_list.push_back(preload("res://levels/DoubleFuzz.tscn"));
@@ -647,6 +671,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/UphillLimited.tscn"));
 	level_list.push_back(preload("res://levels/KingCrimson.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(72);
 	level_list.push_back(preload("res://levels/ElevatorEx.tscn"));
 	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
 	level_list.push_back(preload("res://levels/DontLookDown.tscn"));
@@ -660,6 +685,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Time Crystals");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(72);
 	chapter_skies.push_back(Color("#2A1F82"));
 	level_list.push_back(preload("res://levels/Growth.tscn"));
 	level_list.push_back(preload("res://levels/Delivery.tscn"));
@@ -673,6 +699,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Conservation.tscn"));
 	#level_list.push_back(preload("res://levels/unused/Test.tscn"));
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(80);
 	level_list.push_back(preload("res://levels/Elementary.tscn"));
 	level_list.push_back(preload("res://levels/BlockageEx.tscn"));
 	level_list.push_back(preload("res://levels/Smuggler.tscn"));
@@ -684,6 +711,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Deadline");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(80);
 	chapter_skies.push_back(Color("#2D0E07"));
 	chapter_replacements[chapter_names.size() - 1] = "Ω";
 	level_list.push_back(preload("res://levels/CuckooClock.tscn"));
@@ -699,7 +727,9 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Cascade.tscn"));
 	level_replacements[level_list.size()] = "Ω";
 	level_list.push_back(preload("res://levels/AWayIn.tscn"));
+	
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(88);
 	level_list.push_back(preload("res://levels/HotPotato.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFoundEx3.tscn"));
 	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
@@ -711,6 +741,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_unlock_requirements.push_back(level_list.size());
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_replacements[chapter_names.size() - 1] = "-1";
 	level_list.push_back(preload("res://levels/RoommatesExL2.tscn"));
@@ -733,9 +764,9 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/OrientationL2.tscn"));
 	level_list.push_back(preload("res://levels/OrientationL2Ex.tscn"));
 	level_list.push_back(preload("res://levels/OrientationL2Ex2.tscn"));
-#	level_list.push_back(preload("res://levels/Joke.tscn"));
-#	level_list.push_back(preload("res://levels/ThanksForPlaying.tscn")); #might just be a custom win message for Joke
 	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_unlock_requirements.push_back(level_list.size());
+	# level_list.push_back(preload("res://levels/Joke.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
@@ -2635,31 +2666,17 @@ func escape() -> void:
 	ui_stack.push_back(levelselect);
 	levelscene.add_child(levelselect);
 	
-func load_level_direct(new_level: int) -> void:
-	var impulse = new_level - self.level_number;
-	load_level(impulse);
+func trying_to_load_locked_level() -> bool:
+	var unlock_requirement = 0;
+	if (!level_is_extra):
+		unlock_requirement = chapter_standard_unlock_requirements[chapter];
+	else:
+		unlock_requirement = chapter_advanced_unlock_requirements[chapter];
+	if puzzles_completed < unlock_requirement:
+		return true;
+	return false;
 	
-func load_level(impulse: int) -> void:
-	level_number = posmod(int(level_number), level_list.size());
-	if (impulse != 0):
-		user_replay_before_restarts.clear();
-	elif user_replay.length() > 0:
-		user_replay_before_restarts.push_back(user_replay);
-	if (impulse != 0):
-		level_number += impulse;
-		level_number = posmod(int(level_number), level_list.size());
-		save_file["level_number"] = level_number;
-		save_game();
-	var level = level_list[level_number].instance();
-	levelfolder.remove_child(terrainmap);
-	terrainmap.queue_free();
-	levelfolder.add_child(level);
-	terrainmap = level;
-	terrain_layers.clear();
-	terrain_layers.append(terrainmap);
-	for child in terrainmap.get_children():
-		if child is TileMap:
-			terrain_layers.push_front(child);
+func setup_chapter_etc() -> void:
 	chapter = 0;
 	level_is_extra = false;
 	for i in range(chapter_names.size()):
@@ -2676,6 +2693,54 @@ func load_level(impulse: int) -> void:
 		sky_timer_max = 3.0;
 		old_sky = current_sky;
 		target_sky = chapter_skies[chapter];
+	
+func load_level_direct(new_level: int) -> void:
+	var impulse = new_level - self.level_number;
+	load_level(impulse);
+	
+func load_level(impulse: int) -> void:
+	level_number = posmod(int(level_number), level_list.size());
+	
+	if (impulse != 0):
+		user_replay_before_restarts.clear();
+	elif user_replay.length() > 0:
+		user_replay_before_restarts.push_back(user_replay);
+	
+	if (impulse != 0):
+		level_number += impulse;
+		level_number = posmod(int(level_number), level_list.size());
+	
+	setup_chapter_etc();
+	
+	# we might try to F1/F2 onto a level we don't have access to. if so, back up then show level select.
+	if trying_to_load_locked_level():
+		impulse *= -1;
+		if (impulse == 0):
+			impulse = -1;
+		for i in range(999):
+			level_number += impulse;
+			level_number = posmod(int(level_number), level_list.size());
+			setup_chapter_etc();
+			if !trying_to_load_locked_level():
+				break;
+		# buggy if the game just loaded, for some reason, but I didn't want it anyway
+		if (ready_done):
+			escape();
+			
+	if (impulse != 0):
+		save_file["level_number"] = level_number;
+		save_game();
+	
+	var level = level_list[level_number].instance();
+	levelfolder.remove_child(terrainmap);
+	terrainmap.queue_free();
+	levelfolder.add_child(level);
+	terrainmap = level;
+	terrain_layers.clear();
+	terrain_layers.append(terrainmap);
+	for child in terrainmap.get_children():
+		if child is TileMap:
+			terrain_layers.push_front(child);
 	
 	ready_map();
 	update_level_label();

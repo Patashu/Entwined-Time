@@ -46,9 +46,26 @@ func prepare_chapter() -> void:
 	for child in holder.get_children():
 		if !specialbuttons.has(child):
 			child.queue_free();
+			
+	var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];	
 	var chapter_string = str(chapter);
 	if gamelogic.chapter_replacements.has(chapter):
 		chapter_string = gamelogic.chapter_replacements[chapter];
+	
+	if (gamelogic.puzzles_completed < unlock_requirement):
+		holder.text = "Chapter " + chapter_string + " - ???";
+		var label = Label.new();
+		holder.add_child(label);
+		label.rect_position.x = 2;
+		label.rect_size.x = holder.rect_size.x - 4;
+		label.rect_position.y = 18;
+		label.align = 1;
+		label.text = "Complete more puzzles: " + str(gamelogic.puzzles_completed) + "/" + str(unlock_requirement);
+		label.theme = holder.theme;
+		return
+		
+	var advanced_unlock_requirement = gamelogic.chapter_advanced_unlock_requirements[chapter];
+		
 	holder.text = "Chapter " + chapter_string + " - " + gamelogic.chapter_names[chapter];
 	var normal_start = gamelogic.chapter_standard_starting_levels[chapter];
 	var advanced_start = gamelogic.chapter_advanced_starting_levels[chapter];
@@ -73,7 +90,7 @@ func prepare_chapter() -> void:
 	if (y == y_max):
 		y = 0;
 		x += 1;
-		
+	
 	for i in range(advanced_start - normal_start):
 		var button = preload("res://LevelButton.tscn").instance();
 		holder.add_child(button);
@@ -130,45 +147,53 @@ func prepare_chapter() -> void:
 			y = 0;
 			x += 1;
 		
-		for i in range(advanced_end - advanced_start):
-			var button = preload("res://LevelButton.tscn").instance();
-			holder.add_child(button);
-			button.rect_position.x = xx + xxx*x;
-			button.rect_position.y = yy + yyy*y;
-			button.level_number = i + advanced_start;
-			var level_name = gamelogic.level_names[button.level_number];
-			var level_string = str(i);
-			if (gamelogic.level_replacements.has(button.level_number)):
-				level_string = gamelogic.level_replacements[button.level_number];
-			button.text = level_string + "X - " + level_name;
-			button.theme = holder.theme;
-			button.levelselect = self;
-			if (x == 0 and y == 1): # the first button
-				button.grab_focus();
-			if (button.level_number == gamelogic.level_number): # button corresponding to the current level
-				button.grab_focus();
+		if (gamelogic.puzzles_completed < advanced_unlock_requirement):
+			label = Label.new();
+			holder.add_child(label);
+			label.rect_position.x = xx + xxx*x;
+			label.rect_position.y = yy + yyy*y + 2;
+			label.text = "Complete more puzzles: " + str(gamelogic.puzzles_completed) + "/" + str(advanced_unlock_requirement);
+			label.theme = holder.theme;
+		else:
+			for i in range(advanced_end - advanced_start):
+				var button = preload("res://LevelButton.tscn").instance();
+				holder.add_child(button);
+				button.rect_position.x = xx + xxx*x;
+				button.rect_position.y = yy + yyy*y;
+				button.level_number = i + advanced_start;
+				var level_name = gamelogic.level_names[button.level_number];
+				var level_string = str(i);
+				if (gamelogic.level_replacements.has(button.level_number)):
+					level_string = gamelogic.level_replacements[button.level_number];
+				button.text = level_string + "X - " + level_name;
+				button.theme = holder.theme;
+				button.levelselect = self;
+				if (x == 0 and y == 1): # the first button
+					button.grab_focus();
+				if (button.level_number == gamelogic.level_number): # button corresponding to the current level
+					button.grab_focus();
+					
+				# if we beat it, add a star :3
+				if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
+					var star = Sprite.new();
+					star.texture = preload("res://assets/star.png");
+					star.scale = Vector2(0.5, 0.5);
+					star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
+					star.centered = false;
+					holder.add_child(star);
+					pass;
 				
-			# if we beat it, add a star :3
-			if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
-				var star = Sprite.new();
-				star.texture = preload("res://assets/star.png");
-				star.scale = Vector2(0.5, 0.5);
-				star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
-				star.centered = false;
-				holder.add_child(star);
-				pass;
-			
-			y += 1;
-			if (y == y_max):
-				y = 0;
-				x += 1;
+				y += 1;
+				if (y == y_max):
+					y = 0;
+					x += 1;
 		
 	# chapter 0 notice
 	if chapter == 0:
 		label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = xx + xxx;
-		label.rect_position.y = yy + yyy*y;
+		label.rect_position.y = yy + yyy*(10);
 		label.text = "(Advanced puzzles are optional,\nfor those seeking a challenge.)"
 		label.theme = holder.theme;
 		
@@ -177,7 +202,7 @@ func prepare_chapter() -> void:
 		label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = 8;
-		label.rect_position.y = yy + yyy*(y+2);
+		label.rect_position.y = yy + yyy*(10);
 		label.text = "(This is a difficult but rewarding chapter. If you get stuck, try the next chapters\nand come back later. The secrets of space-time will be here when you're ready.)"
 		label.theme = holder.theme;
 
