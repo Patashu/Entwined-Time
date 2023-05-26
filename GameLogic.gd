@@ -2383,6 +2383,11 @@ func check_won() -> void:
 				var old_replay_mturn = int(old_replay_mturn_parts[1]);
 				if (old_replay_mturn > meta_turn):
 					level_save_data["replay"] = annotate_replay(user_replay);
+				elif (old_replay_mturn == meta_turn):
+					# same meta-turn but shorter replay also wins
+					var old_replay_payload = old_replay_parts[old_replay_parts.size()-1];
+					if (len(user_replay) <= len(old_replay_payload)):
+						level_save_data["replay"] = annotate_replay(user_replay);
 			update_level_label();
 			save_game();
 	
