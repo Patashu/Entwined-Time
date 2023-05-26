@@ -37,7 +37,9 @@ func _controlsbutton_pressed() -> void:
 	self.add_child(controls);
 	
 func _settingsbutton_pressed() -> void:
-	pass
+	var settings = preload("res://Settings.tscn").instance();
+	gamelogic.ui_stack.push_back(settings);
+	self.add_child(settings);
 	
 func _leveleditorbutton_pressed() -> void:
 	pass
@@ -52,7 +54,7 @@ func prepare_chapter() -> void:
 	if gamelogic.chapter_replacements.has(chapter):
 		chapter_string = gamelogic.chapter_replacements[chapter];
 	
-	if (gamelogic.puzzles_completed < unlock_requirement):
+	if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < unlock_requirement):
 		holder.text = "Chapter " + chapter_string + " - ???";
 		var label = Label.new();
 		holder.add_child(label);
@@ -147,7 +149,7 @@ func prepare_chapter() -> void:
 			y = 0;
 			x += 1;
 		
-		if (gamelogic.puzzles_completed < advanced_unlock_requirement):
+		if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < advanced_unlock_requirement):
 			label = Label.new();
 			holder.add_child(label);
 			label.rect_position.x = xx + xxx*x;

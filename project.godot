@@ -80,6 +80,11 @@ _global_script_classes=[ {
 "path": "res://PingPongSprite.gd"
 }, {
 "base": "Node2D",
+"class": "Settings",
+"language": "GDScript",
+"path": "res://Settings.gd"
+}, {
+"base": "Node2D",
 "class": "Shade",
 "language": "GDScript",
 "path": "res://Shade.gd"
@@ -129,6 +134,7 @@ _global_script_class_icons={
 "LevelSelect": "",
 "OneTimeSprite": "",
 "PingPongSprite": "",
+"Settings": "",
 "Shade": "",
 "SparkleSpawner": "",
 "ThoughtBubble": "",

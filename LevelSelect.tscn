@@ -43,7 +43,6 @@ margin_left = 112.0
 margin_top = 223.0
 margin_right = 157.0
 margin_bottom = 238.0
-disabled = true
 text = "Settings"
 
 [node name="LevelEditorButton" type="Button" parent="Holder"]

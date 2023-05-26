@@ -2706,6 +2706,8 @@ func escape() -> void:
 	levelscene.add_child(levelselect);
 	
 func trying_to_load_locked_level() -> bool:
+	if save_file.has("unlock_everything") and save_file["unlock_everything"]:
+		return false;
 	var unlock_requirement = 0;
 	if (!level_is_extra):
 		unlock_requirement = chapter_standard_unlock_requirements[chapter];
