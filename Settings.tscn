@@ -23,3 +23,10 @@ margin_top = 223.0
 margin_right = 261.0
 margin_bottom = 238.0
 text = "Ok"
+
+[node name="UnlockEverything" type="CheckBox" parent="Holder"]
+margin_left = 12.0
+margin_top = 17.0
+margin_right = 33.0
+margin_bottom = 37.0
+text = "Unlock all puzzles (while this checkbox is ticked)"

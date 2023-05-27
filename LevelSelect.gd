@@ -22,26 +22,41 @@ func _ready() -> void:
 	closebutton.connect("pressed", self, "destroy");
 	
 func _prevbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	chapter -= 1;
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
 
 func _nextbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	chapter += 1;
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
 
 func _controlsbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	var controls = preload("res://Controls.tscn").instance();
 	gamelogic.ui_stack.push_back(controls);
 	self.add_child(controls);
 	
 func _settingsbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	var settings = preload("res://Settings.tscn").instance();
 	gamelogic.ui_stack.push_back(settings);
 	self.add_child(settings);
 	
 func _leveleditorbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	pass
 
 func prepare_chapter() -> void:
