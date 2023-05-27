@@ -220,6 +220,10 @@ enum Tiles {
 	TheStars, #57
 	VoidSpikeball, #58
 	VoidGlassBlock, #59
+	ChronoHelixBlue, #60
+	ChronoHelixRed, #61
+	HeavyGoalJoke, #62
+	LightGoalJoke, #63
 }
 
 # information about the level
@@ -722,12 +726,12 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/GreenCuckoo1.tscn"));
 	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
 	level_list.push_back(preload("res://levels/DST.tscn"));
-	level_list.push_back(preload("res://levels/EngineRoom.tscn"));
+	#level_list.push_back(preload("res://levels/EngineRoom.tscn"));
 	level_list.push_back(preload("res://levels/TheShroud.tscn"));
 	level_list.push_back(preload("res://levels/Rewind.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolition.tscn"));
 	level_list.push_back(preload("res://levels/Cascade.tscn"));
-	level_replacements[level_list.size()] = "Ω";
+	##level_replacements[level_list.size()] = "Ω";
 	level_list.push_back(preload("res://levels/AWayIn.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
@@ -735,11 +739,14 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/HotPotato.tscn"));
 	level_list.push_back(preload("res://levels/LevelNotFoundEx3.tscn"));
 	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
-	level_list.push_back(preload("res://levels/Collectathon.tscn"));
-	level_list.push_back(preload("res://levels/Rink.tscn"));
+	#level_list.push_back(preload("res://levels/Collectathon.tscn"));
+	#level_list.push_back(preload("res://levels/Rink.tscn"));
 	level_list.push_back(preload("res://levels/Hassle.tscn"));
+	#level_list.push_back(preload("res://levels/Permify.tscn"));
 	level_list.push_back(preload("res://levels/TheShroudEx.tscn"));
-	level_list.push_back(preload("res://levels/ControlledDemolitionEx.tscn"));
+	#level_list.push_back(preload("res://levels/ControlledDemolitionEx.tscn"));
+	#level_replacements[level_list.size()] = "Ω";
+	#level_list.push_back(preload("res://levels/ChronoLabReactor.tscn"));
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_list.size());
