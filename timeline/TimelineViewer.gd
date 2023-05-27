@@ -130,12 +130,19 @@ func undo_lock_turn() -> TimelineSlot:
 	# if it's not empty, move it just after current_move and increment current_move by 1.
 	else:
 		# for some reason we need to distinguish between 'entered a nega time crystal on our move' and 'otherwise'.
-		# quickest to just count timelineslots until they stop having children.
+		# quickest to just count timelineslots until they stop having non-fading children.
 		# or is locked.
 		var i = 0;
 		for slot in timelineslots.get_children():
 			if slot.timelinesymbols.get_children().size() == 0 or slot.locked:
-				break;
+				break
+			var fading = false;
+			for sprite in slot.timelinesymbols.get_children():
+				if sprite.fading:
+					fading = true;
+					break;
+			if fading:
+				break; #the legendary double break
 			i += 1;
 		timelineslots.move_child(slot_to_move, i);
 		current_move += 1;
