@@ -20,6 +20,7 @@ func _ready() -> void:
 		child.vframes = actor.vframes;
 		child.frame = actor.frame;
 		child.texture = actor.texture;
+		child.flip_h = actor.flip_h;
 		self.position = actor.position;
 	child.get_material().set_shader_param("color", undo_color);
 	child.get_material().set_shader_param("mixture", 1.0);
