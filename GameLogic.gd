@@ -2514,18 +2514,20 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		#hypothetical: bool, is_gravity: bool, is_retro: bool = false,
 		#pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of: Array = null) -> int:
 		var actor = event[1];
+		var animation_nonce = event[6];
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
 			add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
 		else:
 			move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5],
-			event[6]);
+			animation_nonce);
 	elif (event[0] == Undo.set_actor_var):
 		var actor = event[1];
+		var animation_nonce = event[5];
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
-			add_to_animation_server(actor, [Animation.undo_immunity, event[4]]);
+			add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
 		else:
 			#[Undo.set_actor_var, actor, prop, old_value, value, animation_nonce]
-			var animation_nonce = event[5];
+			
 			set_actor_var(actor, event[2], event[3], chrono, animation_nonce);
 	elif (event[0] == Undo.change_terrain):
 		var actor = event[1];
