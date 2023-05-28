@@ -13,6 +13,7 @@ var rotate_magnitude = 1;
 var particle_timer = 1;
 var particle_timer_max = 1;
 var last_particle_angle = 0;
+var facing_left = false; #dummied out
 
 func lock() -> void:
 	locked = true;
