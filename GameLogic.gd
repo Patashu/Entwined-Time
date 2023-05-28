@@ -2173,7 +2173,7 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int, animation
 						if !actor.dinged:
 							set_actor_var(actor, "dinged", true, chrono);
 		
-		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), actor.facing_left, animation_nonce])
+		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
 	elif actor is Actor:
 		var ghost = null;
 		if (prop == "facing_left"):

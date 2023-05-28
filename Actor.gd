@@ -409,7 +409,7 @@ func _process(delta: float) -> void:
 					bump_amount *= 0.2;
 					position += current_animation[1]*bump_amount*24;
 			elif (current_animation[0] == 2): #set_next_texture
-				set_next_texture(current_animation[1], current_animation[2]);
+				set_next_texture(current_animation[1], current_animation[3]);
 				gamelogic.broadcast_animation_nonce(current_animation[2]);
 			elif (current_animation[0] == 3): #sfx
 				gamelogic.play_sound(current_animation[1]);
