@@ -1286,7 +1286,7 @@ func animation_nonce_fountain_dispense() -> int:
 	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
-phased_out_of = null, animation_nonce = -1) -> int:
+phased_out_of = null, animation_nonce : int = -1, is_move: bool = false) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.ghost_dir = -dir;
@@ -1295,11 +1295,11 @@ phased_out_of = null, animation_nonce = -1) -> int:
 		return Success.Yes;
 	
 	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical,
-	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce);
+	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce, is_move);
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
-is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
-phased_out_of = null, animation_nonce = -1) -> int:
+is_retro: bool = false, pushers_list: Array = [], was_fall: bool = false, was_push: bool = false,
+phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 	var dir = pos - actor.pos;
 	var old_pos = actor.pos;
 	
@@ -1321,6 +1321,19 @@ phased_out_of = null, animation_nonce = -1) -> int:
 					phased_out_of.append(actor);
 		if (animation_nonce == -1):
 			animation_nonce = animation_nonce_fountain_dispense();
+			
+		# do facing change now before move happens
+		if (is_move and actor.is_character):
+			if (dir == Vector2.LEFT):
+				if (heavy_selected and !heavy_actor.facing_left):
+					set_actor_var(heavy_actor, "facing_left", true, Chrono.MOVE);
+				elif (!heavy_selected and !light_actor.facing_left):
+					set_actor_var(light_actor, "facing_left", true, Chrono.MOVE);
+			elif (dir == Vector2.RIGHT):
+				if (heavy_selected and heavy_actor.facing_left):
+					set_actor_var(heavy_actor, "facing_left", false, Chrono.MOVE);
+				elif (!heavy_selected and light_actor.facing_left):
+					set_actor_var(light_actor, "facing_left", false, Chrono.MOVE);
 			
 		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of, animation_nonce],
 		chrono_for_maybe_green_actor(actor, chrono));
@@ -2143,11 +2156,18 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int, animation
 						if !actor.dinged:
 							set_actor_var(actor, "dinged", true, chrono);
 		
-		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), animation_nonce])
+		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), actor.facing_left, animation_nonce])
 	elif actor is Actor:
-		var ghost = get_ghost_that_hasnt_moved(actor);
-		ghost.set(prop, value);
-		ghost.update_graphics();
+		var ghost = null;
+		if (prop == "facing_left"):
+			# turning facing direction is always the first thing you do, so there'll never be a ghost after this
+			# that we'll need to pass on the facing direction to, so just skip it
+			pass
+			#ghost = get_ghost(actor);
+		else:
+			ghost = get_ghost_that_hasnt_moved(actor);
+			ghost.set(prop, value);
+			ghost.update_graphics();
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	#if (debug_prints and chrono < Chrono.META_UNDO):
@@ -2310,11 +2330,21 @@ func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:
 	ghost.offset = Vector2(12, 12)
 	return ghost;
 
+func get_ghost(actor: Actor) -> Actor:
+	while actor.next_ghost != null:
+		actor = actor.next_ghost;
+	if (actor.is_ghost):
+		return actor;
+	return make_ghost_for(actor);
+
 func get_ghost_that_hasnt_moved(actor : Actor) -> Actor:
 	while actor.next_ghost != null:
 		actor = actor.next_ghost;
 	if (actor.is_ghost and actor.ghost_dir == Vector2.ZERO):
 		return actor;
+	return make_ghost_for(actor);
+	
+func make_ghost_for(actor: Actor) -> Actor:
 	var ghost = clone_actor_but_dont_add_it(actor);
 	ghost.is_ghost = true;
 	ghost.modulate = Color(1, 1, 1, 0);
@@ -2848,7 +2878,8 @@ func character_move(dir: Vector2) -> bool:
 		if (!valid_voluntary_airborne_move(heavy_actor, dir)):
 			result = Success.Surprise;
 		else:
-			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE, false, false);
+			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE,
+			false, false, false, [], false, false, null, -1, true);
 	else:
 		if (light_actor.broken or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
@@ -2856,7 +2887,8 @@ func character_move(dir: Vector2) -> bool:
 		if (!valid_voluntary_airborne_move(light_actor, dir)):
 			result = Success.Surprise;
 		else:
-			result = move_actor_relative(light_actor, dir, Chrono.MOVE, false, false);
+			result = move_actor_relative(light_actor, dir, Chrono.MOVE,
+			false, false, false, [], false, false, null, -1, true);
 	if (result == Success.Yes):
 		play_sound("step")
 		if (dir == Vector2.UP):
@@ -2864,16 +2896,6 @@ func character_move(dir: Vector2) -> bool:
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
 			elif !heavy_selected and !is_suspended(light_actor):
 				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
-		elif (dir == Vector2.LEFT):
-			if (heavy_selected and !heavy_actor.facing_left):
-				set_actor_var(heavy_actor, "facing_left", true, Chrono.MOVE);
-			elif (!heavy_selected and !light_actor.facing_left):
-				set_actor_var(light_actor, "facing_left", true, Chrono.MOVE);
-		elif (dir == Vector2.RIGHT):
-			if (heavy_selected and heavy_actor.facing_left):
-				set_actor_var(heavy_actor, "facing_left", false, Chrono.MOVE);
-			elif (!heavy_selected and light_actor.facing_left):
-				set_actor_var(light_actor, "facing_left", false, Chrono.MOVE);
 		elif (dir == Vector2.DOWN):
 			if heavy_selected and !is_suspended(heavy_actor):
 				set_actor_var(heavy_actor, "airborne", 0, Chrono.MOVE);

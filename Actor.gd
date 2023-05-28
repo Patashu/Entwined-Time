@@ -61,19 +61,13 @@ var just_moved = false;
 
 func update_graphics() -> void:
 	var tex = get_next_texture();
-	set_next_texture(tex);
+	set_next_texture(tex, facing_left);
 	if (thought_bubble != null):
 		thought_bubble.update_ticks(ticks);
 	update_grayscale(in_night);
 
 func get_next_texture() -> Texture:
-	# facing and powered modulate also automatically update here, since I want that to be instant
-	
-	# facing
-	if facing_left:
-		flip_h = true;
-	else:
-		flip_h = false;
+	# powered modulate also update here, since I want that to be instant
 	
 	# powered
 	if is_character and !is_ghost:
@@ -169,7 +163,13 @@ func get_next_texture() -> Texture:
 	
 	return null;
 
-func set_next_texture(tex: Texture) -> void:
+func set_next_texture(tex: Texture, facing_left_at_the_time: bool) -> void:
+	# facing updates here, even if the texture didn't change
+	if facing_left_at_the_time:
+		flip_h = true;
+	else:
+		flip_h = false;
+	
 	if (self.texture == tex):
 		return;
 	if (fluster_timer_max > 0):
@@ -217,7 +217,7 @@ func set_next_texture(tex: Texture) -> void:
 func fluster():
 	if (broken):
 		return;
-	set_next_texture(preload("res://assets/light_involuntary_bump.png"))
+	set_next_texture(preload("res://assets/light_involuntary_bump.png"), facing_left)
 	fluster_timer = 0;
 	fluster_timer_max = 0.3;
 
@@ -409,7 +409,7 @@ func _process(delta: float) -> void:
 					bump_amount *= 0.2;
 					position += current_animation[1]*bump_amount*24;
 			elif (current_animation[0] == 2): #set_next_texture
-				set_next_texture(current_animation[1]);
+				set_next_texture(current_animation[1], current_animation[2]);
 				gamelogic.broadcast_animation_nonce(current_animation[2]);
 			elif (current_animation[0] == 3): #sfx
 				gamelogic.play_sound(current_animation[1]);
