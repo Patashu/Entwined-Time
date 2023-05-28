@@ -96,6 +96,12 @@ func prepare_chapter() -> void:
 	var y = 0;
 	var y_max = 12;
 	
+	# squish for very large chapters
+	if (advanced_end - normal_start) > 22:
+		y_max = 13;
+		yy = 15;
+		yyy = 15;
+		
 	var label = Label.new();
 	holder.add_child(label);
 	label.rect_position.x = xx + xxx*x;
