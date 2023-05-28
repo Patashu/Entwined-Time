@@ -378,6 +378,7 @@ func _ready() -> void:
 	# Call once when the game is booted up.
 	menubutton.connect("pressed", self, "escape");
 	load_game();
+	setup_resolution();
 	initialize_level_list();
 	prepare_audio();
 	tile_changes();
@@ -388,6 +389,14 @@ func _ready() -> void:
 	# Load the first map.
 	load_level(0);
 	ready_done = true;
+	
+func setup_resolution() -> void:
+	if (!save_file.has("pixel_scale")):
+		return
+	var value = save_file["pixel_scale"];
+	var size = Vector2(512*value, 300*value);
+	OS.set_window_size(size);
+	OS.center_window();
 	
 func initialize_shaders() -> void:
 	#each thing that uses a shader has to compile the first time it's used, so... use it now!

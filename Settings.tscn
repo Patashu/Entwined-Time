@@ -30,3 +30,18 @@ margin_top = 17.0
 margin_right = 33.0
 margin_bottom = 37.0
 text = "Unlock all puzzles (while this checkbox is ticked)"
+
+[node name="PixelScale" type="SpinBox" parent="Holder"]
+margin_left = 12.0
+margin_top = 40.0
+margin_right = 86.0
+margin_bottom = 64.0
+min_value = 1.0
+value = 2.0
+
+[node name="Label" type="Label" parent="Holder"]
+margin_left = 86.0
+margin_top = 46.0
+margin_right = 126.0
+margin_bottom = 57.0
+text = "Pixel Scale"
