@@ -14,4 +14,5 @@ func _process(delta: float) -> void:
 
 func _draw():
 	if (alpha > 0):
-		draw_rect(Rect2(0, 0, get_viewport().size.x, get_viewport().size.y), Color(0, 0, 0, alpha), true);
+		# I should get it from gamelogic but too lazy to pass it in so...
+		draw_rect(Rect2(0, 0, 512, 300), Color(0, 0, 0, alpha), true);

@@ -302,6 +302,8 @@ var HeavyTimeline_default_position = Vector2(6, 26);
 var LightInfoLabel_default_position = Vector2(478, 1);
 var LightTimeline_default_position = Vector2(482, 26);
 var win_label_default_y = 113;
+var pixel_width = ProjectSettings.get("display/window/size/width"); #512
+var pixel_height = ProjectSettings.get("display/window/size/height"); #300
 
 # animation server
 var animation_server = []
@@ -396,7 +398,7 @@ func _ready() -> void:
 func setup_resolution() -> void:
 	if (save_file.has("pixel_scale")):
 		var value = save_file["pixel_scale"];
-		var size = Vector2(512*value, 300*value);
+		var size = Vector2(pixel_width*value, pixel_height*value);
 		OS.set_window_size(size);
 		OS.center_window();
 	if (save_file.has("vsync_enabled")):
@@ -945,7 +947,7 @@ func timeline_squish() -> void:
 		
 	# calculation: the screen is 512 pixels wide. each cell is 24 pixels.
 	# we want 24 pixels of leeway, then our timelines.
-	var center = 256;
+	var center = pixel_width/2;
 	var left = center-map_x_max*24/2;
 	var right = center+map_x_max*24/2;
 	heavyinfolabel.rect_position.x += left-48-24*heavy_extra_width;
@@ -961,10 +963,10 @@ func timeline_squish() -> void:
 	var heavy_tallness = heavy_max*24 + heavyinfolabel.rect_size.y;
 	var light_tallness = light_max*24 + lightinfolabel.rect_size.y;
 	var max_tallness = max(heavy_tallness, light_tallness);
-	heavyinfolabel.rect_position.y += (300-max_tallness)/2;
-	heavytimeline.position.y += (300-max_tallness)/2
-	lightinfolabel.rect_position.y += (300-max_tallness)/2
-	lighttimeline.position.y += (300-max_tallness)/2
+	heavyinfolabel.rect_position.y += (pixel_height-max_tallness)/2;
+	heavytimeline.position.y += (pixel_height-max_tallness)/2
+	lightinfolabel.rect_position.y += (pixel_height-max_tallness)/2
+	lighttimeline.position.y += (pixel_height-max_tallness)/2
 
 func broadcast_animation_nonce(animation_nonce: int) -> void:
 	if (heavy_selected):
@@ -2554,7 +2556,7 @@ func check_won() -> void:
 	
 func adjust_winlabel() -> void:
 	winlabel.rect_position.y = win_label_default_y;
-	winlabel.rect_position.x = 256 - winlabel.rect_size.x/2;
+	winlabel.rect_position.x = pixel_width/2 - winlabel.rect_size.x/2;
 	var tries = 1;
 	var heavy_actor_rect = heavy_actor.get_rect();
 	var light_actor_rect = light_actor.get_rect();
@@ -3405,8 +3407,8 @@ func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
 	levelscene.add_child(label);
 	label.rect_position.x = 0;
-	label.rect_size.x = get_viewport().size.x/2;
-	label.rect_position.y = get_viewport().size.y/4-16;
+	label.rect_size.x = pixel_width;
+	label.rect_position.y = pixel_height/2-16;
 	label.text = text;
 
 func start_specific_replay(replay: String) -> void:

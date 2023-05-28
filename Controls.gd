@@ -21,5 +21,5 @@ func _process(delta: float) -> void:
 		destroy();
 
 func _draw() -> void:
-	draw_rect(Rect2(-get_viewport().size.x, -get_viewport().size.y,
-	get_viewport().size.x*2, get_viewport().size.y*2), Color(0, 0, 0, 0.5), true);
+	draw_rect(Rect2(0, 0,
+	gamelogic.pixel_width, gamelogic.pixel_height), Color(0, 0, 0, 0.5), true);
