@@ -382,6 +382,7 @@ func _ready() -> void:
 	setup_resolution();
 	prepare_audio();
 	setup_volume();
+	setup_animation_speed();
 	initialize_level_list();
 	tile_changes();
 	initialize_shaders();
@@ -408,8 +409,12 @@ func setup_volume() -> void:
 			speaker.volume_db = value;
 	if (save_file.has("music_volume")):
 		var value = save_file["music_volume"];
-		
 	
+func setup_animation_speed() -> void:
+	if (save_file.has("animation_speed")):
+		var value = save_file["animation_speed"];
+		Engine.time_scale = value;
+		
 func initialize_shaders() -> void:
 	#each thing that uses a shader has to compile the first time it's used, so... use it now!
 	var afterimage = preload("Afterimage.tscn").instance();
