@@ -377,6 +377,7 @@ func load_game():
 func _ready() -> void:
 	# Call once when the game is booted up.
 	menubutton.connect("pressed", self, "escape");
+	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
 	load_game();
 	setup_resolution();
 	prepare_audio();
