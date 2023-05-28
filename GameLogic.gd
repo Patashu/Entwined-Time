@@ -379,8 +379,9 @@ func _ready() -> void:
 	menubutton.connect("pressed", self, "escape");
 	load_game();
 	setup_resolution();
-	initialize_level_list();
 	prepare_audio();
+	setup_volume();
+	initialize_level_list();
 	tile_changes();
 	initialize_shaders();
 	if (OS.is_debug_build()):
@@ -398,6 +399,15 @@ func setup_resolution() -> void:
 		OS.center_window();
 	if (save_file.has("vsync_enabled")):
 		OS.vsync_enabled = save_file["vsync_enabled"];
+		
+func setup_volume() -> void:
+	if (save_file.has("sfx_volume")):
+		var value = save_file["sfx_volume"];
+		for speaker in speakers:
+			speaker.volume_db = value;
+	if (save_file.has("music_volume")):
+		var value = save_file["music_volume"];
+		
 	
 func initialize_shaders() -> void:
 	#each thing that uses a shader has to compile the first time it's used, so... use it now!
@@ -1218,8 +1228,11 @@ func fade_in_lost():
 	
 	if muted or (doing_replay and meta_undo_a_restart_mode):
 		return;
-	lost_speaker.volume_db = -40;
-	lost_speaker_volume_tween.interpolate_property(lost_speaker, "volume_db", -40, -10, 3.00, 1, Tween.EASE_IN, 0)
+	var db = save_file["music_volume"];
+	if (db <= -30):
+		return;
+	lost_speaker.volume_db = -40 + db;
+	lost_speaker_volume_tween.interpolate_property(lost_speaker, "volume_db", -40 + db, -10 + db, 3.00, 1, Tween.EASE_IN, 0)
 	lost_speaker_volume_tween.start();
 	lost_speaker.play();
 
@@ -1236,6 +1249,8 @@ func play_sound(sound: String) -> void:
 	if (sounds_played_this_frame.has(sound)):
 		return;
 	for speaker in speakers:
+		if speaker.volume_db <= -30:
+			return;
 		if !speaker.playing:
 			speaker.stream = sounds[sound];
 			sounds_played_this_frame[sound] = true;

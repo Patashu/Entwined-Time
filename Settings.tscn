@@ -8,10 +8,11 @@
 script = ExtResource( 3 )
 
 [node name="Holder" type="Label" parent="."]
-margin_left = 54.0
-margin_top = 30.0
-margin_right = 463.0
-margin_bottom = 273.0
+margin_left = 63.0
+margin_top = 33.0
+margin_right = 472.0
+margin_bottom = 276.0
+rect_pivot_offset = Vector2( 58, 105 )
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 text = "Settings:"
@@ -53,3 +54,33 @@ margin_top = 46.0
 margin_right = 126.0
 margin_bottom = 57.0
 text = "Pixel Scale"
+
+[node name="LabelSFX" type="Label" parent="Holder"]
+margin_left = 96.0
+margin_top = 94.0
+margin_right = 149.0
+margin_bottom = 105.0
+text = "SFX Volume: 0 dB"
+
+[node name="LabelMusic" type="Label" parent="Holder"]
+margin_left = 96.0
+margin_top = 113.0
+margin_right = 159.0
+margin_bottom = 124.0
+text = "Music Volume: 0 dB"
+
+[node name="SFXSlider" type="HSlider" parent="Holder"]
+margin_left = 11.0
+margin_top = 92.0
+margin_right = 94.0
+margin_bottom = 108.0
+min_value = -30.0
+max_value = 10.0
+
+[node name="MusicSlider" type="HSlider" parent="Holder"]
+margin_left = 11.0
+margin_top = 111.0
+margin_right = 94.0
+margin_bottom = 127.0
+min_value = -30.0
+max_value = 10.0
