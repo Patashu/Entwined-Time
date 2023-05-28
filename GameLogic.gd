@@ -391,12 +391,13 @@ func _ready() -> void:
 	ready_done = true;
 	
 func setup_resolution() -> void:
-	if (!save_file.has("pixel_scale")):
-		return
-	var value = save_file["pixel_scale"];
-	var size = Vector2(512*value, 300*value);
-	OS.set_window_size(size);
-	OS.center_window();
+	if (save_file.has("pixel_scale")):
+		var value = save_file["pixel_scale"];
+		var size = Vector2(512*value, 300*value);
+		OS.set_window_size(size);
+		OS.center_window();
+	if (save_file.has("vsync_enabled")):
+		OS.vsync_enabled = save_file["vsync_enabled"];
 	
 func initialize_shaders() -> void:
 	#each thing that uses a shader has to compile the first time it's used, so... use it now!
