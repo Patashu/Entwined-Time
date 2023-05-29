@@ -790,8 +790,10 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/RoommatesL2.tscn"));
 	level_list.push_back(preload("res://levels/CarryingItL2.tscn"));
 	level_list.push_back(preload("res://levels/CallACabL2.tscn"));
-	level_list.push_back(preload("res://levels/TheFirstPitL2.tscn"));
+	#level_list.push_back(preload("res://levels/TheoryOfEverythingA.tscn"));
+	#level_list.push_back(preload("res://levels/TheoryOfEverythingB.tscn"));
 	level_list.push_back(preload("res://levels/PachinkoL2.tscn"));
+	level_list.push_back(preload("res://levels/TheFirstPitL2.tscn"));
 	level_list.push_back(preload("res://levels/BraidL2.tscn"));
 	level_list.push_back(preload("res://levels/BraidL2Ex.tscn"));
 	level_list.push_back(preload("res://levels/TallL2.tscn"));
@@ -1044,7 +1046,7 @@ func make_actors() -> void:
 	# crates
 	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
 	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.WOODEN, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
-	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.IRON, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
+	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.WOODEN, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
 	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
 	
 	# cuckoo clocks
