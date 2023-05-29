@@ -3282,7 +3282,9 @@ func update_level_label() -> void:
 	if (level_author != "" and level_author != "Patashu"):
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
-		levellabel.text += " (REPLAY) (F9/F10 ADJUST SPEED)"
+		levellabel.text += " (REPLAY)"
+		if (heavy_max_moves < 11 and light_max_moves < 11):
+			levellabel.text += " (F9/F10 ADJUST SPEED)";
 	if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 		levelstar.visible = true;
 		var string_size = preload("res://standardfont.tres").get_string_size(levellabel.text);
