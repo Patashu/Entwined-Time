@@ -12,6 +12,7 @@ onready var animationslider : HSlider = get_node("Holder/AnimationSlider");
 onready var labelsfx : Label = get_node("Holder/LabelSFX");
 onready var labelmusic : Label = get_node("Holder/LabelMusic");
 onready var labelanimation : Label = get_node("Holder/LabelAnimation");
+onready var puzzlecheckerboard : CheckBox = get_node("Holder/PuzzleCheckerboard");
 
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
@@ -30,12 +31,15 @@ func _ready() -> void:
 	if (gamelogic.save_file.has("animation_speed")):
 		animationslider.value = gamelogic.save_file["animation_speed"];
 		updatelabelanimation(animationslider.value);
+	if (gamelogic.save_file.has("puzzle_checkerboard")):
+		puzzlecheckerboard.pressed = gamelogic.save_file["puzzle_checkerboard"];
 	unlockeverything.connect("pressed", self, "_unlockeverything_pressed");
 	vsync.connect("pressed", self, "_vsync_pressed");
 	pixelscale.connect("value_changed", self, "_pixelscale_value_changed");
 	sfxslider.connect("value_changed", self, "_sfxslider_value_changed");
 	musicslider.connect("value_changed", self, "_musicslider_value_changed");
 	animationslider.connect("value_changed", self, "_animationslider_value_changed");
+	puzzlecheckerboard.connect("pressed", self, "_puzzlecheckerboard_pressed");
 
 func _unlockeverything_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -81,6 +85,13 @@ func _animationslider_value_changed(value: float) -> void:
 	gamelogic.save_file["animation_speed"] = value;
 	gamelogic.setup_animation_speed();
 	updatelabelanimation(value);
+	
+func _puzzlecheckerboard_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["puzzle_checkerboard"] = puzzlecheckerboard.pressed;
+	gamelogic.checkerboard.visible = puzzlecheckerboard.pressed;
 	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):

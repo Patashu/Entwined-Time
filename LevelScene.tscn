@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=43 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -36,6 +36,7 @@
 [ext_resource path="res://assets/tutorial_arrows/arrow_right_8.png" type="Texture" id=34]
 [ext_resource path="res://assets/screen-static.png" type="Texture" id=35]
 [ext_resource path="res://Shade.gd" type="Script" id=36]
+[ext_resource path="res://assets/checkerboard.png" type="Texture" id=37]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 16
@@ -170,6 +171,13 @@ shader_param/Noise = ExtResource( 35 )
 
 [node name="LevelScene" type="Node2D"]
 script = ExtResource( 5 )
+
+[node name="Checkerboard" type="TextureRect" parent="."]
+visible = false
+margin_right = 223.0
+margin_bottom = 174.0
+texture = ExtResource( 37 )
+stretch_mode = 2
 
 [node name="UnderTerrainFolder" type="Node2D" parent="."]
 

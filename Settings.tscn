@@ -12,7 +12,7 @@ margin_left = 63.0
 margin_top = 33.0
 margin_right = 472.0
 margin_bottom = 276.0
-rect_pivot_offset = Vector2( 119, 136 )
+rect_pivot_offset = Vector2( 75, 174 )
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 text = "Settings:"
@@ -39,6 +39,13 @@ margin_right = 70.0
 margin_bottom = 87.0
 pressed = true
 text = "VSync"
+
+[node name="PuzzleCheckerboard" type="CheckBox" parent="Holder"]
+margin_left = 13.0
+margin_top = 150.0
+margin_right = 71.0
+margin_bottom = 170.0
+text = "Puzzle Checkerboard"
 
 [node name="PixelScale" type="SpinBox" parent="Holder"]
 margin_left = 12.0

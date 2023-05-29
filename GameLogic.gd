@@ -27,6 +27,7 @@ onready var leftarrow : Sprite = levelscene.get_node("LeftArrow");
 onready var rightarrow : Sprite = levelscene.get_node("RightArrow");
 onready var Static : Sprite = levelscene.get_node("Static");
 onready var Shade : Node2D = levelscene.get_node("Shade");
+onready var checkerboard : TextureRect = levelscene.get_node("Checkerboard");
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
 
 # distinguish between temporal layers when a move or state change happens
@@ -381,6 +382,8 @@ func _ready() -> void:
 	menubutton.connect("pressed", self, "escape");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
 	load_game();
+	if (save_file.has("puzzle_checkerboard")):
+		checkerboard.visible = true;
 	setup_resolution();
 	prepare_audio();
 	setup_volume();
@@ -1167,6 +1170,8 @@ func calculate_map_size() -> void:
 	ghostsfolder.position = terrainmap.position;
 	underactorsparticles.position = terrainmap.position;
 	overactorsparticles.position = terrainmap.position;
+	checkerboard.rect_position = terrainmap.position;
+	checkerboard.rect_size = cell_size*Vector2(map_x_max+1, map_y_max+1);
 		
 func update_targeter() -> void:
 	if (heavy_selected):
