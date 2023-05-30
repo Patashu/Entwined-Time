@@ -12,7 +12,7 @@ margin_left = 63.0
 margin_top = 33.0
 margin_right = 472.0
 margin_bottom = 276.0
-rect_pivot_offset = Vector2( 75, 174 )
+rect_pivot_offset = Vector2( 86, 199 )
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 text = "Settings:"
@@ -83,6 +83,13 @@ margin_right = 193.0
 margin_bottom = 143.0
 text = "Animation Speed: 1.0x"
 
+[node name="LabelUndoTrail" type="Label" parent="Holder"]
+margin_left = 96.0
+margin_top = 175.0
+margin_right = 203.0
+margin_bottom = 186.0
+text = "Undo Prediction Opacity: 100%"
+
 [node name="SFXSlider" type="HSlider" parent="Holder"]
 margin_left = 11.0
 margin_top = 92.0
@@ -106,5 +113,14 @@ margin_right = 94.0
 margin_bottom = 146.0
 min_value = 0.1
 max_value = 2.0
+step = 0.1
+value = 1.0
+
+[node name="UndoTrailSlider" type="HSlider" parent="Holder"]
+margin_left = 11.0
+margin_top = 173.0
+margin_right = 94.0
+margin_bottom = 189.0
+max_value = 1.0
 step = 0.1
 value = 1.0

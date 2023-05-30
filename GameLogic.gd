@@ -355,6 +355,8 @@ func default_save_file() -> void:
 		save_file["levels"] = {}
 	if (!save_file.has("version")):
 		save_file["version"] = 0
+	if (!save_file.has("undo_trails")):
+		save_file["undo_trails"] = 1.0;
 
 func load_game():
 	var file = File.new()
@@ -2352,6 +2354,7 @@ func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:
 	var ghost = Actor.new();
 	ghost.gamelogic = self;
 	ghost.is_ghost = true;
+	ghost.ghost_alpha = save_file["undo_trails"];
 	ghost.modulate = Color(1, 1, 1, 0);
 	ghosts.append(ghost);
 	ghostsfolder.add_child(ghost);
@@ -2379,6 +2382,7 @@ func get_ghost_that_hasnt_moved(actor : Actor) -> Actor:
 func make_ghost_for(actor: Actor) -> Actor:
 	var ghost = clone_actor_but_dont_add_it(actor);
 	ghost.is_ghost = true;
+	ghost.ghost_alpha = save_file["undo_trails"];
 	ghost.modulate = Color(1, 1, 1, 0);
 	actor.next_ghost = ghost;
 	ghost.previous_ghost = actor;
