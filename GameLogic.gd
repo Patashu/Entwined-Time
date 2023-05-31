@@ -1235,6 +1235,7 @@ func prepare_audio() -> void:
 	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
 	sounds["untick"] = preload("res://sfx/untick.ogg");
 	sounds["winentwined"] = preload("res://sfx/winentwined.ogg");
+	sounds["winbadtime"] = preload("res://sfx/winbadtime.ogg");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
@@ -2579,7 +2580,10 @@ func check_won() -> void:
 				won = false;
 				break;
 		if (won == true and !doing_replay):
-			play_sound("winentwined");
+			if (level_name == "Joke"):
+				play_sound("winbadtime");
+			else:
+				play_sound("winentwined");
 			var levels_save_data = save_file["levels"];
 			if (!levels_save_data.has(level_name)):
 				levels_save_data[level_name] = {};
