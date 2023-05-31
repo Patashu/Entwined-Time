@@ -2147,15 +2147,33 @@ func end_lose() -> void:
 	lost_speaker.stop();
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int,
-animation_nonce: int = -1, is_retro: bool = false) -> void:
+animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> void:
 	var old_value = actor.get(prop);
 	if animation_nonce == -1:
 		animation_nonce = animation_nonce_fountain_dispense();
 	if (chrono < Chrono.GHOSTS):
+		actor.set(prop, value);
+		
 		# going to try this to fix a dinged bug - don't make undo events for dinged, since it's purely visual
 		if (prop != "dinged"):
-			add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
-		actor.set(prop, value);
+			# and now to fix some airborne bugs, all revolving around 2:
+			# if you go to 2, emit an event to 1 instead.
+			#If you go from 2 to 1, ignore it.
+			#If you go from 2 to anything else, pretend you came from 1.
+			
+			if (prop == "airborne"):
+				if (value == 2):
+					value = 1;
+					add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
+				elif (value == 1 and old_value == 2):
+					pass
+				elif (old_value == 2):
+					old_value = 1;
+					add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
+				else:
+					add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
+			else:
+				add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
 		
 		# sound effects for airborne changes
 		if (prop == "airborne"):
@@ -2642,6 +2660,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			animation_nonce);
 	elif (event[0] == Undo.set_actor_var):
 		var actor = event[1];
+		var retro_old_value = event[4];
 		var animation_nonce = event[5];
 		var is_retro = true;
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
@@ -2649,7 +2668,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		else:
 			#[Undo.set_actor_var, actor, prop, old_value, value, animation_nonce]
 			
-			set_actor_var(actor, event[2], event[3], chrono, animation_nonce, is_retro);
+			set_actor_var(actor, event[2], event[3], chrono, animation_nonce, is_retro, retro_old_value);
 	elif (event[0] == Undo.change_terrain):
 		var actor = event[1];
 		var pos = event[2];
