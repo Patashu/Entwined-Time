@@ -1207,7 +1207,15 @@ func prepare_audio() -> void:
 	sounds["fall"] = preload("res://sfx/fall.ogg");
 	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
 	sounds["greentimecrystal"] = preload("res://sfx/greentimecrystal.ogg");
+	sounds["heavycoyote"] = preload("res://sfx/heavycoyote.ogg");
+	sounds["heavyland"] = preload("res://sfx/heavyland.ogg");
+	sounds["heavyuncoyote"] = preload("res://sfx/heavyuncoyote.ogg");
+	sounds["heavyunland"] = preload("res://sfx/heavyunland.ogg");
 	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
+	sounds["lightcoyote"] = preload("res://sfx/lightcoyote.ogg");
+	sounds["lightland"] = preload("res://sfx/lightland.ogg");
+	sounds["lightuncoyote"] = preload("res://sfx/lightuncoyote.ogg");
+	sounds["lightunland"] = preload("res://sfx/lightunland.ogg");
 	sounds["lose"] = preload("res://sfx/lose.ogg");
 	sounds["magentatimecrystal"] = preload("res://sfx/magentatimecrystal.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
@@ -2138,7 +2146,8 @@ func end_lose() -> void:
 	lost = false;
 	lost_speaker.stop();
 
-func set_actor_var(actor: ActorBase, prop: String, value, chrono: int, animation_nonce: int = -1) -> void:
+func set_actor_var(actor: ActorBase, prop: String, value, chrono: int,
+animation_nonce: int = -1, is_retro: bool = false) -> void:
 	var old_value = actor.get(prop);
 	if animation_nonce == -1:
 		animation_nonce = animation_nonce_fountain_dispense();
@@ -2147,6 +2156,31 @@ func set_actor_var(actor: ActorBase, prop: String, value, chrono: int, animation
 		if (prop != "dinged"):
 			add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
 		actor.set(prop, value);
+		
+		# sound effects for airborne changes
+		if (prop == "airborne"):
+			if actor.actorname == "heavy":
+				if is_retro:
+					if old_value >= 1 and value <= 0:
+						add_to_animation_server(actor, [Animation.sfx, "heavyuncoyote"]);
+					elif old_value == -1 and value != -1:
+						add_to_animation_server(actor, [Animation.sfx, "heavyunland"]);
+				else:
+					if value >= 1 and old_value <= 0:
+						add_to_animation_server(actor, [Animation.sfx, "heavycoyote"]);
+					elif value == -1 and old_value != -1:
+						add_to_animation_server(actor, [Animation.sfx, "heavyland"]);
+			elif actor.actorname == "light":
+				if is_retro:
+					if old_value >= 1 and value <= 0:
+						add_to_animation_server(actor, [Animation.sfx, "lightuncoyote"]);
+					elif old_value == -1 and value != -1:
+						add_to_animation_server(actor, [Animation.sfx, "lightunland"]);
+				else:
+					if value >= 1 and old_value <= 0:
+						add_to_animation_server(actor, [Animation.sfx, "lightcoyote"]);
+					elif value == -1 and old_value != -1:
+						add_to_animation_server(actor, [Animation.sfx, "lightland"]);
 		
 		# special case - if we break or unbreak, we can ding or unding too
 		if prop == "broken":
@@ -2609,12 +2643,13 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.set_actor_var):
 		var actor = event[1];
 		var animation_nonce = event[5];
+		var is_retro = true;
 		if (chrono < Chrono.META_UNDO and actor.in_stars):
 			add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
 		else:
 			#[Undo.set_actor_var, actor, prop, old_value, value, animation_nonce]
 			
-			set_actor_var(actor, event[2], event[3], chrono, animation_nonce);
+			set_actor_var(actor, event[2], event[3], chrono, animation_nonce, is_retro);
 	elif (event[0] == Undo.change_terrain):
 		var actor = event[1];
 		var pos = event[2];

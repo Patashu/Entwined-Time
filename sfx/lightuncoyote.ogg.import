@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/lightuncoyote.ogg-7bb7e7f81d11c92fa76dd66d8d0067d9.oggstr"
+
+[deps]
+
+source_file="res://sfx/lightuncoyote.ogg"
+dest_files=[ "res://.import/lightuncoyote.ogg-7bb7e7f81d11c92fa76dd66d8d0067d9.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

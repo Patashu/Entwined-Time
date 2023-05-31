@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/heavyuncoyote.ogg-16b9fe7150c7e9e0cd9491f81f03f013.oggstr"
+
+[deps]
+
+source_file="res://sfx/heavyuncoyote.ogg"
+dest_files=[ "res://.import/heavyuncoyote.ogg-16b9fe7150c7e9e0cd9491f81f03f013.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/heavyland.ogg-3308d23890b3e6f6aabfee8232f95236.oggstr"
+
+[deps]
+
+source_file="res://sfx/heavyland.ogg"
+dest_files=[ "res://.import/heavyland.ogg-3308d23890b3e6f6aabfee8232f95236.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

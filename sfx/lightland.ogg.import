@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/lightland.ogg-6777919976e499b871efb3e9c45914fc.oggstr"
+
+[deps]
+
+source_file="res://sfx/lightland.ogg"
+dest_files=[ "res://.import/lightland.ogg-6777919976e499b871efb3e9c45914fc.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
