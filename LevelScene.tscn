@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -37,6 +37,7 @@
 [ext_resource path="res://assets/screen-static.png" type="Texture" id=35]
 [ext_resource path="res://Shade.gd" type="Script" id=36]
 [ext_resource path="res://assets/checkerboard.png" type="Texture" id=37]
+[ext_resource path="res://StarSprite.gd" type="Script" id=38]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 16
@@ -249,10 +250,11 @@ align = 1
 valign = 1
 
 [node name="LevelStar" type="Sprite" parent="."]
-visible = false
+modulate = Color( 1, 1, 1, 0 )
 scale = Vector2( 0.167, 0.167 )
 texture = ExtResource( 7 )
 centered = false
+script = ExtResource( 38 )
 
 [node name="MenuButton" type="Button" parent="."]
 margin_left = 226.0

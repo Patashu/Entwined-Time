@@ -2536,6 +2536,8 @@ func check_won() -> void:
 				pass
 			else:
 				level_save_data["won"] = true;
+				levelstar.previous_modulate = Color(1, 1, 1, 0);
+				levelstar.flash();
 				puzzles_completed += 1;
 			if (!level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
@@ -3291,13 +3293,18 @@ func update_level_label() -> void:
 		if (heavy_max_moves < 11 and light_max_moves < 11):
 			levellabel.text += " (F9/F10 ADJUST SPEED)";
 	if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
-		levelstar.visible = true;
+		if (levelstar.next_modulates.size() > 0):
+			# in the middle of a flash from just having won
+			pass
+		else:
+			levelstar.modulate = Color(1, 1, 1, 1);
 		var string_size = preload("res://standardfont.tres").get_string_size(levellabel.text);
 		var label_middle = levellabel.rect_position.x + levellabel.rect_size.x / 2;
 		var string_left = label_middle - string_size.x/2;
 		levelstar.position = Vector2(string_left-14, levellabel.rect_position.y);
 	else:
-		levelstar.visible = false;
+		levelstar.finish_animations();
+		levelstar.modulate = Color(1, 1, 1, 0);
 	
 func update_info_labels() -> void:
 	#also do fuzz indicator here
