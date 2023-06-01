@@ -178,6 +178,7 @@ func prepare_chapter() -> void:
 			x += 1;
 		
 		if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < advanced_unlock_requirement):
+			all_advanced_stars = false;
 			var label = Label.new();
 			holder.add_child(label);
 			label.rect_position.x = xx + xxx*x;
