@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=179 format=2]
+[gd_resource type="TileSet" load_steps=183 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -160,6 +160,9 @@
 [ext_resource path="res://assets/light_goal_joke.png" type="Texture" id=158]
 [ext_resource path="res://assets/heavy_goal_joke.png" type="Texture" id=159]
 [ext_resource path="res://assets/chrono_helix_red.png" type="Texture" id=160]
+[ext_resource path="res://assets/light_fire_idle_3.png" type="Texture" id=161]
+[ext_resource path="res://assets/light_fire_idle_2.png" type="Texture" id=162]
+[ext_resource path="res://assets/light_fire_idle_1.png" type="Texture" id=163]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -470,6 +473,15 @@ frame_2/texture = ExtResource( 156 )
 frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 155 )
 frame_3/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=20]
+frames = 3
+fps = 5.0
+frame_0/texture = ExtResource( 163 )
+frame_1/texture = ExtResource( 162 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 161 )
+frame_2/delay_sec = 0.0
 
 [resource]
 0/name = "Fire"
@@ -1363,3 +1375,17 @@ frame_3/delay_sec = 0.0
 63/shape_one_way_margin = 0.0
 63/shapes = [  ]
 63/z_index = 0
+64/name = "LightFire"
+64/texture = SubResource( 20 )
+64/tex_offset = Vector2( 0, 0 )
+64/modulate = Color( 1, 1, 1, 1 )
+64/region = Rect2( 0, 0, 24, 24 )
+64/tile_mode = 0
+64/occluder_offset = Vector2( 12, 12 )
+64/navigation_offset = Vector2( 12, 12 )
+64/shape_offset = Vector2( 0, 0 )
+64/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+64/shape_one_way = false
+64/shape_one_way_margin = 0.0
+64/shapes = [  ]
+64/z_index = 0

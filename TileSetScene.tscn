@@ -1,4 +1,4 @@
-[gd_scene load_steps=179 format=2]
+[gd_scene load_steps=183 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -160,6 +160,9 @@
 [ext_resource path="res://assets/light_goal_joke.png" type="Texture" id=158]
 [ext_resource path="res://assets/heavy_goal_joke.png" type="Texture" id=159]
 [ext_resource path="res://assets/chrono_helix_red.png" type="Texture" id=160]
+[ext_resource path="res://assets/light_fire_idle_3.png" type="Texture" id=161]
+[ext_resource path="res://assets/light_fire_idle_2.png" type="Texture" id=162]
+[ext_resource path="res://assets/light_fire_idle_1.png" type="Texture" id=163]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -471,6 +474,15 @@ frame_2/delay_sec = 0.0
 frame_3/texture = ExtResource( 155 )
 frame_3/delay_sec = 0.0
 
+[sub_resource type="AnimatedTexture" id=20]
+frames = 3
+fps = 5.0
+frame_0/texture = ExtResource( 163 )
+frame_1/texture = ExtResource( 162 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 161 )
+frame_2/delay_sec = 0.0
+
 [node name="TileSetScene" type="Node2D"]
 
 [node name="WoodenPlatform" type="Sprite" parent="."]
@@ -724,3 +736,7 @@ texture = ExtResource( 159 )
 [node name="LightGoalJoke" type="Sprite" parent="."]
 position = Vector2( 45, 297 )
 texture = ExtResource( 158 )
+
+[node name="LightFire" type="Sprite" parent="."]
+position = Vector2( 50, 266 )
+texture = SubResource( 20 )

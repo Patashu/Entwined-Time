@@ -225,6 +225,7 @@ enum Tiles {
 	ChronoHelixRed, #61
 	HeavyGoalJoke, #62
 	LightGoalJoke, #63
+	LightFire, #64
 }
 
 # information about the level
@@ -503,6 +504,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
 	level_list.push_back(preload("res://levels/HellEx.tscn"));
 	level_list.push_back(preload("res://levels/FireInTheSky.tscn"));
+	level_list.push_back(preload("res://levels/FireInTheSkyExLuKAs.tscn"));
 	level_list.push_back(preload("res://levels/FireInTheSkyEx.tscn"));
 	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
 	
@@ -3233,9 +3235,6 @@ func time_passes(chrono: int) -> void:
 			time_colour = TimeColour.Red;
 		add_to_animation_server(null, [Animation.fire_roars, time_colour])
 	for actor in time_actors:
-		if (actor.in_night):
-			# why would you ever put fire in night? but yet...
-			continue;
 		var terrain = terrain_in_tile(actor.pos);		
 		if !actor.broken and terrain.has(Tiles.Fire) and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
@@ -3243,13 +3242,13 @@ func time_passes(chrono: int) -> void:
 		if !actor.broken and terrain.has(Tiles.HeavyFire) and actor.durability <= Durability.FIRE and actor.actorname != "light":
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
+		if !actor.broken and terrain.has(Tiles.LightFire) and actor.durability <= Durability.FIRE and actor.actorname != "heavy":
+			actor.post_mortem = Durability.FIRE;
+			set_actor_var(actor, "broken", true, chrono);
 		
 	# Green fire happens after regular fire, so you can have that matter if you'd like it to :D	
 	if chrono <= Chrono.CHAR_UNDO:
 		for actor in actors:
-			if (actor.in_night):
-				# GREEN fire in night? now you're just making fun of me...
-				continue;
 			var terrain = terrain_in_tile(actor.pos);
 			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
 				actor.post_mortem = Durability.FIRE;
@@ -3450,6 +3449,19 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.vframes = 3;
 				sprite.hframes = 8;
 				sprite.frame = 0;
+				sprite.centered = false;
+				sprite.frame_max = sprite.frame + 8;
+				underactorsparticles.add_child(sprite);
+		if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Blue):
+			fires = get_used_cells_by_id_one_array(Tiles.LightFire);
+			for fire in fires:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://OneTimeSprite.gd"));
+				sprite.texture = preload("res://assets/fire_spritesheet.png");
+				sprite.position = terrainmap.map_to_world(fire);
+				sprite.vframes = 3;
+				sprite.hframes = 8;
+				sprite.frame = 8;
 				sprite.centered = false;
 				sprite.frame_max = sprite.frame + 8;
 				underactorsparticles.add_child(sprite);
