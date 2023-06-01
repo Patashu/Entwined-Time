@@ -69,6 +69,10 @@ func prepare_chapter() -> void:
 	if gamelogic.chapter_replacements.has(chapter):
 		chapter_string = gamelogic.chapter_replacements[chapter];
 	
+	holder.finish_animations();
+	var all_standard_stars = true;
+	var all_advanced_stars = true;
+	
 	if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < unlock_requirement):
 		holder.text = "Chapter " + chapter_string + " - ???";
 		var label = Label.new();
@@ -102,12 +106,12 @@ func prepare_chapter() -> void:
 		yy = 15;
 		yyy = 15;
 		
-	var label = Label.new();
-	holder.add_child(label);
-	label.rect_position.x = xx + xxx*x;
-	label.rect_position.y = yy + yyy*y + 2;
-	label.text = "Standard:"
-	label.theme = holder.theme;
+	var standard_label = Label.new();
+	holder.add_child(standard_label);
+	standard_label.rect_position.x = xx + xxx*x;
+	standard_label.rect_position.y = yy + yyy*y + 2;
+	standard_label.text = "Standard:"
+	standard_label.theme = holder.theme;
 	
 	y += 1;
 	if (y == y_max):
@@ -136,7 +140,8 @@ func prepare_chapter() -> void:
 			star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
 			star.centered = false;
 			holder.add_child(star);
-			pass;
+		else:
+			all_standard_stars = false;
 		
 		if (x == 0 and y == 1): # the first button
 			button.grab_focus();
@@ -148,6 +153,8 @@ func prepare_chapter() -> void:
 			y = 0;
 			x += 1;
 	
+	var advanced_label = null;
+	
 	if (advanced_end - advanced_start) > 0:
 		# don't put the advanced label at the bottom of a column
 		if (y == y_max - 1):
@@ -158,12 +165,12 @@ func prepare_chapter() -> void:
 			y = 0;
 			x += 1;
 		
-		label = Label.new();
-		holder.add_child(label);
-		label.rect_position.x = xx + xxx*x;
-		label.rect_position.y = yy + yyy*y + 2;
-		label.text = "Advanced:"
-		label.theme = holder.theme;
+		advanced_label = Label.new();
+		holder.add_child(advanced_label);
+		advanced_label.rect_position.x = xx + xxx*x;
+		advanced_label.rect_position.y = yy + yyy*y + 2;
+		advanced_label.text = "Advanced:"
+		advanced_label.theme = holder.theme;
 		
 		y += 1;
 		if (y == y_max):
@@ -171,7 +178,7 @@ func prepare_chapter() -> void:
 			x += 1;
 		
 		if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < advanced_unlock_requirement):
-			label = Label.new();
+			var label = Label.new();
 			holder.add_child(label);
 			label.rect_position.x = xx + xxx*x;
 			label.rect_position.y = yy + yyy*y + 2;
@@ -204,7 +211,8 @@ func prepare_chapter() -> void:
 					star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
 					star.centered = false;
 					holder.add_child(star);
-					pass;
+				else:
+					all_advanced_stars = false;
 				
 				y += 1;
 				if (y == y_max):
@@ -213,7 +221,7 @@ func prepare_chapter() -> void:
 		
 	# chapter 0 notice
 	if chapter == 0:
-		label = Label.new();
+		var label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = xx + xxx;
 		label.rect_position.y = yy + yyy*(10);
@@ -222,12 +230,22 @@ func prepare_chapter() -> void:
 		
 	# chapter 2 notice
 	if chapter == 2:
-		label = Label.new();
+		var label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = 8;
 		label.rect_position.y = yy + yyy*(10);
 		label.text = "(This chapter is optional. It teaches techniques used only in Advanced puzzles.)\n(If you get stuck, proceed to Chapter 3 - you can come back here anytime!)"
 		label.theme = holder.theme;
+		
+	# gold label flashes for completionists
+	if (all_standard_stars):
+		standard_label.set_script(preload("res://GoldLabel.gd"));
+		standard_label.flash();
+		if (all_advanced_stars):
+			holder.flash();
+	if (all_advanced_stars and advanced_label != null):
+		advanced_label.set_script(preload("res://GoldLabel.gd"));
+		advanced_label.flash();
 
 func destroy() -> void:
 	self.queue_free();
