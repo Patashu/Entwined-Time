@@ -1845,7 +1845,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		elif actor_there.pushable():
 			pushables_there.push_back(actor_there);
 	
-	if (actors_there.size() > 0):
+	if (pushables_there.size() > 0):
 		if (!can_push):
 			return Success.No;
 		# check if the current actor COULD push the next actor, then give them a push and return the result
