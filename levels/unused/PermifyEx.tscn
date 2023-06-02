@@ -11,8 +11,7 @@ tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 196614, 4, 14, 19
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Permify"
-level_replay = "Permify$mturn=100$xdwxaxzwxwxzwxwxzxzddzzzzxddwxdwwxdxwzzzzawwwxzzzxzzzxzsxaxssxwxaxwzzwazzzzxzzzzdxawwwxzwxzzzaaaxaazzzsxszzxdsxzzxzzzxdddxddddzdxdzd"
+level_name = "Permify [VAR1] (unsolved)"
 heavy_max_moves = 5
 light_max_moves = 5
 clock_turns = "5,5"
