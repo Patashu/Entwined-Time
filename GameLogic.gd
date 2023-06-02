@@ -3072,6 +3072,11 @@ func time_passes(chrono: int) -> void:
 	animation_substep(chrono);
 	var time_actors = []
 	for actor in actors:
+		# broken time crystals being in stacks was messing up the just_moved gravity code,
+		# and nothing related to time passage effects time crystals anyway, so just eject them here
+		if actor.is_crystal:
+			continue;
+		
 		#AD06: Characters are Purple, other actors are Gray. (But with time colours you can make your own arbitrary rules!
 #		Red: Time passes only when red moves forward.
 #		Blue: Time passes only when blue moves forward.
