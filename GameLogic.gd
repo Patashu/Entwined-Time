@@ -796,7 +796,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/UphillL2.tscn"));
 	level_list.push_back(preload("res://levels/DownhillL2.tscn"));
 	level_list.push_back(preload("res://levels/RoommatesL2.tscn"));
-	#level_list.push_back(preload("res://levels/RoommatesL2Ex.tscn"));
+	level_list.push_back(preload("res://levels/RoommatesL2Ex.tscn"));
 	level_list.push_back(preload("res://levels/CarryingItL2.tscn"));
 	level_list.push_back(preload("res://levels/CallACabL2.tscn"));
 	#level_list.push_back(preload("res://levels/TheoryOfEverythingA.tscn"));
@@ -980,10 +980,10 @@ func timeline_squish() -> void:
 	lighttimeline.position.y += (pixel_height-max_tallness)/2
 
 func broadcast_animation_nonce(animation_nonce: int) -> void:
-	if (heavy_selected):
-		heavytimeline.broadcast_animation_nonce(animation_nonce);
-	else:
-		lighttimeline.broadcast_animation_nonce(animation_nonce);
+	# have to do both to fix a bug where you change characters immediately after making a move
+	# (alternatively keep track of it, but meh, it's quick enough right?)
+	heavytimeline.broadcast_animation_nonce(animation_nonce);
+	lighttimeline.broadcast_animation_nonce(animation_nonce);
 
 func get_used_cells_by_id_all_layers(id: int) -> Array:
 	var results = []
