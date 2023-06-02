@@ -15,7 +15,7 @@ level_name = "Rink"
 level_replay = "Rink$mturn=25$aaxawxdzzzzazzxdzaaaxwxdzzzzxwxa"
 heavy_max_moves = 6
 light_max_moves = 6
-clock_turns = "26"
+clock_turns = "20"
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
