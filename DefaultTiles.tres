@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=183 format=2]
+[gd_resource type="TileSet" load_steps=186 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -163,6 +163,9 @@
 [ext_resource path="res://assets/light_fire_idle_3.png" type="Texture" id=161]
 [ext_resource path="res://assets/light_fire_idle_2.png" type="Texture" id=162]
 [ext_resource path="res://assets/light_fire_idle_1.png" type="Texture" id=163]
+[ext_resource path="res://assets/void_power_socket.png" type="Texture" id=164]
+[ext_resource path="res://assets/white_power_socket.png" type="Texture" id=165]
+[ext_resource path="res://assets/green_power_socket.png" type="Texture" id=166]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1389,3 +1392,45 @@ frame_2/delay_sec = 0.0
 64/shape_one_way_margin = 0.0
 64/shapes = [  ]
 64/z_index = 0
+65/name = "PowerSocket"
+65/texture = ExtResource( 165 )
+65/tex_offset = Vector2( 0, 0 )
+65/modulate = Color( 1, 1, 1, 1 )
+65/region = Rect2( 0, 0, 24, 24 )
+65/tile_mode = 0
+65/occluder_offset = Vector2( 12, 12 )
+65/navigation_offset = Vector2( 12, 12 )
+65/shape_offset = Vector2( 0, 0 )
+65/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+65/shape_one_way = false
+65/shape_one_way_margin = 0.0
+65/shapes = [  ]
+65/z_index = 0
+66/name = "GreenPowerSocket"
+66/texture = ExtResource( 166 )
+66/tex_offset = Vector2( 0, 0 )
+66/modulate = Color( 1, 1, 1, 1 )
+66/region = Rect2( 0, 0, 24, 24 )
+66/tile_mode = 0
+66/occluder_offset = Vector2( 12, 12 )
+66/navigation_offset = Vector2( 12, 12 )
+66/shape_offset = Vector2( 0, 0 )
+66/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+66/shape_one_way = false
+66/shape_one_way_margin = 0.0
+66/shapes = [  ]
+66/z_index = 0
+67/name = "VoidPowerSocket"
+67/texture = ExtResource( 164 )
+67/tex_offset = Vector2( 0, 0 )
+67/modulate = Color( 1, 1, 1, 1 )
+67/region = Rect2( 0, 0, 24, 24 )
+67/tile_mode = 0
+67/occluder_offset = Vector2( 12, 12 )
+67/navigation_offset = Vector2( 12, 12 )
+67/shape_offset = Vector2( 0, 0 )
+67/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+67/shape_one_way = false
+67/shape_one_way_margin = 0.0
+67/shapes = [  ]
+67/z_index = 0

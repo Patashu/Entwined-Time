@@ -226,6 +226,9 @@ enum Tiles {
 	HeavyGoalJoke, #62
 	LightGoalJoke, #63
 	LightFire, #64
+	PowerSocket, #65
+	GreenPowerSocket, #66
+	VoidPowerSocket, #67
 }
 
 # information about the level
@@ -1699,6 +1702,21 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, Greenness.Green, chrono);
 			Tiles.VoidSpikeball:
 				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, Greenness.Void, chrono);
+			Tiles.PowerSocket:
+				if (actor.is_character):
+					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Mundane, chrono);
+				else:
+					result = Success.No;
+			Tiles.GreenPowerSocket:
+				if (actor.is_character):
+					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
+				else:
+					result = Success.No;
+			Tiles.VoidPowerSocket:
+				if (actor.is_character):
+					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Void, chrono);
+				else:
+					result = Success.No;
 			Tiles.NoHeavy:
 				result = no_if_true_yes_if_false(actor.actorname == "heavy");
 				if (result == Success.No):
