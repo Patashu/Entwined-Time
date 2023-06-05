@@ -22,13 +22,14 @@ C: Meta-Undo
 R: Restart
 
 Esc: Open/Close Menu
-F1/F2: Change Level/Chapter
+F1/F2: Change Puzzle/Chapter
 M: Mute/Unmute Audio
 
 Ctrl+C/Ctrl+V: Copy/Paste Replay
 F11: Your Best Replay | Shift+F11: Force Save Replay
 F12: Author's Replay
-F9/F10: Adjust Replay Speed (25% multiplicative)
+F9: Replay Speed Down | Shift+F9: Reset Replay Speed
+F10: Replay Speed Up | Shift+F10: Maximum Replay Speed
 "
 align = 1
 

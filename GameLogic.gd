@@ -3624,9 +3624,15 @@ func _process(delta: float) -> void:
 			toggle_mute();
 			
 		if (Input.is_action_just_pressed("speedup_replay")):
-			replay_interval *= 0.8;
+			if (Input.is_action_pressed("shift")):
+				replay_interval = 0.015;
+			elif replay_interval > 0:
+				replay_interval *= (2.0/3.0);
 		if (Input.is_action_just_pressed("slowdown_replay")):
-			replay_interval /= 0.8;
+			if (Input.is_action_pressed("shift")):
+				replay_interval = 0.5;
+			elif replay_interval > 0:
+				replay_interval /= (2.0/3.0);
 		if (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
 				if (won):
