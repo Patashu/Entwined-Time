@@ -974,10 +974,11 @@ func timeline_squish() -> void:
 	var heavy_tallness = heavy_max*24 + heavyinfolabel.rect_size.y;
 	var light_tallness = light_max*24 + lightinfolabel.rect_size.y;
 	var max_tallness = max(heavy_tallness, light_tallness);
-	heavyinfolabel.rect_position.y += (pixel_height-max_tallness)/2;
-	heavytimeline.position.y += (pixel_height-max_tallness)/2
-	lightinfolabel.rect_position.y += (pixel_height-max_tallness)/2
-	lighttimeline.position.y += (pixel_height-max_tallness)/2
+	var y_offset = int(floor((pixel_height-max_tallness)/2));
+	heavyinfolabel.rect_position.y += y_offset
+	heavytimeline.position.y += y_offset
+	lightinfolabel.rect_position.y += y_offset
+	lighttimeline.position.y += y_offset
 
 func broadcast_animation_nonce(animation_nonce: int) -> void:
 	# have to do both to fix a bug where you change characters immediately after making a move
@@ -2629,7 +2630,7 @@ func check_won() -> void:
 	
 func adjust_winlabel() -> void:
 	winlabel.rect_position.y = win_label_default_y;
-	winlabel.rect_position.x = pixel_width/2 - winlabel.rect_size.x/2;
+	winlabel.rect_position.x = pixel_width/2 - int(floor(winlabel.rect_size.x/2));
 	var tries = 1;
 	var heavy_actor_rect = heavy_actor.get_rect();
 	var light_actor_rect = light_actor.get_rect();
@@ -3362,8 +3363,8 @@ func update_level_label() -> void:
 		else:
 			levelstar.modulate = Color(1, 1, 1, 1);
 		var string_size = preload("res://standardfont.tres").get_string_size(levellabel.text);
-		var label_middle = levellabel.rect_position.x + levellabel.rect_size.x / 2;
-		var string_left = label_middle - string_size.x/2;
+		var label_middle = levellabel.rect_position.x + int(floor(levellabel.rect_size.x / 2));
+		var string_left = label_middle - int(floor(string_size.x/2));
 		levelstar.position = Vector2(string_left-14, levellabel.rect_position.y);
 	else:
 		levelstar.finish_animations();

@@ -52,7 +52,7 @@ func finish_divider_position() -> void:
 		timelinedivider.position.y = 0;
 		timelinedivider.position.x = 0;
 	else:
-		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1);
+		timelinedivider.position.y = yy*(((current_move-1)%y_max)+1)-1;
 		timelinedivider.position.x = xx*floor((current_move-1)/y_max);
 
 func broadcast_animation_nonce(animation_nonce: int) -> void:

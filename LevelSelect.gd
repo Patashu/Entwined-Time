@@ -95,7 +95,7 @@ func prepare_chapter() -> void:
 	var yy = 16;
 	var yyy = 16;
 	var xx = 19;
-	var xxx = (holder.rect_size.x / 2)-2;
+	var xxx = int(floor(holder.rect_size.x / 2))-2;
 	var x = 0;
 	var y = 0;
 	var y_max = 12;
