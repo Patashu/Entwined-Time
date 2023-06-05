@@ -740,7 +740,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Forgetfulness.tscn"));
 	level_list.push_back(preload("res://levels/Remembrance.tscn"));
 	level_list.push_back(preload("res://levels/Conservation.tscn"));
-	#level_list.push_back(preload("res://levels/unused/Test.tscn"));
+	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	chapter_advanced_unlock_requirements.push_back(80);
 	level_list.push_back(preload("res://levels/Elementary.tscn"));
@@ -3569,6 +3569,15 @@ func last_level_of_section() -> bool:
 		return true;
 	return false;
 		
+func unwin() -> void:
+	floating_text("Shift+F11: Unwin");
+	if (save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]):
+		puzzles_completed -= 1;
+	if (save_file["levels"].has(level_name)):
+		save_file["levels"][level_name].clear();
+	save_game();
+	update_level_label();
+	
 func _process(delta: float) -> void:
 	sounds_played_this_frame.clear();
 	
@@ -3619,14 +3628,11 @@ func _process(delta: float) -> void:
 		if (Input.is_action_just_pressed("slowdown_replay")):
 			replay_interval /= 0.8;
 		if (Input.is_action_just_pressed("start_saved_replay")):
-			if (OS.is_debug_build() and Input.is_action_pressed("shift")):
-				floating_text("Shift+F11: Unwin");
-				if (save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]):
-					puzzles_completed -= 1;
-				if (save_file["levels"].has(level_name)):
-					save_file["levels"][level_name].clear();
-				save_game();
-				update_level_label();
+			if (Input.is_action_pressed("shift")):
+				if (won):
+					save_file["levels"][level_name]["replay"] = annotate_replay(user_replay);
+					save_game();
+					floating_text("Shift+F11: Replay force saved!");
 			else:
 				start_saved_replay();
 				update_info_labels();
