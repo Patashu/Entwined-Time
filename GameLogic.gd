@@ -3649,11 +3649,13 @@ func _process(delta: float) -> void:
 		if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
 			replay_from_clipboard();
 		
+		var dir = Vector2.ZERO;
+		
 		if (Input.is_action_just_pressed("character_undo")):
 			end_replay();
 			character_undo();
 			update_info_labels();
-		if (Input.is_action_just_pressed("meta_undo")):
+		elif (Input.is_action_just_pressed("meta_undo")):
 			if Input.is_action_pressed("ctrl"):
 				OS.set_clipboard(annotate_replay(user_replay));
 				floating_text("Ctrl+C: Replay copied");
@@ -3661,38 +3663,37 @@ func _process(delta: float) -> void:
 				end_replay();
 				meta_undo();
 				update_info_labels();
-		if (Input.is_action_just_pressed("character_switch")):
-			end_replay();
-			character_switch();
-			update_info_labels();
-		if (Input.is_action_just_pressed("restart")):
+		elif (Input.is_action_just_pressed("restart")):
 			end_replay();
 			restart();
 			update_info_labels();
-		if (Input.is_action_just_pressed("escape")):
+		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		if (Input.is_action_just_pressed("previous_level")):
+		elif (Input.is_action_just_pressed("previous_level")):
 			end_replay();
 			load_level(-1);
-		if (Input.is_action_just_pressed("next_level")):
+		elif (Input.is_action_just_pressed("next_level")):
 			end_replay();
 			load_level(1);
-		
-		var dir = Vector2.ZERO;
-		if (Input.is_action_just_pressed("ui_left")):
-			dir = Vector2.LEFT;
-		if (Input.is_action_just_pressed("ui_right")):
-			dir = Vector2.RIGHT;
-		if (Input.is_action_just_pressed("ui_up")):
-			dir = Vector2.UP;
-		if (Input.is_action_just_pressed("ui_down")):
-			dir = Vector2.DOWN;
-			
-		if dir != Vector2.ZERO:
+		elif (Input.is_action_just_pressed("character_switch")):
 			end_replay();
-			character_move(dir);
+			character_switch();
 			update_info_labels();
+		else:
+			if (Input.is_action_just_pressed("ui_left")):
+				dir = Vector2.LEFT;
+			if (Input.is_action_just_pressed("ui_right")):
+				dir = Vector2.RIGHT;
+			if (Input.is_action_just_pressed("ui_up")):
+				dir = Vector2.UP;
+			if (Input.is_action_just_pressed("ui_down")):
+				dir = Vector2.DOWN;
+				
+			if dir != Vector2.ZERO:
+				end_replay();
+				character_move(dir);
+				update_info_labels();
 		
 	update_targeter();
 	update_animation_server();
