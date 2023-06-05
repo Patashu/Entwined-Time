@@ -3578,6 +3578,22 @@ func unwin() -> void:
 	save_game();
 	update_level_label();
 	
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		var mouse_position = get_parent().get_global_mouse_position();
+		var heavy_rect = heavy_actor.get_rect();
+		var light_rect = light_actor.get_rect();
+		heavy_rect.position += heavy_actor.global_position;
+		light_rect.position += light_actor.global_position;
+		if !heavy_selected and heavy_rect.has_point(mouse_position):
+			end_replay();
+			character_switch();
+			update_info_labels();
+		elif heavy_selected and light_rect.has_point(mouse_position):
+			end_replay();
+			character_switch();
+			update_info_labels();
+	
 func _process(delta: float) -> void:
 	sounds_played_this_frame.clear();
 	
@@ -3650,6 +3666,22 @@ func _process(delta: float) -> void:
 			replay_from_clipboard();
 		
 		var dir = Vector2.ZERO;
+		
+		#mouse click to switch characters
+#		if (Input.is_mouse_button_just_pressed(BUTTON_LEFT)):
+#			var mouse_position = get_parent().get_global_mouse_position();
+#			var heavy_rect = heavy_actor.get_rect();
+#			var light_rect = light_actor.get_rect();
+#			heavy_rect.position += actorsfolder.position;
+#			light_rect.position += actorsfolder.position;
+#			if !heavy_selected and heavy_rect.has_point(mouse_position):
+#				end_replay();
+#				character_switch();
+#				update_info_labels();
+#			elif heavy_selected and light_rect.has_point(mouse_position):
+#				end_replay();
+#				character_switch();
+#				update_info_labels();
 		
 		if (Input.is_action_just_pressed("character_undo")):
 			end_replay();
