@@ -197,7 +197,7 @@ margin_top = 1.0
 margin_right = 37.0
 margin_bottom = 26.0
 theme = ExtResource( 2 )
-custom_colors/font_color = Color( 1, 0.517647, 0.172549, 1 )
+custom_colors/font_color = Color( 1, 0.454902, 0.34902, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Heavy
 99/99"
@@ -210,7 +210,7 @@ margin_top = 1.0
 margin_right = 511.0
 margin_bottom = 26.0
 theme = ExtResource( 2 )
-custom_colors/font_color = Color( 0, 0.87451, 1, 1 )
+custom_colors/font_color = Color( 0.498039, 0.788235, 1, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Light
 99/99"
