@@ -573,6 +573,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
 	level_list.push_back(preload("res://levels/Mole.tscn"));
 	level_list.push_back(preload("res://levels/DoubleJump.tscn"));
+	level_list.push_back(preload("res://levels/Firefighters.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	chapter_advanced_unlock_requirements.push_back(32);
