@@ -397,10 +397,10 @@ frame_7/delay_sec = 0.0
 [sub_resource type="AnimatedTexture" id=6]
 frames = 3
 fps = 5.0
-frame_0/texture = ExtResource( 66 )
-frame_1/texture = ExtResource( 65 )
+frame_0/texture = ExtResource( 65 )
+frame_1/texture = ExtResource( 64 )
 frame_1/delay_sec = 0.0
-frame_2/texture = ExtResource( 64 )
+frame_2/texture = ExtResource( 66 )
 frame_2/delay_sec = 0.0
 
 [sub_resource type="AnimatedTexture" id=16]
@@ -677,7 +677,7 @@ position = Vector2( 298, 275 )
 texture = SubResource( 5 )
 
 [node name="GreenFire" type="Sprite" parent="."]
-position = Vector2( 290, 292 )
+position = Vector2( 283, 184 )
 texture = SubResource( 6 )
 
 [node name="NoRetro" type="Sprite" parent="."]
