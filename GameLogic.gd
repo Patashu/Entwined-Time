@@ -527,6 +527,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	chapter_advanced_unlock_requirements.push_back(24);
 	level_list.push_back(preload("res://levels/TheFirstPitEx3.tscn"));
+	level_list.push_back(preload("res://levels/RoughTerrain.tscn"));
 	level_list.push_back(preload("res://levels/TheBoundlessSkyEx.tscn"));
 	level_list.push_back(preload("res://levels/TheBoundlessSkyEx2.tscn"));
 	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
@@ -788,8 +789,8 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Hassle.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolitionEx.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolitionEx2.tscn"));
-	level_list.push_back(preload("res://levels/CelestialNavigation.tscn"));
 	level_list.push_back(preload("res://levels/Permify.tscn"));
+	level_list.push_back(preload("res://levels/CelestialNavigation.tscn"));
 	#level_replacements[level_list.size()] = "Ω";
 	#level_list.push_back(preload("res://levels/ChronoLabReactor.tscn"));
 	
