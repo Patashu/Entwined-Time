@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 0, 14, 2, 1, 14, 3, 2, 14, 4, 3, 32, 0, 4, 3, 0, 6, 14
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Celestial Navigation"
+level_replay = "Celestial Navigation$mturn=115$xwxaxwxaxwxdxadwxzzxzxzxzzwddxdxzdzdxzxzzzzwdwazzzaxazdzxzxaxzxddzzzxddzzxwxdxwxzxwxaxwxdxwxaxwxzzzxzzzzzxaaaxaaazzzxzzzxdsxddxzxaxsxzzzasxdxzxadxzzzsaawxdzzdzxsxzzxsxz"
 heavy_max_moves = 6
 light_max_moves = 6
 
