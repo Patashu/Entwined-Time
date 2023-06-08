@@ -922,19 +922,19 @@ func ready_tutorial() -> void:
 			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
 		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+			tutoriallabel.bbcode_text = "Arrows: Move [color=#FF7459]Character[/color]\nX: Swap [color=#FF7459]Character[/color]\nZ: Undo [color=#FF7459]Character[/color]\nR: Restart";
 		elif (level_number == 3):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "X: Swap Character\nZ: Undo Character\nR: Restart";
+			tutoriallabel.bbcode_text = "X: Swap [color=#FF7459]Character[/color]\nZ: Undo [color=#FF7459]Character[/color]\nR: Restart";
 		elif (level_number == 4):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "Z: Undo Character\nR: Restart";
+			tutoriallabel.bbcode_text = "Z: Undo [color=#FF7459]Character[/color]\nR: Restart";
 		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "C: Meta-Undo\nR: Restart\n(Meta-Undo undoes your last Move or Undo.)";
+			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart.)";
+			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(You can [color=#A9F05F]Meta-Undo[/color] a Restart.)";
 		elif (level_number == 7):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "Esc: Level Select/Controls/Settings";
@@ -3428,6 +3428,12 @@ func update_info_labels() -> void:
 	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
 	
 	#TODO: for level_number 2, 3 and 4, dynamically change colours based on which character is selected
+	
+	if (level_number >= 2 and level_number <= 4):
+		if (heavy_selected):
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#7FC9FF", "#FF7459");
+		else:
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
 	
 #	if level_number == 1:
 #		if meta_turn >= 24 or heavy_actor.broken or light_actor.broken:
