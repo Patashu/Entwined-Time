@@ -13,8 +13,8 @@ tile_data = PoolIntArray( 3, 7, 0, 4, 2, 0, 5, 3, 0, 6, 8, 0, 65537, 14, 524290,
 script = ExtResource( 1 )
 level_name = "Snake Chute"
 level_replay = "aaxawaasdxdwdddxaaxaaxzzzxwzxxdxzzzzzxdddszxwxxzwzxaaaaawcxaxw"
-heavy_max_moves = 19
-light_max_moves = 19
+heavy_max_moves = 22
+light_max_moves = 22
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
