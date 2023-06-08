@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 9, 14, 196609, 65537, 3, 0, 65539, 3, 0, 65540, 1, 0, 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Landfill"
+level_replay = "Landfill$mturn=47$awxwawaaxzwdxzzzzzddxaxzzwaaxdxddddxwaxzxzzzzzzwaxdddxwxaxwaxw"
 heavy_max_moves = 7
 light_max_moves = 11
 
