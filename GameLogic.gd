@@ -601,19 +601,19 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/CrateExpectations.tscn"));
 	level_list.push_back(preload("res://levels/Bridge.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
-	level_list.push_back(preload("res://levels/TheCratePit.tscn"));
 	level_list.push_back(preload("res://levels/OverDestination.tscn"));
 	level_list.push_back(preload("res://levels/Sokoban.tscn"));
-	level_list.push_back(preload("res://levels/ThirdRoommate.tscn"));
-	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
+	level_list.push_back(preload("res://levels/ThirdRoommate.tscn"));
+	level_list.push_back(preload("res://levels/TheCratePit.tscn"));
+	level_list.push_back(preload("res://levels/Landfill.tscn"));
 	level_list.push_back(preload("res://levels/Levitation.tscn"));
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	chapter_advanced_unlock_requirements.push_back(40);
+	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/TheCratePitEx.tscn"));
-	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/ThirdRoommateEx.tscn"));
 	level_list.push_back(preload("res://levels/LandfillEx.tscn"));
 	level_list.push_back(preload("res://levels/TheCratePitEx2.tscn"));
