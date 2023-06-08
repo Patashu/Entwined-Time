@@ -21,7 +21,7 @@ clock_turns = "8"
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131073, 39, 0, 131081, 39, 0, 327685, 32, 0 )
+tile_data = PoolIntArray( 131072, 23, 0, 131073, 39, 0, 131081, 39, 0, 131082, 23, 0, 196608, 23, 0, 196618, 23, 0, 327685, 32, 0 )
 
 [node name="TileMap2" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
