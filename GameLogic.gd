@@ -934,7 +934,7 @@ func ready_tutorial() -> void:
 			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(You can [color=#A9F05F]Meta-Undo[/color] a Restart.)";
+			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(If you Restart by mistake, [color=#A9F05F]Meta-Undo[/color] will undo that too.)";
 		elif (level_number == 7):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "Esc: Level Select/Controls/Settings";
