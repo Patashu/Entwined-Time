@@ -12,6 +12,6 @@ tile_data = PoolIntArray( 6, 7, 0, 131074, 3, 0, 131078, 8, 0, 196608, 14, 19661
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Over-Destination [VAR1]"
-level_replay = "xaaaawaaxwzxddxddwdddxdssddsxzxwaasxazzzzzzxwzxxwdxddxzxxsxddddxzzzzzzzzzzzzzzddddddwddsawaxzzccccccccccccccxxzzxddddwdw"
+level_replay = "Over-Destination [VAR1]$mturn=56$xaaaawaasddxdwdddxdssassdxzxzzzzzzzxzzzzxazxddddddxzzzzzzzxxzxzzxzwdw"
 heavy_max_moves = 6
-light_max_moves = 21
+light_max_moves = 17
