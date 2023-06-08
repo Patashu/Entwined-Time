@@ -18,7 +18,7 @@ onready var winlabel : Label = levelscene.get_node("WinLabel");
 onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
 onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
-onready var tutoriallabel : Label = levelscene.get_node("TutorialLabel");
+onready var tutoriallabel : RichTextLabel = levelscene.get_node("TutorialLabel");
 onready var targeter : Sprite = levelscene.get_node("Targeter")
 onready var heavytimeline : Node2D = levelscene.get_node("HeavyTimeline");
 onready var lighttimeline : Node2D = levelscene.get_node("LightTimeline");
@@ -919,31 +919,32 @@ func ready_tutorial() -> void:
 		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
 		if (level_number == 0 or level_number == 1):
-			tutoriallabel.text = "Arrows: Move\nZ: Undo\nR: Restart";
+			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
 		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+			tutoriallabel.bbcode_text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
 		elif (level_number == 3):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.text = "X: Swap Character\nZ: Undo Character\nR: Restart";
+			tutoriallabel.bbcode_text = "X: Swap Character\nZ: Undo Character\nR: Restart";
 		elif (level_number == 4):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.text = "Z: Undo Character\nR: Restart";
+			tutoriallabel.bbcode_text = "Z: Undo Character\nR: Restart";
 		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(Meta-Undo undoes your last Move or Undo.)";
+			tutoriallabel.bbcode_text = "C: Meta-Undo\nR: Restart\n(Meta-Undo undoes your last Move or Undo.)";
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart.)";
+			tutoriallabel.bbcode_text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart.)";
 		elif (level_number == 7):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.text = "Esc: Level Select/Controls/Settings";
+			tutoriallabel.bbcode_text = "Esc: Level Select/Controls/Settings";
+		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 			
 	if level_name == "Snake Pit":
 		tutoriallabel.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
 		tutoriallabel.rect_position.y -= 24;
-		tutoriallabel.text = "You can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay";
+		tutoriallabel.text = "[center]You can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.max_moves = heavy_max_moves;

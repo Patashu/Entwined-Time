@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -38,6 +38,7 @@
 [ext_resource path="res://Shade.gd" type="Script" id=36]
 [ext_resource path="res://assets/checkerboard.png" type="Texture" id=37]
 [ext_resource path="res://StarSprite.gd" type="Script" id=38]
+[ext_resource path="res://standardfont.tres" type="DynamicFont" id=39]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 16
@@ -297,17 +298,22 @@ text = "You have won!
 [F11]: Watch Replay"
 align = 1
 
-[node name="TutorialLabel" type="Label" parent="."]
+[node name="TutorialLabel" type="RichTextLabel" parent="."]
 margin_top = 69.0
 margin_right = 512.0
 margin_bottom = 122.0
 theme = ExtResource( 2 )
+custom_colors/default_color = Color( 0.952941, 0.733333, 0.588235, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_as_outline = 1
+custom_fonts/normal_font = ExtResource( 39 )
+bbcode_enabled = true
+bbcode_text = "[center]Arrows: Move Character
+X: Swap Character
+Z: Undo Character[/center]"
 text = "Arrows: Move Character
 X: Swap Character
 Z: Undo Character"
-align = 1
 
 [node name="MetaInfoLabel" type="Label" parent="."]
 margin_top = 271.0
