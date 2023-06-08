@@ -944,7 +944,7 @@ func ready_tutorial() -> void:
 		tutoriallabel.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
 		tutoriallabel.rect_position.y -= 24;
-		tutoriallabel.text = "[center]You can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
+		tutoriallabel.bbcode_text = "[center]You can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.max_moves = heavy_max_moves;
