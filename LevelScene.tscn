@@ -264,6 +264,24 @@ margin_bottom = 299.0
 theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
+[node name="DownArrow" type="Sprite" parent="."]
+visible = false
+position = Vector2( -48, -48 )
+texture = SubResource( 1 )
+centered = false
+
+[node name="LeftArrow" type="Sprite" parent="."]
+visible = false
+position = Vector2( -48, -48 )
+texture = SubResource( 2 )
+centered = false
+
+[node name="RightArrow" type="Sprite" parent="."]
+visible = false
+position = Vector2( -48, -48 )
+texture = SubResource( 3 )
+centered = false
+
 [node name="WinLabel" type="Label" parent="."]
 visible = false
 margin_left = 209.0
@@ -300,24 +318,6 @@ custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 text = "Meta"
 align = 1
 valign = 1
-
-[node name="DownArrow" type="Sprite" parent="."]
-visible = false
-position = Vector2( -48, -48 )
-texture = SubResource( 1 )
-centered = false
-
-[node name="LeftArrow" type="Sprite" parent="."]
-visible = false
-position = Vector2( -48, -48 )
-texture = SubResource( 2 )
-centered = false
-
-[node name="RightArrow" type="Sprite" parent="."]
-visible = false
-position = Vector2( -48, -48 )
-texture = SubResource( 3 )
-centered = false
 
 [node name="Static" type="Sprite" parent="."]
 visible = false

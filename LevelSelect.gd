@@ -225,7 +225,7 @@ func prepare_chapter() -> void:
 		var label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = xx + xxx;
-		label.rect_position.y = yy + yyy*(10);
+		label.rect_position.y = yy + yyy*(11);
 		label.text = "(Advanced puzzles are optional,\nfor those seeking a challenge.)"
 		label.theme = holder.theme;
 		

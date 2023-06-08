@@ -459,6 +459,8 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_standard_unlock_requirements.push_back(0);
 	chapter_skies.push_back(Color("#223C52"));
+	level_list.push_back(preload("res://levels/MeetHeavy.tscn"));
+	level_list.push_back(preload("res://levels/MeetLight.tscn"));
 	level_list.push_back(preload("res://levels/Initiation.tscn"));
 	level_list.push_back(preload("res://levels/Orientation.tscn"));
 	level_list.push_back(preload("res://levels/PushingIt.tscn"));
@@ -874,6 +876,9 @@ func ready_map() -> void:
 	light_filling_turn_actual = -1;
 	light_locked_turns.clear();
 	heavy_selected = true;
+	# Meet Light - only Light is selectable
+	if (level_number == 1):
+		heavy_selected = false;
 	user_replay = "";
 	
 	var level_info = terrainmap.get_node("LevelInfo");
@@ -897,12 +902,12 @@ func ready_map() -> void:
 	ready_tutorial();
 	
 func ready_tutorial() -> void:
-	if level_number > 2:
+	if level_number > 4:
 		metainfolabel.visible = true;
 	else:
 		metainfolabel.visible = false;
 		
-	if level_number > 5:
+	if level_number > 7:
 		tutoriallabel.visible = false;
 		downarrow.visible = false;
 		leftarrow.visible = false;
@@ -913,23 +918,26 @@ func ready_tutorial() -> void:
 		leftarrow.visible = true;
 		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
-		if (level_number == 0):
-			tutoriallabel.text = "Arrows: Move Character";
-		if (level_number == 1):
+		if (level_number == 0 or level_number == 1):
+			tutoriallabel.text = "Arrows: Move\nZ: Undo\nR: Restart";
+		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character";
-		if (level_number == 2):
+			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+		elif (level_number == 3):
+			tutoriallabel.rect_position.y -= 24;
+			tutoriallabel.text = "X: Swap Character\nZ: Undo Character\nR: Restart";
+		elif (level_number == 4):
 			tutoriallabel.rect_position.y -= 24;
 			tutoriallabel.text = "Z: Undo Character\nR: Restart";
-		if (level_number == 3):
+		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(Meta-Undo undoes your last Move or Undo.)";
-		if (level_number == 4):
+		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.text = "C: Meta-Undo\nR: Restart\n(You can Meta-Undo a Restart.)";
-		if (level_number == 5):
+		elif (level_number == 7):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.text = "Esc: Level Select/Controls List";
+			tutoriallabel.text = "Esc: Level Select/Controls/Settings";
 			
 	if level_name == "Snake Pit":
 		tutoriallabel.visible = true;
@@ -2853,6 +2861,9 @@ func meta_undo(is_silent: bool = false) -> bool:
 	return true;
 	
 func character_switch() -> void:
+	# no swapping characters in Meet Heavy or Meet Light, even if you know the button
+	if (level_number == 0 or level_number == 1):
+		return
 	heavy_selected = !heavy_selected;
 	user_replay += "x";
 	update_ghosts();
@@ -3415,19 +3426,21 @@ func update_info_labels() -> void:
 	
 	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
 	
-	if level_number == 1:
-		if meta_turn >= 24 or heavy_actor.broken or light_actor.broken:
-			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+	#TODO: for level_number 2, 3 and 4, dynamically change colours based on which character is selected
 	
-	if level_number == 0:
-		if meta_turn >= 12 or heavy_actor.broken or light_actor.broken:
-			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
-		elif meta_turn < 3:
-			tutoriallabel.text = "Arrows: Move Character";
-		elif meta_turn < 6:
-			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character";
-		else:
-			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character";
+#	if level_number == 1:
+#		if meta_turn >= 24 or heavy_actor.broken or light_actor.broken:
+#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+#
+#	if level_number == 0:
+#		if meta_turn >= 12 or heavy_actor.broken or light_actor.broken:
+#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
+#		elif meta_turn < 3:
+#			tutoriallabel.text = "Arrows: Move Character";
+#		elif meta_turn < 6:
+#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character";
+#		else:
+#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character";
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
