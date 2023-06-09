@@ -614,13 +614,13 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	chapter_advanced_unlock_requirements.push_back(40);
-	level_list.push_back(preload("res://levels/Levitation.tscn"));
 	level_list.push_back(preload("res://levels/WeaknessEx.tscn"));
 	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
 	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
 	level_list.push_back(preload("res://levels/ThirdRoommateEx.tscn"));
 	level_list.push_back(preload("res://levels/TheCratePitEx.tscn"));
 	level_list.push_back(preload("res://levels/TheCratePitEx2.tscn"));
+	level_list.push_back(preload("res://levels/Levitation.tscn"));
 	level_list.push_back(preload("res://levels/QuantumEntanglement.tscn"));
 	level_list.push_back(preload("res://levels/LandfillEx.tscn"));
 	level_list.push_back(preload("res://levels/TheTower.tscn"));
