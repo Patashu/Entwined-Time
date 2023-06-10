@@ -12,8 +12,8 @@ tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 524292, 65539, 14
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Press Every Key"
-level_replay = "Press Every Key$mturn=28$xdxdddxzxzzxaasxdxzzzxzzxwawxdxzxzxzzdxadd"
-heavy_max_moves = 6
+level_replay = "Press Every Key$mturn=33$xaaxdxzzaasxdxzzzxzzxwawxdxzxdxzzaaxzzxzxdwxzddxz"
+heavy_max_moves = 2
 light_max_moves = 3
 
 [node name="TileMap" type="TileMap" parent="."]
