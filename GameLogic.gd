@@ -781,7 +781,6 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/DST.tscn"));
 	level_list.push_back(preload("res://levels/EngineRoom.tscn"));
 	level_list.push_back(preload("res://levels/TheShroud.tscn"));
-	level_list.push_back(preload("res://levels/MidnightParkour.tscn"));
 	level_list.push_back(preload("res://levels/Rewind.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolition.tscn"));
 	level_list.push_back(preload("res://levels/Cascade.tscn"));
@@ -796,6 +795,7 @@ func initialize_level_list() -> void:
 	level_list.push_back(preload("res://levels/Rink.tscn"));
 	level_list.push_back(preload("res://levels/Collectathon.tscn"));
 	level_list.push_back(preload("res://levels/Hassle.tscn"));
+	level_list.push_back(preload("res://levels/MidnightParkour.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolitionEx.tscn"));
 	level_list.push_back(preload("res://levels/ControlledDemolitionEx2.tscn"));
 	level_list.push_back(preload("res://levels/Permify.tscn"));
