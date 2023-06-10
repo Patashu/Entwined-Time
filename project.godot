@@ -164,8 +164,8 @@ run/main_scene="res://LevelScene.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.133333, 0.235294, 0.321569, 1 )
-config/icon="res://assets/heavy_idle.png"
-config/windows_native_icon="res://heavy_idle.ico"
+config/icon="res://icon.png"
+config/windows_native_icon="res://icon.ico"
 
 [display]
 
