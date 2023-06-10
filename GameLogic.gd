@@ -1242,6 +1242,7 @@ func prepare_audio() -> void:
 	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
 	sounds["lightcoyote"] = preload("res://sfx/lightcoyote.ogg");
 	sounds["lightland"] = preload("res://sfx/lightland.ogg");
+	sounds["lightstep"] = preload("res://sfx/lightstep.ogg");
 	sounds["lightuncoyote"] = preload("res://sfx/lightuncoyote.ogg");
 	sounds["lightunland"] = preload("res://sfx/lightunland.ogg");
 	sounds["lose"] = preload("res://sfx/lose.ogg");
@@ -3033,7 +3034,10 @@ func character_move(dir: Vector2) -> bool:
 			result = move_actor_relative(light_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
 	if (result == Success.Yes):
-		play_sound("step")
+		if (!heavy_selected):
+			play_sound("lightstep")
+		else:
+			play_sound("step")
 		if (dir == Vector2.UP):
 			if heavy_selected and !is_suspended(heavy_actor):
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
