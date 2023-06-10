@@ -1240,6 +1240,8 @@ func prepare_audio() -> void:
 	sounds["heavyuncoyote"] = preload("res://sfx/heavyuncoyote.ogg");
 	sounds["heavyunland"] = preload("res://sfx/heavyunland.ogg");
 	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
+	sounds["involuntarybumplight"] = preload("res://sfx/involuntarybumplight.ogg");
+	sounds["involuntarybumpother"] = preload("res://sfx/involuntarybumpother.ogg");
 	sounds["lightcoyote"] = preload("res://sfx/lightcoyote.ogg");
 	sounds["lightland"] = preload("res://sfx/lightland.ogg");
 	sounds["lightstep"] = preload("res://sfx/lightstep.ogg");
@@ -1498,7 +1500,12 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 		if (!hypothetical):
 			# involuntary bump sfx
 			if (pushers_list.size() > 0 or is_retro):
-				add_to_animation_server(actor, [Animation.sfx, "involuntarybump"]);
+				if (actor.actorname == "light"):
+					add_to_animation_server(actor, [Animation.sfx, "involuntarybumplight"]);
+				elif (actor.actorname == "heavy"):
+					add_to_animation_server(actor, [Animation.sfx, "involuntarybump"]);
+				else:
+					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"]);
 		# bump animation always happens, I think?
 		add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
 	return success;

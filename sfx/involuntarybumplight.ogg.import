@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/involuntarybumplight.ogg-3498cbdac8100345a8d6f6b94b560ba0.oggstr"
+
+[deps]
+
+source_file="res://sfx/involuntarybumplight.ogg"
+dest_files=[ "res://.import/involuntarybumplight.ogg-3498cbdac8100345a8d6f6b94b560ba0.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
