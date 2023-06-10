@@ -1206,9 +1206,9 @@ func calculate_map_size() -> void:
 		
 func update_targeter() -> void:
 	if (heavy_selected):
-		targeter.position = heavy_actor.position + terrainmap.position;
+		targeter.position = heavy_actor.position + terrainmap.position - Vector2(2, 2);
 	else:
-		targeter.position = light_actor.position + terrainmap.position;
+		targeter.position = light_actor.position + terrainmap.position - Vector2(2, 2);
 	
 	if (!downarrow.visible):
 		return;

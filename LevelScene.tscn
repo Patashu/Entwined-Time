@@ -232,9 +232,10 @@ position = Vector2( 482, 26 )
 [node name="OverActorsParticles" type="Node2D" parent="."]
 
 [node name="Targeter" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.8 )
 position = Vector2( -28, -30 )
 texture = ExtResource( 4 )
-offset = Vector2( 12, 12 )
+offset = Vector2( 14, 14 )
 
 [node name="GameLogic" type="Node" parent="."]
 script = ExtResource( 3 )
