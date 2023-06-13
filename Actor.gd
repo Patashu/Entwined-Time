@@ -3,6 +3,7 @@ class_name Actor
 
 var gamelogic = null
 var actorname = ""
+var stored_position = Vector2.ZERO
 var pos = Vector2.ZERO
 #var state = {}
 var broken = false
@@ -583,14 +584,15 @@ func _process(delta: float) -> void:
 				else:
 					gamelogic.play_sound("untick");
 			elif (current_animation[0] == 19): #undo_immunity
-				gamelogic.broadcast_animation_nonce(current_animation[1]);
 				if (animation_timer == 0):
+					gamelogic.broadcast_animation_nonce(current_animation[1]);
+					stored_position = position;
 					gamelogic.play_sound("shroud");
 				animation_timer_max = 0.083;
-				position = pos*24 + Vector2(gamelogic.rng.randf_range(-2, 2), gamelogic.rng.randf_range(-2, 2));
+				position = stored_position + Vector2(gamelogic.rng.randf_range(-2, 2), gamelogic.rng.randf_range(-2, 2));
 				animation_timer += delta;
 				if (animation_timer > animation_timer_max):
-					position = pos*24;
+					position = stored_position;
 				else:
 					is_done = false;
 			elif (current_animation[0] == 20): #grayscale
