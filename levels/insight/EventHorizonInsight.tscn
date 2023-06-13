@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 655364, 65541, 28, 0, 65542, 14, 655362, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 524292, 131072, 14, 262145, 131073, 7, 0, 131074, 2, 0, 131076, 25, 0, 131079, 8, 0, 131081, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Event Horizon (Insight)"
+level_replay = "Event Horizon (Insight)$mturn=17$ddxaawxdxzzaxzxaaaxwaaa"
+heavy_max_moves = 6
+light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 1, 0 )
