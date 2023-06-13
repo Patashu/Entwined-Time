@@ -845,8 +845,8 @@ func initialize_level_list() -> void:
 	# level_list.push_back(preload("res://levels/Joke.tscn"));
 	
 	# sentinel to make overflow checks easy
-	chapter_standard_starting_levels.push_back(level_list.size());
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	
 	for level_filename in level_filenames:
 		level_list.push_back(load("res://levels/" + level_filename + ".tscn"));
