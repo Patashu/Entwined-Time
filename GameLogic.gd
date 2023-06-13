@@ -790,8 +790,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("DST")
 	level_filenames.push_back("EngineRoom")
 	level_filenames.push_back("TheShroud")
-	level_filenames.push_back("Rewind")
 	level_filenames.push_back("ControlledDemolition")
+	level_filenames.push_back("Rewind")
 	level_filenames.push_back("Cascade")
 	#level_replacements[level_filenames.size()] = "Ω";
 	#level_filenames.push_back("AWayIn")
