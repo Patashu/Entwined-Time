@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 8, 14, 524290, 9, 14, 196614, 10, 14, 196614, 11, 14, 524292, 65536, 7, 0, 65537, 8, 0, 65542, 3, 0, 65544, 14, 262145, 65545, 2, 0, 65546, 1, 0, 65547, 14, 262145, 131072, 14, 524290, 131073, 14, 196615, 131074, 46, 0, 131075, 46, 0, 131076, 46, 0, 131077, 14, 196613, 131078, 14, 524291, 131079, 14, 196614, 131080, 14, 655363, 131081, 14, 196614, 131082, 14, 196614, 131083, 14, 655364, 196608, 14, 262145, 196614, 14, 262145, 262144, 14, 327681, 262150, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Green Glass (Insight)"
+level_replay = "Green Glass (Insight)$mturn=19$xddddwddxdxzzzzzzwwaas"
+heavy_max_moves = 1
+light_max_moves = 7
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 32, 0, 131074, 46, 0, 131075, 46, 0, 131076, 46, 0 )
