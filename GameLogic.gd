@@ -12,6 +12,7 @@ onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
 onready var overactorsparticles : Node2D = levelscene.get_node("OverActorsParticles");
 onready var underactorsparticles : Node2D = levelscene.get_node("UnderActorsParticles");
 onready var menubutton : Button = levelscene.get_node("MenuButton");
+onready var gaininsightbutton : Button = levelscene.get_node("GainInsightButton");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
 onready var levelstar : Sprite = levelscene.get_node("LevelStar");
 onready var winlabel : Label = levelscene.get_node("WinLabel");
@@ -390,6 +391,7 @@ func load_game():
 func _ready() -> void:
 	# Call once when the game is booted up.
 	menubutton.connect("pressed", self, "escape");
+	gaininsightbutton.connect("pressed", self, "gain_insight");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
 	load_game();
 	if (save_file.has("puzzle_checkerboard")):
@@ -909,6 +911,13 @@ func ready_map() -> void:
 		if (ResourceLoader.exists(insight_path)):
 			has_insight_level = true;
 			insight_level_scene = load(insight_path);
+	
+	gaininsightbutton.visible = has_insight_level;
+	gaininsightbutton.disabled = !has_insight_level;
+	if (has_insight_level and in_insight_level):
+		gaininsightbutton.text = "(G) Return";
+	elif (has_insight_level and !in_insight_level):
+		gaininsightbutton.text = "(G)ain Insight";
 	
 	calculate_map_size();
 	make_actors();
