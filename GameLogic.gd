@@ -3686,6 +3686,9 @@ func _input(event: InputEvent) -> void:
 			update_info_labels();
 	
 func gain_insight() -> void:
+	if (ui_stack.size() > 0):
+		return;
+	
 	if (has_insight_level):
 		if (in_insight_level):
 			in_insight_level = false;
