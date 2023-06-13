@@ -3688,6 +3688,12 @@ func _input(event: InputEvent) -> void:
 func gain_insight() -> void:
 	if (ui_stack.size() > 0):
 		return;
+		
+	if (!save_file.has("gain_insight") or save_file["gain_insight"] != true):
+		var modal = preload("res://GainInsightModalPrompt.tscn").instance();
+		ui_stack.push_back(modal);
+		levelscene.add_child(modal);
+		return;
 	
 	if (has_insight_level):
 		if (in_insight_level):
