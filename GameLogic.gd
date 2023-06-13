@@ -601,6 +601,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("BonfireEx2")
 	level_filenames.push_back("TripleJump")
 	level_filenames.push_back("DivingBoard")
+	level_filenames.push_back("FirefightersEx")
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
