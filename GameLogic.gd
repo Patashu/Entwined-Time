@@ -3749,7 +3749,9 @@ func _process(delta: float) -> void:
 		
 		if (won and Input.is_action_just_pressed("ui_accept")):
 			end_replay();
-			if last_level_of_section():
+			if (in_insight_level):
+				gain_insight();
+			elif last_level_of_section():
 				escape();
 			else:
 				load_level(1);
