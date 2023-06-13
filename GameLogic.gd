@@ -3387,7 +3387,10 @@ func do_one_replay_turn() -> void:
 	if replay_turn >= level_replay.length():
 		if (unit_test_mode and won and level_number < (level_list.size() - 1)):
 			doing_replay = true;
-			load_level(1);
+			if (has_insight_level and !in_insight_level):
+				gain_insight();
+			else:
+				load_level(1);
 			replay_turn = 0;
 			next_replay = replay_timer + replay_interval();
 			return;
@@ -3688,12 +3691,13 @@ func _input(event: InputEvent) -> void:
 func gain_insight() -> void:
 	if (ui_stack.size() > 0):
 		return;
-		
-	if (!save_file.has("gain_insight") or save_file["gain_insight"] != true):
-		var modal = preload("res://GainInsightModalPrompt.tscn").instance();
-		ui_stack.push_back(modal);
-		levelscene.add_child(modal);
-		return;
+	
+	if (!unit_test_mode):
+		if (!save_file.has("gain_insight") or save_file["gain_insight"] != true):
+			var modal = preload("res://GainInsightModalPrompt.tscn").instance();
+			ui_stack.push_back(modal);
+			levelscene.add_child(modal);
+			return;
 	
 	if (has_insight_level):
 		if (in_insight_level):
