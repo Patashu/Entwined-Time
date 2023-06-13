@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524291, 4, 14, 196615, 6, 14, 196609, 65536, 14, 262145, 65537, 5, 0, 65538, 5, 0, 65539, 14, 262145, 65540, 5, 0, 65541, 5, 0, 65542, 14, 262145, 131072, 14, 262145, 131074, 5, 0, 131075, 14, 262145, 131076, 5, 0, 131078, 14, 262145, 196608, 14, 262145, 196610, 5, 0, 196611, 14, 262145, 196612, 5, 0, 196614, 14, 262145, 262144, 14, 262145, 262145, 5, 0, 262146, 5, 0, 262147, 14, 262145, 262148, 5, 0, 262149, 5, 0, 262150, 14, 262145, 327680, 14, 262145, 327682, 5, 0, 327683, 14, 262145, 327684, 5, 0, 327686, 14, 262145, 393216, 14, 262145, 393217, 2, 0, 393218, 5, 0, 393219, 14, 262145, 393220, 5, 0, 393221, 8, 0, 393222, 14, 262145, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 655363, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Triple Jump"
+level_replay = "Triple Jump$mturn=65$wxwxzwxwxzwxwxzwxwxzwxzxzswxzxzswxzxzzswxzxzzzwxwxdxzwxaxzwxzxzswxzxzswxdxzwxaxzwxzxzzsswxzxzzzzww"
+heavy_max_moves = 3
+light_max_moves = 4
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 7, 0, 65537, 1, 0, 131074, 20, 0, 131076, 20, 0, 196610, 20, 0, 196612, 20, 0, 262146, 20, 0, 262148, 20, 0, 327682, 20, 0, 327684, 20, 0, 393218, 20, 0, 393220, 20, 0 )
