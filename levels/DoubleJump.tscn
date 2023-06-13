@@ -15,3 +15,9 @@ level_name = "Double Jump"
 level_replay = "Double Jump$mturn=15$wxwxwxzxwxwxwxzwxdxwxzxwxzw"
 heavy_max_moves = 5
 light_max_moves = 5
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 20, 0, 131076, 20, 0, 196610, 20, 0, 196612, 20, 0, 262146, 20, 0, 262148, 20, 0, 327682, 20, 0, 327684, 20, 0 )
