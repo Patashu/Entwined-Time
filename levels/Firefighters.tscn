@@ -12,7 +12,7 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 19
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Firefighters"
-level_replay = "Firefighters$mturn=23$awwwwdsdxaaaawxdzzzzwxzzzs"
+level_replay = "Firefighters$mturn=25$awwwwdsddxaaawxdxzaxzzzzzwxzzs"
 heavy_max_moves = 10
 light_max_moves = 10
 
@@ -20,4 +20,4 @@ light_max_moves = 10
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 262145, 0, 0, 262147, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 327683, 2, 0, 327689, 8, 0 )
+tile_data = PoolIntArray( -65531, 0, 0, -65530, 0, 0, -65529, 0, 0, 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 262145, 0, 0, 262147, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 327683, 2, 0, 327689, 8, 0 )
