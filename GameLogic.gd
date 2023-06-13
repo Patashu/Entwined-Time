@@ -235,6 +235,9 @@ enum Tiles {
 var chapter = 0
 var level_in_chapter = 0;
 var level_is_extra = false;
+var in_insight_level = false;
+var has_insight_level = false;
+var insight_level_scene = null;
 var level_number = 0
 var level_name = "Blah Blah Blah";
 var level_replay = "";
@@ -328,6 +331,7 @@ var meta_undo_a_restart_mode = false;
 
 # list of levels in the game
 var level_list = [];
+var level_filenames = [];
 var level_names = [];
 var chapter_names = [];
 var chapter_skies = [];
@@ -456,392 +460,391 @@ func assert_tile_enum() -> void:
 func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Two Time");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(0);
 	chapter_skies.push_back(Color("#223C52"));
-	level_list.push_back(preload("res://levels/MeetHeavy.tscn"));
-	level_list.push_back(preload("res://levels/MeetLight.tscn"));
-	level_list.push_back(preload("res://levels/Initiation.tscn"));
-	level_list.push_back(preload("res://levels/Orientation.tscn"));
-	level_list.push_back(preload("res://levels/PushingIt.tscn"));
-	level_list.push_back(preload("res://levels/Wall.tscn"));
-	level_list.push_back(preload("res://levels/Tall.tscn"));
-	level_list.push_back(preload("res://levels/Braid.tscn"));
-	level_list.push_back(preload("res://levels/TheFirstPit.tscn"));	
-	level_list.push_back(preload("res://levels/Pachinko.tscn"));
-	level_list.push_back(preload("res://levels/CallACab.tscn"));
-	level_list.push_back(preload("res://levels/CarryingIt.tscn"));
-	level_list.push_back(preload("res://levels/Roommates.tscn"));
-	level_list.push_back(preload("res://levels/Downhill.tscn"));
-	level_list.push_back(preload("res://levels/Uphill.tscn"));
+	level_filenames.push_back("MeetHeavy")
+	level_filenames.push_back("MeetLight")
+	level_filenames.push_back("Initiation")
+	level_filenames.push_back("Orientation")
+	level_filenames.push_back("PushingIt")
+	level_filenames.push_back("Wall")
+	level_filenames.push_back("Tall")
+	level_filenames.push_back("Braid")
+	level_filenames.push_back("TheFirstPit")	
+	level_filenames.push_back("Pachinko")
+	level_filenames.push_back("CallACab")
+	level_filenames.push_back("CarryingIt")
+	level_filenames.push_back("Roommates")
+	level_filenames.push_back("Downhill")
+	level_filenames.push_back("Uphill")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
-	level_list.push_back(preload("res://levels/Spelunking.tscn"));
-	level_list.push_back(preload("res://levels/ShouldveCalledaCab.tscn"));
-	level_list.push_back(preload("res://levels/UncabYourself.tscn"));
-	level_list.push_back(preload("res://levels/TheFirstPitEx.tscn"));
-	level_list.push_back(preload("res://levels/TheFirstPitEx2.tscn"));
-	level_list.push_back(preload("res://levels/RoommatesEx.tscn"));
+	level_filenames.push_back("Spelunking")
+	level_filenames.push_back("ShouldveCalledaCab")
+	level_filenames.push_back("UncabYourself")
+	level_filenames.push_back("TheFirstPitEx")
+	level_filenames.push_back("TheFirstPitEx2")
+	level_filenames.push_back("RoommatesEx")
 	
 	chapter_names.push_back("Hazards");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(8);
 	chapter_skies.push_back(Color("#512E22"));
-	level_list.push_back(preload("res://levels/Spikes.tscn"));
-	level_list.push_back(preload("res://levels/SnakePit.tscn"));
-	level_list.push_back(preload("res://levels/TheSpikePit.tscn"));
-	level_list.push_back(preload("res://levels/TrustFall.tscn"));
-	level_list.push_back(preload("res://levels/Campfire.tscn"));
-	level_list.push_back(preload("res://levels/SpontaneousCombustion.tscn"));
-	level_list.push_back(preload("res://levels/Firewall.tscn"));
-	level_list.push_back(preload("res://levels/Hell.tscn"));
-	level_list.push_back(preload("res://levels/No.tscn"));
-	level_list.push_back(preload("res://levels/TheBoundlessSky.tscn"));
+	level_filenames.push_back("Spikes")
+	level_filenames.push_back("SnakePit")
+	level_filenames.push_back("TheSpikePit")
+	level_filenames.push_back("TrustFall")
+	level_filenames.push_back("Campfire")
+	level_filenames.push_back("SpontaneousCombustion")
+	level_filenames.push_back("Firewall")
+	level_filenames.push_back("Hell")
+	level_filenames.push_back("No")
+	level_filenames.push_back("TheBoundlessSky")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(16);
-	level_list.push_back(preload("res://levels/SnakePitEx.tscn"));
-	level_list.push_back(preload("res://levels/SnakePitEx2.tscn"));
-	level_list.push_back(preload("res://levels/TheSpikePitEx.tscn"));
-	level_list.push_back(preload("res://levels/TrustFallEx.tscn"));
-	level_list.push_back(preload("res://levels/FirewallEx.tscn"));
-	level_list.push_back(preload("res://levels/FirewallEx2.tscn"));
-	level_list.push_back(preload("res://levels/HellEx.tscn"));
-	level_list.push_back(preload("res://levels/FireInTheSky.tscn"));
-	level_list.push_back(preload("res://levels/FireInTheSkyExLuKAs.tscn"));
-	level_list.push_back(preload("res://levels/FireInTheSkyEx.tscn"));
-	level_list.push_back(preload("res://levels/OrbitalDrop.tscn"));
+	level_filenames.push_back("SnakePitEx")
+	level_filenames.push_back("SnakePitEx2")
+	level_filenames.push_back("TheSpikePitEx")
+	level_filenames.push_back("TrustFallEx")
+	level_filenames.push_back("FirewallEx")
+	level_filenames.push_back("FirewallEx2")
+	level_filenames.push_back("HellEx")
+	level_filenames.push_back("FireInTheSky")
+	level_filenames.push_back("FireInTheSkyExLuKAs")
+	level_filenames.push_back("FireInTheSkyEx")
+	level_filenames.push_back("OrbitalDrop")
 	
 	chapter_names.push_back("Secrets of Space-Time");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(16);
 	chapter_skies.push_back(Color("#062138"));
-	level_list.push_back(preload("res://levels/HeavyMovingService.tscn"));
-	level_list.push_back(preload("res://levels/LightMovingService.tscn"));
-	level_list.push_back(preload("res://levels/LightMovingServiceEx.tscn"));
-	level_list.push_back(preload("res://levels/InvisibleBridgeL.tscn"));
-	level_list.push_back(preload("res://levels/InvisibleBridge.tscn"));
-	level_list.push_back(preload("res://levels/Acrobatics.tscn"));
-	level_list.push_back(preload("res://levels/AcrobaticsEx.tscn"));
-	level_list.push_back(preload("res://levels/GraduationPure.tscn"));
+	level_filenames.push_back("HeavyMovingService")
+	level_filenames.push_back("LightMovingService")
+	level_filenames.push_back("LightMovingServiceEx")
+	level_filenames.push_back("InvisibleBridgeL")
+	level_filenames.push_back("InvisibleBridge")
+	level_filenames.push_back("Acrobatics")
+	level_filenames.push_back("AcrobaticsEx")
+	level_filenames.push_back("GraduationPure")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(24);
-	level_list.push_back(preload("res://levels/TheFirstPitEx3.tscn"));
-	level_list.push_back(preload("res://levels/RoughTerrain.tscn"));
-	level_list.push_back(preload("res://levels/TheBoundlessSkyEx.tscn"));
-	level_list.push_back(preload("res://levels/TheBoundlessSkyEx2.tscn"));
-	level_list.push_back(preload("res://levels/AcrobatsEscape.tscn"));
-	level_list.push_back(preload("res://levels/AcrobatsEscapeEx.tscn"));
-	level_list.push_back(preload("res://levels/AcrobatsEscapeEx2.tscn"));
+	level_filenames.push_back("TheFirstPitEx3")
+	level_filenames.push_back("RoughTerrain")
+	level_filenames.push_back("TheBoundlessSkyEx")
+	level_filenames.push_back("TheBoundlessSkyEx2")
+	level_filenames.push_back("AcrobatsEscape")
+	level_filenames.push_back("AcrobatsEscapeEx")
+	level_filenames.push_back("AcrobatsEscapeEx2")
 	
 	chapter_names.push_back("One-Ways");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(16);
 	chapter_skies.push_back(Color("#1C3D19"));
-	level_list.push_back(preload("res://levels/OneWays.tscn"));
-	level_list.push_back(preload("res://levels/PeekaBoo.tscn"));
-	level_list.push_back(preload("res://levels/CoyoteTime.tscn"));
-	level_list.push_back(preload("res://levels/SecurityDoor.tscn"));
-	level_list.push_back(preload("res://levels/Jail.tscn"));
-	level_list.push_back(preload("res://levels/Upstream.tscn"));
-	level_list.push_back(preload("res://levels/Downstream.tscn"));
-	level_list.push_back(preload("res://levels/TheOneWayPit.tscn"));
-	level_list.push_back(preload("res://levels/EventHorizon.tscn"));
-	level_list.push_back(preload("res://levels/PushingItSequel.tscn"));
-	level_list.push_back(preload("res://levels/Daredevils.tscn"));
+	level_filenames.push_back("OneWays")
+	level_filenames.push_back("PeekaBoo")
+	level_filenames.push_back("CoyoteTime")
+	level_filenames.push_back("SecurityDoor")
+	level_filenames.push_back("Jail")
+	level_filenames.push_back("Upstream")
+	level_filenames.push_back("Downstream")
+	level_filenames.push_back("TheOneWayPit")
+	level_filenames.push_back("EventHorizon")
+	level_filenames.push_back("PushingItSequel")
+	level_filenames.push_back("Daredevils")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(24);
-	level_list.push_back(preload("res://levels/SecurityDoorEx.tscn"));
-	level_list.push_back(preload("res://levels/SecurityDoorEx2.tscn"));
-	level_list.push_back(preload("res://levels/JailEx.tscn"));
-	level_list.push_back(preload("res://levels/JailEx2.tscn"));
-	level_list.push_back(preload("res://levels/TheOneWayPitEx.tscn"));
-	level_list.push_back(preload("res://levels/TheSpikePitEx2.tscn"));
-	level_list.push_back(preload("res://levels/InvisibleBridgeEx.tscn"));
-	level_list.push_back(preload("res://levels/InvisibleBridgeEx2.tscn"));
-	level_list.push_back(preload("res://levels/OneWayToBurn.tscn"));
-	level_list.push_back(preload("res://levels/HawkingRadiation.tscn"));
-	level_list.push_back(preload("res://levels/GraduationSpicy.tscn"));
-	level_list.push_back(preload("res://levels/Heaven.tscn"));
+	level_filenames.push_back("SecurityDoorEx")
+	level_filenames.push_back("SecurityDoorEx2")
+	level_filenames.push_back("JailEx")
+	level_filenames.push_back("JailEx2")
+	level_filenames.push_back("TheOneWayPitEx")
+	level_filenames.push_back("TheSpikePitEx2")
+	level_filenames.push_back("InvisibleBridgeEx")
+	level_filenames.push_back("InvisibleBridgeEx2")
+	level_filenames.push_back("OneWayToBurn")
+	level_filenames.push_back("HawkingRadiation")
+	level_filenames.push_back("GraduationSpicy")
+	level_filenames.push_back("Heaven")
 	
 	chapter_names.push_back("Trap Doors and Ladders");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(24);
 	chapter_skies.push_back(Color("#3B3F1A"));
-	level_list.push_back(preload("res://levels/Down.tscn"));
-	level_list.push_back(preload("res://levels/LadderWorld.tscn"));
-	level_list.push_back(preload("res://levels/LadderLattice.tscn"));
-	level_list.push_back(preload("res://levels/StairwayToHell.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinet.tscn"));
-	level_list.push_back(preload("res://levels/Mole.tscn"));
-	level_list.push_back(preload("res://levels/Dive.tscn"))
-	level_list.push_back(preload("res://levels/DoubleJump.tscn"));
-	level_list.push_back(preload("res://levels/Firefighters.tscn"));
+	level_filenames.push_back("Down")
+	level_filenames.push_back("LadderWorld")
+	level_filenames.push_back("LadderLattice")
+	level_filenames.push_back("StairwayToHell")
+	level_filenames.push_back("TrophyCabinet")
+	level_filenames.push_back("Mole")
+	level_filenames.push_back("Dive")
+	level_filenames.push_back("DoubleJump")
+	level_filenames.push_back("Firefighters")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(32);
-	level_list.push_back(preload("res://levels/FirewallEx3.tscn"));
-	level_list.push_back(preload("res://levels/LadderWorldEx.tscn"));
-	level_list.push_back(preload("res://levels/LadderLatticeEx.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinetEx.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinetEx2.tscn"));
-	level_list.push_back(preload("res://levels/TrophyCabinetEx3.tscn"));
-	level_list.push_back(preload("res://levels/Bonfire.tscn"));
-	level_list.push_back(preload("res://levels/BonfireEx.tscn"));
-	level_list.push_back(preload("res://levels/BonfireEx2.tscn"));
-	level_list.push_back(preload("res://levels/DivingBoard.tscn"));
+	level_filenames.push_back("FirewallEx3")
+	level_filenames.push_back("LadderWorldEx")
+	level_filenames.push_back("LadderLatticeEx")
+	level_filenames.push_back("TrophyCabinetEx")
+	level_filenames.push_back("TrophyCabinetEx2")
+	level_filenames.push_back("TrophyCabinetEx3")
+	level_filenames.push_back("Bonfire")
+	level_filenames.push_back("BonfireEx")
+	level_filenames.push_back("BonfireEx2")
+	level_filenames.push_back("DivingBoard")
 	
 	chapter_names.push_back("Iron Crates");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(32);
 	chapter_skies.push_back(Color("#424947"));
-	level_list.push_back(preload("res://levels/IronCrates.tscn"));
-	level_list.push_back(preload("res://levels/CrateExpectations.tscn"));
-	level_list.push_back(preload("res://levels/Bridge.tscn"));
-	level_list.push_back(preload("res://levels/Weakness.tscn"));
-	level_list.push_back(preload("res://levels/SteppingStool.tscn"));
-	level_list.push_back(preload("res://levels/OverDestination.tscn"));
-	level_list.push_back(preload("res://levels/ThirdRoommate.tscn"));
-	level_list.push_back(preload("res://levels/Sokoban.tscn"));
-	level_list.push_back(preload("res://levels/OneAtATime.tscn"));
-	level_list.push_back(preload("res://levels/PushingItCrate.tscn"));
-	level_list.push_back(preload("res://levels/SnakeChute.tscn"));
-	level_list.push_back(preload("res://levels/TheCratePit.tscn"));
-	level_list.push_back(preload("res://levels/Landfill.tscn"));
-	level_list.push_back(preload("res://levels/PressEveryKey.tscn"));
+	level_filenames.push_back("IronCrates")
+	level_filenames.push_back("CrateExpectations")
+	level_filenames.push_back("Bridge")
+	level_filenames.push_back("Weakness")
+	level_filenames.push_back("SteppingStool")
+	level_filenames.push_back("OverDestination")
+	level_filenames.push_back("ThirdRoommate")
+	level_filenames.push_back("Sokoban")
+	level_filenames.push_back("OneAtATime")
+	level_filenames.push_back("PushingItCrate")
+	level_filenames.push_back("SnakeChute")
+	level_filenames.push_back("TheCratePit")
+	level_filenames.push_back("Landfill")
+	level_filenames.push_back("PressEveryKey")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(40);
-	level_list.push_back(preload("res://levels/WeaknessEx.tscn"));
-	level_list.push_back(preload("res://levels/SteppingStoolEx.tscn"));
-	level_list.push_back(preload("res://levels/OverDestinationEx.tscn"));
-	level_list.push_back(preload("res://levels/ThirdRoommateEx.tscn"));
-	level_list.push_back(preload("res://levels/TheCratePitEx.tscn"));
-	level_list.push_back(preload("res://levels/TheCratePitEx2.tscn"));
-	level_list.push_back(preload("res://levels/Levitation.tscn"));
-	level_list.push_back(preload("res://levels/QuantumEntanglement.tscn"));
-	level_list.push_back(preload("res://levels/LandfillEx.tscn"));
-	level_list.push_back(preload("res://levels/TheTower.tscn"));
+	level_filenames.push_back("WeaknessEx")
+	level_filenames.push_back("SteppingStoolEx")
+	level_filenames.push_back("OverDestinationEx")
+	level_filenames.push_back("ThirdRoommateEx")
+	level_filenames.push_back("TheCratePitEx")
+	level_filenames.push_back("TheCratePitEx2")
+	level_filenames.push_back("Levitation")
+	level_filenames.push_back("QuantumEntanglement")
+	level_filenames.push_back("LandfillEx")
+	level_filenames.push_back("TheTower")
 	
 	chapter_names.push_back("There Are Many Colours");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(40);
 	chapter_skies.push_back(Color("#37294F"));
-	level_list.push_back(preload("res://levels/RedAndBlue.tscn"));
-	level_list.push_back(preload("res://levels/LevelNotFound.tscn"));
-	level_list.push_back(preload("res://levels/DownhillRedBlue.tscn"));
-	level_list.push_back(preload("res://levels/LunarGravity.tscn"));
-	level_list.push_back(preload("res://levels/BlueAndRed.tscn"));
-	level_list.push_back(preload("res://levels/TheRedPit.tscn"));
-	level_list.push_back(preload("res://levels/TheBluePit.tscn"));
-	level_list.push_back(preload("res://levels/TheMagentaPit.tscn"));
-	level_list.push_back(preload("res://levels/TheGrayPit.tscn"));
-	level_list.push_back(preload("res://levels/PaperPlanes.tscn"));
-	level_list.push_back(preload("res://levels/TimelessBridge.tscn"));
+	level_filenames.push_back("RedAndBlue")
+	level_filenames.push_back("LevelNotFound")
+	level_filenames.push_back("DownhillRedBlue")
+	level_filenames.push_back("LunarGravity")
+	level_filenames.push_back("BlueAndRed")
+	level_filenames.push_back("TheRedPit")
+	level_filenames.push_back("TheBluePit")
+	level_filenames.push_back("TheMagentaPit")
+	level_filenames.push_back("TheGrayPit")
+	level_filenames.push_back("PaperPlanes")
+	level_filenames.push_back("TimelessBridge")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(48);
-	level_list.push_back(preload("res://levels/LevelNotFoundEx.tscn"));
-	level_list.push_back(preload("res://levels/LevelNotFoundEx2.tscn"));
-	level_list.push_back(preload("res://levels/Freedom.tscn"));
-	level_list.push_back(preload("res://levels/BlueAndRedEx.tscn"));
-	level_list.push_back(preload("res://levels/BlueAndRedEx2.tscn"));
-	level_list.push_back(preload("res://levels/PaperPlanesEx.tscn"));
-	level_list.push_back(preload("res://levels/TimelessBridgeEx.tscn"));
-	level_list.push_back(preload("res://levels/LevitationColours.tscn"));
-	level_list.push_back(preload("res://levels/Towerplex.tscn"));
-	level_list.push_back(preload("res://levels/TheMagentaPitEx.tscn"));
+	level_filenames.push_back("LevelNotFoundEx")
+	level_filenames.push_back("LevelNotFoundEx2")
+	level_filenames.push_back("Freedom")
+	level_filenames.push_back("BlueAndRedEx")
+	level_filenames.push_back("BlueAndRedEx2")
+	level_filenames.push_back("PaperPlanesEx")
+	level_filenames.push_back("TimelessBridgeEx")
+	level_filenames.push_back("LevitationColours")
+	level_filenames.push_back("Towerplex")
+	level_filenames.push_back("TheMagentaPitEx")
 	
 	chapter_names.push_back("Change");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(48);
 	chapter_skies.push_back(Color("#446570"));
-	level_list.push_back(preload("res://levels/Ahhh.tscn"));
-	level_list.push_back(preload("res://levels/Eeep.tscn"));
-	level_list.push_back(preload("res://levels/DoubleGlazed.tscn"));
-	level_list.push_back(preload("res://levels/LetMeIn.tscn"));
-	level_list.push_back(preload("res://levels/Interleave.tscn"));
-	level_list.push_back(preload("res://levels/SpelunkingGlass.tscn"));
-	level_list.push_back(preload("res://levels/LadderWorldGlass.tscn"));
-	level_list.push_back(preload("res://levels/TheGlassPit.tscn"));
-	level_list.push_back(preload("res://levels/DemolitionSquad.tscn"));
-	level_list.push_back(preload("res://levels/Aquarium.tscn"));
-	level_list.push_back(preload("res://levels/Deconstruct.tscn"));
-	level_list.push_back(preload("res://levels/TreasureHunt.tscn"));
+	level_filenames.push_back("Ahhh")
+	level_filenames.push_back("Eeep")
+	level_filenames.push_back("DoubleGlazed")
+	level_filenames.push_back("LetMeIn")
+	level_filenames.push_back("Interleave")
+	level_filenames.push_back("SpelunkingGlass")
+	level_filenames.push_back("LadderWorldGlass")
+	level_filenames.push_back("TheGlassPit")
+	level_filenames.push_back("DemolitionSquad")
+	level_filenames.push_back("Aquarium")
+	level_filenames.push_back("Deconstruct")
+	level_filenames.push_back("TreasureHunt")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(56);
-	level_list.push_back(preload("res://levels/LetMeInEx.tscn"));
-	level_list.push_back(preload("res://levels/HeavyMovingServiceGlass.tscn"));
-	level_list.push_back(preload("res://levels/DoubleGlazedEx.tscn"));
-	level_list.push_back(preload("res://levels/SpelunkingGlassEx.tscn"));
-	level_list.push_back(preload("res://levels/DemolitionSquadEx.tscn"));
-	level_list.push_back(preload("res://levels/TheGlassPitEx.tscn"));
-	level_list.push_back(preload("res://levels/CampfireGlass.tscn"));
-	level_list.push_back(preload("res://levels/CampfireGlassEx.tscn"));
-	level_list.push_back(preload("res://levels/SpelunkingGlassEx2.tscn"));
-	level_list.push_back(preload("res://levels/LadderWorldGlassEx.tscn"));
+	level_filenames.push_back("LetMeInEx")
+	level_filenames.push_back("HeavyMovingServiceGlass")
+	level_filenames.push_back("DoubleGlazedEx")
+	level_filenames.push_back("SpelunkingGlassEx")
+	level_filenames.push_back("DemolitionSquadEx")
+	level_filenames.push_back("TheGlassPitEx")
+	level_filenames.push_back("CampfireGlass")
+	level_filenames.push_back("CampfireGlassEx")
+	level_filenames.push_back("SpelunkingGlassEx2")
+	level_filenames.push_back("LadderWorldGlassEx")
 	
 	chapter_names.push_back("Permanence");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(56);
 	chapter_skies.push_back(Color("#14492A"));
-	level_list.push_back(preload("res://levels/HelpYourself.tscn"));
-	level_list.push_back(preload("res://levels/SpikesGreen.tscn"));
-	level_list.push_back(preload("res://levels/SoBroken.tscn"));
-	level_list.push_back(preload("res://levels/CampfireGreen.tscn"));
-	level_list.push_back(preload("res://levels/SpontaneousCombustionGreen.tscn"));
-	level_list.push_back(preload("res://levels/FirewallGreen.tscn"));
-	level_list.push_back(preload("res://levels/GreenGlass.tscn"));
-	level_list.push_back(preload("res://levels/TheFuture.tscn"));
-	level_list.push_back(preload("res://levels/FasterThanLight.tscn"));
-	level_list.push_back(preload("res://levels/Mundane.tscn"));
+	level_filenames.push_back("HelpYourself")
+	level_filenames.push_back("SpikesGreen")
+	level_filenames.push_back("SoBroken")
+	level_filenames.push_back("CampfireGreen")
+	level_filenames.push_back("SpontaneousCombustionGreen")
+	level_filenames.push_back("FirewallGreen")
+	level_filenames.push_back("GreenGlass")
+	level_filenames.push_back("TheFuture")
+	level_filenames.push_back("FasterThanLight")
+	level_filenames.push_back("Mundane")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(64);
-	level_list.push_back(preload("res://levels/LightHurtingService.tscn"));
-	level_list.push_back(preload("res://levels/LightHurtingServiceEx.tscn"));
-	level_list.push_back(preload("res://levels/LightHurtingServiceEx2.tscn"));
-	level_list.push_back(preload("res://levels/GreenGrass.tscn"));
-	level_list.push_back(preload("res://levels/HelpYourselfEx.tscn"));
-	level_list.push_back(preload("res://levels/SpikesGreenEx.tscn"));
-	level_list.push_back(preload("res://levels/CampfireGreenEx.tscn"));
-	level_list.push_back(preload("res://levels/CampfireGreenEx2.tscn"));
-	level_list.push_back(preload("res://levels/FirewallGreenEx.tscn"));
-	level_list.push_back(preload("res://levels/Skip.tscn"));
-	level_list.push_back(preload("res://levels/LeadPlanes.tscn"))
-	level_list.push_back(preload("res://levels/Airdodging.tscn"));
-	level_list.push_back(preload("res://levels/DragonsGate.tscn"))
+	level_filenames.push_back("LightHurtingService")
+	level_filenames.push_back("LightHurtingServiceEx")
+	level_filenames.push_back("LightHurtingServiceEx2")
+	level_filenames.push_back("GreenGrass")
+	level_filenames.push_back("HelpYourselfEx")
+	level_filenames.push_back("SpikesGreenEx")
+	level_filenames.push_back("CampfireGreenEx")
+	level_filenames.push_back("CampfireGreenEx2")
+	level_filenames.push_back("FirewallGreenEx")
+	level_filenames.push_back("Skip")
+	level_filenames.push_back("LeadPlanes")
+	level_filenames.push_back("Airdodging")
+	level_filenames.push_back("DragonsGate")
 	
 	chapter_names.push_back("Exotic Matter");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(64);
 	chapter_skies.push_back(Color("#351731"));
-	level_list.push_back(preload("res://levels/TheFuzz.tscn"));
-	level_list.push_back(preload("res://levels/DoubleFuzz.tscn"));
-	level_list.push_back(preload("res://levels/PushingItFurther.tscn"));
-	level_list.push_back(preload("res://levels/Elevator.tscn"));
-	level_list.push_back(preload("res://levels/FuzzyTrick.tscn"));
-	level_list.push_back(preload("res://levels/LimitedUndo.tscn"));
-	level_list.push_back(preload("res://levels/UphillLimited.tscn"));
-	level_list.push_back(preload("res://levels/TimeStop.tscn"));
-	level_list.push_back(preload("res://levels/KingCrimson.tscn"));
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	level_filenames.push_back("TheFuzz")
+	level_filenames.push_back("DoubleFuzz")
+	level_filenames.push_back("PushingItFurther")
+	level_filenames.push_back("Elevator")
+	level_filenames.push_back("FuzzyTrick")
+	level_filenames.push_back("LimitedUndo")
+	level_filenames.push_back("UphillLimited")
+	level_filenames.push_back("TimeStop")
+	level_filenames.push_back("KingCrimson")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(72);
-	level_list.push_back(preload("res://levels/ElevatorEx.tscn"));
-	level_list.push_back(preload("res://levels/ImaginaryMoves.tscn"));
-	level_list.push_back(preload("res://levels/DontLookDown.tscn"));
-	level_list.push_back(preload("res://levels/LeadBalloon.tscn"));
-	level_list.push_back(preload("res://levels/Durability.tscn"));
-	level_list.push_back(preload("res://levels/UnfathomableGlass.tscn"));
-	level_list.push_back(preload("res://levels/PushingItFurtherEx.tscn"));
-	level_list.push_back(preload("res://levels/LimitedUndoEx.tscn"));
-	level_list.push_back(preload("res://levels/LimitedUndoEx2.tscn"));
-	level_list.push_back(preload("res://levels/KingCrimsonEx.tscn"));
+	level_filenames.push_back("ElevatorEx")
+	level_filenames.push_back("ImaginaryMoves")
+	level_filenames.push_back("DontLookDown")
+	level_filenames.push_back("LeadBalloon")
+	level_filenames.push_back("Durability")
+	level_filenames.push_back("UnfathomableGlass")
+	level_filenames.push_back("PushingItFurtherEx")
+	level_filenames.push_back("LimitedUndoEx")
+	level_filenames.push_back("LimitedUndoEx2")
+	level_filenames.push_back("KingCrimsonEx")
 	
 	chapter_names.push_back("Time Crystals");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(72);
 	chapter_skies.push_back(Color("#2A1F82"));
-	level_list.push_back(preload("res://levels/Growth.tscn"));
-	level_list.push_back(preload("res://levels/Delivery.tscn"));
-	level_list.push_back(preload("res://levels/Blockage.tscn"));
-	level_list.push_back(preload("res://levels/Wither.tscn"));
-	level_list.push_back(preload("res://levels/Bounce.tscn"));
-	level_list.push_back(preload("res://levels/Pathology.tscn"));
-	level_list.push_back(preload("res://levels/Reflections.tscn"));
-	level_list.push_back(preload("res://levels/Forgetfulness.tscn"));
-	level_list.push_back(preload("res://levels/Remembrance.tscn"));
-	level_list.push_back(preload("res://levels/Conservation.tscn"));
+	level_filenames.push_back("Growth")
+	level_filenames.push_back("Delivery")
+	level_filenames.push_back("Blockage")
+	level_filenames.push_back("Wither")
+	level_filenames.push_back("Bounce")
+	level_filenames.push_back("Pathology")
+	level_filenames.push_back("Reflections")
+	level_filenames.push_back("Forgetfulness")
+	level_filenames.push_back("Remembrance")
+	level_filenames.push_back("Conservation")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(80);
-	level_list.push_back(preload("res://levels/Elementary.tscn"));
-	level_list.push_back(preload("res://levels/BlockageEx.tscn"));
-	level_list.push_back(preload("res://levels/Smuggler.tscn"));
-	level_list.push_back(preload("res://levels/SmugglerEx.tscn"));
-	level_list.push_back(preload("res://levels/Frangible.tscn"));
-	level_list.push_back(preload("res://levels/Switcheroo.tscn"));
-	level_list.push_back(preload("res://levels/SwitcherooEx.tscn"));
-	level_list.push_back(preload("res://levels/StairwayToHeaven.tscn"));
+	level_filenames.push_back("Elementary")
+	level_filenames.push_back("BlockageEx")
+	level_filenames.push_back("Smuggler")
+	level_filenames.push_back("SmugglerEx")
+	level_filenames.push_back("Frangible")
+	level_filenames.push_back("Switcheroo")
+	level_filenames.push_back("SwitcherooEx")
+	level_filenames.push_back("StairwayToHeaven")
 	
 	chapter_names.push_back("Deadline");
-	chapter_standard_starting_levels.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(80);
 	chapter_skies.push_back(Color("#2D0E07"));
 	chapter_replacements[chapter_names.size() - 1] = "Ω";
-	level_list.push_back(preload("res://levels/CuckooClock.tscn"));
-	level_list.push_back(preload("res://levels/ItDoesntAddUp.tscn"));
-	level_list.push_back(preload("res://levels/TimeZones.tscn"));
-	level_list.push_back(preload("res://levels/GreenCuckoo1.tscn"));
-	level_list.push_back(preload("res://levels/GreenCuckoo2.tscn"));
-	level_list.push_back(preload("res://levels/DST.tscn"));
-	level_list.push_back(preload("res://levels/EngineRoom.tscn"));
-	level_list.push_back(preload("res://levels/TheShroud.tscn"));
-	level_list.push_back(preload("res://levels/Rewind.tscn"));
-	level_list.push_back(preload("res://levels/ControlledDemolition.tscn"));
-	level_list.push_back(preload("res://levels/Cascade.tscn"));
-	#level_replacements[level_list.size()] = "Ω";
-	#level_list.push_back(preload("res://levels/AWayIn.tscn"));
+	level_filenames.push_back("CuckooClock")
+	level_filenames.push_back("ItDoesntAddUp")
+	level_filenames.push_back("TimeZones")
+	level_filenames.push_back("GreenCuckoo1")
+	level_filenames.push_back("GreenCuckoo2")
+	level_filenames.push_back("DST")
+	level_filenames.push_back("EngineRoom")
+	level_filenames.push_back("TheShroud")
+	level_filenames.push_back("Rewind")
+	level_filenames.push_back("ControlledDemolition")
+	level_filenames.push_back("Cascade")
+	#level_replacements[level_filenames.size()] = "Ω";
+	#level_filenames.push_back("AWayIn")
 	
-	chapter_advanced_starting_levels.push_back(level_list.size());
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(88);
-	level_list.push_back(preload("res://levels/HotPotato.tscn"));
-	level_list.push_back(preload("res://levels/LevelNotFoundEx3.tscn"));
-	level_list.push_back(preload("res://levels/AnnoyingRacket.tscn"));
-	level_list.push_back(preload("res://levels/Rink.tscn"));
-	level_list.push_back(preload("res://levels/Collectathon.tscn"));
-	level_list.push_back(preload("res://levels/Hassle.tscn"));
-	level_list.push_back(preload("res://levels/MidnightParkour.tscn"));
-	level_list.push_back(preload("res://levels/ControlledDemolitionEx.tscn"));
-	level_list.push_back(preload("res://levels/ControlledDemolitionEx2.tscn"));
-	level_list.push_back(preload("res://levels/Permify.tscn"));
-	level_list.push_back(preload("res://levels/CelestialNavigation.tscn"));
-	#level_replacements[level_list.size()] = "Ω";
-	#level_list.push_back(preload("res://levels/ChronoLabReactor.tscn"));
+	level_filenames.push_back("HotPotato")
+	level_filenames.push_back("LevelNotFoundEx3")
+	level_filenames.push_back("AnnoyingRacket")
+	level_filenames.push_back("Rink")
+	level_filenames.push_back("Collectathon")
+	level_filenames.push_back("Hassle")
+	level_filenames.push_back("MidnightParkour")
+	level_filenames.push_back("ControlledDemolitionEx")
+	level_filenames.push_back("ControlledDemolitionEx2")
+	level_filenames.push_back("Permify")
+	level_filenames.push_back("CelestialNavigation")
+	#level_replacements[level_filenames.size()] = "Ω";
+	#level_filenames.push_back("ChronoLabReactor")
 	
 	chapter_names.push_back("Victory Lap");
-	chapter_standard_starting_levels.push_back(level_list.size());
-	chapter_standard_unlock_requirements.push_back(level_list.size());
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(level_filenames.size());
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_replacements[chapter_names.size() - 1] = "-1";
-	level_list.push_back(preload("res://levels/RoommatesExL2.tscn"));
-	level_list.push_back(preload("res://levels/SpelunkingL2.tscn"));
-	level_list.push_back(preload("res://levels/UphillL2.tscn"));
-	level_list.push_back(preload("res://levels/DownhillL2.tscn"));
-	level_list.push_back(preload("res://levels/RoommatesL2.tscn"));
-	level_list.push_back(preload("res://levels/RoommatesL2Ex.tscn"));
-	level_list.push_back(preload("res://levels/CarryingItL2.tscn"));
-	level_list.push_back(preload("res://levels/CallACabL2.tscn"));
-	level_list.push_back(preload("res://levels/TheoryOfEverythingA.tscn"));
-	level_list.push_back(preload("res://levels/TheoryOfEverythingB.tscn"));
-	level_list.push_back(preload("res://levels/PachinkoL2.tscn"));
-	level_list.push_back(preload("res://levels/TheFirstPitL2.tscn"));
-	level_list.push_back(preload("res://levels/BraidL2.tscn"));
-	level_list.push_back(preload("res://levels/BraidL2Ex.tscn"));
-	level_list.push_back(preload("res://levels/TallL2.tscn"));
-	level_list.push_back(preload("res://levels/TallL2Ex.tscn"));
-	level_list.push_back(preload("res://levels/TallL2Ex2.tscn"));
-	level_list.push_back(preload("res://levels/WallL2.tscn"));
-	level_list.push_back(preload("res://levels/WallL2Ex.tscn"));
-	level_list.push_back(preload("res://levels/PushingItL2.tscn"));
-	level_list.push_back(preload("res://levels/OrientationL2.tscn"));
-	level_list.push_back(preload("res://levels/OrientationL2Ex.tscn"));
-	level_list.push_back(preload("res://levels/OrientationL2Ex2.tscn"));
-	chapter_advanced_starting_levels.push_back(level_list.size());
-	chapter_advanced_unlock_requirements.push_back(level_list.size());
+	level_filenames.push_back("RoommatesExL2")
+	level_filenames.push_back("SpelunkingL2")
+	level_filenames.push_back("UphillL2")
+	level_filenames.push_back("DownhillL2")
+	level_filenames.push_back("RoommatesL2")
+	level_filenames.push_back("RoommatesL2Ex")
+	level_filenames.push_back("CarryingItL2")
+	level_filenames.push_back("CallACabL2")
+	level_filenames.push_back("TheoryOfEverythingA")
+	level_filenames.push_back("TheoryOfEverythingB")
+	level_filenames.push_back("PachinkoL2")
+	level_filenames.push_back("TheFirstPitL2")
+	level_filenames.push_back("BraidL2")
+	level_filenames.push_back("BraidL2Ex")
+	level_filenames.push_back("TallL2")
+	level_filenames.push_back("TallL2Ex")
+	level_filenames.push_back("TallL2Ex2")
+	level_filenames.push_back("WallL2")
+	level_filenames.push_back("WallL2Ex")
+	level_filenames.push_back("PushingItL2")
+	level_filenames.push_back("OrientationL2")
+	level_filenames.push_back("OrientationL2Ex")
+	level_filenames.push_back("OrientationL2Ex2")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
 	# level_list.push_back(preload("res://levels/Joke.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_list.size());
 	chapter_advanced_starting_levels.push_back(level_list.size());
 	
-	#needs keys/locks
-	#level_list.push_back(preload("res://levels/InsightDontPushIt.tscn"));
-	#level_list.push_back(preload("res://levels/InsightDidntPushIt.tscn"));
+	for level_filename in level_filenames:
+		level_list.push_back(load("res://levels/" + level_filename + ".tscn"));
 	
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
@@ -898,6 +901,15 @@ func ready_map() -> void:
 	heavy_max_moves = level_info.heavy_max_moves;
 	light_max_moves = level_info.light_max_moves;
 	clock_turns = level_info.clock_turns;
+	
+	has_insight_level = false;
+	insight_level_scene = null;
+	if (level_number >= 0):
+		var insight_path = "res://levels/insight/" + level_filenames[level_number] + "Insight.tscn";
+		if (ResourceLoader.exists(insight_path)):
+			has_insight_level = true;
+			insight_level_scene = load(insight_path);
+	
 	calculate_map_size();
 	make_actors();
 	
@@ -1265,6 +1277,7 @@ func prepare_audio() -> void:
 	sounds["unpush"] = preload("res://sfx/unpush.ogg");
 	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
 	sounds["untick"] = preload("res://sfx/untick.ogg");
+	sounds["usegreenality"] = preload("res://sfx/usegreenality.ogg");
 	sounds["winentwined"] = preload("res://sfx/winentwined.ogg");
 	sounds["winbadtime"] = preload("res://sfx/winbadtime.ogg");
 	
@@ -2645,7 +2658,8 @@ func check_won() -> void:
 				level_save_data["won"] = true;
 				levelstar.previous_modulate = Color(1, 1, 1, 0);
 				levelstar.flash();
-				puzzles_completed += 1;
+				if (!in_insight_level):
+					puzzles_completed += 1;
 			if (!level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
 			else:
@@ -2868,12 +2882,12 @@ func meta_undo(is_silent: bool = false) -> bool:
 		play_sound("metaundo");
 	undo_effect_strength = 0.08;
 	undo_effect_per_second = undo_effect_strength*(1/0.2);
-	undo_effect_color = meta_color;
 	for whatever in underactorsparticles.get_children():
 		whatever.queue_free();
 	for whatever in overactorsparticles.get_children():
 		whatever.queue_free();
 	finish_animations(Chrono.META_UNDO);
+	undo_effect_color = meta_color;
 	return true;
 	
 func character_switch() -> void:
@@ -2891,8 +2905,8 @@ func restart(is_silent: bool = false) -> void:
 	play_sound("restart");
 	undo_effect_strength = 0.5;
 	undo_effect_per_second = undo_effect_strength*(1/0.5);
-	undo_effect_color = meta_color;
 	finish_animations(Chrono.TIMELESS);
+	undo_effect_color = meta_color;
 	
 func escape() -> void:
 	if (ui_stack.size() > 0):
@@ -2936,6 +2950,8 @@ func setup_chapter_etc() -> void:
 		target_sky = chapter_skies[chapter];
 	
 func load_level_direct(new_level: int) -> void:
+	in_insight_level = false;
+	has_insight_level = false;
 	var impulse = new_level - self.level_number;
 	load_level(impulse);
 	
@@ -2969,10 +2985,15 @@ func load_level(impulse: int) -> void:
 			escape();
 			
 	if (impulse != 0):
+		in_insight_level = false;
 		save_file["level_number"] = level_number;
 		save_game();
 	
-	var level = level_list[level_number].instance();
+	var level = null;
+	if (impulse == 0 and has_insight_level and in_insight_level and insight_level_scene != null):
+		level = insight_level_scene.instance();
+	else:
+		level = level_list[level_number].instance();
 	levelfolder.remove_child(terrainmap);
 	terrainmap.queue_free();
 	levelfolder.add_child(level);
@@ -3655,6 +3676,20 @@ func _input(event: InputEvent) -> void:
 			character_switch();
 			update_info_labels();
 	
+func gain_insight() -> void:
+	if (has_insight_level):
+		if (in_insight_level):
+			in_insight_level = false;
+		else:
+			in_insight_level = true;
+		load_level(0);
+		cut_sound();
+		play_sound("usegreenality");
+		undo_effect_strength = 0.5;
+		undo_effect_per_second = undo_effect_strength*(1/0.5);
+		finish_animations(Chrono.TIMELESS);
+		undo_effect_color = Color("A9F05F");
+	
 func _process(delta: float) -> void:
 	sounds_played_this_frame.clear();
 	
@@ -3769,6 +3804,9 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("next_level")):
 			end_replay();
 			load_level(1);
+		elif (Input.is_action_just_pressed("gain_insight")):
+			end_replay();
+			gain_insight();
 		elif (Input.is_action_just_pressed("character_switch")):
 			end_replay();
 			character_switch();
