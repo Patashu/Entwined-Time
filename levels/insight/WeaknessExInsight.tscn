@@ -1,29 +1,29 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
 
 [node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 1 )
+tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 2, 14, 524290, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65538, 14, 262145, 65542, 14, 262145, 131072, 14, 524290, 131073, 14, 196614, 131074, 14, 655364, 131075, 3, 0, 131078, 14, 262145, 196608, 14, 262145, 196610, 8, 0, 196611, 3, 0, 196612, 2, 0, 196614, 14, 262145, 262144, 14, 262145, 262145, 7, 0, 262146, 14, 196609, 262147, 3, 0, 262150, 14, 262145, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 589828, 327686, 14, 262145, 393218, 14, 655362, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 2 )
-level_name = "Weakness [VAR0.5]"
-level_replay = "Weakness [VAR0.5]$mturn=18$ssadwasddwawaadzzz"
+script = ExtResource( 1 )
+level_name = "Weakness [VAR1] (Insight)"
+level_replay = "Weakness [VAR1] (Insight)$mturn=18$ssadwasddwawaadzzz"
 heavy_max_moves = 15
 light_max_moves = 0
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
+tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 196612, 1, 0 )
 
 [node name="TileMap2" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
+tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 65539, 6, 0, 65540, 6, 0, 65541, 6, 0, 131075, 6, 0, 131076, 6, 0, 131077, 6, 0, 196611, 6, 0, 196612, 6, 0, 196613, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 327683, 6, 0, 327684, 6, 0, 327685, 6, 0 )
