@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524291, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 65544, 14, 262145, 131072, 14, 262145, 131074, 14, 262148, 131076, 14, 262145, 131078, 14, 262148, 131080, 14, 262145, 196608, 14, 262145, 196609, 7, 0, 196610, 8, 0, 196612, 14, 262145, 196614, 2, 0, 196615, 1, 0, 196616, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655363, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "One-Ways (Insight)"
+level_replay = "One-Ways (Insight)$mturn=10$xdwxawxwaaxwdd"
+heavy_max_moves = 5
+light_max_moves = 5
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 21, 0, 65538, 22, 0, 65539, 22, 0, 65541, 19, 0, 65542, 19, 0, 65543, 21, 0, 131073, 21, 0, 131075, 20, 0, 131077, 20, 0, 131079, 21, 0, 196609, 19, 0, 196610, 19, 0, 196611, 20, 0, 196613, 20, 0, 196614, 22, 0, 196615, 22, 0 )
