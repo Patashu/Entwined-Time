@@ -7,17 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 2, 0, 4, 8, 0, 65536, 14, 196613, 65537, 14, 196615, 65539, 14, 196613, 65540, 14, 196615 )
+tile_data = PoolIntArray( 0, 2, 0, 4, 8, 0, 8, 7, 0, 65536, 14, 196613, 65537, 14, 196615, 65539, 14, 196613, 65540, 14, 196615, 65543, 14, 196613, 65544, 14, 196615 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "The Boundless Sky (Insight)"
-level_replay = "The Boundless Sky (Insight)$mturn=12$xaassxddddxzzaa"
-heavy_max_moves = 4
+level_replay = "The Boundless Sky (Insight)$mturn=18$xaassxdddddxzzzzddddxz"
+heavy_max_moves = 5
 light_max_moves = 4
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 7, 0, 4, 1, 0 )
+tile_data = PoolIntArray( 4, 1, 0 )
