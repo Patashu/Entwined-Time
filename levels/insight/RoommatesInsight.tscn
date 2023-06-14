@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 196614, 13, 14, 196614, 14, 14, 196614, 15, 14, 196614, 16, 14, 196614, 17, 14, 196614, 18, 14, 524292, 65536, 14, 262145, 65554, 14, 262145, 131072, 14, 262145, 131073, 7, 0, 131074, 2, 0, 131087, 1, 0, 131088, 8, 0, 131090, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 196614, 196619, 14, 196614, 196620, 14, 196614, 196621, 14, 196614, 196622, 14, 196614, 196623, 14, 196614, 196624, 14, 196614, 196625, 14, 196614, 196626, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Roommates (Insight)"
+level_replay = "Roommates (Insight)$mturn=42$ddddddddddddxaxwxaaxzzzzzzzzzzzzzddddddddddddd"
+heavy_max_moves = 13
+light_max_moves = 3
