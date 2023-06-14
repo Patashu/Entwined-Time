@@ -15,3 +15,9 @@ level_name = "Security Door (Insight)"
 level_replay = "Security Door (Insight)$mturn=9$xdxaaxzaxzxaxzd"
 heavy_max_moves = 5
 light_max_moves = 3
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65542, 22, 0 )
