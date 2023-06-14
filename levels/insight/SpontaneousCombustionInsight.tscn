@@ -7,17 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65539, 2, 0, 65540, 8, 0, 65542, 7, 0, 65543, 14, 262145, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 7, 0, 65541, 1, 0, 65542, 14, 262145, 131072, 14, 589826, 131073, 14, 196614, 131074, 14, 196615, 131075, 8, 0, 131076, 14, 196613, 131077, 14, 196614, 131078, 14, 589828, 196608, 14, 262145, 196609, 7, 0, 196611, 2, 0, 196613, 1, 0, 196614, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Spontaeous Combustion (Insight)"
-level_replay = "Spontaneous Combustion (Insight)$mturn=6$dxdxzaaxd"
-heavy_max_moves = 2
-light_max_moves = 2
+level_replay = "Spontaeous Combustion (Insight)$mturn=6$wxaaxzdd"
+heavy_max_moves = 3
+light_max_moves = 3
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65539, 0, 0, 65540, 0, 0 )
+tile_data = PoolIntArray( 131075, 0, 0, 196611, 0, 0 )
