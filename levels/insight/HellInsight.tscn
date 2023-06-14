@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 14, 196609, 65537, 0, 0, 65538, 14, 524290, 65539, 14, 196615, 65543, 14, 262145, 131074, 14, 262145, 131075, 0, 0, 131077, 8, 0, 131078, 2, 0, 131079, 14, 262145, 196610, 14, 262145, 196611, 0, 0, 196612, 14, 524290, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 655364, 262145, 14, 196613, 262146, 14, 589828, 262147, 0, 0, 262148, 14, 262145, 327680, 0, 0, 327682, 14, 327681, 327683, 0, 0, 327684, 14, 655362, 327685, 14, 196614, 327686, 14, 196614, 327687, 14, 524292, 393221, 1, 0, 393222, 7, 0, 393223, 14, 262145, 458752, 14, 196613, 458753, 14, 196614, 458754, 14, 196615, 458755, 12, 0, 458756, 14, 262148, 458757, 12, 0, 458758, 14, 196613, 458759, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Hell (Insight)"
+level_replay = "Hell (Insight)$mturn=24$awawaddadzzzzaaswasddddd"
+heavy_max_moves = 16
+light_max_moves = 0
