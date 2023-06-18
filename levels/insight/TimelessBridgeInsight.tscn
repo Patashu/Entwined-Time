@@ -11,7 +11,7 @@ tile_data = PoolIntArray( 0, 14, 2, 1, 14, 3, 2, 14, 458755, 3, 14, 196614, 4, 1
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Everything You Wanted To Know About Wooden Crates"
-level_replay = "Everything You Wanted To Know About Wooden Crates$mturn=24$xdddxaaasxaxaaxwxaxzzdxdxdxdxwaaaxdxd"
+level_name = "You Only Need To Know They're Multi-Push"
+level_replay = "You Only Need To Know They're Multi-Push$mturn=24$xdddxaaasxaxaaxwxaxzzdxdxdxdxwaaaxdxd"
 heavy_max_moves = 10
 light_max_moves = 10
