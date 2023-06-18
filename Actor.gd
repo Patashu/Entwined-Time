@@ -2,7 +2,7 @@ extends ActorBase
 class_name Actor
 
 var gamelogic = null
-var actorname = ""
+var actorname = -1
 var stored_position = Vector2.ZERO
 var pos = Vector2.ZERO
 #var state = {}
@@ -61,6 +61,23 @@ var in_stars = false;
 # a part of, so other things that shared their tile can move with them
 var just_moved = false;
 
+# faster than string comparisons
+enum Name {
+	Heavy,
+	Light,
+	HeavyGoal,
+	LightGoal,
+	IronCrate,
+	SteelCrate,
+	WoodenCrate,
+	PowerCrate,
+	TimeCrystalGreen,
+	TimeCrystalMagenta,
+	CuckooClock,
+	HeavyGoalJoke,
+	LightGoalJoke,
+}
+
 func update_graphics() -> void:
 	var tex = get_next_texture();
 	set_next_texture(tex, facing_left);
@@ -93,7 +110,7 @@ func get_next_texture() -> Texture:
 			ding = null;
 	
 	# airborne, broken
-	if actorname == "heavy":
+	if actorname == Name.Heavy:
 		if broken:
 			return preload("res://assets/heavy_broken.png");
 		elif airborne >= 1:
@@ -106,7 +123,7 @@ func get_next_texture() -> Texture:
 			else:
 				return preload("res://assets/heavy_idle.png");
 	
-	elif actorname == "light":
+	elif actorname == Name.Light:
 		if broken:
 			return preload("res://assets/light_broken.png");
 		elif airborne >= 1:
@@ -119,31 +136,31 @@ func get_next_texture() -> Texture:
 			else:
 				return preload("res://assets/light_idle_animation.png");
 	
-	elif actorname == "iron_crate":
+	elif actorname == Name.IronCrate:
 		if broken:
 			return preload("res://assets/iron_crate_broken.png");
 		else:
 			return preload("res://assets/iron_crate.png");
 	
-	elif actorname == "steel_crate":
+	elif actorname == Name.SteelCrate:
 		if broken:
 			return preload("res://assets/steel_crate_broken.png");
 		else:
 			return preload("res://assets/steel_crate.png");
 	
-	elif actorname == "power_crate":
+	elif actorname == Name.PowerCrate:
 		if broken:
 			return preload("res://assets/power_crate_broken.png");
 		else:
 			return preload("res://assets/power_crate_animation.png");
 			
-	elif actorname == "wooden_crate":
+	elif actorname == Name.WoodenCrate:
 		if broken:
 			return preload("res://assets/wooden_crate_broken.png");
 		else:
 			return preload("res://assets/wooden_crate.png");
 			
-	elif actorname == "cuckoo_clock":
+	elif actorname == Name.CuckooClock:
 		if ticks == 0:
 			return preload("res://assets/cuckoo_clock_end.png");
 		elif broken:
@@ -151,13 +168,13 @@ func get_next_texture() -> Texture:
 		else:
 			return preload("res://assets/cuckoo_clock.png");
 			
-	elif actorname == "time_crystal_green":
+	elif actorname == Name.TimeCrystalGreen:
 		if broken:
 			return null;
 		else:
 			return preload("res://assets/timecrystalgreen.png");
 			
-	elif actorname == "time_crystal_magenta":
+	elif actorname == Name.TimeCrystalMagenta:
 		if broken:
 			return null;
 		else:
@@ -439,7 +456,7 @@ func _process(delta: float) -> void:
 						sprite.vframes = round(sprite.get_rect().size.y/24);
 						sprite.hframes = round(sprite.get_rect().size.x/24);
 						sprite.frame = 0;
-						if (actorname == "heavy"):
+						if (actorname == Name.Heavy):
 							sprite.frame = 4;
 						sprite.centered = true;
 						sprite.scale = Vector2(0.5, 0.5);

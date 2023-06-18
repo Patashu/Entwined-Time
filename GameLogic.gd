@@ -842,7 +842,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("OrientationL2Ex2")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
-	# level_list.push_back(preload("res://levels/Joke.tscn"));
+	#level_replacements[level_filenames.size()] = "-1";
+	#level_list.push_back(preload("res://levels/Joke.tscn"));
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1065,7 +1066,7 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for heavy_tile in tiles:
 			terrain_layers[i].set_cellv(heavy_tile, -1);
-			heavy_actor = make_actor("heavy", heavy_tile, true);
+			heavy_actor = make_actor(Actor.Name.Heavy, heavy_tile, true);
 			heavy_actor.heaviness = Heaviness.STEEL;
 			heavy_actor.strength = Strength.HEAVY;
 			heavy_actor.durability = Durability.FIRE;
@@ -1089,7 +1090,7 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for light_tile in tiles:
 			terrain_layers[i].set_cellv(light_tile, -1);
-			light_actor = make_actor("light", light_tile, true);
+			light_actor = make_actor(Actor.Name.Light, light_tile, true);
 			light_actor.heaviness = Heaviness.IRON;
 			light_actor.strength = Strength.LIGHT;
 			light_actor.durability = Durability.SPIKES;
@@ -1102,17 +1103,17 @@ func make_actors() -> void:
 			light_actor.update_graphics();
 	
 	# crates
-	extract_actors(Tiles.IronCrate, "iron_crate", Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
-	extract_actors(Tiles.SteelCrate, "steel_crate", Heaviness.STEEL, Strength.WOODEN, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
-	extract_actors(Tiles.PowerCrate, "power_crate", Heaviness.WOODEN, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
-	extract_actors(Tiles.WoodenCrate, "wooden_crate", Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
+	extract_actors(Tiles.IronCrate, Actor.Name.IronCrate, Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
+	extract_actors(Tiles.SteelCrate, Actor.Name.SteelCrate, Heaviness.STEEL, Strength.WOODEN, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
+	extract_actors(Tiles.PowerCrate, Actor.Name.PowerCrate, Heaviness.WOODEN, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
+	extract_actors(Tiles.WoodenCrate, Actor.Name.WoodenCrate, Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
 	
 	# cuckoo clocks
-	extract_actors(Tiles.CuckooClock, "cuckoo_clock", Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 1, false, Color("#AD8255"));
+	extract_actors(Tiles.CuckooClock, Actor.Name.CuckooClock, Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 1, false, Color("#AD8255"));
 	
 	# time crystals
-	extract_actors(Tiles.TimeCrystalGreen, "time_crystal_green", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#A9F05F"));
-	extract_actors(Tiles.TimeCrystalMagenta, "time_crystal_magenta", Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#9966CC"));
+	extract_actors(Tiles.TimeCrystalGreen, Actor.Name.TimeCrystalGreen, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#A9F05F"));
+	extract_actors(Tiles.TimeCrystalMagenta, Actor.Name.TimeCrystalMagenta, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#9966CC"));
 	
 	find_colours();
 	
@@ -1127,7 +1128,7 @@ func tick_clocks() -> void:
 		return
 	# I'll stable sort if needed
 	for actor in actors:
-		if actor.actorname == "cuckoo_clock":
+		if actor.actorname == Actor.Name.CuckooClock:
 			actor.set_ticks(int(clock_turns_array[i]));
 			i += 1;
 			if i >= clock_turns_array.size():
@@ -1138,7 +1139,7 @@ func find_goals(layer: TileMap) -> void:
 	for tile in heavy_goal_tiles:
 		var goal = Goal.new();
 		goal.gamelogic = self;
-		goal.actorname = "heavy_goal";
+		goal.actorname = Actor.Name.HeavyGoal;
 		goal.texture = preload("res://assets/BigPortalRed.png");
 		goal.centered = true;
 		goal.pos = tile;
@@ -1153,7 +1154,7 @@ func find_goals(layer: TileMap) -> void:
 	for tile in light_goal_tiles:
 		var goal = Goal.new();
 		goal.gamelogic = self;
-		goal.actorname = "light_goal";
+		goal.actorname = Actor.Name.LightGoal;
 		goal.texture = preload("res://assets/BigPortalBlue.png");
 		goal.centered = true;
 		goal.pos = tile;
@@ -1165,7 +1166,7 @@ func find_goals(layer: TileMap) -> void:
 		actorsfolder.add_child(goal);
 		goal.update_graphics();
 	
-func extract_actors(id: int, actorname: String, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
+func extract_actors(id: int, actorname: int, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
 	for i in range(layers_tiles.size()):
 		var tiles = layers_tiles[i];
@@ -1203,7 +1204,7 @@ func find_colour(id: int, time_colour : int) -> void:
 			for actor in actors:
 				if actor.pos == tile and actor.is_native_colour():
 					actor.time_colour = time_colour;
-					if (actor.time_colour == TimeColour.Void and actor.actorname == "cuckoo_clock"):
+					if (actor.time_colour == TimeColour.Void and actor.actorname == Actor.Name.CuckooClock):
 						void_cuckoo_clocks.append(actor);
 					actor.update_time_bubble();
 					break;
@@ -1346,12 +1347,12 @@ func toggle_mute() -> void:
 	muted = !muted;
 	cut_sound();
 
-func make_actor(actorname: String, pos: Vector2, is_character: bool, chrono: int = Chrono.TIMELESS) -> Actor:
+func make_actor(actorname: int, pos: Vector2, is_character: bool, chrono: int = Chrono.TIMELESS) -> Actor:
 	var actor = Actor.new();
 	# do this before update_goal_lock()
 	actors.append(actor);
 	actor.actorname = actorname;
-	if actor.actorname == "time_crystal_green" or actor.actorname == "time_crystal_magenta":
+	if actor.actorname == Actor.Name.TimeCrystalGreen or actor.actorname == Actor.Name.TimeCrystalMagenta:
 		actor.is_crystal = true;
 		update_goal_lock();
 	actor.is_character = is_character;
@@ -1481,21 +1482,21 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 					if actor.dinged:
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
-				if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
+				if actor.actorname == Actor.Name.Heavy and terrain.has(Tiles.HeavyGoal):
 					for goal in goals:
-						if goal.actorname == "heavy_goal" and !goal.dinged and goal.pos == actor.pos:
+						if goal.actorname == Actor.Name.HeavyGoal and !goal.dinged and goal.pos == actor.pos:
 							set_actor_var(goal, "dinged", true, chrono);
-				if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
+				if actor.actorname == Actor.Name.Light and terrain.has(Tiles.LightGoal):
 					for goal in goals:
-						if goal.actorname == "light_goal" and !goal.dinged and goal.pos == actor.pos:
+						if goal.actorname == Actor.Name.LightGoal and !goal.dinged and goal.pos == actor.pos:
 							set_actor_var(goal, "dinged", true, chrono);
-				if actor.actorname == "heavy" and old_terrain.has(Tiles.HeavyGoal):
+				if actor.actorname == Actor.Name.Heavy and old_terrain.has(Tiles.HeavyGoal):
 					for goal in goals:
-						if goal.actorname == "heavy_goal" and goal.dinged and goal.pos != actor.pos:
+						if goal.actorname == Actor.Name.HeavyGoal and goal.dinged and goal.pos != actor.pos:
 							set_actor_var(goal, "dinged", false, chrono);
-				if actor.actorname == "light" and old_terrain.has(Tiles.LightGoal):
+				if actor.actorname == Actor.Name.Light and old_terrain.has(Tiles.LightGoal):
 					for goal in goals:
-						if goal.actorname == "light_goal" and goal.dinged and goal.pos != actor.pos:
+						if goal.actorname == Actor.Name.LightGoal and goal.dinged and goal.pos != actor.pos:
 							set_actor_var(goal, "dinged", false, chrono);
 		
 		# Sticky top: When Heavy moves non-up at Chrono.MOVE, an actor on top of it will try to move too afterwards.
@@ -1509,7 +1510,7 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 		#(Also I just now realized I never did AD03 so???)
 		#(AD15: Non-broken time crystals are sticky toppable! In fact, Heavy can PUSH them upwards thanks to some special logic elsewhere :D)
 		#(FIX: Broken time crystals can't be sticky top'd because they're basically not things
-		if actor.actorname == "heavy" and chrono == Chrono.MOVE and dir.y >= 0:
+		if actor.actorname == Actor.Name.Heavy and chrono == Chrono.MOVE and dir.y >= 0:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
 				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
@@ -1520,14 +1521,14 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 		return success;
 	elif (success != Success.Yes):
 		# vanity bump goes here, even if it's hypothetical, muahaha
-		if pushers_list.size() > 0 and actor.actorname == "light":
+		if pushers_list.size() > 0 and actor.actorname == Actor.Name.Light:
 			add_to_animation_server(actor, [Animation.fluster]);
 		if (!hypothetical):
 			# involuntary bump sfx
 			if (pushers_list.size() > 0 or is_retro):
-				if (actor.actorname == "light"):
+				if (actor.actorname == Actor.Name.Light):
 					add_to_animation_server(actor, [Animation.sfx, "involuntarybumplight"]);
-				elif (actor.actorname == "heavy"):
+				elif (actor.actorname == Actor.Name.Heavy):
 					add_to_animation_server(actor, [Animation.sfx, "involuntarybump"]);
 				else:
 					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"]);
@@ -1772,12 +1773,12 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				else:
 					result = Success.No;
 			Tiles.NoHeavy:
-				result = no_if_true_yes_if_false(actor.actorname == "heavy");
+				result = no_if_true_yes_if_false(actor.actorname == Actor.Name.Heavy);
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
 			Tiles.NoLight:
-				result = no_if_true_yes_if_false(actor.actorname == "light");
+				result = no_if_true_yes_if_false(actor.actorname == Actor.Name.Light);
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
@@ -1926,7 +1927,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		# Multi Push Rule: Multipushes are allowed (even multiple things in a tile and etc) unless another rule prohibits it.
 		var strength_modifier = 0;
 		if (pushers_list.size() > 0):
-			if actor.actorname == "light":
+			if actor.actorname == Actor.Name.Light:
 				strength_modifier = -1;
 		pushers_list.append(actor);
 		for actor_there in pushables_there:
@@ -1969,7 +1970,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					#AD13: Heavy prefers to push crystals up instead of eat them. Sticky top baby ;D
 					#this definitely won't bite me in the ass I want to make a PUZZLE ok
 					if (can_eat(actor, actor_there) or can_eat(actor_there, actor)):
-						if actor.actorname == "heavy" and !is_retro and dir == Vector2.UP:
+						if actor.actorname == Actor.Name.Heavy and !is_retro and dir == Vector2.UP:
 							var crystal_carry = move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
 							if (crystal_carry == Success.No):
 								eat_crystal(actor, actor_there, chrono);
@@ -1994,14 +1995,14 @@ func can_eat(eater: Actor, eatee: Actor) -> bool:
 		return false;
 	if (!eater.is_character):
 		# new: cuckoo clocks can eat time crystals :9
-		if eater.actorname == "cuckoo_clock" and !eater.broken:
+		if eater.actorname == Actor.Name.CuckooClock and !eater.broken:
 			pass
 		else:
 			return false;
 	# for now I've decided you can always eat a time crystal - it'll just break you if it's nega and you're at 0/0 turns
 	# other options: push, eat but do nothing, eat and go into negative moves, lose (time paradox)
 	return true;
-	#if (eatee.actorname == "time_crystal_green"):
+	#if (eatee.actorname == Actor.Name.TimeCrystalGreen):
 	#	return true;
 	#if (heavy_actor == eater and heavy_max_moves > 0 or light_actor == eater and light_max_moves > 0):
 #		return true;
@@ -2014,7 +2015,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		eatee = eater;
 		eater = temp;
 	set_actor_var(eatee, "broken", true, Chrono.CHAR_UNDO);
-	if (eatee.actorname == "time_crystal_green"):
+	if (eatee.actorname == Actor.Name.TimeCrystalGreen):
 		if heavy_actor == eater:
 			heavy_max_moves += 1;
 			if (heavy_locked_turns.size() == 0):
@@ -2204,7 +2205,7 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: in
 		animation_nonce = animation_nonce_fountain_dispense();
 	actor.ticks += amount;
 	if (actor.ticks == 0):
-		if actor.actorname == "cuckoo_clock":
+		if actor.actorname == Actor.Name.CuckooClock:
 			# end the world
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
 	add_undo_event([Undo.tick, actor, amount, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
@@ -2254,7 +2255,7 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 		
 		# sound effects for airborne changes
 		if (prop == "airborne"):
-			if actor.actorname == "heavy":
+			if actor.actorname == Actor.Name.Heavy:
 				if is_retro:
 					if old_value >= 1 and value <= 0:
 						add_to_animation_server(actor, [Animation.sfx, "heavyuncoyote"]);
@@ -2265,7 +2266,7 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 						add_to_animation_server(actor, [Animation.sfx, "heavycoyote"]);
 					elif value == -1 and old_value != -1:
 						add_to_animation_server(actor, [Animation.sfx, "heavyland"]);
-			elif actor.actorname == "light":
+			elif actor.actorname == Actor.Name.Light:
 				if is_retro:
 					if old_value >= 1 and value <= 0:
 						add_to_animation_server(actor, [Animation.sfx, "lightuncoyote"]);
@@ -2285,21 +2286,21 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 			
 			var terrain = terrain_in_tile(actor.pos);
 			if value == true:
-				if (actor.actorname == "time_crystal_green"):
+				if (actor.actorname == Actor.Name.TimeCrystalGreen):
 					add_to_animation_server(actor, [Animation.sfx, "greentimecrystal"])
-				elif (actor.actorname == "time_crystal_magenta"):
+				elif (actor.actorname == Actor.Name.TimeCrystalMagenta):
 					add_to_animation_server(actor, [Animation.sfx, "magentatimecrystal"])
 				else:
 					add_to_animation_server(actor, [Animation.sfx, "broken"])
 					add_to_animation_server(actor, [Animation.explode])
 				if actor.is_character:
-					if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
+					if actor.actorname == Actor.Name.Heavy and terrain.has(Tiles.HeavyGoal):
 						for goal in goals:
-							if goal.actorname == "heavy_goal" and goal.dinged:
+							if goal.actorname == Actor.Name.HeavyGoal and goal.dinged:
 								set_actor_var(goal, "dinged", false, chrono);
-					if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
+					if actor.actorname == Actor.Name.Light and terrain.has(Tiles.LightGoal):
 						for goal in goals:
-							if goal.actorname == "light_goal" and goal.dinged:
+							if goal.actorname == Actor.Name.LightGoal and goal.dinged:
 								set_actor_var(goal, "dinged", false, chrono);
 				else:
 					if actor.dinged:
@@ -2307,13 +2308,13 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 			else:
 				add_to_animation_server(actor, [Animation.sfx, "unbroken"])
 				if actor.is_character:
-					if actor.actorname == "heavy" and terrain.has(Tiles.HeavyGoal):
+					if actor.actorname == Actor.Name.Heavy and terrain.has(Tiles.HeavyGoal):
 						for goal in goals:
-							if goal.actorname == "heavy_goal" and !goal.dinged:
+							if goal.actorname == Actor.Name.HeavyGoal and !goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
-					if actor.actorname == "light" and terrain.has(Tiles.LightGoal):
+					if actor.actorname == Actor.Name.Light and terrain.has(Tiles.LightGoal):
 						for goal in goals:
-							if goal.actorname == "light_goal" and !goal.dinged:
+							if goal.actorname == Actor.Name.LightGoal and !goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
 				else:
 					if terrain.has(Tiles.CrateGoal):
@@ -3332,10 +3333,10 @@ func time_passes(chrono: int) -> void:
 		if !actor.broken and terrain.has(Tiles.Fire) and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
-		if !actor.broken and terrain.has(Tiles.HeavyFire) and actor.durability <= Durability.FIRE and actor.actorname != "light":
+		if !actor.broken and terrain.has(Tiles.HeavyFire) and actor.durability <= Durability.FIRE and actor.actorname != Actor.Name.Light:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
-		if !actor.broken and terrain.has(Tiles.LightFire) and actor.durability <= Durability.FIRE and actor.actorname != "heavy":
+		if !actor.broken and terrain.has(Tiles.LightFire) and actor.durability <= Durability.FIRE and actor.actorname != Actor.Name.Heavy:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
 		

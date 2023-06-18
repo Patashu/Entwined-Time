@@ -29,7 +29,7 @@ func unlock() -> void:
 
 func update_scalify_target() -> void:
 	scalify_target = 0.1;
-	if (actorname == "heavy_goal"):
+	if (actorname == Actor.Name.HeavyGoal):
 		scalify_target *= 1.7;
 	if (dinged and !locked):
 		scalify_target *= 2;
