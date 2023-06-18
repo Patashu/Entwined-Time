@@ -2313,19 +2313,22 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# animation
 			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
 		else: #cuckoo clock
-			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
+			if (eater.ticks == 1000):
+				clock_ticks(eater, -999, Chrono.CHAR_UNDO);
+			else:
+				clock_ticks(eater, -1, Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee]);
 
 func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: int = -1) -> void:
 	if (animation_nonce == -1):
 		animation_nonce = animation_nonce_fountain_dispense();
-	actor.ticks += amount;
+	actor.update_ticks(actor.ticks + amount);
 	if (actor.ticks == 0):
 		if actor.actorname == Actor.Name.CuckooClock:
 			# end the world
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
 	add_undo_event([Undo.tick, actor, amount, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
-	add_to_animation_server(actor, [Animation.tick, amount, animation_nonce]);
+	add_to_animation_server(actor, [Animation.tick, amount, actor.ticks, animation_nonce]);
 
 func lose(reason: String, suspect: Actor) -> void:
 	lost = true;
@@ -3496,7 +3499,7 @@ func time_passes(chrono: int) -> void:
 	for actor in time_actors:
 		if actor.in_night:
 			continue;
-		if actor.ticks < 10000 and !actor.broken:
+		if actor.ticks < 1000 and !actor.broken:
 			clock_ticks(actor, -1, chrono);
 	
 func bottom_up(a, b) -> bool:
@@ -3877,6 +3880,7 @@ func _process(delta: float) -> void:
 			Static.visible = false;
 			Static.modulate = Color(1, 1, 1, 1);
 		
+	if ui_stack.size() == 0:
 		if (doing_replay and replay_timer > next_replay):
 			do_one_replay_turn();
 			update_info_labels();

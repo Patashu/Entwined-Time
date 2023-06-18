@@ -48,7 +48,7 @@ var is_crystal = false;
 var crystal_timer = 0;
 var crystal_timer_max = 1.6;
 # cuckoo clock
-var ticks = 10000;
+var ticks = 1000;
 var thought_bubble = null;
 var ripple = null;
 var ripple_timer = 0;
@@ -331,6 +331,8 @@ func afterimage() -> void:
 	
 func update_ticks(ticks: int) -> void:
 	self.ticks = ticks;
+	if (thought_bubble == null):
+		set_ticks(ticks);
 	
 func set_ticks(ticks: int) -> void:
 	self.ticks = ticks;
@@ -614,9 +616,10 @@ func _process(delta: float) -> void:
 				self.add_child(sparklespawner);
 			elif (current_animation[0] == 18): #tick
 				var amount = current_animation[1];
-				gamelogic.broadcast_animation_nonce(current_animation[2]);
-				thought_bubble.update_ticks(ticks);
-				if (ticks == 0):
+				var new_ticks = current_animation[2];
+				gamelogic.broadcast_animation_nonce(current_animation[3]);
+				thought_bubble.update_ticks(new_ticks);
+				if (new_ticks == 0):
 					gamelogic.play_sound("timesup");
 					ripple = preload("res://Ripple.tscn").instance();
 					ripple_timer = 0;
