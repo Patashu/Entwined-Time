@@ -51,12 +51,16 @@ func set_next_texture(tex: Texture) -> void:
 func _process(delta: float) -> void:
 	particle_timer += delta;
 	if (particle_timer > particle_timer_max):
-		var underactorsparticles = self.get_parent().get_parent().get_node("UnderActorsParticles");
+		var underactorsparticles = gamelogic.get_parent().get_node("UnderActorsParticles");
 		particle_timer -= particle_timer_max;
 		var sprite = Sprite.new();
 		sprite.set_script(preload("res://GoalParticle.gd"));
 		sprite.texture = self.texture;
-		sprite.position = self.position;
+		# use parent's position if we're a joke, our own otherwise
+		if (self.get_parent() is Actor):
+			sprite.position = self.get_parent().position + self.position;
+		else:
+			sprite.position = self.position;
 		sprite.centered = true;
 		sprite.rotation = gamelogic.rng.randf_range(0, 2*PI);
 		sprite.rotate_magnitude = self.rotate_magnitude*4;

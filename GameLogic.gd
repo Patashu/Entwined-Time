@@ -293,6 +293,7 @@ var won = false;
 var lost = false;
 var lost_void = false;
 var won_fade_started = false;
+var joke_portals_present = false;
 var cell_size = 24;
 var undo_effect_strength = 0;
 var undo_effect_per_second = 0;
@@ -445,6 +446,8 @@ func tile_changes() -> void:
 	# hide light and heavy goal sprites when in-game and not in-editor
 	terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, null);
 	terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, null);
+	terrainmap.tile_set.tile_set_texture(Tiles.LightGoalJoke, null);
+	terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, null);
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
@@ -842,8 +845,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("OrientationL2Ex2")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
-	#level_replacements[level_filenames.size()] = "-1";
-	#level_list.push_back(preload("res://levels/Joke.tscn"));
+	level_replacements[level_filenames.size()] = "-1";
+	level_filenames.push_back("Joke")
 	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -864,6 +867,7 @@ func ready_map() -> void:
 	won = false;
 	end_lose();
 	lost_speaker.stop();
+	joke_portals_present = false;
 	for actor in actors:
 		actor.queue_free();
 	actors.clear();
@@ -1115,6 +1119,10 @@ func make_actors() -> void:
 	extract_actors(Tiles.TimeCrystalGreen, Actor.Name.TimeCrystalGreen, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#A9F05F"));
 	extract_actors(Tiles.TimeCrystalMagenta, Actor.Name.TimeCrystalMagenta, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#9966CC"));
 	
+	# joke portals
+	extract_actors(Tiles.HeavyGoalJoke, Actor.Name.HeavyGoalJoke, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("FF6A00"));
+	extract_actors(Tiles.LightGoalJoke, Actor.Name.LightGoalJoke, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("00FFFF"));
+	
 	find_colours();
 	
 	tick_clocks();
@@ -1181,6 +1189,40 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 			actor.is_character = false;
 			actor.color = color;
 			actor.update_graphics();
+			
+			if (actor.actorname == Actor.Name.HeavyGoalJoke):
+				joke_portals_present = true;
+				# manifest a goal to live here
+				var goal = Goal.new();
+				goal.gamelogic = self;
+				goal.actorname = Actor.Name.HeavyGoal;
+				goal.texture = preload("res://assets/BigPortalRed.png");
+				goal.centered = true;
+				goal.pos = actor.pos;
+				goal.position = Vector2(cell_size/2, cell_size/2);
+				goal.modulate = Color(1, 1, 1, 0.8);
+				goal.instantly_reach_scalify();
+				goals.append(goal);
+				goal.update_graphics();
+				actor.joke_goal = goal;
+				actor.add_child(goal);
+			elif (actor.actorname == Actor.Name.LightGoalJoke):
+				joke_portals_present = true;
+				# manifest a goal to live here
+				var goal = Goal.new();
+				goal.gamelogic = self;
+				goal.actorname = Actor.Name.LightGoal;
+				goal.texture = preload("res://assets/BigPortalBlue.png");
+				goal.centered = true;
+				goal.pos = actor.pos;
+				goal.position = Vector2(cell_size/2, cell_size/2);
+				goal.modulate = Color(1, 1, 1, 0.8);
+				goal.rotate_magnitude = -1;
+				goal.instantly_reach_scalify();
+				goals.append(goal);
+				goal.update_graphics();
+				actor.joke_goal = goal;
+				actor.add_child(goal);
 	
 func find_colours() -> void:
 	find_colour(Tiles.ColourRed, TimeColour.Red);
@@ -1385,6 +1427,24 @@ func animation_nonce_fountain_dispense() -> int:
 	animation_nonce_fountain += 1;
 	return result;
 	
+func heavy_goal_here(pos: Vector2, terrain: Array) -> bool:
+	if (!joke_portals_present):
+		return terrain.has(Tiles.HeavyGoal);
+	else:
+		for goal in goals:
+			if goal.actorname == Actor.Name.HeavyGoal and goal.pos == pos:
+				return true;
+		return false;
+	
+func light_goal_here(pos: Vector2, terrain: Array) -> bool:
+	if (!joke_portals_present):
+		return terrain.has(Tiles.LightGoal);
+	else:
+		for goal in goals:
+			if goal.actorname == Actor.Name.LightGoal and goal.pos == pos:
+				return true;
+		return false;
+	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
 phased_out_of = null, animation_nonce : int = -1, is_move: bool = false) -> int:
@@ -1411,6 +1471,20 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 			was_push = pushers_list.size() > 0;
 			was_fall = is_gravity;
 		actor.pos = pos;
+		# joke portal update
+		if (actor.joke_goal != null):
+			var joke_goal = actor.joke_goal;
+			joke_goal.pos = pos;
+			if joke_goal.dinged:
+				set_actor_var(joke_goal, "dinged", false, chrono);
+			else:
+				if joke_goal.actorname == Actor.Name.HeavyGoal:
+					if !heavy_actor.broken and heavy_actor.pos == joke_goal.pos:
+						set_actor_var(joke_goal, "dinged", true, chrono);
+				elif joke_goal.actorname == Actor.Name.LightGoal:
+					if !light_actor.broken and light_actor.pos == joke_goal.pos:
+						set_actor_var(joke_goal, "dinged", true, chrono);
+		
 		# 'phased out of' mechanic: If two actors stack, one actor moves out and then undoes,
 		# it should phase back in rather than retro-push since no desyncing or timefuck has happened.
 		# (Remember, character undo ALWAYS returns you to the state you were in on that turn... IF nothing changed.)
@@ -1482,19 +1556,19 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 					if actor.dinged:
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
-				if actor.actorname == Actor.Name.Heavy and terrain.has(Tiles.HeavyGoal):
+				if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos, terrain):
 					for goal in goals:
 						if goal.actorname == Actor.Name.HeavyGoal and !goal.dinged and goal.pos == actor.pos:
 							set_actor_var(goal, "dinged", true, chrono);
-				if actor.actorname == Actor.Name.Light and terrain.has(Tiles.LightGoal):
+				if actor.actorname == Actor.Name.Light and light_goal_here(actor.pos, terrain):
 					for goal in goals:
 						if goal.actorname == Actor.Name.LightGoal and !goal.dinged and goal.pos == actor.pos:
 							set_actor_var(goal, "dinged", true, chrono);
-				if actor.actorname == Actor.Name.Heavy and old_terrain.has(Tiles.HeavyGoal):
+				if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos - dir, old_terrain):
 					for goal in goals:
 						if goal.actorname == Actor.Name.HeavyGoal and goal.dinged and goal.pos != actor.pos:
 							set_actor_var(goal, "dinged", false, chrono);
-				if actor.actorname == Actor.Name.Light and old_terrain.has(Tiles.LightGoal):
+				if actor.actorname == Actor.Name.Light and light_goal_here(actor.pos - dir, old_terrain):
 					for goal in goals:
 						if goal.actorname == Actor.Name.LightGoal and goal.dinged and goal.pos != actor.pos:
 							set_actor_var(goal, "dinged", false, chrono);
@@ -1898,15 +1972,16 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		return Success.Yes;
 	
 	# handle solidity in our tile, solidity in the tile over, hazards/surprises in the tile over
-	if (current_tile_is_solid(actor, dir, is_gravity, is_retro)):
-		if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
-			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
-		return Success.No;
-	var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono);
-	if (solidity_check != Success.Yes):
-		if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
-			add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), flash_colour]);
-		return solidity_check;
+	if (!actor.phases_into_terrain()):
+		if (current_tile_is_solid(actor, dir, is_gravity, is_retro)):
+			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
+				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
+			return Success.No;
+		var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono);
+		if (solidity_check != Success.Yes):
+			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
+				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), flash_colour]);
+			return solidity_check;
 	
 	# handle pushing
 	var actors_there = actors_in_tile(dest);
@@ -1934,8 +2009,12 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			# Strength Rule
 			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
 			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness) and !can_eat(actor_there, actor):
-				pushers_list.pop_front();
-				return Success.No;
+				if (actor.phases_into_actors()):
+					pushables_there.clear();
+					break;
+				else:
+					pushers_list.pop_front();
+					return Success.No;
 		var result = Success.Yes;
 		
 		# logic to handle time crystals and actor stacks:
@@ -1953,8 +2032,13 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				continue;
 			var actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
 			if actor_there_result == Success.No:
-				pushers_list.pop_front();
-				return Success.No;
+				if (actor.phases_into_actors()):
+					pushables_there.clear();
+					result = Success.Yes;
+					break;
+				else:
+					pushers_list.pop_front();
+					return Success.No;
 			if actor_there_result == Success.Surprise:
 				result = Success.Surprise;
 				surprises.append(actor_there);
@@ -2294,11 +2378,11 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 					add_to_animation_server(actor, [Animation.sfx, "broken"])
 					add_to_animation_server(actor, [Animation.explode])
 				if actor.is_character:
-					if actor.actorname == Actor.Name.Heavy and terrain.has(Tiles.HeavyGoal):
+					if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos, terrain):
 						for goal in goals:
 							if goal.actorname == Actor.Name.HeavyGoal and goal.dinged:
 								set_actor_var(goal, "dinged", false, chrono);
-					if actor.actorname == Actor.Name.Light and terrain.has(Tiles.LightGoal):
+					if actor.actorname == Actor.Name.Light and light_goal_here(actor.pos, terrain):
 						for goal in goals:
 							if goal.actorname == Actor.Name.LightGoal and goal.dinged:
 								set_actor_var(goal, "dinged", false, chrono);
@@ -2308,11 +2392,11 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 			else:
 				add_to_animation_server(actor, [Animation.sfx, "unbroken"])
 				if actor.is_character:
-					if actor.actorname == Actor.Name.Heavy and terrain.has(Tiles.HeavyGoal):
+					if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos, terrain):
 						for goal in goals:
 							if goal.actorname == Actor.Name.HeavyGoal and !goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
-					if actor.actorname == Actor.Name.Light and terrain.has(Tiles.LightGoal):
+					if actor.actorname == Actor.Name.Light and light_goal_here(actor.pos, terrain):
 						for goal in goals:
 							if goal.actorname == Actor.Name.LightGoal and !goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
@@ -2639,7 +2723,9 @@ func check_won() -> void:
 			won = false;
 			break;
 	
-	if (!locked and !light_actor.broken and !heavy_actor.broken and terrain_in_tile(heavy_actor.pos).has(Tiles.HeavyGoal) and terrain_in_tile(light_actor.pos).has(Tiles.LightGoal)):
+	if (!locked and !light_actor.broken and !heavy_actor.broken
+	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos))
+	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos))):
 		won = true;
 		# but wait!
 		# check for crate goals as well
@@ -2693,7 +2779,10 @@ func check_won() -> void:
 	
 	winlabel.visible = won;
 	if (won):
-		winlabel.text = "You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay"
+		if (level_name == "Joke"):
+			winlabel.text = "Thanks for playing :3"
+		else:
+			winlabel.text = "You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay"
 		won_fade_started = false;
 		tutoriallabel.visible = false;
 		adjust_winlabel();

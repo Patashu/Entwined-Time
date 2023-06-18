@@ -60,6 +60,8 @@ var in_stars = false;
 # basically, things that move become non-colliding until the end of the multi-push/fall tick they're
 # a part of, so other things that shared their tile can move with them
 var just_moved = false;
+# joke goals logic
+var joke_goal = null;
 
 # faster than string comparisons
 enum Name {
@@ -84,6 +86,14 @@ func update_graphics() -> void:
 	if (thought_bubble != null):
 		thought_bubble.update_ticks(ticks);
 	update_grayscale(in_night);
+	if (is_ghost and actorname == Name.HeavyGoalJoke):
+		texture = preload("res://assets/BigPortalRed.png");
+		offset = Vector2(12, 12)/0.1;
+		scale = Vector2(0.1, 0.1);
+	elif (is_ghost and actorname == Name.LightGoalJoke):
+		texture = preload("res://assets/BigPortalBlue.png");
+		offset = Vector2(12, 12)/0.1;
+		scale = Vector2(0.1, 0.1);
 
 func get_next_texture() -> Texture:
 	# powered modulate also update here, since I want that to be instant
@@ -293,6 +303,16 @@ func pushable() -> bool:
 	if (broken):
 		return is_character;
 	return true;
+		
+func phases_into_terrain() -> bool:
+	if actorname == Name.HeavyGoalJoke or actorname == Name.LightGoalJoke:
+		return true;
+	return false;
+	
+func phases_into_actors() -> bool:
+	if actorname == Name.HeavyGoalJoke or actorname == Name.LightGoalJoke:
+		return true;
+	return false;
 		
 #func tiny_pushable() -> bool:
 #	if (just_moved):
