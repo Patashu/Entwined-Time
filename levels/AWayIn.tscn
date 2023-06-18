@@ -26,4 +26,4 @@ tile_data = PoolIntArray( 0, 57, 0, 12, 57, 0, 65536, 57, 0, 65548, 57, 0, 13107
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 720901, 1, 0, 720902, 40, 0, 720903, 7, 0, 786437, 23, 0, 786438, 23, 0, 786439, 23, 0 )
+tile_data = PoolIntArray( 720901, 1, 0, 720902, 39, 0, 720903, 7, 0, 786437, 23, 0, 786438, 23, 0, 786439, 23, 0 )
