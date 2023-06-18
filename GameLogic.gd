@@ -151,6 +151,7 @@ enum TimeColour {
 	Cyan,
 	Orange,
 	Yellow,
+	White,
 }
 
 enum Greenness {
@@ -230,6 +231,7 @@ enum Tiles {
 	PowerSocket, #65
 	GreenPowerSocket, #66
 	VoidPowerSocket, #67
+	ColourWhite, #68
 }
 
 # information about the level
@@ -1238,6 +1240,7 @@ func find_colours() -> void:
 	find_colour(Tiles.ColourCyan, TimeColour.Cyan);
 	find_colour(Tiles.ColourOrange, TimeColour.Orange);
 	find_colour(Tiles.ColourYellow, TimeColour.Yellow);
+	find_colour(Tiles.ColourWhite, TimeColour.White);
 	
 func find_colour(id: int, time_colour : int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -1987,7 +1990,9 @@ func strength_check(strength: int, heaviness: int) -> bool:
 	
 func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], phased_out_of = null) -> int:
 	var dest = actor.pos + dir;
-	if (chrono >= Chrono.META_UNDO):
+	if (chrono >= Chrono.TIMELESS):
+		return Success.Yes;
+	if (chrono >= Chrono.META_UNDO and is_retro):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
 		return Success.Yes;
 	
@@ -2055,8 +2060,6 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		#* if any is Surprise: if !hypothetical, do all the surprises. then return Suprise.
 		#* (if any is Yes): if !hypothetical, do all the push-or-eats, then return Yes
 		
-		# TODO: logic for wooden crates special moves, logic for keys
-		
 		var surprises = [];
 		result = Success.Yes;
 		for actor_there in pushables_there:
@@ -2068,13 +2071,26 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					pushables_there.clear();
 					result = Success.Yes;
 					break;
+				elif (pushables_there.size() == 1 and actor_there.actorname == Actor.Name.WoodenCrate and actor.is_character and !is_gravity):
+					if actor.actorname == Actor.Name.Heavy:
+						set_actor_var(actor_there, "broken", true, chrono);
+					elif actor.actorname == Actor.Name.Light:
+						dir = Vector2.UP;
+						# check again if we can push it up
+						actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
+						if (actor_there_result == Success.No):
+							pushers_list.pop_front();
+							return Success.No;
+						elif(actor_there_result == Success.Surprise):
+							result = Success.Surprise;
+							surprises.append(actor_there);
+					
 				else:
 					pushers_list.pop_front();
 					return Success.No;
 			if actor_there_result == Success.Surprise:
 				result = Success.Surprise;
 				surprises.append(actor_there);
-		
 		
 		if (!hypothetical):
 			if (result == Success.Surprise):
@@ -3013,7 +3029,6 @@ func meta_undo(is_silent: bool = false) -> bool:
 	var events = meta_undo_buffer.pop_back();
 	for event in events:
 		undo_one_event(event, Chrono.META_UNDO);
-	time_passes(Chrono.META_UNDO);
 	adjust_meta_turn(-1);
 	if (!is_silent):
 		cut_sound();
@@ -3026,6 +3041,8 @@ func meta_undo(is_silent: bool = false) -> bool:
 		whatever.queue_free();
 	finish_animations(Chrono.META_UNDO);
 	undo_effect_color = meta_color;
+	# void things experience time when you undo
+	time_passes(Chrono.META_UNDO);
 	return true;
 	
 func character_switch() -> void:
@@ -3283,55 +3300,66 @@ func anything_happened_meta() -> bool:
 	return false;
 
 func time_passes(chrono: int) -> void:
-	if (chrono >= Chrono.META_UNDO):
-		return
 	animation_substep(chrono);
 	var time_actors = []
-	for actor in actors:
-		# broken time crystals being in stacks was messing up the just_moved gravity code,
-		# and nothing related to time passage effects time crystals anyway, so just eject them here
-		if actor.is_crystal:
-			continue;
-		
-		#AD06: Characters are Purple, other actors are Gray. (But with time colours you can make your own arbitrary rules!
-#		Red: Time passes only when red moves forward.
-#		Blue: Time passes only when blue moves forward.
-#		Purple: The default unrendered colour of characters. Time passes except when I am undoing.
-#		Gray: The default unrendered colour of non-character actors. Time passes when a character moves forward and doesn't when a character undoes.
-#		Green: Time always passes, AND undo events are not generated/stored for this actor, AND if a green character takes a turn and no events are made, turn is not incremented. (So, having actor be green is equivalent to a no-time-shenanigans version of Entwined Time where time just always moves forward and you need to meta-undo to claw it back.) (Alternatively, I might have turns work as normal but there's a sentinel value for 'no turns, no timeline' like 100, since -1 actually will mean something)
-#		Void: Time passes every real time second, AND undo events AND meta undo events are not generated/stored for this actor, AND if a void actor takes a turn and no events are made, turn/meta-turn is not incremented. (In the main campaign this will probably only be used for the void cuckoo clock in the final level.)
-#		Magenta: Time always passes.
-#		Orange: Time passes if Red is moving or undoing.
-#		Cyan: Time passes if Blue is moving or undoing.
-#		Yellow: Time passes if a character is undoing.
-		if actor.time_colour == TimeColour.Gray:
-			if (chrono == Chrono.MOVE):
+	
+	if chrono == Chrono.META_UNDO:
+		for actor in actors:
+			if actor.is_crystal:
+				continue;
+			if actor.time_colour == TimeColour.Void:
 				time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Purple:
-			if (chrono == Chrono.MOVE):
-				time_actors.push_back(actor);
-			else:
-				if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
+			
+	elif chrono < Chrono.META_UNDO:
+		for actor in actors:
+			# broken time crystals being in stacks was messing up the just_moved gravity code,
+			# and nothing related to time passage effects time crystals anyway, so just eject them here
+			if actor.is_crystal:
+				continue;
+			
+			#AD06: Characters are Purple, other actors are Gray. (But with time colours you can make your own arbitrary rules!
+	#		Red: Time passes only when red moves forward.
+	#		Blue: Time passes only when blue moves forward.
+	#		Purple: The default unrendered colour of characters. Time passes except when I am undoing.
+	#		Gray: The default unrendered colour of non-character actors. Time passes when a character moves forward and doesn't when a character undoes.
+	#		Green: Time always passes, AND undo events are not generated/stored for this actor, AND if a green character takes a turn and no events are made, turn is not incremented. (So, having actor be green is equivalent to a no-time-shenanigans version of Entwined Time where time just always moves forward and you need to meta-undo to claw it back.) (Alternatively, I might have turns work as normal but there's a sentinel value for 'no turns, no timeline' like 100, since -1 actually will mean something)
+	#		Void: Time always passes AND time passes after a meta-undo AND undo events AND meta undo events are not generated/stored for this actor, AND if a void actor takes a turn and no events are made, turn/meta-turn is not incremented. (In the main campaign this will probably only be used for the void cuckoo clock in the final level.)
+	#		Magenta: Time always passes.
+	#		Orange: Time passes if Red is moving or undoing.
+	#		Cyan: Time passes if Blue is moving or undoing.
+	#		Yellow: Time passes if a character is undoing.
+	#		White: Time never passes.
+			if actor.time_colour == TimeColour.Gray:
+				if (chrono == Chrono.MOVE):
 					time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Red:
-			if chrono == Chrono.MOVE and heavy_selected:
+			elif actor.time_colour == TimeColour.Purple:
+				if (chrono == Chrono.MOVE):
+					time_actors.push_back(actor);
+				else:
+					if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
+						time_actors.push_back(actor);
+			elif actor.time_colour == TimeColour.Red:
+				if chrono == Chrono.MOVE and heavy_selected:
+					time_actors.push_back(actor);
+			elif actor.time_colour == TimeColour.Blue:
+				if chrono == Chrono.MOVE and !heavy_selected:
+					time_actors.push_back(actor);
+			elif actor.time_colour == TimeColour.Green:
 				time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Blue:
-			if chrono == Chrono.MOVE and !heavy_selected:
+			elif actor.time_colour == TimeColour.Void:
 				time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Green:
-			time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Magenta:
-			time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Cyan:
-			if !heavy_selected:
+			elif actor.time_colour == TimeColour.Magenta:
 				time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Orange:
-			if heavy_selected:
-				time_actors.push_back(actor);
-		elif actor.time_colour == TimeColour.Yellow:
-			if (chrono == Chrono.CHAR_UNDO):
-				time_actors.push_back(actor);
+			elif actor.time_colour == TimeColour.Cyan:
+				if !heavy_selected:
+					time_actors.push_back(actor);
+			elif actor.time_colour == TimeColour.Orange:
+				if heavy_selected:
+					time_actors.push_back(actor);
+			elif actor.time_colour == TimeColour.Yellow:
+				if (chrono == Chrono.CHAR_UNDO):
+					time_actors.push_back(actor);
+			# White: No
 	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.
