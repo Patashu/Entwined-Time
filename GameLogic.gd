@@ -814,8 +814,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("ControlledDemolitionEx2")
 	level_filenames.push_back("Permify")
 	level_filenames.push_back("CelestialNavigation")
-	#level_replacements[level_filenames.size()] = "Ω";
-	#level_filenames.push_back("ChronoLabReactor")
+	level_replacements[level_filenames.size()] = "Ω";
+	level_filenames.push_back("ChronoLabReactor")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -3045,6 +3045,8 @@ func escape() -> void:
 func trying_to_load_locked_level() -> bool:
 	if save_file.has("unlock_everything") and save_file["unlock_everything"]:
 		return false;
+	if (level_names[level_number] == "Chrono Lab Reactor" and !save_file["levels"].has("Chrono Lab Reactor")):
+		return true;
 	var unlock_requirement = 0;
 	if (!level_is_extra):
 		unlock_requirement = chapter_standard_unlock_requirements[chapter];

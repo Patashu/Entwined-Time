@@ -204,6 +204,11 @@ func prepare_chapter() -> void:
 				if (button.level_number == gamelogic.level_number): # button corresponding to the current level
 					button.grab_focus();
 					
+				# lock Chrono Lab Reactor if not seen yet
+				if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and level_name == "Chrono Lab Reactor" and !gamelogic.save_file["levels"].has(level_name)):
+					button.text = "???";
+					button.disabled = true;
+					
 				# if we beat it, add a star :3
 				if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
 					var star = Sprite.new();
