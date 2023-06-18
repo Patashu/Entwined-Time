@@ -287,6 +287,7 @@ var speakers = [];
 var music_speaker = null;
 var lost_speaker = null;
 var lost_speaker_volume_tween;
+var won_speaker = null;
 var sounds_played_this_frame = {};
 var muted = false;
 var won = false;
@@ -427,6 +428,7 @@ func setup_volume() -> void:
 			speaker.volume_db = value;
 	if (save_file.has("music_volume")):
 		var value = save_file["music_volume"];
+		won_speaker.volume_db = value;
 	
 func setup_animation_speed() -> void:
 	if (save_file.has("animation_speed")):
@@ -1345,6 +1347,8 @@ func prepare_audio() -> void:
 	lost_speaker_volume_tween = Tween.new();
 	self.add_child(lost_speaker_volume_tween);
 	self.add_child(lost_speaker);
+	won_speaker = AudioStreamPlayer.new();
+	self.add_child(won_speaker);
 	music_speaker = AudioStreamPlayer.new();
 	self.add_child(music_speaker);
 
@@ -1370,6 +1374,7 @@ func cut_sound() -> void:
 	for speaker in speakers:
 		speaker.stop();
 	lost_speaker.stop();
+	won_speaker.stop();
 
 func play_sound(sound: String) -> void:
 	if muted or (doing_replay and meta_undo_a_restart_mode):
@@ -1384,6 +1389,22 @@ func play_sound(sound: String) -> void:
 			sounds_played_this_frame[sound] = true;
 			speaker.play();
 			return;
+
+func play_won(sound: String) -> void:
+	if muted or (doing_replay and meta_undo_a_restart_mode):
+		return;
+	if (sounds_played_this_frame.has(sound)):
+		return;
+	var speaker = won_speaker;
+	# might adjust to -40 db or whatever depending
+	if speaker.volume_db <= -30:
+		return;
+	if speaker.playing:
+		speaker.stop();
+	speaker.stream = sounds[sound];
+	sounds_played_this_frame[sound] = true;
+	speaker.play();
+	return;
 
 func toggle_mute() -> void:
 	muted = !muted;
@@ -2744,9 +2765,9 @@ func check_won() -> void:
 				break;
 		if (won == true and !doing_replay):
 			if (level_name == "Joke"):
-				play_sound("winbadtime");
+				play_won("winbadtime");
 			else:
-				play_sound("winentwined");
+				play_won("winentwined");
 			var levels_save_data = save_file["levels"];
 			if (!levels_save_data.has(level_name)):
 				levels_save_data[level_name] = {};
