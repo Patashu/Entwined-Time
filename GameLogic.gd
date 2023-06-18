@@ -291,6 +291,7 @@ var won_speaker = null;
 var sounds_played_this_frame = {};
 var muted = false;
 var won = false;
+var nonstandard_won = false;
 var lost = false;
 var lost_void = false;
 var won_fade_started = false;
@@ -867,6 +868,7 @@ func initialize_level_list() -> void:
 
 func ready_map() -> void:
 	won = false;
+	nonstandard_won = false;
 	end_lose();
 	lost_speaker.stop();
 	joke_portals_present = false;
@@ -1120,6 +1122,10 @@ func make_actors() -> void:
 	# time crystals
 	extract_actors(Tiles.TimeCrystalGreen, Actor.Name.TimeCrystalGreen, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#A9F05F"));
 	extract_actors(Tiles.TimeCrystalMagenta, Actor.Name.TimeCrystalMagenta, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("#9966CC"));
+	
+	# chrono helixes
+	extract_actors(Tiles.ChronoHelixRed, Actor.Name.ChronoHelixRed, Heaviness.IRON, Strength.HEAVY, Durability.NOTHING, 1, false, Color("FF6A00"));
+	extract_actors(Tiles.ChronoHelixBlue, Actor.Name.ChronoHelixBlue, Heaviness.IRON, Strength.HEAVY, Durability.NOTHING, 1, false, Color("00FFFF"));
 	
 	# joke portals
 	extract_actors(Tiles.HeavyGoalJoke, Actor.Name.HeavyGoalJoke, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("FF6A00"));
@@ -2027,6 +2033,18 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				strength_modifier = -1;
 		pushers_list.append(actor);
 		for actor_there in pushables_there:
+			# chrono helix bump check
+			if (actor_there.actorname == Actor.Name.ChronoHelixRed):
+				if actor.actorname == Actor.Name.ChronoHelixBlue:
+					nonstandard_won = true;
+					check_won();
+					return Success.No;
+			elif (actor_there.actorname == Actor.Name.ChronoHelixBlue):
+				if actor.actorname == Actor.Name.ChronoHelixRed:
+					nonstandard_won = true;
+					check_won();
+					return Success.No;
+			
 			# Strength Rule
 			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
 			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness) and !can_eat(actor_there, actor):
@@ -2746,7 +2764,7 @@ func check_won() -> void:
 	
 	if (!locked and !light_actor.broken and !heavy_actor.broken
 	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos))
-	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos))):
+	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos))) or nonstandard_won:
 		won = true;
 		# but wait!
 		# check for crate goals as well
@@ -2995,6 +3013,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 		if !is_silent:
 			play_sound("bump");
 		return false;
+	nonstandard_won = false;
 	var events = meta_undo_buffer.pop_back();
 	for event in events:
 		undo_one_event(event, Chrono.META_UNDO);
@@ -3430,6 +3449,26 @@ func time_passes(chrono: int) -> void:
 	
 	# AFTER-GRAVITY TILE ARRIVAL
 	
+	# Chrono helixes repel each other.
+	if !nonstandard_won:
+		for actor in time_actors:
+			if actor.actorname == Actor.Name.ChronoHelixRed:
+				for actor2 in actors:
+					if actor2.actorname == Actor.Name.ChronoHelixBlue:
+						var diff = actor.pos - actor2.pos;
+						if (abs(diff.x) <= 1 and abs(diff.y) <= 1):
+							add_to_animation_server(actor, [Animation.sfx, "fall"]);
+							move_actor_relative(actor, diff, chrono, false, false);
+							move_actor_relative(actor2, -diff, chrono, false, false);
+			elif actor.actorname == Actor.Name.ChronoHelixBlue:
+				for actor2 in actors:
+					if actor2.actorname == Actor.Name.ChronoHelixRed:
+						var diff = actor.pos - actor2.pos;
+						if (abs(diff.x) <= 1 and abs(diff.y) <= 1):
+							add_to_animation_server(actor, [Animation.sfx, "fall"]);
+							move_actor_relative(actor, diff, chrono, false, false);
+							move_actor_relative(actor2, -diff, chrono, false, false);
+	
 	# Things in fire break.
 	# TODO: once colours exist this gets more complicated
 	# might be sufficient to just check which of Heavy/Light are in time_actors, since that's really what matters
@@ -3459,7 +3498,7 @@ func time_passes(chrono: int) -> void:
 			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
 				actor.post_mortem = Durability.FIRE;
 				set_actor_var(actor, "broken", true, Chrono.CHAR_UNDO);
-				
+	
 	# Lucky last - clocks tick.
 	for actor in time_actors:
 		if actor.in_night:

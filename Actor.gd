@@ -76,6 +76,8 @@ enum Name {
 	TimeCrystalGreen,
 	TimeCrystalMagenta,
 	CuckooClock,
+	ChronoHelixRed,
+	ChronoHelixBlue,
 	HeavyGoalJoke,
 	LightGoalJoke,
 }
@@ -189,6 +191,11 @@ func get_next_texture() -> Texture:
 			return null;
 		else:
 			return preload("res://assets/timecrystalmagenta.png");
+			
+	elif actorname == Name.ChronoHelixBlue:
+		return preload("res://assets/chrono_helix_blue.png");
+	elif actorname == Name.ChronoHelixRed:
+		return preload("res://assets/chrono_helix_red.png");
 	
 	return null;
 
