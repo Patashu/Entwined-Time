@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 7, 0, 65539, 8, 0, 65540, 14, 655362, 65541, 14, 196614, 65542, 14, 524292, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 524292, 131075, 2, 0, 131077, 22, 0, 131078, 14, 262145, 196610, 14, 655362, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Jail (Insight)"
+level_replay = "Jail (Insight)$mturn=16$dadxsxzxzadaxawxzzxzzz"
+heavy_max_moves = 4
+light_max_moves = 4
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 19, 0, 131077, 1, 0 )
