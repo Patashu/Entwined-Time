@@ -12,7 +12,7 @@ tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 19
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Elementary"
-level_replay = "Elementary$mturn=76$wwzzdwdzzxwxdxzwdxdzzzxzzxdxasxzxzzxdadxwxwxzwwxzzzxzzxzdzdxdcxdaxdsxzzzxzzxddxwxwxzwwxzzxzzddxddxzdxzzzaaaa"
+level_replay = "Elementary$mturn=64$wwzddzsxwxdxzwdxzzddzxzzxdxwxzxwxzxzzxzzdxdxwzxzwxdxzdsxzxzzswxdxzzwwxzzdddxzzddxzzzaaaa"
 heavy_max_moves = 1
 light_max_moves = 1
 

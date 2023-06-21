@@ -12,7 +12,7 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 393219, 3, 14, 45
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Frangible"
-level_replay = "Frangible$mturn=108$asxwxdxzwxwxzdxzzzwwwaxdxzzzzzsaaaaxzzawxzddxzwaaxzzzzzzaxdzzxwxzzzxzxdaxwxzzxsxddaxwxzzzxsxdddaxwxzzzzxzxzzdddddxwzxzzzzzxzzzzzasxwaxwwwxddzxwzzd"
+level_replay = "Frangible$mturn=77$xawdxwxdxzawwwwaxdxzzzzzaaaxzzzzwxzddxzzaaxwxzzadxzxdaxwxzzzddxzxdaxwxzzzzxzzzzzaxzdddwwxwwxzzddzxwdxs"
 heavy_max_moves = 6
 light_max_moves = 6
 

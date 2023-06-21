@@ -12,7 +12,7 @@ tile_data = PoolIntArray( 0, 47, 0, 1, 55, 0, 5, 47, 0, 65537, 23, 0, 65539, 47,
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Cascade"
-level_replay = "Cascade$mturn=112$azxwdzzxwxaxzwzxzwxdxzxwdxwzxzzzwxaxdxzxzzdxaxaxzxzzxwxaxzxzcxaxzaxzdsxwzxxwxaxzdxzzzsxzwaxzxwdcazzzzzxdxaxdxdxzxzzsxzxzdzxwxdxzddwdxwdxzzxwxzxwxzdxzxdxzzzzaaazzzdddxzzaaa"
+level_replay = "Cascade$mturn=79$azxwdzawzzxdxzxwdwzzzxaxzxaxwzxzzwxaxzxwxazdxzwxzxzwawazzzzzxddwxdxzdxwxzzxwxzwdwdsxzzxdxzaaazzzdddxzzzaaa"
 heavy_max_moves = 6
 light_max_moves = 6
 clock_turns = "6,4,7,5,3,2,1"

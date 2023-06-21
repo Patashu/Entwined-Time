@@ -597,7 +597,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(32);
 	level_filenames.push_back("FirewallEx3")
 	level_filenames.push_back("LadderWorldEx")
-	level_filenames.push_back("LadderLatticeEx")
 	level_filenames.push_back("TrophyCabinetEx")
 	level_filenames.push_back("TrophyCabinetEx2")
 	level_filenames.push_back("TrophyCabinetEx3")
@@ -1605,9 +1604,10 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 		#(e.g. light on heavy, light jumps, heavy jumps, light undoes, light isn't pulled down by Heavy falling.)
 		#Multiple replays rely on this behaviour now I think, I could do a full game pass but EHHH.
 		#(Also I just now realized I never did AD03 so???)
+		#(June 21st 2023: Finally doing AD14, ahem)
 		#(AD15: Non-broken time crystals are sticky toppable! In fact, Heavy can PUSH them upwards thanks to some special logic elsewhere :D)
 		#(FIX: Broken time crystals can't be sticky top'd because they're basically not things
-		if actor.actorname == Actor.Name.Heavy and chrono == Chrono.MOVE and dir.y >= 0:
+		if actor.actorname == Actor.Name.Heavy and !is_retro and dir.y >= 0:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
 				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
