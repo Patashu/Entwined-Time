@@ -560,17 +560,18 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Upstream")
 	level_filenames.push_back("Downstream")
 	level_filenames.push_back("BoosterSeat")
+	level_filenames.push_back("TheOneWayPit")
 	level_filenames.push_back("EventHorizon")
 	level_filenames.push_back("PushingItSequel")
 	level_filenames.push_back("Daredevils")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(24);
+	level_filenames.push_back("RemoteVoyage")
 	level_filenames.push_back("SecurityDoorEx")
 	level_filenames.push_back("SecurityDoorEx2")
 	level_filenames.push_back("JailEx")
 	level_filenames.push_back("JailEx2")
-	level_filenames.push_back("TheOneWayPit")
 	level_filenames.push_back("TheOneWayPitEx")
 	level_filenames.push_back("TheSpikePitEx2")
 	level_filenames.push_back("InvisibleBridgeEx")
