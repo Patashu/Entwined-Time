@@ -2074,6 +2074,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					result = Success.Yes;
 					break;
 				elif (pushables_there.size() == 1 and actor_there.actorname == Actor.Name.WoodenCrate and actor.is_character and !is_gravity):
+					# since wooden crate did a bump, robot needs to do a bump too to sync up animations
+					# should be OK to have the nonce be -1 since the real thing will still happen?
+					add_to_animation_server(actor, [Animation.bump, dir, -1]);
 					if actor.actorname == Actor.Name.Heavy:
 						set_actor_var(actor_there, "broken", true, chrono);
 					elif actor.actorname == Actor.Name.Light:
