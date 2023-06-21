@@ -105,6 +105,12 @@ func prepare_chapter() -> void:
 		y_max = 13;
 		yy = 15;
 		yyy = 15;
+	
+	# and another squish...
+	if (advanced_end - normal_start) > 23:
+		y_max = 14;
+		yy = 13;
+		yyy = 15;
 		
 	var standard_label = Label.new();
 	holder.add_child(standard_label);
