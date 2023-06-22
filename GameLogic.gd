@@ -2132,7 +2132,8 @@ func can_eat(eater: Actor, eatee: Actor) -> bool:
 		return false;
 	if (!eater.is_character):
 		# new: cuckoo clocks can eat time crystals :9
-		if eater.actorname == Actor.Name.CuckooClock and !eater.broken:
+		# but only if they have a time
+		if eater.actorname == Actor.Name.CuckooClock and !eater.broken and eater.ticks != 1000:
 			pass
 		else:
 			return false;
@@ -2334,10 +2335,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# animation
 			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
 		else: #cuckoo clock
-			if (eater.ticks == 1000):
-				clock_ticks(eater, -999, Chrono.CHAR_UNDO);
-			else:
-				clock_ticks(eater, -1, Chrono.CHAR_UNDO);
+			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee]);
 
 func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: int = -1) -> void:
@@ -3532,7 +3530,7 @@ func time_passes(chrono: int) -> void:
 	for actor in time_actors:
 		if actor.in_night:
 			continue;
-		if actor.ticks < 1000 and !actor.broken:
+		if actor.ticks != 1000 and !actor.broken:
 			clock_ticks(actor, -1, chrono);
 	
 func bottom_up(a, b) -> bool:
