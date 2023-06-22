@@ -1275,6 +1275,9 @@ func calculate_map_size() -> void:
 	overactorsparticles.position = terrainmap.position;
 	checkerboard.rect_position = terrainmap.position;
 	checkerboard.rect_size = cell_size*Vector2(map_x_max+1, map_y_max+1);
+	# hack for World's Smallest Puzzle!
+	if (map_y_max == 0):
+		checkerboard.rect_position.y -= cell_size;
 		
 func update_targeter() -> void:
 	if (heavy_selected):
