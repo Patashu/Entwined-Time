@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 65536, 14, 262145, 65539, 14, 262145, 65540, 2, 0, 131072, 14, 262145, 131075, 14, 655362, 131076, 14, 196614, 131077, 14, 524292, 196608, 14, 262145, 196609, 3, 0, 196610, 8, 0, 196613, 14, 262145, 262144, 14, 262145, 262147, 3, 0, 262149, 14, 262145, 327680, 14, 262145, 327683, 14, 524290, 327684, 14, 196614, 327685, 14, 655364, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 655364 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 5, 0, 65538, 32, 0, 131073, 6, 0, 131074, 6, 0, 196609, 6, 0, 196610, 6, 0, 196611, 5, 0, 196612, 5, 0, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 327681, 6, 0, 327682, 6, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65540, 1, 0, 131074, 7, 0, 196609, 32, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Iron Crates (Insight)"
+level_replay = "Iron Crates (Insight)$mturn=33$xsawdddsawaassdwawdwwasdssddwasaww"
+heavy_max_moves = 0
+light_max_moves = 33
