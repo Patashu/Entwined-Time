@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 3, 2, 14, 458755, 3, 14, 196614, 4, 14, 196614, 5, 14, 524291, 6, 14, 196614, 7, 14, 196614, 8, 14, 393219, 9, 14, 3, 10, 14, 4, 65536, 14, 589825, 65537, 14, 131075, 65538, 14, 131076, 65541, 14, 262145, 65544, 14, 131074, 65545, 14, 131075, 65546, 14, 589829, 131072, 14, 262145, 131073, 8, 0, 131074, 15, 0, 131075, 15, 0, 131077, 14, 262145, 131079, 15, 0, 131080, 15, 0, 131081, 2, 0, 131082, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 524291, 196611, 14, 196615, 196612, 33, 0, 196613, 14, 327681, 196614, 33, 0, 196615, 14, 196613, 196616, 14, 524291, 196617, 14, 196614, 196618, 14, 655364, 262146, 14, 262145, 262152, 14, 262145, 327682, 14, 262145, 327688, 14, 262145, 393218, 14, 262145, 393219, 15, 0, 393220, 7, 0, 393221, 32, 0, 393222, 1, 0, 393224, 14, 262145, 458754, 14, 655362, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196614, 458760, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "You Only Need To Know They're Multi-Push"
+level_replay = "You Only Need To Know They're Multi-Push$mturn=24$xdddxaaasxaxaaxwxaxzzdxdxdxdxwaaaxdxd"
+heavy_max_moves = 10
+light_max_moves = 10
