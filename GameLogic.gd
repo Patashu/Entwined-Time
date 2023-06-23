@@ -3944,6 +3944,8 @@ func _process(delta: float) -> void:
 		if (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
 				if (won):
+					if (!save_file["levels"].has(level_name)):
+						save_file["levels"][level_name] = {};
 					save_file["levels"][level_name]["replay"] = annotate_replay(user_replay);
 					save_game();
 					floating_text("Shift+F11: Replay force saved!");
