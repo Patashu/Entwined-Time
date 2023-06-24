@@ -15,7 +15,7 @@ onready var menubutton : Button = levelscene.get_node("MenuButton");
 onready var gaininsightbutton : Button = levelscene.get_node("GainInsightButton");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
 onready var levelstar : Sprite = levelscene.get_node("LevelStar");
-onready var winlabel : Label = levelscene.get_node("WinLabel");
+onready var winlabel : Node2D = levelscene.get_node("WinLabel");
 onready var heavyinfolabel : Label = levelscene.get_node("HeavyInfoLabel");
 onready var lightinfolabel : Label = levelscene.get_node("LightInfoLabel");
 onready var metainfolabel : Label = levelscene.get_node("MetaInfoLabel");
@@ -395,6 +395,7 @@ func _ready() -> void:
 	menubutton.connect("pressed", self, "escape");
 	gaininsightbutton.connect("pressed", self, "gain_insight");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
+	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay");
 	load_game();
 	if (save_file.has("puzzle_checkerboard")):
 		checkerboard.visible = true;
@@ -2357,10 +2358,10 @@ func lose(reason: String, suspect: Actor) -> void:
 	lost = true;
 	if (suspect != null and suspect.time_colour == TimeColour.Void):
 		lost_void = true;
-		winlabel.text = reason + "\n\nRestart to continue."
+		winlabel.change_text(reason + "\n\nRestart to continue.")
 	else:
 		lost_void = false;
-		winlabel.text = reason + "\n\nMeta-Undo or Restart to continue."
+		winlabel.change_text(reason + "\n\nMeta-Undo or Restart to continue.")
 	
 func end_lose() -> void:
 	lost = false;
@@ -2838,9 +2839,9 @@ func check_won() -> void:
 	winlabel.visible = won;
 	if (won):
 		if (level_name == "Joke"):
-			winlabel.text = "Thanks for playing :3"
+			winlabel.change_text("Thanks for playing :3")
 		else:
-			winlabel.text = "You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay"
+			winlabel.change_text("You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay")
 		won_fade_started = false;
 		tutoriallabel.visible = false;
 		adjust_winlabel();
@@ -2850,12 +2851,12 @@ func check_won() -> void:
 		light_actor.modulate.a = 1;
 	
 func adjust_winlabel() -> void:
-	winlabel.rect_position.y = win_label_default_y;
-	winlabel.rect_position.x = pixel_width/2 - int(floor(winlabel.rect_size.x/2));
+	var winlabel_rect_size = winlabel.get_rect_size();
+	winlabel.set_rect_position(Vector2(pixel_width/2 - int(floor(winlabel_rect_size.x/2)), win_label_default_y));
 	var tries = 1;
 	var heavy_actor_rect = heavy_actor.get_rect();
 	var light_actor_rect = light_actor.get_rect();
-	var label_rect = Rect2(winlabel.rect_position, winlabel.rect_size);
+	var label_rect = Rect2(winlabel.get_rect_position(), winlabel_rect_size);
 	heavy_actor_rect.position = terrainmap.map_to_world(heavy_actor.pos) + terrainmap.global_position;
 	light_actor_rect.position = terrainmap.map_to_world(light_actor.pos) + terrainmap.global_position;
 	while (tries < 99):
@@ -2863,7 +2864,7 @@ func adjust_winlabel() -> void:
 			var polarity = 1;
 			if (tries % 2 == 0):
 				polarity = -1;
-			winlabel.rect_position.y += 8*tries*polarity;
+			winlabel.set_rect_position(Vector2(winlabel.get_rect_position().x, winlabel.get_rect_position().y + 8*tries*polarity));
 			label_rect.position.y += 8*tries*polarity;
 		else:
 			break;

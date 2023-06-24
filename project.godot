@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://OneTimeSprite.gd"
 }, {
+"base": "Node2D",
+"class": "OutlinedLabel",
+"language": "GDScript",
+"path": "res://OutlinedLabel.gd"
+}, {
 "base": "Sprite",
 "class": "PingPongSprite",
 "language": "GDScript",
@@ -150,6 +155,7 @@ _global_script_class_icons={
 "LevelScene": "",
 "LevelSelect": "",
 "OneTimeSprite": "",
+"OutlinedLabel": "",
 "PingPongSprite": "",
 "Settings": "",
 "Shade": "",
