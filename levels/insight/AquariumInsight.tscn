@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 393219, 3, 14, 3, 4, 14, 3, 5, 14, 3, 6, 14, 3, 7, 14, 3, 8, 14, 4, 65536, 14, 262145, 65537, 1, 0, 65538, 14, 589825, 65539, 14, 131075, 65540, 14, 131075, 65541, 14, 131075, 65542, 14, 131075, 65543, 14, 131075, 65544, 14, 589829, 131072, 14, 262145, 131073, 2, 0, 131074, 14, 262145, 131075, 8, 0, 131079, 7, 0, 131080, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 655363, 196611, 14, 196615, 196612, 45, 0, 196613, 45, 0, 196614, 45, 0, 196615, 14, 196613, 196616, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Aquarium (Insight)"
+level_replay = "Aquarium$mturn=10$xdxwswxzxzxdddxw"
+heavy_max_moves = 5
+light_max_moves = 3
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131075, 37, 0 )
