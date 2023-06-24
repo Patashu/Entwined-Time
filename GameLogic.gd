@@ -685,7 +685,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheGlassPit")
 	level_filenames.push_back("DemolitionSquad")
 	level_filenames.push_back("Aquarium")
-	level_filenames.push_back("Deconstruct")
 	level_filenames.push_back("TreasureHunt")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -697,6 +696,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("SpelunkingGlassEx")
 	level_filenames.push_back("DemolitionSquadEx")
 	level_filenames.push_back("TheGlassPitEx")
+	level_filenames.push_back("Deconstruct")
 	level_filenames.push_back("CampfireGlass")
 	level_filenames.push_back("CampfireGlassEx")
 	level_filenames.push_back("SpelunkingGlassEx2")
