@@ -695,9 +695,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("LadderWorldGlassEx0.5")
 	level_filenames.push_back("SpelunkingGlassEx")
 	level_filenames.push_back("DemolitionSquadEx")
-	
 	level_filenames.push_back("Deconstruct")
 	level_filenames.push_back("TheGlassPitEx")
+	level_filenames.push_back("TheRace")
 	level_filenames.push_back("CampfireGlass")
 	level_filenames.push_back("CampfireGlassEx")
 	level_filenames.push_back("SpelunkingGlassEx2")
