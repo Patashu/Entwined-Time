@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65536, 14, 262145, 65538, 2, 0, 65539, 3, 0, 65541, 3, 0, 65542, 8, 0, 65544, 14, 262145, 131072, 14, 262145, 131073, 45, 0, 131074, 14, 2, 131075, 14, 4, 131076, 45, 0, 131077, 14, 2, 131078, 14, 4, 131079, 45, 0, 131080, 14, 262145, 196608, 14, 262145, 196609, 45, 0, 196610, 14, 131074, 196611, 14, 131076, 196612, 45, 0, 196613, 14, 131074, 196614, 14, 131076, 196615, 45, 0, 196616, 14, 262145, 262144, 14, 262145, 262146, 1, 0, 262147, 32, 0, 262149, 32, 0, 262150, 7, 0, 262152, 14, 262145, 327680, 14, 327681, 327681, 0, 0, 327682, 0, 0, 327683, 14, 262148, 327684, 0, 0, 327685, 14, 262148, 327686, 0, 0, 327687, 0, 0, 327688, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Treasure Hunt (Insight)"
+level_replay = "Treasure Hunt (Insight)$mturn=22$dxdaxzxzzaxdaxzdxzzdazzasxzxsd"
+heavy_max_moves = 4
+light_max_moves = 4
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 19, 0, 262147, 22, 0, 262149, 19, 0, 262150, 22, 0, 327681, 45, 0, 327682, 45, 0, 327684, 45, 0, 327686, 45, 0, 327687, 45, 0 )
