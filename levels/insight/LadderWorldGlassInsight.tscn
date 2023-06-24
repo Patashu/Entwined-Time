@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 2, 45, 0, 3, 7, 0, 65537, 45, 0, 65540, 1, 0, 131072, 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Ladderworld? (Insight)"
+level_replay = "Ladderworld? (Insight)$mturn=37$ddwxwdxzzwdxzwwxzzzxzzzddxddxasxwxdxzzwdxzzwxzdxdw"
 heavy_max_moves = 3
 light_max_moves = 6
 
