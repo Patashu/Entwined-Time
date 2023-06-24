@@ -7,17 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 45, 0, 1, 45, 0, 2, 45, 0, 3, 45, 0, 4, 45, 0, 5, 45, 0, 6, 45, 0, 7, 45, 0, 8, 45, 0, 9, 45, 0, 10, 45, 0, 11, 45, 0, 65536, 45, 0, 65537, 2, 0, 65541, 1, 0, 65542, 7, 0, 65546, 8, 0, 65547, 45, 0, 131072, 45, 0, 131073, 45, 0, 131074, 45, 0, 131075, 45, 0, 131076, 45, 0, 131077, 45, 0, 131078, 45, 0, 131079, 45, 0, 131080, 45, 0, 131081, 45, 0, 131082, 45, 0, 131083, 45, 0 )
+tile_data = PoolIntArray( 0, 45, 0, 1, 45, 0, 2, 45, 0, 3, 45, 0, 4, 45, 0, 5, 45, 0, 6, 45, 0, 7, 45, 0, 8, 45, 0, 9, 45, 0, 10, 45, 0, 11, 45, 0, 12, 45, 0, 13, 45, 0, 65536, 45, 0, 65537, 2, 0, 65542, 1, 0, 65543, 7, 0, 65548, 8, 0, 65549, 45, 0, 131072, 45, 0, 131073, 45, 0, 131074, 45, 0, 131075, 45, 0, 131076, 45, 0, 131077, 45, 0, 131078, 45, 0, 131079, 45, 0, 131080, 45, 0, 131081, 45, 0, 131082, 45, 0, 131083, 45, 0, 131084, 45, 0, 131085, 45, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Aquarium"
-level_replay = "Aquarium$mturn=18$xaxdddxzxzzxaxzdddxzxzxaxdxaxd"
-heavy_max_moves = 6
+level_replay = "Aquarium$mturn=20$xaxdddxzxzzxaxzdddxzxzxaxdxaxdxaxd"
+heavy_max_moves = 5
 light_max_moves = 3
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65537, 35, 0, 65546, 37, 0 )
+tile_data = PoolIntArray( 65537, 35, 0, 65548, 37, 0 )
