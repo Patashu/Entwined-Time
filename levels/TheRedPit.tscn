@@ -12,7 +12,7 @@ tile_data = PoolIntArray( 0, 14, 262148, 10, 14, 262148, 131075, 2, 0, 131079, 8
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "The Red Pit"
-level_replay = "The Red Pit$mturn=20$xaaxdwdwdxzzwxdxzwxaxzxzzxaaxd"
+level_replay = "The Red Pit$mturn=20$xaaxdwdwdxzzwxdxzwxaxzxzzxaxwxw"
 heavy_max_moves = 8
 light_max_moves = 2
 
@@ -26,4 +26,4 @@ tile_data = PoolIntArray( 131075, 35, 0, 131079, 35, 0 )
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131075, 7, 0, 131079, 1, 0 )
+tile_data = PoolIntArray( 65540, 7, 0, 65542, 1, 0 )
