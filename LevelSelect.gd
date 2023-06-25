@@ -101,7 +101,8 @@ func prepare_chapter() -> void:
 	var y_max = 12;
 	
 	# squish for very large chapters
-	if (advanced_end - normal_start) > 22:
+	# (need a hack for chapter 0 b/c it has the extra note it needs to render)
+	if (advanced_end - normal_start) > 22 or chapter == 0:
 		y_max = 13;
 		yy = 15;
 		yyy = 15;

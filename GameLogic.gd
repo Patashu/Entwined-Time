@@ -495,6 +495,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheFirstPitEx")
 	level_filenames.push_back("TheFirstPitEx2")
 	level_filenames.push_back("RoommatesEx")
+	level_filenames.push_back("Cliffs")
 	
 	chapter_names.push_back("Hazards");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
