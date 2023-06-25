@@ -2797,7 +2797,7 @@ func check_won() -> void:
 	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos))) or nonstandard_won:
 		won = true;
 		# but wait!
-		# check for crate goals as well
+		# check for crate goals as well (crate must be non-broken)
 		# PERF: if this ends up being slow, I can cache it on level load since it won't ever change. but it seems fast enough?
 		var crate_goals = get_used_cells_by_id_one_array(Tiles.CrateGoal);
 		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
@@ -2805,7 +2805,7 @@ func check_won() -> void:
 		for crate_goal in crate_goals:
 			var crate_goal_satisfied = false;
 			for actor in actors:
-				if actor.pos == crate_goal:
+				if !actor.broken and actor.pos == crate_goal:
 					crate_goal_satisfied = true;
 					break;
 			if (!crate_goal_satisfied):
