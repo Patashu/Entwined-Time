@@ -2932,12 +2932,20 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	elif (event[0] == Undo.light_turn_direct):
 		light_turn -= event[1];
 	elif (event[0] == Undo.heavy_undo_event_add):
+		while (heavy_undo_buffer.size() <= event[1]):
+			heavy_undo_buffer.append([]);
 		heavy_undo_buffer[event[1]].pop_front();
 	elif (event[0] == Undo.light_undo_event_add):
+		while (light_undo_buffer.size() <= event[1]):
+			light_undo_buffer.append([]);
 		light_undo_buffer[event[1]].pop_front();
 	elif (event[0] == Undo.heavy_undo_event_add_locked):
+		while (heavy_undo_buffer.size() <= event[1]):
+			heavy_undo_buffer.append([]);
 		heavy_locked_turns[event[1]].pop_front();
 	elif (event[0] == Undo.light_undo_event_add_locked):
+		while (light_undo_buffer.size() <= event[1]):
+			light_undo_buffer.append([]);
 		light_locked_turns[event[1]].pop_front();
 	elif (event[0] == Undo.heavy_undo_event_remove):
 		# meta undo an undo creates a char undo event but not a meta undo event, it's special!
