@@ -11,8 +11,8 @@ tile_data = PoolIntArray( 0, 2, 0, 1, 8, 0, 327680, 1, 0, 327681, 7, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Blue and Red (Joke)"
-level_replay = "Blue and Red (Joke)$mturn=6$wdxssxaxw"
+level_name = "Blue and Red (Remix)"
+level_replay = "Blue and Red (Remix)$mturn=6$wdxssxaxw"
 heavy_max_moves = 4
 light_max_moves = 4
 

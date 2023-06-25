@@ -11,8 +11,8 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196615, 2, 12, 0, 3, 12, 0, 4, 1
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Coyote Time (Insight)"
-level_replay = "Coyote Time (Insight)$mturn=10$xdxdzdzdxzddxz"
+level_name = "Coyote Time (Remix)"
+level_replay = "Coyote Time (Remix)$mturn=10$xdxdzdzdxzddxz"
 heavy_max_moves = 1
 light_max_moves = 3
 
