@@ -1113,7 +1113,7 @@ func make_actors() -> void:
 	
 	# crates
 	extract_actors(Tiles.IronCrate, Actor.Name.IronCrate, Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
-	extract_actors(Tiles.SteelCrate, Actor.Name.SteelCrate, Heaviness.STEEL, Strength.WOODEN, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
+	extract_actors(Tiles.SteelCrate, Actor.Name.SteelCrate, Heaviness.STEEL, Strength.LIGHT, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
 	extract_actors(Tiles.PowerCrate, Actor.Name.PowerCrate, Heaviness.WOODEN, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
 	extract_actors(Tiles.WoodenCrate, Actor.Name.WoodenCrate, Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
 	
@@ -2079,7 +2079,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					pushables_there.clear();
 					result = Success.Yes;
 					break;
-				elif (pushables_there.size() == 1 and actor_there.actorname == Actor.Name.WoodenCrate and actor.is_character and !is_gravity):
+				elif (!actor.broken and pushables_there.size() == 1 and actor_there.actorname == Actor.Name.WoodenCrate and actor.is_character and !is_gravity):
+					# 'Wooden Crates special moves'
+					# When making a non-gravity move, if the push fails, unbroken Heavy can break a solo Wooden Crate, unbroken Light can push a Wooden Crate upwards.
 					# since wooden crate did a bump, robot needs to do a bump too to sync up animations
 					# should be OK to have the nonce be -1 since the real thing will still happen?
 					add_to_animation_server(actor, [Animation.bump, dir, -1]);
@@ -2095,7 +2097,13 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 						elif(actor_there_result == Success.Surprise):
 							result = Success.Surprise;
 							surprises.append(actor_there);
-					
+				elif (!actor.broken and pushables_there.size() == 1 and actor.actorname == Actor.Name.SteelCrate and !actor_there.broken and (actor_there.actorname == Actor.Name.Light or actor_there.actorname == Actor.Name.CuckooClock)):
+					# 'Steel Crates special moves'
+					# If an unbroken steel crate tries to move into a solo unbroken Light or Cuckoo Clock for any reason, the target first breaks.
+					# this also cancels the pusher's move which is janky but fuck it, I don't feel like fixing the jank for a non main campaign edge case
+					result = Success.Surprise;
+					add_to_animation_server(actor, [Animation.bump, dir, -1]);
+					set_actor_var(actor_there, "broken", true, chrono);
 				else:
 					pushers_list.pop_front();
 					return Success.No;
