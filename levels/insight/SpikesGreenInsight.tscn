@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196615, 4, 47, 0, 5, 47, 0, 6, 14, 196613, 7, 14, 196614, 8, 14, 196615, 9, 47, 0, 10, 47, 0, 11, 47, 0, 65536, 14, 262145, 65537, 2, 0, 65538, 8, 0, 65547, 47, 0, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196615, 131076, 47, 0, 131077, 47, 0, 131078, 14, 524290, 131079, 14, 196614, 131080, 14, 196615, 131081, 47, 0, 131083, 47, 0, 196614, 14, 262145, 196615, 7, 0, 196616, 1, 0, 196619, 47, 0, 262150, 14, 655362, 262151, 14, 196614, 262152, 14, 196615, 262153, 47, 0, 262154, 47, 0, 262155, 47, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Green Spikes! (Remix)"
+level_replay = "Green Spikes! (Remix)$mturn=20$dxdaxdxzdxddddddaxzzaxzdaa"
+heavy_max_moves = 11
+light_max_moves = 6
