@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 7, 14, 524290, 8, 14, 196614, 9, 14, 524292, 65541, 14
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Rewind (Insight)"
+level_replay = "Rewind (Insight)$mturn=52$wdddazzzzzdddwwzzzwwwzzzzzzzwddddaddzzzzzzzzaawwwwww"
 heavy_max_moves = 8
 light_max_moves = 0
 clock_turns = "4,6"
