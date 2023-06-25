@@ -651,6 +651,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("RedAndBlue")
 	level_filenames.push_back("LevelNotFound")
 	level_filenames.push_back("DownhillRedBlue")
+	level_filenames.push_back("TrustFallRedBlue")
 	level_filenames.push_back("LunarGravity")
 	level_filenames.push_back("BlueAndRed")
 	level_filenames.push_back("TheRedPit")
