@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196612, 7, 0, 262147, 14, 524290, 262148, 14, 196615, 327680, 29, 0, 327681, 29, 0, 327683, 14, 262145, 393216, 2, 0, 393217, 1, 0, 393219, 14, 262145, 458752, 14, 196609, 458753, 23, 0, 458754, 0, 0, 458755, 14, 262145, 524288, 14, 655362, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Leap of Faith"
+level_replay = "Leap of Faith$mturn=22$dxasxsxddsxzdwxzzzzzwdwddxzz"
+heavy_max_moves = 6
+light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327680, 8, 0, 393216, 35, 0, 458753, 30, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327680, 36, 0 )
