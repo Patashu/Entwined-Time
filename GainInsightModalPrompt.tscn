@@ -14,9 +14,9 @@ margin_right = 394.0
 margin_bottom = 173.0
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
-text = "Gain Insight shows you a simpler version of the puzzle.
-You still have to solve it yourself, but the key idea
-will be clearer."
+text = "Gain Insight shows you a simpler or remixed puzzle.
+You still have to solve it yourself. The key idea will
+be clearer or played around with."
 align = 1
 
 [node name="OkButton" type="Button" parent="Holder"]
