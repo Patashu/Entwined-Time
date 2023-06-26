@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 458755, 2, 14, 196614, 3, 14, 524291, 4, 14, 196614, 5, 14, 393219, 6, 14, 4, 65536, 14, 65538, 65537, 14, 65540, 65539, 14, 262145, 65541, 14, 65538, 65542, 14, 65540, 131072, 14, 589825, 131073, 14, 131076, 131074, 2, 0, 131075, 14, 262145, 131076, 8, 0, 131077, 14, 131074, 131078, 14, 589829, 196608, 14, 262145, 196609, 1, 0, 196611, 14, 262145, 196613, 7, 0, 196614, 14, 262145, 262144, 14, 262145, 262145, 12, 0, 262147, 14, 262145, 262149, 12, 0, 262150, 14, 262145, 327680, 14, 589824, 327681, 14, 4, 327683, 14, 262145, 327685, 14, 2, 327686, 14, 589830, 393216, 14, 65538, 393217, 14, 65540, 393219, 14, 262145, 393221, 14, 65538, 393222, 14, 65540, 458752, 14, 65538, 458753, 14, 65540, 458754, 54, 0, 458755, 14, 262145, 458756, 54, 0, 458757, 14, 65538, 458758, 14, 65540, 524288, 14, 131074, 524289, 14, 131076, 524290, 12, 0, 524291, 14, 327681, 524292, 12, 0, 524293, 14, 131074, 524294, 14, 131076 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Bounce House (Insight)"
+level_replay = "Bounce House (Insight)$mturn=15$sszwaxssssszzzzd"
+heavy_max_moves = 6
+light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 35, 0, 131076, 36, 0 )
