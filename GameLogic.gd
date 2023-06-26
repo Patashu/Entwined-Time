@@ -592,9 +592,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("LadderWorld")
 	level_filenames.push_back("LadderLattice")
 	level_filenames.push_back("StairwayToHell")
-	level_filenames.push_back("TrophyCabinet")
 	level_filenames.push_back("Mole")
 	level_filenames.push_back("Dive")
+	level_filenames.push_back("TrophyCabinet")
 	level_filenames.push_back("DoubleJump")
 	level_filenames.push_back("Firefighters")
 	
