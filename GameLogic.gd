@@ -532,6 +532,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(16);
 	chapter_skies.push_back(Color("#062138"));
+	chapter_replacements[chapter_names.size() - 1] = "2?";
 	level_filenames.push_back("HeavyMovingService")
 	level_filenames.push_back("LightMovingService")
 	level_filenames.push_back("LightMovingServiceEx")
