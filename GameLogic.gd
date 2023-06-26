@@ -785,6 +785,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(80);
 	level_filenames.push_back("Elementary")
 	level_filenames.push_back("BlockageEx")
+	level_filenames.push_back("MementoEx")
 	level_filenames.push_back("Smuggler")
 	level_filenames.push_back("SmugglerEx")
 	level_filenames.push_back("Frangible")
