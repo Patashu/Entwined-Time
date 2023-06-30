@@ -545,6 +545,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(24);
 	level_filenames.push_back("TheFirstPitEx3")
+	level_filenames.push_back("TheFirstPitEx4")
 	level_filenames.push_back("RoughTerrain")
 	level_filenames.push_back("TheBoundlessSkyEx")
 	level_filenames.push_back("TheBoundlessSkyEx2")
