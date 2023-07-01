@@ -641,6 +641,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("ThirdRoommateEx")
 	level_filenames.push_back("TheCratePitEx")
 	level_filenames.push_back("TheCratePitEx2")
+	level_filenames.push_back("OneAtATimeEx")
 	level_filenames.push_back("Levitation")
 	level_filenames.push_back("QuantumEntanglement")
 	level_filenames.push_back("LandfillEx")
@@ -781,7 +782,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Reflections")
 	level_filenames.push_back("Forgetfulness")
 	level_filenames.push_back("Remembrance")
+	level_filenames.push_back("Recollection")
 	level_filenames.push_back("Conservation")
+	level_filenames.push_back("Accumulation")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(80);
