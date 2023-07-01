@@ -782,7 +782,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Reflections")
 	level_filenames.push_back("Forgetfulness")
 	level_filenames.push_back("Remembrance")
-	level_filenames.push_back("Recollection")
+	level_filenames.push_back("PushingItCrystal")
 	level_filenames.push_back("Conservation")
 	level_filenames.push_back("Accumulation")
 	
