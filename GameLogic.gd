@@ -3903,6 +3903,9 @@ func unwin() -> void:
 	update_level_label();
 	
 func _input(event: InputEvent) -> void:
+	if (ui_stack.size() > 0):
+		return;
+	
 	if event is InputEventMouseButton:
 		var mouse_position = get_parent().get_global_mouse_position();
 		var heavy_rect = heavy_actor.get_rect();
