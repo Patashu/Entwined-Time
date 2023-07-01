@@ -4008,39 +4008,22 @@ func _process(delta: float) -> void:
 			toggle_replay();
 			update_info_labels();
 			
-		if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
+		var dir = Vector2.ZERO;
+			
+		if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("copy")):
+			OS.set_clipboard(annotate_replay(user_replay));
+			floating_text("Ctrl+C: Replay copied");
+		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
 			replay_from_clipboard();
 		
-		var dir = Vector2.ZERO;
-		
-		#mouse click to switch characters
-#		if (Input.is_mouse_button_just_pressed(BUTTON_LEFT)):
-#			var mouse_position = get_parent().get_global_mouse_position();
-#			var heavy_rect = heavy_actor.get_rect();
-#			var light_rect = light_actor.get_rect();
-#			heavy_rect.position += actorsfolder.position;
-#			light_rect.position += actorsfolder.position;
-#			if !heavy_selected and heavy_rect.has_point(mouse_position):
-#				end_replay();
-#				character_switch();
-#				update_info_labels();
-#			elif heavy_selected and light_rect.has_point(mouse_position):
-#				end_replay();
-#				character_switch();
-#				update_info_labels();
-		
-		if (Input.is_action_just_pressed("character_undo")):
+		elif (Input.is_action_just_pressed("character_undo")):
 			end_replay();
 			character_undo();
 			update_info_labels();
 		elif (Input.is_action_just_pressed("meta_undo")):
-			if Input.is_action_pressed("ctrl"):
-				OS.set_clipboard(annotate_replay(user_replay));
-				floating_text("Ctrl+C: Replay copied");
-			else:
-				end_replay();
-				meta_undo();
-				update_info_labels();
+			end_replay();
+			meta_undo();
+			update_info_labels();
 		elif (Input.is_action_just_pressed("restart")):
 			end_replay();
 			restart();
