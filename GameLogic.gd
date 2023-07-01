@@ -536,10 +536,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("HeavyMovingService")
 	level_filenames.push_back("LightMovingService")
 	level_filenames.push_back("LightMovingServiceEx")
-	level_filenames.push_back("InvisibleBridgeL")
-	level_filenames.push_back("InvisibleBridge")
 	level_filenames.push_back("Acrobatics")
 	level_filenames.push_back("AcrobaticsEx")
+	level_filenames.push_back("InvisibleBridgeL")
+	level_filenames.push_back("InvisibleBridge")
 	level_filenames.push_back("GraduationPure")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
