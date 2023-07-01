@@ -7,17 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 65536, 14, 262145, 65537, 7, 0, 65539, 14, 262145, 131072, 14, 262145, 131075, 14, 262145, 196608, 14, 262145, 196611, 14, 262145, 262144, 14, 262145, 262147, 14, 262145, 327680, 14, 262145, 327681, 8, 0, 327682, 2, 0, 327683, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65539, 7, 0, 65542, 14, 262145, 131072, 14, 262145, 131073, 0, 0, 131075, 0, 0, 131076, 1, 0, 131077, 0, 0, 131078, 14, 262145, 196608, 14, 262145, 196614, 14, 262145, 262144, 14, 262145, 262150, 14, 262145, 327680, 14, 262145, 327682, 2, 0, 327684, 8, 0, 327686, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Ladder Dither (Insight)"
-level_replay = "Ladder Dither (Insight)$mturn=13$wxdxwaxwxdxwxzxwxzxwaxs"
-heavy_max_moves = 6
-light_max_moves = 6
+level_name = "Ladder Dither (Remix)"
+level_replay = "Ladder Dither (Remix)$mturn=18$dwxaxzwddxzwxaxzwxzxwxzxwaxw"
+heavy_max_moves = 5
+light_max_moves = 5
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65537, 5, 0, 196610, 5, 0, 327682, 1, 0 )
+tile_data = PoolIntArray( 131073, 20, 0, 131075, 20, 0, 131077, 20, 0, 262146, 20, 0, 262148, 20, 0 )
