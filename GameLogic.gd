@@ -4031,10 +4031,10 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		elif (Input.is_action_just_pressed("previous_level")):
+		elif (Input.is_action_just_pressed("previous_level") and meta_turn <= 0):
 			end_replay();
 			load_level(-1);
-		elif (Input.is_action_just_pressed("next_level")):
+		elif (Input.is_action_just_pressed("next_level") and meta_turn <= 0):
 			end_replay();
 			load_level(1);
 		elif (Input.is_action_just_pressed("gain_insight")):
