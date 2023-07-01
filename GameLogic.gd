@@ -479,7 +479,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Wall")
 	level_filenames.push_back("Tall")
 	level_filenames.push_back("Braid")
-	level_filenames.push_back("TheFirstPit")	
+	level_filenames.push_back("TheFirstPit")
 	level_filenames.push_back("Pachinko")
 	level_filenames.push_back("CallACab")
 	level_filenames.push_back("CarryingIt")
@@ -3608,7 +3608,7 @@ func do_one_replay_turn() -> void:
 			return;
 		else:
 			if (unit_test_mode):
-				floating_text("Tested up to level: " + str(level_number));
+				floating_text("Tested up to level: " + str(level_number) + " (This is 0 indexed lol)" );
 			end_replay();
 			return;
 	next_replay = replay_timer+replay_interval();
