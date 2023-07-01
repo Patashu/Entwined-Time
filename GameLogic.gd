@@ -593,6 +593,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Down")
 	level_filenames.push_back("LadderWorld")
 	level_filenames.push_back("LadderLattice")
+	level_filenames.push_back("LadderDither")
 	level_filenames.push_back("StairwayToHell")
 	level_filenames.push_back("Mole")
 	level_filenames.push_back("Dive")
@@ -4034,10 +4035,10 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		elif (Input.is_action_just_pressed("previous_level") and meta_turn <= 0):
+		elif (Input.is_action_just_pressed("previous_level") and (won or lost or meta_turn <= 0)):
 			end_replay();
 			load_level(-1);
-		elif (Input.is_action_just_pressed("next_level") and meta_turn <= 0):
+		elif (Input.is_action_just_pressed("next_level") and (won or lost or meta_turn <= 0)):
 			end_replay();
 			load_level(1);
 		elif (Input.is_action_just_pressed("gain_insight")):
