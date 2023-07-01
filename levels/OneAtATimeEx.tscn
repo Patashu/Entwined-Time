@@ -24,5 +24,6 @@ tile_data = PoolIntArray( 65537, 6, 0, 65538, 6, 0, 131074, 6, 0, 131075, 6, 0, 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "One at a Time [VAR1]"
+level_replay = "One at a Time [VAR1]$mturn=53$xssadwadxsswxzzzzsadxdsassxzxzzzzzzzzxzzwadsscccccccxsdsasswxzxzzzzxzzxsaxzzawxzz"
 heavy_max_moves = 8
 light_max_moves = 8
