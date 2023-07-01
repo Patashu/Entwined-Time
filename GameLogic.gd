@@ -1320,10 +1320,12 @@ func prepare_audio() -> void:
 	# TODO: replace this with an enum and assert on startup like tiles
 	
 	#used
-	sounds["bump"] = preload("res://sfx/bump.ogg");
+	sounds["bluefire"] = preload("res://sfx/bluefire.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
+	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["fall"] = preload("res://sfx/fall.ogg");
 	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
+	sounds["greenfire"] = preload("res://sfx/greenfire.ogg");
 	sounds["greentimecrystal"] = preload("res://sfx/greentimecrystal.ogg");
 	sounds["heavycoyote"] = preload("res://sfx/heavycoyote.ogg");
 	sounds["heavyland"] = preload("res://sfx/heavyland.ogg");
@@ -1341,8 +1343,9 @@ func prepare_audio() -> void:
 	sounds["magentatimecrystal"] = preload("res://sfx/magentatimecrystal.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
-	sounds["restart"] = preload("res://sfx/restart.ogg");
 	sounds["push"] = preload("res://sfx/push.ogg");
+	sounds["redfire"] = preload("res://sfx/redfire.ogg");
+	sounds["restart"] = preload("res://sfx/restart.ogg");	
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["shroud"] = preload("res://sfx/shroud.ogg");
 	sounds["step"] = preload("res://sfx/step.ogg");
@@ -3719,6 +3722,9 @@ func add_to_animation_server(actor: ActorBase, animation: Array) -> void:
 	animation_server[animation_substep].push_back([actor, animation]);
 
 func handle_global_animation(animation: Array) -> void:
+	var redfire = false;
+	var bluefire = false;
+	var greenfire = false;
 	if animation[0] == Animation.fire_roars:
 		#have green fires animate first so if someone puts green and non-green fires in the same tile they layer correctly
 		var green_fires = get_used_cells_by_id_one_array(Tiles.GreenFire);
@@ -3733,6 +3739,7 @@ func handle_global_animation(animation: Array) -> void:
 			sprite.centered = false;
 			sprite.frame_max = sprite.frame + 8;
 			underactorsparticles.add_child(sprite);
+			greenfire = true;
 		var fires = get_used_cells_by_id_one_array(Tiles.Fire);
 		for fire in fires:
 			var sprite = Sprite.new();
@@ -3744,9 +3751,14 @@ func handle_global_animation(animation: Array) -> void:
 			sprite.frame = 0;
 			sprite.centered = false;
 			if animation[1] == TimeColour.Blue:
+				bluefire = true;
 				sprite.frame = 8;
 			elif animation[1] == TimeColour.Magenta:
+				redfire = true;
+				bluefire = true;
 				sprite.frame = 16;
+			else:
+				redfire = true;
 			sprite.frame_max = sprite.frame + 8;
 			underactorsparticles.add_child(sprite);
 		if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Red):
@@ -3762,6 +3774,7 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.centered = false;
 				sprite.frame_max = sprite.frame + 8;
 				underactorsparticles.add_child(sprite);
+				redfire = true;
 		if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Blue):
 			fires = get_used_cells_by_id_one_array(Tiles.LightFire);
 			for fire in fires:
@@ -3775,6 +3788,14 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.centered = false;
 				sprite.frame_max = sprite.frame + 8;
 				underactorsparticles.add_child(sprite);
+				bluefire = true;
+	# we can immediately play sounds since the animation just started
+	if (redfire):
+		play_sound("redfire");
+	if (bluefire):
+		play_sound("bluefire");
+	if (greenfire):
+		play_sound("greenfire");
 
 func update_animation_server(skip_globals: bool = false) -> void:
 	# don't interrupt ongoing animations
