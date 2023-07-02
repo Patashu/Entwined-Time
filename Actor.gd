@@ -281,6 +281,10 @@ func update_time_bubble():
 		time_bubble.position = Vector2(12, 12);
 		self.add_child(time_bubble);
 		time_bubble.time_bubble_colour()
+		
+func setup_colourblind_mode(value: bool) -> void:
+	if time_bubble != null:
+		time_bubble.setup_colourblind_mode(value);
 
 # POST 'oh shit I have an infinite' gravity rules (AD07):
 # (-1 fall speed is infinite. It's so infinite it breaks glass and keeps going!)

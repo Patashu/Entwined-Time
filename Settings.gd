@@ -15,6 +15,7 @@ onready var labelmusic : Label = get_node("Holder/LabelMusic");
 onready var labelanimation : Label = get_node("Holder/LabelAnimation");
 onready var labelundotrail : Label = get_node("Holder/LabelUndoTrail");
 onready var puzzlecheckerboard : CheckBox = get_node("Holder/PuzzleCheckerboard");
+onready var colourblindmode : CheckBox = get_node("Holder/ColourblindMode");
 
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
@@ -35,6 +36,8 @@ func _ready() -> void:
 		updatelabelanimation(animationslider.value);
 	if (gamelogic.save_file.has("puzzle_checkerboard")):
 		puzzlecheckerboard.pressed = gamelogic.save_file["puzzle_checkerboard"];
+	if (gamelogic.save_file.has("colourblind_mode")):
+		colourblindmode.pressed = gamelogic.save_file["colourblind_mode"];
 	
 	undotrailslider.value = gamelogic.save_file["undo_trails"];
 	updatelabelundotrail(undotrailslider.value);
@@ -47,6 +50,7 @@ func _ready() -> void:
 	animationslider.connect("value_changed", self, "_animationslider_value_changed");
 	undotrailslider.connect("value_changed", self, "_undotrailslider_value_changed");
 	puzzlecheckerboard.connect("pressed", self, "_puzzlecheckerboard_pressed");
+	colourblindmode.connect("pressed", self, "_colourblindmode_pressed");
 
 func _unlockeverything_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -109,6 +113,13 @@ func _puzzlecheckerboard_pressed() -> void:
 	gamelogic.save_file["puzzle_checkerboard"] = puzzlecheckerboard.pressed;
 	gamelogic.checkerboard.visible = puzzlecheckerboard.pressed;
 	
+func _colourblindmode_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["colourblind_mode"] = colourblindmode.pressed;
+	gamelogic.setup_colourblind_mode();
+	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):
 		labelsfx.text = "SFX Volume: Muted";
@@ -126,7 +137,6 @@ func updatelabelanimation(value: float) -> void:
 
 func updatelabelundotrail(value: float) -> void:
 	labelundotrail.text = "Undo Prediction Opacity: " + str(int(round(value * 100))) + "%";
-
 
 func destroy() -> void:
 	gamelogic.save_game();

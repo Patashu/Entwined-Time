@@ -19,6 +19,20 @@ var label = null;
 var shadow_labels = [];
 var alpha = 0.85;
 
+enum TimeColour {
+	Gray,
+	Purple,
+	Magenta,
+	Red,
+	Blue,
+	Green,
+	Void,
+	Cyan,
+	Orange,
+	Yellow,
+	White,
+}
+
 func poof_in() -> void:
 	if (state == State.In or state == State.Nominal):
 		return;

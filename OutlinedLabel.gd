@@ -27,6 +27,11 @@ func change_text(text: String) -> void:
 		sl.text = text;
 	label.text = text;
 
+func set_align(value: int) -> void:
+	for sl in shadow_labels:
+		sl.align = value;
+	label.align = value;
+
 func get_rect_position() -> Vector2:
 	return label.rect_position;
 
