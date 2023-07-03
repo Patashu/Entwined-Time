@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 4, 2, 0, 65538, 7, 0, 65540, 8, 0, 131074, 14, 196613,
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Ping Pong"
+level_replay = "Ping Pong$mturn=22$adssszzzdddzzzzzzzzddd"
 heavy_max_moves = 6
 light_max_moves = 0
 

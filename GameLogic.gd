@@ -790,6 +790,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(72);
 	level_filenames.push_back("ElevatorEx")
+	level_filenames.push_back("PingPongEx")
 	level_filenames.push_back("ImaginaryMoves")
 	level_filenames.push_back("DontLookDown")
 	level_filenames.push_back("LeadBalloon")
