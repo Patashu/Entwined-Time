@@ -12,5 +12,12 @@ tile_data = PoolIntArray( 0, 7, 0, 1, 1, 0, 2, 52, 0, 3, 52, 0, 5, 2, 0, 8, 52, 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Ping Pong (Insight)"
+level_replay = "Ping Pong (Insight)$mturn=20$aaazzzzzdddzzzzzzaaa"
 heavy_max_moves = 3
 light_max_moves = 0
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 8, 0 )
