@@ -781,6 +781,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("PushingItFurther")
 	level_filenames.push_back("Elevator")
 	level_filenames.push_back("Stuck")
+	level_filenames.push_back("PingPong")
 	level_filenames.push_back("FuzzyTrick")
 	level_filenames.push_back("LimitedUndo")
 	level_filenames.push_back("UphillLimited")
