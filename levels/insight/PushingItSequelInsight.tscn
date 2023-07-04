@@ -13,7 +13,7 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 19
 script = ExtResource( 1 )
 level_name = "Pushing It 2: Finish The Job (Insight)"
 level_replay = "Pushing It 2: Finish The Job (Insight)$mturn=14$aaaawzwzzzzaaa"
-heavy_max_moves = 7
+heavy_max_moves = 5
 light_max_moves = 0
 
 [node name="TileMap" type="TileMap" parent="."]
