@@ -3617,6 +3617,20 @@ func replay_interval() -> float:
 		return 0.01;
 	return replay_interval;
 	
+func authors_replay() -> void:
+	if (ui_stack.size() > 0):
+		return;
+	
+	if (!doing_replay):
+		if (!unit_test_mode):
+			if (!save_file.has("authors_replay") or save_file["authors_replay"] != true):
+				var modal = preload("res://AuthorsReplayModalPrompt.tscn").instance();
+				ui_stack.push_back(modal);
+				levelscene.add_child(modal);
+				return;
+	
+	toggle_replay();
+	
 func toggle_replay() -> void:
 	meta_undo_a_restart_mode = false;
 	unit_test_mode = false;
@@ -4044,7 +4058,7 @@ func _process(delta: float) -> void:
 				start_saved_replay();
 				update_info_labels();
 		if (Input.is_action_just_pressed("start_replay")):
-			toggle_replay();
+			authors_replay();
 			update_info_labels();
 			
 		var dir = Vector2.ZERO;
