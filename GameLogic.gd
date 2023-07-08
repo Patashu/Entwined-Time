@@ -276,6 +276,9 @@ var heavy_selected = true;
 # for undo trail ghosts
 var ghosts = []
 
+# for afterimages
+var afterimage_server = {}
+
 # save file, ooo!
 var save_file = {}
 var puzzles_completed = 0;
@@ -477,8 +480,7 @@ func initialize_shaders() -> void:
 	afterimage.initialize(targeter, light_color);
 	levelscene.call_deferred("add_child", afterimage);
 	afterimage.position = Vector2(-99, -99);
-	pass
-	# TODO: compile the Static shader by flicking it on for a single frame?
+	# TODO: compile the Static shader by flicking it on for a single frame? same for ripple and grayscale
 	
 func tile_changes() -> void:
 	# hide light and heavy goal sprites when in-game and not in-editor
@@ -3934,19 +3936,28 @@ func start_saved_replay() -> void:
 func annotate_replay(replay: String) -> String:
 	return level_name + "$" + "mturn=" + str(meta_turn) + "$" + replay;
 
+func get_afterimage_material_for(color: Color) -> Material:
+	if (afterimage_server.has(color)):
+		return afterimage_server[color];
+	var new_material = preload("res://afterimage_shadermaterial.tres").duplicate();
+	new_material.set_shader_param("color", color);
+	afterimage_server[color] = new_material;
+	return new_material;
+
 func afterimage(actor: Actor) -> void:
 	if undo_effect_color == Color.transparent:
 		return;
 	# ok, we're mid undo.
 	var afterimage = preload("res://Afterimage.tscn").instance();
-	afterimage.initialize(actor, undo_effect_color);
+	afterimage.actor = actor;
+	afterimage.set_material(get_afterimage_material_for(undo_effect_color));
 	underactorsparticles.add_child(afterimage);
 	
 func afterimage_terrain(texture: Texture, position: Vector2, color: Color) -> void:
 	var afterimage = preload("res://Afterimage.tscn").instance();
-	afterimage.initialize(null, color);
 	afterimage.texture = texture;
 	afterimage.position = position;
+	afterimage.set_material(get_afterimage_material_for(color));
 	underactorsparticles.add_child(afterimage);
 		
 func last_level_of_section() -> bool:

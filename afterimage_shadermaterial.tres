@@ -22,6 +22,6 @@ script = SubResource( 2 )
 
 [resource]
 shader = SubResource( 1 )
-shader_param/color = null
-shader_param/mixture = null
+shader_param/color = Color( 0, 0, 0, 1 )
+shader_param/mixture = 1.0
 script = SubResource( 2 )
