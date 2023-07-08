@@ -309,6 +309,7 @@ var fuzz_timer = 0;
 var fuzz_timer_max = 0;
 var ui_stack = [];
 var ready_done = false;
+var using_controller = false;
 
 #UI defaults
 var HeavyInfoLabel_default_position = Vector2(0, 1);
@@ -399,7 +400,8 @@ func _ready() -> void:
 	menubutton.connect("pressed", self, "escape");
 	gaininsightbutton.connect("pressed", self, "gain_insight");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
-	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay");
+	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue");
+	call_deferred("adjust_winlabel");
 	load_game();
 	react_to_save_file_update();
 	initialize_level_list();
@@ -1042,6 +1044,7 @@ func ready_tutorial() -> void:
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "Esc: Level Select/Controls/Settings";
 		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
+		call_deferred("update_info_labels");
 			
 	if level_name == "Snake Pit":
 		tutoriallabel.visible = true;
@@ -1431,7 +1434,6 @@ func prepare_audio() -> void:
 
 func fade_in_lost():
 	winlabel.visible = true;
-	adjust_winlabel();
 	call_deferred("adjust_winlabel");
 	Shade.on = true;
 	
@@ -2917,15 +2919,20 @@ func check_won() -> void:
 	if (won):
 		if (level_name == "Joke"):
 			winlabel.change_text("Thanks for playing :3")
+		elif !using_controller:
+			winlabel.change_text("You have won!\n\n[Enter]: Continue")
 		else:
-			winlabel.change_text("You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay")
+			winlabel.change_text("You have won!\n\n[Bottom Face Button]: Continue")
 		won_fade_started = false;
 		tutoriallabel.visible = false;
-		adjust_winlabel();
+		call_deferred("adjust_winlabel_deferred");
 	elif won_fade_started:
 		won_fade_started = false;
 		heavy_actor.modulate.a = 1;
 		light_actor.modulate.a = 1;
+	
+func adjust_winlabel_deferred() -> void:
+	call_deferred("adjust_winlabel");
 	
 func adjust_winlabel() -> void:
 	var winlabel_rect_size = winlabel.get_rect_size();
@@ -3756,28 +3763,27 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
 	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
-	
-	#TODO: for level_number 2, 3 and 4, dynamically change colours based on which character is selected
-	
+
 	if (level_number >= 2 and level_number <= 4):
 		if (heavy_selected):
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#7FC9FF", "#FF7459");
 		else:
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
-	
-#	if level_number == 1:
-#		if meta_turn >= 24 or heavy_actor.broken or light_actor.broken:
-#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
-#
-#	if level_number == 0:
-#		if meta_turn >= 12 or heavy_actor.broken or light_actor.broken:
-#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character\nR: Restart";
-#		elif meta_turn < 3:
-#			tutoriallabel.text = "Arrows: Move Character";
-#		elif meta_turn < 6:
-#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character";
-#		else:
-#			tutoriallabel.text = "Arrows: Move Character\nX: Swap Character\nZ: Undo Character";
+			
+	if tutoriallabel.visible:
+		if using_controller:
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Arrows:", "D-Pad/Either Stick:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("X:", "Bottom Face Button:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Esc:", "Start:");
+		else:
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Start:", "Esc:");
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
@@ -4022,6 +4028,14 @@ func gain_insight() -> void:
 		undo_effect_color = Color("A9F05F");
 	
 func _process(delta: float) -> void:
+	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
+		using_controller = true;
+		update_info_labels();
+	
+	if Input.is_action_just_pressed("any_keyboard") and using_controller:
+		using_controller = false;
+		update_info_labels();
+	
 	sounds_played_this_frame.clear();
 	
 	replay_timer += delta;
@@ -4046,6 +4060,8 @@ func _process(delta: float) -> void:
 			Static.modulate = Color(1, 1, 1, 1);
 		
 	if ui_stack.size() == 0:
+		var dir = Vector2.ZERO;
+		
 		if (doing_replay and replay_timer > next_replay):
 			do_one_replay_turn();
 			update_info_labels();
@@ -4058,21 +4074,19 @@ func _process(delta: float) -> void:
 				escape();
 			else:
 				load_level(1);
-		
-		if (Input.is_action_just_pressed("mute")):
+		elif (Input.is_action_just_pressed("mute")):
 			toggle_mute();
-			
-		if (Input.is_action_just_pressed("speedup_replay")):
+		elif (Input.is_action_just_pressed("speedup_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.015;
 			elif replay_interval > 0:
 				replay_interval *= (2.0/3.0);
-		if (Input.is_action_just_pressed("slowdown_replay")):
+		elif (Input.is_action_just_pressed("slowdown_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.5;
 			elif replay_interval > 0:
 				replay_interval /= (2.0/3.0);
-		if (Input.is_action_just_pressed("start_saved_replay")):
+		elif (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
 				if (won):
 					if (!save_file["levels"].has(level_name)):
@@ -4083,13 +4097,10 @@ func _process(delta: float) -> void:
 			else:
 				start_saved_replay();
 				update_info_labels();
-		if (Input.is_action_just_pressed("start_replay")):
+		elif (Input.is_action_just_pressed("start_replay")):
 			authors_replay();
 			update_info_labels();
-			
-		var dir = Vector2.ZERO;
-			
-		if (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("copy")):
+		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("copy")):
 			OS.set_clipboard(annotate_replay(user_replay));
 			floating_text("Ctrl+C: Replay copied");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
@@ -4110,12 +4121,18 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		elif (Input.is_action_just_pressed("previous_level") and (won or lost or meta_turn <= 0)):
-			end_replay();
-			load_level(-1);
-		elif (Input.is_action_just_pressed("next_level") and (won or lost or meta_turn <= 0)):
-			end_replay();
-			load_level(1);
+		elif (Input.is_action_just_pressed("previous_level")):
+			if (won or lost or meta_turn <= 0):
+				end_replay();
+				load_level(-1);
+			else:
+				play_sound("bump");
+		elif (Input.is_action_just_pressed("next_level")):
+			if (won or lost or meta_turn <= 0):
+				end_replay();
+				load_level(1);
+			else:
+				play_sound("bump");
 		elif (Input.is_action_just_pressed("gain_insight")):
 			end_replay();
 			gain_insight();
