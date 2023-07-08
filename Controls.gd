@@ -2,6 +2,8 @@ extends Node2D
 class_name Controls
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var holder : Label = get_node("Holder");
+onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
 
 func _ready() -> void:
@@ -19,6 +21,20 @@ func _process(delta: float) -> void:
 	
 	if (Input.is_action_just_released("escape")):
 		destroy();
+		
+	var focus = holder.get_focus_owner();
+	if (focus == null):
+		okbutton.grab_focus();
+		focus = okbutton;
+	
+	var focus_middle_x = focus.rect_position.x + focus.rect_size.x / 2;
+	pointer.position.y = focus.rect_position.y + focus.rect_size.y / 2;
+	if (focus_middle_x > holder.rect_size.x / 2):
+		pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
+		pointer.position.x = focus.rect_position.x + focus.rect_size.x + 12;
+	else:
+		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
+		pointer.position.x = focus.rect_position.x - 12;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

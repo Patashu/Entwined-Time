@@ -10,7 +10,8 @@ onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var leveleditorbutton : Button = get_node("Holder/LevelEditorButton");
 onready var closebutton : Button = get_node("Holder/CloseButton");
-onready var specialbuttons = [prevbutton, nextbutton, controlsbutton, settingsbutton, leveleditorbutton, closebutton];
+onready var pointer : Sprite = get_node("Holder/Pointer");
+onready var specialbuttons = [prevbutton, nextbutton, controlsbutton, settingsbutton, leveleditorbutton, closebutton, pointer];
 
 func _ready() -> void:
 	prepare_chapter();
@@ -275,6 +276,20 @@ func _process(delta: float) -> void:
 		_prevbutton_pressed();
 	if (Input.is_action_just_pressed("next_level")):
 		_nextbutton_pressed();
+		
+	var focus = holder.get_focus_owner();
+	if (focus == null):
+		closebutton.grab_focus();
+		focus = closebutton;
+
+	var focus_middle_x = focus.rect_position.x + focus.rect_size.x / 2;
+	pointer.position.y = focus.rect_position.y + focus.rect_size.y / 2;
+	if (focus_middle_x > holder.rect_size.x / 2):
+		pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
+		pointer.position.x = focus.rect_position.x + focus.rect_size.x + 12;
+	else:
+		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
+		pointer.position.x = focus.rect_position.x - 12;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

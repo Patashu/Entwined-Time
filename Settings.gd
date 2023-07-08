@@ -2,6 +2,8 @@ extends Node2D
 class_name Settings
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var holder : Control = get_node("Holder");
+onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
 onready var unlockeverything : CheckBox = get_node("Holder/UnlockEverything");
 onready var pixelscale : SpinBox = get_node("Holder/PixelScale");
@@ -18,6 +20,17 @@ onready var labelanimation : Label = get_node("Holder/LabelAnimation");
 onready var labelundotrail : Label = get_node("Holder/LabelUndoTrail");
 onready var puzzlecheckerboard : CheckBox = get_node("Holder/PuzzleCheckerboard");
 onready var colourblindmode : CheckBox = get_node("Holder/ColourblindMode");
+onready var copysavefile : Button = get_node("Holder/CopySaveFile");
+onready var pastesavefile : Button = get_node("Holder/PasteSaveFile");
+onready var newsavefile : Button = get_node("Holder/NewSaveFile");
+
+func floating_text(text: String) -> void:
+	var label = preload("res://FloatingText.tscn").instance();
+	get_node("Holder").add_child(label);
+	label.rect_position.x = 0;
+	label.rect_size.x = holder.rect_size.x;
+	label.rect_position.y = holder.rect_size.y/2-16;
+	label.text = text;
 
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
@@ -57,6 +70,9 @@ func _ready() -> void:
 	undotrailslider.connect("value_changed", self, "_undotrailslider_value_changed");
 	puzzlecheckerboard.connect("pressed", self, "_puzzlecheckerboard_pressed");
 	colourblindmode.connect("pressed", self, "_colourblindmode_pressed");
+	copysavefile.connect("pressed", self, "_copysavefile_pressed");
+	pastesavefile.connect("pressed", self, "_pastesavefile_pressed");
+	newsavefile.connect("pressed", self, "_newsavefile_pressed");
 
 func _unlockeverything_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -135,6 +151,24 @@ func _colourblindmode_pressed() -> void:
 	gamelogic.save_file["colourblind_mode"] = colourblindmode.pressed;
 	gamelogic.setup_colourblind_mode();
 	
+func _copysavefile_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	floating_text("TODO");
+	
+func _pastesavefile_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	floating_text("TODO");
+	
+func _newsavefile_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	floating_text("TODO");
+	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):
 		labelsfx.text = "SFX Volume: Muted";
@@ -171,6 +205,25 @@ func _process(delta: float) -> void:
 	
 	if (Input.is_action_just_released("escape")):
 		destroy();
+		
+	var focus = holder.get_focus_owner();
+	if (focus == null):
+		okbutton.grab_focus();
+		focus = okbutton;
+		
+	# spinbox correction hack
+	var parent = focus.get_parent();
+	if parent is SpinBox:
+		focus = parent;
+
+	var focus_middle_x = focus.rect_position.x + focus.rect_size.x / 2;
+	pointer.position.y = focus.rect_position.y + focus.rect_size.y / 2;
+	if (focus_middle_x > holder.rect_size.x / 2):
+		pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
+		pointer.position.x = focus.rect_position.x + focus.rect_size.x + 12;
+	else:
+		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
+		pointer.position.x = focus.rect_position.x - 12;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,
