@@ -397,13 +397,7 @@ func _ready() -> void:
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
 	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue\n[F11]: Watch Replay");
 	load_game();
-	if (save_file.has("puzzle_checkerboard")):
-		checkerboard.visible = true;
-	setup_colourblind_mode();
-	setup_resolution();
-	prepare_audio();
-	setup_volume();
-	setup_animation_speed();
+	react_to_save_file_update();
 	initialize_level_list();
 	tile_changes();
 	initialize_shaders();
@@ -413,6 +407,16 @@ func _ready() -> void:
 	# Load the first map.
 	load_level(0);
 	ready_done = true;
+
+func react_to_save_file_update() -> void:
+	if (save_file.has("puzzle_checkerboard")):
+		checkerboard.visible = true;
+	setup_colourblind_mode();
+	setup_resolution();
+	prepare_audio();
+	setup_volume();
+	setup_animation_speed();
+	refresh_puzzles_completed();
 	
 func setup_resolution() -> void:
 	if (save_file.has("pixel_scale")):
@@ -910,9 +914,15 @@ func initialize_level_list() -> void:
 		var level = level_prototype.instance();
 		var level_name = level.get_node("LevelInfo").level_name;
 		level_names.push_back(level_name);
+		level.queue_free();
+		
+	refresh_puzzles_completed();
+		
+func refresh_puzzles_completed() -> void:
+	puzzles_completed = 0;
+	for level_name in level_names:
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 			puzzles_completed += 1;
-		level.queue_free();
 
 func ready_map() -> void:
 	won = false;
