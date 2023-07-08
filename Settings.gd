@@ -163,13 +163,37 @@ func _pastesavefile_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	floating_text("TODO");
+	var paste = OS.get_clipboard();
+	
+	var json_parse_result = JSON.parse(paste)
+	
+	var result = null;
+	
+	if json_parse_result.error == OK:
+		var data = json_parse_result.result;
+		if typeof(data) == TYPE_DICTIONARY:
+			result = data;
+	
+	if (result == null):
+		floating_text("Didn't find a valid save file on clipboard")
+	else:
+		gamelogic.save_file = result;
+		gamelogic.react_to_save_file_update();
+		gamelogic.load_level(gamelogic.level_number);
+		destroy();
 	
 func _newsavefile_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	floating_text("TODO");
+	var new_save_file = gamelogic.save_file.duplicate(true);
+	
+	new_save_file["levels"] = {};
+	new_save_file["level_number"] = 0;
+	
+	OS.set_clipboard(to_json(new_save_file));
+	
+	floating_text("Exported fresh save file to clipboard - Import it to confirm.");
 	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):

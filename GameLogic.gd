@@ -391,7 +391,8 @@ func load_game():
 		return default_save_file();
 	
 	default_save_file();
-	level_number = save_file["level_number"];
+	
+	react_to_save_file_update();
 
 func _ready() -> void:
 	# Call once when the game is booted up.
@@ -412,6 +413,7 @@ func _ready() -> void:
 	ready_done = true;
 
 func react_to_save_file_update() -> void:
+	level_number = save_file["level_number"];
 	if (save_file.has("puzzle_checkerboard")):
 		checkerboard.visible = true;
 	setup_colourblind_mode();
