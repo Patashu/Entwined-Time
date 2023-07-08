@@ -148,7 +148,7 @@ max_value = 1.0
 step = 0.1
 value = 1.0
 
-[node name="CopySaveFile" type="Button" parent="Holder"]
+[node name="NewSaveFile" type="Button" parent="Holder"]
 margin_left = 317.0
 margin_top = 73.0
 margin_right = 404.0
@@ -162,7 +162,7 @@ margin_right = 404.0
 margin_bottom = 71.0
 text = "Paste Save File"
 
-[node name="NewSaveFile" type="Button" parent="Holder"]
+[node name="CopySaveFile" type="Button" parent="Holder"]
 margin_left = 317.0
 margin_top = 39.0
 margin_right = 404.0

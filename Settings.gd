@@ -155,7 +155,9 @@ func _copysavefile_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	floating_text("TODO");
+	OS.set_clipboard(to_json(gamelogic.save_file));
+	
+	floating_text("Exported save file to clipboard!");
 	
 func _pastesavefile_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
