@@ -7,10 +7,12 @@ onready var unlockeverything : CheckBox = get_node("Holder/UnlockEverything");
 onready var pixelscale : SpinBox = get_node("Holder/PixelScale");
 onready var vsync : CheckBox = get_node("Holder/VSync");
 onready var sfxslider : HSlider = get_node("Holder/SFXSlider");
+onready var fanfareslider : HSlider = get_node("Holder/FanfareSlider");
 onready var musicslider : HSlider = get_node("Holder/MusicSlider");
 onready var animationslider : HSlider = get_node("Holder/AnimationSlider");
 onready var undotrailslider : HSlider = get_node("Holder/UndoTrailSlider");
 onready var labelsfx : Label = get_node("Holder/LabelSFX");
+onready var labelfanfare : Label = get_node("Holder/LabelFanfare");
 onready var labelmusic : Label = get_node("Holder/LabelMusic");
 onready var labelanimation : Label = get_node("Holder/LabelAnimation");
 onready var labelundotrail : Label = get_node("Holder/LabelUndoTrail");
@@ -28,6 +30,9 @@ func _ready() -> void:
 	if (gamelogic.save_file.has("sfx_volume")):
 		sfxslider.value = gamelogic.save_file["sfx_volume"];
 		updatelabelsfx(sfxslider.value);
+	if (gamelogic.save_file.has("fanfare_volume")):
+		fanfareslider.value = gamelogic.save_file["fanfare_volume"];
+		updatelabelfanfare(fanfareslider.value);
 	if (gamelogic.save_file.has("music_volume")):
 		musicslider.value = gamelogic.save_file["music_volume"];
 		updatelabelmusic(musicslider.value);
@@ -46,6 +51,7 @@ func _ready() -> void:
 	vsync.connect("pressed", self, "_vsync_pressed");
 	pixelscale.connect("value_changed", self, "_pixelscale_value_changed");
 	sfxslider.connect("value_changed", self, "_sfxslider_value_changed");
+	fanfareslider.connect("value_changed", self, "_fanfareslider_value_changed");
 	musicslider.connect("value_changed", self, "_musicslider_value_changed");
 	animationslider.connect("value_changed", self, "_animationslider_value_changed");
 	undotrailslider.connect("value_changed", self, "_undotrailslider_value_changed");
@@ -81,6 +87,15 @@ func _sfxslider_value_changed(value: float) -> void:
 	gamelogic.play_sound("switch");
 	updatelabelsfx(value);
 	
+func _fanfareslider_value_changed(value: float) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["fanfare_volume"] = value;
+	gamelogic.setup_volume();
+	gamelogic.play_sound("switch");
+	updatelabelfanfare(value);
+		
 func _musicslider_value_changed(value: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
@@ -125,6 +140,12 @@ func updatelabelsfx(value: int) -> void:
 		labelsfx.text = "SFX Volume: Muted";
 	else:
 		labelsfx.text = "SFX Volume: " + str(value) + " dB";
+		
+func updatelabelfanfare(value: int) -> void:
+	if (value <= -30):
+		labelfanfare.text = "Fanfare Volume: Muted";
+	else:
+		labelfanfare.text = "Fanfare Volume: " + str(value) + " dB";
 		
 func updatelabelmusic(value: int) -> void:
 	if (value <= -30):

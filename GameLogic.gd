@@ -434,6 +434,9 @@ func setup_volume() -> void:
 			speaker.volume_db = value;
 	if (save_file.has("music_volume")):
 		var value = save_file["music_volume"];
+		music_speaker.volume_db = value;
+	if (save_file.has("fanfare_volume")):
+		var value = save_file["fanfare_volume"];
 		won_speaker.volume_db = value;
 	
 func setup_animation_speed() -> void:
@@ -1430,7 +1433,7 @@ func fade_in_lost():
 	
 	if muted or (doing_replay and meta_undo_a_restart_mode):
 		return;
-	var db = save_file["music_volume"];
+	var db = save_file["fanfare_volume"];
 	if (db <= -30):
 		return;
 	lost_speaker.volume_db = -40 + db;
