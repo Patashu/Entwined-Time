@@ -232,6 +232,7 @@ enum Tiles {
 	GreenPowerSocket, #66
 	VoidPowerSocket, #67
 	ColourWhite, #68
+	GlassBlockCracked, #69
 }
 
 # information about the level
@@ -1840,7 +1841,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile, animation_nonce], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
-		if new_tile == Tiles.GlassBlock:
+		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			for actor in actors:
 				# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
@@ -1889,7 +1890,18 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 				if (blocked):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
+			Tiles.GlassBlockCracked:
+				# it'd be cool to let actors break out of cracked glass blocks under their own power.
+				blocked = true;
+				if (blocked):
+					flash_terrain = id;
+					flash_colour = no_foo_flash;
 			Tiles.GreenGlassBlock:
+				blocked = true;
+				if (blocked):
+					flash_terrain = id;
+					flash_colour = no_foo_flash;
+			Tiles.VoidGlassBlock:
 				blocked = true;
 				if (blocked):
 					flash_terrain = id;
@@ -2022,6 +2034,8 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Mundane, chrono, -1);
 				else:
 					return Success.No;
+			Tiles.GlassBlockCracked:
+				result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Mundane, chrono, -1);
 			Tiles.GreenGlassBlock:
 				if (actor.heaviness >= Heaviness.IRON):
 					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Green, chrono, -1);

@@ -507,6 +507,8 @@ func _process(delta: float) -> void:
 						sprite.texture = preload("res://assets/green_glass_block.png")
 					elif (current_animation[2] == 51):
 						sprite.texture = preload("res://assets/one_undo.png")
+					elif (current_animation[2] == 69):
+						sprite.texture = preload("res://assets/glass_block_cracked.png")
 					else:
 						sprite.texture = preload("res://assets/glass_block.png")
 					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
