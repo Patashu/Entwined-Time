@@ -137,7 +137,9 @@ text = "Menu (Esc)"
 
 [node name="VirtualButtons" type="Node2D" parent="."]
 
-[node name="UndoButton" type="Button" parent="VirtualButtons"]
+[node name="Verbs" type="Node2D" parent="VirtualButtons"]
+
+[node name="UndoButton" type="Button" parent="VirtualButtons/Verbs"]
 margin_left = 8.0
 margin_top = 273.0
 margin_right = 29.0
@@ -145,7 +147,7 @@ margin_bottom = 295.0
 theme = ExtResource( 2 )
 text = "Z"
 
-[node name="SwapButton" type="Button" parent="VirtualButtons"]
+[node name="SwapButton" type="Button" parent="VirtualButtons/Verbs"]
 margin_left = 35.0
 margin_top = 273.0
 margin_right = 57.0
@@ -153,7 +155,7 @@ margin_bottom = 295.0
 theme = ExtResource( 2 )
 text = "X"
 
-[node name="MetaUndoButton" type="Button" parent="VirtualButtons"]
+[node name="MetaUndoButton" type="Button" parent="VirtualButtons/Verbs"]
 margin_left = 63.0
 margin_top = 273.0
 margin_right = 85.0
@@ -161,15 +163,9 @@ margin_bottom = 295.0
 theme = ExtResource( 2 )
 text = "C"
 
-[node name="EnterButton" type="Button" parent="VirtualButtons"]
-margin_left = 234.0
-margin_top = 256.0
-margin_right = 277.0
-margin_bottom = 271.0
-theme = ExtResource( 2 )
-text = "Enter"
+[node name="Dirs" type="Node2D" parent="VirtualButtons"]
 
-[node name="LeftButton" type="Button" parent="VirtualButtons"]
+[node name="LeftButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 406.0
 margin_top = 273.0
 margin_right = 428.0
@@ -177,7 +173,7 @@ margin_bottom = 295.0
 theme = ExtResource( 2 )
 text = "<"
 
-[node name="DownButton" type="Button" parent="VirtualButtons"]
+[node name="DownButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 434.0
 margin_top = 273.0
 margin_right = 456.0
@@ -185,7 +181,7 @@ margin_bottom = 295.0
 theme = ExtResource( 2 )
 text = "v"
 
-[node name="RightButton" type="Button" parent="VirtualButtons"]
+[node name="RightButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 462.0
 margin_top = 273.0
 margin_right = 484.0
@@ -193,13 +189,23 @@ margin_bottom = 295.0
 theme = ExtResource( 2 )
 text = ">"
 
-[node name="UpButton" type="Button" parent="VirtualButtons"]
+[node name="UpButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 434.0
 margin_top = 246.0
 margin_right = 456.0
 margin_bottom = 268.0
 theme = ExtResource( 2 )
 text = "^"
+
+[node name="Others" type="Node2D" parent="VirtualButtons"]
+
+[node name="EnterButton" type="Button" parent="VirtualButtons/Others"]
+margin_left = 234.0
+margin_top = 256.0
+margin_right = 277.0
+margin_bottom = 271.0
+theme = ExtResource( 2 )
+text = "Enter"
 
 [node name="DownArrow" type="Sprite" parent="."]
 visible = false

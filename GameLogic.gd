@@ -417,14 +417,14 @@ func _ready() -> void:
 	ready_done = true;
 
 func connect_virtual_buttons() -> void:
-	virtualbuttons.get_node("UndoButton").connect("button_down", self, "_undobutton_pressed");
-	virtualbuttons.get_node("SwapButton").connect("button_down", self, "_swapbutton_pressed");
-	virtualbuttons.get_node("MetaUndoButton").connect("button_down", self, "_metaundobutton_pressed");
-	virtualbuttons.get_node("LeftButton").connect("button_down", self, "_leftbutton_pressed");
-	virtualbuttons.get_node("DownButton").connect("button_down", self, "_downbutton_pressed");
-	virtualbuttons.get_node("RightButton").connect("button_down", self, "_rightbutton_pressed");
-	virtualbuttons.get_node("UpButton").connect("button_down", self, "_upbutton_pressed");
-	virtualbuttons.get_node("EnterButton").connect("button_down", self, "_enterbutton_pressed");
+	virtualbuttons.get_node("Verbs/UndoButton").connect("button_down", self, "_undobutton_pressed");
+	virtualbuttons.get_node("Verbs/SwapButton").connect("button_down", self, "_swapbutton_pressed");
+	virtualbuttons.get_node("Verbs/MetaUndoButton").connect("button_down", self, "_metaundobutton_pressed");
+	virtualbuttons.get_node("Dirs/LeftButton").connect("button_down", self, "_leftbutton_pressed");
+	virtualbuttons.get_node("Dirs/DownButton").connect("button_down", self, "_downbutton_pressed");
+	virtualbuttons.get_node("Dirs/RightButton").connect("button_down", self, "_rightbutton_pressed");
+	virtualbuttons.get_node("Dirs/UpButton").connect("button_down", self, "_upbutton_pressed");
+	virtualbuttons.get_node("Others/EnterButton").connect("button_down", self, "_enterbutton_pressed");
 	
 func _undobutton_pressed() -> void:
 	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
@@ -482,13 +482,36 @@ func react_to_save_file_update() -> void:
 	refresh_puzzles_completed();
 	
 func setup_virtual_buttons() -> void:
-	if (save_file.has("virtual_buttons") and save_file["virtual_buttons"]):
-		for button in virtualbuttons.get_children():
-			button.disabled = false;
+	var value = 0;
+	if (save_file.has("virtual_buttons")):
+		value = save_file["virtual_buttons"];
+	if (value > 0):
+		for folder in virtualbuttons.get_children():
+			for button in folder.get_children():
+				button.disabled = false;
 		virtualbuttons.visible = true;
+		if value == 1:
+			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
+			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+		elif value == 2:
+			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
+			virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
+		elif value == 3:
+			virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
+			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+		elif value == 4:
+			virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
+			virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
+		elif value == 5:
+			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
+			virtualbuttons.get_node("Dirs").position = Vector2(-300, 0);
+		elif value == 6:
+			virtualbuttons.get_node("Verbs").position = Vector2(300, 0);
+			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
 	else:
-		for button in virtualbuttons.get_children():
-			button.disabled = true;
+		for folder in virtualbuttons.get_children():
+			for button in folder.get_children():
+				button.disabled = true;
 		virtualbuttons.visible = false;
 	
 func setup_resolution() -> void:
@@ -2989,8 +3012,8 @@ func check_won() -> void:
 			save_game();
 	
 	winlabel.visible = won;
-	virtualbuttons.get_node("EnterButton").visible = won and virtualbuttons.visible;
-	virtualbuttons.get_node("EnterButton").disabled = !won or !virtualbuttons.visible;
+	virtualbuttons.get_node("Others/EnterButton").visible = won and virtualbuttons.visible;
+	virtualbuttons.get_node("Others/EnterButton").disabled = !won or !virtualbuttons.visible;
 	if (won):
 		won_cooldown = 0;
 		if (level_name == "Joke"):

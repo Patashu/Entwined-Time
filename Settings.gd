@@ -23,7 +23,7 @@ onready var colourblindmode : CheckBox = get_node("Holder/ColourblindMode");
 onready var copysavefile : Button = get_node("Holder/CopySaveFile");
 onready var pastesavefile : Button = get_node("Holder/PasteSaveFile");
 onready var newsavefile : Button = get_node("Holder/NewSaveFile");
-onready var virtualbuttons : CheckBox = get_node("Holder/VirtualButtons");
+onready var virtualbuttons : SpinBox = get_node("Holder/VirtualButtons");
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -58,7 +58,7 @@ func _ready() -> void:
 	if (gamelogic.save_file.has("colourblind_mode")):
 		colourblindmode.pressed = gamelogic.save_file["colourblind_mode"];
 	if (gamelogic.save_file.has("virtual_buttons")):
-		virtualbuttons.pressed = gamelogic.save_file["virtual_buttons"];
+		virtualbuttons.value = gamelogic.save_file["virtual_buttons"];
 	
 	undotrailslider.value = gamelogic.save_file["undo_trails"];
 	updatelabelundotrail(undotrailslider.value);
@@ -76,7 +76,7 @@ func _ready() -> void:
 	copysavefile.connect("pressed", self, "_copysavefile_pressed");
 	pastesavefile.connect("pressed", self, "_pastesavefile_pressed");
 	newsavefile.connect("pressed", self, "_newsavefile_pressed");
-	virtualbuttons.connect("pressed", self, "_virtualbuttons_pressed");
+	virtualbuttons.connect("value_changed", self, "_virtualbuttons_value_changed");
 
 func _unlockeverything_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -199,11 +199,11 @@ func _newsavefile_pressed() -> void:
 	
 	floating_text("Exported fresh save file to clipboard - Import it to confirm.");
 	
-func _virtualbuttons_pressed() -> void:
+func _virtualbuttons_value_changed(value: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	gamelogic.save_file["virtual_buttons"] = virtualbuttons.pressed;
+	gamelogic.save_file["virtual_buttons"] = value;
 	gamelogic.setup_virtual_buttons();
 	
 func updatelabelsfx(value: int) -> void:
