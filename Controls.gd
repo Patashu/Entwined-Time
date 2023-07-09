@@ -28,8 +28,8 @@ var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",
 var controller_images = [
 	preload("res://controller_prompts/Positional_Prompts_Down.png"),
 	preload("res://controller_prompts/Positional_Prompts_Right.png"),
-	preload("res://controller_prompts/Positional_Prompts_Up.png"),
 	preload("res://controller_prompts/Positional_Prompts_Left.png"),
+	preload("res://controller_prompts/Positional_Prompts_Up.png"),
 	preload("res://controller_prompts/XboxSeriesX_LB.png"),
 	preload("res://controller_prompts/XboxSeriesX_RB.png"),
 	preload("res://controller_prompts/XboxSeriesX_LT.png"),
@@ -66,7 +66,9 @@ func _swapbutton_pressed() -> void:
 	setup_rebinding_stuff();
 
 func _resetbutton_pressed() -> void:
-	pass #TODO
+	#seems OK to reset both keyboard and controller simultaneously
+	InputMap.load_from_globals();
+	setup_rebinding_stuff();
 	
 func setup_rebinding_stuff() -> void:
 	if !keyboard_mode:
@@ -116,20 +118,21 @@ func setup_rebinding_stuff() -> void:
 				button.action = action;
 				button.keyboard_mode = keyboard_mode;
 				button.toggle_mode = true;
+				button.event = get_event(button.action, button.i, button.keyboard_mode);
 				rebindingstuff.add_child(button);
 				button.rect_position.x = round(xx + xxx*x + xxx3 + xxx2*j);
 				button.rect_position.y = round(yy + yyy*y);
 				button.rect_size.x = xxx2-2;
-				setup_button(button);
 				button.theme = holder.theme;
 				button.clip_text = true;
+				setup_button(button); #must happen after button.rect_size and button.clip_text
 		label.theme = holder.theme;
 
 func setup_button(button: Button) -> void:
 	button.image = null;
 	for child in button.get_children():
 		child.queue_free();
-	button.text = get_binding(button.action, button.i);
+	button.text = get_text(button.event);
 	if (!keyboard_mode and button.text != ""):
 		setup_controller_button(button);
 
@@ -149,18 +152,23 @@ func setup_controller_button(button: Button) -> void:
 			button.text = image;
 			return;
 
-func get_binding(action: String, i: int) -> String:
+func get_event(action: String, i: int, keyboard_mode: bool) -> InputEvent:
 	var events = InputMap.get_action_list(action);
 	var found = 0;
 	for event in events:
 		if (keyboard_mode and event is InputEventKey) or (!keyboard_mode and event is InputEventJoypadButton):
 			if (found == i):
-				if (keyboard_mode):
-					return event.as_text();
-				else:
-					return str(event.button_index);
+				return event;
 			else:
 				found += 1;
+	return null;
+
+func get_text(event: InputEvent) -> String:
+	if (event != null):
+		if (keyboard_mode):
+			return event.as_text();
+		else:
+			return str(event.button_index);
 	return "";
 
 func destroy() -> void:

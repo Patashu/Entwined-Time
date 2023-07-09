@@ -4,14 +4,17 @@ class_name BindingButton
 export var action: String = "";
 export var keyboard_mode: bool = true;
 export var i: int = 0;
+var event: InputEvent = null;
 var parent: Node2D = null;
 var image: Sprite = null;
 
 func _ready() -> void:
 	set_process_unhandled_input(false)
+	set_process_unhandled_key_input(false)
 
 func _toggled(is_button_pressed):
 	set_process_unhandled_input(is_button_pressed)
+	set_process_unhandled_key_input(is_button_pressed)
 	if is_button_pressed:
 		text = "(What?)"
 		if (image != null):
@@ -25,26 +28,24 @@ func _toggled(is_button_pressed):
 		display_current_key()
 	grab_focus();
 		
-func _unhandled_input(event):
-	if event is InputEventJoypadButton and !keyboard_mode:
-		remap_action_to(event)
+func _unhandled_input(new_event : InputEvent):
+	if new_event is InputEventJoypadButton and !keyboard_mode and new_event.is_pressed():
+		remap_action_to(new_event)
 		pressed = false
-	elif event is InputEventKey and keyboard_mode:
-		remap_action_to(event)
+		
+func _unhandled_key_input(new_event : InputEventKey):
+	if keyboard_mode and new_event.is_pressed():
+		remap_action_to(new_event)
 		pressed = false
 
-func remap_action_to(event):
-	pass
-	# We first change the event in this game instance.
-	#InputMap.action_erase_events(action)
-	#InputMap.action_add_event(action, event)
-	# And then save it to the keymaps file
-	#KeyPersistence.keymaps[action] = event
-	#KeyPersistence.save_keymap()
-	#text = "%s Key" % event.as_text()
-
+func remap_action_to(new_event):
+	# if we WERE an event, erase it.
+	if (event != null):
+		InputMap.action_erase_event(action, event);
+	# Now map the new one.
+	InputMap.action_add_event(action, new_event);
+	event = new_event;
+	# TODO: persistence, anti-softlock, bullying, no double binding, ui_cancel to clear, etc
 
 func display_current_key():
 	parent.setup_button(self);
-	#var current_key = InputMap.action_get_events(action)[0].as_text()
-	#text = "%s Key" % current_key
