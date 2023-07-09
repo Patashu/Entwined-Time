@@ -4049,10 +4049,15 @@ func gain_insight() -> void:
 func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
 		using_controller = true;
+		menubutton.text = "Menu (Start)";
+		menubutton.rect_position.x = 222;
 		update_info_labels();
 	
 	if Input.is_action_just_pressed("any_keyboard") and using_controller:
 		using_controller = false;
+		menubutton.text = "Menu (Esc)";
+		menubutton.rect_position.x = 226;
+		menubutton.rect_size.x = 60;
 		update_info_labels();
 	
 	sounds_played_this_frame.clear();
