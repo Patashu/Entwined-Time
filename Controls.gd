@@ -10,6 +10,7 @@ onready var resetbutton : Button = get_node("Holder/ResetButton");
 onready var rebindingstuff : Node2D = get_node("Holder/RebindingStuff");
 
 var keyboard_mode = true;
+var rebinding_button = null;
 
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
 "character_undo", "meta_undo", "character_switch", "restart",
@@ -79,6 +80,7 @@ func setup_rebinding_stuff() -> void:
 	for child in children:
 		child.queue_free();
 		rebindingstuff.remove_child(child);
+	rebinding_button = null;
 	
 	var half_way = int(ceil(actions.size() / 2));
 	var yy = 12;
@@ -108,16 +110,28 @@ func setup_rebinding_stuff() -> void:
 			label.text = hrn_actions[i] + ":";
 			for j in range(3):
 				var button = Button.new();
+				button.set_script(preload("res://BindingButton.gd"));
+				button.parent = self;
+				button.i = j;
+				button.action = action;
+				button.keyboard_mode = keyboard_mode;
+				button.toggle_mode = true;
 				rebindingstuff.add_child(button);
 				button.rect_position.x = round(xx + xxx*x + xxx3 + xxx2*j);
 				button.rect_position.y = round(yy + yyy*y);
 				button.rect_size.x = xxx2-2;
-				button.text = get_binding(action, j);
-				if (!keyboard_mode and button.text != ""):
-					setup_controller_button(button);
+				setup_button(button);
 				button.theme = holder.theme;
 				button.clip_text = true;
 		label.theme = holder.theme;
+
+func setup_button(button: Button) -> void:
+	button.image = null;
+	for child in button.get_children():
+		child.queue_free();
+	button.text = get_binding(button.action, button.i);
+	if (!keyboard_mode and button.text != ""):
+		setup_controller_button(button);
 
 func setup_controller_button(button: Button) -> void:
 	var index = int(button.text);
@@ -127,6 +141,7 @@ func setup_controller_button(button: Button) -> void:
 			var sprite = Sprite.new();
 			sprite.scale = Vector2(1.0/7.0, 1.0/7.0);
 			button.add_child(sprite);
+			button.image = sprite;
 			sprite.position = button.rect_size / 2;
 			sprite.texture = image;
 			button.text = "";
