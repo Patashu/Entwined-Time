@@ -8,36 +8,36 @@
 script = ExtResource( 3 )
 
 [node name="Holder" type="Label" parent="."]
-margin_left = 54.0
+margin_left = 11.0
 margin_top = 30.0
-margin_right = 463.0
+margin_right = 505.0
 margin_bottom = 273.0
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
-text = "Controls:
-Arrows: Move Character
-X: Swap Character
-Z: Undo Character
-C: Meta-Undo
-R: Restart
-
-Esc: Open/Close Menu
-F1/F2: Change Puzzle/Chapter
-M: Mute/Unmute Audio
-
-Ctrl+C/Ctrl+V: Copy/Paste Replay
-F11: Your Best Replay | Shift+F11: Force Save Replay
-F12: Author's Replay
-F9: Replay Speed Down | Shift+F9: Reset Replay Speed
-F10: Replay Speed Up | Shift+F10: Maximum Replay Speed
-"
+text = "Keyboard Controls:"
 align = 1
 
+[node name="RebindingStuff" type="Node2D" parent="Holder"]
+
 [node name="OkButton" type="Button" parent="Holder"]
-margin_left = 150.0
+margin_left = 189.0
 margin_top = 223.0
-margin_right = 261.0
+margin_right = 300.0
 margin_bottom = 238.0
 text = "Ok"
+
+[node name="SwapButton" type="Button" parent="Holder"]
+margin_left = 5.0
+margin_top = 223.0
+margin_right = 116.0
+margin_bottom = 238.0
+text = "Controller Controls"
+
+[node name="ResetButton" type="Button" parent="Holder"]
+margin_left = 378.0
+margin_top = 223.0
+margin_right = 489.0
+margin_bottom = 238.0
+text = "Reset to Defaults"
 
 [node name="Pointer" type="Sprite" parent="Holder"]

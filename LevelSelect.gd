@@ -159,8 +159,8 @@ func prepare_chapter() -> void:
 		
 	var standard_label = Label.new();
 	holder.add_child(standard_label);
-	standard_label.rect_position.x = xx + xxx*x;
-	standard_label.rect_position.y = yy + yyy*y + 2;
+	standard_label.rect_position.x = round(xx + xxx*x);
+	standard_label.rect_position.y = round(yy + yyy*y + 2);
 	standard_label.text = "Standard:"
 	standard_label.theme = holder.theme;
 	
@@ -173,8 +173,8 @@ func prepare_chapter() -> void:
 		var button = preload("res://LevelButton.tscn").instance();
 		buttons_by_xy[Vector2(x, y)] = button;
 		holder.add_child(button);
-		button.rect_position.x = xx + xxx*x;
-		button.rect_position.y = yy + yyy*y;
+		button.rect_position.x = round(xx + xxx*x);
+		button.rect_position.y = round(yy + yyy*y);
 		button.level_number = i + normal_start;
 		var level_name = gamelogic.level_names[button.level_number];
 		var level_string = str(i);
@@ -219,8 +219,8 @@ func prepare_chapter() -> void:
 		
 		advanced_label = Label.new();
 		holder.add_child(advanced_label);
-		advanced_label.rect_position.x = xx + xxx*x;
-		advanced_label.rect_position.y = yy + yyy*y + 2;
+		advanced_label.rect_position.x = round(xx + xxx*x);
+		advanced_label.rect_position.y = round(yy + yyy*y + 2);
 		advanced_label.text = "Advanced:"
 		advanced_label.theme = holder.theme;
 		
@@ -233,8 +233,8 @@ func prepare_chapter() -> void:
 			all_advanced_stars = false;
 			var label = Label.new();
 			holder.add_child(label);
-			label.rect_position.x = xx + xxx*x;
-			label.rect_position.y = yy + yyy*y + 2;
+			label.rect_position.x = round(xx + xxx*x);
+			label.rect_position.y = round(yy + yyy*y + 2);
 			label.text = "Complete more puzzles: " + str(gamelogic.puzzles_completed) + "/" + str(advanced_unlock_requirement);
 			label.theme = holder.theme;
 		else:
@@ -242,8 +242,8 @@ func prepare_chapter() -> void:
 				var button = preload("res://LevelButton.tscn").instance();
 				buttons_by_xy[Vector2(x, y)] = button;
 				holder.add_child(button);
-				button.rect_position.x = xx + xxx*x;
-				button.rect_position.y = yy + yyy*y;
+				button.rect_position.x = round(xx + xxx*x);
+				button.rect_position.y = round(yy + yyy*y);
 				button.level_number = i + advanced_start;
 				var level_name = gamelogic.level_names[button.level_number];
 				var level_string = str(i);
@@ -282,8 +282,8 @@ func prepare_chapter() -> void:
 	if chapter == 0:
 		var label = Label.new();
 		holder.add_child(label);
-		label.rect_position.x = xx + xxx;
-		label.rect_position.y = yy + yyy*(11);
+		label.rect_position.x = round(xx + xxx);
+		label.rect_position.y = round(yy + yyy*(11));
 		label.text = "(Advanced puzzles are optional,\nfor those seeking a challenge.)"
 		label.theme = holder.theme;
 		
@@ -292,7 +292,7 @@ func prepare_chapter() -> void:
 		var label = Label.new();
 		holder.add_child(label);
 		label.rect_position.x = 8;
-		label.rect_position.y = yy + yyy*(10);
+		label.rect_position.y = round(yy + yyy*(10));
 		label.text = "(This chapter is optional. It teaches techniques used only in Advanced puzzles.)\n(If you get stuck, proceed to Chapter 3 - you can come back here anytime!)"
 		label.theme = holder.theme;
 		
@@ -331,14 +331,14 @@ func _process(delta: float) -> void:
 		closebutton.grab_focus();
 		focus = closebutton;
 
-	var focus_middle_x = focus.rect_position.x + focus.rect_size.x / 2;
-	pointer.position.y = focus.rect_position.y + focus.rect_size.y / 2;
+	var focus_middle_x = round(focus.rect_position.x + focus.rect_size.x / 2);
+	pointer.position.y = round(focus.rect_position.y + focus.rect_size.y / 2);
 	if (focus_middle_x > holder.rect_size.x / 2):
 		pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
-		pointer.position.x = focus.rect_position.x + focus.rect_size.x + 12;
+		pointer.position.x = round(focus.rect_position.x + focus.rect_size.x + 12);
 	else:
 		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
-		pointer.position.x = focus.rect_position.x - 12;
+		pointer.position.x = round(focus.rect_position.x - 12);
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,
