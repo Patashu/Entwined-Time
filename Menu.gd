@@ -15,6 +15,7 @@ onready var insightbutton : Button = get_node("Holder/InsightButton");
 onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var restartbutton : Button = get_node("Holder/RestartButton");
+onready var undorestartbutton : Button = get_node("Holder/UndoRestartButton");
 
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
@@ -28,9 +29,131 @@ func _ready() -> void:
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
 	settingsbutton.connect("pressed", self, "_settingsbutton_pressed");
 	restartbutton.connect("pressed", self, "_restartbutton_pressed");
-	# TODO: rename and disable (or hide) buttons based on state
-	# TODO: button functionality
+	undorestartbutton.connect("pressed", self, "_undorestartbutton_pressed");
+	
+	if gamelogic.in_insight_level:
+		insightbutton.text = "Lose Insight";
+	elif !gamelogic.has_insight_level:
+		insightbutton.disabled = true;
+		
+	if gamelogic.user_replay_before_restarts.size() == 0:
+		undorestartbutton.disabled = true;
+		
+	if gamelogic.doing_replay:
+		authorsreplaybutton.text = "End Replay";
+		authorsreplaybutton.rect_size.x = yourreplaybutton.rect_size.x;
+		
+	#check if player has beaten and saved a replay for this puzzle
+	var levels_save_data = gamelogic.save_file["levels"];
+	if (!levels_save_data.has(gamelogic.level_name)):
+		yourreplaybutton.disabled = true;
+	else:
+		var level_save_data = levels_save_data[gamelogic.level_name];
+		if (!level_save_data.has("replay")):
+			yourreplaybutton.disabled = true;
+	
+	if (!gamelogic.won):
+		savereplaybutton.disabled = true;
+		
+	if (gamelogic.user_replay.length() <= 0):
+		copyreplaybutton.disabled = true;
+	
 	okbutton.grab_focus();
+
+func _yourreplaybutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	# must be kept in sync with GameLogic
+	destroy();
+	if (gamelogic.doing_replay):
+		gamelogic.end_replay();
+	gamelogic.start_saved_replay();
+	gamelogic.update_info_labels();
+	
+func _authorsreplaybutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	# must be kept in sync with GameLogic
+	destroy();
+	gamelogic.authors_replay();
+	gamelogic.update_info_labels();
+	
+func _savereplaybutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	if (gamelogic.won):
+		if (!gamelogic.save_file["levels"].has(gamelogic.level_name)):
+			gamelogic.save_file["levels"][gamelogic.level_name] = {};
+		gamelogic.save_file["levels"][gamelogic.level_name]["replay"] = gamelogic.annotate_replay(gamelogic.user_replay);
+		gamelogic.save_game();
+		gamelogic.floating_text("Shift+F11: Replay force saved!");
+	destroy();
+	
+func _copyreplaybutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	# must be kept in sync with GameLogic
+	destroy();
+	OS.set_clipboard(gamelogic.annotate_replay(gamelogic.user_replay));
+	gamelogic.floating_text("Ctrl+C: Replay copied");
+	
+func _pastereplaybutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	# must be kept in sync with GameLogic
+	destroy();
+	gamelogic.replay_from_clipboard();
+	
+func _levelselectbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	var a = preload("res://LevelSelect.tscn").instance();
+	self.get_parent().add_child(a);
+	gamelogic.ui_stack.push_back(a);
+	destroy();
+	
+func _insightbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	destroy();
+	gamelogic.gain_insight();
+	
+func _controlsbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	var a = preload("res://Controls.tscn").instance();
+	self.get_parent().add_child(a);
+	gamelogic.ui_stack.push_back(a);
+	destroy();
+	
+func _settingsbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	var a = preload("res://Settings.tscn").instance();
+	self.get_parent().add_child(a);
+	gamelogic.ui_stack.push_back(a);
+	destroy();
+	
+func _restartbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	destroy();
+	# must be kept in sync with GameLogic "restart"
+	gamelogic.end_replay();
+	gamelogic.restart();
+	gamelogic.update_info_labels();
+	
+func _undorestartbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	destroy();
+	gamelogic.meta_undo_a_restart();
 
 func destroy() -> void:
 	self.queue_free();
@@ -41,7 +164,7 @@ func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	if (Input.is_action_just_released("escape")):
+	if (Input.is_action_just_pressed("escape")):
 		destroy();
 		
 	var focus = holder.get_focus_owner();
@@ -57,6 +180,14 @@ func _process(delta: float) -> void:
 	else:
 		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
 		pointer.position.x = focus.rect_position.x - 12;
+		
+	# constantly check if we could paste this replay or not
+	# must be kept in sync with GameLogic
+	var replay = OS.get_clipboard();
+	if (gamelogic.is_valid_replay(replay)):
+		pastereplaybutton.disabled = false;
+	else:
+		pastereplaybutton.disabled = true;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

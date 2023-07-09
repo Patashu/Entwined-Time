@@ -6,19 +6,15 @@ onready var holder : Label = get_node("Holder");
 onready var chapter = gamelogic.chapter;
 onready var prevbutton : Button = get_node("Holder/PrevButton");
 onready var nextbutton : Button = get_node("Holder/NextButton");
-onready var controlsbutton : Button = get_node("Holder/ControlsButton");
-onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var leveleditorbutton : Button = get_node("Holder/LevelEditorButton");
 onready var closebutton : Button = get_node("Holder/CloseButton");
 onready var pointer : Sprite = get_node("Holder/Pointer");
-onready var specialbuttons = [prevbutton, nextbutton, controlsbutton, settingsbutton, leveleditorbutton, closebutton, pointer];
+onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, closebutton, pointer];
 
 func _ready() -> void:
 	prepare_chapter();
 	prevbutton.connect("pressed", self, "_prevbutton_pressed");
 	nextbutton.connect("pressed", self, "_nextbutton_pressed");
-	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
-	settingsbutton.connect("pressed", self, "_settingsbutton_pressed");
 	leveleditorbutton.connect("pressed", self, "_leveleditorbutton_pressed");
 	closebutton.connect("pressed", self, "destroy");
 	
@@ -42,22 +38,6 @@ func _nextbutton_pressed() -> void:
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
 
-func _controlsbutton_pressed() -> void:
-	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
-		return;
-	
-	var controls = preload("res://Controls.tscn").instance();
-	gamelogic.ui_stack.push_back(controls);
-	self.add_child(controls);
-	
-func _settingsbutton_pressed() -> void:
-	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
-		return;
-	
-	var settings = preload("res://Settings.tscn").instance();
-	gamelogic.ui_stack.push_back(settings);
-	self.add_child(settings);
-	
 func _leveleditorbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;

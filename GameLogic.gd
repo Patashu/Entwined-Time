@@ -12,7 +12,6 @@ onready var terrainmap : TileMap = levelfolder.get_node("TerrainMap");
 onready var overactorsparticles : Node2D = levelscene.get_node("OverActorsParticles");
 onready var underactorsparticles : Node2D = levelscene.get_node("UnderActorsParticles");
 onready var menubutton : Button = levelscene.get_node("MenuButton");
-onready var gaininsightbutton : Button = levelscene.get_node("GainInsightButton");
 onready var levellabel : Label = levelscene.get_node("LevelLabel");
 onready var levelstar : Sprite = levelscene.get_node("LevelStar");
 onready var winlabel : Node2D = levelscene.get_node("WinLabel");
@@ -400,7 +399,6 @@ func load_game():
 func _ready() -> void:
 	# Call once when the game is booted up.
 	menubutton.connect("pressed", self, "escape");
-	gaininsightbutton.connect("pressed", self, "gain_insight");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
 	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue");
 	call_deferred("adjust_winlabel");
@@ -417,6 +415,9 @@ func _ready() -> void:
 	ready_done = true;
 
 func react_to_save_file_update() -> void:
+	#save_file["gain_insight"] = false;
+	#save_file["authors_replay"] = false;
+	
 	level_number = save_file["level_number"];
 	if (save_file.has("puzzle_checkerboard")):
 		checkerboard.visible = true;
@@ -913,7 +914,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
 	level_replacements[level_filenames.size()] = "-1";
 	level_filenames.push_back("Joke")
-	
+
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -990,13 +991,6 @@ func ready_map() -> void:
 		if (ResourceLoader.exists(insight_path)):
 			has_insight_level = true;
 			insight_level_scene = load(insight_path);
-	
-	gaininsightbutton.visible = has_insight_level;
-	gaininsightbutton.disabled = !has_insight_level;
-	if (has_insight_level and in_insight_level):
-		gaininsightbutton.text = "(G) Return";
-	elif (has_insight_level and !in_insight_level):
-		gaininsightbutton.text = "(G)ain Insight";
 	
 	calculate_map_size();
 	make_actors();
@@ -3185,8 +3179,7 @@ func escape() -> void:
 		var topmost_ui = ui_stack.pop_front();
 		topmost_ui.queue_free();
 		return;
-	end_replay();
-	var levelselect = preload("res://LevelSelect.tscn").instance();
+	var levelselect = preload("res://Menu.tscn").instance();
 	ui_stack.push_back(levelselect);
 	levelscene.add_child(levelselect);
 	
@@ -3223,6 +3216,7 @@ func setup_chapter_etc() -> void:
 		target_sky = chapter_skies[chapter];
 	
 func load_level_direct(new_level: int) -> void:
+	doing_replay = false;
 	in_insight_level = false;
 	has_insight_level = false;
 	var impulse = new_level - self.level_number;
@@ -3925,17 +3919,26 @@ func floating_text(text: String) -> void:
 	label.rect_position.y = pixel_height/2-16;
 	label.text = text;
 
+func is_valid_replay(replay: String) -> bool:
+	var replay_parts = replay.split("$");
+	replay = replay_parts[replay_parts.size()-1];
+	replay = replay.strip_edges();
+	replay = replay.to_lower();
+	if replay.length() <= 0:
+		return false;
+	for letter in replay:
+		if !(letter in "wasdzxc"):
+			return false;
+	return true;
+
 func start_specific_replay(replay: String) -> void:
 	var replay_parts = replay.split("$");
 	replay = replay_parts[replay_parts.size()-1];
 	replay = replay.strip_edges();
 	replay = replay.to_lower();
-	for letter in replay:
-		pass
-		if !(letter in "wasdzxc"):
-			pass
-			floating_text("Ctrl+V: Invalid replay");
-			return;
+	if (!is_valid_replay(replay)):
+		floating_text("Ctrl+V: Invalid replay");
+		return;
 	end_replay();
 	toggle_replay();
 	level_replay = replay;
@@ -4127,6 +4130,7 @@ func _process(delta: float) -> void:
 				replay_interval /= (2.0/3.0);
 		elif (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
+				# must be kept in sync with Menu
 				if (won):
 					if (!save_file["levels"].has(level_name)):
 						save_file["levels"][level_name] = {};
@@ -4134,15 +4138,19 @@ func _process(delta: float) -> void:
 					save_game();
 					floating_text("Shift+F11: Replay force saved!");
 			else:
+				# must be kept in sync with Menu
 				start_saved_replay();
 				update_info_labels();
 		elif (Input.is_action_just_pressed("start_replay")):
+			# must be kept in sync with Menu
 			authors_replay();
 			update_info_labels();
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("copy")):
+			# must be kept in sync with Menu
 			OS.set_clipboard(annotate_replay(user_replay));
 			floating_text("Ctrl+C: Replay copied");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
+			# must be kept in sync with Menu
 			replay_from_clipboard();
 		elif (Input.is_action_just_pressed("character_undo")):
 			end_replay();
@@ -4153,6 +4161,7 @@ func _process(delta: float) -> void:
 			meta_undo();
 			update_info_labels();
 		elif (Input.is_action_just_pressed("restart")):
+			# must be kept in sync with Menu "restart"
 			end_replay();
 			restart();
 			update_info_labels();

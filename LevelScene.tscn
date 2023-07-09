@@ -135,14 +135,6 @@ margin_bottom = 299.0
 theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
-[node name="GainInsightButton" type="Button" parent="."]
-margin_left = 441.0
-margin_top = 2.0
-margin_right = 509.0
-margin_bottom = 17.0
-theme = ExtResource( 2 )
-text = "(G)ain Insight"
-
 [node name="DownArrow" type="Sprite" parent="."]
 visible = false
 position = Vector2( -48, -48 )
