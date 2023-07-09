@@ -24,6 +24,33 @@ var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",
 "Next Lev/Chap", "Prev Lev/Chap", "Mute", "Author's Replay", "Replay Speed+",
 "Replay Speed-", "Your Replay", "Gain Insight", "Level Select"]
 
+var controller_images = [
+	preload("res://controller_prompts/Positional_Prompts_Down.png"),
+	preload("res://controller_prompts/Positional_Prompts_Right.png"),
+	preload("res://controller_prompts/Positional_Prompts_Up.png"),
+	preload("res://controller_prompts/Positional_Prompts_Left.png"),
+	preload("res://controller_prompts/XboxSeriesX_LB.png"),
+	preload("res://controller_prompts/XboxSeriesX_RB.png"),
+	preload("res://controller_prompts/XboxSeriesX_LT.png"),
+	preload("res://controller_prompts/XboxSeriesX_RT.png"),
+	"L3",
+	"R3",
+	preload("res://controller_prompts/XboxSeriesX_View.png"),
+	preload("res://controller_prompts/XboxSeriesX_Menu.png"),
+	preload("res://controller_prompts/XboxSeriesX_Dpad_Up.png"),
+	preload("res://controller_prompts/XboxSeriesX_Dpad_Down.png"),
+	preload("res://controller_prompts/XboxSeriesX_Dpad_Left.png"),
+	preload("res://controller_prompts/XboxSeriesX_Dpad_Right.png"),
+	"Home",
+	preload("res://controller_prompts/XboxSeriesX_Share.png"),
+	"Paddle 1",
+	"Paddle 2",
+	"Paddle 3",
+	"Paddle 4",
+	"Touchpad",
+];
+
+
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
 	swapbutton.connect("pressed", self, "_swapbutton_pressed");
@@ -69,6 +96,8 @@ func setup_rebinding_stuff() -> void:
 			y -= half_way;
 		var action = actions[i];
 		var action_is_special = action.find(":") > -1;
+		if (action_is_special and !keyboard_mode):
+			continue
 		var label = Label.new();
 		rebindingstuff.add_child(label);
 		label.rect_position.x = round(xx + xxx*x);
@@ -84,9 +113,26 @@ func setup_rebinding_stuff() -> void:
 				button.rect_position.y = round(yy + yyy*y);
 				button.rect_size.x = xxx2-2;
 				button.text = get_binding(action, j);
+				if (!keyboard_mode and button.text != ""):
+					setup_controller_button(button);
 				button.theme = holder.theme;
 				button.clip_text = true;
 		label.theme = holder.theme;
+
+func setup_controller_button(button: Button) -> void:
+	var index = int(button.text);
+	if index < controller_images.size():
+		var image = controller_images[index];
+		if image is Texture:
+			var sprite = Sprite.new();
+			sprite.scale = Vector2(1.0/7.0, 1.0/7.0);
+			button.add_child(sprite);
+			sprite.position = button.rect_size / 2;
+			sprite.texture = image;
+			button.text = "";
+		else:
+			button.text = image;
+			return;
 
 func get_binding(action: String, i: int) -> String:
 	var events = InputMap.get_action_list(action);
