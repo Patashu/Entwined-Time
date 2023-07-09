@@ -32,6 +32,7 @@ func _prevbutton_pressed() -> void:
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
 	update_focus_neighbors();
+	prevbutton.grab_focus();
 
 func _nextbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -41,6 +42,7 @@ func _nextbutton_pressed() -> void:
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
 	update_focus_neighbors();
+	nextbutton.grab_focus();
 
 func _leveleditorbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
