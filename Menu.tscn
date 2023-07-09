@@ -22,6 +22,8 @@ margin_left = 9.0
 margin_top = 17.0
 margin_right = 74.0
 margin_bottom = 32.0
+focus_neighbour_left = NodePath("../YourReplayButton")
+focus_neighbour_top = NodePath("../RestartButton")
 text = "Continue"
 
 [node name="YourReplayButton" type="Button" parent="Holder"]
@@ -29,6 +31,8 @@ margin_left = 78.0
 margin_top = 17.0
 margin_right = 160.0
 margin_bottom = 32.0
+focus_neighbour_top = NodePath("../UndoRestartButton")
+focus_neighbour_right = NodePath("../OkButton")
 text = "Your Replay"
 
 [node name="AuthorsReplayButton" type="Button" parent="Holder"]
@@ -36,6 +40,7 @@ margin_left = 78.0
 margin_top = 35.0
 margin_right = 144.0
 margin_bottom = 50.0
+focus_neighbour_right = NodePath("../LevelSelectButton")
 text = "Author's Replay"
 
 [node name="SaveReplayButton" type="Button" parent="Holder"]
@@ -43,6 +48,7 @@ margin_left = 78.0
 margin_top = 53.0
 margin_right = 160.0
 margin_bottom = 68.0
+focus_neighbour_right = NodePath("../InsightButton")
 text = "Save Replay"
 
 [node name="CopyReplayButton" type="Button" parent="Holder"]
@@ -50,6 +56,7 @@ margin_left = 78.0
 margin_top = 71.0
 margin_right = 160.0
 margin_bottom = 86.0
+focus_neighbour_right = NodePath("../ControlsButton")
 text = "Copy Replay"
 
 [node name="PasteReplayButton" type="Button" parent="Holder"]
@@ -57,6 +64,7 @@ margin_left = 78.0
 margin_top = 89.0
 margin_right = 160.0
 margin_bottom = 104.0
+focus_neighbour_right = NodePath("../SettingsButton")
 text = "Paste Replay"
 
 [node name="LevelSelectButton" type="Button" parent="Holder"]
@@ -64,6 +72,7 @@ margin_left = 9.0
 margin_top = 35.0
 margin_right = 74.0
 margin_bottom = 50.0
+focus_neighbour_left = NodePath("../AuthorsReplayButton")
 text = "Level Select"
 
 [node name="InsightButton" type="Button" parent="Holder"]
@@ -71,6 +80,7 @@ margin_left = 9.0
 margin_top = 53.0
 margin_right = 74.0
 margin_bottom = 68.0
+focus_neighbour_left = NodePath("../SaveReplayButton")
 text = "Gain Insight"
 
 [node name="ControlsButton" type="Button" parent="Holder"]
@@ -78,6 +88,7 @@ margin_left = 9.0
 margin_top = 71.0
 margin_right = 74.0
 margin_bottom = 86.0
+focus_neighbour_left = NodePath("../CopyReplayButton")
 text = "Controls"
 
 [node name="SettingsButton" type="Button" parent="Holder"]
@@ -85,6 +96,7 @@ margin_left = 9.0
 margin_top = 89.0
 margin_right = 74.0
 margin_bottom = 104.0
+focus_neighbour_left = NodePath("../PasteReplayButton")
 text = "Settings"
 
 [node name="RestartButton" type="Button" parent="Holder"]
@@ -92,6 +104,8 @@ margin_left = 9.0
 margin_top = 107.0
 margin_right = 74.0
 margin_bottom = 122.0
+focus_neighbour_left = NodePath("../UndoRestartButton")
+focus_neighbour_bottom = NodePath("../OkButton")
 text = "Restart"
 
 [node name="UndoRestartButton" type="Button" parent="Holder"]
@@ -99,6 +113,8 @@ margin_left = 79.0
 margin_top = 107.0
 margin_right = 160.0
 margin_bottom = 122.0
+focus_neighbour_right = NodePath("../RestartButton")
+focus_neighbour_bottom = NodePath("../YourReplayButton")
 text = "Undo a Restart"
 
 [node name="Pointer" type="Sprite" parent="Holder"]

@@ -30,6 +30,7 @@ func _ready() -> void:
 	settingsbutton.connect("pressed", self, "_settingsbutton_pressed");
 	restartbutton.connect("pressed", self, "_restartbutton_pressed");
 	undorestartbutton.connect("pressed", self, "_undorestartbutton_pressed");
+	#IF YOU CHANGE THE NUMBER OF BUTTONS, CHANGE FOCUS NEIGHBOURS IN EDITOR TOO!!
 	
 	if gamelogic.in_insight_level:
 		insightbutton.text = "Lose Insight";
