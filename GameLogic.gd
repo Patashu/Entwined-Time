@@ -295,6 +295,7 @@ var sounds_played_this_frame = {};
 var muted = false;
 var won = false;
 var nonstandard_won = false;
+var won_cooldown = 0;
 var lost = false;
 var lost_void = false;
 var won_fade_started = false;
@@ -2931,6 +2932,7 @@ func check_won() -> void:
 	
 	winlabel.visible = won;
 	if (won):
+		won_cooldown = 0;
 		if (level_name == "Joke"):
 			winlabel.change_text("Thanks for playing :3")
 		elif !using_controller:
@@ -3741,7 +3743,10 @@ func update_level_label() -> void:
 	if (doing_replay):
 		levellabel.text += " (REPLAY)"
 		if (heavy_max_moves < 11 and light_max_moves < 11):
-			levellabel.text += " (F9/F10 ADJUST SPEED)";
+			if (using_controller):
+				levellabel.text += " (L2/R2 ADJUST SPEED)";
+			else:
+				levellabel.text += " (F9/F10 ADJUST SPEED)";
 	if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 		if (levelstar.next_modulates.size() > 0):
 			# in the middle of a flash from just having won
@@ -4052,6 +4057,9 @@ func _process(delta: float) -> void:
 	
 	sounds_played_this_frame.clear();
 	
+	if (won):
+		won_cooldown += delta;
+	
 	replay_timer += delta;
 	if (sky_timer < sky_timer_max):
 		sky_timer += delta;
@@ -4090,6 +4098,18 @@ func _process(delta: float) -> void:
 				load_level(1);
 		elif (Input.is_action_just_pressed("mute")):
 			toggle_mute();
+		elif (Input.is_action_just_pressed("previous_level") and !doing_replay and (!won or won_cooldown > 0.5)):
+			if (won or lost or meta_turn <= 0):
+				end_replay();
+				load_level(-1);
+			else:
+				play_sound("bump");
+		elif (Input.is_action_just_pressed("next_level") and !doing_replay and (!won or won_cooldown > 0.5)):
+			if (won or lost or meta_turn <= 0):
+				end_replay();
+				load_level(1);
+			else:
+				play_sound("bump");
 		elif (Input.is_action_just_pressed("speedup_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.015;
@@ -4119,7 +4139,6 @@ func _process(delta: float) -> void:
 			floating_text("Ctrl+C: Replay copied");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
 			replay_from_clipboard();
-		
 		elif (Input.is_action_just_pressed("character_undo")):
 			end_replay();
 			character_undo();
@@ -4135,18 +4154,6 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		elif (Input.is_action_just_pressed("previous_level")):
-			if (won or lost or meta_turn <= 0):
-				end_replay();
-				load_level(-1);
-			else:
-				play_sound("bump");
-		elif (Input.is_action_just_pressed("next_level")):
-			if (won or lost or meta_turn <= 0):
-				end_replay();
-				load_level(1);
-			else:
-				play_sound("bump");
 		elif (Input.is_action_just_pressed("gain_insight")):
 			end_replay();
 			gain_insight();
