@@ -10,9 +10,11 @@ onready var leveleditorbutton : Button = get_node("Holder/LevelEditorButton");
 onready var closebutton : Button = get_node("Holder/CloseButton");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, closebutton, pointer];
+var buttons_by_xy = {};
 
 func _ready() -> void:
 	prepare_chapter();
+	update_focus_neighbors();
 	prevbutton.connect("pressed", self, "_prevbutton_pressed");
 	nextbutton.connect("pressed", self, "_nextbutton_pressed");
 	leveleditorbutton.connect("pressed", self, "_leveleditorbutton_pressed");
@@ -29,6 +31,7 @@ func _prevbutton_pressed() -> void:
 	chapter -= 1;
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
+	update_focus_neighbors();
 
 func _nextbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -37,6 +40,7 @@ func _nextbutton_pressed() -> void:
 	chapter += 1;
 	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
 	prepare_chapter();
+	update_focus_neighbors();
 
 func _leveleditorbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -44,7 +48,60 @@ func _leveleditorbutton_pressed() -> void:
 	
 	pass
 
+func update_focus_neighbors() -> void:
+	for pos in buttons_by_xy.keys():
+		var button = buttons_by_xy[pos];
+		
+		# up
+		button.focus_neighbour_top = button.get_path_to(closebutton);
+		if (buttons_by_xy.has(pos + Vector2.UP)):
+			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.UP]);
+		elif (buttons_by_xy.has(pos + Vector2.UP + Vector2.UP)):
+			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.UP + Vector2.UP]);
+		elif (buttons_by_xy.has(pos + Vector2.LEFT + Vector2.UP)):
+			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.LEFT + Vector2.UP]);
+		elif (buttons_by_xy.has(pos + Vector2.RIGHT + Vector2.UP)):
+			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.RIGHT + Vector2.UP]);
+			
+		# down
+		var sideways = Vector2.RIGHT;
+		if (pos.x == 0):
+			button.focus_neighbour_bottom = button.get_path_to(prevbutton);
+		else:
+			button.focus_neighbour_bottom = button.get_path_to(nextbutton);
+			sideways = Vector2.LEFT;
+		if (buttons_by_xy.has(pos + Vector2.DOWN)):
+			button.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[pos + Vector2.DOWN]);
+		elif (buttons_by_xy.has(pos + Vector2.DOWN + Vector2.DOWN)):
+			button.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[pos + Vector2.DOWN + Vector2.DOWN]);
+			
+		# left and right
+		for i in range(10):
+			if (buttons_by_xy.has(pos + sideways - Vector2.UP*i)):
+				button.focus_neighbour_left = button.get_path_to(buttons_by_xy[pos + sideways - Vector2.UP*i]);
+				button.focus_neighbour_right = button.get_path_to(buttons_by_xy[pos + sideways - Vector2.UP*i]);
+				break;
+			elif (buttons_by_xy.has(pos + sideways - Vector2.UP*i)):
+				button.focus_neighbour_left = button.get_path_to(buttons_by_xy[pos + sideways - Vector2.UP*i]);
+				button.focus_neighbour_right = button.get_path_to(buttons_by_xy[pos + sideways - Vector2.UP*i]);
+				break;
+			
+		# focus button down and left
+		if (buttons_by_xy.has(Vector2(0, 0))):
+			closebutton.focus_neighbour_left = button.get_path_to(buttons_by_xy[Vector2(0, 0)]);
+			closebutton.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[Vector2(0, 0)]);
+		elif (buttons_by_xy.has(Vector2(0, 1))):
+			closebutton.focus_neighbour_left = button.get_path_to(buttons_by_xy[Vector2(0, 1)]);
+			closebutton.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[Vector2(0, 1)]);
+			
+		if (buttons_by_xy.has(Vector2(1, 0))):
+			closebutton.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[Vector2(1, 0)]);
+		elif (buttons_by_xy.has(Vector2(1, 1))):
+			closebutton.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[Vector2(1, 1)]);
+
 func prepare_chapter() -> void:
+	buttons_by_xy.clear();
+	
 	for child in holder.get_children():
 		if !specialbuttons.has(child):
 			child.queue_free();
@@ -112,6 +169,7 @@ func prepare_chapter() -> void:
 	
 	for i in range(advanced_start - normal_start):
 		var button = preload("res://LevelButton.tscn").instance();
+		buttons_by_xy[Vector2(x, y)] = button;
 		holder.add_child(button);
 		button.rect_position.x = xx + xxx*x;
 		button.rect_position.y = yy + yyy*y;
@@ -180,6 +238,7 @@ func prepare_chapter() -> void:
 		else:
 			for i in range(advanced_end - advanced_start):
 				var button = preload("res://LevelButton.tscn").instance();
+				buttons_by_xy[Vector2(x, y)] = button;
 				holder.add_child(button);
 				button.rect_position.x = xx + xxx*x;
 				button.rect_position.y = yy + yyy*y;
