@@ -3180,6 +3180,16 @@ func escape() -> void:
 	ui_stack.push_back(levelselect);
 	levelscene.add_child(levelselect);
 	
+func level_select() -> void:
+	if (ui_stack.size() > 0):
+		# can happen if we click the button directly
+		var topmost_ui = ui_stack.pop_front();
+		topmost_ui.queue_free();
+		return;
+	var levelselect = preload("res://LevelSelect.tscn").instance();
+	ui_stack.push_back(levelselect);
+	levelscene.add_child(levelselect);
+	
 func trying_to_load_locked_level() -> bool:
 	if save_file.has("unlock_everything") and save_file["unlock_everything"]:
 		return false;
@@ -4164,6 +4174,8 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
+		elif (Input.is_action_just_pressed("level_select")):
+			level_select();
 		elif (Input.is_action_just_pressed("gain_insight")):
 			end_replay();
 			gain_insight();
