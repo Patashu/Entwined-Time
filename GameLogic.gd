@@ -4231,8 +4231,9 @@ func _process(delta: float) -> void:
 				escape();
 			else:
 				load_level(1);
-		elif (Input.is_action_just_pressed("mute")):
-			toggle_mute();
+		elif (Input.is_action_just_pressed("escape")):
+			#end_replay(); #done in escape();
+			escape();
 		elif (Input.is_action_just_pressed("previous_level") and !doing_replay and (!won or won_cooldown > 0.5)):
 			if (won or lost or meta_turn <= 0):
 				end_replay();
@@ -4245,6 +4246,8 @@ func _process(delta: float) -> void:
 				load_level(1);
 			else:
 				play_sound("bump");
+		elif (Input.is_action_just_pressed("mute")):
+			toggle_mute();
 		elif (Input.is_action_just_pressed("speedup_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.015;
@@ -4292,9 +4295,6 @@ func _process(delta: float) -> void:
 			end_replay();
 			restart();
 			update_info_labels();
-		elif (Input.is_action_just_pressed("escape")):
-			#end_replay(); #done in escape();
-			escape();
 		elif (Input.is_action_just_pressed("level_select")):
 			level_select();
 		elif (Input.is_action_just_pressed("gain_insight")):
