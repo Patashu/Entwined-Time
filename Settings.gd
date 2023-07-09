@@ -231,6 +231,8 @@ func _process(delta: float) -> void:
 	
 	if (Input.is_action_just_released("escape")):
 		destroy();
+	if (Input.is_action_just_pressed("ui_cancel")):
+		destroy();
 		
 	var focus = holder.get_focus_owner();
 	if (focus == null):

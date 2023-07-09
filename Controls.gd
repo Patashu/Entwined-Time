@@ -19,7 +19,10 @@ func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
+	# TODO: but don't do this while rebinding keys
 	if (Input.is_action_just_released("escape")):
+		destroy();
+	if (Input.is_action_just_pressed("ui_cancel")):
 		destroy();
 		
 	var focus = holder.get_focus_owner();

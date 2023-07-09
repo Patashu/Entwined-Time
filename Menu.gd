@@ -174,8 +174,12 @@ func _process(delta: float) -> void:
 	
 	if (Input.is_action_just_pressed("escape")):
 		destroy();
+	if (Input.is_action_just_pressed("ui_cancel")):
+		destroy();
 	if (Input.is_action_just_pressed("level_select")):
 		_levelselectbutton_pressed();
+	if (Input.is_action_just_pressed("gain_insight")):
+		_insightbutton_pressed();
 		
 	var focus = holder.get_focus_owner();
 	if (focus == null):

@@ -317,6 +317,8 @@ func _process(delta: float) -> void:
 	
 	if (Input.is_action_just_pressed("escape")):
 		destroy();
+	if (Input.is_action_just_pressed("ui_cancel")):
+		destroy();
 	if (Input.is_action_just_pressed("level_select")):
 		destroy();
 	if (Input.is_action_just_pressed("previous_level")):

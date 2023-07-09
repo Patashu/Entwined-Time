@@ -4,10 +4,11 @@ class_name GenericModalPrompt
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
 onready var okbutton : Button = get_node("Holder/OkButton");
 onready var cancelbutton : Button = get_node("Holder/CancelButton");
+onready var holder : Label = get_node("Holder");
+onready var pointer : Sprite = get_node("Holder/Pointer");
 
 func _ready() -> void:
 	cancelbutton.connect("pressed", self, "destroy");
-	#cancelbutton.grab_focus();
 	okbutton.connect("pressed", self, "accept");
 
 func destroy() -> void:
@@ -26,12 +27,20 @@ func _process(delta: float) -> void:
 		destroy();
 	elif (Input.is_action_just_released("ui_cancel")):
 		destroy();
-	elif (Input.is_action_just_released("character_undo")):
-		destroy();
-	elif (Input.is_action_just_released("ui_accept")):
-		accept();
-	elif (Input.is_action_just_released("character_switch")):
-		accept();
+		
+	var focus = holder.get_focus_owner();
+	if (focus == null):
+		cancelbutton.grab_focus();
+		focus = cancelbutton;
+	
+	var focus_middle_x = focus.rect_position.x + focus.rect_size.x / 2;
+	pointer.position.y = focus.rect_position.y + focus.rect_size.y / 2;
+	if (focus_middle_x > holder.rect_size.x / 2):
+		pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
+		pointer.position.x = focus.rect_position.x + focus.rect_size.x + 12;
+	else:
+		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
+		pointer.position.x = focus.rect_position.x - 12;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,
