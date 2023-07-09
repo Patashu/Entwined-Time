@@ -58,6 +58,13 @@ func _ready() -> void:
 	if (gamelogic.user_replay.length() <= 0):
 		copyreplaybutton.disabled = true;
 	
+	# constantly check if we could paste this replay or not
+	var replay = OS.get_clipboard();
+	if (gamelogic.is_valid_replay(replay)):
+		pastereplaybutton.disabled = false;
+	else:
+		pastereplaybutton.disabled = true;
+	
 	okbutton.grab_focus();
 
 func _yourreplaybutton_pressed() -> void:
@@ -182,7 +189,6 @@ func _process(delta: float) -> void:
 		pointer.position.x = focus.rect_position.x - 12;
 		
 	# constantly check if we could paste this replay or not
-	# must be kept in sync with GameLogic
 	var replay = OS.get_clipboard();
 	if (gamelogic.is_valid_replay(replay)):
 		pastereplaybutton.disabled = false;

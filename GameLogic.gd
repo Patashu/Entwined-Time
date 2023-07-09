@@ -1008,7 +1008,7 @@ func ready_tutorial() -> void:
 	else:
 		metainfolabel.visible = false;
 		
-	if level_number > 7:
+	if level_number > 6:
 		tutoriallabel.visible = false;
 		downarrow.visible = false;
 		leftarrow.visible = false;
@@ -1036,9 +1036,6 @@ func ready_tutorial() -> void:
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(If you Restart by mistake, [color=#A9F05F]Meta-Undo[/color] will undo that too.)";
-		elif (level_number == 7):
-			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "Esc: Level Select/Controls/Settings";
 		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 		call_deferred("update_info_labels");
 			
@@ -3790,13 +3787,12 @@ func update_info_labels() -> void:
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Esc:", "Start:");
 		else:
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Start:", "Esc:");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Select:", "R:");
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
