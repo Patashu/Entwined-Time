@@ -94,7 +94,10 @@ func get_binding(action: String, i: int) -> String:
 	for event in events:
 		if (keyboard_mode and event is InputEventKey) or (!keyboard_mode and event is InputEventJoypadButton):
 			if (found == i):
-				return event.as_text();
+				if (keyboard_mode):
+					return event.as_text();
+				else:
+					return str(event.button_index);
 			else:
 				found += 1;
 	return "";
