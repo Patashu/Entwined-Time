@@ -135,6 +135,72 @@ margin_bottom = 299.0
 theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
+[node name="VirtualButtons" type="Node2D" parent="."]
+
+[node name="UndoButton" type="Button" parent="VirtualButtons"]
+margin_left = 8.0
+margin_top = 273.0
+margin_right = 29.0
+margin_bottom = 295.0
+theme = ExtResource( 2 )
+text = "Z"
+
+[node name="SwapButton" type="Button" parent="VirtualButtons"]
+margin_left = 35.0
+margin_top = 273.0
+margin_right = 57.0
+margin_bottom = 295.0
+theme = ExtResource( 2 )
+text = "X"
+
+[node name="MetaUndoButton" type="Button" parent="VirtualButtons"]
+margin_left = 63.0
+margin_top = 273.0
+margin_right = 85.0
+margin_bottom = 295.0
+theme = ExtResource( 2 )
+text = "C"
+
+[node name="EnterButton" type="Button" parent="VirtualButtons"]
+margin_left = 234.0
+margin_top = 256.0
+margin_right = 277.0
+margin_bottom = 271.0
+theme = ExtResource( 2 )
+text = "Enter"
+
+[node name="LeftButton" type="Button" parent="VirtualButtons"]
+margin_left = 406.0
+margin_top = 273.0
+margin_right = 428.0
+margin_bottom = 295.0
+theme = ExtResource( 2 )
+text = "<"
+
+[node name="DownButton" type="Button" parent="VirtualButtons"]
+margin_left = 434.0
+margin_top = 273.0
+margin_right = 456.0
+margin_bottom = 295.0
+theme = ExtResource( 2 )
+text = "v"
+
+[node name="RightButton" type="Button" parent="VirtualButtons"]
+margin_left = 462.0
+margin_top = 273.0
+margin_right = 484.0
+margin_bottom = 295.0
+theme = ExtResource( 2 )
+text = ">"
+
+[node name="UpButton" type="Button" parent="VirtualButtons"]
+margin_left = 434.0
+margin_top = 246.0
+margin_right = 456.0
+margin_bottom = 268.0
+theme = ExtResource( 2 )
+text = "^"
+
 [node name="DownArrow" type="Sprite" parent="."]
 visible = false
 position = Vector2( -48, -48 )
@@ -160,7 +226,7 @@ script = ExtResource( 40 )
 [node name="TutorialLabel" type="RichTextLabel" parent="."]
 margin_top = 69.0
 margin_right = 512.0
-margin_bottom = 122.0
+margin_bottom = 229.0
 theme = ExtResource( 2 )
 custom_colors/default_color = Color( 0.952941, 0.733333, 0.588235, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )

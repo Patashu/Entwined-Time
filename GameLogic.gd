@@ -29,6 +29,7 @@ onready var Static : Sprite = levelscene.get_node("Static");
 onready var Shade : Node2D = levelscene.get_node("Shade");
 onready var checkerboard : TextureRect = levelscene.get_node("Checkerboard");
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
+onready var virtualbuttons : Node2D = levelscene.get_node("VirtualButtons");
 
 # distinguish between temporal layers when a move or state change happens
 # ghosts is for undo trail ghosts
@@ -401,6 +402,7 @@ func _ready() -> void:
 	menubutton.connect("pressed", self, "escape");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
 	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue");
+	connect_virtual_buttons();
 	call_deferred("adjust_winlabel");
 	load_game();
 	react_to_save_file_update();
@@ -414,6 +416,56 @@ func _ready() -> void:
 	load_level(0);
 	ready_done = true;
 
+func connect_virtual_buttons() -> void:
+	virtualbuttons.get_node("UndoButton").connect("button_down", self, "_undobutton_pressed");
+	virtualbuttons.get_node("SwapButton").connect("button_down", self, "_swapbutton_pressed");
+	virtualbuttons.get_node("MetaUndoButton").connect("button_down", self, "_metaundobutton_pressed");
+	virtualbuttons.get_node("LeftButton").connect("button_down", self, "_leftbutton_pressed");
+	virtualbuttons.get_node("DownButton").connect("button_down", self, "_downbutton_pressed");
+	virtualbuttons.get_node("RightButton").connect("button_down", self, "_rightbutton_pressed");
+	virtualbuttons.get_node("UpButton").connect("button_down", self, "_upbutton_pressed");
+	virtualbuttons.get_node("EnterButton").connect("button_down", self, "_enterbutton_pressed");
+	
+func _undobutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("character_undo");
+	
+func _swapbutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("character_switch");
+	
+func _metaundobutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("meta_undo");
+	
+func _leftbutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("ui_left");
+	
+func _rightbutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("ui_right");
+	
+func _upbutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("ui_up");
+
+func _downbutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("ui_down");
+	
+func _enterbutton_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("ui_accept");
+
 func react_to_save_file_update() -> void:
 	#save_file["gain_insight"] = false;
 	#save_file["authors_replay"] = false;
@@ -426,7 +478,18 @@ func react_to_save_file_update() -> void:
 	prepare_audio();
 	setup_volume();
 	setup_animation_speed();
+	setup_virtual_buttons();
 	refresh_puzzles_completed();
+	
+func setup_virtual_buttons() -> void:
+	if (save_file.has("virtual_buttons") and save_file["virtual_buttons"]):
+		for button in virtualbuttons.get_children():
+			button.disabled = false;
+		virtualbuttons.visible = true;
+	else:
+		for button in virtualbuttons.get_children():
+			button.disabled = true;
+		virtualbuttons.visible = false;
 	
 func setup_resolution() -> void:
 	if (save_file.has("pixel_scale")):
@@ -459,6 +522,8 @@ func setup_colourblind_mode() -> void:
 		var value = save_file["colourblind_mode"];
 		#reset all textures to frame 0 to fix any possible drift
 		for i in range (Tiles.keys().size()):
+			if (i == 9):
+				continue;
 			var tex = terrainmap.tile_set.tile_get_texture(i);
 			if tex is AnimatedTexture:
 				tex.current_frame = 0;
@@ -1019,7 +1084,9 @@ func ready_tutorial() -> void:
 		leftarrow.visible = true;
 		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
-		if (level_number == 0 or level_number == 1):
+		if (level_number == 0):
+			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\n\n\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
+		elif (level_number == 1):
 			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
 		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
@@ -2922,6 +2989,8 @@ func check_won() -> void:
 			save_game();
 	
 	winlabel.visible = won;
+	virtualbuttons.get_node("EnterButton").visible = won and virtualbuttons.visible;
+	virtualbuttons.get_node("EnterButton").disabled = !won or !virtualbuttons.visible;
 	if (won):
 		won_cooldown = 0;
 		if (level_name == "Joke"):

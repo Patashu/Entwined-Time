@@ -23,6 +23,7 @@ margin_left = 150.0
 margin_top = 223.0
 margin_right = 261.0
 margin_bottom = 238.0
+focus_neighbour_bottom = NodePath("../UnlockEverything")
 text = "Ok"
 
 [node name="UnlockEverything" type="CheckBox" parent="Holder"]
@@ -30,6 +31,7 @@ margin_left = 12.0
 margin_top = 17.0
 margin_right = 33.0
 margin_bottom = 37.0
+focus_neighbour_top = NodePath("../OkButton")
 text = "Unlock all puzzles (while this checkbox is ticked)"
 
 [node name="VSync" type="CheckBox" parent="Holder"]
@@ -37,6 +39,7 @@ margin_left = 346.0
 margin_top = 17.0
 margin_right = 404.0
 margin_bottom = 37.0
+focus_neighbour_top = NodePath("../OkButton")
 pressed = true
 text = "VSync"
 
@@ -53,6 +56,13 @@ margin_top = 191.0
 margin_right = 121.0
 margin_bottom = 211.0
 text = "Colourblind Mode"
+
+[node name="VirtualButtons" type="CheckBox" parent="Holder"]
+margin_left = 305.0
+margin_top = 192.0
+margin_right = 404.0
+margin_bottom = 212.0
+text = "Virtual Buttons"
 
 [node name="PixelScale" type="SpinBox" parent="Holder"]
 margin_left = 12.0
