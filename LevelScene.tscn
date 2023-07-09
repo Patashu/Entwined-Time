@@ -207,6 +207,22 @@ margin_bottom = 271.0
 theme = ExtResource( 2 )
 text = "Enter"
 
+[node name="F9Button" type="Button" parent="VirtualButtons/Others"]
+margin_left = 456.0
+margin_top = 5.0
+margin_right = 477.0
+margin_bottom = 27.0
+theme = ExtResource( 2 )
+text = "F9"
+
+[node name="F10Button" type="Button" parent="VirtualButtons/Others"]
+margin_left = 483.0
+margin_top = 5.0
+margin_right = 505.0
+margin_bottom = 27.0
+theme = ExtResource( 2 )
+text = "F10"
+
 [node name="DownArrow" type="Sprite" parent="."]
 visible = false
 position = Vector2( -48, -48 )

@@ -425,6 +425,8 @@ func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Dirs/RightButton").connect("button_down", self, "_rightbutton_pressed");
 	virtualbuttons.get_node("Dirs/UpButton").connect("button_down", self, "_upbutton_pressed");
 	virtualbuttons.get_node("Others/EnterButton").connect("button_down", self, "_enterbutton_pressed");
+	virtualbuttons.get_node("Others/F9Button").connect("button_down", self, "_f9button_pressed");
+	virtualbuttons.get_node("Others/F10Button").connect("button_down", self, "_f10button_pressed");
 	
 func _undobutton_pressed() -> void:
 	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
@@ -465,6 +467,16 @@ func _enterbutton_pressed() -> void:
 	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
 		return;
 	Input.action_press("ui_accept");
+	
+func _f9button_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("slowdown_replay");
+	
+func _f10button_pressed() -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press("speedup_replay");
 
 func react_to_save_file_update() -> void:
 	#save_file["gain_insight"] = false;
@@ -1089,6 +1101,12 @@ func ready_map() -> void:
 	
 	initialize_timeline_viewers();
 	ready_tutorial();
+	
+	if (virtualbuttons.visible):
+		virtualbuttons.get_node("Others/F9Button").visible = doing_replay;
+		virtualbuttons.get_node("Others/F9Button").disabled = !doing_replay;
+		virtualbuttons.get_node("Others/F10Button").visible = doing_replay;
+		virtualbuttons.get_node("Others/F10Button").disabled = !doing_replay;
 	
 func ready_tutorial() -> void:
 	if level_number > 4:
@@ -2942,6 +2960,12 @@ func adjust_meta_turn(amount: int) -> void:
 	update_ghosts();
 	check_won();
 	
+	if (virtualbuttons.visible):
+		virtualbuttons.get_node("Others/F9Button").visible = doing_replay;
+		virtualbuttons.get_node("Others/F9Button").disabled = !doing_replay;
+		virtualbuttons.get_node("Others/F10Button").visible = doing_replay;
+		virtualbuttons.get_node("Others/F10Button").disabled = !doing_replay;
+	
 func check_won() -> void:
 	won = false;
 	var locked = false;
@@ -3834,6 +3858,11 @@ func update_level_label() -> void:
 	if (level_author != "" and level_author != "Patashu"):
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
+		if (virtualbuttons.visible):
+			virtualbuttons.get_node("Others/F9Button").visible = true;
+			virtualbuttons.get_node("Others/F9Button").disabled = false;
+			virtualbuttons.get_node("Others/F10Button").visible = true;
+			virtualbuttons.get_node("Others/F10Button").disabled = false;
 		levellabel.text += " (REPLAY)"
 		if (heavy_max_moves < 11 and light_max_moves < 11):
 			if (using_controller):
