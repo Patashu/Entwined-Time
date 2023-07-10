@@ -11,6 +11,7 @@ onready var rebindingstuff : Node2D = get_node("Holder/RebindingStuff");
 
 var keyboard_mode = true;
 var rebinding_button = null;
+var buttons_by_action = {};
 
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
 "character_undo", "meta_undo", "character_switch", "restart",
@@ -89,6 +90,18 @@ func _resetbutton_pressed() -> void:
 	InputMap.load_from_globals();
 	setup_rebinding_stuff();
 	
+func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
+	# if we WERE an event, erase it.
+	if (button.event != null):
+		InputMap.action_erase_event(button.action, button.event);
+	# Now map the new one.
+	InputMap.action_add_event(button.action, new_event);
+	# TODO: persistence, anti-softlock, bullying, no double binding, ui_cancel to clear, etc
+	var refocus_action = button.action;
+	var refocus_index = button.i;
+	setup_rebinding_stuff();
+	buttons_by_action[refocus_action][refocus_index].grab_focus();
+	
 func setup_rebinding_stuff() -> void:
 	if !keyboard_mode:
 		holder.text = "Controller Controls:"
@@ -102,6 +115,7 @@ func setup_rebinding_stuff() -> void:
 		child.queue_free();
 		rebindingstuff.remove_child(child);
 	rebinding_button = null;
+	buttons_by_action.clear();
 	
 	var half_way = int(ceil(actions.size() / 2));
 	var yy = 12;
@@ -129,8 +143,10 @@ func setup_rebinding_stuff() -> void:
 			label.text = action;
 		else:
 			label.text = hrn_actions[i] + ":";
+			buttons_by_action[action] = [];
 			for j in range(3):
 				var button = Button.new();
+				buttons_by_action[action].append(button);
 				button.set_script(preload("res://BindingButton.gd"));
 				button.parent = self;
 				button.i = j;
@@ -210,17 +226,21 @@ func _process(delta: float) -> void:
 		
 	var focus = holder.get_focus_owner();
 	if (focus == null):
-		okbutton.grab_focus();
-		focus = okbutton;
+		if rebinding_button == null:
+			okbutton.grab_focus();
+			focus = okbutton;
+		else:
+			focus = rebinding_button;
 	
-	var focus_middle_x = round(focus.rect_position.x + focus.rect_size.x / 2);
-	pointer.position.y = round(focus.rect_position.y + focus.rect_size.y / 2);
-	if (focus_middle_x > holder.rect_size.x / 2):
-		pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
-		pointer.position.x = round(focus.rect_position.x + focus.rect_size.x + 12);
-	else:
-		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
-		pointer.position.x = round(focus.rect_position.x - 12);
+	if (focus != null):
+		var focus_middle_x = round(focus.rect_position.x + focus.rect_size.x / 2);
+		pointer.position.y = round(focus.rect_position.y + focus.rect_size.y / 2);
+		if (focus_middle_x > holder.rect_size.x / 2):
+			pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
+			pointer.position.x = round(focus.rect_position.x + focus.rect_size.x + 12);
+		else:
+			pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
+			pointer.position.x = round(focus.rect_position.x - 12);
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

@@ -24,28 +24,19 @@ func _toggled(is_button_pressed):
 			parent.rebinding_button.pressed = false;
 			parent.rebinding_button._toggled(false);
 		parent.rebinding_button = self;
+		release_focus();
 	else:
 		display_current_key()
-	grab_focus();
 		
 func _unhandled_input(new_event : InputEvent):
 	if new_event is InputEventJoypadButton and !keyboard_mode and new_event.is_pressed():
-		remap_action_to(new_event)
+		parent.remap_dance(self, new_event)
 		pressed = false
 		
 func _unhandled_key_input(new_event : InputEventKey):
 	if keyboard_mode and new_event.is_pressed():
-		remap_action_to(new_event)
+		parent.remap_dance(self, new_event)
 		pressed = false
-
-func remap_action_to(new_event):
-	# if we WERE an event, erase it.
-	if (event != null):
-		InputMap.action_erase_event(action, event);
-	# Now map the new one.
-	InputMap.action_add_event(action, new_event);
-	event = new_event;
-	# TODO: persistence, anti-softlock, bullying, no double binding, ui_cancel to clear, etc
 
 func display_current_key():
 	parent.setup_button(self);
