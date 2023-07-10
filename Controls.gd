@@ -51,6 +51,25 @@ var controller_images = [
 	"Touchpad",
 ];
 
+var controller_labels = [
+	"",
+	"",
+	"",
+	"",
+	"LB",
+	"RB",
+	"LT",
+	"RT",
+	"",
+	"",
+	"Select",
+	"Start",
+	"",
+	"",
+	"",
+	"",
+	"Share",
+];
 
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
@@ -147,7 +166,11 @@ func setup_controller_button(button: Button) -> void:
 			button.image = sprite;
 			sprite.position = button.rect_size / 2;
 			sprite.texture = image;
-			button.text = "";
+			if (index < controller_labels.size() and controller_labels[index] != ""):
+				button.text = "    " + controller_labels[index];
+				sprite.position.x = 10;
+			else:
+				button.text = "";
 		else:
 			button.text = image;
 			return;
