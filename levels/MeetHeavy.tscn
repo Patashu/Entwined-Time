@@ -7,17 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 2, 0, 65540, 1, 0, 65541, 8, 0, 65542, 14, 262145, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 2, 0, 65538, 8, 0, 65542, 14, 262145, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Meet Heavy"
-level_replay = "Meet Heavy$mturn=3$ddd"
-heavy_max_moves = 3
+level_replay = "Mee Heavy$mturn=6$dddaaa"
+heavy_max_moves = 6
 light_max_moves = 0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65541, 7, 0 )
+tile_data = PoolIntArray( 65537, 1, 0, 65541, 7, 0 )

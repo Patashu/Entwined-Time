@@ -615,8 +615,8 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(0);
 	chapter_skies.push_back(Color("#223C52"));
-	level_filenames.push_back("MeetHeavy")
 	level_filenames.push_back("MeetLight")
+	level_filenames.push_back("MeetHeavy")
 	level_filenames.push_back("Initiation")
 	level_filenames.push_back("Orientation")
 	level_filenames.push_back("PushingIt")
@@ -1069,7 +1069,7 @@ func ready_map() -> void:
 	light_locked_turns.clear();
 	heavy_selected = true;
 	# Meet Light - only Light is selectable
-	if (level_number == 1):
+	if (level_number == 0):
 		heavy_selected = false;
 	user_replay = "";
 	
