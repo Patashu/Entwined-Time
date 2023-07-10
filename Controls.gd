@@ -19,8 +19,8 @@ var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up
 "character_undo", "meta_undo", "character_switch", "restart",
 "next_level", "previous_level", "mute", "start_replay", "speedup_replay",
 "slowdown_replay", "start_saved_replay", "gain_insight", "level_select", #zero-index 19, 20 total
-"Ctrl+C: Copy Replay", "Ctrl+V: Paste Replay", "Shift+speedup_replay: Max Replay Speed",
-"Shift+slowdown_replay: Default Replay Speed", "Shift+start_saved_replay: Save Replay"
+"Ctrl+C: Copy Replay", "Ctrl+V: Paste Replay", "Shift+Replay Speed+: Max Replay Speed",
+"Shift+Replay Speed-: Default Replay Speed", "Shift+Your Replay: Save Replay"
 ]
 
 var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",
