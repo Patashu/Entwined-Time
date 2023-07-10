@@ -403,6 +403,7 @@ func _ready() -> void:
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
 	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue");
 	connect_virtual_buttons();
+	prepare_audio();
 	call_deferred("adjust_winlabel");
 	load_game();
 	initialize_level_list();
@@ -486,7 +487,6 @@ func react_to_save_file_update() -> void:
 		checkerboard.visible = true;
 	setup_colourblind_mode();
 	setup_resolution();
-	prepare_audio();
 	setup_volume();
 	setup_animation_speed();
 	setup_virtual_buttons();

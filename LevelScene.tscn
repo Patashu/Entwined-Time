@@ -136,6 +136,7 @@ theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
 [node name="VirtualButtons" type="Node2D" parent="."]
+visible = false
 
 [node name="Verbs" type="Node2D" parent="VirtualButtons"]
 
