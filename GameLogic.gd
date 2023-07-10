@@ -418,65 +418,99 @@ func _ready() -> void:
 
 func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Verbs/UndoButton").connect("button_down", self, "_undobutton_pressed");
+	virtualbuttons.get_node("Verbs/UndoButton").connect("button_up", self, "_undobutton_released");
 	virtualbuttons.get_node("Verbs/SwapButton").connect("button_down", self, "_swapbutton_pressed");
+	virtualbuttons.get_node("Verbs/SwapButton").connect("button_up", self, "_swapbutton_released");
 	virtualbuttons.get_node("Verbs/MetaUndoButton").connect("button_down", self, "_metaundobutton_pressed");
+	virtualbuttons.get_node("Verbs/MetaUndoButton").connect("button_up", self, "_metaundobutton_released");
 	virtualbuttons.get_node("Dirs/LeftButton").connect("button_down", self, "_leftbutton_pressed");
+	virtualbuttons.get_node("Dirs/LeftButton").connect("button_up", self, "_leftbutton_released");
 	virtualbuttons.get_node("Dirs/DownButton").connect("button_down", self, "_downbutton_pressed");
+	virtualbuttons.get_node("Dirs/DownButton").connect("button_up", self, "_downbutton_released");
 	virtualbuttons.get_node("Dirs/RightButton").connect("button_down", self, "_rightbutton_pressed");
+	virtualbuttons.get_node("Dirs/RightButton").connect("button_up", self, "_rightbutton_released");
 	virtualbuttons.get_node("Dirs/UpButton").connect("button_down", self, "_upbutton_pressed");
+	virtualbuttons.get_node("Dirs/UpButton").connect("button_up", self, "_upbutton_released");
 	virtualbuttons.get_node("Others/EnterButton").connect("button_down", self, "_enterbutton_pressed");
+	virtualbuttons.get_node("Others/EnterButton").connect("button_up", self, "_enterbutton_released");
 	virtualbuttons.get_node("Others/F9Button").connect("button_down", self, "_f9button_pressed");
+	virtualbuttons.get_node("Others/F9Button").connect("button_up", self, "_f9button_released");
 	virtualbuttons.get_node("Others/F10Button").connect("button_down", self, "_f10button_pressed");
+	virtualbuttons.get_node("Others/F10Button").connect("button_up", self, "_f10button_released");
+	
+func virtual_button_pressed(action: String) -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_press(action);
+	menubutton.grab_focus();
+	menubutton.release_focus();
+	
+func virtual_button_released(action: String) -> void:
+	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
+		return;
+	Input.action_release(action);
+	menubutton.grab_focus();
+	menubutton.release_focus();
 	
 func _undobutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("character_undo");
+	virtual_button_pressed("character_undo");
 	
 func _swapbutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("character_switch");
+	virtual_button_pressed("character_switch");
 	
 func _metaundobutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("meta_undo");
+	virtual_button_pressed("meta_undo");
 	
 func _leftbutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("ui_left");
+	virtual_button_pressed("ui_left");
 	
 func _rightbutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("ui_right");
+	virtual_button_pressed("ui_right");
 	
 func _upbutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("ui_up");
+	virtual_button_pressed("ui_up");
 
 func _downbutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("ui_down");
+	virtual_button_pressed("ui_down");
 	
 func _enterbutton_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("ui_accept");
+	virtual_button_pressed("ui_accept");
 	
 func _f9button_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("slowdown_replay");
+	virtual_button_pressed("slowdown_replay");
 	
 func _f10button_pressed() -> void:
-	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
-		return;
-	Input.action_press("speedup_replay");
+	virtual_button_pressed("speedup_replay");
+	
+func _undobutton_released() -> void:
+	virtual_button_released("character_undo");
+	
+func _swapbutton_released() -> void:
+	virtual_button_released("character_switch");
+	
+func _metaundobutton_released() -> void:
+	virtual_button_released("meta_undo");
+	
+func _leftbutton_released() -> void:
+	virtual_button_released("ui_left");
+	
+func _rightbutton_released() -> void:
+	virtual_button_released("ui_right");
+	
+func _upbutton_released() -> void:
+	virtual_button_released("ui_up");
+
+func _downbutton_released() -> void:
+	virtual_button_released("ui_down");
+	
+func _enterbutton_released() -> void:
+	virtual_button_released("ui_accept");
+	
+func _f9button_released() -> void:
+	virtual_button_released("slowdown_replay");
+	
+func _f10button_released() -> void:
+	virtual_button_released("speedup_replay");
 
 func react_to_save_file_update() -> void:
 	#save_file["gain_insight"] = false;
