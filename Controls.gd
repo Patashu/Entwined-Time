@@ -27,6 +27,14 @@ var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",
 "Next Lev/Chap", "Prev Lev/Chap", "Mute", "Author's Replay", "Replay Speed+",
 "Replay Speed-", "Your Replay", "Gain Insight", "Level Select"]
 
+var blacklist_1 = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down"];
+var blacklist_2 = ["escape", "ui_left", "ui_right", "ui_up", "ui_down",
+"character_undo", "meta_undo", "character_switch", "restart",
+"next_level", "previous_level", "mute", "start_replay", "speedup_replay",
+"slowdown_replay", "start_saved_replay", "gain_insight", "level_select"];
+var whitelist_1 = ["slowdown_replay", "previous_level"];
+var whitelist_2 = ["speedup_replay", "next_level"];
+
 var controller_images = [
 	preload("res://controller_prompts/Positional_Prompts_Down.png"),
 	preload("res://controller_prompts/Positional_Prompts_Right.png"),
@@ -99,11 +107,44 @@ func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
 	# Now map the new one.
 	if (new_event != null):
 		InputMap.action_add_event(button.action, new_event);
-	# TODO: persistence, anti-softlock, bullying, no double binding, ui_cancel to clear, etc
+		
+	# The dance can contain itself...
+	remap_dance_core(button.action, new_event);
+	
+	# Now refresh the bindings page to get everything back in canonical form.
 	var refocus_action = button.action;
 	var refocus_index = button.i;
 	setup_rebinding_stuff();
 	buttons_by_action[refocus_action][refocus_index].grab_focus();
+	
+func whitelisted(a: String, b: String) -> bool:
+	if a == b:
+		return true;
+	if whitelist_1.has(a) and whitelist_1.has(b):
+		return true;
+	if whitelist_2.has(a) and whitelist_2.has(b):
+		return true;
+	return false;
+	
+func remap_dance_core(action: String, new_event: InputEvent) -> void:
+	pass
+	# Now check blacklists and whitelists.
+	# If something else shares a blacklist with us and doesn't share a white list with us,
+	# erase the new input from it.
+	for blacklist in [blacklist_1, blacklist_2]:
+		if blacklist.has(action):
+			for other_action in blacklist:
+				if !whitelisted(action, other_action):
+					if InputMap.action_has_event(other_action, new_event):
+						InputMap.action_erase_event(other_action, new_event);
+	
+	# Now check that everything in blacklist 1 has an input still. If something doesn't, give it
+	# event 1 (of the same keyboard/controller type) from the defaults. Loop until stable.
+	for bully_action in blacklist_1:
+		if get_event(bully_action, 0, keyboard_mode) == null:
+			var bully_event = get_default_event(bully_action, 0, keyboard_mode);
+			InputMap.action_add_event(bully_action, bully_event);
+			remap_dance_core(bully_action, bully_event);
 	
 func setup_rebinding_stuff() -> void:
 	if !keyboard_mode:
@@ -196,6 +237,13 @@ func setup_controller_button(button: Button) -> void:
 
 func get_event(action: String, i: int, keyboard_mode: bool) -> InputEvent:
 	var events = InputMap.get_action_list(action);
+	return get_event_core(events, i, keyboard_mode);
+	
+func get_default_event(action: String, i: int, keyboard_mode: bool) -> InputEvent:
+	var events = ProjectSettings.get_setting("input/" + action)["events"];
+	return get_event_core(events, i, keyboard_mode);
+
+func get_event_core(events: Array, i: int, keyboard_mode: bool) -> InputEvent:
 	var found = 0;
 	for event in events:
 		if (keyboard_mode and event is InputEventKey) or (!keyboard_mode and event is InputEventJoypadButton):
