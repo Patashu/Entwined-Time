@@ -12,6 +12,7 @@ onready var rebindingstuff : Node2D = get_node("Holder/RebindingStuff");
 var keyboard_mode = true;
 var rebinding_button = null;
 var buttons_by_action = {};
+var just_danced = false;
 
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
 "character_undo", "meta_undo", "character_switch", "restart",
@@ -91,11 +92,13 @@ func _resetbutton_pressed() -> void:
 	setup_rebinding_stuff();
 	
 func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
+	just_danced = true;
 	# if we WERE an event, erase it.
 	if (button.event != null):
 		InputMap.action_erase_event(button.action, button.event);
 	# Now map the new one.
-	InputMap.action_add_event(button.action, new_event);
+	if (new_event != null):
+		InputMap.action_add_event(button.action, new_event);
 	# TODO: persistence, anti-softlock, bullying, no double binding, ui_cancel to clear, etc
 	var refocus_action = button.action;
 	var refocus_index = button.i;
@@ -220,6 +223,10 @@ func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 		
+	if (!just_danced and rebinding_button == null and Input.is_action_just_pressed("escape")):
+		destroy();
+		return;
+		
 	var focus = holder.get_focus_owner();
 	if (focus == null):
 		if rebinding_button == null:
@@ -227,6 +234,9 @@ func _process(delta: float) -> void:
 			focus = okbutton;
 		else:
 			focus = rebinding_button;
+	
+	if (!just_danced and rebinding_button == null and focus is BindingButton and Input.is_action_just_pressed("ui_cancel")):
+		remap_dance(focus, null);
 	
 	if (focus != null):
 		var focus_middle_x = round(focus.rect_position.x + focus.rect_size.x / 2);
@@ -237,6 +247,8 @@ func _process(delta: float) -> void:
 		else:
 			pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
 			pointer.position.x = round(focus.rect_position.x - 12);
+			
+	just_danced = false;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,
