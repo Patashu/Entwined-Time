@@ -14,6 +14,7 @@ var rebinding_button = null;
 var buttons_by_action = {};
 var just_danced = false;
 
+# Must keep in sync with GameLogic serialize_bindings/deserialize_bindings
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
 "character_undo", "meta_undo", "character_switch", "restart",
 "next_level", "previous_level", "mute", "start_replay", "speedup_replay",
@@ -261,6 +262,7 @@ func get_text(event: InputEvent) -> String:
 	return "";
 
 func destroy() -> void:
+	gamelogic.serialize_bindings();
 	gamelogic.save_game();
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);

@@ -405,7 +405,6 @@ func _ready() -> void:
 	connect_virtual_buttons();
 	call_deferred("adjust_winlabel");
 	load_game();
-	react_to_save_file_update();
 	initialize_level_list();
 	tile_changes();
 	initialize_shaders();
@@ -491,7 +490,57 @@ func react_to_save_file_update() -> void:
 	setup_volume();
 	setup_animation_speed();
 	setup_virtual_buttons();
+	deserialize_bindings();
 	refresh_puzzles_completed();
+	
+var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
+"character_undo", "meta_undo", "character_switch", "restart",
+"next_level", "previous_level", "mute", "start_replay", "speedup_replay",
+"slowdown_replay", "start_saved_replay", "gain_insight", "level_select"];
+	
+func deserialize_bindings() -> void:
+	if save_file.has("keyboard_bindings"):
+		for action in actions:
+			var events = InputMap.get_action_list(action);
+			for event in events:
+				if (event is InputEventKey):
+					InputMap.action_erase_event(action, event);
+			for new_event_str in save_file["keyboard_bindings"][action]:
+				var parts = new_event_str.split(",");
+				var new_event = InputEventKey.new();
+				new_event.scancode = int(parts[0]);
+				new_event.physical_scancode = int(parts[1]);
+				InputMap.action_add_event(action, new_event);
+	if save_file.has("controller_bindings"):
+		for action in actions:
+			var events = InputMap.get_action_list(action);
+			for event in events:
+				if (event is InputEventJoypadButton):
+					InputMap.action_erase_event(action, event);
+			for new_event_int in save_file["controller_bindings"][action]:
+				var new_event = InputEventJoypadButton.new();
+				new_event.button_index = new_event_int;
+				InputMap.action_add_event(action, new_event);
+
+func serialize_bindings() -> void:
+	if !save_file.has("keyboard_bindings"):
+		save_file["keyboard_bindings"] = {};
+	else:
+		save_file["keyboard_bindings"].clear();
+	if !save_file.has("controller_bindings"):
+		save_file["controller_bindings"] = {};
+	else:
+		save_file["controller_bindings"].clear();
+	
+	for action in actions:
+		var events = InputMap.get_action_list(action);
+		save_file["keyboard_bindings"][action] = [];
+		save_file["controller_bindings"][action] = [];
+		for event in events:
+			if (event is InputEventKey):
+				save_file["keyboard_bindings"][action].append(str(event.scancode) + "," +str(event.physical_scancode));
+			elif (event is InputEventJoypadButton):
+				save_file["controller_bindings"][action].append(event.button_index);
 	
 func setup_virtual_buttons() -> void:
 	var value = 0;
