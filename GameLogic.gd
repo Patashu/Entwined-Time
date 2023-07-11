@@ -738,6 +738,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hell")
 	level_filenames.push_back("No")
 	level_filenames.push_back("TheBoundlessSky")
+	level_filenames.push_back("SpontaneousSpikebustion")
 	level_filenames.push_back("Roast")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
