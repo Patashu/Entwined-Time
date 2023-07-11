@@ -4241,7 +4241,7 @@ func gain_insight() -> void:
 	if (ui_stack.size() > 0):
 		return;
 	
-	if (!unit_test_mode):
+	if (has_insight_level and !unit_test_mode):
 		if (!save_file.has("gain_insight") or save_file["gain_insight"] != true):
 			var modal = preload("res://GainInsightModalPrompt.tscn").instance();
 			ui_stack.push_back(modal);

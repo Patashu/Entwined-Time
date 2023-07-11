@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65537, 7, 0, 65540, 8, 0, 65541, 52, 0, 65542, 52, 0, 65543, 52, 0, 65544, 2, 0, 65545, 1, 0, 65546, 14, 262145, 131072, 14, 655362, 131073, 14, 196615, 131074, 12, 0, 131075, 12, 0, 131076, 14, 196613, 131077, 14, 196615, 131078, 12, 0, 131079, 12, 0, 131080, 14, 196613, 131081, 14, 196614, 131082, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Nomadic (Insight)"
+level_replay = "Nomadic (Insight)$mturn=18$xxaaaddzzzzxaxzzzzdddd"
+heavy_max_moves = 6
+light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65540, 38, 0, 65544, 38, 0 )
