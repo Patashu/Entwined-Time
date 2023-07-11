@@ -7,17 +7,11 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 1, 2, 0, 3, 1, 0, 65536, 14, 196613, 65537, 14, 524292, 65539, 14, 196613, 65540, 14, 196615, 131073, 14, 262145, 131076, 8, 0, 196609, 14, 327681, 196610, 12, 0, 196611, 12, 0, 196612, 14, 196613, 196613, 14, 196615 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65546, 14, 262145, 131072, 14, 262145, 131082, 14, 262145, 196608, 14, 262145, 196618, 14, 262145, 262144, 14, 262145, 262149, 12, 0, 262154, 14, 262145, 327680, 14, 262145, 327681, 1, 0, 327685, 12, 0, 327687, 2, 0, 327688, 8, 0, 327689, 7, 0, 327690, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196615, 393220, 12, 0, 393221, 12, 0, 393222, 12, 0, 393223, 14, 196613, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "The Spike Pit (Insight)"
-level_replay = "The Spike Pit (Insight)$mturn=7$xaaxdwdxzz"
-heavy_max_moves = 3
-light_max_moves = 2
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 131076, 7, 0 )
+level_replay = "The Spike Pit (Insight)$mturn=17$wxaaaxzwawaaaaaxzzzd"
+heavy_max_moves = 8
+light_max_moves = 4
