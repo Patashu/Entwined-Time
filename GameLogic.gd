@@ -3457,7 +3457,7 @@ func load_level(impulse: int) -> void:
 				break;
 		# buggy if the game just loaded, for some reason, but I didn't want it anyway
 		if (ready_done):
-			escape();
+			level_select();
 			
 	if (impulse != 0):
 		in_insight_level = false;
@@ -4313,7 +4313,7 @@ func _process(delta: float) -> void:
 			if (in_insight_level):
 				gain_insight();
 			elif last_level_of_section():
-				escape();
+				level_select();
 			else:
 				load_level(1);
 		elif (Input.is_action_just_pressed("escape")):
