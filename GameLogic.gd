@@ -985,6 +985,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("LimitedUndo")
 	level_filenames.push_back("UphillLimited")
 	level_filenames.push_back("TimeStop")
+	level_filenames.push_back("Nomadic")
 	level_filenames.push_back("KingCrimson")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(72);
