@@ -729,9 +729,9 @@ func initialize_level_list() -> void:
 	chapter_standard_unlock_requirements.push_back(8);
 	chapter_skies.push_back(Color("#512E22"));
 	level_filenames.push_back("Spikes")
+	level_filenames.push_back("TrustFall")
 	level_filenames.push_back("SnakePit")
 	level_filenames.push_back("TheSpikePit")
-	level_filenames.push_back("TrustFall")
 	level_filenames.push_back("Campfire")
 	level_filenames.push_back("SpontaneousCombustion")
 	level_filenames.push_back("Firewall")
