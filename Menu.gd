@@ -32,7 +32,12 @@ func _ready() -> void:
 	undorestartbutton.connect("pressed", self, "_undorestartbutton_pressed");
 	#IF YOU CHANGE THE NUMBER OF BUTTONS, CHANGE FOCUS NEIGHBOURS IN EDITOR TOO!!
 	
-	if gamelogic.in_insight_level:
+	if gamelogic.has_remix.has(gamelogic.level_name) or gamelogic.level_name.find("(Remix)") >= 0:
+		if gamelogic.in_insight_level:
+			insightbutton.text = "Lose Remix";
+		else:
+			insightbutton.text = "Gain Remix";
+	elif gamelogic.in_insight_level:
 		insightbutton.text = "Lose Insight";
 	elif !gamelogic.has_insight_level:
 		insightbutton.disabled = true;

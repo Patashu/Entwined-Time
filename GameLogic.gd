@@ -344,6 +344,7 @@ var meta_undo_a_restart_mode = false;
 var level_list = [];
 var level_filenames = [];
 var level_names = [];
+var has_remix = {};
 var chapter_names = [];
 var chapter_skies = [];
 var chapter_replacements = {};
@@ -1125,6 +1126,14 @@ func initialize_level_list() -> void:
 		var level_name = level.get_node("LevelInfo").level_name;
 		level_names.push_back(level_name);
 		level.queue_free();
+		# also learn which puzzles are remixes
+		var insight_path = "res://levels/insight/" + level_name + "Insight.tscn";
+		if (ResourceLoader.exists(insight_path)):
+			var insight_level = load(insight_path).instance();
+			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
+			if (insight_level_name.find("(Remix)") >= 0):
+				has_remix[level_name] = true;
+			insight_level.queue_free();
 		
 	refresh_puzzles_completed();
 		
