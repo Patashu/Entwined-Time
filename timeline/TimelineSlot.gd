@@ -24,8 +24,18 @@ var lock_timer_max = 0;
 func _ready() -> void:
 	pass # Replace with function body.
 
+func remember_animation() -> void:
+	crystalanimation.visible = true;
+	lockanimation.visible = false;
+	crystalanimation.texture = preload("res://assets/CrystalFrameAnimationPB.png");
+	crystalanimation.hframes = 15;
+	crystalanimation.frame = 0;
+	crystal_timer = 0;
+	crystal_timer_max = 0.5/crystalanimation.hframes;
+
 func lock_animation() -> void:
 	crystalanimation.visible = true;
+	lockanimation.visible = false;
 	crystalanimation.texture = preload("res://assets/CrystalFrameAnimationP.png");
 	crystalanimation.hframes = 15;
 	crystalanimation.frame = 0;
@@ -36,16 +46,30 @@ func lock_animation_part_2() -> void:
 	crystalanimation.frame = crystalanimation.hframes - 1;
 	crystal_timer = 0;
 	crystal_timer_max = 0;
-	lockanimation.visible = true;
-	lockanimation.texture = preload("res://assets/LockingTime.png");
-	lockanimation.hframes = 5;
-	lockanimation.frame = 0;
+	if (crystalanimation.texture == preload("res://assets/CrystalFrameAnimationP.png")):
+		lockanimation.visible = true;
+		lockanimation.texture = preload("res://assets/LockingTime.png");
+		lockanimation.hframes = 5;
+		lockanimation.frame = 0;
+		lock_timer = 0;
+		lock_timer_max = 0.5/lockanimation.hframes;
+	else:
+		crystalanimation.texture = preload("res://assets/TestCrystalFrame.png");
+		crystalanimation.frame = 0;
+		crystalanimation.hframes = 1;
+	
+func lock_animation_part_3() -> void:
+	lockanimation.frame = lockanimation.hframes - 1;
 	lock_timer = 0;
-	lock_timer_max = 0.5/lockanimation.hframes;
+	lock_timer_max = 0;
 	
 func undo_lock_animation() -> void:
 	crystalanimation.visible = false;
 	lockanimation.visible = false;
+	
+func undo_remember_animation() -> void:
+	lock_animation();
+	finish_animations();
 
 func fill(buffer: Array) -> void:
 	for sprite in timelinesymbols.get_children():
@@ -220,6 +244,9 @@ func finish_animations() -> void:
 	
 	if (crystal_timer_max > 0):
 		lock_animation_part_2();
+		
+	if (lock_timer_max > 0):
+		lock_animation_part_3();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -229,8 +256,7 @@ func _process(delta: float) -> void:
 			lock_timer -= lock_timer_max;
 			lockanimation.frame += 1;
 			if (lockanimation.frame + 1 == lockanimation.hframes):
-				lock_timer = 0;
-				lock_timer_max = 0;
+				lock_animation_part_3();
 	
 	if (crystal_timer_max > 0):
 		crystal_timer += delta;

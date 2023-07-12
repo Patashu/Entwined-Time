@@ -95,7 +95,7 @@ func undo_add_max_turn() -> void:
 	var last_slot = timelineslots.get_children().pop_back();
 	last_slot.queue_free();
 	
-func lock_turn(turn_locked: int) -> void:
+func lock_turn(turn_locked: int) -> TimelineSlot:
 	# I didn't actually end up using turn_locked since it's unambiguous, but I COULD.
 	# this will have happened AFTER add_turn. So we just lock the appropriate turn or an empty slot at the end.
 	var slot_to_move = null;
@@ -114,6 +114,7 @@ func lock_turn(turn_locked: int) -> void:
 	slot_to_move.locked = true;
 	finish_divider_position();
 	finish_slot_positions();
+	return slot_to_move;
 	
 func undo_lock_turn() -> TimelineSlot:
 	# We know which turn we most recently locked, it's the one at the bottom - so just move it back
@@ -154,15 +155,14 @@ func undo_lock_turn() -> TimelineSlot:
 func unlock_turn(turn: int) -> void:
 	# just re-use all that code I wrote real quick and...
 	var slot_to_move = undo_lock_turn();
-	# I have decreed it, to fix a visual bug and make my life easier: just set it to have no frame if it's empty
-	if (slot_to_move.timelinesymbols.get_children().size() > 0):
-		slot_to_move.texture = preload("res://assets/TestCrystalFrame.png");
+	slot_to_move.remember_animation();
 	# TODO: fancy animation of slot unlocking
 	
 func undo_unlock_turn(turn: int) -> void:
 	# the opposite of unlocking is locking again, so let's try that and see if it works...
 	# have to adjust current_move first. hopefully this ain't TOO hacky.
-	lock_turn(turn);
+	var slot_to_move = lock_turn(turn);
+	slot_to_move.undo_remember_animation();
 
 func add_turn(buffer: Array) -> void:
 	if current_move >= (max_moves):
