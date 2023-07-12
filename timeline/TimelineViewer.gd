@@ -110,7 +110,7 @@ func lock_turn(turn_locked: int) -> void:
 	timelineslots.add_child(slot_to_move);
 	# TODO: animate slot texture changing
 	slot_to_move.fuzz_off();
-	slot_to_move.texture = preload("res://assets/TestCrystalFrameP.png");
+	slot_to_move.lock_animation();
 	slot_to_move.locked = true;
 	finish_divider_position();
 	finish_slot_positions();
@@ -119,10 +119,7 @@ func undo_lock_turn() -> TimelineSlot:
 	# We know which turn we most recently locked, it's the one at the bottom - so just move it back
 	var slot_to_move = timelineslots.get_child(timelineslots.get_children().size()-1);
 	# no animation since this is a meta undo function only
-	if (is_heavy):
-		slot_to_move.texture = preload("res://timeline/timeline-slot-heavy-24.png");
-	else:
-		slot_to_move.texture = preload("res://timeline/timeline-slot-light-24.png");
+	slot_to_move.undo_lock_animation();
 	# TODO: fancy animation of slots sliding
 	# if it's empty, move it just after max_moves.
 	if (slot_to_move.timelinesymbols.get_children().size() == 0):

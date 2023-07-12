@@ -8,15 +8,44 @@ var showing_fuzz = false;
 var fuzz_timer = 0;
 var locked = false;
 var parent = null;
+onready var crystalanimation : Sprite = get_node("CrystalAnimation");
 onready var timelinesymbols : Node2D = get_node("TimelineSymbols");
 onready var overlay : Sprite = get_node("Overlay");
+onready var lockanimation : Sprite = get_node("LockAnimation");
 
 var region_timer = 0;
 var region_timer_max = 0;
+var crystal_timer = 0;
+var crystal_timer_max = 0;
+var lock_timer = 0;
+var lock_timer_max = 0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
+
+func lock_animation() -> void:
+	crystalanimation.visible = true;
+	crystalanimation.texture = preload("res://assets/CrystalFrameAnimationP.png");
+	crystalanimation.hframes = 15;
+	crystalanimation.frame = 0;
+	crystal_timer = 0;
+	crystal_timer_max = 0.5/crystalanimation.hframes;
+	
+func lock_animation_part_2() -> void:
+	crystalanimation.frame = crystalanimation.hframes - 1;
+	crystal_timer = 0;
+	crystal_timer_max = 0;
+	lockanimation.visible = true;
+	lockanimation.texture = preload("res://assets/LockingTime.png");
+	lockanimation.hframes = 5;
+	lockanimation.frame = 0;
+	lock_timer = 0;
+	lock_timer_max = 0.5/lockanimation.hframes;
+	
+func undo_lock_animation() -> void:
+	crystalanimation.visible = false;
+	lockanimation.visible = false;
 
 func fill(buffer: Array) -> void:
 	for sprite in timelinesymbols.get_children():
@@ -188,9 +217,29 @@ func finish_animations() -> void:
 		region_timer = region_timer_max;
 		region_enabled = false;
 		offset = Vector2(12, 12);
+	
+	if (crystal_timer_max > 0):
+		lock_animation_part_2();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (lock_timer_max > 0):
+		lock_timer += delta;
+		if (lock_timer >= lock_timer_max):
+			lock_timer -= lock_timer_max;
+			lockanimation.frame += 1;
+			if (lockanimation.frame + 1 == lockanimation.hframes):
+				lock_timer = 0;
+				lock_timer_max = 0;
+	
+	if (crystal_timer_max > 0):
+		crystal_timer += delta;
+		if (crystal_timer >= crystal_timer_max):
+			crystal_timer -= crystal_timer_max;
+			crystalanimation.frame += 1;
+			if (crystalanimation.frame + 1 == crystalanimation.hframes):
+				lock_animation_part_2();
+	
 	if (region_timer < region_timer_max):
 		region_timer += delta;
 		if (region_timer > region_timer_max):
