@@ -20,20 +20,33 @@ var crystal_timer_max = 0;
 var lock_timer = 0;
 var lock_timer_max = 0;
 
+var motion_start = Vector2.ZERO;
+var motion_end = Vector2.ZERO;
+var motion_timer = 0;
+var motion_timer_max = 0;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
+func start_motion(end: Vector2) -> void:
+	motion_start = position;
+	motion_end = end;
+	motion_timer = 0;
+	motion_timer_max = 1;
+
 func remember_animation() -> void:
+	z_index = 1;
 	crystalanimation.visible = true;
 	lockanimation.visible = false;
 	crystalanimation.texture = preload("res://assets/CrystalFrameAnimationPB.png");
 	crystalanimation.hframes = 15;
 	crystalanimation.frame = 0;
 	crystal_timer = 0;
-	crystal_timer_max = 0.5/crystalanimation.hframes;
+	crystal_timer_max = 1.0/crystalanimation.hframes;
 
 func lock_animation() -> void:
+	z_index = 1;
 	crystalanimation.visible = true;
 	lockanimation.visible = false;
 	crystalanimation.texture = preload("res://assets/CrystalFrameAnimationP.png");
@@ -247,6 +260,14 @@ func finish_animations() -> void:
 		
 	if (lock_timer_max > 0):
 		lock_animation_part_3();
+		
+	if (motion_timer_max > 0):
+		finish_motion();
+		
+func finish_motion() -> void:
+	position = motion_end;
+	motion_timer_max = 0;
+	z_index = 0;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -274,6 +295,13 @@ func _process(delta: float) -> void:
 		else:
 			region_rect = Rect2(20, 20, 32, 32*(region_timer/region_timer_max));
 			offset = Vector2(12, 12-16+32*(region_timer/region_timer_max)/2);
+	
+	if (motion_timer_max > 0):
+		motion_timer += delta;
+		if (motion_timer >= motion_timer_max):
+			finish_motion();
+		else:
+			position = lerp(motion_start, motion_end, motion_timer / motion_timer_max);
 	
 	if (showing_fuzz):
 		fuzz_timer += delta;

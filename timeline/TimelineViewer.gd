@@ -40,11 +40,14 @@ func reset() -> void:
 		slot.position.y += yy*(i%y_max);
 		slot.position.x += xx*floor(i/y_max);
 
-func finish_slot_positions() -> void:
+func finish_slot_positions(slow: bool = false) -> void:
 	var i = 0;
 	for slot in timelineslots.get_children():
-		slot.position.y = yy*(i%y_max);
-		slot.position.x = xx*floor(i/y_max);
+		if (slow):
+			slot.start_motion(Vector2(xx*floor(i/y_max), yy*(i%y_max)));
+		else:
+			slot.position.y = yy*(i%y_max);
+			slot.position.x = xx*floor(i/y_max);
 		i += 1;
 
 func finish_divider_position() -> void:
@@ -65,17 +68,18 @@ func broadcast_remove_sprite(sprite: TimelineSprite) -> void:
 func broadcast_sprite(sprite: TimelineSprite) -> void:
 	nonce_to_sprite_dictionary[sprite.animation_nonce] = sprite;
 
-func finish_animations() -> void:
-	for child in animating_children:
+func finish_slot_animations() -> void:
+	for child in timelineslots.get_children():
 		if is_instance_valid(child):
 			child.finish_animations();
-	animating_children.clear();
+
+func finish_animations() -> void:
+	finish_slot_animations();
 	for sprite in nonce_to_sprite_dictionary.values():
 		if is_instance_valid(sprite):
 			sprite.finish_animations();
 
 func add_max_turn() -> void:
-	finish_animations();
 	max_moves += 1;
 	var i = max_moves -1;
 	var slot = preload("res://timeline/TimelineSlot.tscn").instance();
@@ -84,18 +88,16 @@ func add_max_turn() -> void:
 	slot.region_enabled = true;
 	slot.region_rect = Rect2(20, 20, 32, 0);
 	slot.region_timer_max = 0.5;
-	animating_children.append(slot);
 	timelineslots.add_child(slot);
 	slot.position.y += yy*(i%y_max);
 	slot.position.x += xx*floor(i/y_max);
 	
 func undo_add_max_turn() -> void:
-	finish_animations();
 	max_moves -= 1;
 	var last_slot = timelineslots.get_children().pop_back();
 	last_slot.queue_free();
 	
-func lock_turn(turn_locked: int) -> TimelineSlot:
+func lock_turn(turn_locked: int, slow: bool = true) -> TimelineSlot:
 	# I didn't actually end up using turn_locked since it's unambiguous, but I COULD.
 	# this will have happened AFTER add_turn. So we just lock the appropriate turn or an empty slot at the end.
 	var slot_to_move = null;
@@ -105,23 +107,20 @@ func lock_turn(turn_locked: int) -> TimelineSlot:
 	else:
 		slot_to_move = timelineslots.get_child(max_moves-1);
 	max_moves -= 1; # NOTE: this means max_moves isn't the same as 'number of slots' anymore
-	# TODO: fancy animation of slots sliding
 	timelineslots.remove_child(slot_to_move);
 	timelineslots.add_child(slot_to_move);
-	# TODO: animate slot texture changing
 	slot_to_move.fuzz_off();
 	slot_to_move.lock_animation();
 	slot_to_move.locked = true;
 	finish_divider_position();
-	finish_slot_positions();
+	finish_slot_positions(slow);
 	return slot_to_move;
 	
-func undo_lock_turn() -> TimelineSlot:
+func undo_lock_turn(slow: bool = false) -> TimelineSlot:
 	# We know which turn we most recently locked, it's the one at the bottom - so just move it back
 	var slot_to_move = timelineslots.get_child(timelineslots.get_children().size()-1);
 	# no animation since this is a meta undo function only
 	slot_to_move.undo_lock_animation();
-	# TODO: fancy animation of slots sliding
 	# if it's empty, move it just after max_moves.
 	if (slot_to_move.timelinesymbols.get_children().size() == 0):
 		timelineslots.move_child(slot_to_move, max_moves);
@@ -149,19 +148,18 @@ func undo_lock_turn() -> TimelineSlot:
 	# and finally unlock.
 	slot_to_move.locked = false;
 	finish_divider_position();
-	finish_slot_positions();
+	finish_slot_positions(slow);
 	return slot_to_move;
 
 func unlock_turn(turn: int) -> void:
 	# just re-use all that code I wrote real quick and...
-	var slot_to_move = undo_lock_turn();
+	var slot_to_move = undo_lock_turn(true);
 	slot_to_move.remember_animation();
-	# TODO: fancy animation of slot unlocking
 	
 func undo_unlock_turn(turn: int) -> void:
 	# the opposite of unlocking is locking again, so let's try that and see if it works...
 	# have to adjust current_move first. hopefully this ain't TOO hacky.
-	var slot_to_move = lock_turn(turn);
+	var slot_to_move = lock_turn(turn, false);
 	slot_to_move.undo_remember_animation();
 
 func add_turn(buffer: Array) -> void:
