@@ -4276,16 +4276,37 @@ func gain_insight() -> void:
 func copy_level() -> void:
 	var result = "EntwinedTimePuzzleStart\n";
 	var level_metadata = {};
-	var metadatas = ["level_name", "level_replay", "level_author", "heavy_max_moves", "light_max_moves",
-	"clock_turns", "map_x_max", "map_y_max", "current_sky"];
+	var metadatas = ["level_name", "level_author", #"level_replay", "heavy_max_moves", "light_max_moves",
+	"clock_turns", "map_x_max", "map_y_max", "target_sky"];
 	for metadata in metadatas:
 		level_metadata[metadata] = self.get(metadata);
-	level_metadata["layers"] = terrain_layers.size();
+	
+	# we now have to grab the original values for: terrain_layers, heavy_max_moves, light_max_moves
+	# has to be kept in sync with load_level/ready_map and any custom level logic we end up adding
+	var level = null;
+	if (has_insight_level and in_insight_level and insight_level_scene != null):
+		level = insight_level_scene.instance();
+	else:
+		level = level_list[level_number].instance();
+		
+	var level_info = level.get_node("LevelInfo");
+	level_metadata["level_replay"] = level_info.level_replay;
+	level_metadata["heavy_max_moves"] = level_info.heavy_max_moves;
+	level_metadata["light_max_moves"] = level_info.light_max_moves;
+		
+	var layers = [];
+	layers.append(level);
+	for child in level.get_children():
+		if child is TileMap:
+			layers.push_front(child);
+			
+	level_metadata["layers"] = layers.size();
+			
 	result += to_json(level_metadata);
 	
-	for i in terrain_layers.size():
+	for i in layers.size():
 		result += "\nLAYER " + str(i) + ":\n";
-		var layer = terrain_layers[terrain_layers.size() - 1 - i];
+		var layer = layers[layers.size() - 1 - i];
 		for y in range(map_y_max+1):
 			for x in range(map_x_max+1):
 				if (x > 0):
@@ -4300,6 +4321,8 @@ func copy_level() -> void:
 	result += "EntwinedTimePuzzleEnd"
 	floating_text("Ctrl+Shift+C: Level copied to clipboard!");
 	OS.set_clipboard(result);
+	
+	level.queue_free();
 	
 func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
