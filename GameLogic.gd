@@ -4332,6 +4332,38 @@ func clipboard_contains_level() -> bool:
 	return false
 	
 func paste_level() -> void:
+	var clipboard = OS.get_clipboard();
+	clipboard = clipboard.strip_edges();
+	var lines = clipboard.split("\n");
+	for i in range(lines.size()):
+		lines[i] = lines[i].strip_edges();
+	
+	if (lines[0] != "EntwinedTimePuzzleStart"):
+		floating_text("Assert failed: Line 1 should be EntwinedTimePuzzleStart");
+		return;
+	var json_parse_result = JSON.parse(lines[1])
+	
+	var result = null;
+	
+	if json_parse_result.error == OK:
+		var data = json_parse_result.result;
+		if typeof(data) == TYPE_DICTIONARY:
+			result = data;
+	
+	if (result == null):
+		floating_text("Assert failed: Line 2 should be a valid dictionary")
+		return;
+	
+	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
+	"clock_turns", "map_x_max", "map_y_max", "target_sky", "layers"];
+	
+	for metadata in metadatas:
+		if (!result.has(metadata)):
+			floating_text("Assert failed: Line 2 is missing " + metadata);
+			return;
+			
+	
+	
 	floating_text("TODO");
 	
 func _process(delta: float) -> void:
