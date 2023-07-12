@@ -1158,7 +1158,7 @@ func ready_map() -> void:
 	light_locked_turns.clear();
 	heavy_selected = true;
 	# Meet Light - only Light is selectable
-	if (level_number == 0):
+	if (!is_custom and level_number == 0):
 		heavy_selected = false;
 	user_replay = "";
 	
@@ -1191,6 +1191,7 @@ func ready_map() -> void:
 	
 	initialize_timeline_viewers();
 	ready_tutorial();
+	update_level_label();
 	
 	if (virtualbuttons.visible):
 		virtualbuttons.get_node("Others/F9Button").visible = doing_replay;
@@ -1199,6 +1200,14 @@ func ready_map() -> void:
 		virtualbuttons.get_node("Others/F10Button").disabled = !doing_replay;
 	
 func ready_tutorial() -> void:
+	if is_custom:
+		metainfolabel.visible = true;
+		tutoriallabel.visible = false;
+		downarrow.visible = false;
+		leftarrow.visible = false;
+		rightarrow.visible = false;
+		return;
+	
 	if level_number > 4:
 		metainfolabel.visible = true;
 	else:
@@ -3115,7 +3124,7 @@ func check_won() -> void:
 				level_save_data["won"] = true;
 				levelstar.previous_modulate = Color(1, 1, 1, 0);
 				levelstar.flash();
-				if (!in_insight_level):
+				if (!in_insight_level and !is_custom):
 					puzzles_completed += 1;
 			if (!level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
@@ -3370,7 +3379,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 	
 func character_switch() -> void:
 	# no swapping characters in Meet Heavy or Meet Light, even if you know the button
-	if (level_number == 0 or level_number == 1):
+	if (!is_custom and (level_number == 0 or level_number == 1)):
 		return
 	heavy_selected = !heavy_selected;
 	user_replay += "x";
@@ -3407,6 +3416,8 @@ func level_select() -> void:
 	levelscene.add_child(levelselect);
 	
 func trying_to_load_locked_level() -> bool:
+	if (is_custom):
+		return false;
 	if save_file.has("unlock_everything") and save_file["unlock_everything"]:
 		return false;
 	if (level_names[level_number] == "Chrono Lab Reactor" and !save_file["levels"].has("Chrono Lab Reactor")):
@@ -3421,6 +3432,8 @@ func trying_to_load_locked_level() -> bool:
 	return false;
 	
 func setup_chapter_etc() -> void:
+	if (is_custom):
+		return;
 	chapter = 0;
 	level_is_extra = false;
 	for i in range(chapter_names.size()):
@@ -3439,6 +3452,7 @@ func setup_chapter_etc() -> void:
 		target_sky = chapter_skies[chapter];
 	
 func load_level_direct(new_level: int) -> void:
+	is_custom = false;
 	doing_replay = false;
 	in_insight_level = false;
 	has_insight_level = false;
@@ -3446,6 +3460,8 @@ func load_level_direct(new_level: int) -> void:
 	load_level(impulse);
 	
 func load_level(impulse: int) -> void:
+	if (impulse != 0):
+		is_custom = false; # at least until custom campaigns :eyes:
 	level_number = posmod(int(level_number), level_list.size());
 	
 	if (impulse != 0):
@@ -3480,6 +3496,9 @@ func load_level(impulse: int) -> void:
 		save_game();
 	
 	var level = null;
+	if (is_custom):
+		load_custom_level(custom_string);
+		return;
 	if (impulse == 0 and has_insight_level and in_insight_level and insight_level_scene != null):
 		level = insight_level_scene.instance();
 	else:
@@ -3495,7 +3514,6 @@ func load_level(impulse: int) -> void:
 			terrain_layers.push_front(child);
 	
 	ready_map();
-	update_level_label();
 
 func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 	if actor.fall_speed == 0:
@@ -3942,7 +3960,7 @@ func end_replay() -> void:
 	
 func update_level_label() -> void:
 	var levelnumberastext = ""
-	if (level_number < 0):
+	if (is_custom):
 		levelnumberastext = "CUSTOM";
 	else:
 		var chapter_string = str(chapter);
@@ -3952,8 +3970,8 @@ func update_level_label() -> void:
 		if (level_replacements.has(level_number)):
 			level_string = level_replacements[level_number];
 		levelnumberastext = chapter_string + "-" + level_string;
-	if (level_is_extra):
-		levelnumberastext += "X";
+		if (level_is_extra):
+			levelnumberastext += "X";
 	levellabel.text = levelnumberastext + " - " + level_name;
 	if (level_author != "" and level_author != "Patashu"):
 		levellabel.text += " (By " + level_author + ")"
@@ -4004,26 +4022,27 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
 	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
-
-	if (level_number >= 2 and level_number <= 4):
-		if (heavy_selected):
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#7FC9FF", "#FF7459");
-		else:
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
-			
-	if tutoriallabel.visible:
-		if using_controller:
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Arrows:", "D-Pad/Either Stick:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("X:", "Bottom Face Button:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
-		else:
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Select:", "R:");
+	
+	if (!is_custom):
+		if (level_number >= 2 and level_number <= 4):
+			if (heavy_selected):
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#7FC9FF", "#FF7459");
+			else:
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
+				
+		if tutoriallabel.visible:
+			if using_controller:
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Arrows:", "D-Pad/Either Stick:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("X:", "Bottom Face Button:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
+			else:
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Select:", "R:");
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
@@ -4413,7 +4432,6 @@ func load_custom_level(custom: String) -> void:
 		terrainmap.add_child(terrain_layers[i + 1]);
 	
 	ready_map();
-	update_info_labels();
 	
 func give_up_and_restart() -> void:
 	is_custom = false;
