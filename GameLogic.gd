@@ -4280,8 +4280,24 @@ func copy_level() -> void:
 	"clock_turns", "map_x_max", "map_y_max", "current_sky"];
 	for metadata in metadatas:
 		level_metadata[metadata] = self.get(metadata);
+	level_metadata["layers"] = terrain_layers.size();
 	result += to_json(level_metadata);
-	result += "\nEntwinedTimePuzzleEnd"
+	
+	for i in terrain_layers.size():
+		result += "\nLAYER " + str(i) + ":\n";
+		var layer = terrain_layers[terrain_layers.size() - 1 - i];
+		for y in range(map_y_max+1):
+			for x in range(map_x_max+1):
+				if (x > 0):
+					result += ",";
+				var tile = layer.get_cell(x, y);
+				if tile >= 0 and tile <= 9:
+					result += "0" + str(tile);
+				else:
+					result += str(tile);
+			result += "\n";
+	
+	result += "EntwinedTimePuzzleEnd"
 	floating_text("Ctrl+Shift+C: Level copied to clipboard!");
 	OS.set_clipboard(result);
 	
