@@ -236,7 +236,9 @@ enum Tiles {
 }
 
 # information about the level
-var chapter = 0
+var is_custom = false;
+var custom_string = "";
+var chapter = 0;
 var level_in_chapter = 0;
 var level_is_extra = false;
 var in_insight_level = false;
@@ -1160,20 +1162,21 @@ func ready_map() -> void:
 		heavy_selected = false;
 	user_replay = "";
 	
-	var level_info = terrainmap.get_node("LevelInfo");
-	level_name = level_info.level_name;
-	level_author = level_info.level_author;
-	level_replay = level_info.level_replay;
-	if ("$" in level_replay):
-		var level_replay_parts = level_replay.split("$");
-		level_replay = level_replay_parts[level_replay_parts.size()-1];
-	heavy_max_moves = level_info.heavy_max_moves;
-	light_max_moves = level_info.light_max_moves;
-	clock_turns = level_info.clock_turns;
+	var level_info = terrainmap.get_node_or_null("LevelInfo");
+	if (level_info != null): # might be a custom puzzle
+		level_name = level_info.level_name;
+		level_author = level_info.level_author;
+		level_replay = level_info.level_replay;
+		if ("$" in level_replay):
+			var level_replay_parts = level_replay.split("$");
+			level_replay = level_replay_parts[level_replay_parts.size()-1];
+		heavy_max_moves = level_info.heavy_max_moves;
+		light_max_moves = level_info.light_max_moves;
+		clock_turns = level_info.clock_turns;
 	
 	has_insight_level = false;
 	insight_level_scene = null;
-	if (level_number >= 0):
+	if (!is_custom):
 		var insight_path = "res://levels/insight/" + level_filenames[level_number] + "Insight.tscn";
 		if (ResourceLoader.exists(insight_path)):
 			has_insight_level = true;
@@ -4277,9 +4280,11 @@ func copy_level() -> void:
 	var result = "EntwinedTimePuzzleStart\n";
 	var level_metadata = {};
 	var metadatas = ["level_name", "level_author", #"level_replay", "heavy_max_moves", "light_max_moves",
-	"clock_turns", "map_x_max", "map_y_max", "target_sky"];
+	"clock_turns", "map_x_max", "map_y_max", #"target_sky"
+	];
 	for metadata in metadatas:
 		level_metadata[metadata] = self.get(metadata);
+	level_metadata["target_sky"] = target_sky.to_html(false);
 	
 	# we now have to grab the original values for: terrain_layers, heavy_max_moves, light_max_moves
 	# has to be kept in sync with load_level/ready_map and any custom level logic we end up adding
@@ -4331,15 +4336,16 @@ func clipboard_contains_level() -> bool:
 		return true
 	return false
 	
-func paste_level() -> void:
-	var clipboard = OS.get_clipboard();
-	clipboard = clipboard.strip_edges();
-	var lines = clipboard.split("\n");
+func load_custom_level(custom: String) -> void:
+	var lines = custom.split("\n");
 	for i in range(lines.size()):
 		lines[i] = lines[i].strip_edges();
 	
 	if (lines[0] != "EntwinedTimePuzzleStart"):
 		floating_text("Assert failed: Line 1 should be EntwinedTimePuzzleStart");
+		return;
+	if (lines[(lines.size() - 1)] != "EntwinedTimePuzzleEnd"):
+		floating_text("Assert failed: Last line should be EntwinedTimePuzzleEnd");
 		return;
 	var json_parse_result = JSON.parse(lines[1])
 	
@@ -4362,9 +4368,62 @@ func paste_level() -> void:
 			floating_text("Assert failed: Line 2 is missing " + metadata);
 			return;
 			
+	# it could still be malformed by this point, but let's just assume it's fine and start setting up.
+	# player can hopefully load a real puzzle (or we can do it for them) if something borks.
+	levelfolder.remove_child(terrainmap);
+	terrainmap.queue_free();
+	terrain_layers.clear();
 	
+	is_custom = true;
+	custom_string = custom;
+	level_name = result["level_name"];
+	level_author = result["level_author"];
+	level_replay = result["level_replay"];
+	heavy_max_moves = int(result["heavy_max_moves"]);
+	light_max_moves = int(result["light_max_moves"]);
+	clock_turns = result["clock_turns"];
+	map_x_max = int(result["map_x_max"]);
+	map_y_max = int(result["map_y_max"]);
+	target_sky = Color(result["target_sky"]);
 	
-	floating_text("TODO");
+	var layers = result["layers"];
+	var xx = 2;
+	var xxx = map_y_max + 1 + 1 + 1; #1 for the header, 1 for the off-by-one, 1 for the blank line
+	for i in range(layers):
+		var tile_map = TileMap.new();
+		tile_map.tile_set = preload("res://DefaultTiles.tres");
+		tile_map.cell_size = Vector2(cell_size, cell_size);
+		var a = xx + xxx*i;
+		var header = lines[a];
+		if (header != "LAYER " + str(i) + ":"):
+			floating_text("Assert failed: Line " + str(a) + " should be 'LAYER " + str(i) + ":'.");
+			give_up_and_restart();
+			return
+		for j in range(map_y_max + 1):
+			var layer_line = lines[a + 1 + j];
+			var layer_cells = layer_line.split(",");
+			for k in range(layer_cells.size()):
+				var layer_cell = layer_cells[k];
+				tile_map.set_cell(k, j, int(layer_cell));
+		terrain_layers.append(tile_map);
+		tile_map.update_bitmask_region();
+	terrainmap = terrain_layers[0];
+	levelfolder.add_child(terrainmap);
+	for i in range(layers - 1):
+		terrainmap.add_child(terrain_layers[i + 1]);
+	
+	ready_map();
+	update_info_labels();
+	
+func give_up_and_restart() -> void:
+	is_custom = false;
+	custom_string = "";
+	restart();
+	
+func paste_level() -> void:
+	var clipboard = OS.get_clipboard();
+	clipboard = clipboard.strip_edges();
+	load_custom_level(clipboard);
 	
 func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
