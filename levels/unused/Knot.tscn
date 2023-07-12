@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65539, 14, 262145, 65541, 2, 0, 65543, 14, 262145, 131072, 14, 524290, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 655364, 131077, 14, 262148, 131079, 14, 655362, 131080, 14, 196614, 131081, 14, 196614, 131082, 14, 524292, 196608, 14, 262145, 196609, 1, 0, 196617, 7, 0, 196618, 14, 262145, 262144, 14, 655362, 262145, 14, 524292, 262147, 14, 262148, 262149, 14, 196609, 262151, 14, 262148, 262153, 14, 524290, 262154, 14, 655364, 327681, 14, 262145, 327685, 14, 262145, 327688, 8, 0, 327689, 14, 262145, 393217, 14, 655362, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 655363, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Knot"
+level_replay = "Knot$mturn=35$dxazxdxwxdxzxwxaxzzzzaaaxaaassaxwxaxwaxzzzzzzzzd"
+heavy_max_moves = 6
+light_max_moves = 8
