@@ -527,12 +527,20 @@ func react_to_save_file_update() -> void:
 	setup_animation_speed();
 	setup_virtual_buttons();
 	deserialize_bindings();
+	setup_deadzone();
 	refresh_puzzles_completed();
 	
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
 "character_undo", "meta_undo", "character_switch", "restart",
 "next_level", "previous_level", "mute", "start_replay", "speedup_replay",
 "slowdown_replay", "start_saved_replay", "gain_insight", "level_select"];
+	
+func setup_deadzone() -> void:
+	if (save_file.has("deadzone")):
+		InputMap.action_set_deadzone("ui_up", save_file["deadzone"]);
+		InputMap.action_set_deadzone("ui_down", save_file["deadzone"]);
+		InputMap.action_set_deadzone("ui_left", save_file["deadzone"]);
+		InputMap.action_set_deadzone("ui_right", save_file["deadzone"]);
 	
 func deserialize_bindings() -> void:
 	if save_file.has("keyboard_bindings"):

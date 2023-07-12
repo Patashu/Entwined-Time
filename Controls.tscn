@@ -40,11 +40,28 @@ margin_right = 489.0
 margin_bottom = 238.0
 text = "Reset to Defaults"
 
-[node name="Pointer" type="Sprite" parent="Holder"]
-
 [node name="Instructions" type="Label" parent="Holder"]
 margin_left = 7.0
 margin_top = 209.0
 margin_right = 47.0
 margin_bottom = 220.0
 text = "([Accept] to bind, [Cancel] to clear binding.)"
+
+[node name="DeadzoneSlider" type="HSlider" parent="Holder"]
+margin_left = 387.0
+margin_top = 204.0
+margin_right = 487.0
+margin_bottom = 220.0
+min_value = 0.2
+max_value = 1.0
+step = 0.01
+value = 0.75
+
+[node name="DeadzoneLabel" type="Label" parent="Holder"]
+margin_left = 303.0
+margin_top = 206.0
+margin_right = 381.0
+margin_bottom = 217.0
+text = "Deadzone: 0.75"
+
+[node name="Pointer" type="Sprite" parent="Holder"]

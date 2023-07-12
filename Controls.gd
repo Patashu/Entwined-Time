@@ -8,6 +8,8 @@ onready var okbutton : Button = get_node("Holder/OkButton");
 onready var swapbutton : Button = get_node("Holder/SwapButton");
 onready var resetbutton : Button = get_node("Holder/ResetButton");
 onready var rebindingstuff : Node2D = get_node("Holder/RebindingStuff");
+onready var deadzoneslider: HSlider = get_node("Holder/DeadzoneSlider");
+onready var deadzonelabel: Label = get_node("Holder/DeadzoneLabel");
 
 var keyboard_mode = true;
 var rebinding_button = null;
@@ -89,7 +91,24 @@ func _ready() -> void:
 	okbutton.grab_focus();
 	keyboard_mode = !gamelogic.using_controller;
 	
+	if (gamelogic.save_file.has("deadzone")):
+		deadzoneslider.value = gamelogic.save_file["deadzone"];
+		updatelabeldeadzone(deadzoneslider.value);
+	
+	deadzoneslider.connect("value_changed", self, "_deadzoneslider_value_changed");
+	
 	setup_rebinding_stuff();
+
+func _deadzoneslider_value_changed(value: float) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["deadzone"] = value;
+	gamelogic.setup_deadzone();
+	updatelabeldeadzone(value);
+	
+func updatelabeldeadzone(value: float) -> void:
+	deadzonelabel.text = "Deadzone: " + str(value);
 	
 func _swapbutton_pressed() -> void:
 	keyboard_mode = !keyboard_mode;
@@ -150,9 +169,13 @@ func setup_rebinding_stuff() -> void:
 	if !keyboard_mode:
 		holder.text = "Controller Controls:"
 		swapbutton.text = "Keyboard Controls";
+		deadzoneslider.visible = true;
+		deadzonelabel.visible = true;
 	else:
 		holder.text = "Keyboard Controls:"
 		swapbutton.text = "Controller Controls";
+		deadzoneslider.visible = false;
+		deadzonelabel.visible = false;
 		
 	var children = rebindingstuff.get_children();
 	for child in children:
