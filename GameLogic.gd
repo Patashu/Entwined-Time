@@ -4273,6 +4273,18 @@ func gain_insight() -> void:
 		finish_animations(Chrono.TIMELESS);
 		undo_effect_color = Color("A9F05F");
 	
+func copy_level() -> void:
+	var result = "EntwinedTimePuzzleStart\n";
+	var level_metadata = {};
+	var metadatas = ["level_name", "level_replay", "level_author", "heavy_max_moves", "light_max_moves",
+	"clock_turns", "map_x_max", "map_y_max", "current_sky"];
+	for metadata in metadatas:
+		level_metadata[metadata] = self.get(metadata);
+	result += to_json(level_metadata);
+	result += "\nEntwinedTimePuzzleEnd"
+	floating_text("Ctrl+Shift+C: Level copied to clipboard!");
+	OS.set_clipboard(result);
+	
 func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
 		using_controller = true;
@@ -4373,9 +4385,12 @@ func _process(delta: float) -> void:
 			authors_replay();
 			update_info_labels();
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("copy")):
-			# must be kept in sync with Menu
-			OS.set_clipboard(annotate_replay(user_replay));
-			floating_text("Ctrl+C: Replay copied");
+			if (Input.is_action_pressed("shift")):
+				copy_level();
+			else:
+				# must be kept in sync with Menu
+				OS.set_clipboard(annotate_replay(user_replay));
+				floating_text("Ctrl+C: Replay copied");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
 			# must be kept in sync with Menu
 			replay_from_clipboard();
