@@ -279,13 +279,14 @@ func prepare_chapter() -> void:
 					x += 1;
 		
 	# chapter 0 notice
-	if chapter == 0:
-		var label = Label.new();
-		holder.add_child(label);
-		label.rect_position.x = round(xx + xxx);
-		label.rect_position.y = round(yy + yyy*(12));
-		label.text = "(Advanced puzzles are optional,\nfor those seeking a challenge.)"
-		label.theme = holder.theme;
+	# nvm there's not room anymore LMAO
+	#if chapter == 0:
+	#	var label = Label.new();
+	#	holder.add_child(label);
+	#	label.rect_position.x = round(xx + xxx);
+	#	label.rect_position.y = round(yy + yyy*(12));
+	#	label.text = "(Advanced puzzles are optional,\nfor those seeking a challenge.)"
+	#	label.theme = holder.theme;
 		
 	# chapter 2 notice
 	if chapter == 2:

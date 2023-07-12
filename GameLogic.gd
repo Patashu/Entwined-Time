@@ -733,6 +733,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheFirstPitEx2")
 	level_filenames.push_back("CarryingItEx")
 	level_filenames.push_back("RoommatesEx")
+	level_filenames.push_back("BraidEx")
 	level_filenames.push_back("ShouldveCalledaCab")
 	level_filenames.push_back("UncabYourself")
 	level_filenames.push_back("Cliffs")
