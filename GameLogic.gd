@@ -4324,6 +4324,16 @@ func copy_level() -> void:
 	
 	level.queue_free();
 	
+func clipboard_contains_level() -> bool:
+	var clipboard = OS.get_clipboard();
+	clipboard = clipboard.strip_edges();
+	if clipboard.find("EntwinedTimePuzzleStart") >= 0 and clipboard.find("EntwinedTimePuzzleEnd") >= 0:
+		return true
+	return false
+	
+func paste_level() -> void:
+	floating_text("TODO");
+	
 func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
 		using_controller = true;
@@ -4431,8 +4441,11 @@ func _process(delta: float) -> void:
 				OS.set_clipboard(annotate_replay(user_replay));
 				floating_text("Ctrl+C: Replay copied");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
-			# must be kept in sync with Menu
-			replay_from_clipboard();
+			if (clipboard_contains_level()):
+				paste_level();
+			else:
+				# must be kept in sync with Menu
+				replay_from_clipboard();
 		elif (Input.is_action_just_pressed("character_undo")):
 			end_replay();
 			character_undo();
