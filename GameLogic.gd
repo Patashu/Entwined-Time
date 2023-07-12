@@ -2470,6 +2470,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
 					add_undo_event([Undo.heavy_turn_unlocked, -1, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, -1]);
+					set_actor_var(eater, "powered", true, Chrono.CHAR_UNDO);
 				# or a locked move with contents?
 				else:
 					# maybe character hasn't created any events this turn yet
@@ -2514,6 +2515,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
 					add_undo_event([Undo.light_turn_unlocked, -1, light_locked_turns.size()], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, -1]);
+					set_actor_var(eater, "powered", true, Chrono.CHAR_UNDO);
 				# or a locked move with contents?
 				else:
 					# maybe character hasn't created any events this turn yet
