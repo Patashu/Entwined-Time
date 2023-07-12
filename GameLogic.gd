@@ -716,6 +716,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Wall")
 	level_filenames.push_back("Tall")
 	level_filenames.push_back("Braid")
+	level_filenames.push_back("Knot")
 	level_filenames.push_back("TheFirstPit")
 	level_filenames.push_back("Pachinko")
 	level_filenames.push_back("CallACab")
