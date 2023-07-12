@@ -100,12 +100,17 @@ func undo_add_max_turn() -> void:
 func lock_turn(turn_locked: int, slow: bool = true) -> TimelineSlot:
 	# I didn't actually end up using turn_locked since it's unambiguous, but I COULD.
 	# this will have happened AFTER add_turn. So we just lock the appropriate turn or an empty slot at the end.
+	# Aha, not so fast! For now we call it from undo_unlock_turn too.
+	# Just to be safe, I'll only use the different behaviour in the case I know breaks.
 	var slot_to_move = null;
-	if current_move > 0:
-		slot_to_move = timelineslots.get_child(current_move-1);
-		current_move -= 1;
-	else:
+	if (slow == false and turn_locked == -1):
 		slot_to_move = timelineslots.get_child(max_moves-1);
+	else:
+		if current_move > 0:
+			slot_to_move = timelineslots.get_child(current_move-1);
+			current_move -= 1;
+		else:
+			slot_to_move = timelineslots.get_child(max_moves-1);
 	max_moves -= 1; # NOTE: this means max_moves isn't the same as 'number of slots' anymore
 	timelineslots.remove_child(slot_to_move);
 	timelineslots.add_child(slot_to_move);
