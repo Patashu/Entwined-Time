@@ -1589,6 +1589,7 @@ func prepare_audio() -> void:
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
 	sounds["push"] = preload("res://sfx/push.ogg");
 	sounds["redfire"] = preload("res://sfx/redfire.ogg");
+	sounds["remembertimecrystal"] = preload("res://sfx/remembertimecrystal.ogg");
 	sounds["restart"] = preload("res://sfx/restart.ogg");	
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["shroud"] = preload("res://sfx/shroud.ogg");
@@ -2442,12 +2443,14 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		if heavy_actor == eater:
 			heavy_max_moves += 1;
 			if (heavy_locked_turns.size() == 0):
+				add_to_animation_server(eatee, [Animation.sfx, "greentimecrystal"])
 				# raw: just add a turn to the end
 				if (!heavy_actor.powered):
 					set_actor_var(heavy_actor, "powered", true, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
 				add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw, eatee]);
 			else:
+				add_to_animation_server(eatee, [Animation.sfx, "remembertimecrystal"])
 				# unlock the most recently locked move.
 				var unlocked_move = heavy_locked_turns.pop_back();
 				var unlocked_move_being_filled_this_turn = false;
@@ -2485,11 +2488,13 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		elif light_actor == eater:
 			light_max_moves += 1;
 			if (light_locked_turns.size() == 0):
+				add_to_animation_server(eatee, [Animation.sfx, "greentimecrystal"])
 				if (!light_actor.powered):
 					set_actor_var(light_actor, "powered", true, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
 				add_to_animation_server(eater, [Animation.light_green_time_crystal_raw, eatee]);
 			else:
+				add_to_animation_server(eatee, [Animation.sfx, "remembertimecrystal"])
 				# unlock the most recently locked move.
 				var unlocked_move = light_locked_turns.pop_back();
 				var unlocked_move_being_filled_this_turn = false;
@@ -2528,6 +2533,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			clock_ticks(eater, 1, Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.generic_green_time_crystal, eatee]);
 	else: # magenta time crystal
+		add_to_animation_server(eatee, [Animation.sfx, "magentatimecrystal"])
 		var just_locked = false;
 		var turn_moved = -1;
 		if (heavy_actor == eater):
@@ -2710,9 +2716,11 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 			var terrain = terrain_in_tile(actor.pos);
 			if value == true:
 				if (actor.actorname == Actor.Name.TimeCrystalGreen):
-					add_to_animation_server(actor, [Animation.sfx, "greentimecrystal"])
+					pass #done in eat_crystal now
+					#add_to_animation_server(actor, [Animation.sfx, "greentimecrystal"])
 				elif (actor.actorname == Actor.Name.TimeCrystalMagenta):
-					add_to_animation_server(actor, [Animation.sfx, "magentatimecrystal"])
+					pass #done in eat_crystal now
+					#add_to_animation_server(actor, [Animation.sfx, "magentatimecrystal"])
 				else:
 					add_to_animation_server(actor, [Animation.sfx, "broken"])
 					add_to_animation_server(actor, [Animation.explode])
