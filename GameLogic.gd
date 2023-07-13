@@ -1095,6 +1095,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("RoommatesL2")
 	level_filenames.push_back("RoommatesL2Ex")
 	level_filenames.push_back("CarryingItL2")
+	level_filenames.push_back("KnotRemixL2")
+	level_filenames.push_back("KnotL2")
 	level_filenames.push_back("CallACabL2")
 	level_filenames.push_back("TheoryOfEverythingA")
 	level_filenames.push_back("TheoryOfEverythingB")
