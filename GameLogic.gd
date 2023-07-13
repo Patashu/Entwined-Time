@@ -1130,8 +1130,13 @@ func initialize_level_list() -> void:
 		var level_name = level.get_node("LevelInfo").level_name;
 		level_names.push_back(level_name);
 		level.queue_free();
+		
+	for i in range(level_list.size()):
+		var level_name = level_names[i];
+		var level_filename = level_filenames[i];
+		
 		# also learn which puzzles are remixes
-		var insight_path = "res://levels/insight/" + level_name + "Insight.tscn";
+		var insight_path = "res://levels/insight/" + level_filename + "Insight.tscn";
 		if (ResourceLoader.exists(insight_path)):
 			var insight_level = load(insight_path).instance();
 			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
