@@ -12,6 +12,6 @@ tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 19
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Knot (Remix) (Loop 2)"
-level_replay = "Knot (Remix)$mturn=52$dxwzxdxwxdxzxwxaaaxzzzzxzzzssxaxaxzwaxaxaxzxzzxaxzwdxzzzzxdxdxazxzwxzxzddddxza"
-heavy_max_moves = 5
+level_replay = "Knot (Remix) (Loop 2)$mturn=54$dxwzxzddxwxdxzxwxaaaxzzzzxzzzssxaxaxzwaxaxaxzxzzxaxzwdxzzzzxdxdxazxzwxzxzddddxza"
+heavy_max_moves = 4
 light_max_moves = 4
