@@ -115,7 +115,10 @@ func _pastereplaybutton_pressed() -> void:
 		return;
 	# must be kept in sync with GameLogic
 	destroy();
-	gamelogic.replay_from_clipboard();
+	if (gamelogic.clipboard_contains_level()):
+		gamelogic.paste_level();
+	else:
+		gamelogic.replay_from_clipboard();
 	
 func _levelselectbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -201,11 +204,15 @@ func _process(delta: float) -> void:
 		pointer.position.x = focus.rect_position.x - 12;
 		
 	# constantly check if we could paste this replay or not
-	var replay = OS.get_clipboard();
-	if (gamelogic.is_valid_replay(replay)):
+	if gamelogic.clipboard_contains_level():
 		pastereplaybutton.disabled = false;
+		pastereplaybutton.text = "Paste Level";
+	elif (gamelogic.is_valid_replay(OS.get_clipboard())):
+		pastereplaybutton.disabled = false;
+		pastereplaybutton.text = "Paste Replay";
 	else:
 		pastereplaybutton.disabled = true;
+		pastereplaybutton.text = "Paste Replay";
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

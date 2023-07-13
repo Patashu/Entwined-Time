@@ -4578,10 +4578,10 @@ func _process(delta: float) -> void:
 				OS.set_clipboard(annotate_replay(user_replay));
 				floating_text("Ctrl+C: Replay copied");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
+			# must be kept in sync with Menu
 			if (clipboard_contains_level()):
 				paste_level();
 			else:
-				# must be kept in sync with Menu
 				replay_from_clipboard();
 		elif (Input.is_action_just_pressed("character_undo")):
 			end_replay();
