@@ -1108,7 +1108,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("BraidL2Ex")
 	level_filenames.push_back("TallL2")
 	level_filenames.push_back("TallL2Ex")
-	level_filenames.push_back("TallL2Ex2")
 	level_filenames.push_back("WallL2")
 	level_filenames.push_back("WallL2Ex")
 	level_filenames.push_back("PushingItL2")
