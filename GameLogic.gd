@@ -1140,7 +1140,7 @@ func initialize_level_list() -> void:
 		if (ResourceLoader.exists(insight_path)):
 			var insight_level = load(insight_path).instance();
 			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
-			if (insight_level_name.find("(Remix)") >= 0):
+			if (insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0):
 				has_remix[level_name] = true;
 			insight_level.queue_free();
 		
