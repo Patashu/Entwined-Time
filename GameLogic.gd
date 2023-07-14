@@ -537,7 +537,9 @@ var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up
 "slowdown_replay", "start_saved_replay", "gain_insight", "level_select"];
 	
 func setup_deadzone() -> void:
-	if (save_file.has("deadzone")):
+	if (!save_file.has("deadzone")):
+		save_file["deadzone"] = InputMap.action_get_deadzone("ui_up");
+	else:
 		InputMap.action_set_deadzone("ui_up", save_file["deadzone"]);
 		InputMap.action_set_deadzone("ui_down", save_file["deadzone"]);
 		InputMap.action_set_deadzone("ui_left", save_file["deadzone"]);
@@ -4484,6 +4486,22 @@ func _process(delta: float) -> void:
 		menubutton.rect_position.x = 226;
 		menubutton.rect_size.x = 60;
 		update_info_labels();
+	
+	#hysteresis: dynamically update dead zone based on if a direction is currently held or not
+	if (using_controller):
+		if (!save_file.has("deadzone")):
+			save_file["deadzone"] = InputMap.action_get_deadzone("ui_up");
+		
+		var normal = save_file["deadzone"];
+		var held = normal*0.9;
+		var dirs = ["ui_up", "ui_down", "ui_left", "ui_right"];
+		for dir in dirs:
+			if Input.is_action_pressed(dir):
+				InputMap.action_set_deadzone(dir, held);
+			else:
+				InputMap.action_set_deadzone(dir, normal);
+				
+		tutoriallabel.text = str(Input.get_action_raw_strength("ui_up"));
 	
 	sounds_played_this_frame.clear();
 	
