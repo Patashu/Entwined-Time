@@ -15,8 +15,3 @@ level_name = "Hopscorch"
 level_replay = "Hopscorch$mturn=33$xaaaxwddxzzzwddsxwdwdxzdxdxwdxzxzzxwxzzsxzxzsxd"
 heavy_max_moves = 8
 light_max_moves = 6
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1

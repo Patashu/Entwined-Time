@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 7, 0, 65539, 30, 0, 131075, 30, 0, 196611, 30, 0, 196612, 29, 0, 262144, 2, 0, 262148, 1, 0, 262149, 8, 0, 327680, 29, 0, 327681, 30, 0, 327682, 29, 0, 327683, 30, 0, 327684, 29, 0, 327685, 29, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Hopscorch [VAR1]"
+level_replay = "Hopscorch [VAR1]$mturn=47$xaaaaxwdddxzzxzsxaaxzwdaxzzzzssxzxzzwxdwxwssxwxzzzssxwxxzzwxzzaaxa"
+heavy_max_moves = 8
+light_max_moves = 6
