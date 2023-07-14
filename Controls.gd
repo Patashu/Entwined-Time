@@ -10,6 +10,8 @@ onready var resetbutton : Button = get_node("Holder/ResetButton");
 onready var rebindingstuff : Node2D = get_node("Holder/RebindingStuff");
 onready var deadzoneslider: HSlider = get_node("Holder/DeadzoneSlider");
 onready var deadzonelabel: Label = get_node("Holder/DeadzoneLabel");
+onready var debounceslider: HSlider = get_node("Holder/DebounceSlider");
+onready var debouncelabel: Label = get_node("Holder/DebounceLabel");
 
 var keyboard_mode = true;
 var rebinding_button = null;
@@ -94,8 +96,11 @@ func _ready() -> void:
 	if (gamelogic.save_file.has("deadzone")):
 		deadzoneslider.value = gamelogic.save_file["deadzone"];
 		updatelabeldeadzone(deadzoneslider.value);
+	if (gamelogic.save_file.has("debounce")):
+		debounceslider.value = gamelogic.save_file["debounce"];
+		updatelabeldebounce(debounceslider.value);
 	
-	deadzoneslider.connect("value_changed", self, "_deadzoneslider_value_changed");
+	debounceslider.connect("value_changed", self, "_debounceslider_value_changed");
 	
 	setup_rebinding_stuff();
 
@@ -109,6 +114,16 @@ func _deadzoneslider_value_changed(value: float) -> void:
 	
 func updatelabeldeadzone(value: float) -> void:
 	deadzonelabel.text = "Deadzone: " + str(value);
+	
+func _debounceslider_value_changed(value: float) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["debounce"] = value;
+	updatelabeldebounce(value);
+	
+func updatelabeldebounce(value: float) -> void:
+	debouncelabel.text = "Debounce: " + str(value) + "ms";
 	
 func _swapbutton_pressed() -> void:
 	keyboard_mode = !keyboard_mode;
@@ -171,11 +186,15 @@ func setup_rebinding_stuff() -> void:
 		swapbutton.text = "Keyboard Controls";
 		deadzoneslider.visible = true;
 		deadzonelabel.visible = true;
+		debounceslider.visible = true;
+		debouncelabel.visible = true;
 	else:
 		holder.text = "Keyboard Controls:"
 		swapbutton.text = "Controller Controls";
 		deadzoneslider.visible = false;
 		deadzonelabel.visible = false;
+		debounceslider.visible = false;
+		debouncelabel.visible = false;
 		
 	var children = rebindingstuff.get_children();
 	for child in children:

@@ -4473,6 +4473,8 @@ func paste_level() -> void:
 	clipboard = clipboard.strip_edges();
 	load_custom_level(clipboard);
 	
+var last_dir_release_times = [0, 0, 0, 0];
+	
 func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
 		using_controller = true;
@@ -4488,21 +4490,41 @@ func _process(delta: float) -> void:
 		update_info_labels();
 	
 	#hysteresis: dynamically update dead zone based on if a direction is currently held or not
+	#(this should happen even when ui_stack is filled so it applies to menus as well)
+	#debouncing: if the player uses a controller to re-press a direction within (debounce_ms) ms,
+	#allow it but in gameplay code ignore movement this frame
+	#(this means debouncing doesn't work in menus since I don't control focus logic.)
+	#(maybe it's somehow possible another way?)
+	var get_debounced = false;
 	if (using_controller):
 		if (!save_file.has("deadzone")):
 			save_file["deadzone"] = InputMap.action_get_deadzone("ui_up");
+		if (!save_file.has("debounce")):
+			save_file["debounce"] = 40;
 		
 		var normal = save_file["deadzone"];
-		var held = normal*0.9;
+		var debounce_ms = save_file["debounce"];
+		var held = normal*0.95;
 		var dirs = ["ui_up", "ui_down", "ui_left", "ui_right"];
-		for dir in dirs:
+		for i in range(dirs.size()):
+			
+			var dir = dirs[i];
+			var current_time = Time.get_ticks_msec();
+			
+			if Input.is_action_just_pressed(dir):
+				if ((current_time - debounce_ms) < last_dir_release_times[i]):
+					get_debounced = true;
+					#floating_text("get debounced");
+			elif Input.is_action_just_released(dir):
+				last_dir_release_times[i] = current_time;
+				
 			if Input.is_action_pressed(dir):
 				InputMap.action_set_deadzone(dir, held);
 			else:
 				InputMap.action_set_deadzone(dir, normal);
 				
-		tutoriallabel.text = str(Input.get_action_raw_strength("ui_up"));
-	
+		#tutoriallabel.text = str(Input.get_action_raw_strength("ui_up"));
+			
 	sounds_played_this_frame.clear();
 	
 	if (won):
@@ -4623,7 +4645,7 @@ func _process(delta: float) -> void:
 			end_replay();
 			character_switch();
 			update_info_labels();
-		else:
+		elif (!get_debounced):
 			if (Input.is_action_just_pressed("ui_left")):
 				dir = Vector2.LEFT;
 			if (Input.is_action_just_pressed("ui_right")):
