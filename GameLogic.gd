@@ -847,7 +847,6 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(32);
-	level_filenames.push_back("FirewallEx3")
 	level_filenames.push_back("LadderWorldEx")
 	level_filenames.push_back("TrophyCabinetEx")
 	level_filenames.push_back("TrophyCabinetEx2")
