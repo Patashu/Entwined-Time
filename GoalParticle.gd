@@ -2,7 +2,7 @@ extends Sprite
 class_name GoalParticle
 
 var fadeout_timer = 0;
-var fadeout_timer_max = 1;
+var fadeout_timer_max = 1.0;
 var rotate_magnitude = 0;
 var velocity = Vector2.ZERO;
 var alpha_max = 1;
@@ -21,7 +21,7 @@ func _process(delta: float) -> void:
 	if (fadeout_timer > fadeout_timer_max):
 		queue_free();
 	else:
-		if (fadeout_timer < fadeout_timer_max / 2):
-			self.modulate.a = alpha_max*(fadeout_timer/(fadeout_timer_max/2));
+		if (fadeout_timer < fadeout_timer_max / 2.0):
+			self.modulate.a = alpha_max*(fadeout_timer/(fadeout_timer_max/2.0));
 		else:
-			self.modulate.a = alpha_max*(1-(fadeout_timer-(fadeout_timer_max/2))/(fadeout_timer_max/2));
+			self.modulate.a = alpha_max*(1-(fadeout_timer-(fadeout_timer_max/2.0))/(fadeout_timer_max/2.0));

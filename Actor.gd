@@ -62,6 +62,9 @@ var in_stars = false;
 var just_moved = false;
 # joke goals logic
 var joke_goal = null;
+# action lines!
+var action_lines_timer = 0;
+var action_lines_timer_max = 0.25;
 
 # faster than string comparisons
 enum Name {
@@ -354,6 +357,33 @@ func update_grayscale(yes: bool) -> void:
 		self.material = null;
 
 func _process(delta: float) -> void:
+	#action lines
+	if (!is_ghost and is_character and airborne != -1):
+		action_lines_timer += delta;
+		if (action_lines_timer > action_lines_timer_max):
+			action_lines_timer -= action_lines_timer_max;
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://GoalParticle.gd"));
+			if (actorname == Name.Heavy):
+				sprite.texture = preload("res://assets/action_line_heavy.png");
+			else:
+				sprite.texture = preload("res://assets/action_line_light.png");
+			sprite.position = self.position;
+			sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
+			sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
+			if (airborne == 0):
+				sprite.velocity = Vector2(0, -24);
+			else:
+				sprite.velocity = Vector2(0, 24);
+				sprite.position.y += gamelogic.cell_size/2;
+			sprite.centered = true;
+			sprite.rotate_magnitude = 0;
+			sprite.alpha_max = 1;
+			sprite.modulate = self.modulate;
+			sprite.modulate.a = 0;
+			sprite.fadeout_timer_max = 0.75;
+			gamelogic.overactorsparticles.add_child(sprite);
+	
 	#crystal effects
 	if (is_crystal):
 		var old_times = floor(crystal_timer/crystal_timer_max);
