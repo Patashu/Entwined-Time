@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 7, 0, 65536, 8, 0, 65537, 2, 0, 131072, 14, 196609, 131073, 12, 0, 196608, 14, 262145, 262144, 14, 327681, 262146, 34, 0, 262147, 64, 0, 262148, 64, 0, 393219, 1, 0, 458755, 12, 0, 458756, 14, 196609, 524292, 14, 262145, 589828, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Fire In The Sky"
+level_replay = "Fire In The Sky$mturn=24$xwxaxdxwzxzwxdxzzxwxwdssssxddxzzzzz"
+heavy_max_moves = 6
+light_max_moves = 6
