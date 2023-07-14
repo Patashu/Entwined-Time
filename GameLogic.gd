@@ -767,10 +767,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("FirewallEx2")
 	level_filenames.push_back("HellEx")
 	level_filenames.push_back("CampfireEx")
-	level_filenames.push_back("HopscorchEx")
 	level_filenames.push_back("FireInTheSky")
 	level_filenames.push_back("FireInTheSkyExLuKAs")
 	level_filenames.push_back("FireInTheSkyEx")
+	level_filenames.push_back("HopscorchEx")
 	level_filenames.push_back("OrbitalDrop")
 	
 	chapter_names.push_back("Secrets of Space-Time");
