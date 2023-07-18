@@ -2582,7 +2582,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		if (heavy_actor == eater):
 			# Lose (Paradox)
 			if (heavy_max_moves <= 0):
-				set_actor_var(heavy_actor, "broken", true, Chrono.CHAR_UNDO);
+				add_to_animation_server(eater, [Animation.heavy_magenta_time_crystal, eatee, -99]);
 				lose("Paradox: A character can't have less than 0 moves.", heavy_actor)
 				return;
 			# accessible timeline is now one move shorter.
@@ -2627,7 +2627,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		elif (light_actor == eater):
 			# Lose (Paradox)
 			if (light_max_moves <= 0):
-				set_actor_var(light_actor, "broken", true, Chrono.CHAR_UNDO);
+				add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, -99]);
 				lose("Paradox: A character can't have less than 0 moves.", light_actor)
 				return;
 			# accessible timeline is now one move shorter.
