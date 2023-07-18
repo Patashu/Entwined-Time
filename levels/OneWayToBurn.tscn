@@ -12,6 +12,7 @@ tile_data = PoolIntArray( 4, 14, 196609, 12, 14, 196609, 65540, 14, 262145, 6554
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "One Way... To BURN"
+level_replay = "One Way... To BURN$mturn=53$aaxwddxwzdaaddxwxdxzxaxdsxzxzaaxwzxzzaaxzzxzaxzdaxzaxzzaxzaxzzzzxzzzzxzzd"
 heavy_max_moves = 9
 light_max_moves = 8
 
