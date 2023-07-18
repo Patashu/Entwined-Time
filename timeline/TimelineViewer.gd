@@ -109,7 +109,15 @@ func lock_turn(turn_locked: int, slow: bool = true) -> TimelineSlot:
 	# Just to be safe, I'll only use the different behaviour in the case I know breaks.
 	var slot_to_move = null;
 	if (slow == false and turn_locked == -1):
+		# bashy, but another case was found (light remembers an empty slot on their turn then meta-undos)
+		# that was broken, and I just want to be 100% sure I always get it correct and don't regress old cases, so...
 		slot_to_move = timelineslots.get_child(max_moves-1);
+		for slot in timelineslots.get_children():
+			# 'find last slot that is green crystal and empty'
+			if slot.crystalanimation.visible and (slot.crystalanimation.texture == preload("res://assets/CrystalFrameAnimationPB.png") or slot.crystalanimation.texture == preload("res://assets/TestCrystalFrame.png") and slot.timelinesymbols.get_children().size() == 0):
+					slot_to_move = slot;
+					# no break b/c last
+		
 	else:
 		if current_move > 0:
 			slot_to_move = timelineslots.get_child(current_move-1);
