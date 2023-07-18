@@ -820,7 +820,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("SecurityDoorEx")
 	level_filenames.push_back("SecurityDoorEx2")
 	level_filenames.push_back("JailEx")
-	level_filenames.push_back("JailEx2")
 	level_filenames.push_back("TheOneWayPitEx")
 	level_filenames.push_back("TheSpikePitEx2")
 	level_filenames.push_back("InvisibleBridgeEx")
