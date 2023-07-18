@@ -224,16 +224,24 @@ func fuzz_off() -> void:
 	timelineslots.get_child(current_move-1).fuzz_off();
 
 func start_fade() -> void:
-	# could be a slow fadeout if I want
-	modulate.r = 0.5;
-	modulate.g = 0.5;
-	modulate.b = 0.5;
+	fade_timer = 0;
+	fade_timer_max = 2;
 
 func end_fade() -> void:
+	fade_timer = 0;
+	fade_timer_max = 0;
 	modulate.r = 1.0;
 	modulate.g = 1.0;
 	modulate.b = 1.0;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+func _process(delta: float) -> void:
+	if (fade_timer < fade_timer_max):
+		fade_timer += delta;
+		if (fade_timer > fade_timer_max):
+			fade_timer = fade_timer_max;
+		var value = 1-0.5*(fade_timer/fade_timer_max);
+		modulate.r = value;
+		modulate.g = value;
+		modulate.b = value;
+		
