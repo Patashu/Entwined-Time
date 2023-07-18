@@ -1280,6 +1280,10 @@ func ready_tutorial() -> void:
 		tutoriallabel.bbcode_text = "[center]You can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
 	
 func initialize_timeline_viewers() -> void:
+	heavytimeline.label = heavyinfolabel;
+	lighttimeline.label = lightinfolabel;
+	heavytimeline.actor = heavy_actor;
+	lighttimeline.actor = light_actor;
 	heavytimeline.max_moves = heavy_max_moves;
 	lighttimeline.max_moves = light_max_moves;
 	heavytimeline.reset();

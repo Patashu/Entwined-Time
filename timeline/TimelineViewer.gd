@@ -13,6 +13,8 @@ onready var timelinedivider = self.get_node("TimelineDivider");
 var nonce_to_sprite_dictionary = {};
 var fade_timer = 0;
 var fade_timer_max = 0;
+var label : Label = null;
+var actor = null;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -230,9 +232,20 @@ func start_fade() -> void:
 func end_fade() -> void:
 	fade_timer = 0;
 	fade_timer_max = 0;
-	modulate.r = 1.0;
-	modulate.g = 1.0;
-	modulate.b = 1.0;
+	fade_myself_and_friends(1.0);
+
+func fade_myself_and_friends(value: float) -> void:
+	modulate.r = value;
+	modulate.g = value;
+	modulate.b = value;
+	if (label != null):
+		label.modulate.r = value;
+		label.modulate.g = value;
+		label.modulate.b = value;
+	if (is_instance_valid(actor)):
+		actor.self_modulate.r = value;
+		actor.self_modulate.g = value;
+		actor.self_modulate.b = value;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -240,8 +253,6 @@ func _process(delta: float) -> void:
 		fade_timer += delta;
 		if (fade_timer > fade_timer_max):
 			fade_timer = fade_timer_max;
-		var value = 1-0.5*(fade_timer/fade_timer_max);
-		modulate.r = value;
-		modulate.g = value;
-		modulate.b = value;
+		var value = 1-0.6*(fade_timer/fade_timer_max);
+		fade_myself_and_friends(value);
 		
