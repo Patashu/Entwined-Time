@@ -250,6 +250,7 @@ func clear(color: Color) -> void:
 	undo_effect_strength = 0.5;
 
 func finish_animations() -> void:
+	z_index = 0; #have to explicitly do this since we might be elevated but not in motion
 	if (region_timer < region_timer_max):
 		region_timer = region_timer_max;
 		region_enabled = false;
