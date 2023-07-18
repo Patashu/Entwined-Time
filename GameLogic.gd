@@ -3413,8 +3413,9 @@ func meta_undo(is_silent: bool = false) -> bool:
 	user_replay += "c";
 	finish_animations(Chrono.MOVE);
 	if (meta_turn <= 0):
-		if (meta_undo_a_restart()):
-			return true;
+		if (!doing_replay):
+			if (meta_undo_a_restart()):
+				return true;
 		if !is_silent:
 			play_sound("bump");
 		return false;
