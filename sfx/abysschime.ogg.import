@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/abysschime.ogg-11420eacc94aaf6a9834a5f4cbc750c4.oggstr"
+
+[deps]
+
+source_file="res://sfx/abysschime.ogg"
+dest_files=[ "res://.import/abysschime.ogg-11420eacc94aaf6a9834a5f4cbc750c4.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

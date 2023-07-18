@@ -1603,6 +1603,7 @@ func prepare_audio() -> void:
 	# TODO: replace this with an enum and assert on startup like tiles
 	
 	#used
+	sounds["abysschime"] = preload("res://sfx/abysschime.ogg");
 	sounds["bluefire"] = preload("res://sfx/bluefire.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
 	sounds["bump"] = preload("res://sfx/bump.ogg");
