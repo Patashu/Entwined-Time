@@ -13,5 +13,5 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 524292, 7, 14, 52
 script = ExtResource( 1 )
 level_name = "Peek-a-Boo"
 level_replay = "ddxdddwxazxwxdxzzzzzddwxzzzaw"
-heavy_max_moves = 4
+heavy_max_moves = 3
 light_max_moves = 5
