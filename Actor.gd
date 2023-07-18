@@ -699,6 +699,12 @@ func _process(delta: float) -> void:
 				sparklespawner.script = preload("res://SparkleSpawner.gd");
 				sparklespawner.color = color;
 				self.add_child(sparklespawner);
+			elif (current_animation[0] == 23): #lose
+				if (actorname == Name.Heavy):
+					gamelogic.heavytimeline.start_fade();
+				else:
+					gamelogic.lighttimeline.start_fade();
+				gamelogic.play_sound("abysschime");
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

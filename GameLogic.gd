@@ -138,6 +138,7 @@ enum Animation {
 	grayscale, #20
 	generic_green_time_crystal, #21
 	generic_magenta_time_crystal, #22
+	lose, #23
 }
 
 enum TimeColour {
@@ -2750,7 +2751,19 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 						add_to_animation_server(actor, [Animation.sfx, "lightland"]);
 		
 		# special case - if we break or unbreak, we can ding or unding too
+		# We also need to handle abysschime and meta-undoing it.
+		# (I'll write that logic separately just so it's not a giant mess, the performance hit is miniscule.)
 		if prop == "broken":
+			if actor.is_character:
+				if value:
+					if (!actor_has_broken_event_anywhere(actor)):
+						add_to_animation_server(actor, [Animation.lose]);
+				else:
+					if actor.actorname == Actor.Name.Heavy:
+						heavytimeline.end_fade();
+					else:
+						lighttimeline.end_fade();
+			
 			#check goal lock when a crystal breaks or unbreaks
 			if (actor.is_crystal):
 				update_goal_lock();
@@ -2806,6 +2819,23 @@ animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> vo
 			ghost = get_ghost_that_hasnt_moved(actor);
 			ghost.set(prop, value);
 			ghost.update_graphics();
+
+func actor_has_broken_event_anywhere(actor: Actor) -> bool:
+	# not edge cases: chrono, actor colour (since we always check)
+	# yes edge cases: could be a locked turn or a fuzz doubled turn
+	#this code looks HILARIOUS but I swear it is legitimately the best way to write it
+	#Undo.set_actor_var, actor, prop, old_value, value,
+	var buffers = [heavy_undo_buffer, light_undo_buffer, heavy_locked_turns, light_locked_turns];
+	for buffer in buffers:
+		for turn in buffer:
+			for event in turn:
+				if event[0] == Undo.set_actor_var:
+					if event[1] == actor:
+						if event[2] == "broken":
+							if event[3] == false:
+								if event[4] == true:
+									return true;
+	return false
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	#if (debug_prints and chrono < Chrono.META_UNDO):

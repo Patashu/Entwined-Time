@@ -11,6 +11,8 @@ var animating_children = [];
 onready var timelineslots = self.get_node("TimelineSlots");
 onready var timelinedivider = self.get_node("TimelineDivider");
 var nonce_to_sprite_dictionary = {};
+var fade_timer = 0;
+var fade_timer_max = 0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -24,6 +26,7 @@ func _ready() -> void:
 func reset() -> void:
 	if (timelinedivider == null):
 		return
+	end_fade()
 	current_move = 0;
 	timelinedivider.position.x = 0;
 	timelinedivider.position.y = 0;
@@ -220,6 +223,16 @@ func fuzz_off() -> void:
 		return;
 	timelineslots.get_child(current_move-1).fuzz_off();
 
+func start_fade() -> void:
+	# could be a slow fadeout if I want
+	modulate.r = 0.5;
+	modulate.g = 0.5;
+	modulate.b = 0.5;
+
+func end_fade() -> void:
+	modulate.r = 1.0;
+	modulate.g = 1.0;
+	modulate.b = 1.0;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
