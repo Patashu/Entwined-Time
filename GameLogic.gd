@@ -235,6 +235,7 @@ enum Tiles {
 	ColourWhite, #68
 	GlassBlockCracked, #69
 }
+var voidlike_tiles = [];
 
 # information about the level
 var is_custom = false;
@@ -257,6 +258,7 @@ var map_y_max : int = 0;
 var map_x_max_max : int = 21;
 var map_y_max_max : int = 10; #TODO: screen scrolling/zoom
 var terrain_layers = []
+var voidlike_puzzle = false;
 
 # information about the actors and their state
 var heavy_actor : Actor = null
@@ -415,10 +417,17 @@ func _ready() -> void:
 	initialize_shaders();
 	if (OS.is_debug_build()):
 		assert_tile_enum();
+	prepare_voidlike_tiles();
 	
 	# Load the first map.
 	load_level(0);
 	ready_done = true;
+
+func prepare_voidlike_tiles() -> void:
+	for i in range (Tiles.size()):
+		var expected_tile_name = Tiles.keys()[i];
+		if expected_tile_name.findn("void") >= 0:
+			voidlike_tiles.append(i);
 
 func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Verbs/UndoButton").connect("button_down", self, "_undobutton_pressed");
@@ -1352,6 +1361,16 @@ func get_used_cells_by_id_one_array(id: int) -> Array:
 	return results;
 
 func make_actors() -> void:
+	# mark voidlike puzzle now
+	voidlike_puzzle = false;
+	if (is_custom):
+		for tile in voidlike_tiles:
+			for layer in terrain_layers:
+				var hits = layer.get_used_cells_by_id(tile);
+				if (hits.size() > 0):
+					voidlike_puzzle = true;
+					break;
+	
 	# find goals and goal-ify them
 	for layer in terrain_layers:
 		find_goals(layer);
