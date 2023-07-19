@@ -2896,9 +2896,29 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			meta_undo_buffer.append([]);
 		meta_undo_buffer[meta_turn].push_front(event);
 
+func append_replay(move: String) -> bool:
+	if (move == "x"):
+		if user_replay.ends_with("x"):
+			user_replay = user_replay.left(user_replay.length() - 1);
+		else:
+			user_replay += move;
+	else:
+		user_replay += move;
+	return true;
+	
+func meta_undo_replay() -> bool:
+	if (voidlike_puzzle):
+		user_replay += "c";
+	else:
+		if !user_replay.ends_with("x"):
+			user_replay = user_replay.left(user_replay.length() - 1);
+		else:
+			user_replay = user_replay.left(user_replay.length() - 2);
+			append_replay("x");
+	return true;
+
 func character_undo(is_silent: bool = false) -> bool:
 	if (won or lost): return false;
-	user_replay += "z";
 	finish_animations(Chrono.CHAR_UNDO);
 	var fuzzed = false;
 	if (heavy_selected):
@@ -2953,7 +2973,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
 				undo_effect_per_second = undo_effect_strength*(1/0.4);
 				undo_effect_color = heavy_color;
-		return true;
+		return append_replay("z");
 	else:
 		
 		# check if we can undo
@@ -3006,7 +3026,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_effect_strength = 0.08;
 				undo_effect_per_second = undo_effect_strength*(1/0.4);
 				undo_effect_color = light_color;
-		return true;
+		return append_replay("z");
 
 func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:
 	# TODO: another poor refactor but
@@ -3432,7 +3452,6 @@ func meta_undo(is_silent: bool = false) -> bool:
 		play_sound("bump");
 		return false;
 	end_lose();
-	user_replay += "c";
 	finish_animations(Chrono.MOVE);
 	if (meta_turn <= 0):
 		if (!doing_replay):
@@ -3459,16 +3478,16 @@ func meta_undo(is_silent: bool = false) -> bool:
 	undo_effect_color = meta_color;
 	# void things experience time when you undo
 	time_passes(Chrono.META_UNDO);
-	return true;
+	return meta_undo_replay();
 	
 func character_switch() -> void:
 	# no swapping characters in Meet Heavy or Meet Light, even if you know the button
 	if (!is_custom and (level_number == 0 or level_number == 1)):
 		return
 	heavy_selected = !heavy_selected;
-	user_replay += "x";
 	update_ghosts();
 	play_sound("switch")
+	append_replay("x")
 
 func restart(is_silent: bool = false) -> void:
 	load_level(0);
@@ -3625,14 +3644,15 @@ func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 
 func character_move(dir: Vector2) -> bool:
 	if (won or lost): return false;
+	var chr = "";
 	if (dir == Vector2.UP):
-		user_replay += "w";
+		chr = "w";
 	elif (dir == Vector2.DOWN):
-		user_replay += "s";
+		chr = "s";
 	elif (dir == Vector2.LEFT):
-		user_replay += "a";
+		chr = "a";
 	elif (dir == Vector2.RIGHT):
-		user_replay += "d";
+		chr = "d";
 	finish_animations(Chrono.MOVE);
 	var result = false;
 	if heavy_selected:
@@ -3670,6 +3690,7 @@ func character_move(dir: Vector2) -> bool:
 			#elif !heavy_selected and !is_suspended(light_actor):
 			#	set_actor_var(light_actor, "airborne", 0, Chrono.MOVE);
 	if (result != Success.No):
+		append_replay(chr);
 		time_passes(Chrono.MOVE);
 		if anything_happened_meta():
 			if heavy_selected:
@@ -3682,7 +3703,7 @@ func character_move(dir: Vector2) -> bool:
 				adjust_meta_turn(1);
 	if (result != Success.Yes):
 		play_sound("bump")
-	return result;
+	return result != Success.No;
 
 func anything_happened_char(destructive: bool = true) -> bool:
 	# time crystals fuck this logic up and obviously mean something happened, so just say 'yes' if they happened
