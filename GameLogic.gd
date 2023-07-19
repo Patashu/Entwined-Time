@@ -1718,6 +1718,10 @@ func play_won(sound: String) -> void:
 	return;
 
 func toggle_mute() -> void:
+	if (!muted):
+		floating_text("M: Muted");
+	else:
+		floating_text("M: Unuted");
 	muted = !muted;
 	cut_sound();
 
