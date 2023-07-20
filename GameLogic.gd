@@ -3689,8 +3689,9 @@ func character_move(dir: Vector2) -> bool:
 			#AD10: Light floats gracefully downwards
 			#elif !heavy_selected and !is_suspended(light_actor):
 			#	set_actor_var(light_actor, "airborne", 0, Chrono.MOVE);
-	if (result != Success.No):
+	if (result != Success.No or nonstandard_won):
 		append_replay(chr);
+	if (result != Success.No):
 		time_passes(Chrono.MOVE);
 		if anything_happened_meta():
 			if heavy_selected:
@@ -4023,16 +4024,32 @@ func toggle_replay() -> void:
 	next_replay = replay_timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
 	
+var double_unit_test_mode : bool = true;
+var unit_test_mode_do_second_pass : bool = false;
+	
 func do_one_replay_turn() -> void:
 	if (!doing_replay):
 		return;
 	if replay_turn >= level_replay.length():
 		if (unit_test_mode and won and level_number < (level_list.size() - 1)):
 			doing_replay = true;
-			if (has_insight_level and !in_insight_level):
-				gain_insight();
+			if (double_unit_test_mode):
+				if unit_test_mode_do_second_pass:
+					unit_test_mode_do_second_pass = false;
+					var replay = user_replay;
+					load_level(0);
+					level_replay = replay;
+				else:
+					unit_test_mode_do_second_pass = true;
+					if (has_insight_level and !in_insight_level):
+						gain_insight();
+					else:
+						load_level(1);
 			else:
-				load_level(1);
+				if (has_insight_level and !in_insight_level):
+					gain_insight();
+				else:
+					load_level(1);
 			replay_turn = 0;
 			next_replay = replay_timer + replay_interval();
 			return;
