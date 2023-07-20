@@ -1740,7 +1740,7 @@ func toggle_mute() -> void:
 	if (!muted):
 		floating_text("M: Muted");
 	else:
-		floating_text("M: Unuted");
+		floating_text("M: Unmuted");
 	muted = !muted;
 	cut_sound();
 
