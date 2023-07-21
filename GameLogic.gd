@@ -771,7 +771,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(16);
 	level_filenames.push_back("TrustFallEx")
 	level_filenames.push_back("SnakePitEx")
-	level_filenames.push_back("SnakePitEx2")
 	level_filenames.push_back("TheSpikePitEx")
 	level_filenames.push_back("FirewallEx")
 	level_filenames.push_back("FirewallEx2")
