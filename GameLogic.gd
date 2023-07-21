@@ -861,7 +861,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TrophyCabinetEx2")
 	level_filenames.push_back("Bonfire")
 	level_filenames.push_back("BonfireEx")
-	level_filenames.push_back("BonfireEx2")
 	level_filenames.push_back("TripleJump")
 	level_filenames.push_back("DivingBoard")
 	level_filenames.push_back("FirefightersEx")
