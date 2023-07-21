@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 14, 524290, 3, 14, 196614, 4, 14, 196614, 5, 14, 524291, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 524291, 12, 14, 196614, 13, 14, 196614, 14, 14, 524292, 65538, 14, 262145, 65539, 1, 0, 65540, 5, 0, 65541, 14, 262145, 65542, 0, 0, 65544, 2, 0, 65546, 5, 0, 65547, 14, 262145, 65548, 5, 0, 65549, 1, 0, 65550, 14, 262145, 131074, 14, 655362, 131075, 14, 524292, 131077, 14, 262145, 131079, 14, 524290, 131080, 14, 196614, 131081, 14, 524292, 131083, 14, 262145, 131085, 14, 524290, 131086, 14, 655364, 196611, 14, 262145, 196613, 14, 262145, 196615, 14, 262145, 196616, 7, 0, 196617, 14, 262145, 196619, 14, 262145, 196621, 14, 262145, 262147, 14, 262145, 262149, 14, 327681, 262151, 14, 262145, 262152, 8, 0, 262153, 14, 262145, 262155, 14, 327681, 262157, 14, 262145, 327683, 14, 262145, 327687, 14, 262145, 327689, 14, 262145, 327693, 14, 262145, 393219, 14, 655362, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 655363, 393224, 14, 196614, 393225, 14, 655363, 393226, 14, 196614, 393227, 14, 196614, 393228, 14, 196614, 393229, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "New! Firefighters (Insight)"
+level_replay = "New! Firefighters (Insight)$mturn=11$xsxaaxwxzaaxzxaxzw"
+heavy_max_moves = 6
+light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65542, 5, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
