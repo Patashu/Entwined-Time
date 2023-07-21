@@ -872,7 +872,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("IronCrates")
 	level_filenames.push_back("CrateExpectations")
 	level_filenames.push_back("Bridge")
-	level_filenames.push_back("Weakness")
 	level_filenames.push_back("SteppingStool")
 	level_filenames.push_back("OverDestination")
 	level_filenames.push_back("ThirdRoommate")
@@ -886,7 +885,7 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(40);
-	level_filenames.push_back("WeaknessEx")
+	level_filenames.push_back("Weakness")
 	level_filenames.push_back("SteppingStoolEx")
 	level_filenames.push_back("OverDestinationEx")
 	level_filenames.push_back("ThirdRoommateEx")
