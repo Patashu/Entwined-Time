@@ -4023,7 +4023,7 @@ func toggle_replay() -> void:
 	next_replay = replay_timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
 	
-var double_unit_test_mode : bool = true;
+var double_unit_test_mode : bool = false;
 var unit_test_mode_do_second_pass : bool = false;
 	
 func do_one_replay_turn() -> void:

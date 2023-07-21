@@ -12,6 +12,12 @@ tile_data = PoolIntArray( 3, 6, 0, 5, 6, 0, 65539, 5, 0, 65541, 5, 0, 131075, 5,
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Bonfire"
-level_replay = "wxaxdddwxdddxzxzdxcswxdxzzxzxsswccwxdwwzzzzzzddwwdxdxzwxzzzzzzxzzzdxwzxzzzxwddxdssdxdddxd"
+level_replay = "Bonfire$mturn=40$wxaxzdddwxzddxzaxzzwwdxzwwdxzdxzzzzzzxzxwdddxdxddxdds"
 heavy_max_moves = 6
 light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131077, 30, 0 )
