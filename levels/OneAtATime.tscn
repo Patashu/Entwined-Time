@@ -26,4 +26,4 @@ script = ExtResource( 1 )
 level_name = "One at a Time"
 level_replay = "One at a Time$mturn=12$xaxasssxzawxzzdd"
 heavy_max_moves = 6
-light_max_moves = 6
+light_max_moves = 4
