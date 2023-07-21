@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65540, 14, 524290, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 524292, 131076, 14, 262145, 131078, 25, 0, 131080, 14, 262145, 196608, 14, 524290, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 524291, 196612, 14, 655364, 196613, 20, 0, 196614, 14, 196609, 196615, 20, 0, 196616, 14, 262145, 262144, 14, 262145, 262145, 8, 0, 262146, 21, 0, 262147, 14, 262145, 262148, 21, 0, 262149, 20, 0, 262150, 14, 262145, 262151, 7, 0, 262152, 14, 262145, 327680, 14, 655362, 327681, 14, 524292, 327682, 21, 0, 327683, 14, 262145, 327684, 21, 0, 327685, 14, 2, 327686, 14, 589830, 327687, 1, 0, 327688, 14, 262145, 393217, 14, 262145, 393218, 21, 0, 393219, 14, 327681, 393220, 21, 0, 393221, 14, 589825, 393222, 14, 786435, 393223, 14, 196614, 393224, 14, 655364, 458753, 14, 262145, 458755, 25, 0, 458757, 14, 262145, 524289, 14, 655362, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196614, 524293, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "S for Solid Puzzle Design (Insight)"
+level_replay = "S for Solid Puzzle Design (Insight)$mturn=23$xdsssddzzzzzzdwwwddzzzzz"
+heavy_max_moves = 0
+light_max_moves = 6
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262151, 20, 0, 327687, 2, 0 )
