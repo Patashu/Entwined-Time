@@ -886,7 +886,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(40);
 	level_filenames.push_back("Weakness")
-	level_filenames.push_back("SteppingStoolEx")
 	level_filenames.push_back("OverDestinationEx")
 	level_filenames.push_back("ThirdRoommateEx")
 	level_filenames.push_back("TheCratePitEx")
