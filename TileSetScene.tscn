@@ -1,4 +1,4 @@
-[gd_scene load_steps=188 format=2]
+[gd_scene load_steps=223 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -168,6 +168,37 @@
 [ext_resource path="res://assets/green_power_socket.png" type="Texture" id=166]
 [ext_resource path="res://assets/colour_white.png" type="Texture" id=167]
 [ext_resource path="res://assets/glass_block_cracked.png" type="Texture" id=168]
+[ext_resource path="res://assets/oneway_east_purple_1.png" type="Texture" id=169]
+[ext_resource path="res://assets/oneway_east_purple_7.png" type="Texture" id=170]
+[ext_resource path="res://assets/oneway_east_purple_8.png" type="Texture" id=171]
+[ext_resource path="res://assets/oneway_east_purple_6.png" type="Texture" id=172]
+[ext_resource path="res://assets/oneway_east_purple_3.png" type="Texture" id=173]
+[ext_resource path="res://assets/oneway_east_purple_4.png" type="Texture" id=174]
+[ext_resource path="res://assets/oneway_east_purple_5.png" type="Texture" id=175]
+[ext_resource path="res://assets/oneway_east_purple_2.png" type="Texture" id=176]
+[ext_resource path="res://assets/oneway_north_purple_8.png" type="Texture" id=177]
+[ext_resource path="res://assets/oneway_north_purple_1.png" type="Texture" id=178]
+[ext_resource path="res://assets/oneway_north_purple_2.png" type="Texture" id=179]
+[ext_resource path="res://assets/oneway_north_purple_4.png" type="Texture" id=180]
+[ext_resource path="res://assets/oneway_north_purple_3.png" type="Texture" id=181]
+[ext_resource path="res://assets/oneway_north_purple_5.png" type="Texture" id=182]
+[ext_resource path="res://assets/oneway_north_purple_6.png" type="Texture" id=183]
+[ext_resource path="res://assets/oneway_north_purple_7.png" type="Texture" id=184]
+[ext_resource path="res://assets/oneway_south_purple_3.png" type="Texture" id=185]
+[ext_resource path="res://assets/oneway_south_purple_4.png" type="Texture" id=186]
+[ext_resource path="res://assets/oneway_south_purple_6.png" type="Texture" id=187]
+[ext_resource path="res://assets/oneway_south_purple_7.png" type="Texture" id=188]
+[ext_resource path="res://assets/oneway_south_purple_8.png" type="Texture" id=189]
+[ext_resource path="res://assets/oneway_south_purple_1.png" type="Texture" id=190]
+[ext_resource path="res://assets/oneway_south_purple_2.png" type="Texture" id=191]
+[ext_resource path="res://assets/oneway_west_purple_1.png" type="Texture" id=192]
+[ext_resource path="res://assets/oneway_west_purple_2.png" type="Texture" id=193]
+[ext_resource path="res://assets/oneway_west_purple_7.png" type="Texture" id=194]
+[ext_resource path="res://assets/oneway_west_purple_3.png" type="Texture" id=195]
+[ext_resource path="res://assets/oneway_west_purple_4.png" type="Texture" id=196]
+[ext_resource path="res://assets/oneway_west_purple_5.png" type="Texture" id=197]
+[ext_resource path="res://assets/oneway_west_purple_6.png" type="Texture" id=198]
+[ext_resource path="res://assets/oneway_west_purple_8.png" type="Texture" id=199]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -488,6 +519,82 @@ frame_1/delay_sec = 0.0
 frame_2/texture = ExtResource( 161 )
 frame_2/delay_sec = 0.0
 
+[sub_resource type="AnimatedTexture" id=21]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 169 )
+frame_1/texture = ExtResource( 176 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 173 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 174 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 175 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 172 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 170 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 171 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=22]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 178 )
+frame_1/texture = ExtResource( 179 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 181 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 180 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 182 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 183 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 184 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 177 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=23]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 190 )
+frame_1/texture = ExtResource( 191 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 185 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 186 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 187 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 187 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 188 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 189 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=24]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 192 )
+frame_1/texture = ExtResource( 193 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 195 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 196 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 197 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 198 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 194 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 199 )
+frame_7/delay_sec = 0.0
+
 [node name="TileSetScene" type="Node2D"]
 
 [node name="WoodenPlatform" type="Sprite" parent="."]
@@ -765,3 +872,19 @@ texture = ExtResource( 167 )
 [node name="GlassBlockCracked" type="Sprite" parent="."]
 position = Vector2( 437, 280 )
 texture = ExtResource( 168 )
+
+[node name="OnewayEastPurple" type="Sprite" parent="."]
+position = Vector2( 293, 91 )
+texture = SubResource( 21 )
+
+[node name="OnewayNorthPurple" type="Sprite" parent="."]
+position = Vector2( 293, 91 )
+texture = SubResource( 22 )
+
+[node name="OnewaySouthPurple" type="Sprite" parent="."]
+position = Vector2( 293, 91 )
+texture = SubResource( 23 )
+
+[node name="OnewayWestPurple" type="Sprite" parent="."]
+position = Vector2( 293, 91 )
+texture = SubResource( 24 )

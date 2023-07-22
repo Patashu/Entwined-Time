@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=188 format=2]
+[gd_resource type="TileSet" load_steps=223 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -168,6 +168,37 @@
 [ext_resource path="res://assets/green_power_socket.png" type="Texture" id=166]
 [ext_resource path="res://assets/colour_white.png" type="Texture" id=167]
 [ext_resource path="res://assets/glass_block_cracked.png" type="Texture" id=168]
+[ext_resource path="res://assets/oneway_east_purple_1.png" type="Texture" id=169]
+[ext_resource path="res://assets/oneway_north_purple_8.png" type="Texture" id=170]
+[ext_resource path="res://assets/oneway_west_purple_1.png" type="Texture" id=171]
+[ext_resource path="res://assets/oneway_south_purple_3.png" type="Texture" id=172]
+[ext_resource path="res://assets/oneway_south_purple_4.png" type="Texture" id=173]
+[ext_resource path="res://assets/oneway_west_purple_2.png" type="Texture" id=174]
+[ext_resource path="res://assets/oneway_south_purple_6.png" type="Texture" id=175]
+[ext_resource path="res://assets/oneway_south_purple_7.png" type="Texture" id=176]
+[ext_resource path="res://assets/oneway_east_purple_7.png" type="Texture" id=177]
+[ext_resource path="res://assets/oneway_east_purple_8.png" type="Texture" id=178]
+[ext_resource path="res://assets/oneway_south_purple_8.png" type="Texture" id=179]
+[ext_resource path="res://assets/oneway_north_purple_1.png" type="Texture" id=180]
+[ext_resource path="res://assets/oneway_east_purple_6.png" type="Texture" id=181]
+[ext_resource path="res://assets/oneway_south_purple_1.png" type="Texture" id=182]
+[ext_resource path="res://assets/oneway_east_purple_3.png" type="Texture" id=183]
+[ext_resource path="res://assets/oneway_east_purple_4.png" type="Texture" id=184]
+[ext_resource path="res://assets/oneway_east_purple_5.png" type="Texture" id=185]
+[ext_resource path="res://assets/oneway_north_purple_2.png" type="Texture" id=186]
+[ext_resource path="res://assets/oneway_north_purple_4.png" type="Texture" id=187]
+[ext_resource path="res://assets/oneway_east_purple_2.png" type="Texture" id=188]
+[ext_resource path="res://assets/oneway_north_purple_3.png" type="Texture" id=189]
+[ext_resource path="res://assets/oneway_north_purple_5.png" type="Texture" id=190]
+[ext_resource path="res://assets/oneway_north_purple_6.png" type="Texture" id=191]
+[ext_resource path="res://assets/oneway_north_purple_7.png" type="Texture" id=192]
+[ext_resource path="res://assets/oneway_south_purple_2.png" type="Texture" id=193]
+[ext_resource path="res://assets/oneway_west_purple_7.png" type="Texture" id=194]
+[ext_resource path="res://assets/oneway_west_purple_8.png" type="Texture" id=195]
+[ext_resource path="res://assets/oneway_west_purple_3.png" type="Texture" id=196]
+[ext_resource path="res://assets/oneway_west_purple_4.png" type="Texture" id=197]
+[ext_resource path="res://assets/oneway_west_purple_5.png" type="Texture" id=198]
+[ext_resource path="res://assets/oneway_west_purple_6.png" type="Texture" id=199]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -487,6 +518,82 @@ frame_1/texture = ExtResource( 162 )
 frame_1/delay_sec = 0.0
 frame_2/texture = ExtResource( 161 )
 frame_2/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=21]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 169 )
+frame_1/texture = ExtResource( 188 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 183 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 184 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 185 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 181 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 177 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 178 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=22]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 180 )
+frame_1/texture = ExtResource( 186 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 189 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 187 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 190 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 191 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 192 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 170 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=23]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 182 )
+frame_1/texture = ExtResource( 193 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 172 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 173 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 175 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 175 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 176 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 179 )
+frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=24]
+frames = 8
+fps = 10.0
+frame_0/texture = ExtResource( 171 )
+frame_1/texture = ExtResource( 174 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 196 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 197 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 198 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 199 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 194 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 195 )
+frame_7/delay_sec = 0.0
 
 [resource]
 0/name = "Fire"
@@ -1464,3 +1571,59 @@ frame_2/delay_sec = 0.0
 69/shape_one_way_margin = 0.0
 69/shapes = [  ]
 69/z_index = 0
+70/name = "OnewayEastPurple"
+70/texture = SubResource( 21 )
+70/tex_offset = Vector2( 0, 0 )
+70/modulate = Color( 1, 1, 1, 1 )
+70/region = Rect2( 0, 0, 24, 24 )
+70/tile_mode = 0
+70/occluder_offset = Vector2( 12, 12 )
+70/navigation_offset = Vector2( 12, 12 )
+70/shape_offset = Vector2( 0, 0 )
+70/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+70/shape_one_way = false
+70/shape_one_way_margin = 0.0
+70/shapes = [  ]
+70/z_index = 0
+71/name = "OnewayNorthPurple"
+71/texture = SubResource( 22 )
+71/tex_offset = Vector2( 0, 0 )
+71/modulate = Color( 1, 1, 1, 1 )
+71/region = Rect2( 0, 0, 24, 24 )
+71/tile_mode = 0
+71/occluder_offset = Vector2( 12, 12 )
+71/navigation_offset = Vector2( 12, 12 )
+71/shape_offset = Vector2( 0, 0 )
+71/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+71/shape_one_way = false
+71/shape_one_way_margin = 0.0
+71/shapes = [  ]
+71/z_index = 0
+72/name = "OnewaySouthPurple"
+72/texture = SubResource( 23 )
+72/tex_offset = Vector2( 0, 0 )
+72/modulate = Color( 1, 1, 1, 1 )
+72/region = Rect2( 0, 0, 24, 24 )
+72/tile_mode = 0
+72/occluder_offset = Vector2( 12, 12 )
+72/navigation_offset = Vector2( 12, 12 )
+72/shape_offset = Vector2( 0, 0 )
+72/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+72/shape_one_way = false
+72/shape_one_way_margin = 0.0
+72/shapes = [  ]
+72/z_index = 0
+73/name = "OnewayWestPurple"
+73/texture = SubResource( 24 )
+73/tex_offset = Vector2( 0, 0 )
+73/modulate = Color( 1, 1, 1, 1 )
+73/region = Rect2( 0, 0, 24, 24 )
+73/tile_mode = 0
+73/occluder_offset = Vector2( 12, 12 )
+73/navigation_offset = Vector2( 12, 12 )
+73/shape_offset = Vector2( 0, 0 )
+73/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+73/shape_one_way = false
+73/shape_one_way_margin = 0.0
+73/shapes = [  ]
+73/z_index = 0

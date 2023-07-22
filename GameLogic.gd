@@ -234,6 +234,10 @@ enum Tiles {
 	VoidPowerSocket, #67
 	ColourWhite, #68
 	GlassBlockCracked, #69
+	OnewayEastPurple, #70
+	OnewayNorthPurple, #71
+	OnewaySouthPurple, #72
+	OnewayWestPurple, #73
 }
 var voidlike_tiles = [];
 
@@ -2168,6 +2172,7 @@ var flash_terrain = -1;
 var flash_colour = Color(1, 1, 1, 1);
 var oneway_flash = Color(1, 0, 0, 1);
 var oneway_green_flash = Color(1, 0, 0, 1);
+var oneway_purple_flash = Color(1, 0, 0, 1);
 var no_foo_flash = Color(1, 1, 1, 1);
 
 func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int) -> int:
@@ -2247,6 +2252,26 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_green_flash;
+			Tiles.OnewayEastPurple:
+				result = no_if_true_yes_if_false(is_retro and dir == Vector2.LEFT);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_purple_flash;
+			Tiles.OnewayWestPurple:
+				result = no_if_true_yes_if_false(is_retro and dir == Vector2.RIGHT);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_purple_flash;
+			Tiles.OnewayNorthPurple:
+				result = no_if_true_yes_if_false(is_retro and dir == Vector2.DOWN);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_purple_flash;
+			Tiles.OnewaySouthPurple:
+				result = no_if_true_yes_if_false(is_retro and dir == Vector2.UP);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_purple_flash;
 			Tiles.LadderPlatform:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
 			Tiles.WoodenPlatform:
