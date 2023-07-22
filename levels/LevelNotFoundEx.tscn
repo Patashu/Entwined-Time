@@ -7,17 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 2, 2, 0, 3, 8, 0, 524288, 1, 0, 524293, 7, 0 )
+tile_data = PoolIntArray( 3, 2, 0, 4, 8, 0, 524288, 1, 0, 524295, 7, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "LEVEL_NOT_FOUND [VAR1]"
-level_replay = "LEVEL_NOT_FOUND [VAR1]$mturn=13$wxaaxasxzzddssxas"
-heavy_max_moves = 5
+level_replay = "LEVEL_NOT_FOUND [VAR1]$mturn=30$xsaaxaxaxasxzxzdxzxzxaaxsxzsxdxzzxzzxzzdddsxas"
+heavy_max_moves = 4
 light_max_moves = 4
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 2, 35, 0, 3, 36, 0 )
+tile_data = PoolIntArray( 3, 35, 0, 4, 36, 0 )
