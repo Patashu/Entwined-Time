@@ -4116,7 +4116,11 @@ func pause_replay() -> void:
 func replay_advance_turn(amount: int) -> void:
 	if amount > 0:
 		for i in range(amount):
-			do_one_replay_turn();
+			if (replay_turn < (level_replay.length())):
+				do_one_replay_turn();
+			else:
+				play_sound("bump");
+				break;
 	elif (replay_turn <= 0):
 		play_sound("bump");
 	else:
