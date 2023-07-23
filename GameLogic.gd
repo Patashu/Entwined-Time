@@ -4246,7 +4246,7 @@ func update_level_label() -> void:
 			if (using_controller):
 				levellabel.text += " (L2/R2 ADJUST SPEED)";
 			else:
-				levellabel.text += " (F9/F10 ADJUST SPEED)";
+				pass #there are now virtual buttons for kb+m players
 	if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 		if (levelstar.next_modulates.size() > 0):
 			# in the middle of a flash from just having won
