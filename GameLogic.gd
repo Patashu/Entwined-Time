@@ -2174,7 +2174,7 @@ var flash_terrain = -1;
 var flash_colour = Color(1, 1, 1, 1);
 var oneway_flash = Color(1, 0, 0, 1);
 var oneway_green_flash = Color(1, 0, 0, 1);
-var oneway_purple_flash = Color(1, 0, 0, 1);
+var oneway_purple_flash = Color(1, 1, 1, 1);
 var no_foo_flash = Color(1, 1, 1, 1);
 
 func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int) -> int:
