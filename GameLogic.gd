@@ -570,6 +570,8 @@ func _pausebutton_released() -> void:
 func _replayturnslider_value_changed(value: int) -> void:
 	if !doing_replay:
 		return;
+	if (!replayturnsliderdrag):
+		return;
 	var differential = value - replay_turn;
 	if (differential != 0):
 		replay_advance_turn(differential);
@@ -4148,7 +4150,7 @@ func do_one_replay_turn() -> void:
 		else:
 			if (unit_test_mode):
 				floating_text("Tested up to level: " + str(level_number) + " (This is 0 indexed lol)" );
-			#end_replay();
+				end_replay();
 			return;
 	next_replay = replay_timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
