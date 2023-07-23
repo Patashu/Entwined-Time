@@ -4140,6 +4140,7 @@ func do_one_replay_turn() -> void:
 			return;
 	next_replay = replay_timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
+	var old_meta_turn = meta_turn;
 	replay_turn += 1;
 	if (replay_char == "w"):
 		character_move(Vector2.UP);
@@ -4155,6 +4156,12 @@ func do_one_replay_turn() -> void:
 		character_switch();
 	elif (replay_char == "c"):
 		meta_undo();
+	if replay_char == "x":
+		return
+	elif old_meta_turn == meta_turn:
+		replay_turn -= 1;
+		# replay contains a bump - silently delete the bump so we don't desync when trying to meta-undo it
+		level_replay = level_replay.left(replay_turn) + level_replay.right(replay_turn + 1)
 	
 func end_replay() -> void:
 	doing_replay = false;
