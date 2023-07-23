@@ -135,6 +135,53 @@ margin_bottom = 299.0
 theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
+[node name="ReplayButtons" type="Node2D" parent="."]
+visible = false
+
+[node name="ReplayTurn" type="Node2D" parent="ReplayButtons"]
+
+[node name="PrevTurnButton" type="Button" parent="ReplayButtons/ReplayTurn"]
+margin_left = 145.0
+margin_top = 263.0
+margin_right = 166.0
+margin_bottom = 285.0
+theme = ExtResource( 2 )
+text = "<"
+
+[node name="PauseButton" type="Button" parent="ReplayButtons/ReplayTurn"]
+margin_left = 172.0
+margin_top = 263.0
+margin_right = 193.0
+margin_bottom = 285.0
+theme = ExtResource( 2 )
+text = "||"
+
+[node name="NextTurnButton" type="Button" parent="ReplayButtons/ReplayTurn"]
+margin_left = 199.0
+margin_top = 263.0
+margin_right = 220.0
+margin_bottom = 285.0
+theme = ExtResource( 2 )
+text = ">"
+
+[node name="ReplayTurnLabel" type="Label" parent="ReplayButtons/ReplayTurn"]
+margin_left = 145.0
+margin_top = 286.0
+margin_right = 221.0
+margin_bottom = 300.0
+theme = ExtResource( 2 )
+text = "Turn: 999/999"
+align = 1
+
+[node name="ReplayTurnSlider" type="HSlider" parent="ReplayButtons/ReplayTurn"]
+margin_left = 145.0
+margin_top = 245.0
+margin_right = 219.0
+margin_bottom = 261.0
+theme = ExtResource( 2 )
+
+[node name="ReplaySpeed" type="Node2D" parent="ReplayButtons"]
+
 [node name="VirtualButtons" type="Node2D" parent="."]
 visible = false
 

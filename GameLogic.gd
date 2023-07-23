@@ -30,6 +30,10 @@ onready var Shade : Node2D = levelscene.get_node("Shade");
 onready var checkerboard : TextureRect = levelscene.get_node("Checkerboard");
 onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
 onready var virtualbuttons : Node2D = levelscene.get_node("VirtualButtons");
+onready var replaybuttons : Node2D = levelscene.get_node("ReplayButtons");
+onready var replayturnlabel : Label = levelscene.get_node("ReplayButtons/ReplayTurn/ReplayTurnLabel");
+onready var replayturnslider : HSlider  = levelscene.get_node("ReplayButtons/ReplayTurn/ReplayTurnSlider");
+var replayturnsliderdrag = false;
 
 # distinguish between temporal layers when a move or state change happens
 # ghosts is for undo trail ghosts
@@ -455,6 +459,15 @@ func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Others/F9Button").connect("button_up", self, "_f9button_released");
 	virtualbuttons.get_node("Others/F10Button").connect("button_down", self, "_f10button_pressed");
 	virtualbuttons.get_node("Others/F10Button").connect("button_up", self, "_f10button_released");
+	replaybuttons.get_node("ReplayTurn/PrevTurnButton").connect("button_down", self, "_prevturnbutton_pressed");
+	replaybuttons.get_node("ReplayTurn/PrevTurnButton").connect("button_up", self, "_prevturnbutton_released");
+	replaybuttons.get_node("ReplayTurn/NextTurnButton").connect("button_down", self, "_nextturnbutton_pressed");
+	replaybuttons.get_node("ReplayTurn/NextTurnButton").connect("button_up", self, "_nextturnbutton_released");
+	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_down", self, "_pausebutton_pressed");
+	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_up", self, "_pausebutton_released");
+	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("value_changed", self, "_replayturnslider_value_changed");
+	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_started", self, "_replayturnslider_drag_started");
+	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_ended", self, "_replayturnslider_drag_ended");
 	
 func virtual_button_pressed(action: String) -> void:
 	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
@@ -500,6 +513,15 @@ func _f9button_pressed() -> void:
 func _f10button_pressed() -> void:
 	virtual_button_pressed("speedup_replay");
 	
+func _prevturnbutton_pressed() -> void:
+	virtual_button_pressed("replay_back1");
+
+func _nextturnbutton_pressed() -> void:
+	virtual_button_pressed("replay_fwd1");
+	
+func _pausebutton_pressed() -> void:
+	virtual_button_pressed("replay_pause");
+	
 func _undobutton_released() -> void:
 	virtual_button_released("character_undo");
 	
@@ -529,6 +551,28 @@ func _f9button_released() -> void:
 	
 func _f10button_released() -> void:
 	virtual_button_released("speedup_replay");
+	
+func _prevturnbutton_released() -> void:
+	virtual_button_released("replay_back1");
+
+func _nextturnbutton_released() -> void:
+	virtual_button_released("replay_fwd1");
+	
+func _pausebutton_released() -> void:
+	virtual_button_released("replay_pause");
+	
+func _replayturnslider_value_changed(value: int) -> void:
+	if !doing_replay:
+		return;
+	var differential = value - replay_turn;
+	if (differential != 0):
+		replay_advance_turn(differential);
+
+func _replayturnslider_drag_started() -> void:
+	replayturnsliderdrag = true;
+	
+func _replayturnslider_drag_ended(value: int) -> void:
+	replayturnsliderdrag = false;
 
 func react_to_save_file_update() -> void:
 	#save_file["gain_insight"] = false;
@@ -3579,7 +3623,7 @@ func setup_chapter_etc() -> void:
 	
 func load_level_direct(new_level: int) -> void:
 	is_custom = false;
-	doing_replay = false;
+	end_replay();
 	in_insight_level = false;
 	has_insight_level = false;
 	var impulse = new_level - self.level_number;
@@ -4042,6 +4086,7 @@ func toggle_replay() -> void:
 		end_replay();
 		return;
 	doing_replay = true;
+	replaybuttons.visible = true;
 	restart();
 	replay_paused = false;
 	replay_turn = 0;
@@ -4057,6 +4102,7 @@ func do_one_replay_turn() -> void:
 	if replay_turn >= level_replay.length():
 		if (unit_test_mode and won and level_number < (level_list.size() - 1)):
 			doing_replay = true;
+			replaybuttons.visible = true;
 			if (double_unit_test_mode):
 				if unit_test_mode_do_second_pass:
 					unit_test_mode_do_second_pass = false;
@@ -4213,6 +4259,15 @@ func update_info_labels() -> void:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
 	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
+	
+	if (doing_replay):
+		replaybuttons.visible = true;
+		replayturnlabel.text = "Turn " + str(replay_turn) + "/" + str(level_replay.length());
+		if (!replayturnsliderdrag):
+			replayturnslider.max_value = level_replay.length();
+			replayturnslider.value = replay_turn;
+	else:
+		replaybuttons.visible = false;
 	
 	if (!is_custom):
 		if (level_number >= 2 and level_number <= 4):
