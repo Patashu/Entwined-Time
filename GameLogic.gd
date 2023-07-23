@@ -4132,6 +4132,7 @@ func replay_advance_turn(amount: int) -> void:
 		for i in range(target_turn):
 			do_one_replay_turn();
 		finish_animations(Chrono.TIMELESS);
+		calm_down_timelines();
 		muted = old_muted;
 		# weaker and slower than meta-undo
 		undo_effect_strength = 0.04;
@@ -4139,6 +4140,10 @@ func replay_advance_turn(amount: int) -> void:
 		play_sound("voidundo");
 	replay_paused = true;
 	update_info_labels();
+			
+func calm_down_timelines() -> void:
+	heavytimeline.calm_down();
+	lighttimeline.calm_down();
 			
 func update_level_label() -> void:
 	var levelnumberastext = ""

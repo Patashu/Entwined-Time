@@ -262,6 +262,16 @@ func fade_myself_and_friends(value: float) -> void:
 		actor.self_modulate.g = value;
 		actor.self_modulate.b = value;
 
+func calm_down() -> void:
+	for slot in timelineslots.get_children():
+		if (!slot.showing_fuzz):
+			slot.undo_effect_strength = 0;
+		for sprite in slot.timelinesymbols.get_children():
+			if sprite.next_modulates.size() > 0:
+				sprite.next_modulates.clear();
+				sprite.previous_modulate = sprite.destination_colour;
+				sprite.modulate = sprite.destination_colour;
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (fade_timer < fade_timer_max):
