@@ -4102,6 +4102,8 @@ func authors_replay() -> void:
 				return;
 	
 	toggle_replay();
+	if (level_replay.find("c") >= 0):
+		voidlike_puzzle = true;
 	
 func toggle_replay() -> void:
 	meta_undo_a_restart_mode = false;
@@ -4197,21 +4199,31 @@ func replay_advance_turn(amount: int) -> void:
 		var target_turn = replay_turn + amount;
 		if (target_turn < 0):
 			target_turn == 0;
-		var replay = level_replay;
-		user_replay = ""; #to not pollute meta undo a restart buffer
-		var old_muted = muted;
-		muted = true;
-		load_level(0);
-		start_specific_replay(replay);
-		for i in range(target_turn):
-			do_one_replay_turn();
-		finish_animations(Chrono.TIMELESS);
-		calm_down_timelines();
-		muted = old_muted;
-		# weaker and slower than meta-undo
-		undo_effect_strength = 0.04;
-		undo_effect_per_second = undo_effect_strength*(1/0.4);
-		play_sound("voidundo");
+		if (voidlike_puzzle):
+			var replay = level_replay;
+			user_replay = ""; #to not pollute meta undo a restart buffer
+			var old_muted = muted;
+			muted = true;
+			load_level(0);
+			start_specific_replay(replay);
+			for i in range(target_turn):
+				do_one_replay_turn();
+			finish_animations(Chrono.TIMELESS);
+			calm_down_timelines();
+			muted = old_muted;
+			# weaker and slower than meta-undo
+			undo_effect_strength = 0.04;
+			undo_effect_per_second = undo_effect_strength*(1/0.4);
+			play_sound("voidundo");
+		else:
+			var iterations = replay_turn - target_turn;
+			for i in range(iterations):
+				var last_input = level_replay[replay_turn - 1];
+				if (last_input == "x"):
+					character_switch();
+				else:
+					meta_undo();
+				replay_turn -= 1;
 	replay_paused = true;
 	update_info_labels();
 			
@@ -4453,6 +4465,8 @@ func start_specific_replay(replay: String) -> void:
 	end_replay();
 	toggle_replay();
 	level_replay = replay;
+	if (level_replay.find("c") >= 0):
+		voidlike_puzzle = true;
 
 func replay_from_clipboard() -> void:
 	var replay = OS.get_clipboard();
