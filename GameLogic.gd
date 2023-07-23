@@ -4803,14 +4803,16 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		elif (Input.is_action_just_pressed("previous_level") and (!doing_replay or won) and (!won or won_cooldown > 0.5)):
-			if (won or lost or meta_turn <= 0):
+		elif (Input.is_action_just_pressed("previous_level")
+		and (!using_controller or ((!doing_replay or won) and (!won or won_cooldown > 0.5)))):
+			if (!using_controller or won or lost or meta_turn <= 0):
 				end_replay();
 				load_level(-1);
 			else:
 				play_sound("bump");
-		elif (Input.is_action_just_pressed("next_level") and (!doing_replay or won) and (!won or won_cooldown > 0.5)):
-			if (won or lost or meta_turn <= 0):
+		elif (Input.is_action_just_pressed("next_level")
+		and (!using_controller or ((!doing_replay or won) and (!won or won_cooldown > 0.5)))):
+			if (!using_controller or won or lost or meta_turn <= 0):
 				end_replay();
 				load_level(1);
 			else:
