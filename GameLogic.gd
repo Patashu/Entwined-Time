@@ -35,8 +35,8 @@ onready var replayturnlabel : Label = levelscene.get_node("ReplayButtons/ReplayT
 onready var replayturnslider : HSlider = levelscene.get_node("ReplayButtons/ReplayTurn/ReplayTurnSlider");
 onready var replayspeedlabel : Label = levelscene.get_node("ReplayButtons/ReplaySpeed/ReplaySpeedLabel");
 onready var replayspeedslider : HSlider = levelscene.get_node("ReplayButtons/ReplaySpeed/ReplaySpeedSlider");
-var replayturnsliderdrag = false;
-var replayspeedsliderdrag = false;
+var replayturnsliderset = false;
+var replayspeedsliderset = false;
 
 # distinguish between temporal layers when a move or state change happens
 # ghosts is for undo trail ghosts
@@ -469,11 +469,7 @@ func connect_virtual_buttons() -> void:
 	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_down", self, "_pausebutton_pressed");
 	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_up", self, "_pausebutton_released");
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("value_changed", self, "_replayturnslider_value_changed");
-	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_started", self, "_replayturnslider_drag_started");
-	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_ended", self, "_replayturnslider_drag_ended");
 	replaybuttons.get_node("ReplaySpeed/ReplaySpeedSlider").connect("value_changed", self, "_replayspeedslider_value_changed");
-	replaybuttons.get_node("ReplaySpeed/ReplaySpeedSlider").connect("drag_started", self, "_replayspeedslider_drag_started");
-	replaybuttons.get_node("ReplaySpeed/ReplaySpeedSlider").connect("drag_ended", self, "_replayspeedslider_drag_ended");
 	
 func virtual_button_pressed(action: String) -> void:
 	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
@@ -570,31 +566,19 @@ func _pausebutton_released() -> void:
 func _replayturnslider_value_changed(value: int) -> void:
 	if !doing_replay:
 		return;
-	if (!replayturnsliderdrag):
+	if (replayturnsliderset):
 		return;
 	var differential = value - replay_turn;
 	if (differential != 0):
 		replay_advance_turn(differential);
-
-func _replayturnslider_drag_started() -> void:
-	replayturnsliderdrag = true;
-	
-func _replayturnslider_drag_ended(value: int) -> void:
-	replayturnsliderdrag = false;
 	
 func _replayspeedslider_value_changed(value: int) -> void:
 	if !doing_replay:
 		return;
-	if (!replayspeedsliderdrag):
+	if (replayspeedsliderset):
 		return;
 	replay_interval = value * 0.01;
 	replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
-
-func _replayspeedslider_drag_started() -> void:
-	replayspeedsliderdrag = true;
-	
-func _replayspeedslider_drag_ended(value: int) -> void:
-	replayspeedsliderdrag = false;
 
 func react_to_save_file_update() -> void:
 	#save_file["gain_insight"] = false;
@@ -4294,9 +4278,10 @@ func update_info_labels() -> void:
 	if (doing_replay):
 		replaybuttons.visible = true;
 		replayturnlabel.text = "Turn " + str(replay_turn) + "/" + str(level_replay.length());
-		if (!replayturnsliderdrag):
-			replayturnslider.max_value = level_replay.length();
-			replayturnslider.value = replay_turn;
+		replayturnsliderset = true;
+		replayturnslider.max_value = level_replay.length();
+		replayturnslider.value = replay_turn;
+		replayturnsliderset = false;
 	else:
 		replaybuttons.visible = false;
 	
@@ -4846,14 +4831,18 @@ func _process(delta: float) -> void:
 				replay_interval = 0.015;
 			elif replay_interval > 0:
 				replay_interval *= (2.0/3.0);
+			replayspeedsliderset = true;
 			replayspeedslider.value = floor(replay_interval * 100);
+			replayspeedsliderset = false;
 			replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
 		elif (Input.is_action_just_pressed("slowdown_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.5;
 			elif replay_interval > 0:
 				replay_interval /= (2.0/3.0);
+			replayspeedsliderset = true;
 			replayspeedslider.value = floor(replay_interval * 100);
+			replayspeedsliderset = false;
 			replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
 		elif (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
