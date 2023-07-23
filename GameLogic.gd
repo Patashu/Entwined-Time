@@ -4080,7 +4080,7 @@ func do_one_replay_turn() -> void:
 		else:
 			if (unit_test_mode):
 				floating_text("Tested up to level: " + str(level_number) + " (This is 0 indexed lol)" );
-			end_replay();
+			#end_replay();
 			return;
 	next_replay = replay_timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
@@ -4731,13 +4731,13 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		elif (Input.is_action_just_pressed("previous_level") and !doing_replay and (!won or won_cooldown > 0.5)):
+		elif (Input.is_action_just_pressed("previous_level") and (!doing_replay or won) and (!won or won_cooldown > 0.5)):
 			if (won or lost or meta_turn <= 0):
 				end_replay();
 				load_level(-1);
 			else:
 				play_sound("bump");
-		elif (Input.is_action_just_pressed("next_level") and !doing_replay and (!won or won_cooldown > 0.5)):
+		elif (Input.is_action_just_pressed("next_level") and (!doing_replay or won) and (!won or won_cooldown > 0.5)):
 			if (won or lost or meta_turn <= 0):
 				end_replay();
 				load_level(1);
