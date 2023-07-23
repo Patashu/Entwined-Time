@@ -12,8 +12,8 @@ tile_data = PoolIntArray( 0, 14, 2, 1, 14, 458755, 2, 14, 196614, 3, 14, 196614,
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Braid (Loop 2)"
-level_replay = "Braid (Loop 2)$mturn=57$xdsxwswsxdxzzzzxzzzsdxwxdxzwdxzzxaaxwxaxzxwxwxzxzczwxwxzzwazzsxzwxzaxzzzzdxdxsxzwaxdd"
-heavy_max_moves = 6
+level_replay = "Braid (Loop 2)$mturn=71$xdxwswxzssdxzzzxzzzxswsxdxzxdxzzddxwxzzxzzzddaxddxzzzxzzddxwxzdxwxaxzzxzzxsswxzdxzwxdxzwxaxzzzxzzzxaxdd"
+heavy_max_moves = 3
 light_max_moves = 3
 
 [node name="TileMap" type="TileMap" parent="."]
