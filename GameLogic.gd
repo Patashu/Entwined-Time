@@ -578,7 +578,7 @@ func _replayspeedslider_value_changed(value: int) -> void:
 	if (replayspeedsliderset):
 		return;
 	replay_interval = value * 0.01;
-	replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
+	update_info_labels();
 
 func react_to_save_file_update() -> void:
 	#save_file["gain_insight"] = false;
@@ -4175,6 +4175,7 @@ func pause_replay() -> void:
 	else:
 		replay_paused = true;
 		floating_text("Replay paused");
+	update_info_labels();
 	
 func replay_advance_turn(amount: int) -> void:
 	if amount > 0:
@@ -4284,11 +4285,15 @@ func update_info_labels() -> void:
 	
 	if (doing_replay):
 		replaybuttons.visible = true;
-		replayturnlabel.text = "Turn " + str(replay_turn) + "/" + str(level_replay.length());
+		replayturnlabel.text = "Input " + str(replay_turn) + "/" + str(level_replay.length());
 		replayturnsliderset = true;
 		replayturnslider.max_value = level_replay.length();
 		replayturnslider.value = replay_turn;
 		replayturnsliderset = false;
+		if (replay_paused):
+			replayspeedlabel.text = "Replay Paused";
+		else:
+			replayspeedlabel.text = "Speed: " + "%0.2f" % (replay_interval) + "s";
 	else:
 		replaybuttons.visible = false;
 	
@@ -4841,7 +4846,7 @@ func _process(delta: float) -> void:
 			replayspeedsliderset = true;
 			replayspeedslider.value = floor(replay_interval * 100);
 			replayspeedsliderset = false;
-			replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
+			update_info_labels();
 		elif (Input.is_action_just_pressed("slowdown_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.5;
@@ -4850,7 +4855,7 @@ func _process(delta: float) -> void:
 			replayspeedsliderset = true;
 			replayspeedslider.value = floor(replay_interval * 100);
 			replayspeedsliderset = false;
-			replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
+			update_info_labels();
 		elif (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
 				# must be kept in sync with Menu
