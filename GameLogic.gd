@@ -4112,6 +4112,14 @@ func pause_replay() -> void:
 		replay_paused = true;
 		floating_text("Replay paused");
 	
+func replay_advance_turn(amount: int) -> void:
+	if amount > 0:
+		replay_paused = true;
+		for i in range(amount):
+			do_one_replay_turn();
+	else:
+		floating_text("TODO");
+	
 func update_level_label() -> void:
 	var levelnumberastext = ""
 	if (is_custom):
@@ -4709,9 +4717,9 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("mute")):
 			toggle_mute();
 		elif (doing_replay and Input.is_action_just_pressed("replay_back1")):
-			floating_text("TODO");
+			replay_advance_turn(-1);
 		elif (doing_replay and Input.is_action_just_pressed("replay_fwd1")):
-			floating_text("TODO");
+			replay_advance_turn(1);
 		elif (doing_replay and Input.is_action_just_pressed("replay_pause")):
 			pause_replay();
 		elif (Input.is_action_just_pressed("speedup_replay")):
