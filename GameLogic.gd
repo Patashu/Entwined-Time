@@ -32,8 +32,11 @@ onready var rng : RandomNumberGenerator = RandomNumberGenerator.new();
 onready var virtualbuttons : Node2D = levelscene.get_node("VirtualButtons");
 onready var replaybuttons : Node2D = levelscene.get_node("ReplayButtons");
 onready var replayturnlabel : Label = levelscene.get_node("ReplayButtons/ReplayTurn/ReplayTurnLabel");
-onready var replayturnslider : HSlider  = levelscene.get_node("ReplayButtons/ReplayTurn/ReplayTurnSlider");
+onready var replayturnslider : HSlider = levelscene.get_node("ReplayButtons/ReplayTurn/ReplayTurnSlider");
+onready var replayspeedlabel : Label = levelscene.get_node("ReplayButtons/ReplaySpeed/ReplaySpeedLabel");
+onready var replayspeedslider : HSlider = levelscene.get_node("ReplayButtons/ReplaySpeed/ReplaySpeedSlider");
 var replayturnsliderdrag = false;
+var replayspeedsliderdrag = false;
 
 # distinguish between temporal layers when a move or state change happens
 # ghosts is for undo trail ghosts
@@ -455,10 +458,10 @@ func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Dirs/UpButton").connect("button_up", self, "_upbutton_released");
 	virtualbuttons.get_node("Others/EnterButton").connect("button_down", self, "_enterbutton_pressed");
 	virtualbuttons.get_node("Others/EnterButton").connect("button_up", self, "_enterbutton_released");
-	virtualbuttons.get_node("Others/F9Button").connect("button_down", self, "_f9button_pressed");
-	virtualbuttons.get_node("Others/F9Button").connect("button_up", self, "_f9button_released");
-	virtualbuttons.get_node("Others/F10Button").connect("button_down", self, "_f10button_pressed");
-	virtualbuttons.get_node("Others/F10Button").connect("button_up", self, "_f10button_released");
+	replaybuttons.get_node("ReplaySpeed/F9Button").connect("button_down", self, "_f9button_pressed");
+	replaybuttons.get_node("ReplaySpeed/F9Button").connect("button_up", self, "_f9button_released");
+	replaybuttons.get_node("ReplaySpeed/F10Button").connect("button_down", self, "_f10button_pressed");
+	replaybuttons.get_node("ReplaySpeed/F10Button").connect("button_up", self, "_f10button_released");
 	replaybuttons.get_node("ReplayTurn/PrevTurnButton").connect("button_down", self, "_prevturnbutton_pressed");
 	replaybuttons.get_node("ReplayTurn/PrevTurnButton").connect("button_up", self, "_prevturnbutton_released");
 	replaybuttons.get_node("ReplayTurn/NextTurnButton").connect("button_down", self, "_nextturnbutton_pressed");
@@ -468,6 +471,9 @@ func connect_virtual_buttons() -> void:
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("value_changed", self, "_replayturnslider_value_changed");
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_started", self, "_replayturnslider_drag_started");
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_ended", self, "_replayturnslider_drag_ended");
+	replaybuttons.get_node("ReplaySpeed/ReplaySpeedSlider").connect("value_changed", self, "_replayspeedslider_value_changed");
+	replaybuttons.get_node("ReplaySpeed/ReplaySpeedSlider").connect("drag_started", self, "_replayspeedslider_drag_started");
+	replaybuttons.get_node("ReplaySpeed/ReplaySpeedSlider").connect("drag_ended", self, "_replayspeedslider_drag_ended");
 	
 func virtual_button_pressed(action: String) -> void:
 	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
@@ -573,6 +579,20 @@ func _replayturnslider_drag_started() -> void:
 	
 func _replayturnslider_drag_ended(value: int) -> void:
 	replayturnsliderdrag = false;
+	
+func _replayspeedslider_value_changed(value: int) -> void:
+	if !doing_replay:
+		return;
+	if (!replayspeedsliderdrag):
+		return;
+	replay_interval = value * 0.01;
+	replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
+
+func _replayspeedslider_drag_started() -> void:
+	replayspeedsliderdrag = true;
+	
+func _replayspeedslider_drag_ended(value: int) -> void:
+	replayspeedsliderdrag = false;
 
 func react_to_save_file_update() -> void:
 	#save_file["gain_insight"] = false;
@@ -1272,12 +1292,6 @@ func ready_map() -> void:
 	initialize_timeline_viewers();
 	ready_tutorial();
 	update_level_label();
-	
-	if (virtualbuttons.visible):
-		virtualbuttons.get_node("Others/F9Button").visible = doing_replay;
-		virtualbuttons.get_node("Others/F9Button").disabled = !doing_replay;
-		virtualbuttons.get_node("Others/F10Button").visible = doing_replay;
-		virtualbuttons.get_node("Others/F10Button").disabled = !doing_replay;
 	
 func ready_tutorial() -> void:
 	if is_custom:
@@ -3239,12 +3253,6 @@ func adjust_meta_turn(amount: int) -> void:
 	update_ghosts();
 	check_won();
 	
-	if (virtualbuttons.visible):
-		virtualbuttons.get_node("Others/F9Button").visible = doing_replay;
-		virtualbuttons.get_node("Others/F9Button").disabled = !doing_replay;
-		virtualbuttons.get_node("Others/F10Button").visible = doing_replay;
-		virtualbuttons.get_node("Others/F10Button").disabled = !doing_replay;
-	
 func check_won() -> void:
 	won = false;
 	var locked = false;
@@ -4213,11 +4221,6 @@ func update_level_label() -> void:
 	if (level_author != "" and level_author != "Patashu"):
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
-		if (virtualbuttons.visible):
-			virtualbuttons.get_node("Others/F9Button").visible = true;
-			virtualbuttons.get_node("Others/F9Button").disabled = false;
-			virtualbuttons.get_node("Others/F10Button").visible = true;
-			virtualbuttons.get_node("Others/F10Button").disabled = false;
 		levellabel.text += " (REPLAY)"
 		if (heavy_max_moves < 11 and light_max_moves < 11):
 			if (using_controller):
@@ -4811,11 +4814,15 @@ func _process(delta: float) -> void:
 				replay_interval = 0.015;
 			elif replay_interval > 0:
 				replay_interval *= (2.0/3.0);
+			replayspeedslider.value = floor(replay_interval * 100);
+			replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
 		elif (Input.is_action_just_pressed("slowdown_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.5;
 			elif replay_interval > 0:
 				replay_interval /= (2.0/3.0);
+			replayspeedslider.value = floor(replay_interval * 100);
+			replayspeedlabel.text = "Speed: " + "%0.2f" % (replayspeedslider.value/100.0) + "s";
 		elif (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
 				# must be kept in sync with Menu
