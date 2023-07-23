@@ -341,6 +341,7 @@ var replay_timer = 0;
 var user_replay = "";
 var user_replay_before_restarts = [];
 var doing_replay = false;
+var replay_paused = false;
 var replay_turn = 0;
 var replay_interval = 0.5;
 var next_replay = -1;
@@ -4041,6 +4042,7 @@ func toggle_replay() -> void:
 		return;
 	doing_replay = true;
 	restart();
+	replay_paused = false;
 	replay_turn = 0;
 	next_replay = replay_timer + replay_interval();
 	unit_test_mode = OS.is_debug_build() and Input.is_action_pressed(("shift"));
@@ -4100,6 +4102,15 @@ func do_one_replay_turn() -> void:
 func end_replay() -> void:
 	doing_replay = false;
 	update_level_label();
+	
+func pause_replay() -> void:
+	if replay_paused:
+		replay_paused = false;
+		floating_text("Replay unpaused");
+		replay_timer = next_replay;
+	else:
+		replay_paused = true;
+		floating_text("Replay paused");
 	
 func update_level_label() -> void:
 	var levelnumberastext = ""
@@ -4643,7 +4654,8 @@ func _process(delta: float) -> void:
 	if (won):
 		won_cooldown += delta;
 	
-	replay_timer += delta;
+	if (doing_replay and !replay_paused):
+		replay_timer += delta;
 	if (sky_timer < sky_timer_max):
 		sky_timer += delta;
 		if (sky_timer > sky_timer_max):
@@ -4696,6 +4708,12 @@ func _process(delta: float) -> void:
 				play_sound("bump");
 		elif (Input.is_action_just_pressed("mute")):
 			toggle_mute();
+		elif (doing_replay and Input.is_action_just_pressed("replay_back1")):
+			floating_text("TODO");
+		elif (doing_replay and Input.is_action_just_pressed("replay_fwd1")):
+			floating_text("TODO");
+		elif (doing_replay and Input.is_action_just_pressed("replay_pause")):
+			pause_replay();
 		elif (Input.is_action_just_pressed("speedup_replay")):
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.015;
