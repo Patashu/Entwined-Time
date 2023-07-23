@@ -2977,7 +2977,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			meta_undo_buffer.append([]);
 		meta_undo_buffer[meta_turn].push_front(event);
 
-func append_replay(move: String) -> bool:
+func append_replay(move: String) -> void:
 	if (move == "x"):
 		if user_replay.ends_with("x"):
 			user_replay = user_replay.left(user_replay.length() - 1);
@@ -2985,7 +2985,6 @@ func append_replay(move: String) -> bool:
 			user_replay += move;
 	else:
 		user_replay += move;
-	return true;
 	
 func meta_undo_replay() -> bool:
 	if (voidlike_puzzle):
@@ -3043,6 +3042,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
 			time_passes(Chrono.CHAR_UNDO);
 		
+		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undo");
@@ -3054,7 +3054,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
 				undo_effect_per_second = undo_effect_strength*(1/0.4);
 				undo_effect_color = heavy_color;
-		return append_replay("z");
+		return true;
 	else:
 		
 		# check if we can undo
@@ -3096,6 +3096,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
 			time_passes(Chrono.CHAR_UNDO);
 			
+		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
 			if (fuzzed):
@@ -3107,7 +3108,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_effect_strength = 0.08;
 				undo_effect_per_second = undo_effect_strength*(1/0.4);
 				undo_effect_color = light_color;
-		return append_replay("z");
+		return true;
 
 func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:
 	# TODO: another poor refactor but
