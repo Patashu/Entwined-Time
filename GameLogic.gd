@@ -680,22 +680,36 @@ func setup_virtual_buttons() -> void:
 		if value == 1:
 			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
 			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+			replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
+			replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
 		elif value == 2:
 			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
 			virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
+			replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
+			replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
 		elif value == 3:
 			virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
 			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+			replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
+			replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
 		elif value == 4:
 			virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
 			virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
+			replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
+			replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
 		elif value == 5:
 			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
 			virtualbuttons.get_node("Dirs").position = Vector2(-300, 0);
+			replaybuttons.get_node("ReplayTurn").position = Vector2(160, 0);
+			replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
 		elif value == 6:
 			virtualbuttons.get_node("Verbs").position = Vector2(300, 0);
 			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+			replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
+			replaybuttons.get_node("ReplaySpeed").position = Vector2(-150, 0);
 	else:
+		replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
+		replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
 		for folder in virtualbuttons.get_children():
 			for button in folder.get_children():
 				button.disabled = true;

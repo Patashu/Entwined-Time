@@ -136,6 +136,7 @@ theme = ExtResource( 2 )
 text = "Menu (Esc)"
 
 [node name="ReplayButtons" type="Node2D" parent="."]
+visible = false
 
 [node name="ReplayTurn" type="Node2D" parent="ReplayButtons"]
 
@@ -183,9 +184,9 @@ theme = ExtResource( 2 )
 
 [node name="ReplaySpeedLabel" type="Label" parent="ReplayButtons/ReplaySpeed"]
 margin_left = 292.0
-margin_top = 285.0
+margin_top = 286.0
 margin_right = 368.0
-margin_bottom = 299.0
+margin_bottom = 300.0
 theme = ExtResource( 2 )
 text = "Speed: 0.50s"
 align = 1
