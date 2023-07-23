@@ -88,6 +88,7 @@ func fill(buffer: Array) -> void:
 	for sprite in timelinesymbols.get_children():
 		parent.broadcast_remove_sprite(sprite);
 		sprite.queue_free();
+		timelinesymbols.remove_child(sprite);
 	
 	var relevant_buffer = [];
 	for event in buffer:

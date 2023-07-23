@@ -34,6 +34,7 @@ func reset() -> void:
 	timelinedivider.position.y = 0;
 	for slot in timelineslots.get_children():
 		slot.queue_free();
+		timelineslots.remove_child(slot);
 	for sprite in nonce_to_sprite_dictionary:
 		if is_instance_valid(sprite):
 			sprite.queue_free();
@@ -106,6 +107,7 @@ func undo_add_max_turn() -> void:
 	max_moves -= 1;
 	var last_slot = timelineslots.get_children().pop_back();
 	last_slot.queue_free();
+	timelineslots.remove_child(last_slot);
 	
 func lock_turn(turn_locked: int, slow: bool = true) -> TimelineSlot:
 	# I didn't actually end up using turn_locked since it's unambiguous, but I COULD.
