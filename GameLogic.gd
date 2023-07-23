@@ -1667,6 +1667,7 @@ func prepare_audio() -> void:
 	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
 	sounds["untick"] = preload("res://sfx/untick.ogg");
 	sounds["usegreenality"] = preload("res://sfx/usegreenality.ogg");
+	sounds["voidundo"] = preload("res://sfx/voidundo.ogg");
 	sounds["winentwined"] = preload("res://sfx/winentwined.ogg");
 	sounds["winbadtime"] = preload("res://sfx/winbadtime.ogg");
 	
@@ -4114,12 +4115,31 @@ func pause_replay() -> void:
 	
 func replay_advance_turn(amount: int) -> void:
 	if amount > 0:
-		replay_paused = true;
 		for i in range(amount):
 			do_one_replay_turn();
+	elif (replay_turn <= 0):
+		play_sound("bump");
 	else:
-		floating_text("TODO");
-	
+		var target_turn = replay_turn + amount;
+		if (target_turn < 0):
+			target_turn == 0;
+		var replay = level_replay;
+		user_replay = ""; #to not pollute meta undo a restart buffer
+		var old_muted = muted;
+		muted = true;
+		load_level(0);
+		start_specific_replay(replay);
+		for i in range(target_turn):
+			do_one_replay_turn();
+		finish_animations(Chrono.TIMELESS);
+		muted = old_muted;
+		# weaker and slower than meta-undo
+		undo_effect_strength = 0.04;
+		undo_effect_per_second = undo_effect_strength*(1/0.4);
+		play_sound("voidundo");
+	replay_paused = true;
+	update_info_labels();
+			
 func update_level_label() -> void:
 	var levelnumberastext = ""
 	if (is_custom):

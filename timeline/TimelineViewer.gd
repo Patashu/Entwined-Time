@@ -34,6 +34,11 @@ func reset() -> void:
 	timelinedivider.position.y = 0;
 	for slot in timelineslots.get_children():
 		slot.queue_free();
+	for sprite in nonce_to_sprite_dictionary:
+		if is_instance_valid(sprite):
+			sprite.queue_free();
+	nonce_to_sprite_dictionary.clear();
+	animating_children.clear();
 	for i in range(max_moves):
 		var slot = preload("res://timeline/TimelineSlot.tscn").instance();
 		slot.parent = self;
