@@ -23,30 +23,48 @@ func _ready() -> void:
 	newlevelbutton.connect("pressed", self, "_newlevelbutton_pressed");
 
 func _exiteditorbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	self.get_parent().destroy();
 	destroy();
 	
 func _levelinfobutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	var a = preload("res://level_editor/LevelInfoEdit.tscn").instance();
 	self.get_parent().add_child(a);
 	gamelogic.ui_stack.push_back(a);
 	destroy();
 	
 func _copylevelbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	self.get_parent().copy_level();
 	destroy();
 	
 func _pastelevelbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	self.get_parent().paste_level();
 	destroy();
 	
 func _instructionsbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	var a = preload("res://level_editor/Instructions.tscn").instance();
 	self.get_parent().add_child(a);
 	gamelogic.ui_stack.push_back(a);
 	destroy();
 	
 func _newlevelbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	self.get_parent().new_level();
 	destroy();
 
