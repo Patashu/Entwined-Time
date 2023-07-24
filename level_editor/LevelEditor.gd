@@ -223,6 +223,9 @@ func serialize_current_level() -> String:
 			pass
 		else:
 			empties.append(layer);
+	if (empties.size() == terrain_layers.size()):
+		floating_text("It's empty, Jim.")
+		return "";
 	for layer in empties:
 		terrain_layers.erase(layer);
 		layer.get_parent().remove_child(layer);
@@ -286,8 +289,9 @@ func serialize_current_level() -> String:
 
 func copy_level() -> void:
 	var result = serialize_current_level();
-	floating_text("Ctrl+C: Level copied to clipboard!");
-	OS.set_clipboard(result);
+	if (result != ""):
+		floating_text("Ctrl+C: Level copied to clipboard!");
+		OS.set_clipboard(result);
 	
 func paste_level() -> void:
 	if (!gamelogic.clipboard_contains_level()):
