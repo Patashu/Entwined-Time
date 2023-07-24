@@ -99,6 +99,11 @@ func _ready() -> void:
 	gamelogic.tile_changes(true);
 	
 	custom_string = gamelogic.serialize_current_level();
+	deserialize_custom_level(custom_string);
+			
+	change_pen_tile(); # must happen after level setup
+
+func deserialize_custom_level(custom_string: String) -> void:
 	var level = gamelogic.deserialize_custom_level(custom_string);
 	tilemaps.add_child(level);
 	level_info = level.get_node("LevelInfo");
@@ -107,8 +112,6 @@ func _ready() -> void:
 	for child in level.get_children():
 		if child is TileMap:
 			terrain_layers.push_front(child);
-			
-	change_pen_tile(); # must happen after level setup
 
 func serialize_current_level() -> String:
 	# keep in sync with GameLogic.gd serialize_current_level()
@@ -152,6 +155,14 @@ func copy_level() -> void:
 	var result = serialize_current_level();
 	floating_text("Ctrl+C: Level copied to clipboard!");
 	OS.set_clipboard(result);
+	
+func paste_level() -> void:
+	if (!gamelogic.clipboard_contains_level()):
+		floating_text("Ctrl+V: Invalid level");
+		return
+	else:
+		deserialize_custom_level(OS.get_clipboard());
+		floating_text("Ctrl+V: Level pasted from clipboard!");
 
 func change_pen_tile() -> void:
 	var tile_set = tilemaps.get_child(0).tile_set;
@@ -217,3 +228,5 @@ func _process(delta: float) -> void:
 		rmb();
 	elif (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
 		copy_level();
+	elif (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
+		paste_level();
