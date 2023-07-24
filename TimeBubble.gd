@@ -8,6 +8,8 @@ var time_colours = [Color("808080"), Color("B200FF"), Color("FF00DC"),
 Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040"),
 Color("00FFFF"), Color("FF6A00"), Color("FFD800"), Color("FFFFFF")];
 var label = null;
+var flash_timer = 0.0;
+var flash_timer_max = 0.0;
 
 enum TimeColour {
 	Gray,
@@ -29,6 +31,10 @@ func time_bubble_colour() -> void:
 	var current_r = lerp(0, c.r, coeff);
 	var current_g = lerp(0, c.g, coeff);
 	var current_b = lerp(0, c.b, coeff);
+	if (flash_timer_max > 0.0):
+		current_r = lerp(current_r, 1.0, 0.66*(1-(flash_timer/flash_timer_max)));
+		current_g = lerp(current_g, 1.0, 0.66*(1-(flash_timer/flash_timer_max)));
+		current_b = lerp(current_b, 1.0, 0.66*(1-(flash_timer/flash_timer_max)));
 	self.modulate = Color(current_r, current_g, current_b);
 
 func setup_colourblind_mode(value : bool) -> void:
@@ -46,7 +52,14 @@ func setup_colourblind_mode(value : bool) -> void:
 		label.queue_free();
 		label = null;
 
+func flash() -> void:
+	flash_timer = 0.0;
+	flash_timer_max = 0.33;
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	timer += delta;
+	flash_timer += delta;
+	if (flash_timer >= flash_timer_max):
+		flash_timer_max = 0.0;
 	time_bubble_colour();

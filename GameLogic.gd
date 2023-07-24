@@ -146,6 +146,7 @@ enum Animation {
 	generic_green_time_crystal, #21
 	generic_magenta_time_crystal, #22
 	lose, #23
+	time_passes, #24
 }
 
 enum TimeColour {
@@ -3895,6 +3896,10 @@ func time_passes(chrono: int) -> void:
 				if (chrono == Chrono.CHAR_UNDO):
 					time_actors.push_back(actor);
 			# White: No
+	
+	# Flash time bubbles (Can add other effects here if I think of any).
+	for actor in time_actors:
+		add_to_animation_server(actor, [Animation.time_passes]);
 	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.

@@ -709,6 +709,9 @@ func _process(delta: float) -> void:
 				else:
 					gamelogic.lighttimeline.start_fade();
 				gamelogic.play_sound("abysschime");
+			elif (current_animation[0] == 24): #time_passes
+				if time_bubble != null:
+					time_bubble.flash();
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
