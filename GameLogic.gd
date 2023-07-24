@@ -4192,7 +4192,18 @@ func replay_advance_turn(amount: int) -> void:
 		var target_turn = replay_turn + amount;
 		if (target_turn < 0):
 			target_turn == 0;
+		
+		# Restart and advance the puzzle from the start if:
+		# 1) voidlike_puzzle (contains void elements or the replay contains a meta undo)
+		# 2) it's a long jump, and going forward from the start would be quicker
+		# (currently assuming an undo is 2.1x as fast as a forward move, which seems roughly right)
+		var restart_and_advance = false;
 		if (voidlike_puzzle):
+			restart_and_advance = true;
+		elif amount < -50 and target_turn*2.1 < -amount:
+			restart_and_advance = true;
+			
+		if (restart_and_advance):
 			var replay = level_replay;
 			user_replay = ""; #to not pollute meta undo a restart buffer
 			var old_muted = muted;
