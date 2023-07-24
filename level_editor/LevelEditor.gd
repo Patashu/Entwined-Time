@@ -92,6 +92,8 @@ var pen_tile = Tiles.Wall;
 var pen_layer = 0;
 var terrain_layers = [];
 var pen_xy = Vector2.ZERO;
+var picker_mode = false;
+var picker_array = [];
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -103,6 +105,94 @@ func _ready() -> void:
 	deserialize_custom_level(custom_string);
 			
 	change_pen_tile(); # must happen after level setup
+	
+	initialize_picker_array();
+	
+func initialize_picker_array() -> void:
+	var puzzles = gamelogic.puzzles_completed;
+	if gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]:
+		puzzles += 99999;
+		
+	picker_array.append(-1);
+	picker_array.append(Tiles.HeavyIdle);
+	picker_array.append(Tiles.LightIdle);
+	picker_array.append(Tiles.HeavyGoal);
+	picker_array.append(Tiles.LightGoal);
+	picker_array.append(Tiles.Wall);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[1]):
+		picker_array.append(Tiles.Spikeball);
+		picker_array.append(Tiles.Fire);
+		picker_array.append(Tiles.HeavyFire);
+		picker_array.append(Tiles.LightFire);
+		picker_array.append(Tiles.NoHeavy);
+		picker_array.append(Tiles.NoLight);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[3]):
+		picker_array.append(Tiles.OnewayEast);
+		picker_array.append(Tiles.OnewayNorth);
+		picker_array.append(Tiles.OnewaySouth);
+		picker_array.append(Tiles.OnewayWest);
+		picker_array.append(Tiles.OnewayEastGreen);
+		picker_array.append(Tiles.OnewayNorthGreen);
+		picker_array.append(Tiles.OnewaySouthGreen);
+		picker_array.append(Tiles.OnewayWestGreen);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[4]):
+		picker_array.append(Tiles.Ladder);
+		picker_array.append(Tiles.WoodenPlatform);
+		picker_array.append(Tiles.LadderPlatform);
+		picker_array.append(Tiles.OnewayEastPurple);
+		picker_array.append(Tiles.OnewayNorthPurple);
+		picker_array.append(Tiles.OnewaySouthPurple);
+		picker_array.append(Tiles.OnewayWestPurple);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[5]):
+		picker_array.append(Tiles.IronCrate);
+		picker_array.append(Tiles.CrateGoal);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[6]):
+		picker_array.append(Tiles.ColourRed);
+		picker_array.append(Tiles.ColourBlue);
+		picker_array.append(Tiles.ColourGray);
+		picker_array.append(Tiles.ColourMagenta);
+		picker_array.append(Tiles.WoodenCrate);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[7]):
+		picker_array.append(Tiles.GlassBlock);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[8]):
+		picker_array.append(Tiles.ColourGreen);
+		picker_array.append(Tiles.GreenSpikeball);
+		picker_array.append(Tiles.GreenFire);
+		picker_array.append(Tiles.GreenGlassBlock);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[9]):
+		picker_array.append(Tiles.Fuzz);
+		picker_array.append(Tiles.OneUndo);
+		picker_array.append(Tiles.NoUndo);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[10]):
+		picker_array.append(Tiles.TimeCrystalGreen);
+		picker_array.append(Tiles.TimeCrystalMagenta);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[11]):
+		picker_array.append(Tiles.CuckooClock);
+		picker_array.append(Tiles.TheNight);
+		picker_array.append(Tiles.TheStars);
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
+		picker_array.append(Tiles.SteelCrate);
+		picker_array.append(Tiles.PowerCrate);
+		picker_array.append(Tiles.ColourVoid);
+		picker_array.append(Tiles.ColourCyan);
+		picker_array.append(Tiles.ColourOrange);
+		picker_array.append(Tiles.ColourYellow);
+		picker_array.append(Tiles.ColourWhite);
+		picker_array.append(Tiles.VoidSpikeball);
+		picker_array.append(Tiles.VoidGlassBlock);
+		picker_array.append(Tiles.ChronoHelixBlue);
+		picker_array.append(Tiles.ChronoHelixRed);
+		picker_array.append(Tiles.HeavyGoalJoke);
+		picker_array.append(Tiles.LightGoalJoke);
+		picker_array.append(Tiles.PowerSocket);
+		picker_array.append(Tiles.GreenPowerSocket);
+		picker_array.append(Tiles.VoidPowerSocket);
+		picker_array.append(Tiles.GlassBlockCracked);
+	
+	for i in range(picker_array.size()):
+		var x = i % 21;
+		var y = i / 21;
+		picker.set_cellv(Vector2(x, y), picker_array[i]);
 
 func deserialize_custom_level(custom_string: String) -> void:
 	var level = gamelogic.deserialize_custom_level(custom_string);
@@ -330,6 +420,16 @@ func change_layer(layer: int) -> void:
 			terrain_layers[i].modulate = Color(1, 1, 1, 0.5);
 	layerlabel.text = "Layer: " + str(pen_layer);
 
+func toggle_picker_mode() -> void:
+	if !picker_mode:
+		picker_mode = true;
+		pickerbackground.visible = true;
+		picker.visible = true;
+	else:
+		picker_mode = false;
+		pickerbackground.visible = false;
+		picker.visible = false;
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -376,24 +476,26 @@ func _process(delta: float) -> void:
 			shift_layer(terrain_layers[layer_index()], Vector2.DOWN);
 		else:
 			shift_all_layers(Vector2.DOWN);
-	elif (Input.is_key_pressed(48)):
+	elif (Input.is_action_just_pressed("tab")):
+		toggle_picker_mode();
+	elif (Input.is_action_just_pressed("0")):
 		change_layer(9);
-	elif (Input.is_key_pressed(49)):
+	elif (Input.is_action_just_pressed("1")):
 		change_layer(0);
-	elif (Input.is_key_pressed(50)):
+	elif (Input.is_action_just_pressed("2")):
 		change_layer(1);
-	elif (Input.is_key_pressed(51)):
+	elif (Input.is_action_just_pressed("3")):
 		change_layer(2);
-	elif (Input.is_key_pressed(52)):
+	elif (Input.is_action_just_pressed("4")):
 		change_layer(3);
-	elif (Input.is_key_pressed(53)):
+	elif (Input.is_action_just_pressed("5")):
 		change_layer(4);
-	elif (Input.is_key_pressed(54)):
+	elif (Input.is_action_just_pressed("6")):
 		change_layer(5);
-	elif (Input.is_key_pressed(55)):
+	elif (Input.is_action_just_pressed("7")):
 		change_layer(6);
-	elif (Input.is_key_pressed(56)):
+	elif (Input.is_action_just_pressed("8")):
 		change_layer(7);
-	elif (Input.is_key_pressed(57)):
+	elif (Input.is_action_just_pressed("9")):
 		change_layer(8);
 		

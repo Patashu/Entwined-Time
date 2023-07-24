@@ -14,10 +14,6 @@ color = Color( 0.133333, 0.235294, 0.321569, 1 )
 
 [node name="TileMaps" type="Node2D" parent="."]
 
-[node name="Pen" type="Sprite" parent="."]
-modulate = Color( 2, 2, 2, 0.5 )
-centered = false
-
 [node name="LayerLabel" type="Label" parent="."]
 margin_left = 468.0
 margin_top = 287.0
@@ -37,6 +33,10 @@ visible = false
 tile_set = ExtResource( 3 )
 cell_size = Vector2( 24, 24 )
 format = 1
+
+[node name="Pen" type="Sprite" parent="."]
+modulate = Color( 2, 2, 2, 0.5 )
+centered = false
 
 [node name="MenuButton" type="Button" parent="."]
 margin_left = 226.0
