@@ -190,6 +190,10 @@ func change_pen_tile() -> void:
 func lmb() -> void:
 	terrain_layers[layer_index()].set_cellv(pen_xy, pen_tile);
 	terrain_layers[layer_index()].update_bitmask_area(pen_xy);
+	if (level_info.map_x_max < pen_xy.x):
+		level_info.map_x_max = pen_xy.x;
+	if (level_info.map_y_max < pen_xy.y):
+		level_info.map_y_max = pen_xy.y;
 
 func rmb() -> void:
 	pen_tile = terrain_layers[layer_index()].get_cellv(pen_xy);
