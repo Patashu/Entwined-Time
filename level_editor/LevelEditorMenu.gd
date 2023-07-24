@@ -6,18 +6,26 @@ onready var holder : Label = get_node("Holder");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
 onready var exiteditorbutton : Button = get_node("Holder/ExitEditorButton");
+onready var levelinfobutton : Button = get_node("Holder/LevelInfoButton");
 onready var copylevelbutton : Button = get_node("Holder/CopyLevelButton");
 onready var pastelevelbutton : Button = get_node("Holder/PasteLevelButton");
+onready var newlevelbutton : Button = get_node("Holder/NewLevelButton");
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
 	exiteditorbutton.connect("pressed", self, "_exiteditorbutton_pressed");
+	levelinfobutton.connect("pressed", self, "_levelinfobutton_pressed");
 	copylevelbutton.connect("pressed", self, "_copylevelbutton_pressed");
 	pastelevelbutton.connect("pressed", self, "_pastelevelbutton_pressed");
+	newlevelbutton.connect("pressed", self, "_newlevelbutton_pressed");
 
 func _exiteditorbutton_pressed() -> void:
 	self.get_parent().destroy();
+	destroy();
+	
+func _levelinfobutton_pressed() -> void:
+	# TODO
 	destroy();
 	
 func _copylevelbutton_pressed() -> void:
@@ -26,6 +34,10 @@ func _copylevelbutton_pressed() -> void:
 	
 func _pastelevelbutton_pressed() -> void:
 	self.get_parent().paste_level();
+	destroy();
+	
+func _newlevelbutton_pressed() -> void:
+	self.get_parent().new_level();
 	destroy();
 
 func destroy() -> void:

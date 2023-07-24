@@ -206,6 +206,12 @@ func paste_level() -> void:
 		deserialize_custom_level(OS.get_clipboard());
 		floating_text("Ctrl+V: Level pasted from clipboard!");
 
+func new_level() -> void:
+	change_layer(0);
+	for layer in terrain_layers:
+		layer.clear();
+	floating_text("Level reset");
+
 func shift_all_layers(shift: Vector2) -> void:
 	for layer in terrain_layers:
 		shift_layer(layer, shift);
@@ -339,9 +345,12 @@ func _process(delta: float) -> void:
 	pen.position = mouse_position;
 	pen_xy = Vector2(round(mouse_position.x/float(gamelogic.cell_size)), round(mouse_position.y/float(gamelogic.cell_size)));
 	
-	if (Input.is_mouse_button_pressed(1)):
+	var over_menu_button = false;
+	if (Rect2(menubutton.rect_position, menubutton.rect_size).has_point(get_global_mouse_position())):
+		over_menu_button = true;
+	if (Input.is_mouse_button_pressed(1) and !over_menu_button):
 		lmb();
-	elif (Input.is_mouse_button_pressed(2)):
+	elif (Input.is_mouse_button_pressed(2) and !over_menu_button):
 		rmb();
 	elif (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
 		copy_level();

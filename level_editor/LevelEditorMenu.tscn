@@ -31,7 +31,7 @@ margin_left = 78.0
 margin_top = 17.0
 margin_right = 161.0
 margin_bottom = 32.0
-focus_neighbour_top = NodePath("../UndoRestartButton")
+focus_neighbour_top = NodePath("../NewLevelButton")
 focus_neighbour_right = NodePath("../OkButton")
 text = "Copy Level"
 
@@ -40,7 +40,7 @@ margin_left = 78.0
 margin_top = 35.0
 margin_right = 161.0
 margin_bottom = 50.0
-focus_neighbour_right = NodePath("../LevelSelectButton")
+focus_neighbour_right = NodePath("../LevelInfoButton")
 text = "Paste Level"
 
 [node name="SaveReplayButton" type="Button" parent="Holder"]
@@ -70,14 +70,13 @@ margin_bottom = 104.0
 focus_neighbour_right = NodePath("../SettingsButton")
 text = "---"
 
-[node name="LevelSelectButton" type="Button" parent="Holder"]
-visible = false
+[node name="LevelInfoButton" type="Button" parent="Holder"]
 margin_left = 9.0
 margin_top = 35.0
 margin_right = 74.0
 margin_bottom = 50.0
 focus_neighbour_left = NodePath("../PasteLevelButton")
-text = "---"
+text = "Level Info"
 
 [node name="InsightButton" type="Button" parent="Holder"]
 visible = false
@@ -111,18 +110,17 @@ margin_left = 9.0
 margin_top = 107.0
 margin_right = 74.0
 margin_bottom = 122.0
-focus_neighbour_left = NodePath("../UndoRestartButton")
+focus_neighbour_left = NodePath("../NewLevelButton")
 focus_neighbour_bottom = NodePath("../OkButton")
 text = "Exit Editor"
 
-[node name="UndoRestartButton" type="Button" parent="Holder"]
-visible = false
+[node name="NewLevelButton" type="Button" parent="Holder"]
 margin_left = 79.0
 margin_top = 107.0
 margin_right = 160.0
 margin_bottom = 122.0
 focus_neighbour_right = NodePath("../ExitEditorButton")
 focus_neighbour_bottom = NodePath("../CopyLevelButton")
-text = "---"
+text = "New Level"
 
 [node name="Pointer" type="Sprite" parent="Holder"]
