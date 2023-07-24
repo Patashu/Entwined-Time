@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://default_styleboxtexture.tres" type="StyleBox" id=1]
+[ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
+[ext_resource path="res://level_editor/Instructions.gd" type="Script" id=3]
+
+[node name="Instructions" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Holder" type="Label" parent="."]
+margin_left = 9.0
+margin_top = 6.0
+margin_right = 503.0
+margin_bottom = 294.0
+theme = ExtResource( 2 )
+custom_styles/normal = ExtResource( 1 )
+text = "Level Editor Instructions:
+(It requires keyboard + mouse, sorry.)
+* Go to the puzzle you want to make an edit of and enter the Level Editor, or use 'New Level', or 'Paste Level'.
+* Left click to draw, right click to eyedrop currently highlighted tile.
+* You can open Tab to select any tile (only shows tiles in chapters you've unlocked).
+* Scrollwheel moves between adjacent tiles (as ordered by Tab). 
+* 1-9 to change currently selected layer.
+* WASD/UDLR to move all layers. +Shift to move currently selected layer.
+* Menu > Level Info to change metadata.
+* When you're done, 'Copy Level' (Ctrl+C) and save it to your computer.
+* The level can be played in-game by anyone using 'Paste Level' (Ctrl+V),
+"
+align = 1
+autowrap = true
+
+[node name="OkButton" type="Button" parent="Holder"]
+margin_left = 189.0
+margin_top = 268.0
+margin_right = 300.0
+margin_bottom = 283.0
+text = "Ok"
+
+[node name="Pointer" type="Sprite" parent="Holder"]

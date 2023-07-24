@@ -74,6 +74,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://GoldLabel.gd"
 }, {
+"base": "Node2D",
+"class": "Instructions",
+"language": "GDScript",
+"path": "res://level_editor/Instructions.gd"
+}, {
 "base": "Button",
 "class": "LevelButton",
 "language": "GDScript",
@@ -183,6 +188,7 @@ _global_script_class_icons={
 "Goal": "",
 "GoalParticle": "",
 "GoldLabel": "",
+"Instructions": "",
 "LevelButton": "",
 "LevelEditor": "",
 "LevelEditorMenu": "",

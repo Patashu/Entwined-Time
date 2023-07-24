@@ -9,6 +9,7 @@ onready var exiteditorbutton : Button = get_node("Holder/ExitEditorButton");
 onready var levelinfobutton : Button = get_node("Holder/LevelInfoButton");
 onready var copylevelbutton : Button = get_node("Holder/CopyLevelButton");
 onready var pastelevelbutton : Button = get_node("Holder/PasteLevelButton");
+onready var instructionsbutton : Button = get_node("Holder/InstructionsButton");
 onready var newlevelbutton : Button = get_node("Holder/NewLevelButton");
 
 # Called when the node enters the scene tree for the first time.
@@ -18,6 +19,7 @@ func _ready() -> void:
 	levelinfobutton.connect("pressed", self, "_levelinfobutton_pressed");
 	copylevelbutton.connect("pressed", self, "_copylevelbutton_pressed");
 	pastelevelbutton.connect("pressed", self, "_pastelevelbutton_pressed");
+	instructionsbutton.connect("pressed", self, "_instructionsbutton_pressed");
 	newlevelbutton.connect("pressed", self, "_newlevelbutton_pressed");
 
 func _exiteditorbutton_pressed() -> void:
@@ -34,6 +36,11 @@ func _copylevelbutton_pressed() -> void:
 	
 func _pastelevelbutton_pressed() -> void:
 	self.get_parent().paste_level();
+	destroy();
+	
+func _instructionsbutton_pressed() -> void:
+	var a = preload("res://level_editor/Instructions.tscn").instance();
+	self.get_parent().add_child(a);
 	destroy();
 	
 func _newlevelbutton_pressed() -> void:
