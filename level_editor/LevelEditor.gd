@@ -1,17 +1,6 @@
 extends Node2D
 class_name LevelEditor
 
-onready var gamelogic = get_node("/root/LevelScene").gamelogic;
-onready var menubutton : Button = get_node("MenuButton");
-onready var tilemaps : Node2D = get_node("TileMaps");
-onready var pen : Sprite = get_node("Pen");
-onready var PickerBackground : ColorRect = get_node("PickerBackground");
-onready var Picker : TileMap = get_node("Picker");
-var custom_string = "";
-var level_info : LevelInfo = null;
-var pen_tile = Tiles.Wall;
-var pen_layer = 0;
-
 # keep in sync with GameLogic
 enum Tiles {
 	Fire,
@@ -90,15 +79,36 @@ enum Tiles {
 	OnewayWestPurple, #73
 }
 
+onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var menubutton : Button = get_node("MenuButton");
+onready var tilemaps : Node2D = get_node("TileMaps");
+onready var pen : Sprite = get_node("Pen");
+onready var PickerBackground : ColorRect = get_node("PickerBackground");
+onready var Picker : TileMap = get_node("Picker");
+var custom_string = "";
+var level_info : LevelInfo = null;
+var pen_tile = Tiles.Wall;
+var pen_layer = 0;
+var terrain_layers = [];
+var pen_xy = Vector2.ZERO;
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	menubutton.connect("pressed", self, "_menubutton_pressed");
+	
+	gamelogic.tile_changes(true);
+	
 	custom_string = gamelogic.serialize_current_level();
 	var level = gamelogic.deserialize_custom_level(custom_string);
-	menubutton.connect("pressed", self, "_menubutton_pressed");
 	tilemaps.add_child(level);
 	level_info = level.get_node("LevelInfo");
-	gamelogic.tile_changes(true);
-	change_pen_tile();
+
+	terrain_layers.append(level);
+	for child in level.get_children():
+		if child is TileMap:
+			terrain_layers.push_front(child);
+			
+	change_pen_tile(); # must happen after level setup
 
 func change_pen_tile() -> void:
 	var tile_set = tilemaps.get_child(0).tile_set;
@@ -110,6 +120,13 @@ func change_pen_tile() -> void:
 		pen.region_rect = Rect2(coord*gamelogic.cell_size, Vector2(gamelogic.cell_size, gamelogic.cell_size));
 	else:
 		pen.region_enabled = false;
+
+func lmb() -> void:
+	terrain_layers[pen_layer].set_cellv(pen_xy, pen_tile);
+	terrain_layers[pen_layer].update_bitmask_area(pen_xy);
+
+func rmb() -> void:
+	pass
 
 func _menubutton_pressed() -> void:
 	var a = preload("res://level_editor/LevelEditorMenu.tscn").instance();
@@ -134,3 +151,9 @@ func _process(delta: float) -> void:
 	mouse_position.x = gamelogic.cell_size*round((mouse_position.x-gamelogic.cell_size/2)/float(gamelogic.cell_size));
 	mouse_position.y = gamelogic.cell_size*round((mouse_position.y-gamelogic.cell_size/2)/float(gamelogic.cell_size));
 	pen.position = mouse_position;
+	pen_xy = Vector2(round(mouse_position.x/float(gamelogic.cell_size)), round(mouse_position.y/float(gamelogic.cell_size)));
+	
+	if (Input.is_mouse_button_pressed(1)):
+		lmb();
+	elif (Input.is_mouse_button_pressed(2)):
+		rmb();
