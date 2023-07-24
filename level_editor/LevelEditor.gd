@@ -451,6 +451,18 @@ func toggle_picker_mode() -> void:
 		pickerbackground.visible = false;
 		picker.visible = false;
 
+func picker_cycle(impulse: int) -> void:
+	var current_index = picker_array.find(pen_tile);
+	if (current_index == -1):
+		current_index = 0;
+	current_index += impulse;
+	if (current_index < 0):
+		current_index += picker_array.size();
+	elif (current_index >= picker_array.size()):
+		current_index -= picker_array.size();
+	pen_tile = picker_array[current_index];
+	change_pen_tile();
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -477,6 +489,10 @@ func _process(delta: float) -> void:
 	if (Input.is_mouse_button_pressed(2)):
 		if !over_menu_button:
 			rmb();
+	if (Input.is_action_just_released("mouse_wheel_up")):
+		picker_cycle(-1);
+	if (Input.is_action_just_released("mouse_wheel_down")):
+		picker_cycle(1);	
 	if (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
 		copy_level();
 	if (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
