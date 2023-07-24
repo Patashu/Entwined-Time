@@ -27,7 +27,9 @@ func _exiteditorbutton_pressed() -> void:
 	destroy();
 	
 func _levelinfobutton_pressed() -> void:
-	# TODO
+	var a = preload("res://level_editor/LevelInfoEdit.tscn").instance();
+	self.get_parent().add_child(a);
+	gamelogic.ui_stack.push_back(a);
 	destroy();
 	
 func _copylevelbutton_pressed() -> void:
@@ -41,6 +43,7 @@ func _pastelevelbutton_pressed() -> void:
 func _instructionsbutton_pressed() -> void:
 	var a = preload("res://level_editor/Instructions.tscn").instance();
 	self.get_parent().add_child(a);
+	gamelogic.ui_stack.push_back(a);
 	destroy();
 	
 func _newlevelbutton_pressed() -> void:

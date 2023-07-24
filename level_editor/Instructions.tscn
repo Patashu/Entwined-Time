@@ -24,7 +24,7 @@ text = "Level Editor Instructions:
 * WASD/UDLR to move all layers. +Shift to move currently selected layer.
 * Menu > Level Info to change metadata.
 * When you're done, 'Copy Level' (Ctrl+C) and save it to your computer.
-* The level can be played in-game by anyone using 'Paste Level' (Ctrl+V),
+* The level can be played in-game by anyone using 'Paste Level' (Ctrl+V).
 "
 align = 1
 autowrap = true
