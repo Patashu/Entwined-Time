@@ -171,6 +171,7 @@ enum Greenness {
 
 # attempted performance optimization - have an enum of all tile ids and assert at startup that they're right
 # order SEEMS to be the same as in DefaultTiles
+# keep in sync with LevelEditor
 enum Tiles {
 	Fire,
 	HeavyGoal,
