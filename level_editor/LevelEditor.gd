@@ -120,9 +120,47 @@ func deserialize_custom_level(custom_string: String) -> void:
 func serialize_current_level() -> String:
 	# keep in sync with GameLogic.gd serialize_current_level()
 	
-	# TODO:
-	# and it needs to do sanity checks and metadata setup like: squash layers down,
-	# squash puzzles to the topleft, trim bottom right, trim negative x/y tiles
+	# 0) change to layer 0 just in case of weirdness
+	change_layer(0);
+	
+	# 1) trim empty layers
+	#var new_array = [];
+	var empties = [];
+	for layer in terrain_layers:
+		if layer.get_used_cells().size() > 0:
+			#new_array.append(layer);
+			pass
+		else:
+			empties.append(layer);
+	for layer in empties:
+		terrain_layers.erase(layer);
+		layer.get_parent().remove_child(layer);
+		layer.queue_free();
+	
+	# 2) trim tiles at negative co-ordinates
+	for layer in terrain_layers:
+		var cells = layer.get_used_cells();
+		for cell in cells:
+			if cell.x < 0 or cell.y < 0:
+				layer.set_cellv(cell, -1);
+	
+	# 3) squash horizontally and vertically
+	var min_x = 999999;
+	var min_y = 999999;
+	for layer in terrain_layers:
+		var rect = layer.get_used_rect();
+		min_x = min(rect.position.x, min_x);
+		min_y = min(rect.position.y, min_y);
+	shift_all_layers(Vector2(-min_x, -min_y));
+	
+	# 4) set map_x_max and map_y_max
+	level_info.map_x_max = 1;
+	level_info.map_y_max = 1;
+	for layer in terrain_layers:
+		var rect = layer.get_used_rect();
+		level_info.map_x_max = max(level_info.map_x_max, rect.size.x + rect.position.x);
+		level_info.map_y_max = max(level_info.map_y_max, rect.size.y + rect.position.y);
+
 	var result = "EntwinedTimePuzzleStart\n";
 	var level_metadata = {};
 	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
@@ -167,6 +205,57 @@ func paste_level() -> void:
 	else:
 		deserialize_custom_level(OS.get_clipboard());
 		floating_text("Ctrl+V: Level pasted from clipboard!");
+
+func shift_all_layers(shift: Vector2) -> void:
+	for layer in terrain_layers:
+		shift_layer(layer, shift);
+		
+func shift_layer(layer: TileMap, shift: Vector2) -> void:
+	var rect = null;
+	# do x shift
+	
+	if (shift.x < 0):
+		rect = layer.get_used_rect();
+		for i in range(rect.size.x):
+			var x = rect.position.x + i;
+			for j in range(rect.size.y):
+				var y = rect.position.y + j;
+				layer.set_cellv(Vector2(x+shift.x, y), layer.get_cellv(Vector2(x, y)));
+				layer.update_bitmask_area(Vector2(x+shift.x, y));
+				layer.set_cellv(Vector2(x, y), -1);
+				layer.update_bitmask_area(Vector2(x, y));
+	elif (shift.x > 0):
+		rect = layer.get_used_rect();
+		for i in range(rect.size.x):
+			var x = rect.position.x + rect.size.x - 1 - i;
+			for j in range(rect.size.y):
+				var y = rect.position.y + j;
+				layer.set_cellv(Vector2(x+shift.x, y), layer.get_cellv(Vector2(x, y)));
+				layer.update_bitmask_area(Vector2(x+shift.x, y));
+				layer.set_cellv(Vector2(x, y), -1);
+				layer.update_bitmask_area(Vector2(x, y));
+	
+	# do y shift
+	if (shift.y < 0):
+		rect = layer.get_used_rect();
+		for i in range(rect.size.x):
+			var x = rect.position.x + i;
+			for j in range(rect.size.y):
+				var y = rect.position.y + j;
+				layer.set_cellv(Vector2(x, y+shift.y), layer.get_cellv(Vector2(x, y)));
+				layer.update_bitmask_area(Vector2(x, y+shift.y));
+				layer.set_cellv(Vector2(x, y), -1);
+				layer.update_bitmask_area(Vector2(x, y));
+	elif (shift.y > 0):
+		rect = layer.get_used_rect();
+		for i in range(rect.size.x):
+			var x = rect.position.x + i;
+			for j in range(rect.size.y):
+				var y = rect.position.y + rect.size.y - 1 - j;
+				layer.set_cellv(Vector2(x, y+shift.y), layer.get_cellv(Vector2(x, y)));
+				layer.update_bitmask_area(Vector2(x, y+shift.y));
+				layer.set_cellv(Vector2(x, y), -1);
+				layer.update_bitmask_area(Vector2(x, y));
 
 func layer_index() -> int:
 	return terrain_layers.size() - 1 - pen_layer;
@@ -258,6 +347,14 @@ func _process(delta: float) -> void:
 		copy_level();
 	elif (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
 		paste_level();
+	elif (Input.is_action_just_pressed("ui_left")):
+		shift_all_layers(Vector2.LEFT);
+	elif (Input.is_action_just_pressed("ui_right")):
+		shift_all_layers(Vector2.RIGHT);
+	elif (Input.is_action_just_pressed("ui_up")):
+		shift_all_layers(Vector2.UP);
+	elif (Input.is_action_just_pressed("ui_down")):
+		shift_all_layers(Vector2.DOWN);
 	elif (Input.is_key_pressed(48)):
 		change_layer(9);
 	elif (Input.is_key_pressed(49)):
@@ -278,3 +375,4 @@ func _process(delta: float) -> void:
 		change_layer(7);
 	elif (Input.is_key_pressed(57)):
 		change_layer(8);
+		
