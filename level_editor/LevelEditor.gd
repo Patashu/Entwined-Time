@@ -94,6 +94,7 @@ var terrain_layers = [];
 var pen_xy = Vector2.ZERO;
 var picker_mode = false;
 var picker_array = [];
+var just_picked = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -372,7 +373,20 @@ func change_pen_tile() -> void:
 	else:
 		pen.region_enabled = false;
 
+func picker_click() -> void:
+	pen_tile = picker.get_cellv(pen_xy);
+	change_pen_tile();
+	toggle_picker_mode();
+	just_picked = true;
+
 func lmb() -> void:
+	if (picker_mode):
+		picker_click();
+		return;
+		
+	if (just_picked):
+		return;
+	
 	terrain_layers[layer_index()].set_cellv(pen_xy, pen_tile);
 	terrain_layers[layer_index()].update_bitmask_area(pen_xy);
 	if (level_info.map_x_max < pen_xy.x):
@@ -381,6 +395,13 @@ func lmb() -> void:
 		level_info.map_y_max = pen_xy.y;
 
 func rmb() -> void:
+	if (picker_mode):
+		picker_click();
+		return;
+		
+	if (just_picked):
+		return;
+	
 	pen_tile = terrain_layers[layer_index()].get_cellv(pen_xy);
 	change_pen_tile();
 
@@ -448,54 +469,58 @@ func _process(delta: float) -> void:
 	var over_menu_button = false;
 	if (Rect2(menubutton.rect_position, menubutton.rect_size).has_point(get_global_mouse_position())):
 		over_menu_button = true;
-	if (Input.is_mouse_button_pressed(1) and !over_menu_button):
-		lmb();
-	elif (Input.is_mouse_button_pressed(2) and !over_menu_button):
-		rmb();
-	elif (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
+	if (!Input.is_mouse_button_pressed(1) and !Input.is_mouse_button_pressed(2)):
+		just_picked = false;
+	if (Input.is_mouse_button_pressed(1)):
+		if !over_menu_button:
+			lmb();
+	if (Input.is_mouse_button_pressed(2)):
+		if !over_menu_button:
+			rmb();
+	if (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
 		copy_level();
-	elif (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
+	if (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
 		paste_level();
-	elif (Input.is_action_just_pressed("ui_left")):
+	if (Input.is_action_just_pressed("ui_left")):
 		if (Input.is_action_pressed("shift")):
 			shift_layer(terrain_layers[layer_index()], Vector2.LEFT);
 		else:
 			shift_all_layers(Vector2.LEFT);
-	elif (Input.is_action_just_pressed("ui_right")):
+	if (Input.is_action_just_pressed("ui_right")):
 		if (Input.is_action_pressed("shift")):
 			shift_layer(terrain_layers[layer_index()], Vector2.RIGHT);
 		else:
 			shift_all_layers(Vector2.RIGHT);
-	elif (Input.is_action_just_pressed("ui_up")):
+	if (Input.is_action_just_pressed("ui_up")):
 		if (Input.is_action_pressed("shift")):
 			shift_layer(terrain_layers[layer_index()], Vector2.UP);
 		else:
 			shift_all_layers(Vector2.UP);
-	elif (Input.is_action_just_pressed("ui_down")):
+	if (Input.is_action_just_pressed("ui_down")):
 		if (Input.is_action_pressed("shift")):
 			shift_layer(terrain_layers[layer_index()], Vector2.DOWN);
 		else:
 			shift_all_layers(Vector2.DOWN);
-	elif (Input.is_action_just_pressed("tab")):
+	if (Input.is_action_just_pressed("tab") and !Input.is_mouse_button_pressed(1) and !Input.is_mouse_button_pressed(2)):
 		toggle_picker_mode();
-	elif (Input.is_action_just_pressed("0")):
+	if (Input.is_action_just_pressed("0")):
 		change_layer(9);
-	elif (Input.is_action_just_pressed("1")):
+	if (Input.is_action_just_pressed("1")):
 		change_layer(0);
-	elif (Input.is_action_just_pressed("2")):
+	if (Input.is_action_just_pressed("2")):
 		change_layer(1);
-	elif (Input.is_action_just_pressed("3")):
+	if (Input.is_action_just_pressed("3")):
 		change_layer(2);
-	elif (Input.is_action_just_pressed("4")):
+	if (Input.is_action_just_pressed("4")):
 		change_layer(3);
-	elif (Input.is_action_just_pressed("5")):
+	if (Input.is_action_just_pressed("5")):
 		change_layer(4);
-	elif (Input.is_action_just_pressed("6")):
+	if (Input.is_action_just_pressed("6")):
 		change_layer(5);
-	elif (Input.is_action_just_pressed("7")):
+	if (Input.is_action_just_pressed("7")):
 		change_layer(6);
-	elif (Input.is_action_just_pressed("8")):
+	if (Input.is_action_just_pressed("8")):
 		change_layer(7);
-	elif (Input.is_action_just_pressed("9")):
+	if (Input.is_action_just_pressed("9")):
 		change_layer(8);
 		
