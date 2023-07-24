@@ -577,7 +577,9 @@ func _replayspeedslider_value_changed(value: int) -> void:
 		return;
 	if (replayspeedsliderset):
 		return;
-	replay_interval = value * 0.01;
+	var old_replay_interval = replay_interval;
+	replay_interval = (100-value) * 0.01;
+	adjust_next_replay_time(old_replay_interval);
 	update_info_labels();
 
 func react_to_save_file_update() -> void:
@@ -4731,6 +4733,9 @@ func paste_level() -> void:
 	clipboard = clipboard.strip_edges();
 	load_custom_level(clipboard);
 	
+func adjust_next_replay_time(old_replay_interval: float) -> void:
+	next_replay += replay_interval - old_replay_interval;
+	
 var last_dir_release_times = [0, 0, 0, 0];
 	
 func _process(delta: float) -> void:
@@ -4851,22 +4856,30 @@ func _process(delta: float) -> void:
 		elif (doing_replay and Input.is_action_just_pressed("replay_pause")):
 			pause_replay();
 		elif (Input.is_action_just_pressed("speedup_replay")):
+			var old_replay_interval = replay_interval;
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.015;
-			elif replay_interval > 0:
+			else:
 				replay_interval *= (2.0/3.0);
 			replayspeedsliderset = true;
-			replayspeedslider.value = floor(replay_interval * 100);
+			replayspeedslider.value = 100 - floor(replay_interval * 100);
 			replayspeedsliderset = false;
+			adjust_next_replay_time(old_replay_interval);
 			update_info_labels();
 		elif (Input.is_action_just_pressed("slowdown_replay")):
+			var old_replay_interval = replay_interval;
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.5;
-			elif replay_interval > 0:
+			elif replay_interval < 0.015:
+				replay_interval = 0.015;
+			else:
 				replay_interval /= (2.0/3.0);
+			if (replay_interval > 2.0):
+				replay_interval = 2.0;
 			replayspeedsliderset = true;
-			replayspeedslider.value = floor(replay_interval * 100);
+			replayspeedslider.value = 100 - floor(replay_interval * 100);
 			replayspeedsliderset = false;
+			adjust_next_replay_time(old_replay_interval);
 			update_info_labels();
 		elif (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
