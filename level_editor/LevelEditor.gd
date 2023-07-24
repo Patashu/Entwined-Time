@@ -246,7 +246,7 @@ func shift_layer(layer: TileMap, shift: Vector2) -> void:
 				layer.update_bitmask_area(Vector2(x, y+shift.y));
 				layer.set_cellv(Vector2(x, y), -1);
 				layer.update_bitmask_area(Vector2(x, y));
-	elif (shift.y > 0):
+	elif (shift.y > 0):	
 		rect = layer.get_used_rect();
 		for i in range(rect.size.x):
 			var x = rect.position.x + i;
@@ -348,13 +348,25 @@ func _process(delta: float) -> void:
 	elif (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
 		paste_level();
 	elif (Input.is_action_just_pressed("ui_left")):
-		shift_all_layers(Vector2.LEFT);
+		if (Input.is_action_pressed("shift")):
+			shift_layer(terrain_layers[layer_index()], Vector2.LEFT);
+		else:
+			shift_all_layers(Vector2.LEFT);
 	elif (Input.is_action_just_pressed("ui_right")):
-		shift_all_layers(Vector2.RIGHT);
+		if (Input.is_action_pressed("shift")):
+			shift_layer(terrain_layers[layer_index()], Vector2.RIGHT);
+		else:
+			shift_all_layers(Vector2.RIGHT);
 	elif (Input.is_action_just_pressed("ui_up")):
-		shift_all_layers(Vector2.UP);
+		if (Input.is_action_pressed("shift")):
+			shift_layer(terrain_layers[layer_index()], Vector2.UP);
+		else:
+			shift_all_layers(Vector2.UP);
 	elif (Input.is_action_just_pressed("ui_down")):
-		shift_all_layers(Vector2.DOWN);
+		if (Input.is_action_pressed("shift")):
+			shift_layer(terrain_layers[layer_index()], Vector2.DOWN);
+		else:
+			shift_all_layers(Vector2.DOWN);
 	elif (Input.is_key_pressed(48)):
 		change_layer(9);
 	elif (Input.is_key_pressed(49)):
