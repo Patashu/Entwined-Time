@@ -48,7 +48,10 @@ func _leveleditorbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	pass
+	var a = preload("res://level_editor/LevelEditor.tscn").instance();
+	self.get_parent().add_child(a);
+	gamelogic.ui_stack.push_back(a);
+	destroy();
 
 func update_focus_neighbors() -> void:
 	for pos in buttons_by_xy.keys():

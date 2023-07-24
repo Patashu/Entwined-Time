@@ -4590,7 +4590,7 @@ func gain_insight() -> void:
 		finish_animations(Chrono.TIMELESS);
 		undo_effect_color = Color("A9F05F");
 	
-func copy_level() -> void:
+func serialize_current_level() -> String:
 	var result = "EntwinedTimePuzzleStart\n";
 	var level_metadata = {};
 	var metadatas = ["level_name", "level_author", #"level_replay", "heavy_max_moves", "light_max_moves",
@@ -4638,10 +4638,13 @@ func copy_level() -> void:
 			result += "\n";
 	
 	result += "EntwinedTimePuzzleEnd"
+	level.queue_free();
+	return result;
+	
+func copy_level() -> void:
+	var result = serialize_current_level();
 	floating_text("Ctrl+Shift+C: Level copied to clipboard!");
 	OS.set_clipboard(result);
-	
-	level.queue_free();
 	
 func clipboard_contains_level() -> bool:
 	var clipboard = OS.get_clipboard();
@@ -4650,17 +4653,17 @@ func clipboard_contains_level() -> bool:
 		return true
 	return false
 	
-func load_custom_level(custom: String) -> void:
+func deserialize_custom_level(custom: String) -> Node:
 	var lines = custom.split("\n");
 	for i in range(lines.size()):
 		lines[i] = lines[i].strip_edges();
 	
 	if (lines[0] != "EntwinedTimePuzzleStart"):
 		floating_text("Assert failed: Line 1 should be EntwinedTimePuzzleStart");
-		return;
+		return null;
 	if (lines[(lines.size() - 1)] != "EntwinedTimePuzzleEnd"):
 		floating_text("Assert failed: Last line should be EntwinedTimePuzzleEnd");
-		return;
+		return null;
 	var json_parse_result = JSON.parse(lines[1])
 	
 	var result = null;
@@ -4672,7 +4675,7 @@ func load_custom_level(custom: String) -> void:
 	
 	if (result == null):
 		floating_text("Assert failed: Line 2 should be a valid dictionary")
-		return;
+		return null;
 	
 	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
 	"clock_turns", "map_x_max", "map_y_max", "target_sky", "layers"];
@@ -4680,29 +4683,13 @@ func load_custom_level(custom: String) -> void:
 	for metadata in metadatas:
 		if (!result.has(metadata)):
 			floating_text("Assert failed: Line 2 is missing " + metadata);
-			return;
-			
-	# it could still be malformed by this point, but let's just assume it's fine and start setting up.
-	# player can hopefully load a real puzzle (or we can do it for them) if something borks.
-	levelfolder.remove_child(terrainmap);
-	terrainmap.queue_free();
-	terrain_layers.clear();
-	
-	is_custom = true;
-	custom_string = custom;
-	level_name = result["level_name"];
-	level_author = result["level_author"];
-	level_replay = result["level_replay"];
-	heavy_max_moves = int(result["heavy_max_moves"]);
-	light_max_moves = int(result["light_max_moves"]);
-	clock_turns = result["clock_turns"];
-	map_x_max = int(result["map_x_max"]);
-	map_y_max = int(result["map_y_max"]);
-	target_sky = Color(result["target_sky"]);
+			return null;
 	
 	var layers = result["layers"];
 	var xx = 2;
-	var xxx = map_y_max + 1 + 1 + 1; #1 for the header, 1 for the off-by-one, 1 for the blank line
+	var xxx = result["map_y_max"] + 1 + 1 + 1; #1 for the header, 1 for the off-by-one, 1 for the blank line
+	var terrain_layers = [];
+	var terrainmap = null;
 	for i in range(layers):
 		var tile_map = TileMap.new();
 		tile_map.tile_set = preload("res://DefaultTiles.tres");
@@ -4711,9 +4698,8 @@ func load_custom_level(custom: String) -> void:
 		var header = lines[a];
 		if (header != "LAYER " + str(i) + ":"):
 			floating_text("Assert failed: Line " + str(a) + " should be 'LAYER " + str(i) + ":'.");
-			give_up_and_restart();
-			return
-		for j in range(map_y_max + 1):
+			return null;
+		for j in range(result["map_y_max"] + 1):
 			var layer_line = lines[a + 1 + j];
 			var layer_cells = layer_line.split(",");
 			for k in range(layer_cells.size()):
@@ -4722,9 +4708,45 @@ func load_custom_level(custom: String) -> void:
 		terrain_layers.append(tile_map);
 		tile_map.update_bitmask_region();
 	terrainmap = terrain_layers[0];
-	levelfolder.add_child(terrainmap);
 	for i in range(layers - 1):
 		terrainmap.add_child(terrain_layers[i + 1]);
+	
+	var level_info = Node.new();
+	level_info.set_script(preload("res://levels/LevelInfo.gd"));
+	level_info.name = "LevelInfo";
+	for metadata in metadatas:
+		level_info.set(metadata, result[metadata]);
+	terrainmap.add_child(level_info);
+			
+	return terrainmap;
+	
+func load_custom_level(custom: String) -> void:
+	var level = deserialize_custom_level(custom);
+	if level == null:
+		return;
+	
+	is_custom = true;
+	custom_string = custom;
+	var level_info = level.get_node("LevelInfo");
+	level_name = level_info["level_name"];
+	level_author = level_info["level_author"];
+	level_replay = level_info["level_replay"];
+	heavy_max_moves = int(level_info["heavy_max_moves"]);
+	light_max_moves = int(level_info["light_max_moves"]);
+	clock_turns = level_info["clock_turns"];
+	map_x_max = int(level_info["map_x_max"]);
+	map_y_max = int(level_info["map_y_max"]);
+	target_sky = Color(level_info["target_sky"]);
+	
+	levelfolder.remove_child(terrainmap);
+	terrainmap.queue_free();
+	levelfolder.add_child(level);
+	terrainmap = level;
+	terrain_layers.clear();
+	terrain_layers.append(terrainmap);
+	for child in terrainmap.get_children():
+		if child is TileMap:
+			terrain_layers.push_front(child);
 	
 	ready_map();
 	

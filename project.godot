@@ -79,6 +79,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://LevelButton.gd"
 }, {
+"base": "Node2D",
+"class": "LevelEditor",
+"language": "GDScript",
+"path": "res://level_editor/LevelEditor.gd"
+}, {
+"base": "Node2D",
+"class": "LevelEditorMenu",
+"language": "GDScript",
+"path": "res://level_editor/LevelEditorMenu.gd"
+}, {
 "base": "Node",
 "class": "LevelInfo",
 "language": "GDScript",
@@ -174,6 +184,8 @@ _global_script_class_icons={
 "GoalParticle": "",
 "GoldLabel": "",
 "LevelButton": "",
+"LevelEditor": "",
+"LevelEditorMenu": "",
 "LevelInfo": "",
 "LevelScene": "",
 "LevelSelect": "",

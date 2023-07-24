@@ -49,7 +49,6 @@ margin_bottom = 238.0
 focus_neighbour_left = NodePath("../PrevButton")
 focus_neighbour_right = NodePath("../NextButton")
 focus_neighbour_bottom = NodePath("../CloseButton")
-disabled = true
 text = "Level Editor"
 
 [node name="CloseButton" type="Button" parent="Holder"]
