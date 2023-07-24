@@ -83,8 +83,9 @@ onready var gamelogic = get_node("/root/LevelScene").gamelogic;
 onready var menubutton : Button = get_node("MenuButton");
 onready var tilemaps : Node2D = get_node("TileMaps");
 onready var pen : Sprite = get_node("Pen");
-onready var PickerBackground : ColorRect = get_node("PickerBackground");
-onready var Picker : TileMap = get_node("Picker");
+onready var pickerbackground : ColorRect = get_node("PickerBackground");
+onready var picker : TileMap = get_node("Picker");
+onready var layerlabel : Label = get_node("LayerLabel");
 var custom_string = "";
 var level_info : LevelInfo = null;
 var pen_tile = Tiles.Wall;
@@ -112,6 +113,9 @@ func deserialize_custom_level(custom_string: String) -> void:
 	for child in level.get_children():
 		if child is TileMap:
 			terrain_layers.push_front(child);
+			level.remove_child(child);
+			tilemaps.add_child(child);
+	change_layer(0);
 
 func serialize_current_level() -> String:
 	# keep in sync with GameLogic.gd serialize_current_level()
@@ -164,9 +168,17 @@ func paste_level() -> void:
 		deserialize_custom_level(OS.get_clipboard());
 		floating_text("Ctrl+V: Level pasted from clipboard!");
 
+func layer_index() -> int:
+	return terrain_layers.size() - 1 - pen_layer;
+
 func change_pen_tile() -> void:
 	var tile_set = tilemaps.get_child(0).tile_set;
-	pen.texture = tile_set.tile_get_texture(pen_tile);
+	if (pen_tile >= 0):
+		pen.texture = tile_set.tile_get_texture(pen_tile);
+		pen.offset = Vector2.ZERO;
+	else:
+		pen.texture = preload("res://assets/targeter.png");
+		pen.offset = Vector2(-1, -1);
 	# handle auto-tile wall icon
 	if (pen_tile == Tiles.Wall):
 		var coord = tile_set.autotile_get_icon_coordinate(pen_tile);
@@ -174,19 +186,13 @@ func change_pen_tile() -> void:
 		pen.region_rect = Rect2(coord*gamelogic.cell_size, Vector2(gamelogic.cell_size, gamelogic.cell_size));
 	else:
 		pen.region_enabled = false;
-	
-	if pen.texture == null:
-		pen.texture = preload("res://assets/targeter.png");
-		pen.offset = Vector2(-1, -1);
-	else:
-		pen.offset = Vector2.ZERO;
 
 func lmb() -> void:
-	terrain_layers[pen_layer].set_cellv(pen_xy, pen_tile);
-	terrain_layers[pen_layer].update_bitmask_area(pen_xy);
+	terrain_layers[layer_index()].set_cellv(pen_xy, pen_tile);
+	terrain_layers[layer_index()].update_bitmask_area(pen_xy);
 
 func rmb() -> void:
-	pen_tile = terrain_layers[pen_layer].get_cellv(pen_xy);
+	pen_tile = terrain_layers[layer_index()].get_cellv(pen_xy);
 	change_pen_tile();
 
 func _menubutton_pressed() -> void:
@@ -206,6 +212,24 @@ func floating_text(text: String) -> void:
 	label.rect_size.x = gamelogic.pixel_width;
 	label.rect_position.y = gamelogic.pixel_height/2-16;
 	label.text = text;
+	
+func generate_layer() -> void:
+	var layer = TileMap.new();
+	layer.tile_set = terrain_layers[0].tile_set;
+	layer.cell_size = terrain_layers[0].cell_size;
+	terrain_layers.push_front(layer);
+	tilemaps.add_child(layer);
+	
+func change_layer(layer: int) -> void:
+	pen_layer = layer;
+	while (terrain_layers.size() < (pen_layer + 1)):
+		generate_layer();
+	for i in range(terrain_layers.size()):
+		if i == layer_index():
+			terrain_layers[i].modulate = Color(1, 1, 1, 1);
+		else:
+			terrain_layers[i].modulate = Color(1, 1, 1, 0.5);
+	layerlabel.text = "Layer: " + str(pen_layer);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -230,3 +254,23 @@ func _process(delta: float) -> void:
 		copy_level();
 	elif (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
 		paste_level();
+	elif (Input.is_key_pressed(48)):
+		change_layer(9);
+	elif (Input.is_key_pressed(49)):
+		change_layer(0);
+	elif (Input.is_key_pressed(50)):
+		change_layer(1);
+	elif (Input.is_key_pressed(51)):
+		change_layer(2);
+	elif (Input.is_key_pressed(52)):
+		change_layer(3);
+	elif (Input.is_key_pressed(53)):
+		change_layer(4);
+	elif (Input.is_key_pressed(54)):
+		change_layer(5);
+	elif (Input.is_key_pressed(55)):
+		change_layer(6);
+	elif (Input.is_key_pressed(56)):
+		change_layer(7);
+	elif (Input.is_key_pressed(57)):
+		change_layer(8);
