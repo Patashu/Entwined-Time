@@ -767,12 +767,18 @@ func initialize_shaders() -> void:
 	afterimage.position = Vector2(-99, -99);
 	# TODO: compile the Static shader by flicking it on for a single frame? same for ripple and grayscale
 	
-func tile_changes() -> void:
+func tile_changes(level_editor: bool = false) -> void:
 	# hide light and heavy goal sprites when in-game and not in-editor
-	terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, null);
-	terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, null);
-	terrainmap.tile_set.tile_set_texture(Tiles.LightGoalJoke, null);
-	terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, null);
+	if (!level_editor):
+		terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, null);
+		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, null);
+		terrainmap.tile_set.tile_set_texture(Tiles.LightGoalJoke, null);
+		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, null);
+	else:
+		terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, preload("res://assets/light_goal.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, preload("res://assets/heavy_goal.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.LightGoalJoke, preload("res://assets/light_goal_joke.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, preload("res://assets/light_goal_joke.png"));
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
