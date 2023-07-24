@@ -6,14 +6,20 @@ onready var holder : Label = get_node("Holder");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
 onready var exiteditorbutton : Button = get_node("Holder/ExitEditorButton");
+onready var copypuzzlebutton : Button = get_node("Holder/CopyPuzzleButton");
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
 	exiteditorbutton.connect("pressed", self, "_exiteditorbutton_pressed");
+	copypuzzlebutton.connect("pressed", self, "_copypuzzlebutton_pressed");
 
 func _exiteditorbutton_pressed() -> void:
 	self.get_parent().destroy();
+	destroy();
+	
+func _copypuzzlebutton_pressed() -> void:
+	self.get_parent().copy_level();
 	destroy();
 
 func destroy() -> void:

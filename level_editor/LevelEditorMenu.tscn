@@ -22,19 +22,18 @@ margin_left = 9.0
 margin_top = 17.0
 margin_right = 74.0
 margin_bottom = 32.0
-focus_neighbour_left = NodePath("../YourReplayButton")
+focus_neighbour_left = NodePath("../CopyPuzzleButton")
 focus_neighbour_top = NodePath("../ExitEditorButton")
 text = "Continue"
 
-[node name="YourReplayButton" type="Button" parent="Holder"]
-visible = false
+[node name="CopyPuzzleButton" type="Button" parent="Holder"]
 margin_left = 78.0
 margin_top = 17.0
 margin_right = 161.0
 margin_bottom = 32.0
 focus_neighbour_top = NodePath("../UndoRestartButton")
 focus_neighbour_right = NodePath("../OkButton")
-text = "---"
+text = "Copy Puzzle"
 
 [node name="AuthorsReplayButton" type="Button" parent="Holder"]
 visible = false
@@ -124,7 +123,7 @@ margin_top = 107.0
 margin_right = 160.0
 margin_bottom = 122.0
 focus_neighbour_right = NodePath("../ExitEditorButton")
-focus_neighbour_bottom = NodePath("../YourReplayButton")
+focus_neighbour_bottom = NodePath("../CopyPuzzleButton")
 text = "---"
 
 [node name="Pointer" type="Sprite" parent="Holder"]

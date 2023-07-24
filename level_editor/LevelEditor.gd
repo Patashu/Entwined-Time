@@ -110,6 +110,49 @@ func _ready() -> void:
 			
 	change_pen_tile(); # must happen after level setup
 
+func serialize_current_level() -> String:
+	# keep in sync with GameLogic.gd serialize_current_level()
+	
+	# TODO:
+	# and it needs to do sanity checks and metadata setup like: squash layers down,
+	# squash puzzles to the topleft, trim bottom right, trim negative x/y tiles
+	var result = "EntwinedTimePuzzleStart\n";
+	var level_metadata = {};
+	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
+	"clock_turns", "map_x_max", "map_y_max", #"target_sky"
+	];
+	for metadata in metadatas:
+		level_metadata[metadata] = level_info.get(metadata);
+	level_metadata["target_sky"] = level_info.target_sky.to_html(false);
+		
+	var layers = terrain_layers;
+			
+	level_metadata["layers"] = layers.size();
+			
+	result += to_json(level_metadata);
+	
+	for i in layers.size():
+		result += "\nLAYER " + str(i) + ":\n";
+		var layer = layers[layers.size() - 1 - i];
+		for y in range(level_metadata["map_y_max"]+1):
+			for x in range(level_metadata["map_x_max"]+1):
+				if (x > 0):
+					result += ",";
+				var tile = layer.get_cell(x, y);
+				if tile >= 0 and tile <= 9:
+					result += "0" + str(tile);
+				else:
+					result += str(tile);
+			result += "\n";
+	
+	result += "EntwinedTimePuzzleEnd"
+	return result;
+
+func copy_level() -> void:
+	var result = serialize_current_level();
+	floating_text("Ctrl+C: Level copied to clipboard!");
+	OS.set_clipboard(result);
+
 func change_pen_tile() -> void:
 	var tile_set = tilemaps.get_child(0).tile_set;
 	pen.texture = tile_set.tile_get_texture(pen_tile);
@@ -120,13 +163,20 @@ func change_pen_tile() -> void:
 		pen.region_rect = Rect2(coord*gamelogic.cell_size, Vector2(gamelogic.cell_size, gamelogic.cell_size));
 	else:
 		pen.region_enabled = false;
+	
+	if pen.texture == null:
+		pen.texture = preload("res://assets/targeter.png");
+		pen.offset = Vector2(-1, -1);
+	else:
+		pen.offset = Vector2.ZERO;
 
 func lmb() -> void:
 	terrain_layers[pen_layer].set_cellv(pen_xy, pen_tile);
 	terrain_layers[pen_layer].update_bitmask_area(pen_xy);
 
 func rmb() -> void:
-	pass
+	pen_tile = terrain_layers[pen_layer].get_cellv(pen_xy);
+	change_pen_tile();
 
 func _menubutton_pressed() -> void:
 	var a = preload("res://level_editor/LevelEditorMenu.tscn").instance();
@@ -137,6 +187,14 @@ func destroy() -> void:
 	gamelogic.tile_changes(false);
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
+
+func floating_text(text: String) -> void:
+	var label = preload("res://FloatingText.tscn").instance();
+	self.add_child(label);
+	label.rect_position.x = 0;
+	label.rect_size.x = gamelogic.pixel_width;
+	label.rect_position.y = gamelogic.pixel_height/2-16;
+	label.text = text;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -157,3 +215,5 @@ func _process(delta: float) -> void:
 		lmb();
 	elif (Input.is_mouse_button_pressed(2)):
 		rmb();
+	elif (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
+		copy_level();
