@@ -55,7 +55,7 @@ margin_right = 147.0
 margin_bottom = 174.0
 text = "Light Moves"
 
-[node name="Label3" type="Label" parent="Holder"]
+[node name="ClockTurnsLabel" type="Label" parent="Holder"]
 margin_left = 149.0
 margin_top = 196.0
 margin_right = 214.0

@@ -13,6 +13,13 @@ onready var levelauthor : TextEdit = get_node("Holder/LevelAuthor");
 onready var levelreplay : TextEdit = get_node("Holder/LevelReplay");
 
 func _ready() -> void:
+	var puzzles = gamelogic.puzzles_completed;
+	if gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]:
+		puzzles += 99999;
+	if (puzzles < gamelogic.chapter_standard_unlock_requirements[11]):
+		clockturns.visible = false;
+		get_node("Holder/ClockTurnsLabel").visible = false;
+	
 	okbutton.connect("pressed", self, "destroy");
 	okbutton.grab_focus();
 	
