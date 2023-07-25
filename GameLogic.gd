@@ -1380,8 +1380,8 @@ func timeline_squish() -> void:
 	
 	# horizontal squish check
 	var effective_width = map_x_max;
-	var heavy_extra_width = (heavy_max-1)/11;
-	var light_extra_width = (light_max-1)/11;
+	var heavy_extra_width = floor((heavy_max-1)/11);
+	var light_extra_width = floor((light_max-1)/11);
 	effective_width += max(0, heavy_extra_width);
 	effective_width += max(0, light_extra_width);
 	if (effective_width > 16):
