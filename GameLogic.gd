@@ -252,6 +252,7 @@ var voidlike_tiles = [];
 
 # information about the level
 var is_custom = false;
+var test_mode = false;
 var custom_string = "";
 var chapter = 0;
 var level_in_chapter = 0;
@@ -3299,6 +3300,12 @@ func check_won() -> void:
 				won = false;
 				break;
 		if (won == true and !doing_replay):
+			if (test_mode):
+				var level_info = terrainmap.get_node_or_null("LevelInfo");
+				if (level_info != null):
+					level_info.level_replay = annotate_replay(user_replay);
+					floating_text("Test successful, recorded replay!");
+			
 			if (level_name == "Joke"):
 				play_won("winbadtime");
 			else:
@@ -3585,6 +3592,11 @@ func restart(_is_silent: bool = false) -> void:
 	undo_effect_color = meta_color;
 	
 func escape() -> void:
+	if (test_mode):
+		level_editor();
+		test_mode = false;
+		return;
+	
 	if (ui_stack.size() > 0):
 		# can happen if we click the button directly
 		var topmost_ui = ui_stack.pop_front();
@@ -3594,7 +3606,17 @@ func escape() -> void:
 	ui_stack.push_back(levelselect);
 	levelscene.add_child(levelselect);
 	
+func level_editor() -> void:
+	var a = preload("res://level_editor/LevelEditor.tscn").instance();
+	ui_stack.push_back(a);
+	levelscene.add_child(a);
+	
 func level_select() -> void:
+	if (test_mode):
+		level_editor();
+		test_mode = false;
+		return;
+	
 	if (ui_stack.size() > 0):
 		# can happen if we click the button directly
 		var topmost_ui = ui_stack.pop_front();
@@ -3649,6 +3671,10 @@ func load_level_direct(new_level: int) -> void:
 	load_level(impulse);
 	
 func load_level(impulse: int) -> void:
+	if (impulse != 0 and test_mode):
+		level_editor();
+		test_mode = false;
+	
 	if (impulse != 0):
 		is_custom = false; # at least until custom campaigns :eyes:
 	level_number = posmod(int(level_number), level_list.size());

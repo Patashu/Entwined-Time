@@ -48,7 +48,7 @@ margin_left = 78.0
 margin_top = 53.0
 margin_right = 160.0
 margin_bottom = 68.0
-focus_neighbour_right = NodePath("../InsightButton")
+focus_neighbour_right = NodePath("../TestLevelButton")
 text = "Instructions"
 
 [node name="CopyReplayButton" type="Button" parent="Holder"]
@@ -76,14 +76,13 @@ margin_bottom = 50.0
 focus_neighbour_left = NodePath("../PasteLevelButton")
 text = "Level Info"
 
-[node name="InsightButton" type="Button" parent="Holder"]
-visible = false
+[node name="TestLevelButton" type="Button" parent="Holder"]
 margin_left = 9.0
 margin_top = 53.0
 margin_right = 74.0
 margin_bottom = 68.0
 focus_neighbour_left = NodePath("../InstructionsButton")
-text = "---"
+text = "Test Level"
 
 [node name="ControlsButton" type="Button" parent="Holder"]
 visible = false

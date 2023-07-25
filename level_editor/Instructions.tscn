@@ -23,7 +23,8 @@ text = "Level Editor Instructions:
 * 1-9 to change currently selected layer.
 * WASD/UDLR to move all layers. +Shift to move currently selected layer.
 * Menu > Level Info to change metadata.
-* When you're done, 'Copy Level' (Ctrl+C) and save it to your computer.
+* F1 / Menu > Test Level to playtest. A win will become the official replay.
+* Save often to not lose progress: 'Copy Level' (Ctrl+C)
 * The level can be played in-game by anyone using 'Paste Level' (Ctrl+V).
 "
 align = 1

@@ -12,6 +12,7 @@ onready var pastelevelbutton : Button = get_node("Holder/PasteLevelButton");
 onready var instructionsbutton : Button = get_node("Holder/InstructionsButton");
 onready var newlevelbutton : Button = get_node("Holder/NewLevelButton");
 onready var savetscnbutton : Button = get_node("Holder/SaveTscnButton");
+onready var testlevelbutton : Button = get_node("Holder/TestLevelButton");
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,6 +23,7 @@ func _ready() -> void:
 	pastelevelbutton.connect("pressed", self, "_pastelevelbutton_pressed");
 	instructionsbutton.connect("pressed", self, "_instructionsbutton_pressed");
 	newlevelbutton.connect("pressed", self, "_newlevelbutton_pressed");
+	testlevelbutton.connect("pressed", self, "_testlevelbutton_pressed");
 	if (OS.is_debug_build()):
 		savetscnbutton.connect("pressed", self, "_savetscnbutton_pressed");
 	else:
@@ -72,6 +74,13 @@ func _savetscnbutton_pressed() -> void:
 		return;
 	
 	self.get_parent().save_as_tscn();
+	destroy();
+	
+func _testlevelbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	self.get_parent().test_level();
 	destroy();
 	
 func _newlevelbutton_pressed() -> void:

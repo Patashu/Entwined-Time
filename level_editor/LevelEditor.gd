@@ -102,8 +102,15 @@ func _ready() -> void:
 	
 	gamelogic.tile_changes(true);
 	
-	custom_string = gamelogic.serialize_current_level();
+	if (gamelogic.test_mode):
+		custom_string = gamelogic.custom_string;
+	else:
+		custom_string = gamelogic.serialize_current_level();
 	deserialize_custom_level(custom_string);
+	if (gamelogic.test_mode):
+		var test_level_info = gamelogic.terrainmap.get_node_or_null("LevelInfo");
+		if (test_level_info != null and test_level_info.level_replay != null and test_level_info.level_replay != ""):
+			level_info.level_replay = test_level_info.level_replay;
 			
 	change_pen_tile(); # must happen after level setup
 	
@@ -197,6 +204,15 @@ func initialize_picker_array() -> void:
 
 func deserialize_custom_level(custom_string: String) -> void:
 	var level = gamelogic.deserialize_custom_level(custom_string);
+	if (level == null):
+		floating_text("Invalid level")
+		return;
+	
+	for child in tilemaps.get_children():
+		tilemaps.remove_child(child);
+		child.queue_free();
+	terrain_layers.clear();
+	
 	tilemaps.add_child(level);
 	level_info = level.get_node("LevelInfo");
 
@@ -488,6 +504,13 @@ func picker_cycle(impulse: int) -> void:
 		current_index -= picker_array.size();
 	pen_tile = picker_array[current_index];
 	change_pen_tile();
+	
+func test_level() -> void:
+	var result = serialize_current_level();
+	if (result != ""):
+		gamelogic.load_custom_level(result);
+		gamelogic.test_mode = true;
+	destroy();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -523,6 +546,8 @@ func _process(delta: float) -> void:
 		copy_level();
 	if (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
 		paste_level();
+	if (Input.is_action_just_pressed("test_level")):
+		test_level();
 	if (Input.is_action_just_pressed("ui_left")):
 		if (Input.is_action_pressed("shift")):
 			shift_layer(terrain_layers[layer_index()], Vector2.LEFT);
