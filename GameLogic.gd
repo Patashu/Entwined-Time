@@ -4766,6 +4766,7 @@ func give_up_and_restart() -> void:
 func paste_level() -> void:
 	var clipboard = OS.get_clipboard();
 	clipboard = clipboard.strip_edges();
+	end_replay();
 	load_custom_level(clipboard);
 	
 func adjust_next_replay_time(old_replay_interval: float) -> void:
