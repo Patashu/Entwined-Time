@@ -4625,7 +4625,7 @@ func gain_insight() -> void:
 	
 func serialize_current_level() -> String:
 	# keep in sync with LevelEditor.gd serialize_current_level()
-	var result = "EntwinedTimePuzzleStart\n";
+	var result = "EntwinedTimePuzzleStart: " + level_name + " by " + level_author + "\n";
 	var level_metadata = {};
 	var metadatas = ["level_name", "level_author", #"level_replay", "heavy_max_moves", "light_max_moves",
 	"clock_turns", "map_x_max", "map_y_max", #"target_sky"
@@ -4692,8 +4692,8 @@ func deserialize_custom_level(custom: String) -> Node:
 	for i in range(lines.size()):
 		lines[i] = lines[i].strip_edges();
 	
-	if (lines[0] != "EntwinedTimePuzzleStart"):
-		floating_text("Assert failed: Line 1 should be EntwinedTimePuzzleStart");
+	if (lines[0].find("EntwinedTimePuzzleStart") == -1):
+		floating_text("Assert failed: Line 1 should start EntwinedTimePuzzleStart");
 		return null;
 	if (lines[(lines.size() - 1)] != "EntwinedTimePuzzleEnd"):
 		floating_text("Assert failed: Last line should be EntwinedTimePuzzleEnd");

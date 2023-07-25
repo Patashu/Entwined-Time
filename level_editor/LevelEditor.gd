@@ -272,7 +272,7 @@ func serialize_current_level() -> String:
 		level_info.map_x_max = max(level_info.map_x_max, rect.size.x + rect.position.x);
 		level_info.map_y_max = max(level_info.map_y_max, rect.size.y + rect.position.y);
 
-	var result = "EntwinedTimePuzzleStart\n";
+	var result = "EntwinedTimePuzzleStart: " + level_info.level_name + " by " + level_info.level_author + "\n";
 	var level_metadata = {};
 	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
 	"clock_turns", "map_x_max", "map_y_max", #"target_sky"
