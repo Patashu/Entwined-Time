@@ -201,6 +201,7 @@ func initialize_picker_array() -> void:
 		var x = i % 21;
 		var y = i / 21;
 		picker.set_cellv(Vector2(x, y), picker_array[i]);
+	picker.update_bitmask_region();
 
 func deserialize_custom_level(custom_string: String) -> void:
 	var level = gamelogic.deserialize_custom_level(custom_string);
