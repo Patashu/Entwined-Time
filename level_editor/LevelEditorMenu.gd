@@ -123,3 +123,7 @@ func _process(delta: float) -> void:
 		pastelevelbutton.disabled = false;
 	else:
 		pastelevelbutton.disabled = true;
+
+func _draw() -> void:
+	draw_rect(Rect2(0, 0,
+	gamelogic.pixel_width, gamelogic.pixel_height), Color(0, 0, 0, 0.5), true);
