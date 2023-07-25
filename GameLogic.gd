@@ -4771,6 +4771,9 @@ func load_custom_level(custom: String) -> void:
 	clock_turns = level_info["clock_turns"];
 	map_x_max = int(level_info["map_x_max"]);
 	map_y_max = int(level_info["map_y_max"]);
+	sky_timer = 0;
+	sky_timer_max = 3.0;
+	old_sky = current_sky;
 	target_sky = Color(level_info["target_sky"]);
 	
 	levelfolder.remove_child(terrainmap);
