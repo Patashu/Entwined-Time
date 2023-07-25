@@ -4516,6 +4516,7 @@ func start_specific_replay(replay: String) -> void:
 	level_replay = replay;
 	if (level_replay.find("c") >= 0):
 		voidlike_puzzle = true;
+	update_info_labels();
 
 func replay_from_clipboard() -> void:
 	var replay = OS.get_clipboard();
