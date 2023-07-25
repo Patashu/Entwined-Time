@@ -3299,13 +3299,12 @@ func check_won() -> void:
 			if (!crate_goal_satisfied):
 				won = false;
 				break;
+		if (won and test_mode):
+			var level_info = terrainmap.get_node_or_null("LevelInfo");
+			if (level_info != null):
+				level_info.level_replay = annotate_replay(user_replay);
+				floating_text("Test successful, recorded replay!");
 		if (won == true and !doing_replay):
-			if (test_mode):
-				var level_info = terrainmap.get_node_or_null("LevelInfo");
-				if (level_info != null):
-					level_info.level_replay = annotate_replay(user_replay);
-					floating_text("Test successful, recorded replay!");
-			
 			if (level_name == "Joke"):
 				play_won("winbadtime");
 			else:
