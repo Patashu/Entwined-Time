@@ -16,6 +16,7 @@ onready var testlevelbutton : Button = get_node("Holder/TestLevelButton");
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	okbutton.grab_focus();
 	okbutton.connect("pressed", self, "destroy");
 	exiteditorbutton.connect("pressed", self, "_exiteditorbutton_pressed");
 	levelinfobutton.connect("pressed", self, "_levelinfobutton_pressed");
