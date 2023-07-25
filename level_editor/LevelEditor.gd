@@ -292,6 +292,25 @@ func copy_level() -> void:
 	if (result != ""):
 		floating_text("Ctrl+C: Level copied to clipboard!");
 		OS.set_clipboard(result);
+		
+func save_as_tscn() -> void:
+	var a = serialize_current_level();
+	if (a != ""):
+		var deserialized = gamelogic.deserialize_custom_level(a);
+		for node in deserialized.get_children():
+			node.owner = deserialized
+			
+		var scene = PackedScene.new();
+		var result = scene.pack(deserialized)
+		
+		if result == OK:
+			var path = "res://levels/custom/" + level_info.level_name + ".tscn";
+			var error = ResourceSaver.save(path, scene);
+			if error != OK:
+				floating_text("An error occurred while saving the scene to disk.")
+			else:
+				floating_text("Saved to " + path);
+		deserialized.queue_free();
 	
 func paste_level() -> void:
 	if (!gamelogic.clipboard_contains_level()):

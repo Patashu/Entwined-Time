@@ -11,6 +11,7 @@ onready var copylevelbutton : Button = get_node("Holder/CopyLevelButton");
 onready var pastelevelbutton : Button = get_node("Holder/PasteLevelButton");
 onready var instructionsbutton : Button = get_node("Holder/InstructionsButton");
 onready var newlevelbutton : Button = get_node("Holder/NewLevelButton");
+onready var savetscnbutton : Button = get_node("Holder/SaveTscnButton");
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,6 +22,11 @@ func _ready() -> void:
 	pastelevelbutton.connect("pressed", self, "_pastelevelbutton_pressed");
 	instructionsbutton.connect("pressed", self, "_instructionsbutton_pressed");
 	newlevelbutton.connect("pressed", self, "_newlevelbutton_pressed");
+	if (OS.is_debug_build()):
+		savetscnbutton.connect("pressed", self, "_savetscnbutton_pressed");
+	else:
+		savetscnbutton.get_parent().remove_child(savetscnbutton);
+		savetscnbutton.queue_free();
 
 func _exiteditorbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -59,6 +65,13 @@ func _instructionsbutton_pressed() -> void:
 	var a = preload("res://level_editor/Instructions.tscn").instance();
 	self.get_parent().add_child(a);
 	gamelogic.ui_stack.push_back(a);
+	destroy();
+	
+func _savetscnbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	self.get_parent().save_as_tscn();
 	destroy();
 	
 func _newlevelbutton_pressed() -> void:

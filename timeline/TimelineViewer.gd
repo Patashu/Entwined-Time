@@ -176,7 +176,7 @@ func undo_lock_turn(slow: bool = false) -> TimelineSlot:
 	finish_slot_positions(slow);
 	return slot_to_move;
 
-func unlock_turn(turn: int) -> void:
+func unlock_turn(_turn: int) -> void:
 	# just re-use all that code I wrote real quick and...
 	var slot_to_move = undo_lock_turn(true);
 	slot_to_move.remember_animation();

@@ -2179,7 +2179,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 	return Success.Surprise;
 
-func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool) -> bool:
+func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_retro: bool) -> bool:
 	var terrain = terrain_in_tile(actor.pos);
 	var blocked = false;
 	flash_terrain = -1;
@@ -2813,7 +2813,7 @@ func end_lose() -> void:
 	lost_speaker.stop();
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int,
-animation_nonce: int = -1, is_retro: bool = false, retro_old_value = null) -> void:
+animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> void:
 	var old_value = actor.get(prop);
 	if animation_nonce == -1:
 		animation_nonce = animation_nonce_fountain_dispense();
@@ -3575,7 +3575,7 @@ func character_switch() -> void:
 	play_sound("switch")
 	append_replay("x")
 
-func restart(is_silent: bool = false) -> void:
+func restart(_is_silent: bool = false) -> void:
 	load_level(0);
 	cut_sound();
 	play_sound("restart");
@@ -3669,7 +3669,7 @@ func load_level(impulse: int) -> void:
 		impulse *= -1;
 		if (impulse == 0):
 			impulse = -1;
-		for i in range(999):
+		for _i in range(999):
 			level_number += impulse;
 			level_number = posmod(int(level_number), level_list.size());
 			setup_chapter_etc();
@@ -4194,7 +4194,7 @@ func pause_replay() -> void:
 	
 func replay_advance_turn(amount: int) -> void:
 	if amount > 0:
-		for i in range(amount):
+		for _i in range(amount):
 			if (replay_turn < (level_replay.length())):
 				do_one_replay_turn();
 			else:
@@ -4205,7 +4205,7 @@ func replay_advance_turn(amount: int) -> void:
 	else:
 		var target_turn = replay_turn + amount;
 		if (target_turn < 0):
-			target_turn == 0;
+			target_turn = 0;
 		
 		# Restart and advance the puzzle from the start if:
 		# 1) voidlike_puzzle (contains void elements or the replay contains a meta undo)
@@ -4224,7 +4224,7 @@ func replay_advance_turn(amount: int) -> void:
 			muted = true;
 			load_level(0);
 			start_specific_replay(replay);
-			for i in range(target_turn):
+			for _i in range(target_turn):
 				do_one_replay_turn();
 			finish_animations(Chrono.TIMELESS);
 			calm_down_timelines();
@@ -4235,7 +4235,7 @@ func replay_advance_turn(amount: int) -> void:
 			play_sound("voidundo");
 		else:
 			var iterations = replay_turn - target_turn;
-			for i in range(iterations):
+			for _i in range(iterations):
 				var last_input = level_replay[replay_turn - 1];
 				if (last_input == "x"):
 					character_switch();

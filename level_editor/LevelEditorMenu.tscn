@@ -60,14 +60,13 @@ margin_bottom = 86.0
 focus_neighbour_right = NodePath("../ControlsButton")
 text = "---"
 
-[node name="PasteReplayButton" type="Button" parent="Holder"]
-visible = false
+[node name="SaveTscnButton" type="Button" parent="Holder"]
 margin_left = 78.0
 margin_top = 89.0
 margin_right = 160.0
 margin_bottom = 104.0
 focus_neighbour_right = NodePath("../SettingsButton")
-text = "---"
+text = "Save as .tscn"
 
 [node name="LevelInfoButton" type="Button" parent="Holder"]
 margin_left = 9.0
@@ -101,7 +100,7 @@ margin_left = 9.0
 margin_top = 89.0
 margin_right = 74.0
 margin_bottom = 104.0
-focus_neighbour_left = NodePath("../PasteReplayButton")
+focus_neighbour_left = NodePath("../SaveTscnButton")
 text = "---"
 
 [node name="ExitEditorButton" type="Button" parent="Holder"]
