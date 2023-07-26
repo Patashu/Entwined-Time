@@ -154,6 +154,7 @@ func initialize_picker_array() -> void:
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[5]):
 		picker_array.append(Tiles.IronCrate);
 		picker_array.append(Tiles.CrateGoal);
+		picker_array.append(Tiles.NoCrate);
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[6]):
 		picker_array.append(Tiles.ColourRed);
 		picker_array.append(Tiles.ColourBlue);
