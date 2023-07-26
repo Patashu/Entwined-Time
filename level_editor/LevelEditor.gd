@@ -265,12 +265,12 @@ func serialize_current_level() -> String:
 	shift_all_layers(Vector2(-min_x, -min_y));
 	
 	# 4) set map_x_max and map_y_max
-	level_info.map_x_max = 1;
-	level_info.map_y_max = 1;
+	level_info.map_x_max = 0;
+	level_info.map_y_max = 0;
 	for layer in terrain_layers:
 		var rect = layer.get_used_rect();
-		level_info.map_x_max = max(level_info.map_x_max, rect.size.x + rect.position.x);
-		level_info.map_y_max = max(level_info.map_y_max, rect.size.y + rect.position.y);
+		level_info.map_x_max = max(level_info.map_x_max, rect.size.x + rect.position.x - 1);
+		level_info.map_y_max = max(level_info.map_y_max, rect.size.y + rect.position.y - 1);
 
 	var result = "EntwinedTimePuzzleStart: " + level_info.level_name + " by " + level_info.level_author + "\n";
 	var level_metadata = {};
