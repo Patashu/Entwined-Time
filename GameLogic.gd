@@ -422,7 +422,7 @@ func _ready() -> void:
 	# Call once when the game is booted up.
 	menubutton.connect("pressed", self, "escape");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
-	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue");
+	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue\nWatch Replay: Menu -> Your Replay");
 	connect_virtual_buttons();
 	prepare_audio();
 	call_deferred("adjust_winlabel");
@@ -3346,8 +3346,12 @@ func check_won() -> void:
 		won_cooldown = 0;
 		if (level_name == "Joke"):
 			winlabel.change_text("Thanks for playing :3")
-		elif !using_controller:
+		elif !using_controller and !doing_replay:
+			winlabel.change_text("You have won!\n\n[Enter]: Continue\nWatch Replay: Menu -> Your Replay")
+		elif !using_controller and doing_replay:
 			winlabel.change_text("You have won!\n\n[Enter]: Continue")
+		elif using_controller and !doing_replay:
+			winlabel.change_text("You have won!\n\n[Bottom Face Button]: Continue\nWatch Replay: Menu -> Your Replay")
 		else:
 			winlabel.change_text("You have won!\n\n[Bottom Face Button]: Continue")
 		won_fade_started = false;
