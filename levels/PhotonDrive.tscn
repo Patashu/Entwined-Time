@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,8 +18,6 @@ tile_data = PoolIntArray( 262147, 19, 0 )
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Photon Drive"
-level_author = "Patashu"
 level_replay = "Photon Drive$mturn=42$xwxwxzwxwxzawxzxdxzwsxzzzaxzxzwxwxaxzxzxwxzdddzzzwsxzxsxzxzzddxw"
 heavy_max_moves = 2.0
 light_max_moves = 3.0
-clock_turns = ""
