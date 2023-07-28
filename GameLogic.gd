@@ -966,6 +966,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("SnakeChute")
 	level_filenames.push_back("TheCratePit")
 	level_filenames.push_back("Landfill")
+	level_filenames.push_back("PrecariousSituation")
 	level_filenames.push_back("PressEveryKey")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -973,11 +974,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Weakness")
 	level_filenames.push_back("ThirdRoommateEx")
 	level_filenames.push_back("ThirdRoommateEx2")
-	level_filenames.push_back("TheCratePitEx")
 	level_filenames.push_back("Levitation")
 	level_filenames.push_back("QuantumEntanglement")
-	level_filenames.push_back("LandfillEx")
 	level_filenames.push_back("TheTower")
+	level_filenames.push_back("InvisibleBridgeCrate")
+	level_filenames.push_back("Jenga")
 	
 	chapter_names.push_back("There Are Many Colours");
 	chapter_standard_starting_levels.push_back(level_filenames.size());

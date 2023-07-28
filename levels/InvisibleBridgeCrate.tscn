@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,9 +17,7 @@ tile_data = PoolIntArray( 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 131075, 1, 0, 
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Invisible Bridge (for Crate) 1"
-level_author = "Patashu"
-level_replay = "Invisible Bridge (for Crate) 1$mturn=33$wawxdxzdwdxwxzzxzxwawxdxzdwdxwxzzxzxzxzxzxzdxaxdxwz"
+level_name = "Invisible Bridge (for Crate)"
+level_replay = "Invisible Bridge (for Crate)$mturn=33$wawxdxzdwdxwxzzxzxwawxdxzdwdxwxzzxzxzxzxzxzdxaxdxwz"
 heavy_max_moves = 8.0
 light_max_moves = 3.0
-clock_turns = ""

@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,9 +17,7 @@ tile_data = PoolIntArray( 65537, 72, 0, 65538, 72, 0, 65539, 72, 0, 65540, 72, 0
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Jenga 2"
-level_author = "Patashu"
-level_replay = "Jenga 2$mturn=98$xsaawdxsdddxwddsxdwxaxaxzxsawxaaxaxaaxzxsaxzzzxzzdxsaaxaxaxzxwxzxzzzzzwxdsdxzxdwwwwxdxzzzzxzxzzzwaxdaxdsxzxzzzwwxdxzzzaxwzxzwxzxzxzxzzzxzwaw"
+level_name = "Jenga"
+level_replay = "Jenga$mturn=98$xsaawdxsdddxwddsxdwxaxaxzxsawxaaxaxaaxzxsaxzzzxzzdxsaaxaxaxzxwxzxzzzzzwxdsdxzxdwwwwxdxzzzzxzxzzzwaxdaxdsxzxzzzwwxdxzzzaxwzxzwxzxzxzxzzzxzwaw"
 heavy_max_moves = 22.0
 light_max_moves = 22.0
-clock_turns = ""

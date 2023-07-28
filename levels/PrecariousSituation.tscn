@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,9 +17,7 @@ tile_data = PoolIntArray( 196609, 73, 0, 196610, 32, 0, 196612, 32, 0, 196613, 7
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Precarious Situation Easy"
-level_author = "Patashu"
-level_replay = "Precarious Situation Easy$mturn=49$xaxwxaxdxzzwxaxzaxwxzazxzzxdwxaxzddxwzxzzxzzzxaxddwxdxzddxzxzzzzawaaaxwd"
+level_name = "Precarious Situation"
+level_replay = "Precarious Situation$mturn=49$xaxwxaxdxzzwxaxzaxwxzazxzzxdwxaxzddxwzxzzxzzzxaxddwxdxzddxzxzzzzawaaaxwd"
 heavy_max_moves = 6.0
 light_max_moves = 4.0
-clock_turns = ""
