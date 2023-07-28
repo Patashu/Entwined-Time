@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -12,8 +12,6 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 19
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Light Moving Service (Method C)"
-level_author = "Patashu"
 level_replay = "Light Moving Service (Method C)$mturn=74$xdwdxddxzzzdwxaxzzddsxzxzzxdaxdsxzxzzxdaxdsxzxzzxdaxdsxzxzzxzdxzsxzdxdxzdxdxzxzzzxdzdzdxdddxzxzzzxzzzzxaaaxd"
 heavy_max_moves = 6.0
 light_max_moves = 3.0
-clock_turns = ""

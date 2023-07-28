@@ -880,6 +880,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheFirstPitEx3")
 	level_filenames.push_back("TheFirstPitEx4")
 	level_filenames.push_back("RoughTerrain")
+	level_filenames.push_back("LightMovingServiceEx2")
 	level_filenames.push_back("TheBoundlessSkyEx")
 	level_filenames.push_back("AcrobatsEscape")
 	level_filenames.push_back("AcrobatsEscapeEx")
