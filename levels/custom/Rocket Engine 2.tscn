@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 14, 524290, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65540, 14, 262145, 65542, 7, 0, 65543, 14, 262145, 131076, 14, 262145, 131078, 14, 524290, 131079, 14, 655364, 196612, 14, 262145, 196614, 14, 262145, 262144, 14, 524290, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 589828, 262150, 14, 262145, 327680, 14, 262145, 327682, 5, 0, 327684, 14, 262145, 327686, 14, 262145, 393216, 14, 262145, 393218, 5, 0, 393220, 14, 262145, 393222, 14, 262145, 458752, 14, 262145, 458754, 5, 0, 458756, 14, 327681, 458758, 14, 262145, 524288, 14, 262145, 524289, 2, 0, 524290, 1, 0, 524291, 8, 0, 524292, 29, 0, 524294, 14, 262145, 589824, 14, 655362, 589825, 14, 196614, 589826, 14, 196614, 589827, 14, 196614, 589828, 14, 196614, 589829, 14, 196614, 589830, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Rocket Engine 2"
+level_author = "Patashu"
+level_replay = "Rocket Engine 2$mturn=96$dwxaaxzzwxzxzxzxswxaxzxzxswxaxzzzxwxasdxzxzxswxdxzzxzzzxzxdaxwxzswxzaxzzxwxadxzxzxswxdxzzxzxwxzxzzxdaxwxzxzxazxaswxaxzzzsxzxaxaxzsdxzxzxaxaxzxzzxzxzwxzxdxsd"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""

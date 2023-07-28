@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 14, 524290, 3, 14, 196614, 4, 14, 196614, 5, 14, 524292, 65538, 14, 262145, 65539, 8, 0, 65541, 14, 262145, 131072, 14, 524290, 131073, 14, 196614, 131074, 14, 655363, 131075, 14, 524292, 131077, 14, 262145, 196608, 14, 262145, 196609, 1, 0, 196610, 2, 0, 196611, 14, 262145, 196613, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 524291, 262147, 14, 655364, 262149, 14, 262145, 327682, 14, 262145, 327683, 7, 0, 327685, 14, 262145, 393218, 14, 655362, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "U-Turn (Insight)"
+level_replay = "U-Turn (Insight)$mturn=9$xdxazazazaxz"
+heavy_max_moves = 1.0
+light_max_moves = 1.0

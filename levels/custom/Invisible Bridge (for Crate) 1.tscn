@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 28, 0, 5, 25, 0, 65538, 28, 0, 65539, 8, 0, 65541, 25, 0, 131072, 32, 0, 131074, 28, 0, 131075, 3, 0, 131076, 2, 0, 131077, 25, 0, 196608, 14, 262148, 196610, 28, 0, 196611, 14, 2, 196612, 14, 4, 196613, 25, 0, 262146, 28, 0, 262147, 14, 65538, 262148, 14, 65540, 262149, 25, 0, 327682, 28, 0, 327683, 14, 65538, 327684, 14, 65540, 327685, 25, 0, 393219, 14, 131074, 393220, 14, 131076 )
+
+[node name="@@119" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 131075, 1, 0, 131076, 7, 0, 327682, 27, 0, 327685, 27, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Invisible Bridge (for Crate) 1"
+level_author = "Patashu"
+level_replay = "Invisible Bridge (for Crate) 1$mturn=33$wawxdxzdwdxwxzzxzxwawxdxzdwdxwxzzxzxzxzxzxzdxaxdxwz"
+heavy_max_moves = 8.0
+light_max_moves = 3.0
+clock_turns = ""
