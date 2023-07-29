@@ -522,7 +522,7 @@ func picker_tooltip() -> void:
 	if (tile == -1):
 		text = "";
 	elif (tile == Tiles.HeavyIdle):
-		text = "Heavy: Actor. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Has a sticky top when making forward moves."
+		text = "Heavy: Actor. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move."
 	elif (tile == Tiles.LightIdle):
 		text = "Light: Actor. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs."
 	elif (tile == Tiles.HeavyGoal):
@@ -543,6 +543,24 @@ func picker_tooltip() -> void:
 		text = "No Heavy: Solid to Heavy."
 	elif (tile == Tiles.NoLight):
 		text = "No Light: Solid to Light."
+	elif (tile == Tiles.NoLight):
+		text = "No Light: Solid to Light."
+	elif (tile == Tiles.OnewayEast):
+		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+	elif (tile == Tiles.OnewayNorth):
+		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+	elif (tile == Tiles.OnewaySouth):
+		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+	elif (tile == Tiles.OnewayWest):
+		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+	elif (tile == Tiles.OnewayEastGreen):
+		text = "Green One Way: Solid to moves entering its tile."
+	elif (tile == Tiles.OnewayNorthGreen):
+		text = "Green One Way: Solid to moves entering its tile."
+	elif (tile == Tiles.OnewaySouthGreen):
+		text = "Green One Way: Solid to moves entering its tile."
+	elif (tile == Tiles.OnewayWestGreen):
+		text = "Green One Way: Solid to moves entering its tile."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
