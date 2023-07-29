@@ -77,6 +77,7 @@ enum Tiles {
 	OnewayNorthPurple, #71
 	OnewaySouthPurple, #72
 	OnewayWestPurple, #73
+	ColourBlurple, #74
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -186,6 +187,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.ColourCyan);
 		picker_array.append(Tiles.ColourOrange);
 		picker_array.append(Tiles.ColourYellow);
+		picker_array.append(Tiles.ColourPurple);
+		picker_array.append(Tiles.ColourBlurple);
 		picker_array.append(Tiles.ColourWhite);
 		picker_array.append(Tiles.VoidSpikeball);
 		picker_array.append(Tiles.VoidGlassBlock);

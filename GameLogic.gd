@@ -152,6 +152,7 @@ enum Animation {
 enum TimeColour {
 	Gray,
 	Purple,
+	Blurple,
 	Magenta,
 	Red,
 	Blue,
@@ -247,6 +248,7 @@ enum Tiles {
 	OnewayNorthPurple, #71
 	OnewaySouthPurple, #72
 	OnewayWestPurple, #73
+	ColourBlurple, #74
 }
 var voidlike_tiles = [];
 
@@ -1629,6 +1631,7 @@ func find_colours() -> void:
 	find_colour(Tiles.ColourGreen, TimeColour.Green);
 	find_colour(Tiles.ColourVoid, TimeColour.Void);
 	find_colour(Tiles.ColourPurple, TimeColour.Purple);
+	find_colour(Tiles.ColourBlurple, TimeColour.Blurple);
 	find_colour(Tiles.ColourCyan, TimeColour.Cyan);
 	find_colour(Tiles.ColourOrange, TimeColour.Orange);
 	find_colour(Tiles.ColourYellow, TimeColour.Yellow);
@@ -3896,7 +3899,8 @@ func time_passes(chrono: int) -> void:
 			#AD06: Characters are Purple, other actors are Gray. (But with time colours you can make your own arbitrary rules!
 	#		Red: Time passes only when red moves forward.
 	#		Blue: Time passes only when blue moves forward.
-	#		Purple: The default unrendered colour of characters. Time passes except when I am undoing.
+	#		Purple: The default colour of Heavy. Time passes except when Heavy is undoing.
+	#		Blurple: The default colour of Light. Time passes except when Light is undoing.
 	#		Gray: The default unrendered colour of non-character actors. Time passes when a character moves forward and doesn't when a character undoes.
 	#		Green: Time always passes, AND undo events are not generated/stored for this actor, AND if a green character takes a turn and no events are made, turn is not incremented. (So, having actor be green is equivalent to a no-time-shenanigans version of Entwined Time where time just always moves forward and you need to meta-undo to claw it back.) (Alternatively, I might have turns work as normal but there's a sentinel value for 'no turns, no timeline' like 100, since -1 actually will mean something)
 	#		Void: Time always passes AND time passes after a meta-undo AND undo events AND meta undo events are not generated/stored for this actor, AND if a void actor takes a turn and no events are made, turn/meta-turn is not incremented. (In the main campaign this will probably only be used for the void cuckoo clock in the final level.)
@@ -3912,7 +3916,13 @@ func time_passes(chrono: int) -> void:
 				if (chrono == Chrono.MOVE):
 					time_actors.push_back(actor);
 				else:
-					if (heavy_selected && actor == light_actor) || (!heavy_selected && actor == heavy_actor):
+					if (!heavy_selected):
+						time_actors.push_back(actor);
+			elif actor.time_colour == TimeColour.Blurple:
+				if (chrono == Chrono.MOVE):
+					time_actors.push_back(actor);
+				else:
+					if (heavy_selected):
 						time_actors.push_back(actor);
 			elif actor.time_colour == TimeColour.Red:
 				if chrono == Chrono.MOVE and heavy_selected:

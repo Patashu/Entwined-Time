@@ -262,10 +262,12 @@ func fluster():
 
 func native_colour():
 	if (is_crystal):
-		return 5; #Green
-	if !is_character:
-		return 0; #Gray
-	return 1; #Purple
+		return 6; #Green
+	if (actorname == Name.Heavy):
+		return 1; #Purple
+	if (actorname == Name.Light):
+		return 2; #Blurple
+	return 0; 
 
 func is_native_colour():
 	return native_colour() == time_colour;

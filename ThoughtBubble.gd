@@ -12,7 +12,7 @@ var rising = true;
 var ticks = 10000;
 # REFACTOR: same as in TimeBubble.gd
 var time_colour = 0;
-var time_colours = [Color("808080"), Color("B200FF"), Color("FF00DC"),
+var time_colours = [Color("808080"), Color("B200FF"), Color("5400FF"), Color("FF00DC"),
 Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040"),
 Color("00FFFF"), Color("FF6A00"), Color("FFD800"), Color("FFFFFF")];
 var label = null;
@@ -22,6 +22,7 @@ var alpha = 0.85;
 enum TimeColour {
 	Gray,
 	Purple,
+	Blurple,
 	Magenta,
 	Red,
 	Blue,
