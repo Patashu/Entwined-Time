@@ -4,6 +4,13 @@ class_name OutlinedLabel
 var label = null;
 var shadow_labels = [];
 
+func squish_mode() -> void:
+	for sl in shadow_labels:
+		sl.autowrap = true;
+		sl.rect_min_size = Vector2(100, 100);
+	label.autowrap = true;
+	label.rect_min_size = Vector2(100, 100);
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var offsets = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT];

@@ -86,6 +86,7 @@ onready var tilemaps : Node2D = get_node("TileMaps");
 onready var pen : Sprite = get_node("Pen");
 onready var pickerbackground : ColorRect = get_node("PickerBackground");
 onready var picker : TileMap = get_node("Picker");
+onready var pickertooltip : Node2D = get_node("PickerTooltip");
 onready var layerlabel : Label = get_node("LayerLabel");
 var custom_string = "";
 var level_info : LevelInfo = null;
@@ -96,6 +97,7 @@ var pen_xy = Vector2.ZERO;
 var picker_mode = false;
 var picker_array = [];
 var just_picked = false;
+var show_tooltips = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -116,6 +118,7 @@ func _ready() -> void:
 	change_pen_tile(); # must happen after level setup
 	
 	initialize_picker_array();
+	pickertooltip.squish_mode();
 	
 func initialize_picker_array() -> void:
 	var puzzles = gamelogic.puzzles_completed;
@@ -181,6 +184,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.TheNight);
 		picker_array.append(Tiles.TheStars);
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
+		show_tooltips = true;
 		picker_array.append(Tiles.SteelCrate);
 		picker_array.append(Tiles.PowerCrate);
 		picker_array.append(Tiles.ColourVoid);
@@ -493,10 +497,12 @@ func toggle_picker_mode() -> void:
 		picker_mode = true;
 		pickerbackground.visible = true;
 		picker.visible = true;
+		pickertooltip.visible = show_tooltips;
 	else:
 		picker_mode = false;
 		pickerbackground.visible = false;
 		picker.visible = false;
+		pickertooltip.visible = false;
 
 func picker_cycle(impulse: int) -> void:
 	var current_index = picker_array.find(pen_tile);
@@ -509,6 +515,30 @@ func picker_cycle(impulse: int) -> void:
 		current_index -= picker_array.size();
 	pen_tile = picker_array[current_index];
 	change_pen_tile();
+	
+func picker_tooltip() -> void:
+	var tile = picker.get_cellv(pen_xy);
+	var text = "";
+	if (tile == -1):
+		text = "";
+	elif (tile == Tiles.HeavyIdle):
+		text = "Heavy: Actor. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Has a sticky top when making forward moves."
+	elif (tile == Tiles.LightIdle):
+		text = "Light: Actor. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs."
+	elif (tile == Tiles.ChronoHelixBlue):
+		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
+	elif (tile == Tiles.ChronoHelixRed):
+		text = "Chrono Helix Red: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity, if 8-way adjacent to a Chrono Helix Blue, both move away from each other. When bumped with a Chrono Helix Blue, you win."
+	else:
+		text = "";
+	pickertooltip.change_text(text);
+	
+	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));
+	pickertooltip.set_rect_size(Vector2(200, pickertooltip.get_rect_size().y));
+	if (pickertooltip.get_rect_position().x + 200 > 512):
+		pickertooltip.set_rect_size(Vector2(max(100, 512 - pickertooltip.get_rect_position().x), pickertooltip.get_rect_size().y));
+	if (pickertooltip.get_rect_position().x + 100 > 512):
+		pickertooltip.set_rect_position(Vector2(512-100, pickertooltip.get_rect_position().y));
 	
 func test_level() -> void:
 	var result = serialize_current_level();
@@ -531,6 +561,9 @@ func _process(delta: float) -> void:
 	mouse_position.y = gamelogic.cell_size*round((mouse_position.y-gamelogic.cell_size/2)/float(gamelogic.cell_size));
 	pen.position = mouse_position;
 	pen_xy = Vector2(round(mouse_position.x/float(gamelogic.cell_size)), round(mouse_position.y/float(gamelogic.cell_size)));
+	
+	if (picker_mode and show_tooltips):
+		picker_tooltip();
 	
 	var over_menu_button = false;
 	if (Rect2(menubutton.rect_position, menubutton.rect_size).has_point(get_global_mouse_position())):
