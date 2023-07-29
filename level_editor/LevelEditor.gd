@@ -531,10 +531,22 @@ func picker_tooltip() -> void:
 		text = "Light Goal: At end of turn, if Heavy is on a Heavy Goal and Light is on a Light Goal, you win."
 	elif (tile == Tiles.Wall):
 		text = "Wall: Solid."
+	elif (tile == Tiles.Spikeball):
+		text = "Spikeball: Solid. Surprise: If the actor doesn't have Spikes or greater Durability, it breaks. (Surprises trigger on failure to enter, and aren't stable ground if they'd do something.)"
+	elif (tile == Tiles.Fire):
+		text = "Fire: When an actor experiences time, after gravity, if it's on Fire and doesn't have Fire or greater Durability, it breaks."
+	elif (tile == Tiles.HeavyFire):
+		text = "Heavy Fire: Fire, but it can only break Heavy."
+	elif (tile == Tiles.LightFire):
+		text = "Light Fire: Fire, but it can only break Light."
+	elif (tile == Tiles.NoHeavy):
+		text = "No Heavy: Solid to Heavy."
+	elif (tile == Tiles.NoLight):
+		text = "No Light: Solid to Light."
 	elif (tile == Tiles.ChronoHelixBlue):
-		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
+		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
-		text = "Chrono Helix Red: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity, if 8-way adjacent to a Chrono Helix Blue, both move away from each other. When bumped with a Chrono Helix Blue, you win."
+		text = "Chrono Helix Red: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Blue, both move away from each other. When bumped with a Chrono Helix Blue, you win."
 	else:
 		text = "";
 	pickertooltip.change_text(text);
