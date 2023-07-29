@@ -599,6 +599,12 @@ func picker_tooltip() -> void:
 		text = "Green Fire: A Fire that burns even actors not experiencing time and does not create character undo events."
 	elif (tile == Tiles.GreenGlassBlock):
 		text = "Green Glass Block: A Glass Block that does not create character undo events."
+	elif (tile == Tiles.Fuzz):
+		text = "Fuzz: When a character undoes while standing on Fuzz, the Fuzz is consumed (creating only a meta undo event), the undo happens but is not consumed, and time does not pass."
+	elif (tile == Tiles.OneUndo):
+		text = "One Undo: When a character undoes while standing on One Undo, one of them is replaced with a No Undo (creating only a meta undo event)."
+	elif (tile == Tiles.NoUndo):
+		text = "No Undo: When a character undoes while standing on No Undo and on no One Undos, it is prevented and nothing happens."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
