@@ -525,6 +525,12 @@ func picker_tooltip() -> void:
 		text = "Heavy: Actor. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Has a sticky top when making forward moves."
 	elif (tile == Tiles.LightIdle):
 		text = "Light: Actor. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs."
+	elif (tile == Tiles.HeavyGoal):
+		text = "Heavy Goal: At end of turn, if Heavy is on a Heavy Goal and Light is on a Light Goal, you win."
+	elif (tile == Tiles.LightGoal):
+		text = "Light Goal: At end of turn, if Heavy is on a Heavy Goal and Light is on a Light Goal, you win."
+	elif (tile == Tiles.Wall):
+		text = "Wall: Solid."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):

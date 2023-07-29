@@ -8,8 +8,10 @@ func squish_mode() -> void:
 	for sl in shadow_labels:
 		sl.autowrap = true;
 		sl.rect_min_size = Vector2(100, 100);
+		sl.align = Label.ALIGN_LEFT;
 	label.autowrap = true;
 	label.rect_min_size = Vector2(100, 100);
+	label.align = Label.ALIGN_LEFT;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
