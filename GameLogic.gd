@@ -782,7 +782,7 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, preload("res://assets/light_goal.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, preload("res://assets/heavy_goal.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoalJoke, preload("res://assets/light_goal_joke.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, preload("res://assets/light_goal_joke.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, preload("res://assets/heavy_goal_joke.png"));
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):

@@ -580,15 +580,15 @@ func picker_tooltip() -> void:
 	elif (tile == Tiles.NoCrate):
 		text = "No Crate: Solid to non-Character actors."
 	elif (tile == Tiles.ColourRed):
-		text = "Red: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor experiences time when Heavy moves."
+		text = "Red: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Heavy moves."
 	elif (tile == Tiles.ColourBlue):
-		text = "Blue: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor experiences time when Light moves."
+		text = "Blue: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Light moves."
 	elif (tile == Tiles.ColourGray):
-		text = "Gray: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor experiences time during moves."
+		text = "Gray: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time during moves."
 	elif (tile == Tiles.ColourMagenta):
-		text = "Magenta: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor always experiences time."
+		text = "Magenta: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Always experiences time."
 	elif (tile == Tiles.WoodenCrate):
-		text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When Light fails to push a Wooden Crate, Light tries again by pushing it up instead. When Heavy fails to push a Wooden Crate, Heavy tries again by breaking it instead."
+		text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead."
 	elif (tile == Tiles.GlassBlock):
 		text = "Glass Block: Solid to moves entering or exiting its tile. Surprise: If the actor is Iron weight or greater, the Glass Block breaks. When a Glass Block unbreaks, it breaks any actors that don't have Unbreakable durability."
 	elif (tile == Tiles.ColourGreen):
@@ -615,10 +615,44 @@ func picker_tooltip() -> void:
 		text = "Night: Actors inside Night don't experience time passing (except for being burned by fire and green fire)."
 	elif (tile == Tiles.TheStars):
 		text = "Stars: Actors inside Stars are immune to character undo events."
+	elif (tile == Tiles.SteelCrate):
+		text = "Steel Crate: Actor. Heaviness: Steel. Strength: Iron. Durability: Fire. Fall speed: Infinite. Native Time Colour: Gray. When a unbroken Steel Crate fails to move into an unstacked unbroken Light or Cuckoo Clock, the target first breaks."
+	elif (tile == Tiles.PowerCrate):
+		text = "Power Crate: Actor. Heaviness: Wooden. Strength: Steel. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
+	elif (tile == Tiles.ColourVoid):
+		text = "Void: Colour. Always experiences time, INCLUDING after meta undos. Immune to character undo AND meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+	elif (tile == Tiles.ColourCyan):
+		text = "Cyan: Colour. Experiences time when Light moves or undoes."
+	elif (tile == Tiles.ColourOrange):
+		text = "Orange: Colour. Experiences time when Heavy moves or undoes."
+	elif (tile == Tiles.ColourYellow):
+		text = "Yellow: Colour. Experiences time during undos."
+	elif (tile == Tiles.ColourPurple):
+		text = "Purple: Colour. Experiences time except when Heavy undoes."
+	elif (tile == Tiles.ColourBlurple):
+		text = "Blurple: Colour. Experiences time except when Light undoes."
+	elif (tile == Tiles.ColourWhite):
+		text = "White: Colour. Never experiences time."
+	elif (tile == Tiles.VoidSpikeball):
+		text = "Void Spikeball: A Spikeball that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+	elif (tile == Tiles.VoidGlassBlock):
+		text = "Void Glass Block: A Glass Block that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
 		text = "Chrono Helix Red: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Blue, both move away from each other. When bumped with a Chrono Helix Blue, you win."
+	elif (tile == Tiles.HeavyGoalJoke):
+		text = "Heavy Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Heavy Goal. Phases through terrain and actors."
+	elif (tile == Tiles.LightGoalJoke):
+		text = "Light Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Light Goal. Phases through terrain and actors."
+	elif (tile == Tiles.PowerSocket):
+		text = "Power Socket: A Spikeball that specifically breaks Characters."
+	elif (tile == Tiles.GreenPowerSocket):
+		text = "Green Power Socket: A Power Socket that does not create character undo events."
+	elif (tile == Tiles.VoidPowerSocket):
+		text = "Void Power Socket: A Power Socket that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+	elif (tile == Tiles.GlassBlockCracked):
+		text = "Cracked Glass Block: A Glass Block without the weight requirement."
 	else:
 		text = "";
 	pickertooltip.change_text(text);
