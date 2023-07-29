@@ -596,19 +596,25 @@ func picker_tooltip() -> void:
 	elif (tile == Tiles.GreenSpikeball):
 		text = "Green Spikeball: A Spikeball that does not create character undo events."
 	elif (tile == Tiles.GreenFire):
-		text = "Green Fire: A Fire that burns even actors not experiencing time and does not create character undo events."
+		text = "Green Fire: A Fire that activates after regular Fires even for actors not experiencing time and does not create character undo events."
 	elif (tile == Tiles.GreenGlassBlock):
 		text = "Green Glass Block: A Glass Block that does not create character undo events."
 	elif (tile == Tiles.Fuzz):
-		text = "Fuzz: When a character undoes while standing on Fuzz, the Fuzz is consumed (creating only a meta undo event), the undo happens but is not consumed, and time does not pass."
+		text = "Fuzz: When a character undoes while inside Fuzz, the Fuzz is consumed (creating only a meta undo event), the undo happens but is not consumed, and time does not pass."
 	elif (tile == Tiles.OneUndo):
-		text = "One Undo: When a character undoes while standing on One Undo, one of them is replaced with a No Undo (creating only a meta undo event)."
+		text = "One Undo: When a character undoes while inside One Undo, one of them is replaced with a No Undo (creating only a meta undo event)."
 	elif (tile == Tiles.NoUndo):
-		text = "No Undo: When a character undoes while standing on No Undo and on no One Undos, it is prevented and nothing happens."
+		text = "No Undo: When a character undoes while inside No Undo and on no One Undos, it is prevented and nothing happens."
 	elif (tile == Tiles.TimeCrystalGreen):
-		text = "Green Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. When consumed by a Cuckoo Clock: Increase ticks by 1. When consumed by a Character: If the character has no locked moves: Increase turn limit by 1. Else, unlock the most recently locked move and place it on the end of the character's filled timeline."
+		text = "Green Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. When consumed by an unbroken Cuckoo Clock: Increase ticks by 1. When consumed by a Character: If the character has no locked moves: Increase turn limit by 1. Else, unlock the most recently locked move and place it on the end of the character's filled timeline."
 	elif (tile == Tiles.TimeCrystalMagenta):
-		text = "Magenta Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. When consumed by a Cuckoo Clock: Decrease ticks by 1. When consumed by a Character: If the character's turn limit is 0: You lose. Else, if the character is filling a timeline slot: Lock it. Else, if the character has a filled timeline slot: Lock the highest numbered one. Else, lock an empty timeline slot."
+		text = "Magenta Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. When consumed by an unbroken Cuckoo Clock: Decrease ticks by 1. When consumed by a Character: If the character's turn limit is 0: You lose. Else, if the character is filling a timeline slot: Lock it. Else, if the character has a filled timeline slot: Lock the highest numbered one. Else, lock an empty timeline slot."
+	elif (tile == Tiles.CuckooClock):
+		text = "Cuckoo Clock: Actor. Heaviness: Wooden. Strength: Wooden. Durability: Nothing. Fall speed: 1. Native Time Colour: Gray. To start a puzzle with ticks: Fill out Clock Turns field with a comma separated list, and turns will be assigned to clocks in layer+reading order. When experiencing time, after green fire, if it has ticks and isn't broken, decrease ticks by 1. Whenever a cuckoo clock's ticks are 0: You lose."
+	elif (tile == Tiles.TheNight):
+		text = "Night: Actors inside Night don't experience time passing (except for being burned by fire and green fire)."
+	elif (tile == Tiles.TheStars):
+		text = "Stars: Actors inside Stars are immune to character undo events."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
