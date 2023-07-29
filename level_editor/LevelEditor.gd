@@ -591,7 +591,14 @@ func picker_tooltip() -> void:
 		text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When Light fails to push a Wooden Crate, Light tries again by pushing it up instead. When Heavy fails to push a Wooden Crate, Heavy tries again by breaking it instead."
 	elif (tile == Tiles.GlassBlock):
 		text = "Glass Block: Solid to moves entering or exiting its tile. Surprise: If the actor is Iron weight or greater, the Glass Block breaks. When a Glass Block unbreaks, it breaks any actors that don't have Unbreakable durability."
-	
+	elif (tile == Tiles.ColourGreen):
+		text = "Green: Colour. Always experiences time. Immune to character undo events."
+	elif (tile == Tiles.GreenSpikeball):
+		text = "Green Spikeball: A Spikeball that does not create character undo events."
+	elif (tile == Tiles.GreenFire):
+		text = "Green Fire: A Fire that burns even actors not experiencing time and does not create character undo events."
+	elif (tile == Tiles.GreenGlassBlock):
+		text = "Green Glass Block: A Glass Block that does not create character undo events."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
