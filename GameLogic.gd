@@ -1132,7 +1132,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(80);
 	level_filenames.push_back("Elementary")
 	level_filenames.push_back("BlockageEx")
-	level_filenames.push_back("MementoEx")
 	level_filenames.push_back("Smuggler")
 	level_filenames.push_back("SmugglerEx")
 	level_filenames.push_back("Frangible")
@@ -1397,8 +1396,8 @@ func timeline_squish() -> void:
 	# calculation: the screen is 512 pixels wide. each cell is 24 pixels.
 	# we want 24 pixels of leeway, then our timelines.
 	var center = pixel_width/2;
-	var left = center-map_x_max*24/2;
-	var right = center+map_x_max*24/2;
+	var left = floor(center-map_x_max*24.0/2.0);
+	var right = floor(center+map_x_max*24.0/2.0);
 	heavyinfolabel.rect_position.x += left-48-24*heavy_extra_width;
 	heavytimeline.position.x += left-48-24*heavy_extra_width;
 	lightinfolabel.rect_position.x -= left-48-24*light_extra_width;
@@ -2720,9 +2719,13 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				add_undo_event([Undo.heavy_filling_locked_turn_index, -1, heavy_filling_locked_turn_index], Chrono.CHAR_UNDO);
 				if (heavy_filling_turn_actual != -1):
 					add_undo_event([Undo.heavy_filling_turn_actual, heavy_filling_turn_actual, -1], Chrono.CHAR_UNDO);
-			if (heavy_turn > 0 or just_locked):
+			if (heavy_turn > 0 or just_locked or (heavy_filling_locked_turn_index > -1 and heavy_turn > -1)):
 				# if we have a slot to move: move it and decrement turn
 				turn_moved = heavy_turn;
+				# the case of picking up a second magenta crystal in a row on your turn
+				# I thought it'd need an adjustment, but it seems to not.
+				if (!just_locked and heavy_filling_locked_turn_index > -1):
+					pass
 				# haven't 100% convinced me of this but seems to be true - if it's not our turn, we actually want to move the turn one lower
 				# (e.g. if light_turn is 2, we're creating [2] if it's light's turn, but [1] is what we'd lock next if it's heavy's turn)
 				# the spaghetti continues: we also want to -1 if it is our turn and we're undoing
@@ -2765,9 +2768,13 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				add_undo_event([Undo.light_filling_locked_turn_index, -1, light_filling_locked_turn_index], Chrono.CHAR_UNDO);
 				if (light_filling_turn_actual != -1):
 					add_undo_event([Undo.light_filling_turn_actual, light_filling_turn_actual, -1], Chrono.CHAR_UNDO);
-			if (light_turn > 0 or just_locked):
+			if (light_turn > 0 or just_locked or (light_filling_locked_turn_index > -1 and light_turn > -1)):
 				# if we have a slot to move: move it and decrement turn
 				turn_moved = light_turn;
+				# the case of picking up a second magenta crystal in a row on your turn
+				# I thought it'd need an adjustment, but it seems to not.
+				if (!just_locked and light_filling_locked_turn_index > -1):
+					pass
 				# haven't 100% convinced me of this but seems to be true - if it's not our turn, we actually want to move the turn one lower
 				# (e.g. if light_turn is 2, we're creating [2] if it's light's turn, but [1] is what we'd lock next if it's heavy's turn)
 				# the spaghetti continues: we also want to -1 if it is our turn and we're undoing
