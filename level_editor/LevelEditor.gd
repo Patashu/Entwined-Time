@@ -522,9 +522,9 @@ func picker_tooltip() -> void:
 	if (tile == -1):
 		text = "";
 	elif (tile == Tiles.HeavyIdle):
-		text = "Heavy: Actor. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move."
+		text = "Heavy: Actor. Character. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move."
 	elif (tile == Tiles.LightIdle):
-		text = "Light: Actor. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs."
+		text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs."
 	elif (tile == Tiles.HeavyGoal):
 		text = "Heavy Goal: At end of turn, if Heavy is on a Heavy Goal and Light is on a Light Goal, you win."
 	elif (tile == Tiles.LightGoal):
@@ -561,6 +561,20 @@ func picker_tooltip() -> void:
 		text = "Green One Way: Solid to moves entering its tile."
 	elif (tile == Tiles.OnewayWestGreen):
 		text = "Green One Way: Solid to moves entering its tile."
+	elif (tile == Tiles.Ladder):
+		text = "Ladder: Actors that can climb and aren't broken are supported in this tile (they become and remain grounded)."
+	elif (tile == Tiles.WoodenPlatform):
+		text = "Trapdoor: Solid to gravity moves."
+	elif (tile == Tiles.LadderPlatform):
+		text = "Ladder + Trapdoor: Combines the properties of the two tiles. (I made it before layers existed.)"
+	elif (tile == Tiles.OnewayEastPurple):
+		text = "Purple One Way: Solid to retroactive moves entering its tile."
+	elif (tile == Tiles.OnewayNorthPurple):
+		text = "Purple One Way: Solid to retroactive moves entering its tile."
+	elif (tile == Tiles.OnewaySouthPurple):
+		text = "Purple One Way: Solid to retroactive moves entering its tile."
+	elif (tile == Tiles.OnewayWestPurple):
+		text = "Purple One Way: Solid to retroactive moves entering its tile."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
