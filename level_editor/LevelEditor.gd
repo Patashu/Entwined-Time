@@ -543,8 +543,6 @@ func picker_tooltip() -> void:
 		text = "No Heavy: Solid to Heavy."
 	elif (tile == Tiles.NoLight):
 		text = "No Light: Solid to Light."
-	elif (tile == Tiles.NoLight):
-		text = "No Light: Solid to Light."
 	elif (tile == Tiles.OnewayEast):
 		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
 	elif (tile == Tiles.OnewayNorth):
@@ -575,6 +573,12 @@ func picker_tooltip() -> void:
 		text = "Purple One Way: Solid to retroactive moves entering its tile."
 	elif (tile == Tiles.OnewayWestPurple):
 		text = "Purple One Way: Solid to retroactive moves entering its tile."
+	elif (tile == Tiles.IronCrate):
+		text = "Iron Crate: Actor. Heaviness: Iron. Strength: Wood. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
+	elif (tile == Tiles.CrateGoal):
+		text = "Crate Goal: If you would win due to Light and Heavy being on Goals: You do not unless every Crate Goal has a non-Character actor on its tile."
+	elif (tile == Tiles.NoCrate):
+		text = "No Crate: Solid to non-Character actors."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
