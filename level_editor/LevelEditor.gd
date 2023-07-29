@@ -524,7 +524,7 @@ func picker_tooltip() -> void:
 	elif (tile == Tiles.HeavyIdle):
 		text = "Heavy: Actor. Character. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move."
 	elif (tile == Tiles.LightIdle):
-		text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs."
+		text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs. Clumsy (loses one strength when indirectly pushed)."
 	elif (tile == Tiles.HeavyGoal):
 		text = "Heavy Goal: At end of turn, if Heavy is on a Heavy Goal and Light is on a Light Goal, you win."
 	elif (tile == Tiles.LightGoal):
@@ -579,6 +579,16 @@ func picker_tooltip() -> void:
 		text = "Crate Goal: If you would win due to Light and Heavy being on Goals: You do not unless every Crate Goal has a non-Character actor on its tile."
 	elif (tile == Tiles.NoCrate):
 		text = "No Crate: Solid to non-Character actors."
+	elif (tile == Tiles.ColourRed):
+		text = "Red: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor experiences time when Heavy moves."
+	elif (tile == Tiles.ColourBlue):
+		text = "Blue: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor experiences time when Light moves."
+	elif (tile == Tiles.ColourGray):
+		text = "Gray: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor experiences time during moves."
+	elif (tile == Tiles.ColourMagenta):
+		text = "Magenta: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) This actor always experiences time."
+	elif (tile == Tiles.WoodenCrate):
+		text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When Light fails to push a Wooden Crate, Light tries to push it up instead. When Heavy fails to push a Wooden Crate, Heavy breaks it instead."
 	elif (tile == Tiles.ChronoHelixBlue):
 		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 	elif (tile == Tiles.ChronoHelixRed):
