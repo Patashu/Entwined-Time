@@ -1066,11 +1066,11 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(64);
+	level_filenames.push_back("HelpYourselfEx")
 	level_filenames.push_back("LightHurtingService")
 	level_filenames.push_back("LightHurtingServiceEx")
 	level_filenames.push_back("LightHurtingServiceEx2")
 	level_filenames.push_back("GreenGrass")
-	level_filenames.push_back("HelpYourselfEx")
 	level_filenames.push_back("SpikesGreenEx")
 	level_filenames.push_back("CampfireGreenEx")
 	level_filenames.push_back("FirewallGreenEx")
