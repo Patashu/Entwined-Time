@@ -1120,6 +1120,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bounce")
 	level_filenames.push_back("Pathology")
 	level_filenames.push_back("Reflections")
+	level_filenames.push_back("Erase")
 	level_filenames.push_back("Memento")
 	level_filenames.push_back("Forgetfulness")
 	level_filenames.push_back("Remembrance")
