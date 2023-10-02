@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Effortless Existence.ogg-ed5e40b0fc2d03a5958cb1ceb019fa2d.oggstr"
+
+[deps]
+
+source_file="res://music/Effortless Existence.ogg"
+dest_files=[ "res://.import/Effortless Existence.ogg-ed5e40b0fc2d03a5958cb1ceb019fa2d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
