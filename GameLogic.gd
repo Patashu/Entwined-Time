@@ -309,6 +309,7 @@ var puzzles_completed = 0;
 var sounds = {}
 var music_tracks = [];
 var music_info = [];
+var now_playing = null;
 var speakers = [];
 var target_track = -1;
 var current_track = -1;
@@ -1846,6 +1847,7 @@ func toggle_mute() -> void:
 	else:
 		floating_text("M: Unmuted");
 	muted = !muted;
+	music_speaker.stream_paused = muted;
 	cut_sound();
 
 func make_actor(actorname: int, pos: Vector2, is_character: bool, chrono: int = Chrono.TIMELESS) -> Actor:
@@ -3717,11 +3719,22 @@ func play_next_song() -> void:
 	current_track = target_track;
 	fadeout_timer = 0;
 	fadeout_timer_max = 0;
+	if (is_instance_valid(now_playing)):
+		now_playing.queue_free();
+	now_playing = null;
+	
 	if (current_track > -1 and current_track < music_tracks.size() and current_track < music_info.size()):
 		music_speaker.stream = music_tracks[current_track];
 		music_speaker.play();
+		var value = save_file["music_volume"];
+		if (value > -30 and !muted): #music is not muted
+			now_playing = preload("res://NowPlaying.tscn").instance();
+			self.get_parent().call_deferred("add_child", now_playing);
+			#self.get_parent().add_child(now_playing);
+			now_playing.initialize(music_info[current_track]);
 	else:
 		music_speaker.stop();
+	
 	
 func load_level_direct(new_level: int) -> void:
 	is_custom = false;
