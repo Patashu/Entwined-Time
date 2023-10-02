@@ -11,9 +11,9 @@ tile_data = PoolIntArray( 3, 45, 0, 4, 45, 0, 5, 45, 0, 6, 45, 0, 7, 45, 0, 8, 4
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Spelunking?? [VAR2]"
-level_replay = "Spelunking?? [VAR2]$mturn=202$ddxdssxdxdxzzzdxzzzzxwxddcxaxdxdxzzxzzzxwxdccxdxdaxazzwxzxzxzxsdxdaxazzwxzxzxzxzcsxwxaxzxaxzccadxzcaxzcczzzxzxaddxaxzccxazccxdxaxccxxzdxawccxdxwaxzxzzxzzzxzzwcxasxcccccxsxzdwdxzzxzwcxdzxwcaxwaxzwxaxzzdxwzxzzzxzzzxddddxdddwxzzxzwxzxzzzzwxdxwxdxzzxzzzdxxwaxaadwxdxzzzzwxzzzzwdddxwaaxzzzwwxdxxzxwxdxzzzzxzzwwxaxzzzzxddsxddxzdxzxzzwxwzxaxwaxzwxaxzzxzcxxzxzzxdzzzdddxdddd"
-heavy_max_moves = 4
+level_name = "Spelunking?? [VAR1]"
+level_replay = "Spelunking?? [VAR1]$mturn=43$ddxdssxdxdxzzzwaadwxzzzdxzzzzzddddxsxdxdxzzzddxzzzxddxdd"
+heavy_max_moves = 6
 light_max_moves = 4
 
 [node name="TileMap" type="TileMap" parent="."]

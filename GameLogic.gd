@@ -1055,13 +1055,13 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(56);
 	level_filenames.push_back("LetMeInEx")
 	level_filenames.push_back("HeavyMovingServiceGlass")
-	level_filenames.push_back("SpelunkingGlassEx")
+	level_filenames.push_back("IcyHot")
 	level_filenames.push_back("Deconstruct")
 	level_filenames.push_back("TheGlassPitEx")
 	level_filenames.push_back("TheRace")
 	level_filenames.push_back("CampfireGlass")
 	level_filenames.push_back("CampfireGlassEx")
-	level_filenames.push_back("SpelunkingGlassEx2")
+	level_filenames.push_back("SpelunkingGlassEx")
 	level_filenames.push_back("LadderWorldGlassEx")
 	
 	chapter_names.push_back("Permanence");
