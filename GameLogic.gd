@@ -310,6 +310,12 @@ var sounds = {}
 var music_tracks = [];
 var music_info = [];
 var speakers = [];
+var target_track = -1;
+var current_track = -1;
+var fadeout_timer = 0;
+var fadeout_timer_max = 0;
+var fanfare_duck_db = 0;
+var music_discount = -10;
 var music_speaker = null;
 var lost_speaker = null;
 var lost_speaker_volume_tween;
@@ -728,6 +734,7 @@ func setup_volume() -> void:
 	if (save_file.has("music_volume")):
 		var value = save_file["music_volume"];
 		music_speaker.volume_db = value;
+		music_speaker.volume_db = music_speaker.volume_db + music_discount;
 	if (save_file.has("fanfare_volume")):
 		var value = save_file["fanfare_volume"];
 		won_speaker.volume_db = value;
@@ -3698,6 +3705,23 @@ func setup_chapter_etc() -> void:
 		sky_timer_max = 3.0;
 		old_sky = current_sky;
 		target_sky = chapter_skies[chapter];
+	if (target_track != chapter_tracks[chapter]):
+		target_track = chapter_tracks[chapter];
+		if (current_track == -1):
+			play_next_song();
+		else:
+			fadeout_timer = max(fadeout_timer, 0); #so if we're in the middle of a fadeout it doesn't reset
+			fadeout_timer_max = 3.0;
+	
+func play_next_song() -> void:
+	current_track = target_track;
+	fadeout_timer = 0;
+	fadeout_timer_max = 0;
+	if (current_track > -1 and current_track < music_tracks.size() and current_track < music_info.size()):
+		music_speaker.stream = music_tracks[current_track];
+		music_speaker.play();
+	else:
+		music_speaker.stop();
 	
 func load_level_direct(new_level: int) -> void:
 	is_custom = false;
@@ -4905,6 +4929,31 @@ func _process(delta: float) -> void:
 	
 	if (doing_replay and !replay_paused):
 		replay_timer += delta;
+		
+	# handle current music volume
+	var value = save_file["music_volume"];
+	music_speaker.volume_db = value + music_discount;
+	if fadeout_timer < fadeout_timer_max:
+		fadeout_timer += delta;
+		if (fadeout_timer >= fadeout_timer_max):
+			play_next_song();
+		else:
+			music_speaker.volume_db = music_speaker.volume_db - 30*(fadeout_timer/fadeout_timer_max);
+		
+	# duck when a fanfare is playing. this might need tweaking...
+	var new_fanfare_duck_db = 0;
+	if (lost_speaker.playing and lost_speaker.volume_db > -30):
+		new_fanfare_duck_db += lost_speaker.volume_db + 30;
+	if (won_speaker.playing and won_speaker.volume_db > -30):
+		new_fanfare_duck_db += won_speaker.volume_db + 10; # try ducking less for won
+	if (new_fanfare_duck_db > 0):
+		fanfare_duck_db = new_fanfare_duck_db;
+	else:
+		fanfare_duck_db -= delta*100;
+		if (fanfare_duck_db < 0):
+			fanfare_duck_db = 0;
+	music_speaker.volume_db = music_speaker.volume_db - fanfare_duck_db;
+		
 	if (sky_timer < sky_timer_max):
 		sky_timer += delta;
 		if (sky_timer > sky_timer_max):
