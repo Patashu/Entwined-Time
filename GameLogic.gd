@@ -4710,7 +4710,7 @@ func serialize_current_level() -> String:
 	var result = "EntwinedTimePuzzleStart: " + level_name + " by " + level_author + "\n";
 	var level_metadata = {};
 	var metadatas = ["level_name", "level_author", #"level_replay", "heavy_max_moves", "light_max_moves",
-	"clock_turns", "map_x_max", "map_y_max", #"target_sky"
+	"clock_turns", "map_x_max", "map_y_max", "target_track" #"target_sky"
 	];
 	for metadata in metadatas:
 		level_metadata[metadata] = self.get(metadata);
@@ -4794,7 +4794,11 @@ func deserialize_custom_level(custom: String) -> Node:
 		return null;
 	
 	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
-	"clock_turns", "map_x_max", "map_y_max", "target_sky", "layers"];
+	"clock_turns", "map_x_max", "map_y_max", "target_sky", "layers", "target_track"];
+	
+	#datafix: old custom levels without target_track
+	if (!result.has("target_track")):
+		result["target_track"] = target_track;
 	
 	for metadata in metadatas:
 		if (!result.has(metadata)):
@@ -4856,6 +4860,14 @@ func load_custom_level(custom: String) -> void:
 	sky_timer_max = 3.0;
 	old_sky = current_sky;
 	target_sky = Color(level_info["target_sky"]);
+	# TODO: poorly refactored
+	if (target_track != level_info["target_track"]):
+		target_track = level_info["target_track"];
+		if (current_track == -1):
+			play_next_song();
+		else:
+			fadeout_timer = max(fadeout_timer, 0); #so if we're in the middle of a fadeout it doesn't reset
+			fadeout_timer_max = 3.0;
 	
 	levelfolder.remove_child(terrainmap);
 	terrainmap.queue_free();

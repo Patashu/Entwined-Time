@@ -11,3 +11,4 @@ var map_x_max = -1;
 var map_y_max = -1;
 var target_sky : Color = Color(0.5, 0.5, 0.5, 1);
 var layers = -1;
+var target_track = -1;
