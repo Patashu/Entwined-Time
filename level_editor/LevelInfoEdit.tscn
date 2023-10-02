@@ -9,9 +9,9 @@ script = ExtResource( 1 )
 
 [node name="Holder" type="Label" parent="."]
 margin_left = 147.0
-margin_top = 38.0
+margin_top = 9.0
 margin_right = 370.0
-margin_bottom = 280.0
+margin_bottom = 292.0
 rect_pivot_offset = Vector2( 129, 100 )
 theme = ExtResource( 3 )
 custom_styles/normal = ExtResource( 2 )
@@ -20,9 +20,9 @@ align = 1
 
 [node name="OkButton" type="Button" parent="Holder"]
 margin_left = 58.0
-margin_top = 221.0
+margin_top = 263.0
 margin_right = 169.0
-margin_bottom = 236.0
+margin_bottom = 278.0
 text = "Ok"
 
 [node name="HeavyMoves" type="SpinBox" parent="Holder"]
@@ -30,6 +30,15 @@ margin_left = 7.0
 margin_top = 129.0
 margin_right = 81.0
 margin_bottom = 153.0
+max_value = 999.0
+value = 6.0
+
+[node name="MusicTrack" type="SpinBox" parent="Holder"]
+margin_left = 7.0
+margin_top = 221.0
+margin_right = 81.0
+margin_bottom = 245.0
+min_value = -1.0
 max_value = 999.0
 value = 6.0
 
@@ -54,6 +63,13 @@ margin_top = 163.0
 margin_right = 147.0
 margin_bottom = 174.0
 text = "Light Moves"
+
+[node name="Label3" type="Label" parent="Holder"]
+margin_left = 81.0
+margin_top = 227.0
+margin_right = 146.0
+margin_bottom = 238.0
+text = "Music Track"
 
 [node name="ClockTurnsLabel" type="Label" parent="Holder"]
 margin_left = 149.0
