@@ -4974,8 +4974,8 @@ func _process(delta: float) -> void:
 		fanfare_duck_db = new_fanfare_duck_db;
 	else:
 		fanfare_duck_db -= delta*100;
-		if (fanfare_duck_db < 0):
-			fanfare_duck_db = 0;
+	if (fanfare_duck_db < 0):
+		fanfare_duck_db = 0;
 	music_speaker.volume_db = music_speaker.volume_db - fanfare_duck_db;
 		
 	if (sky_timer < sky_timer_max):
