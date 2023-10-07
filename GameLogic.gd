@@ -905,7 +905,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("One-Ways");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(16);
-	chapter_tracks.push_back(0);
+	chapter_tracks.push_back(3);
 	chapter_skies.push_back(Color("#1C3D19"));
 	level_filenames.push_back("OneWays")
 	level_filenames.push_back("PeekaBoo")
@@ -1097,7 +1097,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Exotic Matter");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(64);
-	chapter_tracks.push_back(0);
+	chapter_tracks.push_back(3);
 	chapter_skies.push_back(Color("#351731"));
 	level_filenames.push_back("TheFuzz")
 	level_filenames.push_back("DoubleFuzz")
@@ -1772,6 +1772,8 @@ func prepare_audio() -> void:
 	music_info.append("Patashu - Effortless Existence");
 	music_tracks.append(preload("res://music/Starblind.ogg"));
 	music_info.append("Patashu - Starblind");
+	music_tracks.append(preload("res://music/polygon remix.ogg"));
+	music_info.append("Sota Fujimori - polygon (Patashu's Entwined Time Remix)");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
