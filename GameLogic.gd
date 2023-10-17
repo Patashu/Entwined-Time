@@ -4239,6 +4239,7 @@ func do_one_replay_turn() -> void:
 	if (!doing_replay):
 		return;
 	if replay_turn >= level_replay.length():
+		meta_undo_a_restart_mode = false;
 		if (unit_test_mode and won and level_number < (level_list.size() - 1)):
 			doing_replay = true;
 			replaybuttons.visible = true;
