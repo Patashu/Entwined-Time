@@ -940,7 +940,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Trap Doors and Ladders");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(24);
-	chapter_tracks.push_back(1);
+	chapter_tracks.push_back(4);
 	chapter_skies.push_back(Color("#3B3F1A"));
 	level_filenames.push_back("Down")
 	level_filenames.push_back("LadderWorld")
@@ -1037,7 +1037,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Change");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(48);
-	chapter_tracks.push_back(2);
+	chapter_tracks.push_back(4);
 	chapter_skies.push_back(Color("#446570"));
 	level_filenames.push_back("Ahhh")
 	level_filenames.push_back("Eeep")
@@ -1774,6 +1774,8 @@ func prepare_audio() -> void:
 	music_info.append("Patashu - Starblind");
 	music_tracks.append(preload("res://music/polygon remix.ogg"));
 	music_info.append("Sota Fujimori - polygon (Patashu's Entwined Time Remix)");
+	music_tracks.append(preload("res://music/Highs and Lows.ogg"));
+	music_info.append("Patashu - Highs & Lows");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
