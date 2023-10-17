@@ -1756,7 +1756,7 @@ func prepare_audio() -> void:
 	sounds["tick"] = preload("res://sfx/tick.ogg");
 	sounds["timesup"] = preload("res://sfx/timesup.ogg");
 	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
-	sounds["undo"] = preload("res://sfx/undo.ogg");
+	sounds["undostrong"] = preload("res://sfx/undostrong.ogg");
 	sounds["unfall"] = preload("res://sfx/unfall.ogg");
 	sounds["unpush"] = preload("res://sfx/unpush.ogg");
 	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
@@ -1768,6 +1768,7 @@ func prepare_audio() -> void:
 	
 	#unused
 	sounds["step"] = preload("res://sfx/step.ogg");
+	sounds["undo"] = preload("res://sfx/undo.ogg");
 	
 	music_tracks.append(preload("res://music/New Bounds.ogg"));
 	music_info.append("Patashu - New Bounds");
@@ -3105,7 +3106,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
-			play_sound("undo");
+			play_sound("undostrong");
 			if (fuzzed):
 				undo_effect_strength = 0.25;
 				undo_effect_per_second = undo_effect_strength*(1/0.5);
@@ -3164,7 +3165,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_effect_per_second = undo_effect_strength*(1/0.5);
 				undo_effect_color = meta_color;
 			else:
-				play_sound("undo");
+				play_sound("undostrong");
 				undo_effect_strength = 0.08;
 				undo_effect_per_second = undo_effect_strength*(1/0.4);
 				undo_effect_color = light_color;
