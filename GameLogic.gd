@@ -1731,6 +1731,7 @@ func prepare_audio() -> void:
 	sounds["greentimecrystal"] = preload("res://sfx/greentimecrystal.ogg");
 	sounds["heavycoyote"] = preload("res://sfx/heavycoyote.ogg");
 	sounds["heavyland"] = preload("res://sfx/heavyland.ogg");
+	sounds["heavystep"] = preload("res://sfx/heavystep.ogg");
 	sounds["heavyuncoyote"] = preload("res://sfx/heavyuncoyote.ogg");
 	sounds["heavyunland"] = preload("res://sfx/heavyunland.ogg");
 	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
@@ -1751,7 +1752,6 @@ func prepare_audio() -> void:
 	sounds["restart"] = preload("res://sfx/restart.ogg");	
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["shroud"] = preload("res://sfx/shroud.ogg");
-	sounds["step"] = preload("res://sfx/step.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
 	sounds["tick"] = preload("res://sfx/tick.ogg");
 	sounds["timesup"] = preload("res://sfx/timesup.ogg");
@@ -1765,6 +1765,9 @@ func prepare_audio() -> void:
 	sounds["voidundo"] = preload("res://sfx/voidundo.ogg");
 	sounds["winentwined"] = preload("res://sfx/winentwined.ogg");
 	sounds["winbadtime"] = preload("res://sfx/winbadtime.ogg");
+	
+	#unused
+	sounds["step"] = preload("res://sfx/step.ogg");
 	
 	music_tracks.append(preload("res://music/New Bounds.ogg"));
 	music_info.append("Patashu - New Bounds");
@@ -3866,7 +3869,7 @@ func character_move(dir: Vector2) -> bool:
 		if (!heavy_selected):
 			play_sound("lightstep")
 		else:
-			play_sound("step")
+			play_sound("heavystep")
 		if (dir == Vector2.UP):
 			if heavy_selected and !is_suspended(heavy_actor):
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
