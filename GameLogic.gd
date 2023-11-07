@@ -602,8 +602,10 @@ func react_to_save_file_update() -> void:
 	#save_file["authors_replay"] = false;
 	
 	level_number = save_file["level_number"];
-	if (save_file.has("puzzle_checkerboard")):
+	if (save_file.has("puzzle_checkerboard") and save_file["puzzle_checkerboard"] == true):
 		checkerboard.visible = true;
+	else:
+		checkerboard.visible = false;
 	setup_colourblind_mode();
 	setup_resolution();
 	setup_volume();
