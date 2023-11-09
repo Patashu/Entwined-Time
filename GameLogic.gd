@@ -4716,6 +4716,9 @@ func gain_insight() -> void:
 		undo_effect_color = Color("A9F05F");
 	
 func serialize_current_level() -> String:
+	if (is_custom):
+		return custom_string;
+	
 	# keep in sync with LevelEditor.gd serialize_current_level()
 	var result = "EntwinedTimePuzzleStart: " + level_name + " by " + level_author + "\n";
 	var level_metadata = {};
