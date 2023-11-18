@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Mote in Eternity's Eye.ogg-fd356cbaa410d3b2f909109b848e3010.oggstr"
+
+[deps]
+
+source_file="res://music/Mote in Eternity's Eye.ogg"
+dest_files=[ "res://.import/Mote in Eternity's Eye.ogg-fd356cbaa410d3b2f909109b848e3010.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

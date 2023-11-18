@@ -1782,6 +1782,10 @@ func prepare_audio() -> void:
 	music_info.append("Sota Fujimori - polygon (Patashu's Entwined Time Remix)");
 	music_tracks.append(preload("res://music/Highs and Lows.ogg"));
 	music_info.append("Patashu - Highs & Lows");
+	music_tracks.append(preload("res://music/Mote in Eternity's Eye.ogg"));
+	music_info.append("Patashu - Mote in Eternity's Eye");
+	music_tracks.append(preload("res://music/Critical Crystal.ogg"));
+	music_info.append("Ryu* - Critical Crystal (Patashu's Entwined Time Remix)");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
