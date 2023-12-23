@@ -973,7 +973,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(32);
-	chapter_tracks.push_back(2);
+	chapter_tracks.push_back(5);
 	chapter_skies.push_back(Color("#424947"));
 	level_filenames.push_back("IronCrates")
 	level_filenames.push_back("CrateExpectations")
@@ -1004,7 +1004,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("There Are Many Colours");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(40);
-	chapter_tracks.push_back(0);
+	chapter_tracks.push_back(6);
 	chapter_skies.push_back(Color("#37294F"));
 	level_filenames.push_back("RedAndBlue")
 	level_filenames.push_back("LevelNotFound")
@@ -1039,7 +1039,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Change");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(48);
-	chapter_tracks.push_back(4);
+	chapter_tracks.push_back(7);
 	chapter_skies.push_back(Color("#446570"));
 	level_filenames.push_back("Ahhh")
 	level_filenames.push_back("Eeep")
@@ -1099,7 +1099,7 @@ func initialize_level_list() -> void:
 	chapter_names.push_back("Exotic Matter");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(64);
-	chapter_tracks.push_back(3);
+	chapter_tracks.push_back(8);
 	chapter_skies.push_back(Color("#351731"));
 	level_filenames.push_back("TheFuzz")
 	level_filenames.push_back("DoubleFuzz")
@@ -1163,7 +1163,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(80);
 	chapter_skies.push_back(Color("#2D0E07"));
-	chapter_tracks.push_back(1);
+	chapter_tracks.push_back(8);
 	chapter_replacements[chapter_names.size() - 1] = "Ω";
 	level_filenames.push_back("CuckooClock")
 	level_filenames.push_back("ItDoesntAddUp")
@@ -1782,10 +1782,15 @@ func prepare_audio() -> void:
 	music_info.append("Sota Fujimori - polygon (Patashu's Entwined Time Remix)");
 	music_tracks.append(preload("res://music/Highs and Lows.ogg"));
 	music_info.append("Patashu - Highs & Lows");
-	music_tracks.append(preload("res://music/Mote in Eternity's Eye.ogg"));
-	music_info.append("Patashu - Mote in Eternity's Eye");
+	music_tracks.append(preload("res://music/Nebulous Netherworld.ogg"));
+	music_info.append("Patashu - Nebulous Netherworld");
+	music_tracks.append(preload("res://music/Causal Conjugate.ogg"));
+	music_info.append("Patashu - Causal Conjugate");
 	music_tracks.append(preload("res://music/Critical Crystal.ogg"));
 	music_info.append("Ryu* - Critical Crystal (Patashu's Entwined Time Remix)");
+	music_tracks.append(preload("res://music/Mote in Eternity's Eye.ogg"));
+	music_info.append("Patashu - Mote in Eternity's Eye");
+	
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();

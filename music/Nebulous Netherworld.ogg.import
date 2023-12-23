@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Nebulous Netherworld.ogg-e6013d39125df779eb5abd7a1274b291.oggstr"
+
+[deps]
+
+source_file="res://music/Nebulous Netherworld.ogg"
+dest_files=[ "res://.import/Nebulous Netherworld.ogg-e6013d39125df779eb5abd7a1274b291.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
