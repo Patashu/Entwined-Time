@@ -1355,11 +1355,11 @@ func ready_tutorial() -> void:
 		downarrow.visible = true;
 		leftarrow.visible = true;
 		rightarrow.visible = true;
-		tutoriallabel.rect_position = Vector2(0, 69);
+		tutoriallabel.rect_position = Vector2(0, 72);
 		if (level_number == 0):
-			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\n\n\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
+			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\nMeet Light!\nHelp it get to its goal!\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
 		elif (level_number == 1):
-			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
+			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\nMeet Heavy!\nHeavy is already on its goal, but...";
 		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
 			tutoriallabel.bbcode_text = "Arrows: Move [color=#FF7459]Character[/color]\nX: Swap [color=#FF7459]Character[/color]\nZ: Undo [color=#FF7459]Character[/color]\nR: Restart";
@@ -1374,7 +1374,7 @@ func ready_tutorial() -> void:
 			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(If you Restart by mistake, [color=#A9F05F]Meta-Undo[/color] will undo that too.)";
+			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Meta-Undo[/color] that too!)";
 		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 		call_deferred("update_info_labels");
 			
