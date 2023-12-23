@@ -484,6 +484,8 @@ func connect_virtual_buttons() -> void:
 	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_down", self, "_pausebutton_pressed");
 	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_up", self, "_pausebutton_released");
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("value_changed", self, "_replayturnslider_value_changed");
+	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_started", self, "_replayturnslider_drag_started");
+	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_ended", self, "_replayturnslider_drag_ended");
 	replaybuttons.get_node("ReplaySpeed/ReplaySpeedSlider").connect("value_changed", self, "_replayspeedslider_value_changed");
 	
 func virtual_button_pressed(action: String) -> void:
@@ -586,6 +588,13 @@ func _replayturnslider_value_changed(value: int) -> void:
 	var differential = value - replay_turn;
 	if (differential != 0):
 		replay_advance_turn(differential);
+	
+var replayturnslider_in_drag : bool = false;
+func _replayturnslider_drag_started() -> void:
+	replayturnslider_in_drag = true;
+	
+func _replayturnslider_drag_ended(_value_changed: bool) -> void:
+	replayturnslider_in_drag = false;
 	
 func _replayspeedslider_value_changed(value: int) -> void:
 	if !doing_replay:
@@ -3118,14 +3127,15 @@ func character_undo(is_silent: bool = false) -> bool:
 		adjust_meta_turn(1);
 		if (!is_silent):
 			play_sound("undostrong");
-			if (fuzzed):
-				undo_effect_strength = 0.25;
-				undo_effect_per_second = undo_effect_strength*(1/0.5);
-				undo_effect_color = meta_color;
-			else:
-				undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
-				undo_effect_per_second = undo_effect_strength*(1/0.4);
-				undo_effect_color = heavy_color;
+			if (!currently_fast_replay()):
+				if (fuzzed):
+					undo_effect_strength = 0.25;
+					undo_effect_per_second = undo_effect_strength*(1/0.5);
+					undo_effect_color = meta_color;
+				else:
+					undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
+					undo_effect_per_second = undo_effect_strength*(1/0.4);
+					undo_effect_color = heavy_color;
 		return true;
 	else:
 		
@@ -3171,15 +3181,16 @@ func character_undo(is_silent: bool = false) -> bool:
 		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
-			if (fuzzed):
-				undo_effect_strength = 0.25;
-				undo_effect_per_second = undo_effect_strength*(1/0.5);
-				undo_effect_color = meta_color;
-			else:
-				play_sound("undostrong");
-				undo_effect_strength = 0.08;
-				undo_effect_per_second = undo_effect_strength*(1/0.4);
-				undo_effect_color = light_color;
+			if (!currently_fast_replay()):
+				if (fuzzed):
+					undo_effect_strength = 0.25;
+					undo_effect_per_second = undo_effect_strength*(1/0.5);
+					undo_effect_color = meta_color;
+				else:
+					play_sound("undostrong");
+					undo_effect_strength = 0.08;
+					undo_effect_per_second = undo_effect_strength*(1/0.4);
+					undo_effect_color = light_color;
 		return true;
 
 func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:
@@ -3625,8 +3636,9 @@ func meta_undo(is_silent: bool = false) -> bool:
 	if (!is_silent):
 		cut_sound();
 		play_sound("metaundo");
-	undo_effect_strength = 0.08;
-	undo_effect_per_second = undo_effect_strength*(1/0.2);
+	if (!currently_fast_replay()):
+		undo_effect_strength = 0.08;
+		undo_effect_per_second = undo_effect_strength*(1/0.2);
 	for whatever in underactorsparticles.get_children():
 		whatever.queue_free();
 	for whatever in overactorsparticles.get_children():
@@ -4206,6 +4218,19 @@ func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
 	return a.pos.y > b.pos.y;
 	
+func currently_fast_replay() -> bool:
+	if (!doing_replay):
+		return false;
+	if (replayturnslider_in_drag):
+		return true;
+	if replay_interval() > 0.05:
+		return false;
+	if (replay_paused):
+		return false;
+	if (replay_turn >= (level_replay.length())):
+		return false;
+	return true;
+	
 func replay_interval() -> float:
 	if unit_test_mode:
 		return 0.01;
@@ -4650,6 +4675,8 @@ func get_afterimage_material_for(color: Color) -> Material:
 	return new_material;
 
 func afterimage(actor: Actor) -> void:
+	if (currently_fast_replay()):
+		return;
 	if undo_effect_color == Color.transparent:
 		return;
 	# ok, we're mid undo.
@@ -4659,6 +4686,8 @@ func afterimage(actor: Actor) -> void:
 	underactorsparticles.add_child(afterimage);
 	
 func afterimage_terrain(texture: Texture, position: Vector2, color: Color) -> void:
+	if (currently_fast_replay()):
+		return;
 	var afterimage = preload("res://Afterimage.tscn").instance();
 	afterimage.texture = texture;
 	afterimage.position = position;
