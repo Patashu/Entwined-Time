@@ -1365,12 +1365,16 @@ func ready_tutorial() -> void:
 		leftarrow.visible = true;
 		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 72);
-		if (in_insight_level):
-			tutoriallabel.bbcode_text = "";
-		elif (level_number == 0):
-			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\nMeet Light!\nHelp it get to its goal!\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
+		if (level_number == 0):
+			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
+			if (!in_insight_level):
+				tutoriallabel.bbcode_text += "\n\n\n\n\n\n\nMeet Light!\nHelp it get to its goal!\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
+			else:
+				tutoriallabel.rect_position.y -= 24;
 		elif (level_number == 1):
-			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\nMeet Heavy!\nHeavy is already on its goal, but...";
+			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
+			if (!in_insight_level):
+				tutoriallabel.bbcode_text += "\n\n\n\n\n\n\nMeet Heavy!\nHeavy is already on its goal, but...";
 		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
 			tutoriallabel.bbcode_text = "Arrows: Move [color=#FF7459]Character[/color]\nX: Swap [color=#FF7459]Character[/color]\nZ: Undo [color=#FF7459]Character[/color]\nR: Restart";
