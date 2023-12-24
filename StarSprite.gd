@@ -4,7 +4,7 @@ class_name StarSprite
 var previous_modulate = Color(1, 1, 1, 0);
 var next_modulates = [];
 var flash_timer = 0;
-var flash_timer_max = 1;
+var flash_timer_max = 3;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

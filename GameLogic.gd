@@ -1365,7 +1365,9 @@ func ready_tutorial() -> void:
 		leftarrow.visible = true;
 		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 72);
-		if (level_number == 0):
+		if (in_insight_level):
+			tutoriallabel.bbcode_text = "";
+		elif (level_number == 0):
 			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\nMeet Light!\nHelp it get to its goal!\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
 		elif (level_number == 1):
 			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart\n\n\n\n\n\n\nMeet Heavy!\nHeavy is already on its goal, but...";
