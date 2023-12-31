@@ -1806,7 +1806,7 @@ func prepare_audio() -> void:
 	music_tracks.append(preload("res://music/Mote in Eternity's Eye.ogg"));
 	music_info.append("Patashu - Mote in Eternity's Eye");
 	music_tracks.append(preload("res://music/1116.ogg"));
-	music_info.append("Dustup - 1116 (Patashu's Entwined Time Remix)chapter_t");
+	music_info.append("Dustup - 1116 (Patashu's Entwined Time Remix)");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
