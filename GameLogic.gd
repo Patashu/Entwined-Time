@@ -1172,7 +1172,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(80);
 	chapter_skies.push_back(Color("#2D0E07"));
-	chapter_tracks.push_back(8);
+	chapter_tracks.push_back(9);
 	chapter_replacements[chapter_names.size() - 1] = "Ω";
 	level_filenames.push_back("CuckooClock")
 	level_filenames.push_back("ItDoesntAddUp")
@@ -1805,7 +1805,8 @@ func prepare_audio() -> void:
 	music_info.append("Ryu* - Critical Crystal (Patashu's Entwined Time Remix)");
 	music_tracks.append(preload("res://music/Mote in Eternity's Eye.ogg"));
 	music_info.append("Patashu - Mote in Eternity's Eye");
-	
+	music_tracks.append(preload("res://music/1116.ogg"));
+	music_info.append("Dustup - 1116 (Patashu's Entwined Time Remix)chapter_t");
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
