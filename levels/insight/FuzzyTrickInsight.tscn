@@ -7,17 +7,17 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 7, 12, 0, 65536, 1, 0, 65537, 7, 0, 65539, 12, 0, 65540, 12, 0, 65541, 12, 0, 65542, 8, 0, 65545, 52, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 524292, 131079, 52, 0, 131080, 14, 524290, 131081, 14, 196615, 196614, 14, 655362, 196615, 14, 196614, 196616, 14, 655364 )
+tile_data = PoolIntArray( 10, 12, 0, 65540, 7, 0, 65542, 12, 0, 65543, 12, 0, 65544, 12, 0, 65545, 8, 0, 65548, 52, 0, 131074, 14, 524290, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 524292, 131082, 52, 0, 131083, 14, 524290, 131084, 14, 196615, 196610, 14, 262145, 196617, 14, 655362, 196618, 14, 196614, 196619, 14, 655364, 262145, 52, 0, 262146, 14, 262145, 327681, 2, 0, 327682, 14, 262145, 393217, 14, 524290, 393218, 14, 655364, 458753, 14, 262145, 524288, 52, 0, 524289, 14, 327681 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
 level_name = "Fuzzy Parkour (Insight)"
-level_replay = "Fuzzy Parkour (Insight)$mturn=13$xdddzzzdzzzaaa"
-heavy_max_moves = 0
+level_replay = "Fuzzy Parkour (Insight)$mturn=24$waszzzszzddxdddzzzdzzzaaa"
+heavy_max_moves = 3
 light_max_moves = 3
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65536, 2, 0 )
+tile_data = PoolIntArray( 65539, 1, 0, 65545, 36, 0, 327681, 35, 0 )
