@@ -451,10 +451,9 @@ func _ready() -> void:
 	load_level(0);
 	ready_done = true;
 	
-	if (level_number != 0):
-		play_sound("bootup");
-		fadeout_timer = 0.0;
-		fadeout_timer_max = 2.5;
+	play_sound("bootup");
+	fadeout_timer = 0.0;
+	fadeout_timer_max = 2.5;
 
 func prepare_voidlike_tiles() -> void:
 	for i in range (Tiles.size()):
