@@ -338,11 +338,12 @@ func save_as_tscn() -> void:
 		deserialized.queue_free();
 	
 func paste_level() -> void:
-	if (!gamelogic.clipboard_contains_level()):
+	var clipboard = OS.get_clipboard();
+	if (!gamelogic.looks_like_level(clipboard)):
 		floating_text("Ctrl+V: Invalid level");
 		return
 	else:
-		deserialize_custom_level(OS.get_clipboard());
+		deserialize_custom_level(clipboard);
 		floating_text("Ctrl+V: Level pasted from clipboard!");
 
 func new_level() -> void:

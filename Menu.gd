@@ -16,8 +16,13 @@ onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var restartbutton : Button = get_node("Holder/RestartButton");
 onready var undorestartbutton : Button = get_node("Holder/UndoRestartButton");
+var is_web = false;
 
 func _ready() -> void:
+	var os_name = OS.get_name();
+	if (os_name == "HTML5" or os_name == "Android" or os_name == "iOS"):
+		is_web = true;
+	
 	okbutton.connect("pressed", self, "destroy");
 	yourreplaybutton.connect("pressed", self, "_yourreplaybutton_pressed");
 	authorsreplaybutton.connect("pressed", self, "_authorsreplaybutton_pressed");
@@ -65,11 +70,21 @@ func _ready() -> void:
 		copyreplaybutton.disabled = true;
 	
 	# constantly check if we could paste this replay or not
-	var replay = OS.get_clipboard();
-	if (gamelogic.is_valid_replay(replay)):
+	# (unless it's a web build, silly!
+	if (is_web):
 		pastereplaybutton.disabled = false;
+		pastereplaybutton.text = "Paste Replay/Lvl";
 	else:
-		pastereplaybutton.disabled = true;
+		var clipboard = OS.get_clipboard();
+		if (gamelogic.looks_like_level(clipboard)):
+			pastereplaybutton.disabled = false;
+			pastereplaybutton.text = "Paste Level";
+		elif (gamelogic.is_valid_replay(clipboard)):
+			pastereplaybutton.disabled = false;
+			pastereplaybutton.text = "Paste Replay";
+		else:
+			pastereplaybutton.disabled = true;
+			pastereplaybutton.text = "Paste Replay";
 	
 	okbutton.grab_focus();
 
@@ -115,10 +130,11 @@ func _pastereplaybutton_pressed() -> void:
 		return;
 	# must be kept in sync with GameLogic
 	destroy();
-	if (gamelogic.clipboard_contains_level()):
-		gamelogic.paste_level();
+	var clipboard = OS.get_clipboard();
+	if (gamelogic.looks_like_level(clipboard)):
+		gamelogic.paste_level(clipboard);
 	else:
-		gamelogic.replay_from_clipboard();
+		gamelogic.start_specific_replay(clipboard);
 	
 func _levelselectbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -204,15 +220,21 @@ func _process(delta: float) -> void:
 		pointer.position.x = focus.rect_position.x - 12;
 		
 	# constantly check if we could paste this replay or not
-	if gamelogic.clipboard_contains_level():
+	# (unless it's a web build, silly!
+	if (is_web):
 		pastereplaybutton.disabled = false;
-		pastereplaybutton.text = "Paste Level";
-	elif (gamelogic.is_valid_replay(OS.get_clipboard())):
-		pastereplaybutton.disabled = false;
-		pastereplaybutton.text = "Paste Replay";
+		pastereplaybutton.text = "Paste Replay/Lvl";
 	else:
-		pastereplaybutton.disabled = true;
-		pastereplaybutton.text = "Paste Replay";
+		var clipboard = OS.get_clipboard();
+		if (gamelogic.looks_like_level(clipboard)):
+			pastereplaybutton.disabled = false;
+			pastereplaybutton.text = "Paste Level";
+		elif (gamelogic.is_valid_replay(clipboard)):
+			pastereplaybutton.disabled = false;
+			pastereplaybutton.text = "Paste Replay";
+		else:
+			pastereplaybutton.disabled = true;
+			pastereplaybutton.text = "Paste Replay";
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

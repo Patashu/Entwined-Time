@@ -13,9 +13,14 @@ onready var instructionsbutton : Button = get_node("Holder/InstructionsButton");
 onready var newlevelbutton : Button = get_node("Holder/NewLevelButton");
 onready var savetscnbutton : Button = get_node("Holder/SaveTscnButton");
 onready var testlevelbutton : Button = get_node("Holder/TestLevelButton");
+var is_web = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var os_name = OS.get_name();
+	if (os_name == "HTML5" or os_name == "Android" or os_name == "iOS"):
+		is_web = true;
+	
 	okbutton.grab_focus();
 	okbutton.connect("pressed", self, "destroy");
 	exiteditorbutton.connect("pressed", self, "_exiteditorbutton_pressed");
@@ -120,10 +125,14 @@ func _process(delta: float) -> void:
 		pointer.position.x = focus.rect_position.x - 12;
 		
 	# constantly check if we could paste this level or not
-	if gamelogic.clipboard_contains_level():
-		pastelevelbutton.disabled = false;
+	if (!is_web):
+		var clipboard = OS.get_clipboard();
+		if (gamelogic.looks_like_level(clipboard)):
+			pastelevelbutton.disabled = false;
+		else:
+			pastelevelbutton.disabled = true;
 	else:
-		pastelevelbutton.disabled = true;
+		pastelevelbutton.disabled = false;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

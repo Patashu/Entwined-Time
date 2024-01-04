@@ -4669,10 +4669,6 @@ func start_specific_replay(replay: String) -> void:
 		voidlike_puzzle = true;
 	update_info_labels();
 
-func replay_from_clipboard() -> void:
-	var replay = OS.get_clipboard();
-	start_specific_replay(replay);
-
 func start_saved_replay() -> void:
 	if (doing_replay):
 		end_replay();
@@ -4839,12 +4835,11 @@ func copy_level() -> void:
 	floating_text("Ctrl+Shift+C: Level copied to clipboard!");
 	OS.set_clipboard(result);
 	
-func clipboard_contains_level() -> bool:
-	var clipboard = OS.get_clipboard();
-	clipboard = clipboard.strip_edges();
-	if clipboard.find("EntwinedTimePuzzleStart") >= 0 and clipboard.find("EntwinedTimePuzzleEnd") >= 0:
-		return true
-	return false
+func looks_like_level(custom: String) -> bool:
+	custom = custom.strip_edges();
+	if custom.find("EntwinedTimePuzzleStart") >= 0 and custom.find("EntwinedTimePuzzleEnd") >= 0:
+		return true;
+	return false;
 	
 func deserialize_custom_level(custom: String) -> Node:
 	if custom.find("\n") >= 0:
@@ -4968,8 +4963,7 @@ func give_up_and_restart() -> void:
 	custom_string = "";
 	restart();
 	
-func paste_level() -> void:
-	var clipboard = OS.get_clipboard();
+func paste_level(clipboard: String) -> void:
 	clipboard = clipboard.strip_edges();
 	end_replay();
 	load_custom_level(clipboard);
@@ -5179,10 +5173,11 @@ func _process(delta: float) -> void:
 				floating_text("Ctrl+C: Replay copied");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
 			# must be kept in sync with Menu
-			if (clipboard_contains_level()):
-				paste_level();
+			var clipboard = OS.get_clipboard();
+			if (looks_like_level(clipboard)):
+				paste_level(clipboard);
 			else:
-				replay_from_clipboard();
+				start_specific_replay(clipboard);
 		elif (Input.is_action_just_pressed("character_undo")):
 			end_replay();
 			character_undo();
