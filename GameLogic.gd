@@ -4832,7 +4832,7 @@ func serialize_current_level() -> String:
 	
 	result += "EntwinedTimePuzzleEnd"
 	level.queue_free();
-	return result;
+	return result.split("\n").join("`\n");
 	
 func copy_level() -> void:
 	var result = serialize_current_level();
@@ -4847,6 +4847,11 @@ func clipboard_contains_level() -> bool:
 	return false
 	
 func deserialize_custom_level(custom: String) -> Node:
+	if custom.find("\n") >= 0:
+		custom = custom.replace("`", "");
+	else:
+		custom = custom.replace("`", "\n");
+	
 	var lines = custom.split("\n");
 	for i in range(lines.size()):
 		lines[i] = lines[i].strip_edges();
