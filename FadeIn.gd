@@ -10,11 +10,11 @@ extends ColorRect
 func _ready() -> void:
 	pass # Replace with function body.
 
-var timer = 2.5;
+var timer = 1.5;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	timer -= delta;
-	self.modulate = Color(1, 1, 1, timer/2.5);
+	self.modulate = Color(1, 1, 1, timer/1.5);
 	if (timer < 0):
 		queue_free();
