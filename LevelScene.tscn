@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/tutorial_arrows/DownArrow.tres" type="Texture" id=8]
 [ext_resource path="res://assets/tutorial_arrows/LeftArrow.tres" type="Texture" id=9]
 [ext_resource path="res://assets/tutorial_arrows/RightArrow.tres" type="Texture" id=10]
+[ext_resource path="res://FadeIn.gd" type="Script" id=11]
 [ext_resource path="res://assets/screen-static.png" type="Texture" id=35]
 [ext_resource path="res://Shade.gd" type="Script" id=36]
 [ext_resource path="res://assets/checkerboard.png" type="Texture" id=37]
@@ -344,3 +345,9 @@ material = SubResource( 5 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 35 )
 centered = false
+
+[node name="FadeIn" type="ColorRect" parent="."]
+margin_right = 512.0
+margin_bottom = 300.0
+color = Color( 0.133333, 0.235294, 0.321569, 1 )
+script = ExtResource( 11 )

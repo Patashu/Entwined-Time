@@ -450,6 +450,11 @@ func _ready() -> void:
 	# Load the first map.
 	load_level(0);
 	ready_done = true;
+	
+	if (level_number != 0):
+		play_sound("bootup");
+		fadeout_timer = 0.0;
+		fadeout_timer_max = 2.5;
 
 func prepare_voidlike_tiles() -> void:
 	for i in range (Tiles.size()):
@@ -1741,6 +1746,7 @@ func prepare_audio() -> void:
 	#used
 	sounds["abysschime"] = preload("res://sfx/abysschime.ogg");
 	sounds["bluefire"] = preload("res://sfx/bluefire.ogg");
+	sounds["bootup"] = preload("res://sfx/bootup.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
 	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["fall"] = preload("res://sfx/fall.ogg");
@@ -3764,6 +3770,9 @@ func setup_chapter_etc() -> void:
 			fadeout_timer_max = 3.0;
 	
 func play_next_song() -> void:
+	if (!ready_done):
+		return;
+	
 	current_track = target_track;
 	fadeout_timer = 0;
 	fadeout_timer_max = 0;
