@@ -309,6 +309,7 @@ var puzzles_completed = 0;
 var sounds = {}
 var music_tracks = [];
 var music_info = [];
+var music_db = [];
 var now_playing = null;
 var speakers = [];
 var target_track = -1;
@@ -1789,24 +1790,34 @@ func prepare_audio() -> void:
 	
 	music_tracks.append(preload("res://music/New Bounds.ogg"));
 	music_info.append("Patashu - New Bounds");
+	music_db.append(0.30);
 	music_tracks.append(preload("res://music/Effortless Existence.ogg"));
 	music_info.append("Patashu - Effortless Existence");
+	music_db.append(2.48);
 	music_tracks.append(preload("res://music/Starblind.ogg"));
 	music_info.append("Patashu - Starblind");
+	music_db.append(1.44);
 	music_tracks.append(preload("res://music/polygon remix.ogg"));
 	music_info.append("Sota Fujimori - polygon (Patashu's Entwined Time Remix)");
+	music_db.append(4.99);
 	music_tracks.append(preload("res://music/Highs and Lows.ogg"));
 	music_info.append("Patashu - Highs & Lows");
+	music_db.append(8.21);
 	music_tracks.append(preload("res://music/Nebulous Netherworld.ogg"));
 	music_info.append("Patashu - Nebulous Netherworld");
+	music_db.append(5.17);
 	music_tracks.append(preload("res://music/Causal Conjugate.ogg"));
 	music_info.append("Patashu - Causal Conjugate");
+	music_db.append(2.63);
 	music_tracks.append(preload("res://music/Critical Crystal.ogg"));
 	music_info.append("Ryu* - Critical Crystal (Patashu's Entwined Time Remix)");
+	music_db.append(1.73);
 	music_tracks.append(preload("res://music/Mote in Eternity's Eye.ogg"));
 	music_info.append("Patashu - Mote in Eternity's Eye");
+	music_db.append(5.82);
 	music_tracks.append(preload("res://music/1116.ogg"));
 	music_info.append("Dustup - 1116 (Patashu's Entwined Time Remix)");
+	music_db.append(-0.02);
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
@@ -5016,10 +5027,16 @@ func _process(delta: float) -> void:
 	# handle current music volume
 	var value = save_file["music_volume"];
 	music_speaker.volume_db = value + music_discount;
+	if (current_track >= 0):
+		music_speaker.volume_db += music_db[current_track];
 	if fadeout_timer < fadeout_timer_max:
 		fadeout_timer += delta;
 		if (fadeout_timer >= fadeout_timer_max):
 			play_next_song();
+			# recalculate this now because the current song just changed...
+			music_speaker.volume_db = value + music_discount;
+			if (current_track >= 0):
+				music_speaker.volume_db += music_db[current_track];
 		else:
 			music_speaker.volume_db = music_speaker.volume_db - 30*(fadeout_timer/fadeout_timer_max);
 		
