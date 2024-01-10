@@ -4937,6 +4937,8 @@ func load_custom_level(custom: String) -> void:
 	# TODO: poorly refactored
 	if (target_track != level_info["target_track"]):
 		target_track = level_info["target_track"];
+		if (target_track < -1 or target_track >= music_tracks.size()):
+			target_track = -1;
 		if (current_track == -1):
 			play_next_song();
 		else:
