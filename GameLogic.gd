@@ -314,6 +314,7 @@ var now_playing = null;
 var speakers = [];
 var target_track = -1;
 var current_track = -1;
+var jukebox_track = -1;
 var fadeout_timer = 0;
 var fadeout_timer_max = 0;
 var fanfare_duck_db = 0;
@@ -3779,17 +3780,21 @@ func setup_chapter_etc() -> void:
 		target_sky = chapter_skies[chapter];
 	if (target_track != chapter_tracks[chapter]):
 		target_track = chapter_tracks[chapter];
-		if (current_track == -1):
-			play_next_song();
-		else:
-			fadeout_timer = max(fadeout_timer, 0); #so if we're in the middle of a fadeout it doesn't reset
-			fadeout_timer_max = 3.0;
+		if (jukebox_track == -1):
+			if (current_track == -1):
+				play_next_song();
+			else:
+				fadeout_timer = max(fadeout_timer, 0); #so if we're in the middle of a fadeout it doesn't reset
+				fadeout_timer_max = 3.0;
 	
 func play_next_song() -> void:
 	if (!ready_done):
 		return;
 	
-	current_track = target_track;
+	if (jukebox_track > -1):
+		current_track = jukebox_track;
+	else:
+		current_track = target_track;
 	fadeout_timer = 0;
 	fadeout_timer_max = 0;
 	if (is_instance_valid(now_playing)):

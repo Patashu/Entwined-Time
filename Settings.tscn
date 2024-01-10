@@ -64,6 +64,14 @@ margin_right = 404.0
 margin_bottom = 216.0
 max_value = 6.0
 
+[node name="Jukebox" type="SpinBox" parent="Holder"]
+margin_left = 330.0
+margin_top = 159.0
+margin_right = 404.0
+margin_bottom = 183.0
+min_value = -2.0
+max_value = 6.0
+
 [node name="PixelScale" type="SpinBox" parent="Holder"]
 margin_left = 12.0
 margin_top = 40.0
@@ -85,6 +93,13 @@ margin_top = 198.0
 margin_right = 326.0
 margin_bottom = 209.0
 text = "Virtual Buttons Layout"
+
+[node name="LabelJukebox" type="Label" parent="Holder"]
+margin_left = 284.0
+margin_top = 164.0
+margin_right = 327.0
+margin_bottom = 175.0
+text = "Jukebox"
 
 [node name="LabelSFX" type="Label" parent="Holder"]
 margin_left = 96.0

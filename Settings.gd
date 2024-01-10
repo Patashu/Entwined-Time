@@ -25,6 +25,7 @@ onready var pastesavefile : Button = get_node("Holder/PasteSaveFile");
 onready var newsavefile : Button = get_node("Holder/NewSaveFile");
 onready var virtualbuttons : SpinBox = get_node("Holder/VirtualButtons");
 onready var metaundoarestart : OptionButton = get_node("Holder/MetaUndoARestart");
+onready var jukebox : SpinBox = get_node("Holder/Jukebox");
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -80,6 +81,9 @@ func _ready() -> void:
 	undotrailslider.value = gamelogic.save_file["undo_trails"];
 	updatelabelundotrail(undotrailslider.value);
 	
+	jukebox.value = gamelogic.jukebox_track;
+	jukebox.max_value = gamelogic.music_tracks.size();
+	
 	unlockeverything.connect("pressed", self, "_unlockeverything_pressed");
 	vsync.connect("pressed", self, "_vsync_pressed");
 	pixelscale.connect("value_changed", self, "_pixelscale_value_changed");
@@ -96,6 +100,7 @@ func _ready() -> void:
 	virtualbuttons.connect("value_changed", self, "_virtualbuttons_value_changed");
 	metaundoarestart.connect("item_focused", self, "_metaundoarestart_item_whatever");
 	metaundoarestart.connect("item_selected", self, "_metaundoarestart_item_whatever");
+	jukebox.connect("value_changed", self, "_jukebox_value_changed");
 	
 	if (is_fixed_size):
 		$Holder/LabelResolutionMultiplier.queue_free();
@@ -232,6 +237,16 @@ func _virtualbuttons_value_changed(value: float) -> void:
 	
 func _metaundoarestart_item_whatever(index: int) -> void:
 	gamelogic.save_file["meta_undo_a_restart"] = index;
+	
+func _jukebox_value_changed(value: float) -> void:
+	if (value < -1):
+		value = jukebox.max_value - 1;
+		jukebox.value = value;
+	elif (value >= gamelogic.music_tracks.size()):
+		value = -1;
+		jukebox.value = value;
+	gamelogic.jukebox_track = value;
+	gamelogic.play_next_song();
 	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):
