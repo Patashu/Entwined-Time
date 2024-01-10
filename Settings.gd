@@ -231,7 +231,7 @@ func _virtualbuttons_value_changed(value: float) -> void:
 	gamelogic.setup_virtual_buttons();
 	
 func _metaundoarestart_item_whatever(index: int) -> void:
-	gamelogic.save_file["metaundoarestart"] = index;
+	gamelogic.save_file["meta_undo_a_restart"] = index;
 	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):

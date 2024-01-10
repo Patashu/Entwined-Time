@@ -3623,15 +3623,35 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			clock_ticks(actor, -amount, chrono, animation_nonce);
 
 func meta_undo_a_restart() -> bool:
+	var meta_undo_a_restart_type = 2;
+	if (save_file.has("meta_undo_a_restart")):
+		meta_undo_a_restart_type = save_file["meta_undo_a_restart"];
+	if (meta_undo_a_restart_type == 4): #No
+		return false;
+	
 	if (user_replay_before_restarts.size() > 0):
 		user_replay = "";
 		end_replay();
 		toggle_replay();
+		level_replay = user_replay_before_restarts.pop_back();
 		cut_sound();
 		play_sound("metarestart");
-		level_replay = user_replay_before_restarts.pop_back();
-		meta_undo_a_restart_mode = true;
-		next_replay = -1;
+		if (meta_undo_a_restart_type == 0): # Yes
+			meta_undo_a_restart_mode = true;
+			replay_advance_turn(level_replay.length());
+			end_replay();
+			finish_animations(Chrono.TIMELESS);
+			meta_undo_a_restart_mode = false;
+		elif (meta_undo_a_restart_type == 1): # Replay (Instant)
+			meta_undo_a_restart_mode = true;
+			replay_advance_turn(level_replay.length());
+			finish_animations(Chrono.TIMELESS);
+			meta_undo_a_restart_mode = false;
+		elif (meta_undo_a_restart_type == 2): # Replay (Fast)
+			meta_undo_a_restart_mode = true;
+			next_replay = -1;
+		elif (meta_undo_a_restart_type == 3): # Replay
+			pass
 		return true;
 	return false;
 
