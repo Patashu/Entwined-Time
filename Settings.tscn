@@ -186,3 +186,10 @@ margin_bottom = 54.0
 text = "Copy Save File"
 
 [node name="Pointer" type="Sprite" parent="Holder"]
+
+[node name="MetaUndoARestart" type="OptionButton" parent="Holder"]
+margin_left = 270.0
+margin_top = 129.0
+margin_right = 401.0
+margin_bottom = 145.0
+text = "Meta-Undo a Restart?:"

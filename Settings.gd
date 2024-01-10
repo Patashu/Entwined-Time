@@ -24,6 +24,7 @@ onready var copysavefile : Button = get_node("Holder/CopySaveFile");
 onready var pastesavefile : Button = get_node("Holder/PasteSaveFile");
 onready var newsavefile : Button = get_node("Holder/NewSaveFile");
 onready var virtualbuttons : SpinBox = get_node("Holder/VirtualButtons");
+onready var metaundoarestart : OptionButton = get_node("Holder/MetaUndoARestart");
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -38,6 +39,17 @@ func _ready() -> void:
 	var is_fixed_size = false;
 	if (os_name == "HTML5" or os_name == "Android" or os_name == "iOS"):
 		is_fixed_size = true;
+	
+	metaundoarestart.add_item("Yes", 0);
+	metaundoarestart.add_item("Replay (Instant)", 1);
+	metaundoarestart.add_item("Replay (Fast)", 2);
+	metaundoarestart.add_item("Replay", 3);
+	metaundoarestart.add_item("No", 4);
+	if (gamelogic.save_file.has("meta_undo_a_restart")):
+		metaundoarestart.selected = gamelogic.save_file["meta_undo_a_restart"];
+	else:
+		metaundoarestart.selected = 2;
+	metaundoarestart.text = "Meta-Undo a Restart?:"
 	
 	okbutton.connect("pressed", self, "destroy");
 	okbutton.grab_focus();
@@ -82,6 +94,8 @@ func _ready() -> void:
 	pastesavefile.connect("pressed", self, "_pastesavefile_pressed");
 	newsavefile.connect("pressed", self, "_newsavefile_pressed");
 	virtualbuttons.connect("value_changed", self, "_virtualbuttons_value_changed");
+	metaundoarestart.connect("item_focused", self, "_metaundoarestart_item_whatever");
+	metaundoarestart.connect("item_selected", self, "_metaundoarestart_item_whatever");
 	
 	if (is_fixed_size):
 		$Holder/LabelResolutionMultiplier.queue_free();
@@ -215,6 +229,9 @@ func _virtualbuttons_value_changed(value: float) -> void:
 	
 	gamelogic.save_file["virtual_buttons"] = value;
 	gamelogic.setup_virtual_buttons();
+	
+func _metaundoarestart_item_whatever(index: int) -> void:
+	gamelogic.save_file["metaundoarestart"] = index;
 	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):
