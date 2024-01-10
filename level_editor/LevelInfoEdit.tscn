@@ -38,7 +38,7 @@ margin_left = 7.0
 margin_top = 221.0
 margin_right = 81.0
 margin_bottom = 245.0
-min_value = -1.0
+min_value = -2.0
 max_value = 999.0
 value = 6.0
 

@@ -34,12 +34,18 @@ func _ready() -> void:
 	levelauthor.text = parent.level_info.level_author;
 	levelreplay.text = parent.level_info.level_replay;
 	musictrack.value = parent.level_info.target_track;
-	musictrack.max_value = gamelogic.music_tracks.size() - 1;
+	musictrack.max_value = gamelogic.music_tracks.size();
 	skycolourbutton.color = parent.level_info.target_sky;
 	
 	musictrack.connect("value_changed", self, "_musictrack_value_changed");
 
 func _musictrack_value_changed(value: float) -> void:
+	if (value < -1):
+		value = musictrack.max_value - 1;
+		musictrack.value = value;
+	elif (value >= gamelogic.music_tracks.size()):
+		value = -1;
+		musictrack.value = value;
 	gamelogic.target_track = value;
 	gamelogic.fadeout_timer = 2.9999;
 	gamelogic.fadeout_timer_max = 3.0;
