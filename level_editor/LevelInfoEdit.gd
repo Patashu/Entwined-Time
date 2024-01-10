@@ -34,6 +34,13 @@ func _ready() -> void:
 	levelreplay.text = parent.level_info.level_replay;
 	musictrack.value = parent.level_info.target_track;
 	musictrack.max_value = gamelogic.music_tracks.size() - 1;
+	
+	musictrack.connect("value_changed", self, "_musictrack_value_changed");
+
+func _musictrack_value_changed(value: float) -> void:
+	gamelogic.target_track = value;
+	gamelogic.fadeout_timer = 2.9999;
+	gamelogic.fadeout_timer_max = 3.0;
 
 func destroy() -> void:
 	var parent = get_parent();
