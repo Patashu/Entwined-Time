@@ -5199,6 +5199,9 @@ func _process(delta: float) -> void:
 			end_replay();
 			character_switch();
 			update_info_labels();
+		elif (Input.is_action_just_pressed("ui_accept")): #so enter can open the menu but only if it's closed
+			#end_replay(); #done in escape();
+			escape();
 		elif (!get_debounced):
 			if (Input.is_action_just_pressed("ui_left")):
 				dir = Vector2.LEFT;
