@@ -12,6 +12,7 @@ onready var levelname : TextEdit = get_node("Holder/LevelName");
 onready var levelauthor : TextEdit = get_node("Holder/LevelAuthor");
 onready var levelreplay : TextEdit = get_node("Holder/LevelReplay");
 onready var musictrack : SpinBox = get_node("Holder/MusicTrack");
+onready var skycolourbutton : ColorPickerButton = get_node("Holder/SkyColourButton");
 
 func _ready() -> void:
 	var puzzles = gamelogic.puzzles_completed;
@@ -34,6 +35,7 @@ func _ready() -> void:
 	levelreplay.text = parent.level_info.level_replay;
 	musictrack.value = parent.level_info.target_track;
 	musictrack.max_value = gamelogic.music_tracks.size() - 1;
+	skycolourbutton.color = parent.level_info.target_sky;
 	
 	musictrack.connect("value_changed", self, "_musictrack_value_changed");
 
@@ -52,6 +54,7 @@ func destroy() -> void:
 	parent.level_info.level_author = levelauthor.text;
 	parent.level_info.level_replay = levelreplay.text;
 	parent.level_info.target_track = musictrack.value;
+	parent.level_info.target_sky = skycolourbutton.color;
 	
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);

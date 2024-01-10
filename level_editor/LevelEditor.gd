@@ -674,6 +674,9 @@ func test_level() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (level_info != null):
+		$ColorRect.color = level_info.target_sky;
+	
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
