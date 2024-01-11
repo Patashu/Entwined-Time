@@ -8,7 +8,7 @@ extends ColorRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	visible = true;
 
 var timer = 1.5;
 

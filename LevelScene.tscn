@@ -347,6 +347,7 @@ texture = ExtResource( 35 )
 centered = false
 
 [node name="FadeIn" type="ColorRect" parent="."]
+visible = false
 margin_right = 512.0
 margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
