@@ -20,7 +20,7 @@ var just_danced = false;
 
 # Must keep in sync with GameLogic serialize_bindings/deserialize_bindings
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
-"character_undo", "meta_undo", "character_switch", "restart",
+"character_undo", "meta_undo", "meta_redo", "character_switch", "restart",
 "next_level", "previous_level", "mute", "start_replay", "speedup_replay",
 "slowdown_replay", "start_saved_replay", 
 "replay_back1", "replay_fwd1", "replay_pause", "gain_insight", "level_select", #zero-index 21, 22 total
@@ -29,14 +29,14 @@ var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up
 ]
 
 var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",
-"Undo", "Meta-Undo", "Swap", "Restart",
+"Undo", "Meta-Undo", "Meta-Redo", "Swap", "Restart",
 "Next Lev/Chap", "Prev Lev/Chap", "Mute", "Author's Replay", "Replay Speed+",
 "Replay Speed-", "Your Replay", "Replay Turn-", "Replay Turn+", "Replay Pause",
 "Gain Insight", "Level Select"]
 
 var blacklist_1 = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down"];
 var blacklist_2 = ["escape", "ui_left", "ui_right", "ui_up", "ui_down",
-"character_undo", "meta_undo", "character_switch", "restart",
+"character_undo", "meta_undo", "meta_redo", "character_switch", "restart",
 "next_level", "previous_level", "mute", "start_replay", "speedup_replay",
 "slowdown_replay", "start_saved_replay", "gain_insight", "level_select",
 "replay_back1", "replay_fwd1", "replay_pause"];
