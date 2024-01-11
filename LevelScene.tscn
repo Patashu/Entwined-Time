@@ -245,6 +245,22 @@ margin_bottom = 295.0
 theme = ExtResource( 2 )
 text = "C"
 
+[node name="MetaRedoButton" type="Button" parent="VirtualButtons/Verbs"]
+margin_left = 63.0
+margin_top = 247.0
+margin_right = 85.0
+margin_bottom = 269.0
+theme = ExtResource( 2 )
+text = "Y"
+
+[node name="MetaRedoLabel" type="Label" parent="VirtualButtons/Verbs/MetaRedoButton"]
+margin_left = -58.0
+margin_top = 6.0
+margin_right = -1.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
+text = "Meta-Redo:"
+
 [node name="Dirs" type="Node2D" parent="VirtualButtons"]
 
 [node name="LeftButton" type="Button" parent="VirtualButtons/Dirs"]

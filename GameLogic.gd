@@ -37,6 +37,8 @@ onready var replayspeedlabel : Label = levelscene.get_node("ReplayButtons/Replay
 onready var replayspeedslider : HSlider = levelscene.get_node("ReplayButtons/ReplaySpeed/ReplaySpeedSlider");
 var replayturnsliderset = false;
 var replayspeedsliderset = false;
+onready var metaredobutton : Button = virtualbuttons.get_node("Verbs/MetaRedoButton");
+onready var metaredobuttonlabel : Label = metaredobutton.get_node("MetaRedoLabel");
 
 # distinguish between temporal layers when a move or state change happens
 # ghosts is for undo trail ghosts
@@ -471,6 +473,8 @@ func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Verbs/SwapButton").connect("button_up", self, "_swapbutton_released");
 	virtualbuttons.get_node("Verbs/MetaUndoButton").connect("button_down", self, "_metaundobutton_pressed");
 	virtualbuttons.get_node("Verbs/MetaUndoButton").connect("button_up", self, "_metaundobutton_released");
+	virtualbuttons.get_node("Verbs/MetaRedoButton").connect("button_down", self, "_metaredobutton_pressed");
+	virtualbuttons.get_node("Verbs/MetaRedoButton").connect("button_up", self, "_metaredobutton_released");
 	virtualbuttons.get_node("Dirs/LeftButton").connect("button_down", self, "_leftbutton_pressed");
 	virtualbuttons.get_node("Dirs/LeftButton").connect("button_up", self, "_leftbutton_released");
 	virtualbuttons.get_node("Dirs/DownButton").connect("button_down", self, "_downbutton_pressed");
@@ -3732,6 +3736,7 @@ func meta_redo() -> bool:
 	play_sound("metaredo");
 	just_did_meta();
 	preserving_meta_redo_inputs = false;
+	metaredobuttonlabel.visible = false;
 	return true;
 	
 func do_one_letter(replay_char: String) -> void:
@@ -4541,6 +4546,8 @@ func update_level_label() -> void:
 		levelstar.modulate = Color(1, 1, 1, 0);
 	
 func update_info_labels() -> void:
+	metaredobutton.visible = meta_redo_inputs != "";
+	
 	#also do fuzz indicator here
 	if terrain_in_tile(heavy_actor.pos).has(Tiles.Fuzz):
 		heavytimeline.fuzz_on();
@@ -4584,17 +4591,23 @@ func update_info_labels() -> void:
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
 				
 		if tutoriallabel.visible:
+			if (meta_redo_inputs != "" and (level_number == 5 or level_number == 6)):
+				tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\nY: [color=#A9F05F]Meta-Redo[/color]";
+				tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
+			
 			if using_controller:
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Arrows:", "D-Pad/Either Stick:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("X:", "Bottom Face Button:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Y:", "L3:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
 			else:
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
+				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("L3:", "Y:");
 				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Select:", "R:");
 
 func animation_substep(chrono: int) -> void:
