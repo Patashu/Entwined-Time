@@ -506,6 +506,8 @@ func virtual_button_pressed(action: String) -> void:
 	Input.action_press(action);
 	menubutton.grab_focus();
 	menubutton.release_focus();
+	if (virtual_button_held_dict.has(action)):
+		virtual_button_held_dict[action] = true;
 	
 func virtual_button_released(action: String) -> void:
 	if (ui_stack.size() > 0 and ui_stack[ui_stack.size() - 1] != self):
@@ -513,6 +515,8 @@ func virtual_button_released(action: String) -> void:
 	Input.action_release(action);
 	menubutton.grab_focus();
 	menubutton.release_focus();
+	if (virtual_button_held_dict.has(action)):
+		virtual_button_held_dict[action] = false;
 	
 func _undobutton_pressed() -> void:
 	virtual_button_pressed("character_undo");
@@ -522,6 +526,9 @@ func _swapbutton_pressed() -> void:
 	
 func _metaundobutton_pressed() -> void:
 	virtual_button_pressed("meta_undo");
+	
+func _metaredobutton_pressed() -> void:
+	virtual_button_pressed("meta_redo");
 	
 func _leftbutton_pressed() -> void:
 	virtual_button_pressed("ui_left");
@@ -561,6 +568,9 @@ func _swapbutton_released() -> void:
 	
 func _metaundobutton_released() -> void:
 	virtual_button_released("meta_undo");
+	
+func _metaredobutton_released() -> void:
+	virtual_button_released("meta_redo");
 	
 func _leftbutton_released() -> void:
 	virtual_button_released("ui_left");
@@ -3686,11 +3696,12 @@ func meta_undo(is_silent: bool = false) -> bool:
 	end_lose();
 	finish_animations(Chrono.MOVE);
 	if (meta_turn <= 0):
-		if (!doing_replay):
-			if (meta_undo_a_restart()):
-				return true;
-		if !is_silent:
-			play_sound("bump");
+		if !key_repeat_this_frame_dict["meta_undo"]:
+			if (!doing_replay):
+				if (meta_undo_a_restart()):
+					return true;
+			if !is_silent:
+				play_sound("bump");
 		preserving_meta_redo_inputs = false;
 		return false;
 	nonstandard_won = false;
@@ -3726,7 +3737,8 @@ func meta_redo() -> bool:
 	if (won or lost):
 		return false;
 	if (meta_redo_inputs == ""):
-		play_sound("bump");
+		if !key_repeat_this_frame_dict["meta_redo"]:
+			play_sound("bump");
 		return false;
 	preserving_meta_redo_inputs = true;
 	var letter = meta_redo_inputs[meta_redo_inputs.length() - 1];
@@ -5063,8 +5075,36 @@ func adjust_next_replay_time(old_replay_interval: float) -> void:
 	next_replay += replay_interval - old_replay_interval;
 	
 var last_dir_release_times = [0, 0, 0, 0];
+var key_repeat_timer_dict = {"meta_undo": 0.0, "meta_redo": 0.0};
+var key_repeat_timer_max_dict = {"meta_undo": 0.0, "meta_redo": 0.0};
+var virtual_button_held_dict = {"meta_undo": false, "meta_redo": false};
+var key_repeat_this_frame_dict = {"meta_undo": false, "meta_redo": false};
+	
+func pressed_or_key_repeated(action: String) -> bool:
+	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
 	
 func _process(delta: float) -> void:
+	# key repeat
+	for action in key_repeat_this_frame_dict.keys():
+		if (Input.is_action_just_pressed(action)):
+			key_repeat_timer_dict[action] = 0.0;
+			key_repeat_timer_max_dict[action] = 0.5;
+			key_repeat_this_frame_dict[action] = false;
+		if Input.is_action_pressed(action) or virtual_button_held_dict[action]:
+			key_repeat_this_frame_dict[action] = false;
+			key_repeat_timer_dict[action] += delta;
+			if (key_repeat_timer_dict[action] > key_repeat_timer_max_dict[action]):
+				key_repeat_this_frame_dict[action] = true;
+				key_repeat_timer_dict[action] -= key_repeat_timer_max_dict[action];
+				if (key_repeat_timer_max_dict[action] == 0.5):
+					key_repeat_timer_max_dict[action] = 0.20;
+				else:
+					key_repeat_timer_max_dict[action] = max(0.05, key_repeat_timer_max_dict[action] * 0.91);
+		else:
+			key_repeat_timer_dict[action] = 0.0;
+			key_repeat_timer_max_dict[action] = 0.0;
+			key_repeat_this_frame_dict[action] = false;
+	
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
 		using_controller = true;
 		menubutton.text = "Menu (Start)";
@@ -5273,11 +5313,11 @@ func _process(delta: float) -> void:
 			end_replay();
 			character_undo();
 			update_info_labels();
-		elif (Input.is_action_just_pressed("meta_undo")):
+		elif (pressed_or_key_repeated("meta_undo")):
 			end_replay();
 			meta_undo();
 			update_info_labels();
-		elif (Input.is_action_just_pressed("meta_redo")):
+		elif (pressed_or_key_repeated("meta_redo")):
 			end_replay();
 			meta_redo();
 			update_info_labels();
