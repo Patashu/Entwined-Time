@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/metaredo.ogg-6043de38e3e27c6a1eea736911674c23.oggstr"
+
+[deps]
+
+source_file="res://sfx/metaredo.ogg"
+dest_files=[ "res://.import/metaredo.ogg-6043de38e3e27c6a1eea736911674c23.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

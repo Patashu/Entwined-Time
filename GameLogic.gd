@@ -1765,6 +1765,7 @@ func prepare_audio() -> void:
 	sounds["lightunland"] = preload("res://sfx/lightunland.ogg");
 	sounds["lose"] = preload("res://sfx/lose.ogg");
 	sounds["magentatimecrystal"] = preload("res://sfx/magentatimecrystal.ogg");
+	sounds["metaredo"] = preload("res://sfx/metaredo.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
 	sounds["push"] = preload("res://sfx/push.ogg");
