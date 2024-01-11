@@ -5075,17 +5075,18 @@ func adjust_next_replay_time(old_replay_interval: float) -> void:
 	next_replay += replay_interval - old_replay_interval;
 	
 var last_dir_release_times = [0, 0, 0, 0];
-var key_repeat_timer_dict = {"meta_undo": 0.0, "meta_redo": 0.0};
-var key_repeat_timer_max_dict = {"meta_undo": 0.0, "meta_redo": 0.0};
-var virtual_button_held_dict = {"meta_undo": false, "meta_redo": false};
-var key_repeat_this_frame_dict = {"meta_undo": false, "meta_redo": false};
+var key_repeat_timer_dict = {};
+var key_repeat_timer_max_dict = {};
+var virtual_button_held_dict = {"meta_undo": false, "meta_redo": false, "previous_level": false, "next_level": false, 
+"replay_back1": false, "replay_fwd1": false, "speedup_replay": false, "slowdown_replay": false};
+var key_repeat_this_frame_dict = {};
 	
 func pressed_or_key_repeated(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
 	
 func _process(delta: float) -> void:
 	# key repeat
-	for action in key_repeat_this_frame_dict.keys():
+	for action in virtual_button_held_dict.keys():
 		if (Input.is_action_just_pressed(action)):
 			key_repeat_timer_dict[action] = 0.0;
 			key_repeat_timer_max_dict[action] = 0.5;
@@ -5230,14 +5231,14 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("escape")):
 			#end_replay(); #done in escape();
 			escape();
-		elif (Input.is_action_just_pressed("previous_level")
+		elif (pressed_or_key_repeated("previous_level")
 		and (!using_controller or ((!doing_replay or won) and (!won or won_cooldown > 0.5)))):
 			if (!using_controller or won or lost or meta_turn <= 0):
 				end_replay();
 				load_level(-1);
 			else:
 				play_sound("bump");
-		elif (Input.is_action_just_pressed("next_level")
+		elif (pressed_or_key_repeated("next_level")
 		and (!using_controller or ((!doing_replay or won) and (!won or won_cooldown > 0.5)))):
 			if (!using_controller or won or lost or meta_turn <= 0):
 				end_replay();
@@ -5246,13 +5247,13 @@ func _process(delta: float) -> void:
 				play_sound("bump");
 		elif (Input.is_action_just_pressed("mute")):
 			toggle_mute();
-		elif (doing_replay and Input.is_action_just_pressed("replay_back1")):
+		elif (doing_replay and pressed_or_key_repeated("replay_back1")):
 			replay_advance_turn(-1);
-		elif (doing_replay and Input.is_action_just_pressed("replay_fwd1")):
+		elif (doing_replay and pressed_or_key_repeated("replay_fwd1")):
 			replay_advance_turn(1);
 		elif (doing_replay and Input.is_action_just_pressed("replay_pause")):
 			pause_replay();
-		elif (Input.is_action_just_pressed("speedup_replay")):
+		elif (pressed_or_key_repeated("speedup_replay")):
 			var old_replay_interval = replay_interval;
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.015;
@@ -5263,7 +5264,7 @@ func _process(delta: float) -> void:
 			replayspeedsliderset = false;
 			adjust_next_replay_time(old_replay_interval);
 			update_info_labels();
-		elif (Input.is_action_just_pressed("slowdown_replay")):
+		elif (pressed_or_key_repeated("slowdown_replay")):
 			var old_replay_interval = replay_interval;
 			if (Input.is_action_pressed("shift")):
 				replay_interval = 0.5;
