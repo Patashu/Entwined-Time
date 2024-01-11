@@ -363,6 +363,8 @@ var animation_nonce_fountain = 0;
 var replay_timer = 0;
 var user_replay = "";
 var user_replay_before_restarts = [];
+var meta_redo_inputs = "";
+var preserving_meta_redo_inputs = false;
 var doing_replay = false;
 var replay_paused = false;
 var replay_turn = 0;
@@ -1311,6 +1313,8 @@ func ready_map() -> void:
 	if (!is_custom and level_number == 0):
 		heavy_selected = false;
 	user_replay = "";
+	meta_redo_inputs = "";
+	preserving_meta_redo_inputs = false;
 	
 	var level_info = terrainmap.get_node_or_null("LevelInfo");
 	if (level_info != null): # might be a custom puzzle
@@ -3087,15 +3091,27 @@ func append_replay(move: String) -> void:
 		else:
 			user_replay += move;
 	else:
+		if (!preserving_meta_redo_inputs):
+			meta_redo_inputs = "";
 		user_replay += move;
 	
 func meta_undo_replay() -> bool:
 	if (voidlike_puzzle):
 		user_replay += "c";
+		meta_redo_inputs += "y";
 	else:
 		if !user_replay.ends_with("x"):
+			if (heavy_selected):
+				meta_redo_inputs += user_replay[user_replay.length() - 1];
+			else:
+				meta_redo_inputs += user_replay[user_replay.length() - 1].to_upper();
 			user_replay = user_replay.left(user_replay.length() - 1);
+			
 		else:
+			if (heavy_selected):
+				meta_redo_inputs += user_replay[user_replay.length() - 2].to_upper();
+			else:
+				meta_redo_inputs += user_replay[user_replay.length() - 2];
 			user_replay = user_replay.left(user_replay.length() - 2);
 			append_replay("x");
 	return true;
@@ -3658,8 +3674,10 @@ func meta_undo_a_restart() -> bool:
 	return false;
 
 func meta_undo(is_silent: bool = false) -> bool:
+	preserving_meta_redo_inputs = true;
 	if (lost and lost_void):
 		play_sound("bump");
+		preserving_meta_redo_inputs = false;
 		return false;
 	end_lose();
 	finish_animations(Chrono.MOVE);
@@ -3669,6 +3687,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 				return true;
 		if !is_silent:
 			play_sound("bump");
+		preserving_meta_redo_inputs = false;
 		return false;
 	nonstandard_won = false;
 	var events = meta_undo_buffer.pop_back();
@@ -3678,6 +3697,12 @@ func meta_undo(is_silent: bool = false) -> bool:
 	if (!is_silent):
 		cut_sound();
 		play_sound("metaundo");
+	just_did_meta();
+	var result = meta_undo_replay();
+	preserving_meta_redo_inputs = false;
+	return result;
+
+func just_did_meta() -> void:
 	if (!currently_fast_replay()):
 		undo_effect_strength = 0.08;
 		undo_effect_per_second = undo_effect_strength*(1/0.2);
@@ -3689,7 +3714,48 @@ func meta_undo(is_silent: bool = false) -> bool:
 	undo_effect_color = meta_color;
 	# void things experience time when you undo
 	time_passes(Chrono.META_UNDO);
-	return meta_undo_replay();
+
+func meta_redo() -> bool:
+	if (voidlike_puzzle):
+		play_sound("bump");
+		return false;
+	if (won or lost):
+		return false;
+	if (meta_redo_inputs == ""):
+		play_sound("bump");
+		return false;
+	preserving_meta_redo_inputs = true;
+	var letter = meta_redo_inputs[meta_redo_inputs.length() - 1];
+	meta_redo_inputs = meta_redo_inputs.left(meta_redo_inputs.length() - 1);
+	do_one_letter_case_sensitive(letter);
+	cut_sound();
+	play_sound("metaredo");
+	just_did_meta();
+	preserving_meta_redo_inputs = false;
+	return true;
+	
+func do_one_letter(replay_char: String) -> void:
+	if (replay_char == "w"):
+		character_move(Vector2.UP);
+	elif (replay_char == "a"):
+		character_move(Vector2.LEFT);
+	elif (replay_char == "s"):
+		character_move(Vector2.DOWN);
+	elif (replay_char == "d"):
+		character_move(Vector2.RIGHT);
+	elif (replay_char == "z"):
+		character_undo();
+	elif (replay_char == "x"):
+		character_switch();
+	elif (replay_char == "c"):
+		meta_undo();
+		
+func do_one_letter_case_sensitive(replay_char: String) -> void:
+	if (replay_char.to_upper() == replay_char and heavy_selected):
+		character_switch();
+	if (replay_char.to_lower() == replay_char and !heavy_selected):
+		character_switch();
+	do_one_letter(replay_char.to_lower());
 	
 func character_switch() -> void:
 	# no swapping characters in Meet Heavy or Meet Light, even if you know the button
@@ -4357,20 +4423,7 @@ func do_one_replay_turn() -> void:
 	var replay_char = level_replay[replay_turn];
 	var old_meta_turn = meta_turn;
 	replay_turn += 1;
-	if (replay_char == "w"):
-		character_move(Vector2.UP);
-	elif (replay_char == "a"):
-		character_move(Vector2.LEFT);
-	elif (replay_char == "s"):
-		character_move(Vector2.DOWN);
-	elif (replay_char == "d"):
-		character_move(Vector2.RIGHT);
-	elif (replay_char == "z"):
-		character_undo();
-	elif (replay_char == "x"):
-		character_switch();
-	elif (replay_char == "c"):
-		meta_undo();
+	do_one_letter(replay_char);
 	if replay_char == "x":
 		return
 	elif old_meta_turn == meta_turn:
@@ -5210,6 +5263,10 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("meta_undo")):
 			end_replay();
 			meta_undo();
+			update_info_labels();
+		elif (Input.is_action_just_pressed("meta_redo")):
+			end_replay();
+			meta_redo();
 			update_info_labels();
 		elif (Input.is_action_just_pressed("restart")):
 			# must be kept in sync with Menu "restart"
