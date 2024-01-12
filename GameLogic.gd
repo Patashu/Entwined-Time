@@ -267,6 +267,7 @@ var insight_level_scene = null;
 var level_number = 0
 var level_name = "Blah Blah Blah";
 var level_replay = "";
+var authors_replay = "";
 var level_author = "";
 var heavy_max_moves = -1;
 var light_max_moves = -1;
@@ -1338,10 +1339,10 @@ func ready_map() -> void:
 	if (level_info != null): # might be a custom puzzle
 		level_name = level_info.level_name;
 		level_author = level_info.level_author;
-		level_replay = level_info.level_replay;
-		if ("$" in level_replay):
-			var level_replay_parts = level_replay.split("$");
-			level_replay = level_replay_parts[level_replay_parts.size()-1];
+		authors_replay = level_info.level_replay;
+		if ("$" in authors_replay):
+			var authors_replay_parts = authors_replay.split("$");
+			authors_replay = authors_replay_parts[authors_replay_parts.size()-1];
 		heavy_max_moves = level_info.heavy_max_moves;
 		light_max_moves = level_info.light_max_moves;
 		clock_turns = level_info.clock_turns;
@@ -4397,6 +4398,7 @@ func authors_replay() -> void:
 				return;
 	
 	toggle_replay();
+	level_replay = authors_replay;
 	if (level_replay.find("c") >= 0):
 		voidlike_puzzle = true;
 	
