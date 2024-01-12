@@ -21,23 +21,26 @@ var just_danced = false;
 # Must keep in sync with GameLogic serialize_bindings/deserialize_bindings
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
 "character_undo", "meta_undo", "meta_redo", "character_switch", "restart",
-"next_level", "previous_level", "mute", "start_replay", "speedup_replay",
-"slowdown_replay", "start_saved_replay", 
-"replay_back1", "replay_fwd1", "replay_pause", "gain_insight", "level_select", #zero-index 21, 22 total
+"next_level", "previous_level", "mute",
+"gain_insight", "level_select",
+"toggle_replay", "start_replay", "start_saved_replay",
+"speedup_replay", "slowdown_replay", "replay_pause", "replay_back1", "replay_fwd1", 
 "Ctrl+C: Copy Replay", "Ctrl+V: Paste Replay", "Shift+Replay Speed+: Max Replay Speed",
-"Shift+Replay Speed-: Default Replay Speed", "Shift+Your Replay: Save Replay"
+"Shift+Replay Speed-: Default Replay Speed", "Shift+Your Replay: Force Save Replay"
 ]
 
 var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",
 "Undo", "Meta-Undo", "Meta-Redo", "Swap", "Restart",
-"Next Lev/Chap", "Prev Lev/Chap", "Mute", "Author's Replay", "Replay Speed+",
-"Replay Speed-", "Your Replay", "Replay Turn-", "Replay Turn+", "Replay Pause",
-"Gain Insight", "Level Select"]
+"Next Lev/Chap", "Prev Lev/Chap", "Mute",
+"Gain Insight", "Level Select",
+"Replay Mode", "Author's Replay", "Your Replay",
+"Replay Speed+", "Replay Speed-", "Replay Pause", "Replay Turn-", "Replay Turn+",
+]
 
 var blacklist_1 = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down"];
 var blacklist_2 = ["escape", "ui_left", "ui_right", "ui_up", "ui_down",
 "character_undo", "meta_undo", "meta_redo", "character_switch", "restart",
-"next_level", "previous_level", "mute", "start_replay", "speedup_replay",
+"next_level", "previous_level", "mute", "start_replay", "toggle_replay", "speedup_replay",
 "slowdown_replay", "start_saved_replay", "gain_insight", "level_select",
 "replay_back1", "replay_fwd1", "replay_pause"];
 var whitelist_1 = ["speedup_replay", "slowdown_replay", "replay_back1", "replay_fwd1", "replay_pause"];
@@ -209,10 +212,10 @@ func setup_rebinding_stuff() -> void:
 	buttons_by_action.clear();
 	
 	var half_way = int(ceil(actions.size() / 2));
-	var yy = 12;
+	var yy = 14;
 	var yyy = 16;
 	var xx = 4;
-	var xxx = int(floor(holder.rect_size.x / 8))-2;
+	var xxx = int(floor(holder.rect_size.x / 8));
 	var xxx2 = xxx-7;
 	var xxx3 = xxx+21;
 	

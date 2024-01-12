@@ -647,9 +647,11 @@ func react_to_save_file_update() -> void:
 	refresh_puzzles_completed();
 	
 var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up", "ui_down",
-"character_undo", "meta_undo", "character_switch", "restart",
-"next_level", "previous_level", "mute", "start_replay", "speedup_replay",
-"slowdown_replay", "start_saved_replay", "gain_insight", "level_select"];
+"character_undo", "meta_undo", "meta_redo", "character_switch", "restart",
+"next_level", "previous_level", "mute",
+"gain_insight", "level_select",
+"toggle_replay", "start_replay", "start_saved_replay",
+"speedup_replay", "slowdown_replay", "replay_pause", "replay_back1", "replay_fwd1"];
 	
 func setup_deadzone() -> void:
 	if (!save_file.has("deadzone")):
@@ -663,26 +665,28 @@ func setup_deadzone() -> void:
 func deserialize_bindings() -> void:
 	if save_file.has("keyboard_bindings"):
 		for action in actions:
-			var events = InputMap.get_action_list(action);
-			for event in events:
-				if (event is InputEventKey):
-					InputMap.action_erase_event(action, event);
-			for new_event_str in save_file["keyboard_bindings"][action]:
-				var parts = new_event_str.split(",");
-				var new_event = InputEventKey.new();
-				new_event.scancode = int(parts[0]);
-				new_event.physical_scancode = int(parts[1]);
-				InputMap.action_add_event(action, new_event);
+			if (save_file["keyboard_bindings"].has(action)):
+				var events = InputMap.get_action_list(action);
+				for event in events:
+					if (event is InputEventKey):
+						InputMap.action_erase_event(action, event);
+				for new_event_str in save_file["keyboard_bindings"][action]:
+					var parts = new_event_str.split(",");
+					var new_event = InputEventKey.new();
+					new_event.scancode = int(parts[0]);
+					new_event.physical_scancode = int(parts[1]);
+					InputMap.action_add_event(action, new_event);
 	if save_file.has("controller_bindings"):
 		for action in actions:
-			var events = InputMap.get_action_list(action);
-			for event in events:
-				if (event is InputEventJoypadButton):
-					InputMap.action_erase_event(action, event);
-			for new_event_int in save_file["controller_bindings"][action]:
-				var new_event = InputEventJoypadButton.new();
-				new_event.button_index = new_event_int;
-				InputMap.action_add_event(action, new_event);
+			if (save_file["controller_bindings"].has(action)):
+				var events = InputMap.get_action_list(action);
+				for event in events:
+					if (event is InputEventJoypadButton):
+						InputMap.action_erase_event(action, event);
+				for new_event_int in save_file["controller_bindings"][action]:
+					var new_event = InputEventJoypadButton.new();
+					new_event.button_index = new_event_int;
+					InputMap.action_add_event(action, new_event);
 
 func serialize_bindings() -> void:
 	if !save_file.has("keyboard_bindings"):
@@ -3770,10 +3774,11 @@ func do_one_letter_case_sensitive(replay_char: String) -> void:
 		load_level(0);
 		start_specific_replay(replay);
 		#hack to make the sounds not play
-		meta_undo_a_restart_mode = true;
+		var old_muted = muted;
+		muted = true;
 		replay_advance_turn(replay.length() - 1);
 		end_replay();
-		meta_undo_a_restart_mode = false;
+		muted = old_muted;
 		return;
 	
 	if (replay_char.to_upper() == replay_char and heavy_selected):
@@ -4778,6 +4783,21 @@ func start_specific_replay(replay: String) -> void:
 		voidlike_puzzle = true;
 	update_info_labels();
 
+func user_pressed_toggle_replay() -> void:
+	meta_undo_a_restart_mode = false;
+	unit_test_mode = false;
+	if (doing_replay):
+		end_replay();
+		update_info_labels();
+		return;
+	if (!level_replay.begins_with(user_replay)):
+		level_replay = user_replay;
+	doing_replay = true;
+	replaybuttons.visible = true;
+	replay_paused = true;
+	replay_turn = user_replay.length();
+	update_info_labels();
+
 func start_saved_replay() -> void:
 	if (doing_replay):
 		end_replay();
@@ -5255,6 +5275,8 @@ func _process(delta: float) -> void:
 				play_sound("bump");
 		elif (Input.is_action_just_pressed("mute")):
 			toggle_mute();
+		elif (Input.is_action_just_pressed("toggle_replay")):
+			user_pressed_toggle_replay();
 		elif (doing_replay and pressed_or_key_repeated("replay_back1")):
 			replay_advance_turn(-1);
 		elif (doing_replay and pressed_or_key_repeated("replay_fwd1")):
