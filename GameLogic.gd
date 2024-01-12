@@ -3112,7 +3112,7 @@ func append_replay(move: String) -> void:
 func meta_undo_replay() -> bool:
 	if (voidlike_puzzle):
 		user_replay += "c";
-		meta_redo_inputs += "y";
+		meta_redo_inputs += "v";
 	else:
 		if !user_replay.ends_with("x"):
 			if (heavy_selected):
@@ -3731,9 +3731,6 @@ func just_did_meta() -> void:
 	time_passes(Chrono.META_UNDO);
 
 func meta_redo() -> bool:
-	if (voidlike_puzzle):
-		play_sound("bump");
-		return false;
 	if (won or lost):
 		return false;
 	if (meta_redo_inputs == ""):
@@ -3768,6 +3765,17 @@ func do_one_letter(replay_char: String) -> void:
 		meta_undo();
 		
 func do_one_letter_case_sensitive(replay_char: String) -> void:
+	if (replay_char == "v"):
+		var replay = user_replay;
+		load_level(0);
+		start_specific_replay(replay);
+		#hack to make the sounds not play
+		meta_undo_a_restart_mode = true;
+		replay_advance_turn(replay.length() - 1);
+		end_replay();
+		meta_undo_a_restart_mode = false;
+		return;
+	
 	if (replay_char.to_upper() == replay_char and heavy_selected):
 		character_switch();
 	if (replay_char.to_lower() == replay_char and !heavy_selected):
