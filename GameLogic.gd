@@ -1421,8 +1421,9 @@ func ready_tutorial() -> void:
 	if level_name == "Snake Pit":
 		tutoriallabel.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
-		tutoriallabel.rect_position.y -= 24;
-		tutoriallabel.bbcode_text = "[center]You can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
+		tutoriallabel.rect_position.y -= 48;
+		tutoriallabel.bbcode_text = "[center]Visualize your current attempt as a Replay:\nF4: Toggle Replay\nAlso, you can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
+		call_deferred("update_info_labels");
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.label = heavyinfolabel;
@@ -4621,19 +4622,25 @@ func update_info_labels() -> void:
 				tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 			
 			if using_controller:
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Arrows:", "D-Pad/Either Stick:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("X:", "Bottom Face Button:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Y:", "L3:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
+				if (level_number < 16):
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Arrows:", "D-Pad/Either Stick:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("X:", "Bottom Face Button:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Y:", "L3:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
+				else:
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("F4:", "R3:");
 			else:
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("L3:", "Y:");
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Select:", "R:");
+				if (level_number < 16):
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("L3:", "Y:");
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Select:", "R:");
+				else:
+					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R3:", "F4:");
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
