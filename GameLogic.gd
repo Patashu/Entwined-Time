@@ -1341,7 +1341,7 @@ func ready_map() -> void:
 		level_name = level_info.level_name;
 		level_author = level_info.level_author;
 		annotated_authors_replay = level_info.level_replay;
-		if ("$" in authors_replay):
+		if ("$" in annotated_authors_replay):
 			var authors_replay_parts = annotated_authors_replay.split("$");
 			authors_replay = authors_replay_parts[authors_replay_parts.size()-1];
 		heavy_max_moves = level_info.heavy_max_moves;
