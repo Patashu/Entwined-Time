@@ -1344,6 +1344,8 @@ func ready_map() -> void:
 		if ("$" in annotated_authors_replay):
 			var authors_replay_parts = annotated_authors_replay.split("$");
 			authors_replay = authors_replay_parts[authors_replay_parts.size()-1];
+		else:
+			authors_replay = annotated_authors_replay;
 		heavy_max_moves = level_info.heavy_max_moves;
 		light_max_moves = level_info.light_max_moves;
 		clock_turns = level_info.clock_turns;
@@ -4449,6 +4451,7 @@ func do_one_replay_turn() -> void:
 				else:
 					load_level(1);
 			replay_turn = 0;
+			level_replay = authors_replay;
 			next_replay = replay_timer + replay_interval();
 			return;
 		else:
