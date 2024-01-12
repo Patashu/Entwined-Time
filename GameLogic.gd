@@ -267,6 +267,7 @@ var insight_level_scene = null;
 var level_number = 0
 var level_name = "Blah Blah Blah";
 var level_replay = "";
+var annotated_authors_replay = "";
 var authors_replay = "";
 var level_author = "";
 var heavy_max_moves = -1;
@@ -1339,9 +1340,9 @@ func ready_map() -> void:
 	if (level_info != null): # might be a custom puzzle
 		level_name = level_info.level_name;
 		level_author = level_info.level_author;
-		authors_replay = level_info.level_replay;
+		annotated_authors_replay = level_info.level_replay;
 		if ("$" in authors_replay):
-			var authors_replay_parts = authors_replay.split("$");
+			var authors_replay_parts = annotated_authors_replay.split("$");
 			authors_replay = authors_replay_parts[authors_replay_parts.size()-1];
 		heavy_max_moves = level_info.heavy_max_moves;
 		light_max_moves = level_info.light_max_moves;
@@ -3433,6 +3434,9 @@ func check_won() -> void:
 			var level_info = terrainmap.get_node_or_null("LevelInfo");
 			if (level_info != null):
 				level_info.level_replay = annotate_replay(user_replay);
+				if (custom_string != ""):
+					#HACK: time to do surgery on a string lol
+					custom_string = custom_string.replace(annotated_authors_replay, level_info.level_replay);
 				floating_text("Test successful, recorded replay!");
 		if (won == true and !doing_replay):
 			if (level_name == "Joke"):
