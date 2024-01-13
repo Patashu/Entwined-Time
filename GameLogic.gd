@@ -1130,6 +1130,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("CampfireGreenEx")
 	level_filenames.push_back("Skip")
 	level_filenames.push_back("Airdodging")
+	level_filenames.push_back("Impossible")
 	
 	chapter_names.push_back("Exotic Matter");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
