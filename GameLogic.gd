@@ -1343,8 +1343,8 @@ func ready_map() -> void:
 			authors_replay = authors_replay_parts[authors_replay_parts.size()-1];
 		else:
 			authors_replay = annotated_authors_replay;
-		heavy_max_moves = level_info.heavy_max_moves;
-		light_max_moves = level_info.light_max_moves;
+		heavy_max_moves = int(level_info.heavy_max_moves);
+		light_max_moves = int(level_info.light_max_moves);
 		clock_turns = level_info.clock_turns;
 	
 	has_insight_level = false;
@@ -4943,8 +4943,8 @@ func serialize_current_level() -> String:
 		
 	var level_info = level.get_node("LevelInfo");
 	level_metadata["level_replay"] = level_info.level_replay;
-	level_metadata["heavy_max_moves"] = level_info.heavy_max_moves;
-	level_metadata["light_max_moves"] = level_info.light_max_moves;
+	level_metadata["heavy_max_moves"] = int(level_info.heavy_max_moves);
+	level_metadata["light_max_moves"] = int(level_info.light_max_moves);
 		
 	var layers = [];
 	layers.append(level);

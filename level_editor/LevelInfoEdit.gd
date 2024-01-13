@@ -53,8 +53,8 @@ func _musictrack_value_changed(value: float) -> void:
 func destroy() -> void:
 	var parent = get_parent();
 	
-	parent.level_info.heavy_max_moves = heavymoves.value;
-	parent.level_info.light_max_moves = lightmoves.value;
+	parent.level_info.heavy_max_moves = int(heavymoves.value);
+	parent.level_info.light_max_moves = int(lightmoves.value);
 	parent.level_info.clock_turns = clockturns.text;
 	parent.level_info.level_name = levelname.text;
 	parent.level_info.level_author = levelauthor.text;
