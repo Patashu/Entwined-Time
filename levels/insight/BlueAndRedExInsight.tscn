@@ -7,12 +7,12 @@
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 3, 7, 0, 4, 1, 0, 65539, 14, 196609, 131072, 2, 0, 131075, 14, 327681, 131079, 8, 0, 196608, 14, 196609, 196615, 14, 196609, 262144, 14, 589824, 262145, 14, 4, 262150, 14, 2, 262151, 14, 589830, 327680, 14, 131074, 327681, 14, 786435, 327682, 14, 196615, 327685, 14, 196613, 327686, 14, 720899, 327687, 14, 131076 )
+tile_data = PoolIntArray( 3, 1, 0, 4, 7, 0, 65539, 14, 196613, 65540, 14, 196615, 131072, 2, 0, 131079, 8, 0, 196608, 14, 196609, 196615, 14, 196609, 262144, 14, 589824, 262145, 14, 4, 262150, 14, 2, 262151, 14, 589830, 327680, 14, 131074, 327681, 14, 786435, 327682, 14, 196615, 327685, 14, 196613, 327686, 14, 720899, 327687, 14, 131076 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Blue and Red [VAR2]"
-level_replay = "Blue and Red [VAR2]$mturn=44$wxwxzwddxzxddxwxzzzzxzxaxwxwxwxwxzzwaaaxzzxaaxdaxzzzzzxzzxdxdxzxda"
+level_name = "Blue and Red [VAR1] (Insight)"
+level_replay = "Blue and Red [VAR1] (Insight)$mturn=16$wxwxwddxzxdxwxdzdxwaaxzxa"
 heavy_max_moves = 6
 light_max_moves = 6
 
