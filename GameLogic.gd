@@ -1068,6 +1068,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Towerplex")
 	level_filenames.push_back("TheMagentaPitEx2")
+	level_filenames.push_back("InvisibleBridgeLMagenta")
 	level_filenames.push_back("TheMagentaPitEx3")
 	
 	chapter_names.push_back("Change");
