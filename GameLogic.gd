@@ -1152,7 +1152,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("PingPongEx")
 	level_filenames.push_back("ImaginaryMoves")
 	level_filenames.push_back("DontLookDown")
-	level_filenames.push_back("LeadBalloon")
 	level_filenames.push_back("Durability")
 	level_filenames.push_back("UnfathomableGlass")
 	level_filenames.push_back("PushingItFurtherEx")
