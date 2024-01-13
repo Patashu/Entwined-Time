@@ -174,6 +174,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.GreenGlassBlock);
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[9]):
 		picker_array.append(Tiles.Fuzz);
+		picker_array.append(Tiles.OneUndo);
+		picker_array.append(Tiles.NoUndo);
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[10]):
 		picker_array.append(Tiles.TimeCrystalGreen);
 		picker_array.append(Tiles.TimeCrystalMagenta);
@@ -185,8 +187,6 @@ func initialize_picker_array() -> void:
 		show_tooltips = true;
 		picker_array.append(Tiles.SteelCrate);
 		picker_array.append(Tiles.PowerCrate);
-		picker_array.append(Tiles.OneUndo);
-		picker_array.append(Tiles.NoUndo);
 		picker_array.append(Tiles.ColourVoid);
 		picker_array.append(Tiles.ColourCyan);
 		picker_array.append(Tiles.ColourOrange);
