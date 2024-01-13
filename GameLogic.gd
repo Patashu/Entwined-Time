@@ -2262,6 +2262,8 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			# desync (probably due to fuzz doubled glass mechanic). find or create the first layer where assumed_old_tile is correct.
 			layer = find_or_create_layer_having_this_tile(pos, assumed_old_tile);
 			terrain_layer = terrain_layers[layer];
+			# set old_tile again (I guess it'll always be -1 at this point but just to be explicit about it)
+			old_tile = terrain_layer.get_cellv(pos);
 		terrain_layer.set_cellv(pos, new_tile);
 		if (green_terrain == Greenness.Green and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
