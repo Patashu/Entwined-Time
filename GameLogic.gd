@@ -1143,8 +1143,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Stuck")
 	level_filenames.push_back("PingPong")
 	level_filenames.push_back("FuzzyTrick")
-	level_filenames.push_back("LimitedUndo")
-	level_filenames.push_back("UphillLimited")
 	level_filenames.push_back("TimeStop")
 	level_filenames.push_back("KingCrimson")
 	level_filenames.push_back("Nomadic")
@@ -1158,8 +1156,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Durability")
 	level_filenames.push_back("UnfathomableGlass")
 	level_filenames.push_back("PushingItFurtherEx")
-	level_filenames.push_back("LimitedUndoEx")
-	level_filenames.push_back("LimitedUndoEx2")
 	level_filenames.push_back("KingCrimsonEx")
 	
 	chapter_names.push_back("Time Crystals");
