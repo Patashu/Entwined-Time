@@ -1184,10 +1184,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elementary")
 	level_filenames.push_back("BlockageEx")
 	level_filenames.push_back("Smuggler")
-	level_filenames.push_back("SmugglerEx")
 	level_filenames.push_back("Frangible")
 	level_filenames.push_back("Switcheroo")
-	level_filenames.push_back("SwitcherooEx")
 	level_filenames.push_back("StairwayToHeaven")
 	
 	chapter_names.push_back("Deadline");

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 524291, 4, 14, 196614, 5, 14, 524292, 65536, 14, 524290, 65537, 14, 655364, 65538, 53, 0, 65539, 14, 327681, 65540, 53, 0, 65541, 14, 655362, 65542, 14, 524292, 131072, 14, 262145, 131078, 14, 655362, 131079, 14, 524292, 196608, 14, 262145, 196611, 1, 0, 196615, 14, 655362, 196616, 14, 524292, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 524291, 262149, 14, 196615, 262150, 54, 0, 262151, 54, 0, 262152, 14, 655362, 262153, 14, 196614, 262154, 14, 524292, 327684, 14, 262145, 327685, 8, 0, 327686, 29, 0, 327687, 29, 0, 327689, 7, 0, 327690, 14, 262145, 393220, 14, 655362, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Switcheroo (Insight)"
+level_replay = "Switcheroo (Insight)$mturn=31$awsdddzzzzzzddddxddxzzwawazzxzdxzxzd"
+heavy_max_moves = 6
+light_max_moves = 2
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 2, 0, 327686, 45, 0, 327687, 45, 0 )

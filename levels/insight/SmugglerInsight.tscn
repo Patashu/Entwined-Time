@@ -11,8 +11,8 @@ tile_data = PoolIntArray( 0, 1, 0, 65536, 2, 0, 65537, 8, 0, 65542, 54, 0, 13107
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Smuggler [VAR1]"
-level_replay = "Smuggler [VAR1]$mturn=32$wddawxddwsxddxzzddzzxazxzxzzxzdddxzzxddxzz"
+level_name = "Smuggler (Remix)"
+level_replay = "Smuggler (Remix)$mturn=32$wddawxddwsxddxzzddzzxazxzxzzxzdddxzzxddxzz"
 heavy_max_moves = 10
 light_max_moves = 10
 
