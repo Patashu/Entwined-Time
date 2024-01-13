@@ -15,7 +15,7 @@ level_name = "Time Zones"
 level_replay = "Time Zones$mturn=24$xdssaxassdxzzzzdssaxzssdxzssa"
 heavy_max_moves = 6
 light_max_moves = 6
-clock_turns = "5,4"
+clock_turns = "5,3"
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
