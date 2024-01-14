@@ -149,6 +149,7 @@ enum Animation {
 	generic_magenta_time_crystal, #22
 	lose, #23
 	time_passes, #24
+	lightning_strikes, #25
 }
 
 enum TimeColour {
@@ -4283,6 +4284,33 @@ func time_passes(chrono: int) -> void:
 	for actor in time_actors:
 		add_to_animation_server(actor, [Animation.time_passes]);
 	
+	#Phase lightning strikes before gravity.
+	if (has_phase_lightning and chrono < Chrono.META_UNDO):
+		var red = heavy_selected;
+		var blue = !heavy_selected;
+		var gray = chrono == Chrono.MOVE;
+		var purple = chrono == Chrono.CHAR_UNDO;
+		add_to_animation_server(null, [Animation.lightning_strikes, red, blue, gray, purple]);
+		for actor in actors:
+			if (actor.broken):
+				continue;
+			if (actor.durability > Durability.FIRE):
+				continue;
+			var terrain = terrain_in_tile(actor.pos);
+			#terrain.has(Tiles.Fire)
+			if (red and terrain.has(Tiles.PhaseLightningRed)):
+				actor.post_mortem = Durability.FIRE;
+				set_actor_var(actor, "broken", true, chrono);
+			elif (blue and terrain.has(Tiles.PhaseLightningBlue)):
+				actor.post_mortem = Durability.FIRE;
+				set_actor_var(actor, "broken", true, chrono);
+			elif (gray and terrain.has(Tiles.PhaseLightningGray)):
+				actor.post_mortem = Durability.FIRE;
+				set_actor_var(actor, "broken", true, chrono);
+			elif (purple and terrain.has(Tiles.PhaseLightningPurple)):
+				actor.post_mortem = Durability.FIRE;
+				set_actor_var(actor, "broken", true, chrono);
+	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.
 	var has_fallen = {};
@@ -4426,7 +4454,7 @@ func time_passes(chrono: int) -> void:
 			time_colour = TimeColour.Red;
 		add_to_animation_server(null, [Animation.fire_roars, time_colour])
 	for actor in time_actors:
-		var terrain = terrain_in_tile(actor.pos);		
+		var terrain = terrain_in_tile(actor.pos);
 		if !actor.broken and terrain.has(Tiles.Fire) and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
@@ -4820,6 +4848,56 @@ func handle_global_animation(animation: Array) -> void:
 		play_sound("bluefire");
 	if (greenfire):
 		play_sound("greenfire");
+		
+	if (animation[0] == Animation.lightning_strikes):
+		var red = animation[1];
+		var blue = animation[2];
+		var gray = animation[3];
+		var purple = animation[4];
+		if (blue):
+			var walls = get_used_cells_by_id_one_array(Tiles.PhaseLightningBlue);
+			for wall in walls:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://PingPongSprite.gd"));
+				sprite.texture = preload("res://assets/phase_lightning_blue_strikes.png");
+				sprite.position = terrainmap.map_to_world(wall);
+				sprite.hframes = 5;
+				sprite.centered = false;
+				sprite.frame_timer_max = 0.08;
+				overactorsparticles.add_child(sprite);
+		if (red):
+			var walls = get_used_cells_by_id_one_array(Tiles.PhaseLightningRed);
+			for wall in walls:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://PingPongSprite.gd"));
+				sprite.texture = preload("res://assets/phase_lightning_red_strikes.png");
+				sprite.position = terrainmap.map_to_world(wall);
+				sprite.hframes = 5;
+				sprite.centered = false;
+				sprite.frame_timer_max = 0.08;
+				overactorsparticles.add_child(sprite);
+		if (gray):
+			var walls = get_used_cells_by_id_one_array(Tiles.PhaseLightningGray);
+			for wall in walls:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://PingPongSprite.gd"));
+				sprite.texture = preload("res://assets/phase_lightning_gray_strikes.png");
+				sprite.position = terrainmap.map_to_world(wall);
+				sprite.hframes = 5;
+				sprite.centered = false;
+				sprite.frame_timer_max = 0.08;
+				overactorsparticles.add_child(sprite);
+		if (purple):
+			var walls = get_used_cells_by_id_one_array(Tiles.PhaseLightningPurple);
+			for wall in walls:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://PingPongSprite.gd"));
+				sprite.texture = preload("res://assets/phase_lightning_purple_strikes.png");
+				sprite.position = terrainmap.map_to_world(wall);
+				sprite.hframes = 5;
+				sprite.centered = false;
+				sprite.frame_timer_max = 0.08;
+				overactorsparticles.add_child(sprite);
 
 func update_animation_server(skip_globals: bool = false) -> void:
 	# don't interrupt ongoing animations

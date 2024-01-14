@@ -717,6 +717,7 @@ func _process(delta: float) -> void:
 				24: #time_passes
 					if time_bubble != null:
 						time_bubble.flash();
+				#skip 25, that's lightning_strikes, continue with 26
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
