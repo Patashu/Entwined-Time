@@ -2547,6 +2547,14 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Void, chrono, -1);
 				else:
 					return Success.No;
+			Tiles.PhaseWallBlue:
+				result = no_if_true_yes_if_false(!heavy_selected);
+			Tiles.PhaseWallRed:
+				result = no_if_true_yes_if_false(heavy_selected);
+			Tiles.PhaseWallGray:
+				result = no_if_true_yes_if_false(chrono == Chrono.MOVE);
+			Tiles.PhaseWallPurple:
+				result = no_if_true_yes_if_false(chrono == Chrono.CHAR_UNDO);
 		if result != Success.Yes:
 			return result;
 	return result;
