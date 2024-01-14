@@ -718,6 +718,10 @@ func _process(delta: float) -> void:
 					if time_bubble != null:
 						time_bubble.flash();
 				#skip 25, that's lightning_strikes, continue with 26
+				26: #heavy_timeline_finish_animations
+					gamelogic.heavytimeline.finish_animations();
+				27: #light_timeline_finish_animations
+					gamelogic.lighttimeline.finish_animations();
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

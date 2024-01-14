@@ -150,6 +150,8 @@ enum Animation {
 	lose, #23
 	time_passes, #24
 	lightning_strikes, #25
+	heavy_timeline_finish_animations, #26
+	light_timeline_finish_animations, #27
 }
 
 enum TimeColour {
@@ -2262,8 +2264,7 @@ func check_checkpoints() -> void:
 				# failsafe
 				if (old_heavy_turn == heavy_turn):
 					heavy_turn -= 1;
-			calm_down_timelines();
-			heavytimeline.finish_animations();
+			add_to_animation_server(heavy_actor, [Animation.heavy_timeline_finish_animations]);
 	
 	if (light_turn > 0):
 		var terrain = terrain_in_tile(light_actor.pos);
@@ -2279,8 +2280,7 @@ func check_checkpoints() -> void:
 				# failsafe
 				if (old_light_turn == light_turn):
 					light_turn -= 1;
-			calm_down_timelines();
-			lighttimeline.finish_animations();
+			add_to_animation_server(heavy_actor, [Animation.light_timeline_finish_animations]);
 		
 func actors_in_tile(pos: Vector2) -> Array:
 	var result = [];
