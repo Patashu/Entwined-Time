@@ -86,10 +86,10 @@ enum Tiles {
 	PhaseLightningRed, #80
 	PhaseLightningGray, #81
 	PhaseLightningPurple, #82
-	OneWayEastLose, #83
-	OneWayNorthLose, #84
-	OneWaySouthLose, #85
-	OneWayWestLose, #86
+	OnewayEastLose, #83
+	OnewayNorthLose, #84
+	OnewaySouthLose, #85
+	OnewayWestLose, #86
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -224,10 +224,10 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.PhaseLightningRed)
 		picker_array.append(Tiles.PhaseLightningGray)
 		picker_array.append(Tiles.PhaseLightningPurple)
-		picker_array.append(Tiles.OneWayEastLose)
-		picker_array.append(Tiles.OneWayNorthLose)
-		picker_array.append(Tiles.OneWaySouthLose)
-		picker_array.append(Tiles.OneWayWestLose)
+		picker_array.append(Tiles.OnewayEastLose)
+		picker_array.append(Tiles.OnewayNorthLose)
+		picker_array.append(Tiles.OnewaySouthLose)
+		picker_array.append(Tiles.OnewayWestLose)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -695,13 +695,13 @@ func picker_tooltip() -> void:
 			text = "Phase Lightning Gray: After character moves, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
 		Tiles.PhaseLightningPurple:
 			text = "Phase Lightning Purple: After character undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
-		Tiles.OneWayEastLose:
+		Tiles.OnewayEastLose:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
-		Tiles.OneWayNorthLose:
+		Tiles.OnewayNorthLose:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
-		Tiles.OneWaySouthLose:
+		Tiles.OnewaySouthLose:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
-		Tiles.OneWayWestLose:
+		Tiles.OnewayWestLose:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
 	pickertooltip.change_text(text);
 	

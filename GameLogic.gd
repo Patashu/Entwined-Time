@@ -259,10 +259,10 @@ enum Tiles {
 	PhaseLightningRed, #80
 	PhaseLightningGray, #81
 	PhaseLightningPurple, #82
-	OneWayEastLose, #83
-	OneWayNorthLose, #84
-	OneWaySouthLose, #85
-	OneWayWestLose, #86
+	OnewayEastLose, #83
+	OnewayNorthLose, #84
+	OnewaySouthLose, #85
+	OnewayWestLose, #86
 }
 var voidlike_tiles = [];
 
@@ -2472,6 +2472,34 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_purple_flash;
+			Tiles.OnewayEastLose:
+				result = no_if_true_yes_if_false(dir == Vector2.LEFT);
+				if (result == Success.No):
+					result = Success.Surprise;
+					flash_terrain = id;
+					flash_colour = oneway_green_flash;
+					lose("A Lose One-Way was bumped.", actor)
+			Tiles.OnewayWestLose:
+				result = no_if_true_yes_if_false(dir == Vector2.RIGHT);
+				if (result == Success.No):
+					result = Success.Surprise;
+					flash_terrain = id;
+					flash_colour = oneway_green_flash;
+					lose("A Lose One-Way was bumped.", actor)
+			Tiles.OnewayNorthLose:
+				result = no_if_true_yes_if_false(dir == Vector2.DOWN);
+				if (result == Success.No):
+					result = Success.Surprise;
+					flash_terrain = id;
+					flash_colour = oneway_green_flash;
+					lose("A Lose One-Way was bumped.", actor)
+			Tiles.OnewaySouthLose:
+				result = no_if_true_yes_if_false(dir == Vector2.UP);
+				if (result == Success.No):
+					result = Success.Surprise;
+					flash_terrain = id;
+					flash_colour = oneway_green_flash;
+					lose("A Lose One-Way was bumped.", actor)
 			Tiles.LadderPlatform:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
 			Tiles.WoodenPlatform:
@@ -4118,6 +4146,8 @@ func anything_happened_char(destructive: bool = true) -> bool:
 	return false;
 	
 func anything_happened_meta() -> bool:
+	if (lost == true):
+		return true;
 	if anything_happened_char(false):
 		return true;
 	while (meta_undo_buffer.size() <= meta_turn):
