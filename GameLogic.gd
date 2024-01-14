@@ -1308,6 +1308,9 @@ func refresh_puzzles_completed() -> void:
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 			puzzles_completed += 1;
 
+var has_phase_walls = false;
+var has_phase_lightning = false;
+
 func ready_map() -> void:
 	won = false;
 	nonstandard_won = false;
@@ -1368,6 +1371,26 @@ func ready_map() -> void:
 		if (ResourceLoader.exists(insight_path)):
 			has_insight_level = true;
 			insight_level_scene = load(insight_path);
+	
+	has_phase_walls = false;
+	if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
+		has_phase_walls = true;
+	elif (any_layer_has_this_tile(Tiles.PhaseWallRed)):
+		has_phase_walls = true;
+	elif (any_layer_has_this_tile(Tiles.PhaseWallGray)):
+		has_phase_walls = true;
+	elif (any_layer_has_this_tile(Tiles.PhaseWallPurple)):
+		has_phase_walls = true;
+	
+	has_phase_lightning = false;
+	if (any_layer_has_this_tile(Tiles.PhaseLightningBlue)):
+		has_phase_lightning = true;
+	elif (any_layer_has_this_tile(Tiles.PhaseLightningRed)):
+		has_phase_lightning = true;
+	elif (any_layer_has_this_tile(Tiles.PhaseLightningGray)):
+		has_phase_lightning = true;
+	elif (any_layer_has_this_tile(Tiles.PhaseLightningPurple)):
+		has_phase_lightning = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -1512,6 +1535,12 @@ func get_used_cells_by_id_one_array(id: int) -> Array:
 	for layer in terrain_layers:
 		results.append_array(layer.get_used_cells_by_id(id));
 	return results;
+
+func any_layer_has_this_tile(id: int) -> bool:
+	for layer in terrain_layers:
+		if (layer.get_used_cells_by_id(id).size() > 0):
+			return true;
+	return false;
 
 func make_actors() -> void:
 	# mark voidlike puzzle now
@@ -3210,12 +3239,11 @@ func character_undo(is_silent: bool = false) -> bool:
 			return false;
 		
 		# before undo effects
-		
+		maybe_pulse_phase_blocks(Chrono.CHAR_UNDO);
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
 		
 		#the undo itself
-		
 		if (terrain.has(Tiles.Fuzz)):
 			fuzzed = true;
 			fuzz_timer = 0;
@@ -3265,12 +3293,11 @@ func character_undo(is_silent: bool = false) -> bool:
 			return false;
 			
 		# before undo effects
-		
+		maybe_pulse_phase_blocks(Chrono.CHAR_UNDO);
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
 		
 		#the undo itself
-		
 		if (terrain.has(Tiles.Fuzz)):
 			fuzzed = true;
 			fuzz_timer = 0;
@@ -4082,6 +4109,7 @@ func character_move(dir: Vector2) -> bool:
 		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
+		maybe_pulse_phase_blocks(Chrono.MOVE);
 		if (!valid_voluntary_airborne_move(heavy_actor, dir)):
 			result = Success.Surprise;
 		else:
@@ -4091,6 +4119,7 @@ func character_move(dir: Vector2) -> bool:
 		if (light_actor.broken or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
+		maybe_pulse_phase_blocks(Chrono.MOVE);
 		if (!valid_voluntary_airborne_move(light_actor, dir)):
 			result = Success.Surprise;
 		else:
@@ -4819,6 +4848,58 @@ func update_animation_server(skip_globals: bool = false) -> void:
 				handle_global_animation(animation[1]);
 		else:
 			animation[0].animations.push_back(animation[1]);
+
+func maybe_pulse_phase_blocks(chrono: int) -> void:
+	if (!has_phase_walls):
+		return
+	var pulse_red = heavy_selected;
+	var pulse_blue = !heavy_selected;
+	var pulse_gray = chrono == Chrono.MOVE;
+	var pulse_purple = chrono == Chrono.CHAR_UNDO;
+	if (pulse_blue):
+		var walls = get_used_cells_by_id_one_array(Tiles.PhaseWallBlue);
+		for wall in walls:
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://PingPongSprite.gd"));
+			sprite.texture = preload("res://assets/phase_wall_blue_strikes.png");
+			sprite.position = terrainmap.map_to_world(wall);
+			sprite.hframes = 6;
+			sprite.centered = false;
+			sprite.frame_timer_max = 0.04;
+			overactorsparticles.add_child(sprite);
+	if (pulse_red):
+		var walls = get_used_cells_by_id_one_array(Tiles.PhaseWallRed);
+		for wall in walls:
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://PingPongSprite.gd"));
+			sprite.texture = preload("res://assets/phase_wall_red_strikes.png");
+			sprite.position = terrainmap.map_to_world(wall);
+			sprite.hframes = 6;
+			sprite.centered = false;
+			sprite.frame_timer_max = 0.04;
+			overactorsparticles.add_child(sprite);
+	if (pulse_gray):
+		var walls = get_used_cells_by_id_one_array(Tiles.PhaseWallGray);
+		for wall in walls:
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://PingPongSprite.gd"));
+			sprite.texture = preload("res://assets/phase_wall_gray_strikes.png");
+			sprite.position = terrainmap.map_to_world(wall);
+			sprite.hframes = 6;
+			sprite.centered = false;
+			sprite.frame_timer_max = 0.04;
+			overactorsparticles.add_child(sprite);
+	if (pulse_purple):
+		var walls = get_used_cells_by_id_one_array(Tiles.PhaseWallPurple);
+		for wall in walls:
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://PingPongSprite.gd"));
+			sprite.texture = preload("res://assets/phase_wall_purple_strikes.png");
+			sprite.position = terrainmap.map_to_world(wall);
+			sprite.hframes = 6;
+			sprite.centered = false;
+			sprite.frame_timer_max = 0.04;
+			overactorsparticles.add_child(sprite);
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
