@@ -78,6 +78,18 @@ enum Tiles {
 	OnewaySouthPurple, #72
 	OnewayWestPurple, #73
 	ColourBlurple, #74
+	PhaseWallBlue, #75
+	PhaseWallRed, #76
+	PhaseWallGray, #77
+	PhaseWallPurple, #78
+	PhaseLightningBlue, #79
+	PhaseLightningRed, #80
+	PhaseLightningGray, #81
+	PhaseLightningPurple, #82
+	OneWayEastLose, #83
+	OneWayNorthLose, #84
+	OneWaySouthLose, #85
+	OneWayWestLose, #86
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -204,6 +216,18 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.GreenPowerSocket);
 		picker_array.append(Tiles.VoidPowerSocket);
 		picker_array.append(Tiles.GlassBlockCracked);
+		picker_array.append(Tiles.PhaseWallBlue)
+		picker_array.append(Tiles.PhaseWallRed)
+		picker_array.append(Tiles.PhaseWallGray)
+		picker_array.append(Tiles.PhaseWallPurple)
+		picker_array.append(Tiles.PhaseLightningBlue)
+		picker_array.append(Tiles.PhaseLightningRed)
+		picker_array.append(Tiles.PhaseLightningGray)
+		picker_array.append(Tiles.PhaseLightningPurple)
+		picker_array.append(Tiles.OneWayEastLose)
+		picker_array.append(Tiles.OneWayNorthLose)
+		picker_array.append(Tiles.OneWaySouthLose)
+		picker_array.append(Tiles.OneWayWestLose)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -654,6 +678,42 @@ func picker_tooltip() -> void:
 		text = "Void Power Socket: A Power Socket that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
 	elif (tile == Tiles.GlassBlockCracked):
 		text = "Cracked Glass Block: A Glass Block without the weight requirement."
+	elif (tile == Tiles.PhaseWallBlue):
+		text = "Phase Wall Blue: Solid during Light moves and undoes."
+	elif (tile == Tiles.PhaseWallRed):
+		text = "Phase Wall Red: Solid during Heavy moves and undoes."
+	elif (tile == Tiles.PhaseWallGray):
+		text = "Phase Wall Gray: Solid during character moves."
+	elif (tile == Tiles.PhaseWallPurple):
+		text = "Phase Wall Purple: Solid during character undoes."
+	elif (tile == Tiles.PhaseLightningBlue):
+		text = "Phase Lightning Blue: After Light moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+	elif (tile == Tiles.PhaseLightningRed):
+		text = "Phase Lightning Red: After Heavy moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+	elif (tile == Tiles.PhaseLightningGray):
+		text = "Phase Lightning Gray: After character moves, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+	elif (tile == Tiles.PhaseLightningPurple):
+		text = "Phase Lightning Purple: After character undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+	elif (tile == Tiles.OneWayEastLose):
+		text = "Lose One Way: A Green One Way that if bumped, you lose."
+	elif (tile == Tiles.OneWayNorthLose):
+		text = "Lose One Way: A Green One Way that if bumped, you lose."
+	elif (tile == Tiles.OneWaySouthLose):
+		text = "Lose One Way: A Green One Way that if bumped, you lose."
+	elif (tile == Tiles.OneWayWestLose):
+		text = "Lose One Way: A Green One Way that if bumped, you lose."
+	#	PhaseWallBlue, #75
+#	PhaseWallRed, #76
+#	PhaseWallGray, #77
+#	PhaseWallPurple, #78
+#	PhaseLightningBlue, #79
+#	PhaseLightningRed, #80
+#	PhaseLightningGray, #81
+#	PhaseLightningPurple, #82
+#	OneWayEastLose, #83
+#	OneWayNorthLose, #84
+#	OneWaySouthLose, #85
+#	OneWayWestLose, #86
 	else:
 		text = "";
 	pickertooltip.change_text(text);

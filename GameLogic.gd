@@ -251,6 +251,18 @@ enum Tiles {
 	OnewaySouthPurple, #72
 	OnewayWestPurple, #73
 	ColourBlurple, #74
+	PhaseWallBlue, #75
+	PhaseWallRed, #76
+	PhaseWallGray, #77
+	PhaseWallPurple, #78
+	PhaseLightningBlue, #79
+	PhaseLightningRed, #80
+	PhaseLightningGray, #81
+	PhaseLightningPurple, #82
+	OneWayEastLose, #83
+	OneWayNorthLose, #84
+	OneWaySouthLose, #85
+	OneWayWestLose, #86
 }
 var voidlike_tiles = [];
 

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=224 format=2]
+[gd_resource type="TileSet" load_steps=328 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -200,6 +200,106 @@
 [ext_resource path="res://assets/oneway_west_purple_5.png" type="Texture" id=198]
 [ext_resource path="res://assets/oneway_west_purple_6.png" type="Texture" id=199]
 [ext_resource path="res://assets/colour_blurple.png" type="Texture" id=200]
+[ext_resource path="res://assets/phase_wall_gray_0.png" type="Texture" id=201]
+[ext_resource path="res://assets/phase_wall_gray_14.png" type="Texture" id=202]
+[ext_resource path="res://assets/phase_wall_blue_2.png" type="Texture" id=203]
+[ext_resource path="res://assets/phase_wall_blue_4.png" type="Texture" id=204]
+[ext_resource path="res://assets/phase_wall_blue_8.png" type="Texture" id=205]
+[ext_resource path="res://assets/phase_wall_gray_16.png" type="Texture" id=206]
+[ext_resource path="res://assets/phase_wall_blue_9.png" type="Texture" id=207]
+[ext_resource path="res://assets/phase_wall_blue_1.png" type="Texture" id=208]
+[ext_resource path="res://assets/phase_wall_blue_5.png" type="Texture" id=209]
+[ext_resource path="res://assets/phase_wall_blue_10.png" type="Texture" id=210]
+[ext_resource path="res://assets/phase_wall_blue_3.png" type="Texture" id=211]
+[ext_resource path="res://assets/phase_wall_blue_11.png" type="Texture" id=212]
+[ext_resource path="res://assets/phase_wall_blue_12.png" type="Texture" id=213]
+[ext_resource path="res://assets/phase_wall_blue_14.png" type="Texture" id=214]
+[ext_resource path="res://assets/phase_wall_blue_15.png" type="Texture" id=215]
+[ext_resource path="res://assets/phase_wall_blue_6.png" type="Texture" id=216]
+[ext_resource path="res://assets/phase_wall_blue_13.png" type="Texture" id=217]
+[ext_resource path="res://assets/phase_wall_blue_16.png" type="Texture" id=218]
+[ext_resource path="res://assets/phase_wall_blue_17.png" type="Texture" id=219]
+[ext_resource path="res://assets/phase_wall_blue_7.png" type="Texture" id=220]
+[ext_resource path="res://assets/phase_wall_gray_15.png" type="Texture" id=221]
+[ext_resource path="res://assets/phase_wall_gray_13.png" type="Texture" id=222]
+[ext_resource path="res://assets/phase_wall_blue_0.png" type="Texture" id=223]
+[ext_resource path="res://assets/phase_wall_gray_10.png" type="Texture" id=224]
+[ext_resource path="res://assets/phase_wall_gray_9.png" type="Texture" id=225]
+[ext_resource path="res://assets/phase_wall_gray_11.png" type="Texture" id=226]
+[ext_resource path="res://assets/phase_wall_gray_12.png" type="Texture" id=227]
+[ext_resource path="res://assets/phase_wall_blue_19.png" type="Texture" id=228]
+[ext_resource path="res://assets/phase_wall_gray_2.png" type="Texture" id=229]
+[ext_resource path="res://assets/phase_wall_gray_5.png" type="Texture" id=230]
+[ext_resource path="res://assets/phase_wall_gray_6.png" type="Texture" id=231]
+[ext_resource path="res://assets/phase_wall_gray_7.png" type="Texture" id=232]
+[ext_resource path="res://assets/phase_wall_red_22.png" type="Texture" id=233]
+[ext_resource path="res://assets/phase_wall_red_21.png" type="Texture" id=234]
+[ext_resource path="res://assets/phase_wall_red_20.png" type="Texture" id=235]
+[ext_resource path="res://assets/phase_wall_red_19.png" type="Texture" id=236]
+[ext_resource path="res://assets/phase_wall_gray_8.png" type="Texture" id=237]
+[ext_resource path="res://assets/phase_wall_red_18.png" type="Texture" id=238]
+[ext_resource path="res://assets/phase_wall_red_17.png" type="Texture" id=239]
+[ext_resource path="res://assets/phase_wall_red_16.png" type="Texture" id=240]
+[ext_resource path="res://assets/phase_wall_blue_20.png" type="Texture" id=241]
+[ext_resource path="res://assets/phase_wall_gray_3.png" type="Texture" id=242]
+[ext_resource path="res://assets/phase_wall_blue_18.png" type="Texture" id=243]
+[ext_resource path="res://assets/phase_wall_gray_4.png" type="Texture" id=244]
+[ext_resource path="res://assets/phase_wall_blue_21.png" type="Texture" id=245]
+[ext_resource path="res://assets/phase_wall_blue_22.png" type="Texture" id=246]
+[ext_resource path="res://assets/phase_wall_gray_1.png" type="Texture" id=247]
+[ext_resource path="res://assets/phase_wall_red_14.png" type="Texture" id=248]
+[ext_resource path="res://assets/phase_wall_red_15.png" type="Texture" id=249]
+[ext_resource path="res://assets/phase_wall_red_11.png" type="Texture" id=250]
+[ext_resource path="res://assets/phase_wall_red_13.png" type="Texture" id=251]
+[ext_resource path="res://assets/phase_wall_red_12.png" type="Texture" id=252]
+[ext_resource path="res://assets/phase_wall_gray_22.png" type="Texture" id=253]
+[ext_resource path="res://assets/phase_wall_purple_19.png" type="Texture" id=254]
+[ext_resource path="res://assets/phase_wall_gray_20.png" type="Texture" id=255]
+[ext_resource path="res://assets/phase_wall_gray_19.png" type="Texture" id=256]
+[ext_resource path="res://assets/phase_wall_purple_14.png" type="Texture" id=257]
+[ext_resource path="res://assets/oneway_east_lose_1.png" type="Texture" id=258]
+[ext_resource path="res://assets/oneway_north_lose_1.png" type="Texture" id=259]
+[ext_resource path="res://assets/phase_wall_purple_18.png" type="Texture" id=260]
+[ext_resource path="res://assets/phase_wall_purple_8.png" type="Texture" id=261]
+[ext_resource path="res://assets/phase_wall_purple_3.png" type="Texture" id=262]
+[ext_resource path="res://assets/oneway_west_lose_1.png" type="Texture" id=263]
+[ext_resource path="res://assets/phase_wall_purple_12.png" type="Texture" id=264]
+[ext_resource path="res://assets/phase_wall_purple_9.png" type="Texture" id=265]
+[ext_resource path="res://assets/phase_wall_gray_18.png" type="Texture" id=266]
+[ext_resource path="res://assets/phase_wall_purple_20.png" type="Texture" id=267]
+[ext_resource path="res://assets/phase_wall_purple_11.png" type="Texture" id=268]
+[ext_resource path="res://assets/phase_wall_purple_10.png" type="Texture" id=269]
+[ext_resource path="res://assets/phase_wall_purple_13.png" type="Texture" id=270]
+[ext_resource path="res://assets/oneway_south_lose_1.png" type="Texture" id=271]
+[ext_resource path="res://assets/phase_wall_purple_7.png" type="Texture" id=272]
+[ext_resource path="res://assets/phase_wall_purple_5.png" type="Texture" id=273]
+[ext_resource path="res://assets/phase_wall_purple_21.png" type="Texture" id=274]
+[ext_resource path="res://assets/phase_wall_purple_2.png" type="Texture" id=275]
+[ext_resource path="res://assets/phase_wall_purple_22.png" type="Texture" id=276]
+[ext_resource path="res://assets/phase_lightning_purple.png" type="Texture" id=277]
+[ext_resource path="res://assets/phase_wall_purple_6.png" type="Texture" id=278]
+[ext_resource path="res://assets/phase_wall_gray_17.png" type="Texture" id=279]
+[ext_resource path="res://assets/phase_lightning_red.png" type="Texture" id=280]
+[ext_resource path="res://assets/phase_wall_purple_17.png" type="Texture" id=281]
+[ext_resource path="res://assets/phase_wall_purple_4.png" type="Texture" id=282]
+[ext_resource path="res://assets/phase_wall_purple_16.png" type="Texture" id=283]
+[ext_resource path="res://assets/phase_wall_purple_15.png" type="Texture" id=284]
+[ext_resource path="res://assets/phase_wall_purple_1.png" type="Texture" id=285]
+[ext_resource path="res://assets/phase_lightning_blue.png" type="Texture" id=286]
+[ext_resource path="res://assets/phase_lightning_gray.png" type="Texture" id=287]
+[ext_resource path="res://assets/phase_wall_gray_21.png" type="Texture" id=288]
+[ext_resource path="res://assets/phase_wall_purple_0.png" type="Texture" id=289]
+[ext_resource path="res://assets/phase_wall_red_9.png" type="Texture" id=290]
+[ext_resource path="res://assets/phase_wall_red_5.png" type="Texture" id=291]
+[ext_resource path="res://assets/phase_wall_red_7.png" type="Texture" id=292]
+[ext_resource path="res://assets/phase_wall_red_1.png" type="Texture" id=293]
+[ext_resource path="res://assets/phase_wall_red_8.png" type="Texture" id=294]
+[ext_resource path="res://assets/phase_wall_red_0.png" type="Texture" id=295]
+[ext_resource path="res://assets/phase_wall_red_3.png" type="Texture" id=296]
+[ext_resource path="res://assets/phase_wall_red_6.png" type="Texture" id=297]
+[ext_resource path="res://assets/phase_wall_red_2.png" type="Texture" id=298]
+[ext_resource path="res://assets/phase_wall_red_4.png" type="Texture" id=299]
+[ext_resource path="res://assets/phase_wall_red_10.png" type="Texture" id=300]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -595,6 +695,202 @@ frame_6/texture = ExtResource( 194 )
 frame_6/delay_sec = 0.0
 frame_7/texture = ExtResource( 195 )
 frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=25]
+frames = 23
+fps = 23.0
+frame_0/texture = ExtResource( 223 )
+frame_1/texture = ExtResource( 208 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 203 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 211 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 204 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 209 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 216 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 220 )
+frame_7/delay_sec = 0.0
+frame_8/texture = ExtResource( 205 )
+frame_8/delay_sec = 0.0
+frame_9/texture = ExtResource( 207 )
+frame_9/delay_sec = 0.0
+frame_10/texture = ExtResource( 210 )
+frame_10/delay_sec = 0.0
+frame_11/texture = ExtResource( 212 )
+frame_11/delay_sec = 0.0
+frame_12/texture = ExtResource( 213 )
+frame_12/delay_sec = 0.0
+frame_13/texture = ExtResource( 217 )
+frame_13/delay_sec = 0.0
+frame_14/texture = ExtResource( 214 )
+frame_14/delay_sec = 0.0
+frame_15/texture = ExtResource( 215 )
+frame_15/delay_sec = 0.0
+frame_16/texture = ExtResource( 218 )
+frame_16/delay_sec = 0.0
+frame_17/texture = ExtResource( 219 )
+frame_17/delay_sec = 0.0
+frame_18/texture = ExtResource( 243 )
+frame_18/delay_sec = 0.0
+frame_19/texture = ExtResource( 228 )
+frame_19/delay_sec = 0.0
+frame_20/texture = ExtResource( 241 )
+frame_20/delay_sec = 0.0
+frame_21/texture = ExtResource( 245 )
+frame_21/delay_sec = 0.0
+frame_22/texture = ExtResource( 246 )
+frame_22/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=26]
+frames = 23
+fps = 23.0
+frame_0/texture = ExtResource( 233 )
+frame_1/texture = ExtResource( 234 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 235 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 236 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 238 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 239 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 240 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 249 )
+frame_7/delay_sec = 0.0
+frame_8/texture = ExtResource( 248 )
+frame_8/delay_sec = 0.0
+frame_9/texture = ExtResource( 251 )
+frame_9/delay_sec = 0.0
+frame_10/texture = ExtResource( 252 )
+frame_10/delay_sec = 0.0
+frame_11/texture = ExtResource( 250 )
+frame_11/delay_sec = 0.0
+frame_12/texture = ExtResource( 300 )
+frame_12/delay_sec = 0.0
+frame_13/texture = ExtResource( 290 )
+frame_13/delay_sec = 0.0
+frame_14/texture = ExtResource( 294 )
+frame_14/delay_sec = 0.0
+frame_15/texture = ExtResource( 292 )
+frame_15/delay_sec = 0.0
+frame_16/texture = ExtResource( 297 )
+frame_16/delay_sec = 0.0
+frame_17/texture = ExtResource( 291 )
+frame_17/delay_sec = 0.0
+frame_18/texture = ExtResource( 299 )
+frame_18/delay_sec = 0.0
+frame_19/texture = ExtResource( 296 )
+frame_19/delay_sec = 0.0
+frame_20/texture = ExtResource( 298 )
+frame_20/delay_sec = 0.0
+frame_21/texture = ExtResource( 293 )
+frame_21/delay_sec = 0.0
+frame_22/texture = ExtResource( 295 )
+frame_22/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=27]
+frames = 23
+fps = 11.5
+frame_0/texture = ExtResource( 201 )
+frame_1/texture = ExtResource( 247 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 229 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 242 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 244 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 230 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 231 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 232 )
+frame_7/delay_sec = 0.0
+frame_8/texture = ExtResource( 237 )
+frame_8/delay_sec = 0.0
+frame_9/texture = ExtResource( 225 )
+frame_9/delay_sec = 0.0
+frame_10/texture = ExtResource( 224 )
+frame_10/delay_sec = 0.0
+frame_11/texture = ExtResource( 226 )
+frame_11/delay_sec = 0.0
+frame_12/texture = ExtResource( 227 )
+frame_12/delay_sec = 0.0
+frame_13/texture = ExtResource( 222 )
+frame_13/delay_sec = 0.0
+frame_14/texture = ExtResource( 202 )
+frame_14/delay_sec = 0.0
+frame_15/texture = ExtResource( 221 )
+frame_15/delay_sec = 0.0
+frame_16/texture = ExtResource( 206 )
+frame_16/delay_sec = 0.0
+frame_17/texture = ExtResource( 279 )
+frame_17/delay_sec = 0.0
+frame_18/texture = ExtResource( 266 )
+frame_18/delay_sec = 0.0
+frame_19/texture = ExtResource( 256 )
+frame_19/delay_sec = 0.0
+frame_20/texture = ExtResource( 255 )
+frame_20/delay_sec = 0.0
+frame_21/texture = ExtResource( 288 )
+frame_21/delay_sec = 0.0
+frame_22/texture = ExtResource( 253 )
+frame_22/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=28]
+frames = 23
+fps = 11.5
+frame_0/texture = ExtResource( 276 )
+frame_1/texture = ExtResource( 274 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 267 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 254 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 260 )
+frame_4/delay_sec = 0.0
+frame_5/texture = ExtResource( 281 )
+frame_5/delay_sec = 0.0
+frame_6/texture = ExtResource( 283 )
+frame_6/delay_sec = 0.0
+frame_7/texture = ExtResource( 284 )
+frame_7/delay_sec = 0.0
+frame_8/texture = ExtResource( 257 )
+frame_8/delay_sec = 0.0
+frame_9/texture = ExtResource( 270 )
+frame_9/delay_sec = 0.0
+frame_10/texture = ExtResource( 264 )
+frame_10/delay_sec = 0.0
+frame_11/texture = ExtResource( 268 )
+frame_11/delay_sec = 0.0
+frame_12/texture = ExtResource( 269 )
+frame_12/delay_sec = 0.0
+frame_13/texture = ExtResource( 265 )
+frame_13/delay_sec = 0.0
+frame_14/texture = ExtResource( 261 )
+frame_14/delay_sec = 0.0
+frame_15/texture = ExtResource( 272 )
+frame_15/delay_sec = 0.0
+frame_16/texture = ExtResource( 278 )
+frame_16/delay_sec = 0.0
+frame_17/texture = ExtResource( 273 )
+frame_17/delay_sec = 0.0
+frame_18/texture = ExtResource( 282 )
+frame_18/delay_sec = 0.0
+frame_19/texture = ExtResource( 262 )
+frame_19/delay_sec = 0.0
+frame_20/texture = ExtResource( 275 )
+frame_20/delay_sec = 0.0
+frame_21/texture = ExtResource( 285 )
+frame_21/delay_sec = 0.0
+frame_22/texture = ExtResource( 289 )
+frame_22/delay_sec = 0.0
 
 [resource]
 0/name = "Fire"
@@ -1642,3 +1938,171 @@ frame_7/delay_sec = 0.0
 74/shape_one_way_margin = 0.0
 74/shapes = [  ]
 74/z_index = 0
+75/name = "PhaseWallBlue"
+75/texture = SubResource( 25 )
+75/tex_offset = Vector2( 0, 0 )
+75/modulate = Color( 1, 1, 1, 1 )
+75/region = Rect2( 0, 0, 24, 24 )
+75/tile_mode = 0
+75/occluder_offset = Vector2( 12, 12 )
+75/navigation_offset = Vector2( 12, 12 )
+75/shape_offset = Vector2( 0, 0 )
+75/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+75/shape_one_way = false
+75/shape_one_way_margin = 0.0
+75/shapes = [  ]
+75/z_index = 0
+76/name = "PhaseWallRed"
+76/texture = SubResource( 26 )
+76/tex_offset = Vector2( 0, 0 )
+76/modulate = Color( 1, 1, 1, 1 )
+76/region = Rect2( 0, 0, 24, 24 )
+76/tile_mode = 0
+76/occluder_offset = Vector2( 12, 12 )
+76/navigation_offset = Vector2( 12, 12 )
+76/shape_offset = Vector2( 0, 0 )
+76/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+76/shape_one_way = false
+76/shape_one_way_margin = 0.0
+76/shapes = [  ]
+76/z_index = 0
+77/name = "PhaseWallGray"
+77/texture = SubResource( 27 )
+77/tex_offset = Vector2( 0, 0 )
+77/modulate = Color( 1, 1, 1, 1 )
+77/region = Rect2( 0, 0, 24, 24 )
+77/tile_mode = 0
+77/occluder_offset = Vector2( 12, 12 )
+77/navigation_offset = Vector2( 12, 12 )
+77/shape_offset = Vector2( 0, 0 )
+77/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+77/shape_one_way = false
+77/shape_one_way_margin = 0.0
+77/shapes = [  ]
+77/z_index = 0
+78/name = "PhaseWallPurple"
+78/texture = SubResource( 28 )
+78/tex_offset = Vector2( 0, 0 )
+78/modulate = Color( 1, 1, 1, 1 )
+78/region = Rect2( 0, 0, 24, 24 )
+78/tile_mode = 0
+78/occluder_offset = Vector2( 12, 12 )
+78/navigation_offset = Vector2( 12, 12 )
+78/shape_offset = Vector2( 0, 0 )
+78/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+78/shape_one_way = false
+78/shape_one_way_margin = 0.0
+78/shapes = [  ]
+78/z_index = 0
+79/name = "PhaseLightningBlue"
+79/texture = ExtResource( 286 )
+79/tex_offset = Vector2( 0, 0 )
+79/modulate = Color( 1, 1, 1, 1 )
+79/region = Rect2( 0, 0, 24, 24 )
+79/tile_mode = 0
+79/occluder_offset = Vector2( 12, 12 )
+79/navigation_offset = Vector2( 12, 12 )
+79/shape_offset = Vector2( 0, 0 )
+79/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+79/shape_one_way = false
+79/shape_one_way_margin = 0.0
+79/shapes = [  ]
+79/z_index = 0
+80/name = "PhaseLightningRed"
+80/texture = ExtResource( 280 )
+80/tex_offset = Vector2( 0, 0 )
+80/modulate = Color( 1, 1, 1, 1 )
+80/region = Rect2( 0, 0, 24, 24 )
+80/tile_mode = 0
+80/occluder_offset = Vector2( 12, 12 )
+80/navigation_offset = Vector2( 12, 12 )
+80/shape_offset = Vector2( 0, 0 )
+80/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+80/shape_one_way = false
+80/shape_one_way_margin = 0.0
+80/shapes = [  ]
+80/z_index = 0
+81/name = "PhaseLightningGray"
+81/texture = ExtResource( 287 )
+81/tex_offset = Vector2( 0, 0 )
+81/modulate = Color( 1, 1, 1, 1 )
+81/region = Rect2( 0, 0, 24, 24 )
+81/tile_mode = 0
+81/occluder_offset = Vector2( 12, 12 )
+81/navigation_offset = Vector2( 12, 12 )
+81/shape_offset = Vector2( 0, 0 )
+81/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+81/shape_one_way = false
+81/shape_one_way_margin = 0.0
+81/shapes = [  ]
+81/z_index = 0
+82/name = "PhaseLightningPurple"
+82/texture = ExtResource( 277 )
+82/tex_offset = Vector2( 0, 0 )
+82/modulate = Color( 1, 1, 1, 1 )
+82/region = Rect2( 0, 0, 24, 24 )
+82/tile_mode = 0
+82/occluder_offset = Vector2( 12, 12 )
+82/navigation_offset = Vector2( 12, 12 )
+82/shape_offset = Vector2( 0, 0 )
+82/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+82/shape_one_way = false
+82/shape_one_way_margin = 0.0
+82/shapes = [  ]
+82/z_index = 0
+83/name = "OnewayEastLose"
+83/texture = ExtResource( 258 )
+83/tex_offset = Vector2( 0, 0 )
+83/modulate = Color( 1, 1, 1, 1 )
+83/region = Rect2( 0, 0, 24, 24 )
+83/tile_mode = 0
+83/occluder_offset = Vector2( 12, 12 )
+83/navigation_offset = Vector2( 12, 12 )
+83/shape_offset = Vector2( 0, 0 )
+83/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+83/shape_one_way = false
+83/shape_one_way_margin = 0.0
+83/shapes = [  ]
+83/z_index = 0
+84/name = "OnewayNorthLose"
+84/texture = ExtResource( 259 )
+84/tex_offset = Vector2( 0, 0 )
+84/modulate = Color( 1, 1, 1, 1 )
+84/region = Rect2( 0, 0, 24, 24 )
+84/tile_mode = 0
+84/occluder_offset = Vector2( 12, 12 )
+84/navigation_offset = Vector2( 12, 12 )
+84/shape_offset = Vector2( 0, 0 )
+84/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+84/shape_one_way = false
+84/shape_one_way_margin = 0.0
+84/shapes = [  ]
+84/z_index = 0
+85/name = "OnewaySouthLose"
+85/texture = ExtResource( 271 )
+85/tex_offset = Vector2( 0, 0 )
+85/modulate = Color( 1, 1, 1, 1 )
+85/region = Rect2( 0, 0, 24, 24 )
+85/tile_mode = 0
+85/occluder_offset = Vector2( 12, 12 )
+85/navigation_offset = Vector2( 12, 12 )
+85/shape_offset = Vector2( 0, 0 )
+85/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+85/shape_one_way = false
+85/shape_one_way_margin = 0.0
+85/shapes = [  ]
+85/z_index = 0
+86/name = "OnewayWestLose"
+86/texture = ExtResource( 263 )
+86/tex_offset = Vector2( 0, 0 )
+86/modulate = Color( 1, 1, 1, 1 )
+86/region = Rect2( 0, 0, 24, 24 )
+86/tile_mode = 0
+86/occluder_offset = Vector2( 12, 12 )
+86/navigation_offset = Vector2( 12, 12 )
+86/shape_offset = Vector2( 0, 0 )
+86/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+86/shape_one_way = false
+86/shape_one_way_margin = 0.0
+86/shapes = [  ]
+86/z_index = 0
