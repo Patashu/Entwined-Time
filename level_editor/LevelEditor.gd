@@ -544,178 +544,165 @@ func picker_cycle(impulse: int) -> void:
 func picker_tooltip() -> void:
 	var tile = picker.get_cellv(pen_xy);
 	var text = "";
-	if (tile == -1):
-		text = "";
-	elif (tile == Tiles.HeavyIdle):
-		text = "Heavy: Actor. Character. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move."
-	elif (tile == Tiles.LightIdle):
-		text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs. Clumsy (loses one strength when indirectly pushed)."
-	elif (tile == Tiles.HeavyGoal):
-		text = "Heavy Goal: At end of turn, if unbroken Heavy is on a Heavy Goal and unbroken Light is on a Light Goal, you win."
-	elif (tile == Tiles.LightGoal):
-		text = "Light Goal: At end of turn, if unbroken Heavy is on a Heavy Goal and unbroken Light is on a Light Goal, you win."
-	elif (tile == Tiles.Wall):
-		text = "Wall: Solid."
-	elif (tile == Tiles.Spikeball):
-		text = "Spikeball: Solid. Surprise: If the actor doesn't have Spikes or greater Durability, it breaks. (Surprises trigger on failure to enter, and aren't stable ground if they'd do something.)"
-	elif (tile == Tiles.Fire):
-		text = "Fire: When an actor experiences time, after gravity, if it's on Fire and doesn't have Fire or greater Durability, it breaks."
-	elif (tile == Tiles.HeavyFire):
-		text = "Heavy Fire: Fire, but it can only break Heavy."
-	elif (tile == Tiles.LightFire):
-		text = "Light Fire: Fire, but it can only break Light."
-	elif (tile == Tiles.NoHeavy):
-		text = "No Heavy: Solid to Heavy."
-	elif (tile == Tiles.NoLight):
-		text = "No Light: Solid to Light."
-	elif (tile == Tiles.OnewayEast):
-		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
-	elif (tile == Tiles.OnewayNorth):
-		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
-	elif (tile == Tiles.OnewaySouth):
-		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
-	elif (tile == Tiles.OnewayWest):
-		text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
-	elif (tile == Tiles.OnewayEastGreen):
-		text = "Green One Way: Solid to moves entering its tile."
-	elif (tile == Tiles.OnewayNorthGreen):
-		text = "Green One Way: Solid to moves entering its tile."
-	elif (tile == Tiles.OnewaySouthGreen):
-		text = "Green One Way: Solid to moves entering its tile."
-	elif (tile == Tiles.OnewayWestGreen):
-		text = "Green One Way: Solid to moves entering its tile."
-	elif (tile == Tiles.Ladder):
-		text = "Ladder: Actors that can climb and aren't broken are supported in this tile (they become and remain grounded)."
-	elif (tile == Tiles.WoodenPlatform):
-		text = "Trapdoor: Solid to gravity moves."
-	elif (tile == Tiles.LadderPlatform):
-		text = "Ladder + Trapdoor: Combines the properties of the two tiles. (I made it before layers existed.)"
-	elif (tile == Tiles.OnewayEastPurple):
-		text = "Purple One Way: Solid to retroactive moves entering its tile."
-	elif (tile == Tiles.OnewayNorthPurple):
-		text = "Purple One Way: Solid to retroactive moves entering its tile."
-	elif (tile == Tiles.OnewaySouthPurple):
-		text = "Purple One Way: Solid to retroactive moves entering its tile."
-	elif (tile == Tiles.OnewayWestPurple):
-		text = "Purple One Way: Solid to retroactive moves entering its tile."
-	elif (tile == Tiles.IronCrate):
-		text = "Iron Crate: Actor. Heaviness: Iron. Strength: Wood. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
-	elif (tile == Tiles.CrateGoal):
-		text = "Crate Goal: If you would win due to Light and Heavy being on Goals: You do not unless every Crate Goal has a non-Character actor on its tile."
-	elif (tile == Tiles.NoCrate):
-		text = "No Crate: Solid to non-Character actors."
-	elif (tile == Tiles.ColourRed):
-		text = "Red: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Heavy moves."
-	elif (tile == Tiles.ColourBlue):
-		text = "Blue: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Light moves."
-	elif (tile == Tiles.ColourGray):
-		text = "Gray: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time during moves."
-	elif (tile == Tiles.ColourMagenta):
-		text = "Magenta: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Always experiences time."
-	elif (tile == Tiles.WoodenCrate):
-		text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead."
-	elif (tile == Tiles.GlassBlock):
-		text = "Glass Block: Solid to moves entering or exiting its tile. Surprise: If the actor is Iron weight or greater, the Glass Block breaks. When a Glass Block unbreaks, it breaks any actors that don't have Unbreakable durability."
-	elif (tile == Tiles.ColourGreen):
-		text = "Green: Colour. Always experiences time. Immune to character undo events."
-	elif (tile == Tiles.GreenSpikeball):
-		text = "Green Spikeball: A Spikeball that does not create character undo events."
-	elif (tile == Tiles.GreenFire):
-		text = "Green Fire: A Fire that activates after regular Fires even for actors not experiencing time and does not create character undo events."
-	elif (tile == Tiles.GreenGlassBlock):
-		text = "Green Glass Block: A Glass Block that does not create character undo events."
-	elif (tile == Tiles.Fuzz):
-		text = "Fuzz: When a character undoes while inside Fuzz, the Fuzz is consumed (creating only a meta undo event), the undo happens but is not consumed, and time does not pass."
-	elif (tile == Tiles.OneUndo):
-		text = "One Undo: When a character undoes while inside One Undo, one of them is replaced with a No Undo (creating only a meta undo event)."
-	elif (tile == Tiles.NoUndo):
-		text = "No Undo: When a character undoes while inside No Undo and on no One Undos, it is prevented and nothing happens."
-	elif (tile == Tiles.TimeCrystalGreen):
-		text = "Green Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. Time Crystals existing locks goals. When consumed by an unbroken Cuckoo Clock: Increase ticks by 1. When consumed by a Character: If the character has no locked moves: Increase turn limit by 1. Else, unlock the most recently locked move and place it on the end of the character's filled timeline."
-	elif (tile == Tiles.TimeCrystalMagenta):
-		text = "Magenta Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. Time Crystals existing locks goals. When consumed by an unbroken Cuckoo Clock: Decrease ticks by 1. When consumed by a Character: If the character's turn limit is 0: You lose. Else, if the character is filling a timeline slot: Lock it. Else, if the character has a filled timeline slot: Lock the highest numbered one. Else, lock an empty timeline slot."
-	elif (tile == Tiles.CuckooClock):
-		text = "Cuckoo Clock: Actor. Heaviness: Wooden. Strength: Wooden. Durability: Nothing. Fall speed: 1. Native Time Colour: Gray. To start a puzzle with ticks: Fill out Clock Turns field with a comma separated list, and turns will be assigned to clocks in layer+reading order. When experiencing time, after green fire, if it has ticks and isn't broken, decrease ticks by 1. Whenever a cuckoo clock's ticks are 0: You lose."
-	elif (tile == Tiles.TheNight):
-		text = "Night: Actors inside Night don't experience time passing (except for being burned by fire and green fire)."
-	elif (tile == Tiles.TheStars):
-		text = "Stars: Actors inside Stars are immune to character undo events."
-	elif (tile == Tiles.SteelCrate):
-		text = "Steel Crate: Actor. Heaviness: Steel. Strength: Iron. Durability: Fire. Fall speed: Infinite. Native Time Colour: Gray. When a unbroken Steel Crate fails to move into an unstacked unbroken Light or Cuckoo Clock, the target first breaks."
-	elif (tile == Tiles.PowerCrate):
-		text = "Power Crate: Actor. Heaviness: Wooden. Strength: Steel. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
-	elif (tile == Tiles.ColourVoid):
-		text = "Void: Colour. Always experiences time, INCLUDING after meta undos. Immune to character undo AND meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
-	elif (tile == Tiles.ColourCyan):
-		text = "Cyan: Colour. Experiences time when Light moves or undoes."
-	elif (tile == Tiles.ColourOrange):
-		text = "Orange: Colour. Experiences time when Heavy moves or undoes."
-	elif (tile == Tiles.ColourYellow):
-		text = "Yellow: Colour. Experiences time during undos."
-	elif (tile == Tiles.ColourPurple):
-		text = "Purple: Colour. Experiences time except when Heavy undoes."
-	elif (tile == Tiles.ColourBlurple):
-		text = "Blurple: Colour. Experiences time except when Light undoes."
-	elif (tile == Tiles.ColourWhite):
-		text = "White: Colour. Never experiences time."
-	elif (tile == Tiles.VoidSpikeball):
-		text = "Void Spikeball: A Spikeball that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
-	elif (tile == Tiles.VoidGlassBlock):
-		text = "Void Glass Block: A Glass Block that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
-	elif (tile == Tiles.ChronoHelixBlue):
-		text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
-	elif (tile == Tiles.ChronoHelixRed):
-		text = "Chrono Helix Red: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Blue, both move away from each other. When bumped with a Chrono Helix Blue, you win."
-	elif (tile == Tiles.HeavyGoalJoke):
-		text = "Heavy Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Heavy Goal. Phases through terrain and actors."
-	elif (tile == Tiles.LightGoalJoke):
-		text = "Light Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Light Goal. Phases through terrain and actors."
-	elif (tile == Tiles.PowerSocket):
-		text = "Power Socket: A Spikeball that specifically breaks Characters."
-	elif (tile == Tiles.GreenPowerSocket):
-		text = "Green Power Socket: A Power Socket that does not create character undo events."
-	elif (tile == Tiles.VoidPowerSocket):
-		text = "Void Power Socket: A Power Socket that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
-	elif (tile == Tiles.GlassBlockCracked):
-		text = "Cracked Glass Block: A Glass Block without the weight requirement."
-	elif (tile == Tiles.PhaseWallBlue):
-		text = "Phase Wall Blue: Solid during Light moves and undoes."
-	elif (tile == Tiles.PhaseWallRed):
-		text = "Phase Wall Red: Solid during Heavy moves and undoes."
-	elif (tile == Tiles.PhaseWallGray):
-		text = "Phase Wall Gray: Solid during character moves."
-	elif (tile == Tiles.PhaseWallPurple):
-		text = "Phase Wall Purple: Solid during character undoes."
-	elif (tile == Tiles.PhaseLightningBlue):
-		text = "Phase Lightning Blue: After Light moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
-	elif (tile == Tiles.PhaseLightningRed):
-		text = "Phase Lightning Red: After Heavy moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
-	elif (tile == Tiles.PhaseLightningGray):
-		text = "Phase Lightning Gray: After character moves, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
-	elif (tile == Tiles.PhaseLightningPurple):
-		text = "Phase Lightning Purple: After character undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
-	elif (tile == Tiles.OneWayEastLose):
-		text = "Lose One Way: A Green One Way that if bumped, you lose."
-	elif (tile == Tiles.OneWayNorthLose):
-		text = "Lose One Way: A Green One Way that if bumped, you lose."
-	elif (tile == Tiles.OneWaySouthLose):
-		text = "Lose One Way: A Green One Way that if bumped, you lose."
-	elif (tile == Tiles.OneWayWestLose):
-		text = "Lose One Way: A Green One Way that if bumped, you lose."
-	#	PhaseWallBlue, #75
-#	PhaseWallRed, #76
-#	PhaseWallGray, #77
-#	PhaseWallPurple, #78
-#	PhaseLightningBlue, #79
-#	PhaseLightningRed, #80
-#	PhaseLightningGray, #81
-#	PhaseLightningPurple, #82
-#	OneWayEastLose, #83
-#	OneWayNorthLose, #84
-#	OneWaySouthLose, #85
-#	OneWayWestLose, #86
-	else:
-		text = "";
+	match tile:
+		-1:
+			text = "";
+		Tiles.HeavyIdle:
+			text = "Heavy: Actor. Character. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move."
+		Tiles.LightIdle:
+			text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs. Clumsy (loses one strength when indirectly pushed)."
+		Tiles.HeavyGoal:
+			text = "Heavy Goal: At end of turn, if unbroken Heavy is on a Heavy Goal and unbroken Light is on a Light Goal, you win."
+		Tiles.LightGoal:
+			text = "Light Goal: At end of turn, if unbroken Heavy is on a Heavy Goal and unbroken Light is on a Light Goal, you win."
+		Tiles.Wall:
+			text = "Wall: Solid."
+		Tiles.Spikeball:
+			text = "Spikeball: Solid. Surprise: If the actor doesn't have Spikes or greater Durability, it breaks. (Surprises trigger on failure to enter, and aren't stable ground if they'd do something.)"
+		Tiles.Fire:
+			text = "Fire: When an actor experiences time, after gravity, if it's on Fire and doesn't have Fire or greater Durability, it breaks."
+		Tiles.HeavyFire:
+			text = "Heavy Fire: Fire, but it can only break Heavy."
+		Tiles.LightFire:
+			text = "Light Fire: Fire, but it can only break Light."
+		Tiles.NoHeavy:
+			text = "No Heavy: Solid to Heavy."
+		Tiles.NoLight:
+			text = "No Light: Solid to Light."
+		Tiles.OnewayEast:
+			text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+		Tiles.OnewayNorth:
+			text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+		Tiles.OnewaySouth:
+			text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+		Tiles.OnewayWest:
+			text = "One Way: Solid to forward moves entering its tile, solid to retroactive moves exiting its tile."
+		Tiles.OnewayEastGreen:
+			text = "Green One Way: Solid to moves entering its tile."
+		Tiles.OnewayNorthGreen:
+			text = "Green One Way: Solid to moves entering its tile."
+		Tiles.OnewaySouthGreen:
+			text = "Green One Way: Solid to moves entering its tile."
+		Tiles.OnewayWestGreen:
+			text = "Green One Way: Solid to moves entering its tile."
+		Tiles.Ladder:
+			text = "Ladder: Actors that can climb and aren't broken are supported in this tile (they become and remain grounded)."
+		Tiles.WoodenPlatform:
+			text = "Trapdoor: Solid to gravity moves."
+		Tiles.LadderPlatform:
+			text = "Ladder + Trapdoor: Combines the properties of the two tiles. (I made it before layers existed.)"
+		Tiles.OnewayEastPurple:
+			text = "Purple One Way: Solid to retroactive moves entering its tile."
+		Tiles.OnewayNorthPurple:
+			text = "Purple One Way: Solid to retroactive moves entering its tile."
+		Tiles.OnewaySouthPurple:
+			text = "Purple One Way: Solid to retroactive moves entering its tile."
+		Tiles.OnewayWestPurple:
+			text = "Purple One Way: Solid to retroactive moves entering its tile."
+		Tiles.IronCrate:
+			text = "Iron Crate: Actor. Heaviness: Iron. Strength: Wood. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
+		Tiles.CrateGoal:
+			text = "Crate Goal: If you would win due to Light and Heavy being on Goals: You do not unless every Crate Goal has a non-Character actor on its tile."
+		Tiles.NoCrate:
+			text = "No Crate: Solid to non-Character actors."
+		Tiles.ColourRed:
+			text = "Red: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Heavy moves."
+		Tiles.ColourBlue:
+			text = "Blue: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Light moves."
+		Tiles.ColourGray:
+			text = "Gray: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time during moves."
+		Tiles.ColourMagenta:
+			text = "Magenta: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Always experiences time."
+		Tiles.WoodenCrate:
+			text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead."
+		Tiles.GlassBlock:
+			text = "Glass Block: Solid to moves entering or exiting its tile. Surprise: If the actor is Iron weight or greater, the Glass Block breaks. When a Glass Block unbreaks, it breaks any actors that don't have Unbreakable durability."
+		Tiles.ColourGreen:
+			text = "Green: Colour. Always experiences time. Immune to character undo events."
+		Tiles.GreenSpikeball:
+			text = "Green Spikeball: A Spikeball that does not create character undo events."
+		Tiles.GreenFire:
+			text = "Green Fire: A Fire that activates after regular Fires even for actors not experiencing time and does not create character undo events."
+		Tiles.GreenGlassBlock:
+			text = "Green Glass Block: A Glass Block that does not create character undo events."
+		Tiles.Fuzz:
+			text = "Fuzz: When a character undoes while inside Fuzz, the Fuzz is consumed (creating only a meta undo event), the undo happens but is not consumed, and time does not pass."
+		Tiles.OneUndo:
+			text = "One Undo: When a character undoes while inside One Undo, one of them is replaced with a No Undo (creating only a meta undo event)."
+		Tiles.NoUndo:
+			text = "No Undo: When a character undoes while inside No Undo and on no One Undos, it is prevented and nothing happens."
+		Tiles.TimeCrystalGreen:
+			text = "Green Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. Time Crystals existing locks goals. When consumed by an unbroken Cuckoo Clock: Increase ticks by 1. When consumed by a Character: If the character has no locked moves: Increase turn limit by 1. Else, unlock the most recently locked move and place it on the end of the character's filled timeline."
+		Tiles.TimeCrystalMagenta:
+			text = "Magenta Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. Time Crystals existing locks goals. When consumed by an unbroken Cuckoo Clock: Decrease ticks by 1. When consumed by a Character: If the character's turn limit is 0: You lose. Else, if the character is filling a timeline slot: Lock it. Else, if the character has a filled timeline slot: Lock the highest numbered one. Else, lock an empty timeline slot."
+		Tiles.CuckooClock:
+			text = "Cuckoo Clock: Actor. Heaviness: Wooden. Strength: Wooden. Durability: Nothing. Fall speed: 1. Native Time Colour: Gray. To start a puzzle with ticks: Fill out Clock Turns field with a comma separated list, and turns will be assigned to clocks in layer+reading order. When experiencing time, after green fire, if it has ticks and isn't broken, decrease ticks by 1. Whenever a cuckoo clock's ticks are 0: You lose."
+		Tiles.TheNight:
+			text = "Night: Actors inside Night don't experience time passing (except for being burned by fire and green fire)."
+		Tiles.TheStars:
+			text = "Stars: Actors inside Stars are immune to character undo events."
+		Tiles.SteelCrate:
+			text = "Steel Crate: Actor. Heaviness: Steel. Strength: Iron. Durability: Fire. Fall speed: Infinite. Native Time Colour: Gray. When a unbroken Steel Crate fails to move into an unstacked unbroken Light or Cuckoo Clock, the target first breaks."
+		Tiles.PowerCrate:
+			text = "Power Crate: Actor. Heaviness: Wooden. Strength: Steel. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
+		Tiles.ColourVoid:
+			text = "Void: Colour. Always experiences time, INCLUDING after meta undos. Immune to character undo AND meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+		Tiles.ColourCyan:
+			text = "Cyan: Colour. Experiences time when Light moves or undoes."
+		Tiles.ColourOrange:
+			text = "Orange: Colour. Experiences time when Heavy moves or undoes."
+		Tiles.ColourYellow:
+			text = "Yellow: Colour. Experiences time during undos."
+		Tiles.ColourPurple:
+			text = "Purple: Colour. Experiences time except when Heavy undoes."
+		Tiles.ColourBlurple:
+			text = "Blurple: Colour. Experiences time except when Light undoes."
+		Tiles.ColourWhite:
+			text = "White: Colour. Never experiences time."
+		Tiles.VoidSpikeball:
+			text = "Void Spikeball: A Spikeball that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+		Tiles.VoidGlassBlock:
+			text = "Void Glass Block: A Glass Block that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+		Tiles.ChronoHelixBlue:
+			text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
+		Tiles.ChronoHelixRed:
+			text = "Chrono Helix Red: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Blue, both move away from each other. When bumped with a Chrono Helix Blue, you win."
+		Tiles.HeavyGoalJoke:
+			text = "Heavy Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Heavy Goal. Phases through terrain and actors."
+		Tiles.LightGoalJoke:
+			text = "Light Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Light Goal. Phases through terrain and actors."
+		Tiles.PowerSocket:
+			text = "Power Socket: A Spikeball that specifically breaks Characters."
+		Tiles.GreenPowerSocket:
+			text = "Green Power Socket: A Power Socket that does not create character undo events."
+		Tiles.VoidPowerSocket:
+			text = "Void Power Socket: A Power Socket that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+		Tiles.GlassBlockCracked:
+			text = "Cracked Glass Block: A Glass Block without the weight requirement."
+		Tiles.PhaseWallBlue:
+			text = "Phase Wall Blue: Solid during Light moves and undoes."
+		Tiles.PhaseWallRed:
+			text = "Phase Wall Red: Solid during Heavy moves and undoes."
+		Tiles.PhaseWallGray:
+			text = "Phase Wall Gray: Solid during character moves."
+		Tiles.PhaseWallPurple:
+			text = "Phase Wall Purple: Solid during character undoes."
+		Tiles.PhaseLightningBlue:
+			text = "Phase Lightning Blue: After Light moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+		Tiles.PhaseLightningRed:
+			text = "Phase Lightning Red: After Heavy moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+		Tiles.PhaseLightningGray:
+			text = "Phase Lightning Gray: After character moves, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+		Tiles.PhaseLightningPurple:
+			text = "Phase Lightning Purple: After character undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+		Tiles.OneWayEastLose:
+			text = "Lose One Way: A Green One Way that if bumped, you lose."
+		Tiles.OneWayNorthLose:
+			text = "Lose One Way: A Green One Way that if bumped, you lose."
+		Tiles.OneWaySouthLose:
+			text = "Lose One Way: A Green One Way that if bumped, you lose."
+		Tiles.OneWayWestLose:
+			text = "Lose One Way: A Green One Way that if bumped, you lose."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));
