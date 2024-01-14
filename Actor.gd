@@ -126,80 +126,81 @@ func get_next_texture() -> Texture:
 			ding = null;
 	
 	# airborne, broken
-	if actorname == Name.Heavy:
-		if broken:
-			return preload("res://assets/heavy_broken.png");
-		elif airborne >= 1:
-			return preload("res://assets/heavy_rising.png");
-		elif airborne == 0:
-			return preload("res://assets/heavy_falling.png");
-		else:
-			if !powered:
-				return preload("res://assets/heavy_unpowered.png");
+	match actorname:
+		Name.Heavy:
+			if broken:
+				return preload("res://assets/heavy_broken.png");
+			elif airborne >= 1:
+				return preload("res://assets/heavy_rising.png");
+			elif airborne == 0:
+				return preload("res://assets/heavy_falling.png");
 			else:
-				return preload("res://assets/heavy_idle.png");
-	
-	elif actorname == Name.Light:
-		if broken:
-			return preload("res://assets/light_broken.png");
-		elif airborne >= 1:
-			return preload("res://assets/light_rising.png");
-		elif airborne == 0:
-			return preload("res://assets/light_falling.png");
-		else:
-			if !powered:
-				return preload("res://assets/light_unpowered.png");
+				if !powered:
+					return preload("res://assets/heavy_unpowered.png");
+				else:
+					return preload("res://assets/heavy_idle.png");
+		
+		Name.Light:
+			if broken:
+				return preload("res://assets/light_broken.png");
+			elif airborne >= 1:
+				return preload("res://assets/light_rising.png");
+			elif airborne == 0:
+				return preload("res://assets/light_falling.png");
 			else:
-				return preload("res://assets/light_idle_animation.png");
-	
-	elif actorname == Name.IronCrate:
-		if broken:
-			return preload("res://assets/iron_crate_broken.png");
-		else:
-			return preload("res://assets/iron_crate.png");
-	
-	elif actorname == Name.SteelCrate:
-		if broken:
-			return preload("res://assets/steel_crate_broken.png");
-		else:
-			return preload("res://assets/steel_crate.png");
-	
-	elif actorname == Name.PowerCrate:
-		if broken:
-			return preload("res://assets/power_crate_broken.png");
-		else:
-			return preload("res://assets/power_crate_animation.png");
-			
-	elif actorname == Name.WoodenCrate:
-		if broken:
-			return preload("res://assets/wooden_crate_broken.png");
-		else:
-			return preload("res://assets/wooden_crate.png");
-			
-	elif actorname == Name.CuckooClock:
-		if ticks == 0:
-			return preload("res://assets/cuckoo_clock_end.png");
-		elif broken:
-			return preload("res://assets/cuckoo_clock_broken.png");
-		else:
-			return preload("res://assets/cuckoo_clock.png");
-			
-	elif actorname == Name.TimeCrystalGreen:
-		if broken:
-			return null;
-		else:
-			return preload("res://assets/timecrystalgreen.png");
-			
-	elif actorname == Name.TimeCrystalMagenta:
-		if broken:
-			return null;
-		else:
-			return preload("res://assets/timecrystalmagenta.png");
-			
-	elif actorname == Name.ChronoHelixBlue:
-		return preload("res://assets/chrono_helix_blue.png");
-	elif actorname == Name.ChronoHelixRed:
-		return preload("res://assets/chrono_helix_red.png");
+				if !powered:
+					return preload("res://assets/light_unpowered.png");
+				else:
+					return preload("res://assets/light_idle_animation.png");
+		
+		Name.IronCrate:
+			if broken:
+				return preload("res://assets/iron_crate_broken.png");
+			else:
+				return preload("res://assets/iron_crate.png");
+		
+		Name.SteelCrate:
+			if broken:
+				return preload("res://assets/steel_crate_broken.png");
+			else:
+				return preload("res://assets/steel_crate.png");
+		
+		Name.PowerCrate:
+			if broken:
+				return preload("res://assets/power_crate_broken.png");
+			else:
+				return preload("res://assets/power_crate_animation.png");
+				
+		Name.WoodenCrate:
+			if broken:
+				return preload("res://assets/wooden_crate_broken.png");
+			else:
+				return preload("res://assets/wooden_crate.png");
+				
+		Name.CuckooClock:
+			if ticks == 0:
+				return preload("res://assets/cuckoo_clock_end.png");
+			elif broken:
+				return preload("res://assets/cuckoo_clock_broken.png");
+			else:
+				return preload("res://assets/cuckoo_clock.png");
+				
+		Name.TimeCrystalGreen:
+			if broken:
+				return null;
+			else:
+				return preload("res://assets/timecrystalgreen.png");
+				
+		Name.TimeCrystalMagenta:
+			if broken:
+				return null;
+			else:
+				return preload("res://assets/timecrystalmagenta.png");
+				
+		Name.ChronoHelixBlue:
+			return preload("res://assets/chrono_helix_blue.png");
+		Name.ChronoHelixRed:
+			return preload("res://assets/chrono_helix_red.png");
 	
 	return null;
 
@@ -458,263 +459,264 @@ func _process(delta: float) -> void:
 		if (animations.size() > 0):
 			var current_animation = animations[0];
 			var is_done = true;
-			if (current_animation[0] == 0): #move
-				# afterimage if it was a retro move
-				if (animation_timer == 0):
-					gamelogic.broadcast_animation_nonce(current_animation[3]);
-					if current_animation[2]:
-						afterimage();
-				animation_timer_max = 0.083;
-				position -= current_animation[1]*(animation_timer/animation_timer_max)*24;
-				animation_timer += delta;
-				if (animation_timer > animation_timer_max):
-					position += current_animation[1]*1*24;
-					# no rounding errors here! get rounded sucker!
-					position.x = round(position.x); position.y = round(position.y);
-				else:
-					is_done = false;
-					position += current_animation[1]*(animation_timer/animation_timer_max)*24;
-			elif (current_animation[0] == 1): #bump
-				if (animation_timer == 0):
-					gamelogic.broadcast_animation_nonce(current_animation[2]);
-				animation_timer_max = 0.1;
-				var bump_amount = (animation_timer/animation_timer_max);
-				if (bump_amount > 0.5):
-					bump_amount = 1-bump_amount;
-				bump_amount *= 0.2;
-				position -= current_animation[1]*bump_amount*24;
-				animation_timer += delta;
-				if (animation_timer > animation_timer_max):
-					position.x = round(position.x); position.y = round(position.y);
-				else:
-					is_done = false;
-					bump_amount = (animation_timer/animation_timer_max);
+			match current_animation[0]:
+				0: #move
+					# afterimage if it was a retro move
+					if (animation_timer == 0):
+						gamelogic.broadcast_animation_nonce(current_animation[3]);
+						if current_animation[2]:
+							afterimage();
+					animation_timer_max = 0.083;
+					position -= current_animation[1]*(animation_timer/animation_timer_max)*24;
+					animation_timer += delta;
+					if (animation_timer > animation_timer_max):
+						position += current_animation[1]*1*24;
+						# no rounding errors here! get rounded sucker!
+						position.x = round(position.x); position.y = round(position.y);
+					else:
+						is_done = false;
+						position += current_animation[1]*(animation_timer/animation_timer_max)*24;
+				1: #bump
+					if (animation_timer == 0):
+						gamelogic.broadcast_animation_nonce(current_animation[2]);
+					animation_timer_max = 0.1;
+					var bump_amount = (animation_timer/animation_timer_max);
 					if (bump_amount > 0.5):
 						bump_amount = 1-bump_amount;
 					bump_amount *= 0.2;
-					position += current_animation[1]*bump_amount*24;
-			elif (current_animation[0] == 2): #set_next_texture
-				set_next_texture(current_animation[1], current_animation[3]);
-				gamelogic.broadcast_animation_nonce(current_animation[2]);
-			elif (current_animation[0] == 3): #sfx
-				gamelogic.play_sound(current_animation[1]);
-			elif (current_animation[0] == 4): #fluster
-				fluster();
-			elif (current_animation[0] == 6): #trapdoor_opens
-				var sprite = Sprite.new();
-				sprite.set_script(preload("res://PingPongSprite.gd"));
-				sprite.texture = preload("res://assets/trapdoor_animation_spritesheet.png");
-				sprite.vframes = round(sprite.get_rect().size.y/24);
-				sprite.hframes = round(sprite.get_rect().size.x/24);
-				sprite.frame = 0;
-				sprite.centered = false;
-				sprite.frame_timer_max = 0.05;
-				sprite.position = current_animation[1];
-				self.get_parent().get_parent().get_node("UnderActorsParticles").add_child(sprite);
-			elif (current_animation[0] == 7): #explode
-				if (is_character):
+					position -= current_animation[1]*bump_amount*24;
+					animation_timer += delta;
+					if (animation_timer > animation_timer_max):
+						position.x = round(position.x); position.y = round(position.y);
+					else:
+						is_done = false;
+						bump_amount = (animation_timer/animation_timer_max);
+						if (bump_amount > 0.5):
+							bump_amount = 1-bump_amount;
+						bump_amount *= 0.2;
+						position += current_animation[1]*bump_amount*24;
+				2: #set_next_texture
+					set_next_texture(current_animation[1], current_animation[3]);
+					gamelogic.broadcast_animation_nonce(current_animation[2]);
+				3: #sfx
+					gamelogic.play_sound(current_animation[1]);
+				4: #fluster
+					fluster();
+				6: #trapdoor_opens
+					var sprite = Sprite.new();
+					sprite.set_script(preload("res://PingPongSprite.gd"));
+					sprite.texture = preload("res://assets/trapdoor_animation_spritesheet.png");
+					sprite.vframes = round(sprite.get_rect().size.y/24);
+					sprite.hframes = round(sprite.get_rect().size.x/24);
+					sprite.frame = 0;
+					sprite.centered = false;
+					sprite.frame_timer_max = 0.05;
+					sprite.position = current_animation[1];
+					self.get_parent().get_parent().get_node("UnderActorsParticles").add_child(sprite);
+				7: #explode
+					if (is_character):
+						var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+						for i in range(10):
+							var sprite = Sprite.new();
+							sprite.set_script(preload("res://OneTimeSprite.gd"));
+							sprite.texture = preload("res://assets/broken_explosion.png")
+							sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+							sprite.vframes = round(sprite.get_rect().size.y/24);
+							sprite.hframes = round(sprite.get_rect().size.x/24);
+							sprite.frame = 0;
+							if (actorname == Name.Heavy):
+								sprite.frame = 4;
+							sprite.centered = true;
+							sprite.scale = Vector2(0.5, 0.5);
+							sprite.frame_max = sprite.frame + 4;
+							sprite.frame_timer_max = 0.2;
+							sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
+							overactorsparticles.add_child(sprite);
+				8: #shatter
 					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
-					for i in range(10):
+					gamelogic.broadcast_animation_nonce(current_animation[4]);
+					for i in range(4):
 						var sprite = Sprite.new();
-						sprite.set_script(preload("res://OneTimeSprite.gd"));
-						sprite.texture = preload("res://assets/broken_explosion.png")
-						sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
-						sprite.vframes = round(sprite.get_rect().size.y/24);
-						sprite.hframes = round(sprite.get_rect().size.x/24);
-						sprite.frame = 0;
-						if (actorname == Name.Heavy):
-							sprite.frame = 4;
+						sprite.set_script(preload("res://FadingSprite.gd"));
+						if (current_animation[2] == 46):
+							sprite.texture = preload("res://assets/green_glass_block.png")
+						elif (current_animation[2] == 51):
+							sprite.texture = preload("res://assets/one_undo.png")
+						elif (current_animation[2] == 69):
+							sprite.texture = preload("res://assets/glass_block_cracked.png")
+						else:
+							sprite.texture = preload("res://assets/glass_block.png")
+						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+						sprite.position.x += -6+(i%2)*12;
+						sprite.position.y += -6+floor(i/2)*12;
 						sprite.centered = true;
 						sprite.scale = Vector2(0.5, 0.5);
-						sprite.frame_max = sprite.frame + 4;
-						sprite.frame_timer_max = 0.2;
-						sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
+						sprite.velocity = Vector2(gamelogic.rng.randf_range(0, 48), gamelogic.rng.randf_range(0, 48));
+						if (i % 2 == 0):
+							sprite.velocity.x *= -1;
+						if (floor(i / 2) == 0):
+							sprite.velocity.y *= -1;
 						overactorsparticles.add_child(sprite);
-			elif (current_animation[0] == 8): #shatter
-				var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
-				gamelogic.broadcast_animation_nonce(current_animation[4]);
-				for i in range(4):
-					var sprite = Sprite.new();
-					sprite.set_script(preload("res://FadingSprite.gd"));
-					if (current_animation[2] == 46):
-						sprite.texture = preload("res://assets/green_glass_block.png")
-					elif (current_animation[2] == 51):
-						sprite.texture = preload("res://assets/one_undo.png")
-					elif (current_animation[2] == 69):
-						sprite.texture = preload("res://assets/glass_block_cracked.png")
-					else:
+					gamelogic.play_sound("shatter");
+				9: #unshatter
+					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+					gamelogic.broadcast_animation_nonce(current_animation[4]);
+					for i in range(4):
+						var sprite = Sprite.new();
+						sprite.set_script(preload("res://FadingSprite.gd"));
 						sprite.texture = preload("res://assets/glass_block.png")
-					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
-					sprite.position.x += -6+(i%2)*12;
-					sprite.position.y += -6+floor(i/2)*12;
-					sprite.centered = true;
-					sprite.scale = Vector2(0.5, 0.5);
-					sprite.velocity = Vector2(gamelogic.rng.randf_range(0, 48), gamelogic.rng.randf_range(0, 48));
-					if (i % 2 == 0):
-						sprite.velocity.x *= -1;
-					if (floor(i / 2) == 0):
-						sprite.velocity.y *= -1;
-					overactorsparticles.add_child(sprite);
-				gamelogic.play_sound("shatter");
-			elif (current_animation[0] == 9): #unshatter
-				var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
-				gamelogic.broadcast_animation_nonce(current_animation[4]);
-				for i in range(4):
-					var sprite = Sprite.new();
-					sprite.set_script(preload("res://FadingSprite.gd"));
-					sprite.texture = preload("res://assets/glass_block.png")
-					sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
-					sprite.position.x += -6+(i%2)*12;
-					sprite.position.y += -6+floor(i/2)*12;
-					sprite.centered = true;
-					sprite.scale = Vector2(0.5, 0.5);
-					sprite.velocity = Vector2(gamelogic.rng.randf_range(0, 48), gamelogic.rng.randf_range(0, 48));
-					if (i % 2 == 0):
-						sprite.velocity.x *= -1;
-					if (floor(i / 2) == 0):
-						sprite.velocity.y *= -1;
-					sprite.position += sprite.velocity;
-					sprite.velocity = -sprite.velocity;
-					overactorsparticles.add_child(sprite);
-				gamelogic.play_sound("unshatter");
-			elif (current_animation[0] == 10): #afterimage_at
-				gamelogic.afterimage_terrain(current_animation[1], current_animation[2], current_animation[3]);
-			elif (current_animation[0] == 11): #fade
-				animation_timer_max = 3;
-				animation_timer += delta;
-				if (animation_timer > animation_timer_max):
-					self.modulate.a = 0;
-				else:
-					is_done = false;
-					self.modulate.a = 1-(animation_timer/animation_timer_max);
-			elif (current_animation[0] == 12): #heavy_green_time_crystal_raw
-				var color = current_animation[1].color;
-				gamelogic.heavytimeline.add_max_turn();
-				gamelogic.timeline_squish();
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 13): #light_green_time_crystal_raw
-				var color = current_animation[1].color;
-				gamelogic.lighttimeline.add_max_turn();
-				gamelogic.timeline_squish();
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 14): #heavy_magenta_time_crystal
-				var color = current_animation[1].color;
-				gamelogic.heavytimeline.lock_turn(current_animation[2]);
-				gamelogic.timeline_squish();
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 15): #light_magenta_time_crystal
-				var color = current_animation[1].color;
-				var turn = current_animation[2];
-				if (turn != -99):
-					gamelogic.lighttimeline.lock_turn(turn);
+						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+						sprite.position.x += -6+(i%2)*12;
+						sprite.position.y += -6+floor(i/2)*12;
+						sprite.centered = true;
+						sprite.scale = Vector2(0.5, 0.5);
+						sprite.velocity = Vector2(gamelogic.rng.randf_range(0, 48), gamelogic.rng.randf_range(0, 48));
+						if (i % 2 == 0):
+							sprite.velocity.x *= -1;
+						if (floor(i / 2) == 0):
+							sprite.velocity.y *= -1;
+						sprite.position += sprite.velocity;
+						sprite.velocity = -sprite.velocity;
+						overactorsparticles.add_child(sprite);
+					gamelogic.play_sound("unshatter");
+				10: #afterimage_at
+					gamelogic.afterimage_terrain(current_animation[1], current_animation[2], current_animation[3]);
+				11: #fade
+					animation_timer_max = 3;
+					animation_timer += delta;
+					if (animation_timer > animation_timer_max):
+						self.modulate.a = 0;
+					else:
+						is_done = false;
+						self.modulate.a = 1-(animation_timer/animation_timer_max);
+				12: #heavy_green_time_crystal_raw
+					var color = current_animation[1].color;
+					gamelogic.heavytimeline.add_max_turn();
 					gamelogic.timeline_squish();
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 16): #heavy_green_time_crystal_unlock
-				var color = current_animation[1].color;
-				gamelogic.heavytimeline.unlock_turn(current_animation[2]);
-				gamelogic.timeline_squish();
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 17): #light_green_time_crystal_unlock
-				var color = current_animation[1].color;
-				var turn = current_animation[2];
-				if (turn != -99):
-					gamelogic.lighttimeline.unlock_turn(current_animation[2]);
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				13: #light_green_time_crystal_raw
+					var color = current_animation[1].color;
+					gamelogic.lighttimeline.add_max_turn();
 					gamelogic.timeline_squish();
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 18): #tick
-				var amount = current_animation[1];
-				var new_ticks = current_animation[2];
-				gamelogic.broadcast_animation_nonce(current_animation[3]);
-				thought_bubble.update_ticks(new_ticks);
-				if (new_ticks == 0):
-					gamelogic.play_sound("timesup");
-					ripple = preload("res://Ripple.tscn").instance();
-					ripple_timer = 0;
-					ripple.rect_position += Vector2(12, 12);
-					self.add_child(ripple);
-					self.update_graphics();
-				elif (amount < 0):
-					gamelogic.play_sound("tick");
-				else:
-					gamelogic.play_sound("untick");
-			elif (current_animation[0] == 19): #undo_immunity
-				if (animation_timer == 0):
-					gamelogic.broadcast_animation_nonce(current_animation[1]);
-					stored_position = position;
-					gamelogic.play_sound("shroud");
-				animation_timer_max = 0.083;
-				position = stored_position + Vector2(gamelogic.rng.randf_range(-2, 2), gamelogic.rng.randf_range(-2, 2));
-				animation_timer += delta;
-				if (animation_timer > animation_timer_max):
-					position = stored_position;
-				else:
-					is_done = false;
-			elif (current_animation[0] == 20): #grayscale
-				var new_value = current_animation[1];
-				update_grayscale(new_value);
-			elif (current_animation[0] == 21): #generic_green_time_crystal
-				var color = current_animation[1].color;
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 22): #generic_magenta_time_crystal;
-				var color = current_animation[1].color;
-				gamelogic.undo_effect_strength = 0.4;
-				gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
-				gamelogic.undo_effect_color = color;
-				var sparklespawner = Node2D.new();
-				sparklespawner.script = preload("res://SparkleSpawner.gd");
-				sparklespawner.color = color;
-				self.add_child(sparklespawner);
-			elif (current_animation[0] == 23): #lose
-				if (actorname == Name.Heavy):
-					gamelogic.heavytimeline.start_fade();
-				else:
-					gamelogic.lighttimeline.start_fade();
-				gamelogic.play_sound("abysschime");
-			elif (current_animation[0] == 24): #time_passes
-				if time_bubble != null:
-					time_bubble.flash();
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				14: #heavy_magenta_time_crystal
+					var color = current_animation[1].color;
+					gamelogic.heavytimeline.lock_turn(current_animation[2]);
+					gamelogic.timeline_squish();
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				15: #light_magenta_time_crystal
+					var color = current_animation[1].color;
+					var turn = current_animation[2];
+					if (turn != -99):
+						gamelogic.lighttimeline.lock_turn(turn);
+						gamelogic.timeline_squish();
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				16: #heavy_green_time_crystal_unlock
+					var color = current_animation[1].color;
+					gamelogic.heavytimeline.unlock_turn(current_animation[2]);
+					gamelogic.timeline_squish();
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				17: #light_green_time_crystal_unlock
+					var color = current_animation[1].color;
+					var turn = current_animation[2];
+					if (turn != -99):
+						gamelogic.lighttimeline.unlock_turn(current_animation[2]);
+						gamelogic.timeline_squish();
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				18: #tick
+					var amount = current_animation[1];
+					var new_ticks = current_animation[2];
+					gamelogic.broadcast_animation_nonce(current_animation[3]);
+					thought_bubble.update_ticks(new_ticks);
+					if (new_ticks == 0):
+						gamelogic.play_sound("timesup");
+						ripple = preload("res://Ripple.tscn").instance();
+						ripple_timer = 0;
+						ripple.rect_position += Vector2(12, 12);
+						self.add_child(ripple);
+						self.update_graphics();
+					elif (amount < 0):
+						gamelogic.play_sound("tick");
+					else:
+						gamelogic.play_sound("untick");
+				19: #undo_immunity
+					if (animation_timer == 0):
+						gamelogic.broadcast_animation_nonce(current_animation[1]);
+						stored_position = position;
+						gamelogic.play_sound("shroud");
+					animation_timer_max = 0.083;
+					position = stored_position + Vector2(gamelogic.rng.randf_range(-2, 2), gamelogic.rng.randf_range(-2, 2));
+					animation_timer += delta;
+					if (animation_timer > animation_timer_max):
+						position = stored_position;
+					else:
+						is_done = false;
+				20: #grayscale
+					var new_value = current_animation[1];
+					update_grayscale(new_value);
+				21: #generic_green_time_crystal
+					var color = current_animation[1].color;
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				22: #generic_magenta_time_crystal;
+					var color = current_animation[1].color;
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
+					var sparklespawner = Node2D.new();
+					sparklespawner.script = preload("res://SparkleSpawner.gd");
+					sparklespawner.color = color;
+					self.add_child(sparklespawner);
+				23: #lose
+					if (actorname == Name.Heavy):
+						gamelogic.heavytimeline.start_fade();
+					else:
+						gamelogic.lighttimeline.start_fade();
+					gamelogic.play_sound("abysschime");
+				24: #time_passes
+					if time_bubble != null:
+						time_bubble.flash();
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

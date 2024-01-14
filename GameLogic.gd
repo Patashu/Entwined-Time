@@ -3542,145 +3542,147 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	#	print("undo_one_event", " ", event, " ", chrono);
 		
 	# undo events that should create undo trails
-		
-	if (event[0] == Undo.move):
-		#[Undo.move, actor, dir, was_push, was_fall]
-		#func move_actor_relative(actor: Actor, dir: Vector2, chrono: int,
-		#hypothetical: bool, is_gravity: bool, is_retro: bool = false,
-		#pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of: Array = null) -> int:
-		var actor = event[1];
-		var animation_nonce = event[6];
-		if (chrono < Chrono.META_UNDO and actor.in_stars):
-			add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
-		else:
-			move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5],
-			animation_nonce);
-	elif (event[0] == Undo.set_actor_var):
-		var actor = event[1];
-		var retro_old_value = event[4];
-		var animation_nonce = event[5];
-		var is_retro = true;
-		if (chrono < Chrono.META_UNDO and actor.in_stars):
-			add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
-		else:
-			#[Undo.set_actor_var, actor, prop, old_value, value, animation_nonce]
-			
-			set_actor_var(actor, event[2], event[3], chrono, animation_nonce, is_retro, retro_old_value);
-	elif (event[0] == Undo.change_terrain):
-		var actor = event[1];
-		var pos = event[2];
-		var layer = event[3];
-		var old_tile = event[4];
-		var new_tile = event[5];
-		var animation_nonce = event[6];
-		maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile, new_tile, animation_nonce);
+	
+	match event[0]:
+		Undo.move:
+			#[Undo.move, actor, dir, was_push, was_fall]
+			#func move_actor_relative(actor: Actor, dir: Vector2, chrono: int,
+			#hypothetical: bool, is_gravity: bool, is_retro: bool = false,
+			#pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of: Array = null) -> int:
+			var actor = event[1];
+			var animation_nonce = event[6];
+			if (chrono < Chrono.META_UNDO and actor.in_stars):
+				add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
+			else:
+				move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5],
+				animation_nonce);
+		Undo.set_actor_var:
+			var actor = event[1];
+			var retro_old_value = event[4];
+			var animation_nonce = event[5];
+			var is_retro = true;
+			if (chrono < Chrono.META_UNDO and actor.in_stars):
+				add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
+			else:
+				#[Undo.set_actor_var, actor, prop, old_value, value, animation_nonce]
+				
+				set_actor_var(actor, event[2], event[3], chrono, animation_nonce, is_retro, retro_old_value);
+		Undo.change_terrain:
+			var actor = event[1];
+			var pos = event[2];
+			var layer = event[3];
+			var old_tile = event[4];
+			var new_tile = event[5];
+			var animation_nonce = event[6];
+			maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile, new_tile, animation_nonce);
 		
 	# undo events that should not
 		
 	if (chrono >= Chrono.GHOSTS):
 		return;
-		
-	elif (event[0] == Undo.heavy_turn):
-		adjust_turn(true, -event[1], chrono);
-	elif (event[0] == Undo.light_turn):
-		adjust_turn(false, -event[1], chrono);
-	elif (event[0] == Undo.heavy_turn_direct):
-		heavy_turn -= event[1];
-	elif (event[0] == Undo.light_turn_direct):
-		light_turn -= event[1];
-	elif (event[0] == Undo.heavy_undo_event_add):
-		while (heavy_undo_buffer.size() <= event[1]):
-			heavy_undo_buffer.append([]);
-		heavy_undo_buffer[event[1]].pop_front();
-	elif (event[0] == Undo.light_undo_event_add):
-		while (light_undo_buffer.size() <= event[1]):
-			light_undo_buffer.append([]);
-		light_undo_buffer[event[1]].pop_front();
-	elif (event[0] == Undo.heavy_undo_event_add_locked):
-		while (heavy_undo_buffer.size() <= event[1]):
-			heavy_undo_buffer.append([]);
-		heavy_locked_turns[event[1]].pop_front();
-	elif (event[0] == Undo.light_undo_event_add_locked):
-		while (light_undo_buffer.size() <= event[1]):
-			light_undo_buffer.append([]);
-		light_locked_turns[event[1]].pop_front();
-	elif (event[0] == Undo.heavy_undo_event_remove):
-		# meta undo an undo creates a char undo event but not a meta undo event, it's special!
-		while (heavy_undo_buffer.size() <= event[1]):
-			heavy_undo_buffer.append([]);
-		heavy_undo_buffer[event[1]].push_front(event[2]);
-	elif (event[0] == Undo.light_undo_event_remove):
-		while (light_undo_buffer.size() <= event[1]):
-			light_undo_buffer.append([]);
-		light_undo_buffer[event[1]].push_front(event[2]);
-	elif (event[0] == Undo.animation_substep):
-		# don't need to emit a new event as meta undoing and beyond is a teleport
-		animation_substep += 1;
-	elif (event[0] == Undo.heavy_green_time_crystal_raw):
-		# don't need to emit a new event as this can't be char undone
-		# (comment repeats for all other time crystal stuff)
-		heavy_max_moves -= 1;
-		heavytimeline.undo_add_max_turn();
-		timeline_squish();
-	elif (event[0] == Undo.light_green_time_crystal_raw):
-		light_max_moves -= 1;
-		lighttimeline.undo_add_max_turn();
-		timeline_squish();
-	elif (event[0] == Undo.heavy_max_moves):
-		heavy_max_moves -= event[1];
-		heavytimeline.undo_lock_turn();
-	elif (event[0] == Undo.light_max_moves):
-		light_max_moves -= event[1];
-		lighttimeline.undo_lock_turn();
-	elif (event[0] == Undo.heavy_filling_locked_turn_index):
-		heavy_filling_locked_turn_index = event[1]; #the old value, event[2] is the new value
-	elif (event[0] == Undo.light_filling_locked_turn_index):
-		light_filling_locked_turn_index = event[1]; #the old value, event[2] is the new value
-	elif (event[0] == Undo.heavy_turn_locked):
-		# don't have to do turn adjustment as a separate undo event was emitted for it
-		var locked_turn = heavy_locked_turns.pop_at(event[2]);
-		# put it back if we locked an actual turn
-		if event[1] == -1:
-			pass
-		else:
-			heavy_undo_buffer.insert(event[1], locked_turn);
-	elif (event[0] == Undo.light_turn_locked):
-		# don't have to do turn adjustment as a separate undo event was emitted for it
-		var locked_turn = light_locked_turns.pop_at(event[2]);
-		# put it back if we locked an actual turn
-		if event[1] == -1:
-			pass
-		else:
-			light_undo_buffer.insert(event[1], locked_turn);
-	elif (event[0] == Undo.heavy_filling_turn_actual):
-		heavy_filling_turn_actual = event[1]; #the old value, event[2] is the new value
-	elif (event[0] == Undo.light_filling_turn_actual):
-		light_filling_turn_actual = event[1]; #the old value, event[2] is the new value
-	elif (event[0] == Undo.heavy_turn_unlocked):
-		# just lock it again ig
-		var was_turn = event[1];
-		if (was_turn == -1):
-			heavy_locked_turns.append([]);
-		else:
-			heavy_locked_turns.append(heavy_undo_buffer.pop_at(was_turn));
-		heavytimeline.undo_unlock_turn(event[1]);
-		heavy_max_moves -= 1;
-	elif (event[0] == Undo.light_turn_unlocked):
-		var was_turn = event[1];
-		if (was_turn == -1):
-			light_locked_turns.append([]);
-		else:
-			light_locked_turns.append(light_undo_buffer.pop_at(was_turn));
-		lighttimeline.undo_unlock_turn(event[1]);
-		light_max_moves -= 1;
-	elif (event[0] == Undo.tick):
-		var actor = event[1];
-		var amount = event[2];
-		var animation_nonce = event[3];
-		if (chrono < Chrono.META_UNDO and actor.in_stars):
-			add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
-		else:
-			clock_ticks(actor, -amount, chrono, animation_nonce);
+	
+	match event[0]:
+		Undo.heavy_turn:
+			adjust_turn(true, -event[1], chrono);
+		Undo.light_turn:
+			adjust_turn(false, -event[1], chrono);
+		Undo.heavy_turn_direct:
+			heavy_turn -= event[1];
+		Undo.light_turn_direct:
+			light_turn -= event[1];
+		Undo.heavy_undo_event_add:
+			while (heavy_undo_buffer.size() <= event[1]):
+				heavy_undo_buffer.append([]);
+			heavy_undo_buffer[event[1]].pop_front();
+		Undo.light_undo_event_add:
+			while (light_undo_buffer.size() <= event[1]):
+				light_undo_buffer.append([]);
+			light_undo_buffer[event[1]].pop_front();
+		Undo.heavy_undo_event_add_locked:
+			while (heavy_undo_buffer.size() <= event[1]):
+				heavy_undo_buffer.append([]);
+			heavy_locked_turns[event[1]].pop_front();
+		Undo.light_undo_event_add_locked:
+			while (light_undo_buffer.size() <= event[1]):
+				light_undo_buffer.append([]);
+			light_locked_turns[event[1]].pop_front();
+		Undo.heavy_undo_event_remove:
+			# meta undo an undo creates a char undo event but not a meta undo event, it's special!
+			while (heavy_undo_buffer.size() <= event[1]):
+				heavy_undo_buffer.append([]);
+			heavy_undo_buffer[event[1]].push_front(event[2]);
+		Undo.light_undo_event_remove:
+			while (light_undo_buffer.size() <= event[1]):
+				light_undo_buffer.append([]);
+			light_undo_buffer[event[1]].push_front(event[2]);
+		Undo.animation_substep:
+			# don't need to emit a new event as meta undoing and beyond is a teleport
+			animation_substep += 1;
+		Undo.heavy_green_time_crystal_raw:
+			# don't need to emit a new event as this can't be char undone
+			# (comment repeats for all other time crystal stuff)
+			heavy_max_moves -= 1;
+			heavytimeline.undo_add_max_turn();
+			timeline_squish();
+		Undo.light_green_time_crystal_raw:
+			light_max_moves -= 1;
+			lighttimeline.undo_add_max_turn();
+			timeline_squish();
+		Undo.heavy_max_moves:
+			heavy_max_moves -= event[1];
+			heavytimeline.undo_lock_turn();
+		Undo.light_max_moves:
+			light_max_moves -= event[1];
+			lighttimeline.undo_lock_turn();
+		Undo.heavy_filling_locked_turn_index:
+			heavy_filling_locked_turn_index = event[1]; #the old value, event[2] is the new value
+		Undo.light_filling_locked_turn_index:
+			light_filling_locked_turn_index = event[1]; #the old value, event[2] is the new value
+		Undo.heavy_turn_locked:
+			# don't have to do turn adjustment as a separate undo event was emitted for it
+			var locked_turn = heavy_locked_turns.pop_at(event[2]);
+			# put it back if we locked an actual turn
+			if event[1] == -1:
+				pass
+			else:
+				heavy_undo_buffer.insert(event[1], locked_turn);
+		Undo.light_turn_locked:
+			# don't have to do turn adjustment as a separate undo event was emitted for it
+			var locked_turn = light_locked_turns.pop_at(event[2]);
+			# put it back if we locked an actual turn
+			if event[1] == -1:
+				pass
+			else:
+				light_undo_buffer.insert(event[1], locked_turn);
+		Undo.heavy_filling_turn_actual:
+			heavy_filling_turn_actual = event[1]; #the old value, event[2] is the new value
+		Undo.light_filling_turn_actual:
+			light_filling_turn_actual = event[1]; #the old value, event[2] is the new value
+		Undo.heavy_turn_unlocked:
+			# just lock it again ig
+			var was_turn = event[1];
+			if (was_turn == -1):
+				heavy_locked_turns.append([]);
+			else:
+				heavy_locked_turns.append(heavy_undo_buffer.pop_at(was_turn));
+			heavytimeline.undo_unlock_turn(event[1]);
+			heavy_max_moves -= 1;
+		Undo.light_turn_unlocked:
+			var was_turn = event[1];
+			if (was_turn == -1):
+				light_locked_turns.append([]);
+			else:
+				light_locked_turns.append(light_undo_buffer.pop_at(was_turn));
+			lighttimeline.undo_unlock_turn(event[1]);
+			light_max_moves -= 1;
+		Undo.tick:
+			var actor = event[1];
+			var amount = event[2];
+			var animation_nonce = event[3];
+			if (chrono < Chrono.META_UNDO and actor.in_stars):
+				add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
+			else:
+				clock_ticks(actor, -amount, chrono, animation_nonce);
 
 func meta_undo_a_restart() -> bool:
 	var meta_undo_a_restart_type = 2;
