@@ -668,6 +668,7 @@ func picker_tooltip() -> void:
 func test_level() -> void:
 	var result = serialize_current_level();
 	if (result != ""):
+		gamelogic.end_replay();
 		gamelogic.load_custom_level(result);
 		gamelogic.test_mode = true;
 	destroy();
