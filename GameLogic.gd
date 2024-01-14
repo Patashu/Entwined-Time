@@ -828,11 +828,15 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, null);
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoalJoke, null);
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, null);
+		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlock, Color(1, 1, 1, 0.8));
+		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlockCracked, Color(1, 1, 1, 0.8));
 	else:
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, preload("res://assets/light_goal.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, preload("res://assets/heavy_goal.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoalJoke, preload("res://assets/light_goal_joke.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, preload("res://assets/heavy_goal_joke.png"));
+		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlock, Color(1, 1, 1, 1));
+		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlockCracked, Color(1, 1, 1, 1));
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
