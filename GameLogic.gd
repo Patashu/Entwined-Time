@@ -1311,6 +1311,7 @@ func refresh_puzzles_completed() -> void:
 
 var has_phase_walls = false;
 var has_phase_lightning = false;
+var has_checkpoints = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1392,6 +1393,14 @@ func ready_map() -> void:
 		has_phase_lightning = true;
 	elif (any_layer_has_this_tile(Tiles.PhaseLightningPurple)):
 		has_phase_lightning = true;
+		
+	has_checkpoints = false;
+	if (any_layer_has_this_tile(Tiles.Checkpoint)):
+		has_checkpoints = true;
+	elif (any_layer_has_this_tile(Tiles.CheckpointBlue)):
+		has_checkpoints = true;
+	elif (any_layer_has_this_tile(Tiles.CheckpointRed)):
+		has_checkpoints = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -1857,8 +1866,8 @@ func prepare_audio() -> void:
 	sounds["winbadtime"] = preload("res://sfx/winbadtime.ogg");
 	
 	#unused
-	sounds["step"] = preload("res://sfx/step.ogg");
-	sounds["undo"] = preload("res://sfx/undo.ogg");
+	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep
+	sounds["undo"] = preload("res://sfx/undo.ogg"); #actually used by checkpoint but it should be a different sfx
 	
 	music_tracks.append(preload("res://music/New Bounds.ogg"));
 	music_info.append("Patashu - New Bounds");
@@ -2212,6 +2221,7 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 		elif (!heavy_actor.powered):
 			set_actor_var(heavy_actor, "powered", true, chrono);
 		heavy_turn += amount;
+		
 		#if (debug_prints):
 		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
@@ -2233,8 +2243,44 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 		elif (!light_actor.powered):
 			set_actor_var(light_actor, "powered", true, chrono);
 		light_turn += amount;
+
 		#if (debug_prints):
 		#	print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
+		
+func check_checkpoints() -> void:
+	if (heavy_turn > 0):
+		var terrain = terrain_in_tile(heavy_actor.pos);
+		if (terrain.has(Tiles.Checkpoint) or terrain.has(Tiles.CheckpointRed)):
+			add_to_animation_server(heavy_actor, [Animation.sfx, "undo"]);
+			while (heavy_turn > 0):
+				var old_heavy_turn = heavy_turn;
+				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
+				for event in events:
+					if (event[0] == Undo.heavy_turn):
+						undo_one_event(event, Chrono.CHAR_UNDO);
+					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
+				# failsafe
+				if (old_heavy_turn == heavy_turn):
+					heavy_turn -= 1;
+			calm_down_timelines();
+			heavytimeline.finish_animations();
+	
+	if (light_turn > 0):
+		var terrain = terrain_in_tile(light_actor.pos);
+		if (terrain.has(Tiles.Checkpoint) or terrain.has(Tiles.CheckpointBlue)):
+			add_to_animation_server(light_actor, [Animation.sfx, "undo"]);
+			while (light_turn > 0):
+				var old_light_turn = light_turn;
+				var events = light_undo_buffer.pop_at(light_turn - 1);
+				for event in events:
+					if (event[0] == Undo.light_turn):
+						undo_one_event(event, Chrono.CHAR_UNDO);
+					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
+				# failsafe
+				if (old_light_turn == light_turn):
+					light_turn -= 1;
+			calm_down_timelines();
+			lighttimeline.finish_animations();
 		
 func actors_in_tile(pos: Vector2) -> Array:
 	var result = [];
@@ -3471,6 +3517,9 @@ func adjust_meta_turn(amount: int) -> void:
 	if (heavy_filling_turn_actual > -1):
 		add_undo_event([Undo.heavy_filling_turn_actual, heavy_filling_turn_actual, -1], Chrono.CHAR_UNDO);
 		heavy_filling_turn_actual = -1;
+	
+	if (has_checkpoints and amount > 0):
+		check_checkpoints();
 	
 	meta_turn += amount;
 	#if (debug_prints):

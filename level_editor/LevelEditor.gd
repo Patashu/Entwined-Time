@@ -228,6 +228,9 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.OnewayNorthLose)
 		picker_array.append(Tiles.OnewaySouthLose)
 		picker_array.append(Tiles.OnewayWestLose)
+		picker_array.append(Tiles.Checkpoint)
+		picker_array.append(Tiles.CheckpointRed)
+		picker_array.append(Tiles.CheckpointBlue)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -688,13 +691,13 @@ func picker_tooltip() -> void:
 		Tiles.PhaseWallPurple:
 			text = "Phase Wall Purple: Solid during character undoes."
 		Tiles.PhaseLightningBlue:
-			text = "Phase Lightning Blue: After Light moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Blue: After Light moves and undoes, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.PhaseLightningRed:
-			text = "Phase Lightning Red: After Heavy moves and undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Red: After Heavy moves and undoes, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.PhaseLightningGray:
-			text = "Phase Lightning Gray: After character moves, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Gray: After character moves, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.PhaseLightningPurple:
-			text = "Phase Lightning Purple: After character undoes, when time passes, before gravity, actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Purple: After character undoes, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.OnewayEastLose:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
 		Tiles.OnewayNorthLose:
@@ -703,6 +706,12 @@ func picker_tooltip() -> void:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
 		Tiles.OnewayWestLose:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
+		Tiles.Checkpoint:
+			text = "Checkpoint: At end of turn, Heavy or Light on this tile has its timeline cleared."
+		Tiles.CheckpointRed:
+			text = "Heavy Checkpoint: At end of turn, Heavy on this tile has its timeline cleared."
+		Tiles.CheckpointBlue:
+			text = "Light Checkpoint: At end of turn, Light on this tile has its timeline cleared."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));
