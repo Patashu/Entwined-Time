@@ -1,4 +1,4 @@
-[gd_scene load_steps=320 format=2]
+[gd_scene load_steps=328 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -292,6 +292,14 @@
 [ext_resource path="res://assets/phase_wall_purple_15.png" type="Texture" id=290]
 [ext_resource path="res://assets/phase_wall_purple_1.png" type="Texture" id=291]
 [ext_resource path="res://assets/phase_wall_purple_0.png" type="Texture" id=292]
+[ext_resource path="res://assets/oneway_east_lose_1.png" type="Texture" id=293]
+[ext_resource path="res://assets/oneway_north_lose_1.png" type="Texture" id=294]
+[ext_resource path="res://assets/oneway_west_lose_1.png" type="Texture" id=295]
+[ext_resource path="res://assets/oneway_south_lose_1.png" type="Texture" id=296]
+[ext_resource path="res://assets/phase_lightning_purple.png" type="Texture" id=297]
+[ext_resource path="res://assets/phase_lightning_red.png" type="Texture" id=298]
+[ext_resource path="res://assets/phase_lightning_blue.png" type="Texture" id=299]
+[ext_resource path="res://assets/phase_lightning_gray.png" type="Texture" id=300]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1197,3 +1205,35 @@ texture = SubResource( 27 )
 [node name="PhaseWallPurple" type="Sprite" parent="."]
 position = Vector2( 378, 55 )
 texture = SubResource( 28 )
+
+[node name="PhaseLightningBlue" type="Sprite" parent="."]
+position = Vector2( 301, 39 )
+texture = ExtResource( 299 )
+
+[node name="PhaseLightningRed" type="Sprite" parent="."]
+position = Vector2( 307, 49 )
+texture = ExtResource( 298 )
+
+[node name="PhaseLightningGray" type="Sprite" parent="."]
+position = Vector2( 308, 40 )
+texture = ExtResource( 300 )
+
+[node name="PhaseLightningPurple" type="Sprite" parent="."]
+position = Vector2( 300, 47 )
+texture = ExtResource( 297 )
+
+[node name="OnewayEastLose" type="Sprite" parent="."]
+position = Vector2( 258, 57 )
+texture = ExtResource( 293 )
+
+[node name="OnewayNorthLose" type="Sprite" parent="."]
+position = Vector2( 258, 57 )
+texture = ExtResource( 294 )
+
+[node name="OnewaySouthLose" type="Sprite" parent="."]
+position = Vector2( 258, 57 )
+texture = ExtResource( 296 )
+
+[node name="OnewayWestLose" type="Sprite" parent="."]
+position = Vector2( 258, 57 )
+texture = ExtResource( 295 )
