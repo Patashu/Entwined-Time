@@ -1330,6 +1330,8 @@ func ready_map() -> void:
 	for ghost in ghosts:
 		ghost.queue_free();
 	ghosts.clear();
+	for whatever in actorsfolder.get_children():
+		whatever.queue_free();
 	for whatever in underactorsparticles.get_children():
 		whatever.queue_free();
 	for whatever in overactorsparticles.get_children():
@@ -1443,13 +1445,25 @@ func ready_tutorial() -> void:
 		if (level_number == 0):
 			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
 			if (!in_insight_level):
-				tutoriallabel.bbcode_text += "\n\n\n\n\n\n\nMeet Light!\nHelp it get to its goal!\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
+				tutoriallabel.bbcode_text += "\n\n\n\n\n\n\n\n\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
 			else:
 				tutoriallabel.rect_position.y -= 24;
+			var sprite = Sprite.new();
+			sprite.texture = preload("res://assets/light_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84, 84);
+			if (in_insight_level):
+				sprite.position.y += 48;
 		elif (level_number == 1):
 			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
-			if (!in_insight_level):
-				tutoriallabel.bbcode_text += "\n\n\n\n\n\n\nMeet Heavy!\nHeavy is already on its goal, but...";
+			var sprite = Sprite.new();
+			sprite.texture = preload("res://assets/light_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84, 84);
+			sprite = Sprite.new();
+			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84, 84+24);
 		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
 			tutoriallabel.bbcode_text = "Arrows: Move [color=#FF7459]Character[/color]\nX: Swap [color=#FF7459]Character[/color]\nZ: Undo [color=#FF7459]Character[/color]\nR: Restart";
@@ -1462,6 +1476,14 @@ func ready_tutorial() -> void:
 		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
+			var sprite = Sprite.new();
+			sprite.texture = preload("res://assets/light_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84+24*5, 84+24*4);
+			sprite = Sprite.new();
+			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84-24*1, 84+24*4);
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Meta-Undo[/color] that too!)";
