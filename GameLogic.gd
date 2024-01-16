@@ -1378,6 +1378,8 @@ func ready_map() -> void:
 			has_insight_level = true;
 			insight_level_scene = load(insight_path);
 	
+	#PERF: grab all the tiles once, turn it into a dictionary, then we can do many lookups in a row quicker
+	
 	has_phase_walls = false;
 	if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 		has_phase_walls = true;
