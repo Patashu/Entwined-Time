@@ -118,7 +118,6 @@ func get_next_texture() -> Texture:
 			sprite.centered = false;
 			sprite.frame_max = 99;
 			sprite.frame_timer_max = 0.05;
-			#sprite.z_index = 1;
 			self.add_child(sprite);
 			ding = sprite;
 		elif !dinged and ding != null:

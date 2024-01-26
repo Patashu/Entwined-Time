@@ -2013,10 +2013,7 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, chrono: int = 
 	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
-	if ((actor.actorname == Actor.Name.IronCrate or actor.actorname == Actor.Name.WoodenCrate or actor.actorname == Actor.Name.PowerCrate or actor.actorname == Actor.Name.SteelCrate) and level_name != "One at a Time"):
-		underterrainfolder.add_child(actor);
-	else:
-		actorsfolder.add_child(actor);
+	actorsfolder.add_child(actor);
 	actor.time_colour = actor.native_colour();
 	move_actor_to(actor, pos, chrono, false, false);
 	if (chrono < Chrono.META_UNDO):
