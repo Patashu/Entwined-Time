@@ -1478,14 +1478,14 @@ func ready_tutorial() -> void:
 		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
-			var sprite = Sprite.new();
-			sprite.texture = preload("res://assets/light_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84+24*5, 84+24*4);
-			sprite = Sprite.new();
-			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84-24*1, 84+24*4);
+#			var sprite = Sprite.new();
+#			sprite.texture = preload("res://assets/light_goal_tutorial.png");
+#			actorsfolder.add_child(sprite);
+#			sprite.position = Vector2(84+24*5, 84+24*4);
+#			sprite = Sprite.new();
+#			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
+#			actorsfolder.add_child(sprite);
+#			sprite.position = Vector2(84-24*1, 84+24*4);
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Meta-Undo[/color] that too!)";
