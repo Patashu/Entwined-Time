@@ -1,7 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://TitleScreen.gd" type="Script" id=1]
+[ext_resource path="res://assets/cutscenes/Panel_1_finish.png" type="Texture" id=2]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=3]
+[ext_resource path="res://assets/cutscenes/Panel_2_finish.png" type="Texture" id=4]
+[ext_resource path="res://assets/cutscenes/Panel_3_finish.png" type="Texture" id=5]
+[ext_resource path="res://assets/cutscenes/Panel_6_finish.png" type="Texture" id=6]
+[ext_resource path="res://assets/cutscenes/6_2.png" type="Texture" id=7]
+[ext_resource path="res://assets/cutscenes/Panel_4_finish.png" type="Texture" id=8]
+[ext_resource path="res://assets/cutscenes/6_3.png" type="Texture" id=9]
+[ext_resource path="res://assets/cutscenes/6_1.png" type="Texture" id=10]
+[ext_resource path="res://assets/cutscenes/6_4.png" type="Texture" id=11]
+[ext_resource path="res://assets/cutscenes/Panel_5_finish.png" type="Texture" id=12]
+[ext_resource path="res://assets/cutscenes/6_5.png" type="Texture" id=13]
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource( 1 )
@@ -59,3 +70,68 @@ text = "Entwined Time
 A two time manipulation puzzle game"
 align = 1
 valign = 1
+
+[node name="CutsceneHolder" type="Node2D" parent="."]
+visible = false
+
+[node name="Panel1" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Panel2" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Panel3" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Panel4" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 8 )
+centered = false
+
+[node name="Panel5" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 12 )
+centered = false
+
+[node name="ColorRect2" type="ColorRect" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 512.0
+margin_bottom = 300.0
+color = Color( 0.133333, 0.235294, 0.321569, 1 )
+
+[node name="Panel6" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Panel61" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 10 )
+centered = false
+
+[node name="Panel62" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 7 )
+centered = false
+
+[node name="Panel63" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="Panel64" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 11 )
+centered = false
+
+[node name="Panel65" type="Sprite" parent="CutsceneHolder"]
+modulate = Color( 1, 1, 1, 0 )
+texture = ExtResource( 13 )
+centered = false

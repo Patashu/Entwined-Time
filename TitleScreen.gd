@@ -14,6 +14,9 @@ var using_controller = false;
 var end_timer = 0.0;
 var end_timer_max = 0.0;
 
+var cutscene_step = 0;
+var cutscene_step_cooldown = 0.0;
+
 func _ready() -> void:
 	beginbutton.connect("pressed", self, "_beginbutton_pressed");
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
@@ -32,8 +35,7 @@ func _beginbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 		
-	# TODO: intro cutscene
-	begin_the_end();
+	cutscene_step();
 
 func _controlsbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -59,6 +61,86 @@ func _creditsbutton_pressed() -> void:
 	self.get_parent().add_child(a);
 	gamelogic.ui_stack.push_back(a);
 	
+func cutscene_step() -> void:
+	if (cutscene_step_cooldown < 0.1):
+		return;
+	cutscene_step_cooldown = 0;
+	
+	match cutscene_step:
+		0:
+			beginbutton.queue_free();
+			controlsbutton.queue_free();
+			settingsbutton.queue_free();
+			creditsbutton.queue_free();
+			pointer.queue_free();
+			$Holder/Label.queue_free();
+			pointer = null;
+			$CutsceneHolder.visible = true;
+			
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel1, "modulate", Color.white, 1);
+			gamelogic.target_track = 11;
+			gamelogic.fadeout_timer_max = 1.0;
+			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+		1:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 1);
+		2:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 1);
+			gamelogic.target_track = 12;
+			gamelogic.fadeout_timer_max = 1.0;
+			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+		3:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel4, "modulate", Color.white, 1);
+		4:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel5, "modulate", Color.white, 1);
+		5:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/ColorRect2, "modulate", Color.white, 1);
+			gamelogic.target_track = -1;
+			gamelogic.fadeout_timer_max = 1.0;
+			gamelogic.fadeout_timer = 0.0;
+		6:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel6, "modulate", Color.white, 1);
+			
+			$CutsceneHolder/Panel1.visible = false;
+			$CutsceneHolder/Panel2.visible = false;
+			$CutsceneHolder/Panel3.visible = false;
+			$CutsceneHolder/Panel4.visible = false;
+			$CutsceneHolder/Panel5.visible = false;
+			
+			gamelogic.target_track = 13;
+			gamelogic.fadeout_timer_max = 1.0;
+			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+		7:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color.white, 1);
+		8:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color.white, 1);
+			tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color(1, 1, 1, 0), 1);
+		9:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color.white, 1);
+			tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color(1, 1, 1, 0), 1);
+		10:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel64, "modulate", Color.white, 1);
+			tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color(1, 1, 1, 0), 1);
+		11:
+			var tween = get_tree().create_tween()
+			tween.tween_property($CutsceneHolder/Panel65, "modulate", Color.white, 1);
+		12:
+			begin_the_end();
+	cutscene_step += 1;
+	
 func begin_the_end() -> void:	
 	end_timer_max = 4.0;
 	gamelogic.load_level_direct(0);
@@ -74,8 +156,22 @@ func destroy() -> void:
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
 
+func _input(event: InputEvent) -> void:
+	if cutscene_step > 0:
+		if event is InputEventScreenTouch:
+			if event.pressed:
+				cutscene_step();
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	cutscene_step_cooldown += delta;
+	
+	if (cutscene_step > 0):	
+		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("character_switch")
+		or Input.is_action_just_pressed("lmb")
+		or Input.is_action_just_pressed("escape")):
+			cutscene_step();
+	
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")):
 		using_controller = true;
 		only_mouse = false;
@@ -93,17 +189,18 @@ func _process(delta: float) -> void:
 	
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
-		
-	var focus = holder.get_focus_owner();
-	if (focus == null):
-		beginbutton.grab_focus();
-		focus = beginbutton;
 	
-	var focus_middle_x = focus.rect_position.x + focus.rect_size.x / 2;
-	pointer.position.y = focus.rect_position.y + focus.rect_size.y / 2;
-	if (focus_middle_x > holder.rect_size.x / 2):
-		pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
-		pointer.position.x = focus.rect_position.x + focus.rect_size.x + 12;
-	else:
-		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
-		pointer.position.x = focus.rect_position.x - 12;
+	if (pointer != null):
+		var focus = holder.get_focus_owner();
+		if (focus == null):
+			beginbutton.grab_focus();
+			focus = beginbutton;
+		
+		var focus_middle_x = focus.rect_position.x + focus.rect_size.x / 2;
+		pointer.position.y = focus.rect_position.y + focus.rect_size.y / 2;
+		if (focus_middle_x > holder.rect_size.x / 2):
+			pointer.texture = preload("res://assets/tutorial_arrows/LeftArrow.tres");
+			pointer.position.x = focus.rect_position.x + focus.rect_size.x + 12;
+		else:
+			pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
+			pointer.position.x = focus.rect_position.x - 12;
