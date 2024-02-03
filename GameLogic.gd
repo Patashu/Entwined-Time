@@ -1917,6 +1917,8 @@ func prepare_audio() -> void:
 	sounds["alert3"] = preload("res://sfx/alert3.ogg");
 	sounds["intothewarp"] = preload("res://sfx/intothewarp.ogg");
 	sounds["getgreenality"] = preload("res://sfx/getgreenality.ogg");
+	sounds["fixit1"] = preload("res://sfx/fixit1.ogg");
+	sounds["fixit2"] = preload("res://sfx/fixit2.ogg");
 	
 	#unused
 	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep

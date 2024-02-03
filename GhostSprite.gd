@@ -11,7 +11,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	position = lerp(self.position, target.position, 0.1);
+	position = lerp(self.position, target.position, 0.05);
 	fadeout_timer += delta;
 	if (fadeout_timer > fadeout_timer_max):
 		queue_free();

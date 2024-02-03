@@ -29,8 +29,10 @@ func _ready() -> void:
 	$CutsceneHolder.visible = false;
 	$CutsceneHolder/HeavyPortal.visible = false;
 	$CutsceneHolder/HeavyActor.visible = false;
+	$CutsceneHolder/HeavyFix.visible = false;
 	$CutsceneHolder/LightPortal.visible = false;
 	$CutsceneHolder/LightActor.visible = false;
+	$CutsceneHolder/LightFix.visible = false;
 	
 	beginbutton.connect("pressed", self, "_beginbutton_pressed");
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
@@ -140,6 +142,7 @@ func cutscene_step() -> void:
 			gamelogic.fadeout_timer_max = 1.0;
 			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
 			$CutsceneHolder/AnimationPlayer.play("Animate");
+			has_shown_advance_label = false;
 			ghost_type = 1;
 		7:
 			begin_the_end();
@@ -149,6 +152,7 @@ func begin_the_end() -> void:
 	if (end_timer_max > 0.0):
 		return;
 	
+	ghost_type = 0;
 	end_timer_max = 4.0;
 	gamelogic.load_level_direct(0);
 	gamelogic.fadeout_timer_max = 6.8;
@@ -160,7 +164,7 @@ func begin_the_end() -> void:
 		gamelogic.setup_virtual_buttons();
 	
 func advance_label() -> void:
-	if (has_shown_advance_label or cutscene_step > 1):
+	if (has_shown_advance_label or (cutscene_step > 1 and cutscene_step < 7)):
 		return;
 	has_shown_advance_label = true;
 	$CutsceneHolder/AdvanceLabel.visible = true;
@@ -193,7 +197,7 @@ func play_sound(sound: String) -> void:
 func change_ghosts() -> void:
 	ghost_type = 2;
 	ghost_timer = 0;
-	ghost_timer_max = 1.0;
+	ghost_timer_max = 0.5;
 	
 func afterimage(sprite: Sprite, color: Color) -> void:
 	var afterimage = preload("res://Afterimage.tscn").instance();
@@ -242,8 +246,11 @@ func _process(delta: float) -> void:
 	if (cutscene_step > 0):
 		if (cutscene_step == 6 and cutscene_step_cooldown > 3.0):
 			cutscene_step();
+			
+		if (cutscene_step == 7 and !$CutsceneHolder/AnimationPlayer.is_playing()):
+			advance_label();
 		
-		if (cutscene_step_cooldown > 4.0):
+		if (cutscene_step < 6 and cutscene_step_cooldown > 4.0):
 			advance_label();
 		
 		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("character_switch")
