@@ -19,6 +19,8 @@ var cutscene_step_cooldown = 0.0;
 
 var has_shown_advance_label = false;
 
+var skip_cutscene_label = null;
+
 func _ready() -> void:
 	beginbutton.connect("pressed", self, "_beginbutton_pressed");
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
@@ -144,7 +146,10 @@ func cutscene_step() -> void:
 			begin_the_end();
 	cutscene_step += 1;
 	
-func begin_the_end() -> void:	
+func begin_the_end() -> void:
+	if (end_timer_max > 0.0):
+		return;
+	
 	end_timer_max = 4.0;
 	gamelogic.load_level_direct(0);
 	gamelogic.fadeout_timer_max = 6.8;
@@ -169,6 +174,20 @@ func advance_label() -> void:
 	else:
 		$CutsceneHolder/AdvanceLabel.text = "(X to advance cutscene)";
 	
+func skip_cutscene_label_grows(delta: float) -> void:
+	if (skip_cutscene_label == null):
+		skip_cutscene_label = preload("res://SkipCutsceneLabel.tscn").instance();
+		self.add_child(skip_cutscene_label);
+	var progressbar = skip_cutscene_label.get_node("ProgressBar");
+	progressbar.value += delta;
+	if (progressbar.value >= progressbar.max_value):
+		begin_the_end();
+
+func reset_skip_cutscene_label() -> void:
+	if (skip_cutscene_label != null):
+		skip_cutscene_label.queue_free();
+		skip_cutscene_label = null;
+	
 func destroy() -> void:
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
@@ -188,9 +207,12 @@ func _process(delta: float) -> void:
 			advance_label();
 		
 		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("character_switch")
-		or Input.is_action_just_pressed("lmb")
-		or Input.is_action_just_pressed("escape")):
+		or Input.is_action_just_pressed("lmb")):
 			cutscene_step();
+		elif (Input.is_action_pressed("escape") and end_timer_max == 0.0):
+			skip_cutscene_label_grows(delta);
+		else:
+			reset_skip_cutscene_label();
 	
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")):
 		using_controller = true;
