@@ -1913,6 +1913,7 @@ func prepare_audio() -> void:
 	#used only in cutscenes
 	sounds["alert"] = preload("res://sfx/alert.ogg");
 	sounds["alert2"] = preload("res://sfx/alert2.ogg");
+	sounds["alert3"] = preload("res://sfx/alert3.ogg");
 	sounds["noodling"] = preload("res://sfx/noodling.ogg");
 	
 	#unused

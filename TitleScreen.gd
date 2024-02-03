@@ -102,6 +102,7 @@ func cutscene_step() -> void:
 		3:
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel4, "modulate", Color.white, 0.5);
+			gamelogic.play_sound("alert3");
 		4:
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel5, "modulate", Color.white, 0.5);
