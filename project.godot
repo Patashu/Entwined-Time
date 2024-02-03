@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Controls.gd"
 }, {
+"base": "Node2D",
+"class": "CreditsModal",
+"language": "GDScript",
+"path": "res://CreditsModal.gd"
+}, {
 "base": "Sprite",
 "class": "FadingSprite",
 "language": "GDScript",
@@ -195,6 +200,7 @@ _global_script_class_icons={
 "AuthorsReplayModalPrompt": "",
 "BindingButton": "",
 "Controls": "",
+"CreditsModal": "",
 "FadingSprite": "",
 "FloatingText": "",
 "GainInsightModalPrompt": "",

@@ -49,7 +49,9 @@ func _creditsbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	pass
+	var a = preload("res://CreditsModal.tscn").instance();
+	self.get_parent().add_child(a);
+	gamelogic.ui_stack.push_back(a);
 	
 func begin_the_end() -> void:
 	end_timer_max = 4.0;
