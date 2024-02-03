@@ -10,7 +10,7 @@ script = ExtResource( 3 )
 
 [node name="Holder" type="Label" parent="."]
 margin_left = 104.0
-margin_top = 63.0
+margin_top = 4.0
 margin_right = 419.0
 margin_bottom = 287.0
 theme = ExtResource( 2 )
@@ -23,22 +23,24 @@ Art (Title Screen, Cutscenes, Promotional): Ranoa
 
 Playtesters: (TODO)
 
+Inspired by Braid and Meet me at NooN
+
 Some music tracks are remixes; the original artists are credited when they play. The arrangements are original, so you can stream or Let's Play this game without worrying about Content ID. (not legal advice tho)"
 align = 1
 autowrap = true
 
 [node name="OkButton" type="Button" parent="Holder"]
-margin_left = 102.0
-margin_top = 198.0
-margin_right = 213.0
-margin_bottom = 213.0
+margin_left = 101.0
+margin_top = 266.0
+margin_right = 212.0
+margin_bottom = 281.0
 text = "Ok"
 
 [node name="LinkLabel" type="RichTextLabel" parent="Holder"]
-margin_left = 5.0
-margin_top = 173.0
-margin_right = 313.0
-margin_bottom = 203.0
+margin_left = 4.0
+margin_top = 241.0
+margin_right = 312.0
+margin_bottom = 271.0
 theme = ExtResource( 2 )
 custom_colors/default_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
