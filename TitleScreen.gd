@@ -58,7 +58,7 @@ func begin_the_end() -> void:
 	gamelogic.load_level_direct(0);
 	gamelogic.fadeout_timer_max = 6.8;
 	gamelogic.fadeout_timer = 0.0;
-	gamelogic.play_sound("thejourneybegins");
+	gamelogic.play_won("thejourneybegins");
 	
 func destroy() -> void:
 	self.queue_free();
