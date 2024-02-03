@@ -1912,6 +1912,7 @@ func prepare_audio() -> void:
 	
 	#used only in cutscenes
 	sounds["alert"] = preload("res://sfx/alert.ogg");
+	sounds["alert2"] = preload("res://sfx/alert2.ogg");
 	sounds["noodling"] = preload("res://sfx/noodling.ogg");
 	
 	#unused
@@ -1956,7 +1957,7 @@ func prepare_audio() -> void:
 	music_db.append(6.0);
 	music_tracks.append(preload("res://music/Cutscene B.ogg"));
 	music_info.append("Patashu - Cutscene B");
-	music_db.append(3.0);
+	music_db.append(6.0);
 	music_tracks.append(preload("res://music/Cutscene C.ogg"));
 	music_info.append("Patashu - Cutscene C");
 	music_db.append(6.0);

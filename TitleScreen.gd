@@ -83,36 +83,37 @@ func cutscene_step() -> void:
 			$CutsceneHolder.visible = true;
 			
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel1, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel1, "modulate", Color.white, 0.5);
 			gamelogic.target_track = 11;
 			gamelogic.fadeout_timer_max = 1.0;
 			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
 			gamelogic.play_sound("noodling");
 		1:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.5);
 			gamelogic.play_sound("alert");
 		2:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 0.5);
+			gamelogic.play_sound("alert2");
 			gamelogic.target_track = 12;
-			gamelogic.fadeout_timer_max = 1.0;
-			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+			gamelogic.fadeout_timer_max = 1.5;
+			gamelogic.fadeout_timer = 0.0;
 		3:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel4, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel4, "modulate", Color.white, 0.5);
 		4:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel5, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel5, "modulate", Color.white, 0.5);
 		5:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/ColorRect2, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/ColorRect2, "modulate", Color.white, 0.5);
 			gamelogic.target_track = -1;
 			gamelogic.fadeout_timer_max = 1.0;
 			gamelogic.fadeout_timer = 0.0;
 		6:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel6, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel6, "modulate", Color.white, 0.5);
 			
 			$CutsceneHolder/Panel1.visible = false;
 			$CutsceneHolder/Panel2.visible = false;
@@ -125,25 +126,25 @@ func cutscene_step() -> void:
 			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
 		7:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color.white, 0.5);
 		8:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color.white, 0.5);
 			tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color(1, 1, 1, 0), 1);
+			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color(1, 1, 1, 0), 0.5);
 		9:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color.white, 0.5);
 			tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color(1, 1, 1, 0), 1);
+			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color(1, 1, 1, 0), 0.5);
 		10:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel64, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel64, "modulate", Color.white, 0.5);
 			tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color(1, 1, 1, 0), 1);
+			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color(1, 1, 1, 0), 0.5);
 		11:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel65, "modulate", Color.white, 1);
+			tween.tween_property($CutsceneHolder/Panel65, "modulate", Color.white, 0.5);
 		12:
 			begin_the_end();
 	cutscene_step += 1;
@@ -163,7 +164,7 @@ func begin_the_end() -> void:
 		gamelogic.setup_virtual_buttons();
 	
 func advance_label() -> void:
-	if (has_shown_advance_label):
+	if (has_shown_advance_label or cutscene_step > 1):
 		return;
 	has_shown_advance_label = true;
 	$CutsceneHolder/AdvanceLabel.visible = true;
