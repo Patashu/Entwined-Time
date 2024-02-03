@@ -152,6 +152,7 @@ enum Animation {
 	lightning_strikes, #25
 	heavy_timeline_finish_animations, #26
 	light_timeline_finish_animations, #27
+	intro_hop, #28
 }
 
 enum TimeColour {
@@ -430,6 +431,12 @@ func default_save_file() -> void:
 		save_file["version"] = 0
 	if (!save_file.has("undo_trails")):
 		save_file["undo_trails"] = 1.0;
+	if (!save_file.has("music_volume")):
+		save_file["music_volume"] = 0.0;
+	if (!save_file.has("sfx_volume")):
+		save_file["sfx_volume"] = 0.0;
+	if (!save_file.has("fanfare_volume")):
+		save_file["fanfare_volume"] = 0.0;
 
 func load_game():
 	var file = File.new()
@@ -473,9 +480,12 @@ func _ready() -> void:
 	load_level(0);
 	ready_done = true;
 	
-	play_sound("bootup");
-	fadeout_timer = 0.0;
-	fadeout_timer_max = 2.5;
+	if (puzzles_completed > 0):
+		play_sound("bootup");
+		fadeout_timer = 0.0;
+		fadeout_timer_max = 2.5;
+	else:
+		call_deferred("title_screen");
 
 func prepare_voidlike_tiles() -> void:
 	for i in range (Tiles.size()):
@@ -1419,6 +1429,16 @@ func ready_map() -> void:
 	ready_tutorial();
 	update_level_label();
 	
+	intro_hop();
+	
+func intro_hop() -> void:
+	if (!ready_done):
+		return;
+	if (heavy_max_moves > 0):
+		add_to_animation_server(heavy_actor, [Animation.intro_hop]);
+	if (light_max_moves > 0):
+		add_to_animation_server(light_actor, [Animation.intro_hop]);
+	
 func ready_tutorial() -> void:
 	if is_custom:
 		metainfolabel.visible = true;
@@ -1446,9 +1466,7 @@ func ready_tutorial() -> void:
 		tutoriallabel.rect_position = Vector2(0, 72);
 		if (level_number == 0):
 			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
-			if (!in_insight_level):
-				tutoriallabel.bbcode_text += "\n\n\n\n\n\n\n\n\n(Touchscreen/Mouse only players: Menu > Settings > Virtual Buttons.)\n(In the full game, this will be checked during the opening sequence.)";
-			else:
+			if (in_insight_level):
 				tutoriallabel.rect_position.y -= 24;
 			var sprite = Sprite.new();
 			sprite.texture = preload("res://assets/light_goal_tutorial.png");

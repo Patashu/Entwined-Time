@@ -721,6 +721,41 @@ func _process(delta: float) -> void:
 					gamelogic.heavytimeline.finish_animations();
 				27: #light_timeline_finish_animations
 					gamelogic.lighttimeline.finish_animations();
+				28: #intro_hop
+					var mult = 5;
+					if (actorname == Name.Heavy):
+						animation_timer_max = 0.5;
+						mult = 8;
+					else:
+						animation_timer_max = 1.0;
+						
+					
+					position.y += sin((animation_timer/animation_timer_max)*PI)*mult;
+					animation_timer += delta;
+					if (animation_timer > animation_timer_max):
+						if (actorname == Name.Heavy):
+							set_next_texture(preload("res://assets/heavy_idle.png"), facing_left);
+						else:
+							set_next_texture(preload("res://assets/light_idle_animation.png"), facing_left);
+					else:
+						is_done = false;
+						position.y -= sin((animation_timer/animation_timer_max)*PI)*mult;
+						
+						if (animation_timer < animation_timer_max * (1.5/4.0)):
+							if (actorname == Name.Heavy):
+								set_next_texture(preload("res://assets/heavy_rising.png"), facing_left);
+							else:
+								set_next_texture(preload("res://assets/light_rising.png"), facing_left);
+						elif (animation_timer > animation_timer_max * (2.5/4.0)):
+							if (actorname == Name.Heavy):
+								set_next_texture(preload("res://assets/heavy_falling.png"), facing_left);
+							else:
+								set_next_texture(preload("res://assets/light_falling.png"), facing_left);
+						else:
+							if (actorname == Name.Heavy):
+								set_next_texture(preload("res://assets/heavy_idle.png"), facing_left);
+							else:
+								set_next_texture(preload("res://assets/light_idle_animation.png"), facing_left);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

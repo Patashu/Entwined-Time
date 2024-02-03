@@ -23,6 +23,10 @@ func _ready() -> void:
 	gamelogic.target_track = 10;
 	gamelogic.fadeout_timer_max = 1.0;
 	gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+	
+	holder.modulate = Color(1, 1, 1, 0);
+	var tween = get_tree().create_tween()
+	tween.tween_property(holder, "modulate", Color.white, 1)
 
 func _beginbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -55,12 +59,16 @@ func _creditsbutton_pressed() -> void:
 	self.get_parent().add_child(a);
 	gamelogic.ui_stack.push_back(a);
 	
-func begin_the_end() -> void:
+func begin_the_end() -> void:	
 	end_timer_max = 4.0;
 	gamelogic.load_level_direct(0);
 	gamelogic.fadeout_timer_max = 6.8;
 	gamelogic.fadeout_timer = 0.0;
 	gamelogic.play_won("thejourneybegins");
+	
+	if (gamelogic.puzzles_completed == 0 and only_mouse):
+		gamelogic.save_file["virtual_buttons"] = 1;
+		gamelogic.setup_virtual_buttons();
 	
 func destroy() -> void:
 	self.queue_free();
