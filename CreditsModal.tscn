@@ -12,7 +12,7 @@ script = ExtResource( 3 )
 margin_left = 104.0
 margin_top = 63.0
 margin_right = 419.0
-margin_bottom = 226.0
+margin_bottom = 287.0
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 text = "Credits:
@@ -21,22 +21,24 @@ Lead Developer: Patashu
 Art (Puzzles): Teal Knight
 Art (Title Screen, Cutscenes, Promotional): Ranoa
 
-Playtesters: (TODO)"
+Playtesters: (TODO)
+
+Some music tracks are remixes; the original artists are credited when they play. The compositions are original, so you can stream or Let's Play this game without worrying about Content ID. (not legal advice tho)"
 align = 1
 autowrap = true
 
 [node name="OkButton" type="Button" parent="Holder"]
-margin_left = 101.0
-margin_top = 139.0
-margin_right = 212.0
-margin_bottom = 154.0
+margin_left = 102.0
+margin_top = 198.0
+margin_right = 213.0
+margin_bottom = 213.0
 text = "Ok"
 
 [node name="LinkLabel" type="RichTextLabel" parent="Holder"]
-margin_left = 4.0
-margin_top = 110.0
-margin_right = 312.0
-margin_bottom = 140.0
+margin_left = 5.0
+margin_top = 173.0
+margin_right = 313.0
+margin_bottom = 203.0
 theme = ExtResource( 2 )
 custom_colors/default_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
