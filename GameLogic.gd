@@ -1878,6 +1878,7 @@ func prepare_audio() -> void:
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["shroud"] = preload("res://sfx/shroud.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
+	sounds["thejourneybegins"] = preload("res://sfx/thejourneybegins.ogg");
 	sounds["tick"] = preload("res://sfx/tick.ogg");
 	sounds["timesup"] = preload("res://sfx/timesup.ogg");
 	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
@@ -4080,10 +4081,11 @@ func play_next_song() -> void:
 		music_speaker.play();
 		var value = save_file["music_volume"];
 		if (value > -30 and !muted): #music is not muted
-			now_playing = preload("res://NowPlaying.tscn").instance();
-			self.get_parent().call_deferred("add_child", now_playing);
-			#self.get_parent().add_child(now_playing);
-			now_playing.initialize(music_info[current_track]);
+			if (ui_stack.size() == 0 or ui_stack[0].name != "TitleScreen"):
+				now_playing = preload("res://NowPlaying.tscn").instance();
+				self.get_parent().call_deferred("add_child", now_playing);
+				#self.get_parent().add_child(now_playing);
+				now_playing.initialize(music_info[current_track]);
 	else:
 		music_speaker.stop();
 	
