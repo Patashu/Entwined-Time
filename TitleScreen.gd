@@ -17,6 +17,8 @@ var end_timer_max = 0.0;
 var cutscene_step = 0;
 var cutscene_step_cooldown = 0.0;
 
+var has_shown_advance_label = false;
+
 func _ready() -> void:
 	beginbutton.connect("pressed", self, "_beginbutton_pressed");
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
@@ -65,6 +67,7 @@ func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):
 		return;
 	cutscene_step_cooldown = 0;
+	$CutsceneHolder/AdvanceLabel.visible = false;
 	
 	match cutscene_step:
 		0:
@@ -152,6 +155,20 @@ func begin_the_end() -> void:
 		gamelogic.save_file["virtual_buttons"] = 1;
 		gamelogic.setup_virtual_buttons();
 	
+func advance_label() -> void:
+	if (has_shown_advance_label):
+		return;
+	has_shown_advance_label = true;
+	$CutsceneHolder/AdvanceLabel.visible = true;
+	var tween = get_tree().create_tween()
+	tween.tween_property($CutsceneHolder/AdvanceLabel, "modulate", Color.white, 1);
+	if (only_mouse):
+		$CutsceneHolder/AdvanceLabel.text = "(Left click or tap the screen to advance cutscene)";
+	elif (using_controller):
+		$CutsceneHolder/AdvanceLabel.text = "(Bottom Face Button to advance cutscene)";
+	else:
+		$CutsceneHolder/AdvanceLabel.text = "(X to advance cutscene)";
+	
 func destroy() -> void:
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
@@ -166,7 +183,10 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	cutscene_step_cooldown += delta;
 	
-	if (cutscene_step > 0):	
+	if (cutscene_step > 0):
+		if (cutscene_step_cooldown > 4.0):
+			advance_label();
+		
 		if (Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("character_switch")
 		or Input.is_action_just_pressed("lmb")
 		or Input.is_action_just_pressed("escape")):
