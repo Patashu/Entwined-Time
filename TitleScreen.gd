@@ -21,7 +21,17 @@ var has_shown_advance_label = false;
 
 var skip_cutscene_label = null;
 
+var ghost_type = 0;
+var ghost_timer = 0.0;
+var ghost_timer_max = 0.2;
+
 func _ready() -> void:
+	$CutsceneHolder.visible = false;
+	$CutsceneHolder/HeavyPortal.visible = false;
+	$CutsceneHolder/HeavyActor.visible = false;
+	$CutsceneHolder/LightPortal.visible = false;
+	$CutsceneHolder/LightActor.visible = false;
+	
 	beginbutton.connect("pressed", self, "_beginbutton_pressed");
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
 	settingsbutton.connect("pressed", self, "_settingsbutton_pressed");
@@ -67,6 +77,8 @@ func _creditsbutton_pressed() -> void:
 	
 func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):
+		return;
+	if ($CutsceneHolder/AnimationPlayer.is_playing()):
 		return;
 	cutscene_step_cooldown = 0;
 	$CutsceneHolder/AdvanceLabel.visible = false;
@@ -116,7 +128,7 @@ func cutscene_step() -> void:
 			gamelogic.play_sound("getgreenality");
 		6:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel6, "modulate", Color.white, 0.5);
+			tween.tween_property($CutsceneHolder/Panel6, "modulate", Color.white, 1.0);
 			
 			$CutsceneHolder/Panel1.visible = false;
 			$CutsceneHolder/Panel2.visible = false;
@@ -127,28 +139,9 @@ func cutscene_step() -> void:
 			gamelogic.target_track = 13;
 			gamelogic.fadeout_timer_max = 1.0;
 			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+			$CutsceneHolder/AnimationPlayer.play("Animate");
+			ghost_type = 1;
 		7:
-			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color.white, 0.5);
-		8:
-			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color.white, 0.5);
-			tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel61, "modulate", Color(1, 1, 1, 0), 0.5);
-		9:
-			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color.white, 0.5);
-			tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel62, "modulate", Color(1, 1, 1, 0), 0.5);
-		10:
-			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel64, "modulate", Color.white, 0.5);
-			tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel63, "modulate", Color(1, 1, 1, 0), 0.5);
-		11:
-			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/Panel65, "modulate", Color.white, 0.5);
-		12:
 			begin_the_end();
 	cutscene_step += 1;
 	
@@ -194,6 +187,31 @@ func reset_skip_cutscene_label() -> void:
 		skip_cutscene_label.queue_free();
 		skip_cutscene_label = null;
 	
+func play_sound(sound: String) -> void:
+	gamelogic.play_sound(sound);
+	
+func change_ghosts() -> void:
+	ghost_type = 2;
+	ghost_timer = 0;
+	ghost_timer_max = 1.0;
+	
+func afterimage(sprite: Sprite, color: Color) -> void:
+	var afterimage = preload("res://Afterimage.tscn").instance();
+	afterimage.actor = sprite;
+	afterimage.set_material(gamelogic.get_afterimage_material_for(color));
+	$CutsceneHolder/Panel6.add_child(afterimage);
+	afterimage.scale = sprite.scale;
+	afterimage.get_child(0).centered = sprite.centered;
+	
+func ghost(sprite: Sprite) -> void:
+	var ghost = Sprite.new();
+	ghost.script = preload("res://GhostSprite.gd");
+	ghost.position = sprite.position;
+	ghost.target = sprite;
+	ghost.texture = sprite.texture;
+	ghost.centered = sprite.centered;
+	$CutsceneHolder/Panel6.add_child(ghost);
+	
 func destroy() -> void:
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
@@ -208,7 +226,23 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	cutscene_step_cooldown += delta;
 	
+	if (ghost_type == 1):
+		ghost_timer += delta;
+		if (ghost_timer > ghost_timer_max):
+			ghost_timer -= ghost_timer_max;
+			afterimage($CutsceneHolder/HeavyActor, gamelogic.heavy_color);
+			afterimage($CutsceneHolder/LightActor, gamelogic.light_color);
+	elif (ghost_type == 2):
+		ghost_timer += delta;
+		if (ghost_timer > ghost_timer_max):
+			ghost_timer -= ghost_timer_max;
+			ghost($CutsceneHolder/HeavyActor);
+			ghost($CutsceneHolder/LightActor);
+	
 	if (cutscene_step > 0):
+		if (cutscene_step == 6 and cutscene_step_cooldown > 3.0):
+			cutscene_step();
+		
 		if (cutscene_step_cooldown > 4.0):
 			advance_label();
 		
