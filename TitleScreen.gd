@@ -87,9 +87,11 @@ func cutscene_step() -> void:
 			gamelogic.target_track = 11;
 			gamelogic.fadeout_timer_max = 1.0;
 			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+			gamelogic.play_sound("noodling");
 		1:
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 1);
+			gamelogic.play_sound("alert");
 		2:
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 1);

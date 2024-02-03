@@ -1910,6 +1910,10 @@ func prepare_audio() -> void:
 	sounds["winentwined"] = preload("res://sfx/winentwined.ogg");
 	sounds["winbadtime"] = preload("res://sfx/winbadtime.ogg");
 	
+	#used only in cutscenes
+	sounds["alert"] = preload("res://sfx/alert.ogg");
+	sounds["noodling"] = preload("res://sfx/noodling.ogg");
+	
 	#unused
 	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep
 	sounds["undo"] = preload("res://sfx/undo.ogg"); #actually used by checkpoint but it should be a different sfx
