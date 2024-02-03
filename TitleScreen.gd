@@ -106,12 +106,14 @@ func cutscene_step() -> void:
 		4:
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel5, "modulate", Color.white, 0.5);
+			gamelogic.play_sound("intothewarp");
 		5:
 			var tween = get_tree().create_tween()
-			tween.tween_property($CutsceneHolder/ColorRect2, "modulate", Color.white, 0.5);
+			tween.tween_property($CutsceneHolder/ColorRect2, "modulate", Color.white, 2.0);
 			gamelogic.target_track = -1;
-			gamelogic.fadeout_timer_max = 1.0;
+			gamelogic.fadeout_timer_max = 2.0;
 			gamelogic.fadeout_timer = 0.0;
+			gamelogic.play_sound("getgreenality");
 		6:
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel6, "modulate", Color.white, 0.5);

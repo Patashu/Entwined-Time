@@ -1911,10 +1911,12 @@ func prepare_audio() -> void:
 	sounds["winbadtime"] = preload("res://sfx/winbadtime.ogg");
 	
 	#used only in cutscenes
+	sounds["noodling"] = preload("res://sfx/noodling.ogg");
 	sounds["alert"] = preload("res://sfx/alert.ogg");
 	sounds["alert2"] = preload("res://sfx/alert2.ogg");
 	sounds["alert3"] = preload("res://sfx/alert3.ogg");
-	sounds["noodling"] = preload("res://sfx/noodling.ogg");
+	sounds["intothewarp"] = preload("res://sfx/intothewarp.ogg");
+	sounds["getgreenality"] = preload("res://sfx/getgreenality.ogg");
 	
 	#unused
 	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep
