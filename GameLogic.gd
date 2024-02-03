@@ -1925,6 +1925,18 @@ func prepare_audio() -> void:
 	music_tracks.append(preload("res://music/1116.ogg"));
 	music_info.append("Dustup - 1116 (Patashu's Entwined Time Remix)");
 	music_db.append(-0.02);
+	music_tracks.append(preload("res://music/Title Screen.ogg"));
+	music_info.append("Patashu - Title Screen");
+	music_db.append(5.0);
+	music_tracks.append(preload("res://music/Cutscene A.ogg"));
+	music_info.append("Patashu - Cutscene A");
+	music_db.append(6.0);
+	music_tracks.append(preload("res://music/Cutscene B.ogg"));
+	music_info.append("Patashu - Cutscene B");
+	music_db.append(3.0);
+	music_tracks.append(preload("res://music/Cutscene C.ogg"));
+	music_info.append("Patashu - Cutscene C");
+	music_db.append(6.0);
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();

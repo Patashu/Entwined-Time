@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Cutscene A.ogg-61c03d2f73f01bf11a951938d6691d36.oggs
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
