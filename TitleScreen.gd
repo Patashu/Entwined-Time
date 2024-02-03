@@ -8,6 +8,8 @@ onready var beginbutton : Button = get_node("Holder/BeginButton");
 onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var creditsbutton : Button = get_node("Holder/CreditsButton");
+var only_mouse = true;
+var using_controller = false;
 
 var end_timer = 0.0;
 var end_timer_max = 0.0;
@@ -66,6 +68,14 @@ func destroy() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")):
+		using_controller = true;
+		only_mouse = false;
+	
+	if Input.is_action_just_pressed("any_keyboard"):
+		using_controller = false;
+		only_mouse = false;
+	
 	if (end_timer_max > 0):
 		end_timer += delta;
 		if (end_timer >= end_timer_max):
