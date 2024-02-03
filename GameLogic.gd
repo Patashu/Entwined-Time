@@ -3992,6 +3992,11 @@ func escape() -> void:
 	ui_stack.push_back(levelselect);
 	levelscene.add_child(levelselect);
 	
+func title_screen() -> void:
+	var a = preload("res://TitleScreen.tscn").instance();
+	ui_stack.push_back(a);
+	levelscene.add_child(a);
+	
 func level_editor() -> void:
 	var a = preload("res://level_editor/LevelEditor.tscn").instance();
 	ui_stack.push_back(a);

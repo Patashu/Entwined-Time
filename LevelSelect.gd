@@ -120,6 +120,12 @@ func prepare_chapter() -> void:
 	var all_standard_stars = true;
 	var all_advanced_stars = true;
 	
+	if (chapter == 0):
+		var button = Button.new();
+		holder.add_child(button);
+		button.text = "Intro Cutscene";
+		button.connect("pressed", self, "_intro_cutscene_pressed");
+	
 	if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < unlock_requirement):
 		holder.text = "Chapter " + chapter_string + " - ???";
 		var label = Label.new();
@@ -309,6 +315,10 @@ func prepare_chapter() -> void:
 	if (all_advanced_stars and advanced_label != null):
 		advanced_label.set_script(preload("res://GoldLabel.gd"));
 		advanced_label.flash();
+
+func _intro_cutscene_pressed() -> void:
+	destroy();
+	gamelogic.title_screen();
 
 func destroy() -> void:
 	self.queue_free();

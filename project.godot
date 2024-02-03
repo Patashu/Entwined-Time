@@ -183,6 +183,11 @@ _global_script_classes=[ {
 "class": "TimelineViewer",
 "language": "GDScript",
 "path": "res://timeline/TimelineViewer.gd"
+}, {
+"base": "Node2D",
+"class": "TitleScreen",
+"language": "GDScript",
+"path": "res://TitleScreen.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
@@ -219,7 +224,8 @@ _global_script_class_icons={
 "TimeBubble": "",
 "TimelineSlot": "",
 "TimelineSprite": "",
-"TimelineViewer": ""
+"TimelineViewer": "",
+"TitleScreen": ""
 }
 
 [application]
