@@ -1388,35 +1388,35 @@ func ready_map() -> void:
 			has_insight_level = true;
 			insight_level_scene = load(insight_path);
 	
-	#PERF: grab all the tiles once, turn it into a dictionary, then we can do many lookups in a row quicker
-	
+	# if any of these become non-custom, then I can always check them or remove the boolean
 	has_phase_walls = false;
-	if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
-		has_phase_walls = true;
-	elif (any_layer_has_this_tile(Tiles.PhaseWallRed)):
-		has_phase_walls = true;
-	elif (any_layer_has_this_tile(Tiles.PhaseWallGray)):
-		has_phase_walls = true;
-	elif (any_layer_has_this_tile(Tiles.PhaseWallPurple)):
-		has_phase_walls = true;
-	
 	has_phase_lightning = false;
-	if (any_layer_has_this_tile(Tiles.PhaseLightningBlue)):
-		has_phase_lightning = true;
-	elif (any_layer_has_this_tile(Tiles.PhaseLightningRed)):
-		has_phase_lightning = true;
-	elif (any_layer_has_this_tile(Tiles.PhaseLightningGray)):
-		has_phase_lightning = true;
-	elif (any_layer_has_this_tile(Tiles.PhaseLightningPurple)):
-		has_phase_lightning = true;
-		
 	has_checkpoints = false;
-	if (any_layer_has_this_tile(Tiles.Checkpoint)):
-		has_checkpoints = true;
-	elif (any_layer_has_this_tile(Tiles.CheckpointBlue)):
-		has_checkpoints = true;
-	elif (any_layer_has_this_tile(Tiles.CheckpointRed)):
-		has_checkpoints = true;
+	if (is_custom):
+		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
+			has_phase_walls = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseWallRed)):
+			has_phase_walls = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseWallGray)):
+			has_phase_walls = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseWallPurple)):
+			has_phase_walls = true;
+		
+		if (any_layer_has_this_tile(Tiles.PhaseLightningBlue)):
+			has_phase_lightning = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseLightningRed)):
+			has_phase_lightning = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseLightningGray)):
+			has_phase_lightning = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseLightningPurple)):
+			has_phase_lightning = true;
+		
+		if (any_layer_has_this_tile(Tiles.Checkpoint)):
+			has_checkpoints = true;
+		elif (any_layer_has_this_tile(Tiles.CheckpointBlue)):
+			has_checkpoints = true;
+		elif (any_layer_has_this_tile(Tiles.CheckpointRed)):
+			has_checkpoints = true;
 	
 	calculate_map_size();
 	make_actors();
