@@ -40,6 +40,12 @@ func reset() -> void:
 			sprite.queue_free();
 	nonce_to_sprite_dictionary.clear();
 	animating_children.clear();
+	if (max_moves > 33):
+		self.scale = Vector2(0.5, 0.5);
+		y_max = 22;
+	else:
+		self.scale = Vector2.ONE;
+		y_max = 11;
 	for i in range(max_moves):
 		var slot = preload("res://timeline/TimelineSlot.tscn").instance();
 		slot.parent = self;
