@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=337 format=2]
+[gd_resource type="TileSet" load_steps=340 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -308,6 +308,9 @@
 [ext_resource path="res://assets/green_fog_3.png" type="Texture" id=306]
 [ext_resource path="res://assets/green_fog_1.png" type="Texture" id=307]
 [ext_resource path="res://assets/green_fog_4.png" type="Texture" id=308]
+[ext_resource path="res://assets/floorboards_gray.png" type="Texture" id=309]
+[ext_resource path="res://assets/floorboards_void.png" type="Texture" id=310]
+[ext_resource path="res://assets/floorboards_green.png" type="Texture" id=311]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2146,3 +2149,45 @@ frame_7/delay_sec = 0.0
 87/shape_one_way_margin = 0.0
 87/shapes = [  ]
 87/z_index = 0
+88/name = "Floorboards"
+88/texture = ExtResource( 309 )
+88/tex_offset = Vector2( 0, 0 )
+88/modulate = Color( 1, 1, 1, 1 )
+88/region = Rect2( 0, 0, 24, 24 )
+88/tile_mode = 0
+88/occluder_offset = Vector2( 12, 12 )
+88/navigation_offset = Vector2( 12, 12 )
+88/shape_offset = Vector2( 0, 0 )
+88/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+88/shape_one_way = false
+88/shape_one_way_margin = 0.0
+88/shapes = [  ]
+88/z_index = 0
+89/name = "GreenFloorboards"
+89/texture = ExtResource( 311 )
+89/tex_offset = Vector2( 0, 0 )
+89/modulate = Color( 1, 1, 1, 1 )
+89/region = Rect2( 0, 0, 24, 24 )
+89/tile_mode = 0
+89/occluder_offset = Vector2( 12, 12 )
+89/navigation_offset = Vector2( 12, 12 )
+89/shape_offset = Vector2( 0, 0 )
+89/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+89/shape_one_way = false
+89/shape_one_way_margin = 0.0
+89/shapes = [  ]
+89/z_index = 0
+90/name = "VoidFloorboards"
+90/texture = ExtResource( 310 )
+90/tex_offset = Vector2( 0, 0 )
+90/modulate = Color( 1, 1, 1, 1 )
+90/region = Rect2( 0, 0, 24, 24 )
+90/tile_mode = 0
+90/occluder_offset = Vector2( 12, 12 )
+90/navigation_offset = Vector2( 12, 12 )
+90/shape_offset = Vector2( 0, 0 )
+90/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+90/shape_one_way = false
+90/shape_one_way_margin = 0.0
+90/shapes = [  ]
+90/z_index = 0

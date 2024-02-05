@@ -268,6 +268,9 @@ enum Tiles {
 	OnewaySouthLose, #85
 	OnewayWestLose, #86
 	GreenFog, #87
+	Floorboards, #88
+	GreenFloorboards, #89
+	VoidFloorboards, #90
 }
 var voidlike_tiles = [];
 
@@ -1327,6 +1330,7 @@ var has_phase_walls = false;
 var has_phase_lightning = false;
 var has_checkpoints = false;
 var has_green_fog = false;
+var has_floorboards = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1396,6 +1400,7 @@ func ready_map() -> void:
 	has_phase_lightning = false;
 	has_checkpoints = false;
 	has_green_fog = false;
+	has_floorboards = false;
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1424,6 +1429,13 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.GreenFog)):
 			has_green_fog = true;
+			
+		if (any_layer_has_this_tile(Tiles.Floorboards)):
+			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.GreenFloorboards)):
+			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
+			has_floorboards = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -2128,10 +2140,12 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list,
 	phased_out_of);
 	if (success == Success.Yes and !hypothetical):
+		
 		if (!is_retro):
 			was_push = pushers_list.size() > 0;
 			was_fall = is_gravity;
 		actor.pos = pos;
+		
 		# joke portal update
 		if (actor.joke_goal != null):
 			var joke_goal = actor.joke_goal;
@@ -2173,6 +2187,24 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 			
 		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of, animation_nonce],
 		chrono_for_maybe_green_actor(actor, chrono));
+		
+		# floorboards check - happens now so it goes 'move off, then floorboards break' so as an undo 'floorboards come back, move is undone'
+		if (has_floorboards and chrono < Chrono.TIMELESS):
+			var old_terrain = terrain_in_tile(old_pos);
+			for i in range(old_terrain.size() - 1, -1, -1):
+				var tile = old_terrain[i];
+				if (tile == Tiles.Floorboards):
+					if (chrono < Chrono.META_UNDO and !is_retro):
+						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
+					break;
+				elif (tile == Tiles.GreenFloorboards):
+					if (chrono < Chrono.META_UNDO):
+						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Green, chrono, -1);
+					break;
+				elif (tile == Tiles.VoidFloorboards):
+					if (chrono < Chrono.TIMELESS):
+						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Void, chrono, -1);
+					break;
 		
 		# update night and stars state
 		var terrain = terrain_in_tile(actor.pos);
@@ -2443,7 +2475,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile, animation_nonce], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
-		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked:
+		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked or new_tile == Tiles.Floorboards:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			for actor in actors:
 				# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
@@ -2461,6 +2493,10 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 	var terrain = terrain_in_tile(actor.pos);
 	var blocked = false;
 	flash_terrain = -1;
+	
+	# floorboards check
+	if (has_floorboards and (terrain.has(Tiles.Floorboards) || terrain.has(Tiles.GreenFloorboards) || terrain.has(Tiles.VoidFloorboards))):
+		return false;
 	
 	# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
 	# so check that.
@@ -2532,8 +2568,13 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 	# check for bottomless pits
 	if (pos.y > map_y_max):
 		return maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Mundane, chrono);
-
+	
 	var terrain = terrain_in_tile(pos);
+	
+	# floorboards check
+	if (has_floorboards and (terrain.has(Tiles.Floorboards) || terrain.has(Tiles.GreenFloorboards) || terrain.has(Tiles.VoidFloorboards))):
+		return Success.Yes;
+	
 	for i in range(terrain.size()):
 		var id = terrain[i];
 		match id:

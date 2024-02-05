@@ -91,6 +91,9 @@ enum Tiles {
 	OnewaySouthLose, #85
 	OnewayWestLose, #86
 	GreenFog, #87
+	Floorboards, #88
+	GreenFloorboards, #89
+	VoidFloorboards, #90
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -233,6 +236,9 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.CheckpointRed)
 		picker_array.append(Tiles.CheckpointBlue)
 		picker_array.append(Tiles.GreenFog)
+		picker_array.append(Tiles.Floorboards)
+		picker_array.append(Tiles.GreenFloorboards)
+		picker_array.append(Tiles.VoidFloorboards)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -716,6 +722,12 @@ func picker_tooltip() -> void:
 			text = "Light Checkpoint: At end of turn, Light on this tile has its timeline cleared."
 		Tiles.GreenFog:
 			text = "Green Fog: Actors in Green Fog don't create undo events."
+		Tiles.Floorboards:
+			text = "Floorboards: Solidity/Surprises of other terrain in this tile is ignored, including Holes. When an Actor leaves a tile with Floorboards using a non-retro move: The Floorboards is destroyed. In a stack of Floorboards, only the topmost one is considered."
+		Tiles.GreenFloorboards:
+			text = "Green Floorboards: A Floorboards that can be destroyed also by retro moves, and that does not create character undo events."
+		Tiles.VoidFloorboards:
+			text = "Void Floorboards: A Floorboards that can be destroyed also by retro and meta-undo moves, and that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));

@@ -537,14 +537,21 @@ func _process(delta: float) -> void:
 					for i in range(4):
 						var sprite = Sprite.new();
 						sprite.set_script(preload("res://FadingSprite.gd"));
-						if (current_animation[2] == 46):
-							sprite.texture = preload("res://assets/green_glass_block.png")
-						elif (current_animation[2] == 51):
-							sprite.texture = preload("res://assets/one_undo.png")
-						elif (current_animation[2] == 69):
-							sprite.texture = preload("res://assets/glass_block_cracked.png")
-						else:
-							sprite.texture = preload("res://assets/glass_block.png")
+						match (current_animation[2]):
+							46:
+								sprite.texture = preload("res://assets/green_glass_block.png")
+							51:
+								sprite.texture = preload("res://assets/one_undo.png")
+							69:
+								sprite.texture = preload("res://assets/glass_block_cracked.png")
+							88:
+								sprite.texture = preload("res://assets/floorboards_gray.png")
+							89:
+								sprite.texture = preload("res://assets/floorboards_green.png")
+							90:
+								sprite.texture = preload("res://assets/floorboards_void.png")
+							_:
+								sprite.texture = preload("res://assets/glass_block.png")
 						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
 						sprite.position.x += -6+(i%2)*12;
 						sprite.position.y += -6+floor(i/2)*12;
@@ -563,7 +570,13 @@ func _process(delta: float) -> void:
 					for i in range(4):
 						var sprite = Sprite.new();
 						sprite.set_script(preload("res://FadingSprite.gd"));
-						sprite.texture = preload("res://assets/glass_block.png")
+						match (current_animation[3]):
+							69:
+								sprite.texture = preload("res://assets/glass_block_cracked.png")
+							88:
+								sprite.texture = preload("res://assets/floorboards_gray.png")
+							_:
+								sprite.texture = preload("res://assets/glass_block.png")
 						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
 						sprite.position.x += -6+(i%2)*12;
 						sprite.position.y += -6+floor(i/2)*12;

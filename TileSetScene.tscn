@@ -1,4 +1,4 @@
-[gd_scene load_steps=337 format=2]
+[gd_scene load_steps=340 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -308,6 +308,9 @@
 [ext_resource path="res://assets/green_fog_3.png" type="Texture" id=306]
 [ext_resource path="res://assets/green_fog_1.png" type="Texture" id=307]
 [ext_resource path="res://assets/green_fog_4.png" type="Texture" id=308]
+[ext_resource path="res://assets/floorboards_gray.png" type="Texture" id=309]
+[ext_resource path="res://assets/floorboards_void.png" type="Texture" id=310]
+[ext_resource path="res://assets/floorboards_green.png" type="Texture" id=311]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1267,3 +1270,15 @@ texture = ExtResource( 295 )
 [node name="GreenFog" type="Sprite" parent="."]
 position = Vector2( 379, 94 )
 texture = SubResource( 29 )
+
+[node name="Floorboards" type="Sprite" parent="."]
+position = Vector2( 410, 42 )
+texture = ExtResource( 309 )
+
+[node name="GreenFloorboards" type="Sprite" parent="."]
+position = Vector2( 416, 47 )
+texture = ExtResource( 311 )
+
+[node name="VoidFloorboards" type="Sprite" parent="."]
+position = Vector2( 423, 53 )
+texture = ExtResource( 310 )
