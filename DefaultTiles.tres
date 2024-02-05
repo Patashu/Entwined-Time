@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=340 format=2]
+[gd_resource type="TileSet" load_steps=343 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -311,6 +311,9 @@
 [ext_resource path="res://assets/floorboards_gray.png" type="Texture" id=309]
 [ext_resource path="res://assets/floorboards_void.png" type="Texture" id=310]
 [ext_resource path="res://assets/floorboards_green.png" type="Texture" id=311]
+[ext_resource path="res://assets/hole_green.png" type="Texture" id=312]
+[ext_resource path="res://assets/hole.png" type="Texture" id=313]
+[ext_resource path="res://assets/hole_void.png" type="Texture" id=314]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2191,3 +2194,45 @@ frame_7/delay_sec = 0.0
 90/shape_one_way_margin = 0.0
 90/shapes = [  ]
 90/z_index = 0
+91/name = "Hole"
+91/texture = ExtResource( 313 )
+91/tex_offset = Vector2( 0, 0 )
+91/modulate = Color( 1, 1, 1, 1 )
+91/region = Rect2( 0, 0, 24, 24 )
+91/tile_mode = 0
+91/occluder_offset = Vector2( 12, 12 )
+91/navigation_offset = Vector2( 12, 12 )
+91/shape_offset = Vector2( 0, 0 )
+91/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+91/shape_one_way = false
+91/shape_one_way_margin = 0.0
+91/shapes = [  ]
+91/z_index = 0
+92/name = "GreenHole"
+92/texture = ExtResource( 312 )
+92/tex_offset = Vector2( 0, 0 )
+92/modulate = Color( 1, 1, 1, 1 )
+92/region = Rect2( 0, 0, 24, 24 )
+92/tile_mode = 0
+92/occluder_offset = Vector2( 12, 12 )
+92/navigation_offset = Vector2( 12, 12 )
+92/shape_offset = Vector2( 0, 0 )
+92/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+92/shape_one_way = false
+92/shape_one_way_margin = 0.0
+92/shapes = [  ]
+92/z_index = 0
+93/name = "VoidHole"
+93/texture = ExtResource( 314 )
+93/tex_offset = Vector2( 0, 0 )
+93/modulate = Color( 1, 1, 1, 1 )
+93/region = Rect2( 0, 0, 24, 24 )
+93/tile_mode = 0
+93/occluder_offset = Vector2( 12, 12 )
+93/navigation_offset = Vector2( 12, 12 )
+93/shape_offset = Vector2( 0, 0 )
+93/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+93/shape_one_way = false
+93/shape_one_way_margin = 0.0
+93/shapes = [  ]
+93/z_index = 0

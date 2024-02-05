@@ -83,6 +83,9 @@ enum Name {
 	ChronoHelixBlue,
 	HeavyGoalJoke,
 	LightGoalJoke,
+	Hole,
+	GreenHole,
+	VoidHole,
 }
 
 func update_graphics() -> void:
@@ -200,6 +203,24 @@ func get_next_texture() -> Texture:
 			return preload("res://assets/chrono_helix_blue.png");
 		Name.ChronoHelixRed:
 			return preload("res://assets/chrono_helix_red.png");
+			
+		Name.Hole:
+			if broken:
+				return preload("res://assets/hole_broken.png");
+			else:
+				return preload("res://assets/hole.png");
+				
+		Name.GreenHole:
+			if broken:
+				return preload("res://assets/hole_green_broken.png");
+			else:
+				return preload("res://assets/hole_green.png");
+				
+		Name.VoidHole:
+			if broken:
+				return preload("res://assets/hole_void_broken.png");
+			else:
+				return preload("res://assets/hole_void.png");
 	
 	return null;
 
@@ -268,6 +289,10 @@ func native_colour():
 		return 1; #Purple
 	if (actorname == Name.Light):
 		return 2; #Blurple
+	if (actorname == Name.GreenHole):
+		return 6; #Green
+	if (actorname == Name.VoidHole):
+		return 7; #Void
 	return 0; 
 
 func is_native_colour():
@@ -313,6 +338,9 @@ func floats() -> bool:
 	
 func climbs() -> bool:
 	return climbs and !broken;
+
+func is_hole() -> bool:
+	return !broken and (actorname == Name.Hole or actorname == Name.GreenHole or actorname == Name.VoidHole);
 
 func pushable() -> bool:
 	if (just_moved):

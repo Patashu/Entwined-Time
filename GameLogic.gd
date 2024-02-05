@@ -271,6 +271,9 @@ enum Tiles {
 	Floorboards, #88
 	GreenFloorboards, #89
 	VoidFloorboards, #90
+	Hole, #91
+	GreenHole, #92
+	VoidHole, #93
 }
 var voidlike_tiles = [];
 
@@ -1331,6 +1334,7 @@ var has_phase_lightning = false;
 var has_checkpoints = false;
 var has_green_fog = false;
 var has_floorboards = false;
+var has_holes = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1401,6 +1405,7 @@ func ready_map() -> void:
 	has_checkpoints = false;
 	has_green_fog = false;
 	has_floorboards = false;
+	has_holes = false;
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1436,6 +1441,13 @@ func ready_map() -> void:
 			has_floorboards = true;
 		elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
 			has_floorboards = true;
+			
+		if (any_layer_has_this_tile(Tiles.Hole)):
+			has_holes = true;
+		elif (any_layer_has_this_tile(Tiles.GreenHole)):
+			has_holes = true;
+		elif (any_layer_has_this_tile(Tiles.VoidHole)):
+			has_holes = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -1700,6 +1712,12 @@ func make_actors() -> void:
 	# joke portals
 	extract_actors(Tiles.HeavyGoalJoke, Actor.Name.HeavyGoalJoke, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("FF6A00"));
 	extract_actors(Tiles.LightGoalJoke, Actor.Name.LightGoalJoke, Heaviness.CRYSTAL, Strength.CRYSTAL, Durability.NOTHING, 0, false, Color("00FFFF"));
+	
+	# holes
+	if (has_holes):
+		extract_actors(Tiles.Hole, Actor.Name.Hole, Heaviness.INFINITE, Strength.NONE, Durability.NOTHING, 0, false, Color("404040"));
+		extract_actors(Tiles.GreenHole, Actor.Name.GreenHole, Heaviness.INFINITE, Strength.NONE, Durability.NOTHING, 0, false, Color("A9F05F"));
+		extract_actors(Tiles.VoidHole, Actor.Name.VoidHole, Heaviness.INFINITE, Strength.NONE, Durability.NOTHING, 0, false, Color("202020"));
 	
 	find_colours();
 	
@@ -2073,7 +2091,10 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, chrono: int = 
 	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
-	actorsfolder.add_child(actor);
+	if (actorname == Actor.Name.Hole || actorname == Actor.Name.GreenHole || actorname == Actor.Name.VoidHole):
+		underterrainfolder.add_child(actor);
+	else:
+		actorsfolder.add_child(actor);
 	actor.time_colour = actor.native_colour();
 	move_actor_to(actor, pos, chrono, false, false);
 	if (chrono < Chrono.META_UNDO):
@@ -2187,6 +2208,18 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 			
 		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of, animation_nonce],
 		chrono_for_maybe_green_actor(actor, chrono));
+		
+		# hole check
+		if (has_holes and chrono < Chrono.META_UNDO):
+			var actors = actors_in_tile(pos);
+			for actor_there in actors:
+				if (actor_there.is_hole()):
+					if (!actor.broken and (actor.actorname == Actor.Name.IronCrate
+					or actor.actorname == Actor.Name.PowerCrate
+					or actor.actorname == Actor.Name.WoodenCrate
+					or actor.actorname == Actor.Name.SteelCrate)):
+						maybe_break_actor(actor_there, 9999, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
+					maybe_break_actor(actor, Durability.PITS, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
 		
 		# floorboards check - happens now so it goes 'move off, then floorboards break' so as an undo 'floorboards come back, move is undone'
 		if (has_floorboards and chrono < Chrono.TIMELESS):
@@ -2497,6 +2530,13 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 	# floorboards check
 	if (has_floorboards and (terrain.has(Tiles.Floorboards) || terrain.has(Tiles.GreenFloorboards) || terrain.has(Tiles.VoidFloorboards))):
 		return false;
+	
+	# hole check
+	if (actor.broken and has_holes):
+		var actors_there = actors_in_tile(actor.pos);
+		for actor_there in actors_there:
+			if (actor_there.actorname == Actor.Name.Hole or actor_there.actorname == Actor.Name.GreenHole or actor_there.actorname == Actor.Name.VoidHole):
+				return true;
 	
 	# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
 	# so check that.
@@ -2809,6 +2849,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			continue
 		#if actor_there.tiny_pushable():
 		#	tiny_pushables_there.push_back(actor_there);
+		elif (actor_there.is_hole()):
+			continue;
 		elif actor_there.pushable():
 			pushables_there.push_back(actor_there);
 	
