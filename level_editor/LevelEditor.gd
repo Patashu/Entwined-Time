@@ -90,6 +90,7 @@ enum Tiles {
 	OnewayNorthLose, #84
 	OnewaySouthLose, #85
 	OnewayWestLose, #86
+	GreenFog, #87
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -231,6 +232,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.Checkpoint)
 		picker_array.append(Tiles.CheckpointRed)
 		picker_array.append(Tiles.CheckpointBlue)
+		picker_array.append(Tiles.GreenFog)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -712,6 +714,8 @@ func picker_tooltip() -> void:
 			text = "Heavy Checkpoint: At end of turn, Heavy on this tile has its timeline cleared."
 		Tiles.CheckpointBlue:
 			text = "Light Checkpoint: At end of turn, Light on this tile has its timeline cleared."
+		Tiles.GreenFog:
+			text = "Green Fog: Actors in Green Fog don't create undo events."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));

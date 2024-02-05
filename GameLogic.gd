@@ -267,6 +267,7 @@ enum Tiles {
 	OnewayNorthLose, #84
 	OnewaySouthLose, #85
 	OnewayWestLose, #86
+	GreenFog, #87
 }
 var voidlike_tiles = [];
 
@@ -847,6 +848,7 @@ func initialize_shaders() -> void:
 	# TODO: compile the Static shader by flicking it on for a single frame? same for ripple and grayscale
 	
 func tile_changes(level_editor: bool = false) -> void:
+	terrainmap.tile_set.tile_set_modulate(Tiles.GreenFog, Color(1, 1, 1, 0.8));
 	# hide light and heavy goal sprites when in-game and not in-editor
 	if (!level_editor):
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, null);
@@ -1324,6 +1326,7 @@ func refresh_puzzles_completed() -> void:
 var has_phase_walls = false;
 var has_phase_lightning = false;
 var has_checkpoints = false;
+var has_green_fog = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1392,6 +1395,7 @@ func ready_map() -> void:
 	has_phase_walls = false;
 	has_phase_lightning = false;
 	has_checkpoints = false;
+	has_green_fog = false;
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1417,6 +1421,9 @@ func ready_map() -> void:
 			has_checkpoints = true;
 		elif (any_layer_has_this_tile(Tiles.CheckpointRed)):
 			has_checkpoints = true;
+			
+		if (any_layer_has_this_tile(Tiles.GreenFog)):
+			has_green_fog = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -2366,6 +2373,11 @@ func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
 		return chrono;
 	elif (actor.time_colour == TimeColour.Green):
 		return Chrono.CHAR_UNDO;
+	if (has_green_fog):
+		var terrain = terrain_in_tile(actor.pos);
+		if (terrain.has(Tiles.GreenFog)):
+			add_to_animation_server(actor, [Animation.sfx, "greenfire"]);
+			return Chrono.CHAR_UNDO;
 	return chrono;
 	
 func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terrain: int, chrono: int) -> int:
