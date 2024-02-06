@@ -2436,7 +2436,17 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 				else:
 					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"]);
 		# bump animation always happens, I think?
-		add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+		# ah, not if it's a 'null' gravity move (everything in the stack was already grounded)
+		if (!is_gravity):
+			add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+		else:
+			if (actor.airborne != -1):
+				add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+			else:
+				for pusher in pushers_list:
+					if pusher.airborne != -1:
+						add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+						break;
 	
 	return success;
 		
