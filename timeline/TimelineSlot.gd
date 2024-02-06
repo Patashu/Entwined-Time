@@ -95,18 +95,22 @@ func fill(buffer: Array) -> void:
 		if event[0] == GameLogic.Undo.move or event[0] == GameLogic.Undo.set_actor_var or event[0] == GameLogic.Undo.change_terrain or event[0] == GameLogic.Undo.tick: # move or set_actor_var or change_terrain or tick
 			# whitelist: for set_actor_var, only consider airborne 1 or less and broken
 			var whitelisted = false;
-			if (event[0] == GameLogic.Undo.move):
-				whitelisted = true;
-			elif (event[0] == GameLogic.Undo.set_actor_var):
-				if (event[2] == "airborne"):
-					if event[4] < 2:
-						whitelisted = true;
-				elif (event[2] == "broken"):
+			match (event[0]):
+				GameLogic.Undo.move:
 					whitelisted = true;
-			elif (event[0] == GameLogic.Undo.change_terrain):
-				whitelisted = true;
-			elif (event[0] == GameLogic.Undo.tick):
-				whitelisted = true;
+				GameLogic.Undo.set_actor_var:
+					if (event[2] == "airborne"):
+						if event[4] < 2:
+							whitelisted = true;
+					elif (event[2] == "broken"):
+						whitelisted = true;
+					elif (event[2] == "momentum"):
+						if (event[3] == Vector2.ZERO or event[4] == Vector2.ZERO or event[3].normalize() != event[4].normalize()):
+							whitelisted = true;
+				GameLogic.Undo.change_terrain:
+					whitelisted = true;
+				GameLogic.Undo.tick:
+					whitelisted = true;
 			if (!whitelisted):
 				continue
 			# reverse order since undo buffer is 'in reverse order'
@@ -158,68 +162,95 @@ func get_animation_nonce_for_event(event) -> int:
 func get_texture_for_event(event: Array, size: int) -> Texture:
 	#add_undo_event([Undo.move, actor, dir], chrono);
 	#add_undo_event([Undo.set_actor_var, actor, prop, old_value], chrono);
-	if event[0] == GameLogic.Undo.move:
-		var dir = event[2];
-		if dir == Vector2.LEFT:
-			if size == 8:
-				return preload("res://timeline/timeline-left-8.png");
-			elif size == 12:
-				return preload("res://timeline/timeline-left-12.png");
-		elif dir == Vector2.RIGHT:
-			if size == 8:
-				return preload("res://timeline/timeline-right-8.png");
-			elif size == 12:
-				return preload("res://timeline/timeline-right-12.png");
-		elif dir == Vector2.UP:
-			if size == 8:
-				return preload("res://timeline/timeline-up-8.png");
-			elif size == 12:
-				return preload("res://timeline/timeline-up-12.png");
-		elif dir == Vector2.DOWN:
-			if size == 8:
-				return preload("res://timeline/timeline-down-8.png");
-			elif size == 12:
-				return preload("res://timeline/timeline-down-12.png");
-		pass
-	elif event[0] == GameLogic.Undo.set_actor_var:
-		var prop = event[2];
-		var new_value = event[4];
-		if prop == "airborne":
-			if new_value == 2:
-				pass
-			elif new_value == 1:
+	match (event[0]):
+		GameLogic.Undo.move:
+			var dir = event[2];
+			if dir == Vector2.LEFT:
 				if size == 8:
-					return preload("res://timeline/timeline-airborne-1-8.png");
+					return preload("res://timeline/timeline-left-8.png");
 				elif size == 12:
-					return preload("res://timeline/timeline-airborne-1-12.png");
-			elif new_value == 0:
+					return preload("res://timeline/timeline-left-12.png");
+			elif dir == Vector2.RIGHT:
 				if size == 8:
-					return preload("res://timeline/timeline-airborne-0-8.png");
+					return preload("res://timeline/timeline-right-8.png");
 				elif size == 12:
-					return preload("res://timeline/timeline-airborne-0-12.png");
-			elif new_value == -1:
+					return preload("res://timeline/timeline-right-12.png");
+			elif dir == Vector2.UP:
 				if size == 8:
-					return preload("res://timeline/timeline-grounded-8.png");
+					return preload("res://timeline/timeline-up-8.png");
 				elif size == 12:
-					return preload("res://timeline/timeline-grounded-12.png");
-		elif prop == "broken":
-			if new_value == true:
+					return preload("res://timeline/timeline-up-12.png");
+			elif dir == Vector2.DOWN:
 				if size == 8:
-					return preload("res://timeline/timeline-broken-8.png");
+					return preload("res://timeline/timeline-down-8.png");
 				elif size == 12:
-					return preload("res://timeline/timeline-broken-12.png");
+					return preload("res://timeline/timeline-down-12.png");
 			pass
-	elif event[0] == GameLogic.Undo.change_terrain:
-		if size == 8:
-			return preload("res://timeline/timeline-terrain-8.png");
-		elif size == 12:
-			return preload("res://timeline/timeline-terrain-12.png");
-	elif event[0] == GameLogic.Undo.tick:
-		if size == 8:
-			return preload("res://timeline/timeline-tick-8.png");
-		elif size == 12:
-			return preload("res://timeline/timeline-tick-12.png");
-		
+		GameLogic.Undo.set_actor_var:
+			var prop = event[2];
+			var new_value = event[4];
+			if prop == "airborne":
+				if new_value == 2:
+					pass
+				elif new_value == 1:
+					if size == 8:
+						return preload("res://timeline/timeline-airborne-1-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-airborne-1-12.png");
+				elif new_value == 0:
+					if size == 8:
+						return preload("res://timeline/timeline-airborne-0-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-airborne-0-12.png");
+				elif new_value == -1:
+					if size == 8:
+						return preload("res://timeline/timeline-grounded-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-grounded-12.png");
+			elif prop == "broken":
+				if new_value == true:
+					if size == 8:
+						return preload("res://timeline/timeline-broken-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-broken-12.png");
+				pass
+			elif prop == "momentum":
+				if (new_value == Vector2.ZERO):
+					if size == 8:
+						return preload("res://timeline/timeline-momentum-zero-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-momentum-zero-12.png");
+				elif (new_value.normalize() == Vector2.LEFT):
+					if size == 8:
+						return preload("res://timeline/timeline-momentum-left-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-momentum-left-12.png");
+				elif (new_value.normalize() == Vector2.RIGHT):
+					if size == 8:
+						return preload("res://timeline/timeline-momentum-right-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-momentum-right-12.png");
+				elif (new_value.normalize() == Vector2.UP):
+					if size == 8:
+						return preload("res://timeline/timeline-momentum-up-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-momentum-up-12.png");
+				elif (new_value.normalize() == Vector2.DOWN):
+					if size == 8:
+						return preload("res://timeline/timeline-momentum-down-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-momentum-down-12.png");
+		GameLogic.Undo.change_terrain:
+			if size == 8:
+				return preload("res://timeline/timeline-terrain-8.png");
+			elif size == 12:
+				return preload("res://timeline/timeline-terrain-12.png");
+		GameLogic.Undo.tick:
+			if size == 8:
+				return preload("res://timeline/timeline-tick-8.png");
+			elif size == 12:
+				return preload("res://timeline/timeline-tick-12.png");
+			
 	return null
 
 func fuzz_on() -> void:

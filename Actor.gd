@@ -19,6 +19,7 @@ var climbs = false
 var is_character = false
 var time_colour = 0
 var time_bubble = null
+var momentum = Vector2.ZERO;
 # undo trails logic
 var is_ghost = false
 var next_ghost = null;
@@ -387,33 +388,51 @@ func update_grayscale(yes: bool) -> void:
 	elif !yes and self.material != null:
 		self.material = null;
 
+func action_line(dir: Vector2) -> void:
+	var sprite = Sprite.new();
+	sprite.set_script(preload("res://GoalParticle.gd"));
+	if (actorname == Name.Heavy):
+		sprite.texture = preload("res://assets/action_line_heavy.png");
+	else:
+		sprite.texture = preload("res://assets/action_line_light.png");
+	sprite.position = self.position;
+	if (dir == Vector2.DOWN):
+		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
+		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
+		sprite.velocity = Vector2(0, -24);
+	elif (dir == Vector2.UP):
+		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
+		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
+		sprite.velocity = Vector2(0, 24);
+		sprite.position.y += gamelogic.cell_size/2;
+	elif (dir == Vector2.LEFT):
+		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
+		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size);
+		sprite.velocity = Vector2(24, 0);
+	elif (dir == Vector2.RIGHT):
+		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
+		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size);
+		sprite.velocity = Vector2(-24, 0);
+	sprite.centered = true;
+	sprite.rotate_magnitude = 0;
+	sprite.alpha_max = 1;
+	sprite.modulate = self.modulate;
+	sprite.modulate.a = 0;
+	sprite.fadeout_timer_max = 0.75;
+	gamelogic.overactorsparticles.add_child(sprite);
+
 func _process(delta: float) -> void:
 	#action lines
-	if (!is_ghost and is_character and airborne != -1):
+	if (!is_ghost and (airborne != -1 or momentum != Vector2.ZERO)):
 		action_lines_timer += delta;
 		if (action_lines_timer > action_lines_timer_max):
 			action_lines_timer -= action_lines_timer_max;
-			var sprite = Sprite.new();
-			sprite.set_script(preload("res://GoalParticle.gd"));
-			if (actorname == Name.Heavy):
-				sprite.texture = preload("res://assets/action_line_heavy.png");
-			else:
-				sprite.texture = preload("res://assets/action_line_light.png");
-			sprite.position = self.position;
-			sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
-			sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
 			if (airborne == 0):
-				sprite.velocity = Vector2(0, -24);
-			else:
-				sprite.velocity = Vector2(0, 24);
-				sprite.position.y += gamelogic.cell_size/2;
-			sprite.centered = true;
-			sprite.rotate_magnitude = 0;
-			sprite.alpha_max = 1;
-			sprite.modulate = self.modulate;
-			sprite.modulate.a = 0;
-			sprite.fadeout_timer_max = 0.75;
-			gamelogic.overactorsparticles.add_child(sprite);
+				action_line(Vector2.DOWN);
+			elif (airborne > 0):
+				action_line(Vector2.UP);
+			if (momentum != Vector2.ZERO):
+				action_line(momentum.normalized());
 	
 	#crystal effects
 	if (is_crystal):
