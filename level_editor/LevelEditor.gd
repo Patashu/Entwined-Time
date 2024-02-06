@@ -103,6 +103,7 @@ enum Tiles {
 	SlopeNE, #97
 	SlopeSE, #98
 	SlopeSW, #99
+	Boulder, #100
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -257,6 +258,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.SlopeNE)
 		picker_array.append(Tiles.SlopeSE)
 		picker_array.append(Tiles.SlopeSW)
+		picker_array.append(Tiles.Boulder);
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -764,6 +766,8 @@ func picker_tooltip() -> void:
 			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
 		Tiles.SlopeSW:
 			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
+		Tiles.Boulder:
+			text = "Boulder: (TODO. It's complicated. They have Momentum.)"
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));

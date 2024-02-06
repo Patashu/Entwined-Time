@@ -280,6 +280,7 @@ enum Tiles {
 	SlopeNE, #97
 	SlopeSE, #98
 	SlopeSW, #99
+	Boulder, #100
 }
 var voidlike_tiles = [];
 
@@ -2184,7 +2185,7 @@ func slope_helper(id: int, dir: Vector2) -> Array:
 	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
-phased_out_of = null, animation_nonce : int = -1, is_move: bool = false) -> int:
+phased_out_of = null, animation_nonce : int = -1, is_move: bool = false, can_push: bool = true) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.ghost_dir = -dir;
@@ -2193,11 +2194,11 @@ phased_out_of = null, animation_nonce : int = -1, is_move: bool = false) -> int:
 		return Success.Yes;
 	
 	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical,
-	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce, is_move);
+	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce, is_move, can_push);
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall: bool = false, was_push: bool = false,
-phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
+phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push: bool = true) -> int:
 	var dir = pos - actor.pos;
 	var old_pos = actor.pos;
 	
@@ -2213,7 +2214,7 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 	# and keep trying hypotheticals until the whole thing is cleared as OK)
 	var slope_next_dir = Vector2.ZERO;
 	if (has_slopes and chrono < Chrono.META_UNDO and !is_retro):
-		success = try_enter(actor, dir, chrono, true, false, is_gravity, is_retro, pushers_list,
+		success = try_enter(actor, dir, chrono, can_push, false, is_gravity, is_retro, pushers_list,
 	phased_out_of);
 		var terrain_there = terrain_in_tile(pos);
 		var new_success = Success.Yes;
@@ -2226,7 +2227,7 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 					if (slope_next_dir * -1 == dir):
 						continue;
 					actor.pos = pos;
-					new_success = try_enter(actor, slope_next_dir, chrono, true, true, is_gravity, is_retro, pushers_list, phased_out_of);
+					new_success = try_enter(actor, slope_next_dir, chrono, can_push, true, is_gravity, is_retro, pushers_list, phased_out_of);
 					actor.pos = old_pos;
 					if (new_success == Success.Yes):
 						break;
@@ -2236,9 +2237,9 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 			success = Success.No;
 		else:
 			if (!hypothetical):
-				try_enter(actor, dir, chrono, true, true, is_gravity, is_retro, pushers_list, phased_out_of);
+				try_enter(actor, dir, chrono, can_push, true, is_gravity, is_retro, pushers_list, phased_out_of);
 	else:
-		success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list, phased_out_of);
+		success = try_enter(actor, dir, chrono, can_push, hypothetical, is_gravity, is_retro, pushers_list, phased_out_of);
 	
 	if (success == Success.Yes and !hypothetical):
 		
@@ -4689,7 +4690,7 @@ func time_passes(chrono: int) -> void:
 				clear_just_moveds = true;
 			
 			if actor.airborne == -1 and !is_suspended(actor):
-				var could_fall = try_enter(actor, Vector2.DOWN, chrono, true, true, true);
+				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or has_fallen[actor] <= 0)):
 					if actor.floats():
@@ -4741,7 +4742,9 @@ func time_passes(chrono: int) -> void:
 			if is_suspended(actor):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
-			var could_fall = try_enter(actor, Vector2.DOWN, chrono, false, true, true);
+			var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true,
+			false, [], false, false, null, -1, false,
+			false) # can_push
 			if (could_fall == Success.No):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
