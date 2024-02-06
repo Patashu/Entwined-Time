@@ -749,7 +749,7 @@ func picker_tooltip() -> void:
 		Tiles.VoidFloorboards:
 			text = "Void Floorboards: A Floorboards that can be destroyed also by retro and meta-undo moves, and that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
 		Tiles.Hole:
-			text = "Hole: (Technically an Actor, so you CAN use Green or Void on this.) When an actor bumps a Hole: If the Hole isn't broken: The actor suffers pit damage and enters the hole. Then if the actor was an unbroken crate, the hole breaks. Holes (broken or unbroken) prevent broken actors from leaving them."
+			text = "Hole: (Technically an Actor, so you CAN use Green or Void on this.) When an actor enters a Hole: If the Hole isn't broken: The actor suffers pit damage. Then if the actor was an unbroken crate/boulder, the hole breaks. Holes (broken or unbroken) prevent broken actors from leaving them."
 		Tiles.GreenHole:
 			text = "Green Hole: A hole that doesn't create character undo events."
 		Tiles.VoidHole:

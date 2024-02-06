@@ -20,6 +20,7 @@ var is_character = false
 var time_colour = 0
 var time_bubble = null
 var momentum = Vector2.ZERO;
+var boulder_moved_horizontally_this_turn = false;
 # undo trails logic
 var is_ghost = false
 var next_ghost = null;
@@ -87,6 +88,7 @@ enum Name {
 	Hole,
 	GreenHole,
 	VoidHole,
+	Boulder,
 }
 
 func update_graphics() -> void:
@@ -222,6 +224,12 @@ func get_next_texture() -> Texture:
 				return preload("res://assets/hole_void_broken.png");
 			else:
 				return preload("res://assets/hole_void.png");
+	
+		Name.Boulder:
+			if broken:
+				return preload("res://assets/boulder_broken.png");
+			else:
+				return preload("res://assets/Boulder.png");
 	
 	return null;
 
@@ -409,10 +417,12 @@ func action_line(dir: Vector2) -> void:
 		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.velocity = Vector2(24, 0);
+		sprite.rotation_degrees = 90;
 	elif (dir == Vector2.RIGHT):
 		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.velocity = Vector2(-24, 0);
+		sprite.rotation_degrees = 90;
 	sprite.centered = true;
 	sprite.rotate_magnitude = 0;
 	sprite.alpha_max = 1;
@@ -432,7 +442,7 @@ func _process(delta: float) -> void:
 			elif (airborne > 0):
 				action_line(Vector2.UP);
 			if (momentum != Vector2.ZERO):
-				action_line(momentum.normalized());
+				action_line(momentum);
 	
 	#crystal effects
 	if (is_crystal):

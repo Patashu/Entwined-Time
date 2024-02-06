@@ -105,8 +105,7 @@ func fill(buffer: Array) -> void:
 					elif (event[2] == "broken"):
 						whitelisted = true;
 					elif (event[2] == "momentum"):
-						if (event[3] == Vector2.ZERO or event[4] == Vector2.ZERO or event[3].normalize() != event[4].normalize()):
-							whitelisted = true;
+						whitelisted = true;
 				GameLogic.Undo.change_terrain:
 					whitelisted = true;
 				GameLogic.Undo.tick:
@@ -220,22 +219,22 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 						return preload("res://timeline/timeline-momentum-zero-8.png");
 					elif size == 12:
 						return preload("res://timeline/timeline-momentum-zero-12.png");
-				elif (new_value.normalize() == Vector2.LEFT):
+				elif (new_value == Vector2.LEFT):
 					if size == 8:
 						return preload("res://timeline/timeline-momentum-left-8.png");
 					elif size == 12:
 						return preload("res://timeline/timeline-momentum-left-12.png");
-				elif (new_value.normalize() == Vector2.RIGHT):
+				elif (new_value == Vector2.RIGHT):
 					if size == 8:
 						return preload("res://timeline/timeline-momentum-right-8.png");
 					elif size == 12:
 						return preload("res://timeline/timeline-momentum-right-12.png");
-				elif (new_value.normalize() == Vector2.UP):
+				elif (new_value == Vector2.UP):
 					if size == 8:
 						return preload("res://timeline/timeline-momentum-up-8.png");
 					elif size == 12:
 						return preload("res://timeline/timeline-momentum-up-12.png");
-				elif (new_value.normalize() == Vector2.DOWN):
+				elif (new_value == Vector2.DOWN):
 					if size == 8:
 						return preload("res://timeline/timeline-momentum-down-8.png");
 					elif size == 12:

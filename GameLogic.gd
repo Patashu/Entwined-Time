@@ -1344,6 +1344,7 @@ var has_floorboards = false;
 var has_holes = false;
 var has_boost_pads = false;
 var has_slopes = false;
+var has_boulders = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1417,6 +1418,7 @@ func ready_map() -> void:
 	has_holes = false;
 	has_boost_pads = false;
 	has_slopes = false;
+	has_boulders = false;
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1473,6 +1475,9 @@ func ready_map() -> void:
 			has_slopes = true;
 		elif (any_layer_has_this_tile(Tiles.SlopeSW)):
 			has_slopes = true;
+			
+		if (any_layer_has_this_tile(Tiles.Boulder)):
+			has_boulders = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -1743,6 +1748,10 @@ func make_actors() -> void:
 		extract_actors(Tiles.Hole, Actor.Name.Hole, Heaviness.INFINITE, Strength.NONE, Durability.NOTHING, 0, false, Color("404040"));
 		extract_actors(Tiles.GreenHole, Actor.Name.GreenHole, Heaviness.INFINITE, Strength.NONE, Durability.NOTHING, 0, false, Color("A9F05F"));
 		extract_actors(Tiles.VoidHole, Actor.Name.VoidHole, Heaviness.INFINITE, Strength.NONE, Durability.NOTHING, 0, false, Color("202020"));
+	
+	# boulders
+	if (has_boulders):
+		extract_actors(Tiles.Boulder, Actor.Name.Boulder, Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 1, false, Color(0.75, 0.75, 0.75, 1));
 	
 	find_colours();
 	
@@ -2298,7 +2307,8 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push
 					if (!actor.broken and (actor.actorname == Actor.Name.IronCrate
 					or actor.actorname == Actor.Name.PowerCrate
 					or actor.actorname == Actor.Name.WoodenCrate
-					or actor.actorname == Actor.Name.SteelCrate)):
+					or actor.actorname == Actor.Name.SteelCrate
+					or actor.actorname == Actor.Name.Boulder)):
 						maybe_break_actor(actor_there, 9999, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
 					maybe_break_actor(actor, Durability.PITS, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
 		
@@ -2401,6 +2411,13 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push
 			for sticky_actor in sticky_actors:
 				sticky_actor.just_moved = false;
 				
+		# boulder momentum
+		if (actor.actorname == Actor.Name.Boulder and (chrono < Chrono.META_UNDO or (chrono == Chrono.META_UNDO and !is_retro))):
+			if dir.y == 0:
+				actor.boulder_moved_horizontally_this_turn = true;
+				if (actor.momentum != dir):
+					set_actor_var(actor, "momentum", dir, chrono);
+		
 		# slopes 2) then after the !is_retro first move succeeds and commits,
 		# again we try to do the second moves in order, and take the first one that succeeds.
 		# (actually, I seem to have retconned this into 'remember which move we think is the valid next one
@@ -2970,6 +2987,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		elif actor_there.pushable():
 			pushables_there.push_back(actor_there);
 	
+	var boulder_cats_cradle_move = false;
+	
 	if (pushables_there.size() > 0):
 		if (!can_push):
 			return Success.No;
@@ -3000,8 +3019,16 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					pushables_there.clear();
 					break;
 				else:
-					pushers_list.pop_front();
-					return Success.No;
+					# Boulders rolling under their own momentum can push with +1 strength, but will stop rolling in the process.
+					if (actor.actorname == Actor.Name.Boulder and actor.momentum == dir and pushers_list.size() == 1 and !boulder_cats_cradle_move):
+						boulder_cats_cradle_move = true;
+						strength_modifier += 1;
+						if !strength_check(actor.strength + strength_modifier, actor_there.heaviness):
+							pushers_list.pop_front();
+							return Success.No;
+					else:
+						pushers_list.pop_front();
+						return Success.No;
 		var result = Success.Yes;
 		
 		# logic to handle time crystals and actor stacks:
@@ -3075,6 +3102,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					actor_there.just_moved = false;
 		
 		pushers_list.pop_front();
+		if (boulder_cats_cradle_move and result == Success.Yes):
+			result = Success.Surprise;
 		return result;
 	
 	return Success.Yes;
@@ -4638,6 +4667,18 @@ func time_passes(chrono: int) -> void:
 			elif (purple and terrain.has(Tiles.PhaseLightningPurple)):
 				actor.post_mortem = Durability.FIRE;
 				set_actor_var(actor, "broken", true, chrono);
+	
+	# Boulders ride their momentum.
+	if (has_boulders):
+		for actor in time_actors:
+			if actor.actorname == Actor.Name.Boulder and !actor.boulder_moved_horizontally_this_turn and actor.momentum != Vector2.ZERO:
+				var rollin = move_actor_relative(actor, actor.momentum, chrono, false, false);
+				if (rollin != Success.Yes):
+					set_actor_var(actor, "momentum", Vector2.ZERO, chrono);
+			
+		for actor in actors:
+			if actor.actorname == Actor.Name.Boulder:
+				actor.boulder_moved_horizontally_this_turn = false;
 	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.
