@@ -276,6 +276,10 @@ enum Tiles {
 	VoidHole, #93
 	BoostPad, #94
 	GreenBoostPad, #95
+	SlopeNW, #96
+	SlopeNE, #97
+	SlopeSE, #98
+	SlopeSW, #99
 }
 var voidlike_tiles = [];
 
@@ -1338,6 +1342,7 @@ var has_green_fog = false;
 var has_floorboards = false;
 var has_holes = false;
 var has_boost_pads = false;
+var has_slopes = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1410,6 +1415,7 @@ func ready_map() -> void:
 	has_floorboards = false;
 	has_holes = false;
 	has_boost_pads = false;
+	has_slopes = false;
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1457,6 +1463,15 @@ func ready_map() -> void:
 			has_boost_pads = true;
 		elif (any_layer_has_this_tile(Tiles.GreenBoostPad)):
 			has_boost_pads = true;
+			
+		if (any_layer_has_this_tile(Tiles.SlopeNE)):
+			has_slopes = true;
+		elif (any_layer_has_this_tile(Tiles.SlopeNW)):
+			has_slopes = true;
+		elif (any_layer_has_this_tile(Tiles.SlopeSE)):
+			has_slopes = true;
+		elif (any_layer_has_this_tile(Tiles.SlopeSW)):
+			has_slopes = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -2148,6 +2163,25 @@ func light_goal_here(pos: Vector2, terrain: Array) -> bool:
 				return true;
 		return false;
 	
+func slope_helper(id: int, dir: Vector2) -> Array:
+	if id == Tiles.SlopeSW and dir.x != 0:
+		return [Vector2.UP, Vector2.RIGHT, Vector2.LEFT, Vector2.DOWN];
+	elif id == Tiles.SlopeSW and dir.y != 0:
+		return [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
+	elif id == Tiles.SlopeSE and dir.x != 0:
+		return [Vector2.UP, Vector2.LEFT, Vector2.RIGHT, Vector2.DOWN];
+	elif id == Tiles.SlopeSE and dir.y != 0:
+		return [Vector2.LEFT, Vector2.UP, Vector2.DOWN, Vector2.RIGHT];
+	elif id == Tiles.SlopeNW and dir.x != 0:
+		return [Vector2.DOWN, Vector2.RIGHT, Vector2.LEFT, Vector2.UP];
+	elif id == Tiles.SlopeNW and dir.y != 0:
+		return [Vector2.RIGHT, Vector2.DOWN, Vector2.UP, Vector2.LEFT];
+	elif id == Tiles.SlopeNE and dir.x != 0:
+		return [Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT, Vector2.UP];
+	elif id == Tiles.SlopeNE and dir.y != 0:
+		return [Vector2.LEFT, Vector2.DOWN, Vector2.UP, Vector2.RIGHT];
+	return []; #unreachable
+	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
 phased_out_of = null, animation_nonce : int = -1, is_move: bool = false) -> int:
@@ -2167,8 +2201,45 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 	var dir = pos - actor.pos;
 	var old_pos = actor.pos;
 	
-	var success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list,
+	var success = Success.No;
+	
+	# slopes 1) if an !is_retro move enters a slope, then for the original move to succeed,
+	# it also has to be able to eject perpendicularly out of the slope. if that fails,
+	# it tries to leave parallely. if that fails too, the move fails.
+	# (This also means that if we're doing !hypothetical movement, we need to be hypothetical until
+	# we've confirmed the whole sequence is OK, then we do !hypothetical finally.)
+	# (UPDATE: Don't allow movement off of a slope to be the direction you came from.)
+	# (TODO: May want to recursively check if there's a slope at the second destination
+	# and keep trying hypotheticals until the whole thing is cleared as OK)
+	var slope_next_dir = Vector2.ZERO;
+	if (has_slopes and chrono < Chrono.META_UNDO and !is_retro):
+		success = try_enter(actor, dir, chrono, true, false, is_gravity, is_retro, pushers_list,
 	phased_out_of);
+		var terrain_there = terrain_in_tile(pos);
+		var new_success = Success.Yes;
+		for i in range(4):
+			var id = Tiles.SlopeNW + i;
+			if terrain_there.has(id):
+				var next_dirs = slope_helper(id, dir);
+				for j in range (2):
+					slope_next_dir = next_dirs[j];
+					if (slope_next_dir * -1 == dir):
+						continue;
+					actor.pos = pos;
+					new_success = try_enter(actor, slope_next_dir, chrono, true, true, is_gravity, is_retro, pushers_list, phased_out_of);
+					actor.pos = old_pos;
+					if (new_success == Success.Yes):
+						break;
+				if (new_success == Success.Yes):
+					break;
+		if (new_success != Success.Yes):
+			success = Success.No;
+		else:
+			if (!hypothetical):
+				try_enter(actor, dir, chrono, true, true, is_gravity, is_retro, pushers_list, phased_out_of);
+	else:
+		success = try_enter(actor, dir, chrono, true, hypothetical, is_gravity, is_retro, pushers_list, phased_out_of);
+	
 	if (success == Success.Yes and !hypothetical):
 		
 		if (!is_retro):
@@ -2328,6 +2399,18 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
 			for sticky_actor in sticky_actors:
 				sticky_actor.just_moved = false;
+				
+		# slopes 2) then after the !is_retro first move succeeds and commits,
+		# again we try to do the second moves in order, and take the first one that succeeds.
+		# (actually, I seem to have retconned this into 'remember which move we think is the valid next one
+		# and do that', which should be OK?
+		# slopes 2b) also, if an actor moves upwards in this way, it immediately becomes 'rising',
+		# like a robot deliberately pressing up.
+		# (update: only if it was grounded
+		if (slope_next_dir != Vector2.ZERO):
+			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
+			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and actor.airborne == -1):
+				set_actor_var(actor, "airborne", 2, chrono);
 				
 		# boost pad check
 		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
@@ -4706,6 +4789,41 @@ func time_passes(chrono: int) -> void:
 			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
 				actor.post_mortem = Durability.FIRE;
 				set_actor_var(actor, "broken", true, Chrono.CHAR_UNDO);
+				
+	# slope cleanup step:
+	# at the end of time_passes, ALL actors still in slopes attempt to be ejected
+	# (first sideways, then vertically, then backwards sideways, then backwards vertically,
+	# then if all of that fails we break for infinite damage).
+	# this continues recursively until nothing changes. if we loop 100 times, lose (infinite loop).
+	if (has_slopes and chrono <= Chrono.META_UNDO):
+		something_happened = true;
+		var c = 0;
+		while (something_happened):
+			something_happened = false;
+			c += 1;
+			if (c >= 100):
+				lose("Infinite loop.", null);
+				break;
+			for actor in actors:
+				var found_a_slope = false;
+				var slope_success = Success.No;
+				var terrain = terrain_in_tile(actor.pos);
+				for i in range (4):
+					var id = Tiles.SlopeNW + i;
+					if (terrain.has(id)):
+						found_a_slope = true;
+						var next_dirs = slope_helper(id, Vector2.UP);
+						for j in range(4):
+							var slope_next_dir = next_dirs[j];
+							slope_success = move_actor_relative(actor, slope_next_dir, chrono, false, false);
+							if (slope_success == Success.Yes):
+								something_happened = true;
+								break;
+					if (slope_success == Success.Yes):
+						break;
+				if (slope_success != Success.Yes and found_a_slope and !actor.broken):
+					set_actor_var(actor, "broken", true, chrono);
+					something_happened = true;
 	
 	# Lucky last - clocks tick.
 	for actor in time_actors:

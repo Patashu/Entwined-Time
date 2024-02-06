@@ -99,6 +99,10 @@ enum Tiles {
 	VoidHole, #93
 	BoostPad, #94
 	GreenBoostPad, #95
+	SlopeNW, #96
+	SlopeNE, #97
+	SlopeSE, #98
+	SlopeSW, #99
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -249,6 +253,10 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.VoidHole)
 		picker_array.append(Tiles.BoostPad)
 		picker_array.append(Tiles.GreenBoostPad)
+		picker_array.append(Tiles.SlopeNW)
+		picker_array.append(Tiles.SlopeNE)
+		picker_array.append(Tiles.SlopeSE)
+		picker_array.append(Tiles.SlopeSW)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -748,6 +756,14 @@ func picker_tooltip() -> void:
 			text = "Boost Pad: Non-retro movements leaving this tile happen one additional time."
 		Tiles.GreenBoostPad:
 			text = "Green Boost Pad: Non-retro AND retro movements leaving this tile happen one additional time."
+		Tiles.SlopeNW:
+			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
+		Tiles.SlopeNE:
+			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
+		Tiles.SlopeSE:
+			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
+		Tiles.SlopeSW:
+			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));
