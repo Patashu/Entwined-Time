@@ -97,6 +97,8 @@ enum Tiles {
 	Hole, #91
 	GreenHole, #92
 	VoidHole, #93
+	BoostPad, #94
+	GreenBoostPad, #95
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -245,6 +247,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.Hole)
 		picker_array.append(Tiles.GreenHole)
 		picker_array.append(Tiles.VoidHole)
+		picker_array.append(Tiles.BoostPad)
+		picker_array.append(Tiles.GreenBoostPad)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -740,6 +744,10 @@ func picker_tooltip() -> void:
 			text = "Green Hole: A hole that doesn't create character undo events."
 		Tiles.VoidHole:
 			text = "Void Hole: A hole that doesn't create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+		Tiles.BoostPad:
+			text = "Boost Pad: Non-retro movements leaving this tile happen one additional time."
+		Tiles.GreenBoostPad:
+			text = "Green Boost Pad: Non-retro AND retro movements leaving this tile happen one additional time."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));

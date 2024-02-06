@@ -274,6 +274,8 @@ enum Tiles {
 	Hole, #91
 	GreenHole, #92
 	VoidHole, #93
+	BoostPad, #94
+	GreenBoostPad, #95
 }
 var voidlike_tiles = [];
 
@@ -1335,6 +1337,7 @@ var has_checkpoints = false;
 var has_green_fog = false;
 var has_floorboards = false;
 var has_holes = false;
+var has_boost_pads = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1406,6 +1409,7 @@ func ready_map() -> void:
 	has_green_fog = false;
 	has_floorboards = false;
 	has_holes = false;
+	has_boost_pads = false;
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1448,6 +1452,11 @@ func ready_map() -> void:
 			has_holes = true;
 		elif (any_layer_has_this_tile(Tiles.VoidHole)):
 			has_holes = true;
+			
+		if (any_layer_has_this_tile(Tiles.BoostPad)):
+			has_boost_pads = true;
+		elif (any_layer_has_this_tile(Tiles.GreenBoostPad)):
+			has_boost_pads = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -2319,6 +2328,16 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
 			for sticky_actor in sticky_actors:
 				sticky_actor.just_moved = false;
+				
+		# boost pad check
+		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
+			var old_terrain = terrain_in_tile(actor.pos - dir);
+			if ((!is_retro and old_terrain.has(Tiles.BoostPad)) or old_terrain.has(Tiles.GreenBoostPad)):
+				boost_pad_reentrance = true;
+				add_to_animation_server(actor, [Animation.sfx, "redfire"]);
+				move_actor_to(actor, actor.pos + dir, chrono, hypothetical, false, false);
+				boost_pad_reentrance = false;
+				
 		return success;
 	elif (success != Success.Yes):
 		# vanity bump goes here, even if it's hypothetical, muahaha
@@ -2335,7 +2354,10 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false) -> int:
 					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"]);
 		# bump animation always happens, I think?
 		add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+	
 	return success;
+		
+var boost_pad_reentrance = false;
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 	if (is_heavy):

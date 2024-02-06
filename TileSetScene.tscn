@@ -1,4 +1,4 @@
-[gd_scene load_steps=343 format=2]
+[gd_scene load_steps=345 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -314,6 +314,8 @@
 [ext_resource path="res://assets/hole_green.png" type="Texture" id=312]
 [ext_resource path="res://assets/hole.png" type="Texture" id=313]
 [ext_resource path="res://assets/hole_void.png" type="Texture" id=314]
+[ext_resource path="res://assets/boost_pad.png" type="Texture" id=315]
+[ext_resource path="res://assets/boost_pad_green.png" type="Texture" id=316]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1297,3 +1299,11 @@ texture = ExtResource( 312 )
 [node name="VoidHole" type="Sprite" parent="."]
 position = Vector2( 439, 102 )
 texture = ExtResource( 314 )
+
+[node name="BoostPad" type="Sprite" parent="."]
+position = Vector2( 457, 42 )
+texture = ExtResource( 315 )
+
+[node name="GreenBoostPad" type="Sprite" parent="."]
+position = Vector2( 463, 47 )
+texture = ExtResource( 316 )

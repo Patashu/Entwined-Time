@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=343 format=2]
+[gd_resource type="TileSet" load_steps=345 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -314,6 +314,8 @@
 [ext_resource path="res://assets/hole_green.png" type="Texture" id=312]
 [ext_resource path="res://assets/hole.png" type="Texture" id=313]
 [ext_resource path="res://assets/hole_void.png" type="Texture" id=314]
+[ext_resource path="res://assets/boost_pad.png" type="Texture" id=315]
+[ext_resource path="res://assets/boost_pad_green.png" type="Texture" id=316]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2236,3 +2238,31 @@ frame_7/delay_sec = 0.0
 93/shape_one_way_margin = 0.0
 93/shapes = [  ]
 93/z_index = 0
+94/name = "BoostPad"
+94/texture = ExtResource( 315 )
+94/tex_offset = Vector2( 0, 0 )
+94/modulate = Color( 1, 1, 1, 1 )
+94/region = Rect2( 0, 0, 24, 24 )
+94/tile_mode = 0
+94/occluder_offset = Vector2( 12, 12 )
+94/navigation_offset = Vector2( 12, 12 )
+94/shape_offset = Vector2( 0, 0 )
+94/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+94/shape_one_way = false
+94/shape_one_way_margin = 0.0
+94/shapes = [  ]
+94/z_index = 0
+95/name = "GreenBoostPad"
+95/texture = ExtResource( 316 )
+95/tex_offset = Vector2( 0, 0 )
+95/modulate = Color( 1, 1, 1, 1 )
+95/region = Rect2( 0, 0, 24, 24 )
+95/tile_mode = 0
+95/occluder_offset = Vector2( 12, 12 )
+95/navigation_offset = Vector2( 12, 12 )
+95/shape_offset = Vector2( 0, 0 )
+95/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+95/shape_one_way = false
+95/shape_one_way_margin = 0.0
+95/shapes = [  ]
+95/z_index = 0
