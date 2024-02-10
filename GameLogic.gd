@@ -2192,6 +2192,8 @@ func slope_helper(id: int, dir: Vector2) -> Array:
 		return [Vector2.LEFT, Vector2.DOWN, Vector2.UP, Vector2.RIGHT];
 	return []; #unreachable
 	
+var infinite_loop_check : int = 0;
+	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
 phased_out_of = null, animation_nonce : int = -1, is_move: bool = false, can_push: bool = true,
@@ -2429,7 +2431,14 @@ boost_pad_reentrance: bool = false) -> int:
 		# like a robot deliberately pressing up.
 		# (update: only if it was grounded
 		if (slope_next_dir != Vector2.ZERO):
+			if (infinite_loop_check >= 20):
+				lose("Infinite loop.", null);
+				return Success.No;
+			if (lost):
+				return Success.No;
+			infinite_loop_check += 1;
 			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
+			infinite_loop_check -= 1;
 			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
 				set_actor_var(actor, "airborne", 2, chrono);
 				
