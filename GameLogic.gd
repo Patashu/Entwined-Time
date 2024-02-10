@@ -2431,7 +2431,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# like a robot deliberately pressing up.
 		# (update: only if it was grounded
 		if (slope_next_dir != Vector2.ZERO):
-			if (infinite_loop_check >= 20):
+			if (infinite_loop_check >= 100):
 				lose("Infinite loop.", null);
 				return Success.No;
 			if (lost):
