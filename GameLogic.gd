@@ -2415,7 +2415,7 @@ boost_pad_reentrance: bool = false) -> int:
 				sticky_actor.just_moved = false;
 				
 		# boulder momentum
-		if (actor.actorname == Actor.Name.Boulder and chrono < Chrono.TIMELESS and !is_retro):
+		if (actor.actorname == Actor.Name.Boulder and chrono < Chrono.TIMELESS and !is_retro and !actor.broken):
 			if dir.y == 0:
 				actor.boulder_moved_horizontally_this_turn = true;
 				if (actor.momentum != dir):
@@ -4674,10 +4674,13 @@ func time_passes(chrono: int) -> void:
 	# Boulders ride their momentum.
 	if (has_boulders):
 		for actor in time_actors:
-			if actor.actorname == Actor.Name.Boulder and !actor.boulder_moved_horizontally_this_turn and actor.momentum != Vector2.ZERO:
-				var rollin = move_actor_relative(actor, actor.momentum, chrono, false, false);
-				if (rollin != Success.Yes):
+			if actor.actorname == Actor.Name.Boulder and actor.momentum != Vector2.ZERO:
+				if (actor.broken):
 					set_actor_var(actor, "momentum", Vector2.ZERO, chrono);
+				elif (!actor.boulder_moved_horizontally_this_turn):
+					var rollin = move_actor_relative(actor, actor.momentum, chrono, false, false);
+					if (rollin != Success.Yes):
+						set_actor_var(actor, "momentum", Vector2.ZERO, chrono);
 			
 		for actor in actors:
 			if actor.actorname == Actor.Name.Boulder:
