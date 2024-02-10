@@ -2430,7 +2430,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# (update: only if it was grounded
 		if (slope_next_dir != Vector2.ZERO):
 			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
-			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and (actor.airborne == -1 or !actor.is_character)):
+			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
 				set_actor_var(actor, "airborne", 2, chrono);
 				
 		# boost pad check
