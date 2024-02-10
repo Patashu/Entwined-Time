@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=350 format=2]
+[gd_resource type="TileSet" load_steps=352 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -321,6 +321,8 @@
 [ext_resource path="res://assets/slope_ne.png" type="Texture" id=319]
 [ext_resource path="res://assets/slope_sw.png" type="Texture" id=320]
 [ext_resource path="res://assets/Boulder.png" type="Texture" id=321]
+[ext_resource path="res://assets/phase_wall_green_even.png" type="Texture" id=322]
+[ext_resource path="res://assets/phase_wall_green_odd.png" type="Texture" id=323]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2341,3 +2343,31 @@ frame_7/delay_sec = 0.0
 100/shape_one_way_margin = 0.0
 100/shapes = [  ]
 100/z_index = 0
+101/name = "PhaseWallGreenEven"
+101/texture = ExtResource( 322 )
+101/tex_offset = Vector2( 0, 0 )
+101/modulate = Color( 1, 1, 1, 1 )
+101/region = Rect2( 0, 0, 24, 24 )
+101/tile_mode = 0
+101/occluder_offset = Vector2( 12, 12 )
+101/navigation_offset = Vector2( 12, 12 )
+101/shape_offset = Vector2( 0, 0 )
+101/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+101/shape_one_way = false
+101/shape_one_way_margin = 0.0
+101/shapes = [  ]
+101/z_index = 0
+102/name = "PhaseWallGreenOdd"
+102/texture = ExtResource( 323 )
+102/tex_offset = Vector2( 0, 0 )
+102/modulate = Color( 1, 1, 1, 1 )
+102/region = Rect2( 0, 0, 24, 24 )
+102/tile_mode = 0
+102/occluder_offset = Vector2( 12, 12 )
+102/navigation_offset = Vector2( 12, 12 )
+102/shape_offset = Vector2( 0, 0 )
+102/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+102/shape_one_way = false
+102/shape_one_way_margin = 0.0
+102/shapes = [  ]
+102/z_index = 0

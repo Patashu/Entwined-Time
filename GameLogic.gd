@@ -281,6 +281,8 @@ enum Tiles {
 	SlopeSE, #98
 	SlopeSW, #99
 	Boulder, #100
+	PhaseWallGreenEven, #101
+	PhaseWallGreenOdd, #102
 }
 var voidlike_tiles = [];
 
@@ -2930,6 +2932,10 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = no_if_true_yes_if_false(chrono == Chrono.MOVE);
 			Tiles.PhaseWallPurple:
 				result = no_if_true_yes_if_false(chrono == Chrono.CHAR_UNDO);
+			Tiles.PhaseWallGreenEven:
+				result = no_if_true_yes_if_false(meta_turn % 2 == 0);
+			Tiles.PhaseWallGreenOdd:
+				result = no_if_true_yes_if_false(meta_turn % 2 == 1);
 		if result != Success.Yes:
 			return result;
 	return result;
