@@ -2318,7 +2318,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# floorboards check - happens now so it goes 'move off, then floorboards break' so as an undo 'floorboards come back, move is undone'
 		if (has_floorboards and chrono < Chrono.TIMELESS):
 			var old_terrain = terrain_in_tile(old_pos);
-			for i in range(old_terrain.size() - 1, -1, -1):
+			for i in range(old_terrain.size() - 1):
 				var tile = old_terrain[i];
 				if (tile == Tiles.Floorboards):
 					if (chrono < Chrono.META_UNDO and !is_retro):
