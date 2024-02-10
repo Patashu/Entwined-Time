@@ -4856,6 +4856,7 @@ func time_passes(chrono: int) -> void:
 		something_happened = true;
 		var c = 0;
 		while (something_happened):
+			animation_substep(chrono);
 			something_happened = false;
 			c += 1;
 			if (c >= 100):
