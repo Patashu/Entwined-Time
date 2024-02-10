@@ -4867,7 +4867,7 @@ func time_passes(chrono: int) -> void:
 	if (has_slopes and chrono <= Chrono.META_UNDO):
 		something_happened = true;
 		var c = 0;
-		while (something_happened):
+		while (something_happened and !lost):
 			animation_substep(chrono);
 			something_happened = false;
 			c += 1;
