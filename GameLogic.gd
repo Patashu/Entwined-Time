@@ -2437,10 +2437,12 @@ boost_pad_reentrance: bool = false) -> int:
 		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
 			var old_terrain = terrain_in_tile(actor.pos - dir);
 			if ((!is_retro and old_terrain.has(Tiles.BoostPad)) or old_terrain.has(Tiles.GreenBoostPad)):
+				animation_substep(chrono);
 				add_to_animation_server(actor, [Animation.sfx, "redfire"]);
 				move_actor_to(actor, actor.pos + dir, chrono, hypothetical, false, false,
 				[], false, false, null, -1, false, true,
 				true);
+				
 				
 		return success;
 	elif (success != Success.Yes):
