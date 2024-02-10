@@ -2430,7 +2430,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# (update: only if it was grounded
 		if (slope_next_dir != Vector2.ZERO):
 			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
-			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and actor.airborne == -1):
+			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and (actor.airborne == -1 or !actor.is_character)):
 				set_actor_var(actor, "airborne", 2, chrono);
 				
 		# boost pad check
@@ -4885,6 +4885,11 @@ func time_passes(chrono: int) -> void:
 				if (slope_success != Success.Yes and found_a_slope and !actor.broken):
 					set_actor_var(actor, "broken", true, chrono);
 					something_happened = true;
+		
+		# another airborne 2->1 since riding a slope might have changed airborneness
+		for actor in actors:
+			if actor.airborne >= 2:
+				set_actor_var(actor, "airborne", 1, chrono);
 	
 	# Lucky last - clocks tick.
 	for actor in time_actors:
