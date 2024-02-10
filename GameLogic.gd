@@ -4874,7 +4874,7 @@ func time_passes(chrono: int) -> void:
 					if (terrain.has(id)):
 						found_a_slope = true;
 						var next_dirs = slope_helper(id, Vector2.UP);
-						for j in range(4):
+						for j in range(2):
 							var slope_next_dir = next_dirs[j];
 							slope_success = move_actor_relative(actor, slope_next_dir, chrono, false, false);
 							if (slope_success == Success.Yes):
