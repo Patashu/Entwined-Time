@@ -1,4 +1,4 @@
-[gd_scene load_steps=352 format=2]
+[gd_scene load_steps=360 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -323,6 +323,14 @@
 [ext_resource path="res://assets/Boulder.png" type="Texture" id=321]
 [ext_resource path="res://assets/phase_wall_green_even.png" type="Texture" id=322]
 [ext_resource path="res://assets/phase_wall_green_odd.png" type="Texture" id=323]
+[ext_resource path="res://assets/nudge_right.png" type="Texture" id=324]
+[ext_resource path="res://assets/nudge_left.png" type="Texture" id=325]
+[ext_resource path="res://assets/nudge_up.png" type="Texture" id=326]
+[ext_resource path="res://assets/nudge_right_green.png" type="Texture" id=327]
+[ext_resource path="res://assets/nudge_up_green.png" type="Texture" id=328]
+[ext_resource path="res://assets/nudge_down.png" type="Texture" id=329]
+[ext_resource path="res://assets/nudge_down_green.png" type="Texture" id=330]
+[ext_resource path="res://assets/nudge_left_green.png" type="Texture" id=331]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1342,3 +1350,35 @@ texture = ExtResource( 322 )
 [node name="PhaseWallGreenOdd" type="Sprite" parent="."]
 position = Vector2( 474, 113 )
 texture = ExtResource( 323 )
+
+[node name="NudgeEast" type="Sprite" parent="."]
+position = Vector2( 453, 204 )
+texture = ExtResource( 324 )
+
+[node name="NudgeNorth" type="Sprite" parent="."]
+position = Vector2( 445, 198 )
+texture = ExtResource( 326 )
+
+[node name="NudgeSouth" type="Sprite" parent="."]
+position = Vector2( 445, 213 )
+texture = ExtResource( 329 )
+
+[node name="NudgeWest" type="Sprite" parent="."]
+position = Vector2( 437, 204 )
+texture = ExtResource( 325 )
+
+[node name="NudgeEastGreen" type="Sprite" parent="."]
+position = Vector2( 483, 208 )
+texture = ExtResource( 327 )
+
+[node name="NudgeNorthGreen" type="Sprite" parent="."]
+position = Vector2( 477, 203 )
+texture = ExtResource( 328 )
+
+[node name="NudgeSouthGreen" type="Sprite" parent="."]
+position = Vector2( 476, 217 )
+texture = ExtResource( 330 )
+
+[node name="NudgeWestGreen" type="Sprite" parent="."]
+position = Vector2( 471, 208 )
+texture = ExtResource( 331 )

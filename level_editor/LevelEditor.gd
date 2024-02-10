@@ -106,6 +106,14 @@ enum Tiles {
 	Boulder, #100
 	PhaseWallGreenEven, #101
 	PhaseWallGreenOdd, #102
+	NudgeEast, #103
+	NudgeNorth, #104
+	NudgeSouth, #105
+	NudgeWest, #106
+	NudgeEastGreen, #107
+	NudgeNorthGreen, #108
+	NudgeSouthGreen, #109
+	NudgeWestGreen, #110
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -263,6 +271,14 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.Boulder)
 		picker_array.append(Tiles.PhaseWallGreenEven)
 		picker_array.append(Tiles.PhaseWallGreenOdd)
+		picker_array.append(Tiles.NudgeEast)
+		picker_array.append(Tiles.NudgeNorth)
+		picker_array.append(Tiles.NudgeSouth)
+		picker_array.append(Tiles.NudgeWest)
+		picker_array.append(Tiles.NudgeEastGreen)
+		picker_array.append(Tiles.NudgeNorthGreen)
+		picker_array.append(Tiles.NudgeSouthGreen)
+		picker_array.append(Tiles.NudgeWestGreen)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -776,6 +792,22 @@ func picker_tooltip() -> void:
 			text = "Phase Wall Green Even: Solid during even Meta-Turns. (Meta-Turn increments at the end of a turn.)"
 		Tiles.PhaseWallGreenOdd:
 			text = "Phase Wall Green Even: Solid during odd Meta-Turns. (Meta-Turn increments at the end of a turn.)"
+		Tiles.NudgeEast:
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+		Tiles.NudgeNorth:
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+		Tiles.NudgeSouth:
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+		Tiles.NudgeWest:
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+		Tiles.NudgeEast:
+			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.NudgeNorth:
+			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.NudgeSouth:
+			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.NudgeWest:
+			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));

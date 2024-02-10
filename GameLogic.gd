@@ -283,6 +283,14 @@ enum Tiles {
 	Boulder, #100
 	PhaseWallGreenEven, #101
 	PhaseWallGreenOdd, #102
+	NudgeEast, #103
+	NudgeNorth, #104
+	NudgeSouth, #105
+	NudgeWest, #106
+	NudgeEastGreen, #107
+	NudgeNorthGreen, #108
+	NudgeSouthGreen, #109
+	NudgeWestGreen, #110
 }
 var voidlike_tiles = [];
 
@@ -1347,6 +1355,7 @@ var has_holes = false;
 var has_boost_pads = false;
 var has_slopes = false;
 var has_boulders = false;
+var has_nudges = false;
 
 func ready_map() -> void:
 	won = false;
@@ -1421,6 +1430,7 @@ func ready_map() -> void:
 	has_boost_pads = false;
 	has_slopes = false;
 	has_boulders = false;
+	has_nudges = false;
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1480,6 +1490,23 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.Boulder)):
 			has_boulders = true;
+			
+		if (any_layer_has_this_tile(Tiles.NudgeEast)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeNorth)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeSouth)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeWest)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeEastGreen)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeNorthGreen)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeSouthGreen)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeWestGreen)):
+			has_nudges = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -4684,6 +4711,27 @@ func time_passes(chrono: int) -> void:
 			elif (purple and terrain.has(Tiles.PhaseLightningPurple)):
 				actor.post_mortem = Durability.FIRE;
 				set_actor_var(actor, "broken", true, chrono);
+		
+	
+	if (has_nudges):
+		# Nudges activate
+		var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
+		for actor in time_actors:
+			var terrain = terrain_in_tile(actor.pos);
+			for id in terrain:
+				if id >= Tiles.NudgeEast and id <= Tiles.NudgeEast + 3:
+					var attempt = move_actor_relative(actor, directions[id - Tiles.NudgeEast], chrono, false, false);
+					if (attempt == Success.Yes):
+						break;
+		
+		# Green nudges activate
+		for actor in actors:
+			var terrain = terrain_in_tile(actor.pos);
+			for id in terrain:
+				if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
+					var attempt = move_actor_relative(actor, directions[id - Tiles.NudgeEastGreen], chrono, false, false);
+					if (attempt == Success.Yes):
+						break;
 	
 	# Boulders ride their momentum.
 	if (has_boulders):
