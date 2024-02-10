@@ -2194,7 +2194,8 @@ func slope_helper(id: int, dir: Vector2) -> Array:
 	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
-phased_out_of = null, animation_nonce : int = -1, is_move: bool = false, can_push: bool = true) -> int:
+phased_out_of = null, animation_nonce : int = -1, is_move: bool = false, can_push: bool = true,
+boost_pad_reentrance: bool = false) -> int:
 	if (chrono == Chrono.GHOSTS):
 		var ghost = get_ghost_that_hasnt_moved(actor);
 		ghost.ghost_dir = -dir;
@@ -2203,11 +2204,13 @@ phased_out_of = null, animation_nonce : int = -1, is_move: bool = false, can_pus
 		return Success.Yes;
 	
 	return move_actor_to(actor, actor.pos + dir, chrono, hypothetical,
-	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce, is_move, can_push);
+	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce, is_move, can_push,
+	boost_pad_reentrance);
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall: bool = false, was_push: bool = false,
-phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push: bool = true) -> int:
+phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push: bool = true,
+boost_pad_reentrance: bool = false) -> int:
 	var dir = pos - actor.pos;
 	var old_pos = actor.pos;
 	
@@ -2434,10 +2437,10 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push
 		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
 			var old_terrain = terrain_in_tile(actor.pos - dir);
 			if ((!is_retro and old_terrain.has(Tiles.BoostPad)) or old_terrain.has(Tiles.GreenBoostPad)):
-				boost_pad_reentrance = true;
 				add_to_animation_server(actor, [Animation.sfx, "redfire"]);
-				move_actor_to(actor, actor.pos + dir, chrono, hypothetical, false, false);
-				boost_pad_reentrance = false;
+				move_actor_to(actor, actor.pos + dir, chrono, hypothetical, false, false,
+				[], false, false, null, -1, false, true,
+				true);
 				
 		return success;
 	elif (success != Success.Yes):
@@ -2467,8 +2470,6 @@ phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push
 						break;
 	
 	return success;
-		
-var boost_pad_reentrance = false;
 		
 func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 	if (is_heavy):
