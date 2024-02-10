@@ -2232,9 +2232,8 @@ boost_pad_reentrance: bool = false) -> int:
 	phased_out_of);
 		var terrain_there = terrain_in_tile(pos);
 		var new_success = Success.Yes;
-		for i in range(4):
-			var id = Tiles.SlopeNW + i;
-			if terrain_there.has(id):
+		for id in terrain_there:
+			if id >= Tiles.SlopeNW and id <= Tiles.SlopeNW + 3:
 				var next_dirs = slope_helper(id, dir);
 				for j in range (2):
 					slope_next_dir = next_dirs[j];
@@ -4878,9 +4877,8 @@ func time_passes(chrono: int) -> void:
 				var found_a_slope = false;
 				var slope_success = Success.No;
 				var terrain = terrain_in_tile(actor.pos);
-				for i in range (4):
-					var id = Tiles.SlopeNW + i;
-					if (terrain.has(id)):
+				for id in terrain:
+					if id >= Tiles.SlopeNW and id <= Tiles.SlopeNW + 3:
 						found_a_slope = true;
 						var next_dirs = slope_helper(id, Vector2.UP);
 						for j in range(2):
