@@ -33,7 +33,7 @@ func _ready() -> void:
 		is_web = true;
 	
 	if (!is_web):
-		$Holder/Disclaimer.queue_free();
+		$Holder/Disclaimer.visible = false;
 	
 	$CutsceneHolder.visible = false;
 	$CutsceneHolder/HeavyPortal.visible = false;
@@ -102,6 +102,7 @@ func cutscene_step() -> void:
 			creditsbutton.queue_free();
 			pointer.queue_free();
 			$Holder/Label.queue_free();
+			$Holder/Disclaimer.queue_free();
 			$ColorRect2.queue_free();
 			pointer = null;
 			$CutsceneHolder.visible = true;
