@@ -80,7 +80,7 @@ func _creditsbutton_pressed() -> void:
 func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):
 		return;
-	if ($CutsceneHolder/AnimationPlayer.is_playing()):
+	if ($CutsceneHolder/AnimationPlayer.current_animation == "Animate" and $CutsceneHolder/AnimationPlayer.is_playing()):
 		return;
 	cutscene_step_cooldown = 0;
 	$CutsceneHolder/AdvanceLabel.visible = false;
@@ -93,6 +93,7 @@ func cutscene_step() -> void:
 			creditsbutton.queue_free();
 			pointer.queue_free();
 			$Holder/Label.queue_free();
+			$ColorRect2.queue_free();
 			pointer = null;
 			$CutsceneHolder.visible = true;
 			

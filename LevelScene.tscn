@@ -128,14 +128,6 @@ texture = ExtResource( 7 )
 centered = false
 script = ExtResource( 38 )
 
-[node name="MenuButton" type="Button" parent="."]
-margin_left = 226.0
-margin_top = 284.0
-margin_right = 286.0
-margin_bottom = 299.0
-theme = ExtResource( 2 )
-text = "Menu (Esc)"
-
 [node name="ReplayButtons" type="Node2D" parent="."]
 visible = false
 
@@ -368,3 +360,11 @@ margin_right = 512.0
 margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
 script = ExtResource( 11 )
+
+[node name="MenuButton" type="Button" parent="."]
+margin_left = 226.0
+margin_top = 284.0
+margin_right = 286.0
+margin_bottom = 299.0
+theme = ExtResource( 2 )
+text = "Menu (Esc)"
