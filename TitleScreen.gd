@@ -103,6 +103,9 @@ func cutscene_step() -> void:
 			gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
 			gamelogic.play_sound("noodling");
 		1:
+			$MainMenuBg.visible = false;
+			$PatagameNoBg.visible = false;
+			
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.5);
 			gamelogic.play_sound("alert");

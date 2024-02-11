@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/Panel_1_finish.png" type="Texture" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://assets/cutscenes/lightfix.png" type="Texture" id=7]
 [ext_resource path="res://assets/cutscenes/Panel_4_finish.png" type="Texture" id=8]
 [ext_resource path="res://assets/cutscenes/heavyfix.png" type="Texture" id=9]
+[ext_resource path="res://assets/cutscenes/MAIN_MENU_BG.png" type="Texture" id=10]
+[ext_resource path="res://assets/cutscenes/Patagame_no_bg.png" type="Texture" id=11]
 [ext_resource path="res://assets/cutscenes/Panel_5_finish.png" type="Texture" id=12]
 [ext_resource path="res://assets/cutscenes/heavyportal.png" type="Texture" id=14]
 [ext_resource path="res://assets/cutscenes/heavyfall.png" type="Texture" id=15]
@@ -343,6 +345,34 @@ tracks/19/keys = {
 "values": [ Vector2( 280, 174 ), Vector2( 280, 174 ) ]
 }
 
+[sub_resource type="Animation" id=2]
+resource_name = "Onload"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../MainMenuBg:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.635294, 0.345098, 0.345098, 0 ), Color( 0.635294, 0.345098, 0.345098, 1 ), Color( 0.423529, 0.223529, 0.223529, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../PatagameNoBg:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0.917647, 0.713726, 0.713726, 1 ) ]
+}
+
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -350,6 +380,23 @@ script = ExtResource( 1 )
 margin_right = 512.0
 margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
+
+[node name="MainMenuBg" type="Sprite" parent="."]
+modulate = Color( 0.635294, 0.345098, 0.345098, 0 )
+texture = ExtResource( 10 )
+centered = false
+
+[node name="PatagameNoBg" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+texture = ExtResource( 11 )
+centered = false
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+modulate = Color( 0, 0, 0, 0.478431 )
+margin_left = 226.0
+margin_top = 183.0
+margin_right = 297.0
+margin_bottom = 279.0
 
 [node name="Holder" type="Label" parent="."]
 margin_right = 512.0
@@ -391,9 +438,10 @@ text = "Credits"
 
 [node name="Label" type="Label" parent="Holder"]
 margin_left = 170.0
-margin_top = 117.0
+margin_top = 23.0
 margin_right = 354.0
-margin_bottom = 156.0
+margin_bottom = 62.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Entwined Time
 
 A two time manipulation puzzle game"
@@ -401,6 +449,7 @@ align = 1
 valign = 1
 
 [node name="CutsceneHolder" type="Node2D" parent="."]
+visible = false
 
 [node name="Panel1" type="Sprite" parent="CutsceneHolder"]
 modulate = Color( 1, 1, 1, 0 )
@@ -440,28 +489,36 @@ texture = ExtResource( 6 )
 centered = false
 
 [node name="HeavyPortal" type="Sprite" parent="CutsceneHolder"]
+visible = false
 position = Vector2( 68, 75 )
 scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 14 )
 
 [node name="LightPortal" type="Sprite" parent="CutsceneHolder"]
+visible = false
 position = Vector2( 435, 78 )
 scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 16 )
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder"]
+visible = false
 position = Vector2( 220, 218 )
-texture = ExtResource( 20 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 15 )
 
 [node name="HeavyFix" type="Sprite" parent="CutsceneHolder"]
+visible = false
 position = Vector2( 220, 165 )
 texture = ExtResource( 9 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder"]
+visible = false
 position = Vector2( 280, 210 )
-texture = ExtResource( 21 )
+scale = Vector2( 1e-05, 1e-05 )
+texture = ExtResource( 17 )
 
 [node name="LightFix" type="Sprite" parent="CutsceneHolder"]
+visible = false
 position = Vector2( 280, 174 )
 texture = ExtResource( 7 )
 
@@ -477,4 +534,6 @@ align = 1
 valign = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CutsceneHolder"]
+autoplay = "Onload"
 anims/Animate = SubResource( 1 )
+anims/Onload = SubResource( 2 )
