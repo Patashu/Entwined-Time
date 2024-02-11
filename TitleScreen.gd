@@ -25,7 +25,16 @@ var ghost_type = 0;
 var ghost_timer = 0.0;
 var ghost_timer_max = 0.2;
 
+var is_web = false;
+
 func _ready() -> void:
+	var os_name = OS.get_name();
+	if (os_name == "HTML5" or os_name == "Android" or os_name == "iOS"):
+		is_web = true;
+	
+	if (!is_web):
+		$Holder/Disclaimer.queue_free();
+	
 	$CutsceneHolder.visible = false;
 	$CutsceneHolder/HeavyPortal.visible = false;
 	$CutsceneHolder/HeavyActor.visible = false;

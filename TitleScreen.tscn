@@ -466,6 +466,16 @@ A two time manipulation puzzle game"
 align = 1
 valign = 1
 
+[node name="Disclaimer" type="Label" parent="Holder"]
+margin_left = 143.0
+margin_top = 157.0
+margin_right = 384.0
+margin_bottom = 196.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "(If keyboard controls aren't working, refresh)"
+align = 1
+valign = 1
+
 [node name="CutsceneHolder" type="Node2D" parent="."]
 visible = false
 
