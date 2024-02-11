@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/Panel_1_finish.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://assets/cutscenes/MAIN_MENU_BG.png" type="Texture" id=10]
 [ext_resource path="res://assets/cutscenes/Patagame_no_bg.png" type="Texture" id=11]
 [ext_resource path="res://assets/cutscenes/Panel_5_finish.png" type="Texture" id=12]
+[ext_resource path="res://assets/cutscenes/eyes.png" type="Texture" id=13]
 [ext_resource path="res://assets/cutscenes/heavyportal.png" type="Texture" id=14]
 [ext_resource path="res://assets/cutscenes/heavyfall.png" type="Texture" id=15]
 [ext_resource path="res://assets/cutscenes/lightportal.png" type="Texture" id=16]
@@ -372,6 +373,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0.917647, 0.713726, 0.713726, 1 ) ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Eyes:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.7, 2.4, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0.917647, 0.713726, 0.713726, 1 ), Color( 0.917647, 0.713726, 0.713726, 0 ) ]
+}
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource( 1 )
@@ -382,13 +395,18 @@ margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
 
 [node name="MainMenuBg" type="Sprite" parent="."]
-modulate = Color( 0.635294, 0.345098, 0.345098, 0 )
+modulate = Color( 0.423529, 0.223529, 0.223529, 1 )
 texture = ExtResource( 10 )
 centered = false
 
 [node name="PatagameNoBg" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 1 )
+modulate = Color( 0.917647, 0.713726, 0.713726, 1 )
 texture = ExtResource( 11 )
+centered = false
+
+[node name="Eyes" type="Sprite" parent="."]
+modulate = Color( 0.917647, 0.713726, 0.713726, 0 )
+texture = ExtResource( 13 )
 centered = false
 
 [node name="ColorRect2" type="ColorRect" parent="."]
