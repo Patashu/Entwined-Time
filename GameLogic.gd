@@ -5861,6 +5861,30 @@ func paste_level(clipboard: String) -> void:
 func adjust_next_replay_time(old_replay_interval: float) -> void:
 	next_replay += replay_interval - old_replay_interval;
 	
+func shade_virtual_button(b: Button) -> void:
+	var label = b.get_node_or_null("Label");
+	if (label == null):
+		return;
+	var draw_mode = b.get_draw_mode();
+	if draw_mode == 0:
+		label.modulate = Color(1, 1, 1, 1);
+	elif draw_mode == 1 or draw_mode == 3:
+		label.modulate = Color(0.5, 0.5, 0.5, 1);
+	elif draw_mode == 2 or draw_mode == 4:
+		label.modulate = Color(1.5, 1.5, 1.5, 1);
+	
+func shade_virtual_buttons() -> void:
+	if (virtualbuttons.visible):
+		for a in virtualbuttons.get_children():
+			for b in a.get_children():
+				if (b is Button):
+					shade_virtual_button(b);
+	if (replaybuttons.visible):
+		for a in replaybuttons.get_children():
+			for b in a.get_children():
+				if (b is Button):
+					shade_virtual_button(b);
+	
 var last_dir_release_times = [0, 0, 0, 0];
 var key_repeat_timer_dict = {};
 var key_repeat_timer_max_dict = {};
@@ -5872,6 +5896,8 @@ func pressed_or_key_repeated(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
 	
 func _process(delta: float) -> void:
+	shade_virtual_buttons();
+	
 	# key repeat
 	for action in virtual_button_held_dict.keys():
 		if (Input.is_action_just_pressed(action)):
