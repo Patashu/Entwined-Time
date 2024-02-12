@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://assets/tutorial_arrows/LeftArrow.tres" type="Texture" id=9]
 [ext_resource path="res://assets/tutorial_arrows/RightArrow.tres" type="Texture" id=10]
 [ext_resource path="res://FadeIn.gd" type="Script" id=11]
+[ext_resource path="res://meta_styleboxtexture.tres" type="StyleBox" id=12]
 [ext_resource path="res://assets/screen-static.png" type="Texture" id=35]
 [ext_resource path="res://Shade.gd" type="Script" id=36]
 [ext_resource path="res://assets/checkerboard.png" type="Texture" id=37]
@@ -129,32 +130,52 @@ centered = false
 script = ExtResource( 38 )
 
 [node name="ReplayButtons" type="Node2D" parent="."]
-visible = false
 
 [node name="ReplayTurn" type="Node2D" parent="ReplayButtons"]
 
 [node name="PrevTurnButton" type="Button" parent="ReplayButtons/ReplayTurn"]
 margin_left = 141.0
 margin_top = 263.0
-margin_right = 162.0
-margin_bottom = 285.0
+margin_right = 164.0
+margin_bottom = 286.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="ReplayButtons/ReplayTurn/PrevTurnButton"]
+margin_left = 10.0
+margin_top = 4.0
+margin_right = 14.0
+margin_bottom = 15.0
+custom_constants/shadow_offset_x = 0
 text = "<"
 
 [node name="PauseButton" type="Button" parent="ReplayButtons/ReplayTurn"]
 margin_left = 168.0
 margin_top = 263.0
-margin_right = 189.0
-margin_bottom = 285.0
+margin_right = 191.0
+margin_bottom = 286.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="ReplayButtons/ReplayTurn/PauseButton"]
+margin_left = 8.0
+margin_top = 5.0
+margin_right = 16.0
+margin_bottom = 16.0
+custom_constants/shadow_offset_x = 0
 text = "||"
 
 [node name="NextTurnButton" type="Button" parent="ReplayButtons/ReplayTurn"]
 margin_left = 195.0
 margin_top = 263.0
-margin_right = 216.0
-margin_bottom = 285.0
+margin_right = 218.0
+margin_bottom = 286.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="ReplayButtons/ReplayTurn/NextTurnButton"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 14.0
+margin_bottom = 16.0
+custom_constants/shadow_offset_x = 0
 text = ">"
 
 [node name="ReplayTurnLabel" type="Label" parent="ReplayButtons/ReplayTurn"]
@@ -195,54 +216,99 @@ value = 50.0
 [node name="F9Button" type="Button" parent="ReplayButtons/ReplaySpeed"]
 margin_left = 294.0
 margin_top = 263.0
-margin_right = 315.0
-margin_bottom = 285.0
+margin_right = 317.0
+margin_bottom = 286.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="ReplayButtons/ReplaySpeed/F9Button"]
+margin_left = 8.0
+margin_top = 5.0
+margin_right = 16.0
+margin_bottom = 16.0
+custom_constants/shadow_offset_x = 0
 text = "<<"
 
 [node name="F10Button" type="Button" parent="ReplayButtons/ReplaySpeed"]
 margin_left = 337.0
 margin_top = 263.0
-margin_right = 359.0
-margin_bottom = 285.0
+margin_right = 360.0
+margin_bottom = 286.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="ReplayButtons/ReplaySpeed/F10Button"]
+margin_left = 8.0
+margin_top = 5.0
+margin_right = 16.0
+margin_bottom = 16.0
+custom_constants/shadow_offset_x = 0
 text = ">>"
 
 [node name="VirtualButtons" type="Node2D" parent="."]
-visible = false
 
 [node name="Verbs" type="Node2D" parent="VirtualButtons"]
 
 [node name="UndoButton" type="Button" parent="VirtualButtons/Verbs"]
-margin_left = 8.0
+margin_left = 7.0
 margin_top = 273.0
-margin_right = 29.0
-margin_bottom = 295.0
+margin_right = 30.0
+margin_bottom = 296.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="VirtualButtons/Verbs/UndoButton"]
+margin_left = 8.0
+margin_top = 6.0
+margin_right = 16.0
+margin_bottom = 17.0
+custom_constants/shadow_offset_x = 0
 text = "Z"
 
 [node name="SwapButton" type="Button" parent="VirtualButtons/Verbs"]
 margin_left = 35.0
 margin_top = 273.0
-margin_right = 57.0
-margin_bottom = 295.0
+margin_right = 58.0
+margin_bottom = 296.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="VirtualButtons/Verbs/SwapButton"]
+margin_left = 8.0
+margin_top = 6.0
+margin_right = 16.0
+margin_bottom = 17.0
+custom_constants/shadow_offset_x = 0
 text = "X"
 
 [node name="MetaUndoButton" type="Button" parent="VirtualButtons/Verbs"]
 margin_left = 63.0
 margin_top = 273.0
-margin_right = 85.0
-margin_bottom = 295.0
+margin_right = 86.0
+margin_bottom = 296.0
 theme = ExtResource( 2 )
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 12 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 12 )
+custom_styles/normal = ExtResource( 12 )
+
+[node name="Label" type="Label" parent="VirtualButtons/Verbs/MetaUndoButton"]
+margin_left = 8.0
+margin_top = 6.0
+margin_right = 15.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
+custom_constants/shadow_offset_x = 0
 text = "C"
 
 [node name="MetaRedoButton" type="Button" parent="VirtualButtons/Verbs"]
 margin_left = 63.0
-margin_top = 247.0
-margin_right = 85.0
-margin_bottom = 269.0
+margin_top = 245.0
+margin_right = 86.0
+margin_bottom = 268.0
 theme = ExtResource( 2 )
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 12 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 12 )
+custom_styles/normal = ExtResource( 12 )
 text = "Y"
 
 [node name="MetaRedoLabel" type="Label" parent="VirtualButtons/Verbs/MetaRedoButton"]
@@ -253,38 +319,75 @@ margin_bottom = 17.0
 custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 text = "Meta-Redo:"
 
+[node name="Label" type="Label" parent="VirtualButtons/Verbs/MetaRedoButton"]
+margin_left = 8.0
+margin_top = 6.0
+margin_right = 16.0
+margin_bottom = 17.0
+custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
+custom_constants/shadow_offset_x = 0
+text = "Y"
+
 [node name="Dirs" type="Node2D" parent="VirtualButtons"]
 
 [node name="LeftButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 406.0
 margin_top = 273.0
-margin_right = 428.0
-margin_bottom = 295.0
+margin_right = 429.0
+margin_bottom = 296.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="VirtualButtons/Dirs/LeftButton"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 14.0
+margin_bottom = 16.0
+custom_constants/shadow_offset_x = 0
 text = "<"
 
 [node name="DownButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 434.0
 margin_top = 273.0
-margin_right = 456.0
-margin_bottom = 295.0
+margin_right = 457.0
+margin_bottom = 296.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="VirtualButtons/Dirs/DownButton"]
+margin_left = 9.0
+margin_top = 5.0
+margin_right = 49.0
+margin_bottom = 16.0
+custom_constants/shadow_offset_x = 0
 text = "v"
 
 [node name="RightButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 462.0
 margin_top = 273.0
-margin_right = 484.0
-margin_bottom = 295.0
+margin_right = 485.0
+margin_bottom = 296.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="VirtualButtons/Dirs/RightButton"]
+margin_left = 10.0
+margin_top = 5.0
+margin_right = 50.0
+margin_bottom = 16.0
+custom_constants/shadow_offset_x = 0
 text = ">"
 
 [node name="UpButton" type="Button" parent="VirtualButtons/Dirs"]
 margin_left = 434.0
-margin_top = 246.0
-margin_right = 456.0
+margin_top = 245.0
+margin_right = 457.0
 margin_bottom = 268.0
 theme = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="VirtualButtons/Dirs/UpButton"]
+margin_left = 9.0
+margin_top = 8.0
+margin_right = 15.0
+margin_bottom = 19.0
+custom_constants/shadow_offset_x = 0
 text = "^"
 
 [node name="Others" type="Node2D" parent="VirtualButtons"]
