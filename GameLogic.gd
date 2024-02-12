@@ -520,32 +520,45 @@ func prepare_voidlike_tiles() -> void:
 func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Verbs/UndoButton").connect("button_down", self, "_undobutton_pressed");
 	virtualbuttons.get_node("Verbs/UndoButton").connect("button_up", self, "_undobutton_released");
+	virtual_button_name_to_action["UndoButton"] = "character_undo";
 	virtualbuttons.get_node("Verbs/SwapButton").connect("button_down", self, "_swapbutton_pressed");
 	virtualbuttons.get_node("Verbs/SwapButton").connect("button_up", self, "_swapbutton_released");
+	virtual_button_name_to_action["SwapButton"] = "character_switch";
 	virtualbuttons.get_node("Verbs/MetaUndoButton").connect("button_down", self, "_metaundobutton_pressed");
 	virtualbuttons.get_node("Verbs/MetaUndoButton").connect("button_up", self, "_metaundobutton_released");
+	virtual_button_name_to_action["MetaUndoButton"] = "meta_undo";
 	virtualbuttons.get_node("Verbs/MetaRedoButton").connect("button_down", self, "_metaredobutton_pressed");
 	virtualbuttons.get_node("Verbs/MetaRedoButton").connect("button_up", self, "_metaredobutton_released");
+	virtual_button_name_to_action["MetaRedoButton"] = "meta_redo";
 	virtualbuttons.get_node("Dirs/LeftButton").connect("button_down", self, "_leftbutton_pressed");
 	virtualbuttons.get_node("Dirs/LeftButton").connect("button_up", self, "_leftbutton_released");
+	virtual_button_name_to_action["LeftButton"] = "ui_left";
 	virtualbuttons.get_node("Dirs/DownButton").connect("button_down", self, "_downbutton_pressed");
 	virtualbuttons.get_node("Dirs/DownButton").connect("button_up", self, "_downbutton_released");
+	virtual_button_name_to_action["DownButton"] = "ui_down";
 	virtualbuttons.get_node("Dirs/RightButton").connect("button_down", self, "_rightbutton_pressed");
 	virtualbuttons.get_node("Dirs/RightButton").connect("button_up", self, "_rightbutton_released");
+	virtual_button_name_to_action["RightButton"] = "ui_right";
 	virtualbuttons.get_node("Dirs/UpButton").connect("button_down", self, "_upbutton_pressed");
 	virtualbuttons.get_node("Dirs/UpButton").connect("button_up", self, "_upbutton_released");
+	virtual_button_name_to_action["UpButton"] = "ui_up";
 	virtualbuttons.get_node("Others/EnterButton").connect("button_down", self, "_enterbutton_pressed");
 	virtualbuttons.get_node("Others/EnterButton").connect("button_up", self, "_enterbutton_released");
 	replaybuttons.get_node("ReplaySpeed/F9Button").connect("button_down", self, "_f9button_pressed");
 	replaybuttons.get_node("ReplaySpeed/F9Button").connect("button_up", self, "_f9button_released");
+	virtual_button_name_to_action["F9Button"] = "slowdown_replay";
 	replaybuttons.get_node("ReplaySpeed/F10Button").connect("button_down", self, "_f10button_pressed");
 	replaybuttons.get_node("ReplaySpeed/F10Button").connect("button_up", self, "_f10button_released");
+	virtual_button_name_to_action["F10Button"] = "speedup_replay";
 	replaybuttons.get_node("ReplayTurn/PrevTurnButton").connect("button_down", self, "_prevturnbutton_pressed");
 	replaybuttons.get_node("ReplayTurn/PrevTurnButton").connect("button_up", self, "_prevturnbutton_released");
+	virtual_button_name_to_action["PrevTurnButton"] = "replay_back1";
 	replaybuttons.get_node("ReplayTurn/NextTurnButton").connect("button_down", self, "_nextturnbutton_pressed");
 	replaybuttons.get_node("ReplayTurn/NextTurnButton").connect("button_up", self, "_nextturnbutton_released");
+	virtual_button_name_to_action["NextTurnButton"] = "replay_fwd1";
 	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_down", self, "_pausebutton_pressed");
 	replaybuttons.get_node("ReplayTurn/PauseButton").connect("button_up", self, "_pausebutton_released");
+	virtual_button_name_to_action["PauseButton"] = "replay_pause";
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("value_changed", self, "_replayturnslider_value_changed");
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_started", self, "_replayturnslider_drag_started");
 	replaybuttons.get_node("ReplayTurn/ReplayTurnSlider").connect("drag_ended", self, "_replayturnslider_drag_ended");
@@ -5911,9 +5924,17 @@ func paste_level(clipboard: String) -> void:
 func adjust_next_replay_time(old_replay_interval: float) -> void:
 	next_replay += replay_interval - old_replay_interval;
 	
+var virtual_button_name_to_action = {};
+	
 func shade_virtual_button(b: Button) -> void:
 	var label = b.get_node_or_null("Label");
 	if (label == null):
+		return;
+	if (Input.is_action_just_pressed(virtual_button_name_to_action[b.name])):
+		label.modulate = Color(1.5, 1.5, 1.5, 1);
+		return;
+	elif (Input.is_action_pressed(virtual_button_name_to_action[b.name])):
+		label.modulate = Color(0.8, 0.8, 0.8, 1);
 		return;
 	var draw_mode = b.get_draw_mode();
 	if draw_mode == 0:
