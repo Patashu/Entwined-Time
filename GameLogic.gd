@@ -5871,7 +5871,10 @@ func shade_virtual_button(b: Button) -> void:
 	elif draw_mode == 1 or draw_mode == 3:
 		label.modulate = Color(0.5, 0.5, 0.5, 1);
 	elif draw_mode == 2 or draw_mode == 4:
-		label.modulate = Color(1.5, 1.5, 1.5, 1);
+		if (Input.is_mouse_button_pressed(1)):
+			label.modulate = Color(0.8, 0.8, 0.8, 1);
+		else:
+			label.modulate = Color(1.5, 1.5, 1.5, 1);
 	
 func shade_virtual_buttons() -> void:
 	if (virtualbuttons.visible):
