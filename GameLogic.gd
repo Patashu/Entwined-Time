@@ -1528,7 +1528,7 @@ func intro_hop() -> void:
 		add_to_animation_server(heavy_actor, [Animation.intro_hop]);
 	if (light_max_moves > 0):
 		add_to_animation_server(light_actor, [Animation.intro_hop]);
-	
+
 func ready_tutorial() -> void:
 	if is_custom:
 		metainfolabel.visible = true;
@@ -1555,57 +1555,103 @@ func ready_tutorial() -> void:
 		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 72);
 		if (level_number == 0):
-			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
+			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Undo\n$RESTART: Restart";
 			if (in_insight_level):
 				tutoriallabel.rect_position.y -= 24;
-			var sprite = Sprite.new();
-			sprite.texture = preload("res://assets/light_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84, 84);
-			if (in_insight_level):
-				sprite.position.y += 48;
+			
+			var added_goal_sprites = false;
+			for a in actorsfolder.get_children():
+				if (a is Sprite):
+					added_goal_sprites = true;
+					break;
+			if (!added_goal_sprites):
+				var sprite = Sprite.new();
+				sprite.texture = preload("res://assets/light_goal_tutorial.png");
+				actorsfolder.add_child(sprite);
+				sprite.position = Vector2(84, 84);
+				if (in_insight_level):
+					sprite.position.y += 48;
+			
 		elif (level_number == 1):
-			tutoriallabel.bbcode_text = "Arrows: Move\nZ: Undo\nR: Restart";
-			var sprite = Sprite.new();
-			sprite.texture = preload("res://assets/light_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84, 84);
-			sprite = Sprite.new();
-			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84, 84+24);
+			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Undo\n$RESTART: Restart";
+			
+			var added_goal_sprites = false;
+			for a in actorsfolder.get_children():
+				if (a is Sprite):
+					added_goal_sprites = true;
+					break;
+			if (!added_goal_sprites):
+				var sprite = Sprite.new();
+				sprite.texture = preload("res://assets/light_goal_tutorial.png");
+				actorsfolder.add_child(sprite);
+				sprite.position = Vector2(84, 84);
+				sprite = Sprite.new();
+				sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
+				actorsfolder.add_child(sprite);
+				sprite.position = Vector2(84, 84+24);
 		elif (level_number == 2):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "Arrows: Move [color=#FF7459]Character[/color]\nX: Swap [color=#FF7459]Character[/color]\nZ: Undo [color=#FF7459]Character[/color]\nR: Restart";
+			tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Character[/color]\n$SWAP: Swap [color=#FF7459]Character[/color]\n$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
 		elif (level_number == 3):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "X: Swap [color=#FF7459]Character[/color]\nZ: Undo [color=#FF7459]Character[/color]\nR: Restart";
+			tutoriallabel.bbcode_text = "$SWAP: Swap [color=#FF7459]Character[/color]\n$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
 		elif (level_number == 4):
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "Z: Undo [color=#FF7459]Character[/color]\nR: Restart";
+			tutoriallabel.bbcode_text = "$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
 		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
-#			var sprite = Sprite.new();
-#			sprite.texture = preload("res://assets/light_goal_tutorial.png");
-#			actorsfolder.add_child(sprite);
-#			sprite.position = Vector2(84+24*5, 84+24*4);
-#			sprite = Sprite.new();
-#			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
-#			actorsfolder.add_child(sprite);
-#			sprite.position = Vector2(84-24*1, 84+24*4);
+			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Meta-Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Meta-Undo[/color] that too!)";
+			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Meta-Undo[/color]\n$RESTART: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Meta-Undo[/color] that too!)";
 		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
-		call_deferred("update_info_labels");
+		translate_tutorial_inputs();
 			
 	if level_name == "Snake Pit":
 		tutoriallabel.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 69);
 		tutoriallabel.rect_position.y -= 48;
-		tutoriallabel.bbcode_text = "[center]Visualize your current attempt as a Replay:\nF4: Toggle Replay\nAlso, you can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
-		call_deferred("update_info_labels");
+		tutoriallabel.bbcode_text = "[center]Visualize your current attempt as a Replay:\n$TOGGLE-REPLAY: Toggle Replay\nAlso, you can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
+		translate_tutorial_inputs();
+		
+func translate_tutorial_inputs() -> void:
+	if (level_number >= 2 and level_number <= 4):
+		if (heavy_selected):
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#7FC9FF", "#FF7459");
+		else:
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
+			
+	if tutoriallabel.visible:
+		if (meta_redo_inputs != "" and (level_number == 5 or level_number == 6)):
+			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Meta-Undo[/color]\n$RESTART: Restart\n$META-REDO: [color=#A9F05F]Meta-Redo[/color]";
+			tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
+		
+		if using_controller:
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$MOVE", "D-Pad/Either Stick");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$SWAP", "Bottom Face Button");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$UNDO", "Right Face Button");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-UNDO", "Top Face Button");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-REDO", "L3");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$RESTART", "Select");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$TOGGLE-REPLAY", "R3");
+		else:
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$MOVE", "Arrows");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$SWAP", human_readable_input("character_switch"));
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$UNDO", human_readable_input("character_undo"));
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-UNDO", human_readable_input("meta_undo"));
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-REDO", human_readable_input("meta_redo"));
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$RESTART", human_readable_input("restart"));
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$TOGGLE-REPLAY", human_readable_input("toggle_replay"));
+	
+func human_readable_input(action: String) -> String:
+	var result = "";
+	var events = InputMap.get_action_list(action);
+	for event in events:
+		if ((!using_controller and event is InputEventKey) or (using_controller and event is InputEventJoypadButton)):
+			if (result != ""):
+				result += " or ";
+			result += event.as_text();
+	return result;
 	
 func initialize_timeline_viewers() -> void:
 	heavytimeline.label = heavyinfolabel;
@@ -5211,37 +5257,7 @@ func update_info_labels() -> void:
 		replaybuttons.visible = false;
 	
 	if (!is_custom):
-		if (level_number >= 2 and level_number <= 4):
-			if (heavy_selected):
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#7FC9FF", "#FF7459");
-			else:
-				tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
-				
-		if tutoriallabel.visible:
-			if (meta_redo_inputs != "" and (level_number == 5 or level_number == 6)):
-				tutoriallabel.bbcode_text = "C: [color=#A9F05F]Meta-Undo[/color]\nR: Restart\nY: [color=#A9F05F]Meta-Redo[/color]";
-				tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
-			
-			if using_controller:
-				if (level_number < 16):
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Arrows:", "D-Pad/Either Stick:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("X:", "Bottom Face Button:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Z:", "Right Face Button:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("C:", "Top Face Button:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Y:", "L3:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R:", "Select:");
-				else:
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("F4:", "R3:");
-			else:
-				if (level_number < 16):
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("D-Pad/Either Stick:", "Arrows:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Bottom Face Button:", "X:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Right Face Button:", "Z:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Top Face Button:", "C:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("L3:", "Y:");
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("Select:", "R:");
-				else:
-					tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("R3:", "F4:");
+		ready_tutorial();
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
