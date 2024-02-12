@@ -5286,6 +5286,11 @@ func do_all_stylebox_overrides(button: Button, stylebox: StyleBox) -> void:
 func update_info_labels() -> void:
 	# also disable/enable and shade verb buttons here
 	if (virtualbuttons.visible):
+		var meta_undo_button = virtualbuttons.get_node("Verbs/MetaUndoButton");
+		if (meta_turn == 0):
+			meta_undo_button.modulate = Color(0.5, 0.5, 0.5, 1);
+		else:
+			meta_undo_button.modulate = Color(1, 1, 1, 1);
 		var dirs = [virtualbuttons.get_node("Dirs/LeftButton"),
 		virtualbuttons.get_node("Dirs/DownButton"),
 		virtualbuttons.get_node("Dirs/RightButton"),
@@ -5296,16 +5301,32 @@ func update_info_labels() -> void:
 			for button in dirs:
 				button.get_node("Label").add_color_override("font_color", Color("#ff7459"));
 				do_all_stylebox_overrides(button, preload("res://heavy_styleboxtexture.tres"));
+				if (heavy_actor.broken or heavy_turn >= heavy_max_moves):
+					button.modulate = Color(0.5, 0.5, 0.5, 1);
+				else:
+					button.modulate = Color(1, 1, 1, 1);
 			undo_button.get_node("Label").add_color_override("font_color", Color("#ff7459"));
 			do_all_stylebox_overrides(undo_button, preload("res://heavy_styleboxtexture.tres"));
+			if (heavy_turn == 0):
+				undo_button.modulate = Color(0.5, 0.5, 0.5, 1);
+			else:
+				undo_button.modulate = Color(1, 1, 1, 1);
 			swap_button.get_node("Label").add_color_override("font_color", Color("#7fc9ff"));
 			do_all_stylebox_overrides(swap_button, preload("res://light_styleboxtexture.tres"));
 		else:
 			for button in dirs:
 				button.get_node("Label").add_color_override("font_color", Color("#7fc9ff"));
 				do_all_stylebox_overrides(button, preload("res://light_styleboxtexture.tres"));
+				if (light_actor.broken or light_turn >= light_max_moves):
+					button.modulate = Color(0.5, 0.5, 0.5, 1);
+				else:
+					button.modulate = Color(1, 1, 1, 1);
 			undo_button.get_node("Label").add_color_override("font_color", Color("#7fc9ff"));
 			do_all_stylebox_overrides(undo_button, preload("res://light_styleboxtexture.tres"));
+			if (light_turn == 0):
+				undo_button.modulate = Color(0.5, 0.5, 0.5, 1);
+			else:
+				undo_button.modulate = Color(1, 1, 1, 1);
 			swap_button.get_node("Label").add_color_override("font_color", Color("#ff7459"));
 			do_all_stylebox_overrides(swap_button, preload("res://heavy_styleboxtexture.tres"));
 	
