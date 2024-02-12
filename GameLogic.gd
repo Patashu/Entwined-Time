@@ -488,7 +488,7 @@ func _ready() -> void:
 	# Call once when the game is booted up.
 	menubutton.connect("pressed", self, "escape");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
-	winlabel.call_deferred("change_text", "You have won!\n\n[Enter]: Continue\nWatch Replay: Menu -> Your Replay");
+	winlabel.call_deferred("change_text", "You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue\nWatch Replay: Menu -> Your Replay");
 	connect_virtual_buttons();
 	prepare_audio();
 	call_deferred("adjust_winlabel");
@@ -1530,6 +1530,9 @@ func intro_hop() -> void:
 		add_to_animation_server(light_actor, [Animation.intro_hop]);
 
 func ready_tutorial() -> void:
+	if (winlabel.visible):
+		return;
+	
 	if is_custom:
 		metainfolabel.visible = true;
 		tutoriallabel.visible = false;
@@ -1628,29 +1631,59 @@ func translate_tutorial_inputs() -> void:
 		
 		if using_controller:
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$MOVE", "D-Pad/Either Stick");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$SWAP", "Bottom Face Button");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$UNDO", "Right Face Button");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-UNDO", "Top Face Button");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-REDO", "L3");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$RESTART", "Select");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$TOGGLE-REPLAY", "R3");
 		else:
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$MOVE", "Arrows");
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$SWAP", human_readable_input("character_switch"));
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$UNDO", human_readable_input("character_undo"));
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-UNDO", human_readable_input("meta_undo"));
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-REDO", human_readable_input("meta_redo"));
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$RESTART", human_readable_input("restart"));
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$TOGGLE-REPLAY", human_readable_input("toggle_replay"));
+		tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$SWAP", human_readable_input("character_switch"));
+		tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$UNDO", human_readable_input("character_undo"));
+		tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-UNDO", human_readable_input("meta_undo"));
+		tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$META-REDO", human_readable_input("meta_redo"));
+		tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$RESTART", human_readable_input("restart"));
+		tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("$TOGGLE-REPLAY", human_readable_input("toggle_replay"));
 	
-func human_readable_input(action: String) -> String:
+var controller_hrns = [
+	"Bottom Face Button",
+	"Right Face Button",
+	"Left Face Button",
+	"Top Face Button",
+	"LB",
+	"RB",
+	"LT",
+	"RT",
+	"L3",
+	"R3",
+	"Select",
+	"Start",
+	"Up",
+	"Down",
+	"Left",
+	"Right",
+	"Home",
+	"Share",
+	"Paddle 1",
+	"Paddle 2",
+	"Paddle 3",
+	"Paddle 4",
+	"Touchpad",
+];
+	
+func human_readable_input(action: String, entries: int = 3) -> String:
 	var result = "";
 	var events = InputMap.get_action_list(action);
+	var entry = 0;
 	for event in events:
 		if ((!using_controller and event is InputEventKey) or (using_controller and event is InputEventJoypadButton)):
+			entry += 1;
 			if (result != ""):
 				result += " or ";
-			result += event.as_text();
+			if (event is InputEventKey):
+				result += event.as_text();
+			else:
+				if (event.button_index < controller_hrns.size()):
+					result += controller_hrns[event.button_index];
+				else:
+					result += event.as_text();
+		if (entry >= entries):
+			return result;
 	return result;
 	
 func initialize_timeline_viewers() -> void:
@@ -4004,13 +4037,13 @@ func check_won() -> void:
 		if (level_name == "Joke"):
 			winlabel.change_text("Thanks for playing :3")
 		elif !using_controller and !doing_replay:
-			winlabel.change_text("You have won!\n\n[Enter]: Continue\nWatch Replay: Menu -> Your Replay")
+			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue\nWatch Replay: Menu -> Your Replay")
 		elif !using_controller and doing_replay:
-			winlabel.change_text("You have won!\n\n[Enter]: Continue")
+			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue")
 		elif using_controller and !doing_replay:
-			winlabel.change_text("You have won!\n\n[Bottom Face Button]: Continue\nWatch Replay: Menu -> Your Replay")
+			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue\nWatch Replay: Menu -> Your Replay")
 		else:
-			winlabel.change_text("You have won!\n\n[Bottom Face Button]: Continue")
+			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue")
 		won_fade_started = false;
 		tutoriallabel.visible = false;
 		call_deferred("adjust_winlabel_deferred");
@@ -5862,13 +5895,13 @@ func _process(delta: float) -> void:
 	
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")) and !using_controller:
 		using_controller = true;
-		menubutton.text = "Menu (Start)";
+		menubutton.text = "Menu (" + human_readable_input("escape", 1).left(5) + ")";
 		menubutton.rect_position.x = 222;
 		update_info_labels();
 	
 	if Input.is_action_just_pressed("any_keyboard") and using_controller:
 		using_controller = false;
-		menubutton.text = "Menu (Esc)";
+		menubutton.text = "Menu (" + human_readable_input("escape", 1).left(3) + ")";
 		menubutton.rect_position.x = 226;
 		menubutton.rect_size.x = 60;
 		update_info_labels();

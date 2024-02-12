@@ -20,9 +20,8 @@ func _ready() -> void:
 	leveleditorbutton.connect("pressed", self, "_leveleditorbutton_pressed");
 	closebutton.connect("pressed", self, "destroy");
 	
-	if (gamelogic.using_controller):
-		nextbutton.text = "Next Chapter (R2)";
-		prevbutton.text = "Prev. Chapter (L2)";
+	nextbutton.text = "Next Chapter (" + gamelogic.human_readable_input("next_level", 1) + ")";
+	prevbutton.text = "Prev. Chapter (" + gamelogic.human_readable_input("previous_level", 1) + ")";
 	
 func _prevbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
