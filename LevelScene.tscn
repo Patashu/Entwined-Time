@@ -142,9 +142,9 @@ theme = ExtResource( 2 )
 
 [node name="Label" type="Label" parent="ReplayButtons/ReplayTurn/PrevTurnButton"]
 margin_left = 10.0
-margin_top = 4.0
+margin_top = 5.0
 margin_right = 14.0
-margin_bottom = 15.0
+margin_bottom = 16.0
 custom_constants/shadow_offset_x = 0
 text = "<"
 
