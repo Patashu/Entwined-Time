@@ -130,6 +130,7 @@ centered = false
 script = ExtResource( 38 )
 
 [node name="ReplayButtons" type="Node2D" parent="."]
+visible = false
 
 [node name="ReplayTurn" type="Node2D" parent="ReplayButtons"]
 
@@ -244,6 +245,7 @@ custom_constants/shadow_offset_x = 0
 text = ">>"
 
 [node name="VirtualButtons" type="Node2D" parent="."]
+visible = false
 
 [node name="Verbs" type="Node2D" parent="VirtualButtons"]
 
