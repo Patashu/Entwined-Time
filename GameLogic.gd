@@ -2049,7 +2049,7 @@ func update_targeter() -> void:
 	if (!downarrow.visible):
 		return;
 	
-	downarrow.position = targeter.position - Vector2(0, 24);
+	downarrow.position = targeter.position - Vector2(-2, 22);
 	
 	if (heavy_turn > 0 and heavy_selected):
 		rightarrow.position = heavytimeline.position - Vector2(24, 24) + Vector2(0, 24)*heavy_turn;
