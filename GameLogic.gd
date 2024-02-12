@@ -805,6 +805,8 @@ func setup_virtual_buttons() -> void:
 			for button in folder.get_children():
 				button.disabled = true;
 		virtualbuttons.visible = false;
+	if (heavy_actor != null):
+		update_info_labels();
 	
 func setup_resolution() -> void:
 	if (save_file.has("pixel_scale")):
@@ -5267,7 +5269,39 @@ func update_level_label() -> void:
 		levelstar.finish_animations();
 		levelstar.modulate = Color(1, 1, 1, 0);
 	
+func do_all_stylebox_overrides(button: Button, stylebox: StyleBox) -> void:
+	button.add_stylebox_override("hover", stylebox);
+	button.add_stylebox_override("pressed", stylebox);
+	button.add_stylebox_override("focus", stylebox);
+	button.add_stylebox_override("disabled", stylebox);
+	button.add_stylebox_override("normal", stylebox);
+	
 func update_info_labels() -> void:
+	# also disable/enable and shade verb buttons here
+	if (virtualbuttons.visible):
+		var dirs = [virtualbuttons.get_node("Dirs/LeftButton"),
+		virtualbuttons.get_node("Dirs/DownButton"),
+		virtualbuttons.get_node("Dirs/RightButton"),
+		virtualbuttons.get_node("Dirs/UpButton")];
+		var undo_button = virtualbuttons.get_node("Verbs/UndoButton");
+		var swap_button = virtualbuttons.get_node("Verbs/SwapButton");
+		if (heavy_selected):
+			for button in dirs:
+				button.get_node("Label").add_color_override("font_color", Color("#ff7459"));
+				do_all_stylebox_overrides(button, preload("res://heavy_styleboxtexture.tres"));
+			undo_button.get_node("Label").add_color_override("font_color", Color("#ff7459"));
+			do_all_stylebox_overrides(undo_button, preload("res://heavy_styleboxtexture.tres"));
+			swap_button.get_node("Label").add_color_override("font_color", Color("#7fc9ff"));
+			do_all_stylebox_overrides(swap_button, preload("res://light_styleboxtexture.tres"));
+		else:
+			for button in dirs:
+				button.get_node("Label").add_color_override("font_color", Color("#7fc9ff"));
+				do_all_stylebox_overrides(button, preload("res://light_styleboxtexture.tres"));
+			undo_button.get_node("Label").add_color_override("font_color", Color("#7fc9ff"));
+			do_all_stylebox_overrides(undo_button, preload("res://light_styleboxtexture.tres"));
+			swap_button.get_node("Label").add_color_override("font_color", Color("#ff7459"));
+			do_all_stylebox_overrides(swap_button, preload("res://heavy_styleboxtexture.tres"));
+	
 	metaredobutton.visible = meta_redo_inputs != "";
 	
 	#also do fuzz indicator here
