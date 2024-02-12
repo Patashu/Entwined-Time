@@ -1550,7 +1550,6 @@ func ready_tutorial() -> void:
 	
 	virtualbuttons.get_node("Verbs/SwapButton").visible = true;
 	virtualbuttons.get_node("Verbs/MetaUndoButton").visible = true;
-	virtualbuttons.get_node("Verbs/MetaRedoButton").visible = true;
 	
 	if is_custom:
 		metainfolabel.visible = true;
@@ -1579,7 +1578,6 @@ func ready_tutorial() -> void:
 		if (level_number == 0):
 			virtualbuttons.get_node("Verbs/SwapButton").visible = false;
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			virtualbuttons.get_node("Verbs/MetaRedoButton").visible = false;
 			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Undo\n$RESTART: Restart";
 			if (in_insight_level):
 				tutoriallabel.rect_position.y -= 24;
@@ -1600,7 +1598,6 @@ func ready_tutorial() -> void:
 		elif (level_number == 1):
 			virtualbuttons.get_node("Verbs/SwapButton").visible = false;
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			virtualbuttons.get_node("Verbs/MetaRedoButton").visible = false;
 			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Undo\n$RESTART: Restart";
 			
 			var added_goal_sprites = false;
@@ -1619,17 +1616,14 @@ func ready_tutorial() -> void:
 				sprite.position = Vector2(84, 84+24);
 		elif (level_number == 2):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			virtualbuttons.get_node("Verbs/MetaRedoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
 			tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Character[/color]\n$SWAP: Swap [color=#FF7459]Character[/color]\n$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
 		elif (level_number == 3):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			virtualbuttons.get_node("Verbs/MetaRedoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
 			tutoriallabel.bbcode_text = "$SWAP: Swap [color=#FF7459]Character[/color]\n$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
 		elif (level_number == 4):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			virtualbuttons.get_node("Verbs/MetaRedoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
 			tutoriallabel.bbcode_text = "$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
 		elif (level_number == 5):
