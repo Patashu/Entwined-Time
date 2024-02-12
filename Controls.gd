@@ -141,6 +141,13 @@ func _resetbutton_pressed() -> void:
 	setup_rebinding_stuff();
 	
 func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
+	# sanitize modifiers off of the event
+	if new_event is InputEventWithModifiers:
+		new_event.alt = false;
+		new_event.shift = false;
+		new_event.control = false;
+		new_event.meta = false;
+		new_event.command = false;
 	just_danced = true;
 	# if we WERE an event, erase it.
 	if (button.event != null):
