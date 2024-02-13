@@ -821,10 +821,26 @@ func setup_virtual_buttons() -> void:
 	if (heavy_actor != null):
 		update_info_labels();
 	
+func get_largest_monitor() -> Vector2:
+	var result = Vector2(-1, -1);
+	var monitors = OS.get_screen_count();
+	for i in range(monitors):
+		var monitor = OS.get_screen_size(i);
+		if (result.x < monitor.x):
+			result.x = monitor.x;
+		if (result.y < monitor.y):
+			result.y = monitor.y;
+	return result;
+	
 func setup_resolution() -> void:
 	if (save_file.has("pixel_scale")):
 		var value = save_file["pixel_scale"];
 		var size = Vector2(pixel_width*value, pixel_height*value);
+		var monitor = get_largest_monitor();
+		if (monitor.x > 0 and size.x > monitor.x):
+			size.x = monitor.x;
+		if (monitor.y > 0 and size.y > monitor.y):
+			size.y = monitor.y;
 		OS.set_window_size(size);
 		OS.center_window();
 	if (save_file.has("vsync_enabled")):
