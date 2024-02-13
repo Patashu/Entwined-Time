@@ -1606,38 +1606,36 @@ func ready_tutorial() -> void:
 			if (in_insight_level):
 				tutoriallabel.rect_position.y -= 24;
 			
-			var added_goal_sprites = false;
+			
 			for a in actorsfolder.get_children():
-				if (a is Sprite):
-					added_goal_sprites = true;
-					break;
-			if (!added_goal_sprites):
-				var sprite = Sprite.new();
-				sprite.texture = preload("res://assets/light_goal_tutorial.png");
-				actorsfolder.add_child(sprite);
-				sprite.position = Vector2(84, 84);
-				if (in_insight_level):
-					sprite.position.y += 48;
+				if (a.name == "Pictogram" or a.name == "Pictogram2"):
+					a.queue_free();
+			var sprite = Sprite.new();
+			sprite.name = "Pictogram";
+			sprite.texture = preload("res://assets/light_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84, 84);
+			if (in_insight_level):
+				sprite.position.y += 48;
 			
 		elif (level_number == 1):
 			virtualbuttons.get_node("Verbs/SwapButton").visible = false;
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Undo\n$RESTART: Restart";
 			
-			var added_goal_sprites = false;
 			for a in actorsfolder.get_children():
-				if (a is Sprite):
-					added_goal_sprites = true;
-					break;
-			if (!added_goal_sprites):
-				var sprite = Sprite.new();
-				sprite.texture = preload("res://assets/light_goal_tutorial.png");
-				actorsfolder.add_child(sprite);
-				sprite.position = Vector2(84, 84);
-				sprite = Sprite.new();
-				sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
-				actorsfolder.add_child(sprite);
-				sprite.position = Vector2(84, 84+24);
+				if (a.name == "Pictogram" or a.name == "Pictogram2"):
+					a.queue_free();
+			var sprite = Sprite.new();
+			sprite.name = "Pictogram";
+			sprite.texture = preload("res://assets/light_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84, 84);
+			sprite = Sprite.new();
+			sprite.name = "Pictogram2";
+			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
+			actorsfolder.add_child(sprite);
+			sprite.position = Vector2(84, 84+24);
 		elif (level_number == 2):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
