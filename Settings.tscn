@@ -208,3 +208,10 @@ margin_top = 129.0
 margin_right = 401.0
 margin_bottom = 145.0
 text = "Meta-Undo a Restart?:"
+
+[node name="FullScreenButton" type="Button" parent="Holder"]
+margin_left = 187.0
+margin_top = 44.0
+margin_right = 248.0
+margin_bottom = 59.0
+text = "Full Screen?"

@@ -26,6 +26,7 @@ onready var newsavefile : Button = get_node("Holder/NewSaveFile");
 onready var virtualbuttons : SpinBox = get_node("Holder/VirtualButtons");
 onready var metaundoarestart : OptionButton = get_node("Holder/MetaUndoARestart");
 onready var jukebox : SpinBox = get_node("Holder/Jukebox");
+onready var fullscreenbutton: Button = get_node("Holder/FullScreenButton");
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -101,11 +102,13 @@ func _ready() -> void:
 	metaundoarestart.connect("item_focused", self, "_metaundoarestart_item_whatever");
 	metaundoarestart.connect("item_selected", self, "_metaundoarestart_item_whatever");
 	jukebox.connect("value_changed", self, "_jukebox_value_changed");
+	fullscreenbutton.connect("pressed", self, "_fullscreenbutton_pressed");
 	
 	if (is_fixed_size):
 		$Holder/LabelResolutionMultiplier.queue_free();
 		vsync.queue_free();
 		pixelscale.queue_free();
+		fullscreenbutton.queue_free();
 
 func _unlockeverything_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -247,6 +250,13 @@ func _jukebox_value_changed(value: float) -> void:
 		jukebox.value = value;
 	gamelogic.jukebox_track = value;
 	gamelogic.play_next_song();
+	
+func _fullscreenbutton_pressed() -> void:
+	if (!gamelogic.save_file.has("fullscreen") or !gamelogic.save_file["fullscreen"]):
+		gamelogic.save_file["fullscreen"] = true;
+	else:
+		gamelogic.save_file["fullscreen"] = false;
+	gamelogic.setup_resolution();
 	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):

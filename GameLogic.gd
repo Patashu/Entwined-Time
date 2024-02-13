@@ -833,6 +833,8 @@ func get_largest_monitor() -> Vector2:
 	return result;
 	
 func setup_resolution() -> void:
+	if (save_file.has("fullscreen")):
+		OS.window_fullscreen = save_file["fullscreen"];
 	if (save_file.has("pixel_scale")):
 		var value = save_file["pixel_scale"];
 		var size = Vector2(pixel_width*value, pixel_height*value);
