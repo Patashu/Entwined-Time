@@ -438,6 +438,8 @@ var chapter_standard_unlock_requirements = [];
 var chapter_advanced_unlock_requirements = [];
 var save_file_string = "user://entwinedtime.sav";
 
+var is_web = false;
+
 func save_game():
 	var file = File.new()
 	file.open(save_file_string, File.WRITE)
@@ -485,6 +487,10 @@ func load_game():
 	react_to_save_file_update();
 
 func _ready() -> void:
+	var os_name = OS.get_name();
+	if (os_name == "HTML5" or os_name == "Android" or os_name == "iOS"):
+		is_web = true;
+	
 	# Call once when the game is booted up.
 	menubutton.connect("pressed", self, "escape");
 	levelstar.scale = Vector2(1.0/6.0, 1.0/6.0);
@@ -5734,6 +5740,13 @@ func _input(event: InputEvent) -> void:
 			end_replay();
 			character_switch();
 			update_info_labels();
+	elif event is InputEventKey:
+		if (!is_web and event.alt and event.scancode == KEY_ENTER):
+			if (!save_file.has("fullscreen") or !save_file["fullscreen"]):
+				save_file["fullscreen"] = true;
+			else:
+				save_file["fullscreen"] = false;
+			setup_resolution();
 	
 func gain_insight() -> void:
 	if (ui_stack.size() > 0):
