@@ -240,6 +240,7 @@ func _virtualbuttons_value_changed(value: float) -> void:
 	
 func _metaundoarestart_item_whatever(index: int) -> void:
 	gamelogic.save_file["meta_undo_a_restart"] = index;
+	gamelogic.update_info_labels();
 	
 func _jukebox_value_changed(value: float) -> void:
 	if (value < -1):

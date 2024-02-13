@@ -4576,6 +4576,7 @@ func load_level(impulse: int) -> void:
 	if (impulse != 0):
 		in_insight_level = false;
 		save_file["level_number"] = level_number;
+		level_replay = "";
 		save_game();
 	
 	var level = null;
@@ -5311,7 +5312,10 @@ func update_info_labels() -> void:
 	# also disable/enable and shade verb buttons here
 	if (virtualbuttons.visible):
 		var meta_undo_button = virtualbuttons.get_node("Verbs/MetaUndoButton");
-		if (meta_turn == 0):
+		var meta_undo_a_restart_type = 2;
+		if (save_file.has("meta_undo_a_restart")):
+			meta_undo_a_restart_type = save_file["meta_undo_a_restart"];
+		if (meta_turn == 0 and (user_replay_before_restarts.size() == 0 or meta_undo_a_restart_type >= 4)):
 			meta_undo_button.modulate = Color(0.5, 0.5, 0.5, 1);
 		else:
 			meta_undo_button.modulate = Color(1, 1, 1, 1);
@@ -5764,6 +5768,7 @@ func gain_insight() -> void:
 			in_insight_level = false;
 		else:
 			in_insight_level = true;
+		level_replay = "";
 		load_level(0);
 		cut_sound();
 		play_sound("usegreenality");
@@ -6149,7 +6154,7 @@ func _process(delta: float) -> void:
 	if ui_stack.size() == 0:
 		var dir = Vector2.ZERO;
 		
-		if (doing_replay and replay_timer > next_replay):
+		if (doing_replay and replay_timer > next_replay and !replay_paused):
 			do_one_replay_turn();
 			update_info_labels();
 		
