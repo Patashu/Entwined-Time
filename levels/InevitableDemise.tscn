@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 524292, 65539, 14, 262145, 65540, 3, 0, 65541, 14, 262145, 131075, 14, 262145, 131077, 14, 262145, 196610, 8, 0, 196611, 14, 327681, 196612, 0, 0, 196613, 14, 655362, 196614, 14, 524292, 262144, 7, 0, 262146, 2, 0, 262147, 1, 0, 262149, 30, 0, 262150, 14, 262145, 327680, 14, 196613, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 655364 )
+
+[node name="@@12590" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 32, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Inevitable Demise"
+level_author = "Patashu"
+level_replay = "Inevitable Demise$mturn=33$xaxadxaxaxzzxaxaddxzzxdxdxwxddxzzzwxzdxsdxzzzzxzaxa"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""

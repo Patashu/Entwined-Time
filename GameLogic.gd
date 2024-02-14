@@ -1130,6 +1130,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("ShippingSolutions")
 	level_filenames.push_back("TheTower")
 	level_filenames.push_back("InvisibleBridgeCrate")
+	level_filenames.push_back("InevitableDemise")
 	level_filenames.push_back("Jenga")
 	
 	chapter_names.push_back("There Are Many Colours");
