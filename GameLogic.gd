@@ -1125,6 +1125,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("ThirdRoommateEx")
 	level_filenames.push_back("ThirdRoommateEx2")
 	level_filenames.push_back("Levitation")
+	level_filenames.push_back("InstantDefeat")
 	level_filenames.push_back("QuantumEntanglement")
 	level_filenames.push_back("ShippingSolutions")
 	level_filenames.push_back("TheTower")

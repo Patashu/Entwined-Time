@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 524292, 65539, 14, 262145, 65540, 3, 0, 65541, 14, 262145, 131075, 14, 262145, 131077, 14, 262145, 196610, 8, 0, 196611, 14, 327681, 196613, 14, 327681, 262144, 1, 0, 262145, 32, 0, 262146, 2, 0, 262148, 0, 0, 262152, 7, 0, 327680, 14, 196613, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 196614, 327687, 14, 196614, 327688, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Instant Defeat"
+level_author = "Patashu"
+level_replay = "Instant Defeat$mturn=45$axdsdadxdxzxzxzwxzxzzwssxddxzzzxzzxzzdaxaxzzaxwxadxdxzzzdddxwaa"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
