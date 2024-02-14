@@ -4039,6 +4039,7 @@ func check_won() -> void:
 				level_info.level_replay = annotate_replay(user_replay);
 				if (custom_string != ""):
 					#HACK: time to do surgery on a string lol
+					custom_string = custom_string.replace("\"level_replay\":\"\"", "\"level_replay\":\"" + level_info.level_replay + "\"")
 					custom_string = custom_string.replace(annotated_authors_replay, level_info.level_replay);
 				floating_text("Test successful, recorded replay!");
 		if (won == true and !doing_replay):
