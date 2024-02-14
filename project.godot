@@ -180,6 +180,11 @@ _global_script_classes=[ {
 "path": "res://TimeBubble.gd"
 }, {
 "base": "Sprite",
+"class": "TimelineDivider",
+"language": "GDScript",
+"path": "res://timeline/TimelineDivider.gd"
+}, {
+"base": "Sprite",
 "class": "TimelineSlot",
 "language": "GDScript",
 "path": "res://timeline/TimelineSlot.gd"
@@ -234,6 +239,7 @@ _global_script_class_icons={
 "StarSprite": "",
 "ThoughtBubble": "",
 "TimeBubble": "",
+"TimelineDivider": "",
 "TimelineSlot": "",
 "TimelineSprite": "",
 "TimelineViewer": "",

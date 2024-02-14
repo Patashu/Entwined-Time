@@ -25,6 +25,11 @@ func _ready() -> void:
 		timelinedivider.texture = preload("res://timeline/timeline-divider-light.png");
 	reset();
 
+func activate(active: bool) -> void:
+	timelinedivider.timer = 0;
+	timelinedivider.is_active = active;
+	timelinedivider.modulate = Color.white;
+
 func reset() -> void:
 	if (timelinedivider == null):
 		return

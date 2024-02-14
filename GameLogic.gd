@@ -1437,6 +1437,7 @@ func ready_map() -> void:
 	# Meet Light - only Light is selectable
 	if (!is_custom and level_number == 0):
 		heavy_selected = false;
+	timeline_activation_change();
 	user_replay = "";
 	meta_redo_inputs = "";
 	preserving_meta_redo_inputs = false;
@@ -4403,11 +4404,22 @@ func do_one_letter_case_sensitive(replay_char: String) -> void:
 		character_switch();
 	do_one_letter(replay_char.to_lower());
 	
+func timeline_activation_change() -> void:
+	heavytimeline.activate(heavy_selected);
+	lighttimeline.activate(!heavy_selected);
+	if (heavy_selected):
+		heavyinfolabel.add_color_override("font_color", "#ff7459");
+		lightinfolabel.add_color_override("font_color", light_color);
+	else:
+		heavyinfolabel.add_color_override("font_color", heavy_color);
+		lightinfolabel.add_color_override("font_color", "#7fc9ff");
+	
 func character_switch() -> void:
 	# no swapping characters in Meet Heavy or Meet Light, even if you know the button
 	if (!is_custom and (level_number == 0 or level_number == 1)):
 		return
 	heavy_selected = !heavy_selected;
+	timeline_activation_change();
 	update_ghosts();
 	play_sound("switch")
 	append_replay("x")
