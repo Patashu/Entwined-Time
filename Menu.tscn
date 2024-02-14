@@ -14,7 +14,7 @@ margin_right = 340.0
 margin_bottom = 215.0
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
-text = "MaintBot OS b3 - Control Panel"
+text = "MaintBot OS b4 - Control Panel"
 align = 1
 
 [node name="OkButton" type="Button" parent="Holder"]
