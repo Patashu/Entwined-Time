@@ -291,6 +291,7 @@ enum Tiles {
 	NudgeNorthGreen, #108
 	NudgeSouthGreen, #109
 	NudgeWestGreen, #110
+	AntiGrate, #111
 }
 var voidlike_tiles = [];
 
@@ -2963,7 +2964,12 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
 			Tiles.Grate:
-				result = no_if_true_yes_if_false(actor.is_character);
+				result = no_if_true_yes_if_false(!actor.broken);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = no_foo_flash;
+			Tiles.AntiGrate:
+				result = no_if_true_yes_if_false(actor.broken);
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;

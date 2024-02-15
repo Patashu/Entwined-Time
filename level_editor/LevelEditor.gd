@@ -114,6 +114,7 @@ enum Tiles {
 	NudgeNorthGreen, #108
 	NudgeSouthGreen, #109
 	NudgeWestGreen, #110
+	AntiGrate, #111
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -279,6 +280,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.NudgeNorthGreen)
 		picker_array.append(Tiles.NudgeSouthGreen)
 		picker_array.append(Tiles.NudgeWestGreen)
+		picker_array.append(Tiles.Grate)
+		picker_array.append(Tiles.AntiGrate)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -808,6 +811,10 @@ func picker_tooltip() -> void:
 			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
 		Tiles.NudgeWest:
 			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.Grate:
+			text = "Grate: Solid to unbroken actors."
+		Tiles.AntiGrate:
+			text = "Anti-Grate: Solid to broken actors."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));
