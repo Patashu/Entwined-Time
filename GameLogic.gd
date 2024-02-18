@@ -3625,7 +3625,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 					#add_to_animation_server(actor, [Animation.sfx, "magentatimecrystal"])
 				else:
 					add_to_animation_server(actor, [Animation.sfx, "broken"])
-					add_to_animation_server(actor, [Animation.explode])
+					add_to_animation_server(actor, [Animation.explode, true])
 				if actor.is_character:
 					if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos, terrain):
 						for goal in goals:
@@ -3640,6 +3640,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
 				add_to_animation_server(actor, [Animation.sfx, "unbroken"])
+				add_to_animation_server(actor, [Animation.explode, false])
 				if actor.is_character:
 					if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos, terrain):
 						for goal in goals:

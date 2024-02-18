@@ -573,24 +573,38 @@ func _process(delta: float) -> void:
 					sprite.position = current_animation[1];
 					self.get_parent().get_parent().get_node("UnderActorsParticles").add_child(sprite);
 				7: #explode
+					var broken = current_animation[1];
 					if (is_character):
 						var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
-						for i in range(10):
-							var sprite = Sprite.new();
-							sprite.set_script(preload("res://OneTimeSprite.gd"));
-							sprite.texture = preload("res://assets/broken_explosion.png")
-							sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
-							sprite.vframes = round(sprite.get_rect().size.y/24);
-							sprite.hframes = round(sprite.get_rect().size.x/24);
-							sprite.frame = 0;
-							if (actorname == Name.Heavy):
-								sprite.frame = 4;
-							sprite.centered = true;
-							sprite.scale = Vector2(0.5, 0.5);
-							sprite.frame_max = sprite.frame + 4;
-							sprite.frame_timer_max = 0.2;
-							sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
-							overactorsparticles.add_child(sprite);
+						if (broken):
+							for i in range(10):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://OneTimeSprite.gd"));
+								sprite.texture = preload("res://assets/broken_explosion.png")
+								sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+								sprite.vframes = round(sprite.get_rect().size.y/24);
+								sprite.hframes = round(sprite.get_rect().size.x/24);
+								sprite.frame = 0;
+								if (actorname == Name.Heavy):
+									sprite.frame = 4;
+								sprite.centered = true;
+								sprite.scale = Vector2(0.5, 0.5);
+								sprite.frame_max = sprite.frame + 4;
+								sprite.frame_timer_max = 0.2;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
+								overactorsparticles.add_child(sprite);
+						else:
+							for i in range(10):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://FadingSprite.gd"));
+								sprite.texture = preload("res://assets/Sparkle.png")
+								sprite.position = position + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
+								sprite.centered = true;
+								sprite.scale = Vector2(0.25, 0.25);
+								sprite.fadeout_timer_max = 0.5;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
+								sprite.position -= sprite.velocity/2;
+								overactorsparticles.add_child(sprite);
 				8: #shatter
 					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
 					gamelogic.broadcast_animation_nonce(current_animation[4]);
