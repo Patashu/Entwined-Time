@@ -1178,13 +1178,13 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#446570"));
 	level_filenames.push_back("Ahhh")
 	level_filenames.push_back("Eeep")
-	level_filenames.push_back("DoubleGlazed")
 	level_filenames.push_back("LetMeIn")
 	level_filenames.push_back("Interleave")
+	level_filenames.push_back("DemolitionSquad")
 	level_filenames.push_back("LadderWorldGlass")
 	level_filenames.push_back("SpelunkingGlass")
+	level_filenames.push_back("DoubleGlazed")
 	level_filenames.push_back("TheGlassPit")
-	level_filenames.push_back("DemolitionSquad")
 	level_filenames.push_back("Aquarium")
 	level_filenames.push_back("TreasureHunt")
 	
