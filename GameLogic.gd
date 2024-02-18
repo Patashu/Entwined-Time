@@ -4406,7 +4406,7 @@ func meta_redo() -> bool:
 	do_one_letter_case_sensitive(letter);
 	cut_sound();
 	play_sound("metaredo");
-	just_did_meta();
+	#just_did_meta();
 	preserving_meta_redo_inputs = false;
 	metaredobuttonlabel.visible = false;
 	return true;
