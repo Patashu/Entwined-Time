@@ -1195,6 +1195,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("IcyHot")
 	level_filenames.push_back("Deconstruct")
 	level_filenames.push_back("TheGlassPitEx")
+	level_filenames.push_back("DoubleGlazedEx")
 	level_filenames.push_back("TheRace")
 	level_filenames.push_back("CampfireGlass")
 	level_filenames.push_back("CampfireGlassEx")
