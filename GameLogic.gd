@@ -4915,7 +4915,12 @@ func time_passes(chrono: int) -> void:
 	for actor in time_actors:
 		has_fallen[actor] = 0;
 		if !actor.in_night and actor.airborne > 0 and actor.fall_speed() != 0:
-			set_actor_var(actor, "airborne", actor.airborne - 1, chrono);
+			var new_value = actor.airborne - 1;
+			if (new_value == 0):
+				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
+				if (could_fall != Success.Yes):
+					add_to_animation_server(actor, [Animation.sfx, "fall"]);
+			set_actor_var(actor, "airborne", new_value, chrono);
 			
 	# AD09: ALL actors go from airborne 2 to 1. (blue/red levels are kind of fucky without this)
 	for actor in actors:
