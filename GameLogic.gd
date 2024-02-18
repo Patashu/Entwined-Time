@@ -3683,7 +3683,7 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 							if event[3] == false:
 								if event[4] == true:
 									return true;
-	return false
+	return false;
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	#if (debug_prints and chrono < Chrono.META_UNDO):
@@ -5284,7 +5284,16 @@ func replay_advance_turn(amount: int) -> void:
 func calm_down_timelines() -> void:
 	heavytimeline.calm_down();
 	lighttimeline.calm_down();
-			
+
+func point_at_broken_event(is_heavy: bool, slot: Sprite) -> void:
+	if (chapter == 1 and level_in_chapter <= 4):
+		if (is_heavy):
+			rightarrow.visible = true;
+			rightarrow.position = slot.global_position - Vector2(24, 0);
+		else:
+			leftarrow.visible = true;
+			leftarrow.position = slot.global_position + Vector2(24, 0);
+	
 func update_level_label() -> void:
 	var levelnumberastext = ""
 	if (is_custom):

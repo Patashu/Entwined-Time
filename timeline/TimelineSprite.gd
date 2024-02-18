@@ -11,6 +11,7 @@ var viewer = null;
 var fading = false;
 var flashed_to_enter = false;
 var flashed_while_fading = false;
+var is_broken = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

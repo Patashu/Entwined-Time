@@ -144,6 +144,8 @@ func fill(buffer: Array) -> void:
 		sprite.modulate = Color(1, 1, 1, 0);
 		sprite.texture = get_texture_for_event(event, size);
 		sprite.animation_nonce = get_animation_nonce_for_event(event);
+		if (event[0] == GameLogic.Undo.set_actor_var and event[2] == "broken"):
+			sprite.is_broken = true;
 		sprite.viewer = parent;
 		parent.broadcast_sprite(sprite);
 

@@ -1,6 +1,7 @@
 extends Node2D
 class_name TimelineViewer
 
+onready var gamelogic = get_node("/root/LevelScene/GameLogic");
 export var is_heavy = false;
 var current_move = 0;
 var max_moves = 0;
@@ -82,7 +83,10 @@ func finish_divider_position() -> void:
 
 func broadcast_animation_nonce(animation_nonce: int) -> void:
 	if nonce_to_sprite_dictionary.has(animation_nonce) and is_instance_valid(nonce_to_sprite_dictionary[animation_nonce]):
-		nonce_to_sprite_dictionary[animation_nonce].flash();
+		var sprite = nonce_to_sprite_dictionary[animation_nonce];
+		sprite.flash();
+		if (sprite.is_broken):
+			gamelogic.point_at_broken_event(is_heavy, sprite.get_parent().get_parent());
 	
 func broadcast_remove_sprite(sprite: TimelineSprite) -> void:
 	nonce_to_sprite_dictionary.erase(sprite.animation_nonce);
