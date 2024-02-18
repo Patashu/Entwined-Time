@@ -3606,7 +3606,16 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 					elif value == -1 and old_value != -1:
 						add_to_animation_server(actor, [Animation.sfx, "lightland"]);
 						add_to_animation_server(actor, [Animation.dust, 2]);
-			#everyone gets landing dust :D
+			else:
+				#everyone gets landing dust
+				if is_retro:
+					if old_value == -1 and value != -1:
+						add_to_animation_server(actor, [Animation.dust, 5]);
+				else:
+					if value == -1 and old_value != -1:
+						add_to_animation_server(actor, [Animation.dust, 2]);
+					
+			#everyone gets falling dust
 			if is_retro:
 				if (old_value == 0 and value != 0):
 					add_to_animation_server(actor, [Animation.dust, 4]);
