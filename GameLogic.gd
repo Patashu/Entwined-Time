@@ -153,6 +153,7 @@ enum Animation {
 	heavy_timeline_finish_animations, #26
 	light_timeline_finish_animations, #27
 	intro_hop, #28
+	stall, #29
 }
 
 enum TimeColour {
@@ -2630,14 +2631,14 @@ boost_pad_reentrance: bool = false) -> int:
 		# bump animation always happens, I think?
 		# ah, not if it's a 'null' gravity move (everything in the stack was already grounded)
 		if (!is_gravity):
-			add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+			add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
 		else:
 			if (actor.airborne != -1):
-				add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+				add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
 			else:
 				for pusher in pushers_list:
 					if pusher.airborne != -1:
-						add_to_animation_server(actor, [Animation.bump, dir, animation_nonce]);
+						add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
 						break;
 	
 	return success;
@@ -3667,6 +3668,15 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 			ghost = get_ghost_that_hasnt_moved(actor);
 			ghost.set(prop, value);
 			ghost.update_graphics();
+			
+	# stall certain animations
+	if (prop == "airborne" and actor.is_character):
+		if (value > 0 and old_value > 0):
+			pass
+		else:
+			add_to_animation_server(actor, [Animation.stall, 0.07]);
+	elif (prop == "broken"):
+		add_to_animation_server(actor, [Animation.stall, 0.14]);
 
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	# not edge cases: chrono, actor colour (since we always check)
@@ -5433,10 +5443,13 @@ func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
 	add_undo_event([Undo.animation_substep], chrono);
 
-func add_to_animation_server(actor: ActorBase, animation: Array) -> void:
+func add_to_animation_server(actor: ActorBase, animation: Array, with_priority: bool = false) -> void:
 	while animation_server.size() <= animation_substep:
 		animation_server.push_back([]);
-	animation_server[animation_substep].push_back([actor, animation]);
+	if (with_priority):
+		animation_server[animation_substep].push_front([actor, animation]);
+	else:
+		animation_server[animation_substep].push_back([actor, animation]);
 
 func handle_global_animation(animation: Array) -> void:
 	var redfire = false;

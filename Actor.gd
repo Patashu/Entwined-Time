@@ -843,6 +843,13 @@ func _process(delta: float) -> void:
 								set_next_texture(preload("res://assets/heavy_idle.png"), facing_left);
 							else:
 								set_next_texture(preload("res://assets/light_idle_animation.png"), facing_left);
+				29: #stall
+					animation_timer_max = current_animation[1];
+					animation_timer += delta;
+					if (animation_timer > animation_timer_max):
+						is_done = true;
+					else:
+						is_done = false;
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
