@@ -605,6 +605,7 @@ func _process(delta: float) -> void:
 								sprite.velocity = Vector2(gamelogic.rng.randf_range(-48, 48), gamelogic.rng.randf_range(-48, 48));
 								sprite.position -= sprite.velocity/2;
 								overactorsparticles.add_child(sprite);
+								sprite.modulate = color;
 				8: #shatter
 					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
 					gamelogic.broadcast_animation_nonce(current_animation[4]);
