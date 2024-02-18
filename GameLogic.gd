@@ -2624,11 +2624,11 @@ boost_pad_reentrance: bool = false) -> int:
 			# involuntary bump sfx
 			if (pushers_list.size() > 0 or is_retro):
 				if (actor.actorname == Actor.Name.Light):
-					add_to_animation_server(actor, [Animation.sfx, "involuntarybumplight"]);
+					add_to_animation_server(actor, [Animation.sfx, "involuntarybumplight"], true);
 				elif (actor.actorname == Actor.Name.Heavy):
-					add_to_animation_server(actor, [Animation.sfx, "involuntarybump"]);
+					add_to_animation_server(actor, [Animation.sfx, "involuntarybump"], true);
 				else:
-					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"]);
+					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"], true);
 		# bump animation always happens, I think?
 		# ah, not if it's a 'null' gravity move (everything in the stack was already grounded)
 		if (!is_gravity):
