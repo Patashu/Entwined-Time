@@ -154,6 +154,7 @@ enum Animation {
 	light_timeline_finish_animations, #27
 	intro_hop, #28
 	stall, #29
+	dust, #30
 }
 
 enum TimeColour {
@@ -3579,24 +3580,39 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 				if is_retro:
 					if old_value >= 1 and value <= 0:
 						add_to_animation_server(actor, [Animation.sfx, "heavyuncoyote"]);
+						add_to_animation_server(actor, [Animation.dust, 3]);
 					elif old_value == -1 and value != -1:
 						add_to_animation_server(actor, [Animation.sfx, "heavyunland"]);
+						add_to_animation_server(actor, [Animation.dust, 5]);
 				else:
 					if value >= 1 and old_value <= 0:
 						add_to_animation_server(actor, [Animation.sfx, "heavycoyote"]);
+						add_to_animation_server(actor, [Animation.dust, 0]);
 					elif value == -1 and old_value != -1:
 						add_to_animation_server(actor, [Animation.sfx, "heavyland"]);
+						add_to_animation_server(actor, [Animation.dust, 2]);
 			elif actor.actorname == Actor.Name.Light:
 				if is_retro:
 					if old_value >= 1 and value <= 0:
 						add_to_animation_server(actor, [Animation.sfx, "lightuncoyote"]);
+						add_to_animation_server(actor, [Animation.dust, 3]);
 					elif old_value == -1 and value != -1:
 						add_to_animation_server(actor, [Animation.sfx, "lightunland"]);
+						add_to_animation_server(actor, [Animation.dust, 5]);
 				else:
 					if value >= 1 and old_value <= 0:
 						add_to_animation_server(actor, [Animation.sfx, "lightcoyote"]);
+						add_to_animation_server(actor, [Animation.dust, 0]);
 					elif value == -1 and old_value != -1:
 						add_to_animation_server(actor, [Animation.sfx, "lightland"]);
+						add_to_animation_server(actor, [Animation.dust, 2]);
+			#everyone gets landing dust :D
+			if is_retro:
+				if (old_value == 0 and value != 0):
+					add_to_animation_server(actor, [Animation.dust, 4]);
+			else:
+				if value == 0 and old_value != 0:
+					add_to_animation_server(actor, [Animation.dust, 1]);
 		
 		# special case - if we break or unbreak, we can ding or unding too
 		# We also need to handle abysschime and meta-undoing it.

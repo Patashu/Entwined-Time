@@ -850,6 +850,100 @@ func _process(delta: float) -> void:
 						is_done = true;
 					else:
 						is_done = false;
+				30: #dust
+					var frame = gamelogic.rng.randi_range(0, 6);
+					match current_animation[1]:
+						0: #rising
+							for i in range(6):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://FadingSprite.gd"));
+								sprite.texture = preload("res://assets/dust.png")
+								sprite.position = self.position + Vector2(12, 24) + Vector2(gamelogic.rng.randf_range(-6, 6), 0);
+								sprite.fadeout_timer_max = 0.25;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(48, 96));
+								sprite.hframes = 7;
+								sprite.frame = frame;
+								sprite.centered = true;
+								sprite.scale = Vector2(1, 1);
+								gamelogic.overactorsparticles.add_child(sprite);
+						1: #falling
+							for i in range(6):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://FadingSprite.gd"));
+								sprite.texture = preload("res://assets/dust.png")
+								sprite.position = self.position + Vector2(12, 0) + Vector2(gamelogic.rng.randf_range(-6, 6), 0);
+								sprite.fadeout_timer_max = 0.25;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(-48, -96));
+								sprite.hframes = 7;
+								sprite.frame = frame;
+								sprite.centered = true;
+								sprite.scale = Vector2(1, 1);
+								gamelogic.overactorsparticles.add_child(sprite);
+						2: #landing
+							for i in range(6):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://FadingSprite.gd"));
+								sprite.texture = preload("res://assets/dust.png")
+								sprite.position = self.position + Vector2(12, 24) + Vector2(gamelogic.rng.randf_range(-6, 6), 0);
+								sprite.fadeout_timer_max = 0.25;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(48, 96), 0);
+								if (i % 2 == 1):
+									sprite.velocity.x *= -1;
+								sprite.hframes = 7;
+								sprite.frame = frame;
+								sprite.centered = true;
+								sprite.scale = Vector2(1, 1);
+								gamelogic.overactorsparticles.add_child(sprite);
+						3: #un-rising
+							for i in range(6):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://FadingSprite.gd"));
+								sprite.texture = preload("res://assets/dust.png")
+								sprite.position = self.position + Vector2(12, 24) + Vector2(gamelogic.rng.randf_range(-6, 6), 0);
+								sprite.fadeout_timer_max = 0.25;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(48, 96));
+								sprite.hframes = 7;
+								sprite.frame = frame;
+								sprite.centered = true;
+								sprite.scale = Vector2(1, 1);
+								gamelogic.overactorsparticles.add_child(sprite);
+								sprite.position += sprite.velocity*0.25;
+								sprite.velocity *= -1;
+								sprite.modulate = color;
+						4: #un-falling
+							for i in range(6):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://FadingSprite.gd"));
+								sprite.texture = preload("res://assets/dust.png")
+								sprite.position = self.position + Vector2(12, 0) + Vector2(gamelogic.rng.randf_range(-6, 6), 0);
+								sprite.fadeout_timer_max = 0.25;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(-48, -96));
+								sprite.hframes = 7;
+								sprite.frame = frame;
+								sprite.centered = true;
+								sprite.scale = Vector2(1, 1);
+								gamelogic.overactorsparticles.add_child(sprite);
+								sprite.position += sprite.velocity*0.25;
+								sprite.velocity *= -1;
+								sprite.modulate = color;
+						5: #un-landing
+							for i in range(6):
+								var sprite = Sprite.new();
+								sprite.set_script(preload("res://FadingSprite.gd"));
+								sprite.texture = preload("res://assets/dust.png")
+								sprite.position = self.position + Vector2(12, 24) + Vector2(gamelogic.rng.randf_range(-6, 6), 0);
+								sprite.fadeout_timer_max = 0.25;
+								sprite.velocity = Vector2(gamelogic.rng.randf_range(48, 96), 0);
+								if (i % 2 == 1):
+									sprite.velocity.x *= -1;
+								sprite.hframes = 7;
+								sprite.frame = frame;
+								sprite.centered = true;
+								sprite.scale = Vector2(1, 1);
+								gamelogic.overactorsparticles.add_child(sprite);
+								sprite.position += sprite.velocity*0.25;
+								sprite.velocity *= -1;
+								sprite.modulate = color;
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
