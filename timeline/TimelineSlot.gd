@@ -167,25 +167,49 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 		GameLogic.Undo.move:
 			var dir = event[2];
 			if dir == Vector2.LEFT:
-				if size == 8:
-					return preload("res://timeline/timeline-left-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-left-12.png");
+				if (event[5].size() > 0):
+					if size == 8:
+						return preload("res://timeline/timeline-left-phase-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-left-phase-12.png");
+				else:
+					if size == 8:
+						return preload("res://timeline/timeline-left-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-left-12.png");
 			elif dir == Vector2.RIGHT:
-				if size == 8:
-					return preload("res://timeline/timeline-right-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-right-12.png");
+				if (event[5].size() > 0):
+					if size == 8:
+						return preload("res://timeline/timeline-right-phase-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-right-phase-12.png");
+				else:
+					if size == 8:
+						return preload("res://timeline/timeline-right-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-right-12.png");
 			elif dir == Vector2.UP:
-				if size == 8:
-					return preload("res://timeline/timeline-up-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-up-12.png");
+				if (event[5].size() > 0):
+					if size == 8:
+						return preload("res://timeline/timeline-up-phase-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-up-phase-12.png");
+				else:
+					if size == 8:
+						return preload("res://timeline/timeline-up-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-up-12.png");
 			elif dir == Vector2.DOWN:
-				if size == 8:
-					return preload("res://timeline/timeline-down-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-down-12.png");
+				if (event[5].size() > 0):
+					if size == 8:
+						return preload("res://timeline/timeline-down-phase-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-down-phase-12.png");
+				else:
+					if size == 8:
+						return preload("res://timeline/timeline-down-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-down-12.png");
 			pass
 		GameLogic.Undo.set_actor_var:
 			var prop = event[2];
