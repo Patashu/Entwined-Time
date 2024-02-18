@@ -2937,20 +2937,11 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.VoidSpikeball:
 				result = maybe_break_actor(actor, Durability.SPIKES, hypothetical, Greenness.Void, chrono);
 			Tiles.PowerSocket:
-				if (actor.is_character):
-					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Mundane, chrono);
-				else:
-					result = Success.No;
+				result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Mundane, chrono);
 			Tiles.GreenPowerSocket:
-				if (actor.is_character):
-					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
-				else:
-					result = Success.No;
+				result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
 			Tiles.VoidPowerSocket:
-				if (actor.is_character):
-					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Void, chrono);
-				else:
-					result = Success.No;
+				result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Void, chrono);
 			Tiles.NoHeavy:
 				result = no_if_true_yes_if_false(actor.actorname == Actor.Name.Heavy);
 				if (result == Success.No):

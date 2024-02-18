@@ -726,7 +726,7 @@ func picker_tooltip() -> void:
 		Tiles.LightGoalJoke:
 			text = "Light Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Light Goal. Phases through terrain and actors."
 		Tiles.PowerSocket:
-			text = "Power Socket: A Spikeball that specifically breaks Characters."
+			text = "Power Socket: A Spikeball that breaks ALL Actors. (Put a No Heavy/Light/Crate on top if you want it to avoid some actors.)"
 		Tiles.GreenPowerSocket:
 			text = "Green Power Socket: A Power Socket that does not create character undo events."
 		Tiles.VoidPowerSocket:
@@ -803,14 +803,14 @@ func picker_tooltip() -> void:
 			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
 		Tiles.NudgeWest:
 			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
-		Tiles.NudgeEast:
-			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
-		Tiles.NudgeNorth:
-			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
-		Tiles.NudgeSouth:
-			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
-		Tiles.NudgeWest:
-			text = "Nudge Green: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.NudgeEastGreen:
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.NudgeNorthGreen:
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.NudgeSouthGreen:
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+		Tiles.NudgeWestGreen:
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
 		Tiles.Grate:
 			text = "Grate: Solid to unbroken actors."
 		Tiles.AntiGrate:
