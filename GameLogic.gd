@@ -4919,6 +4919,7 @@ func time_passes(chrono: int) -> void:
 			if (new_value == 0):
 				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
 				if (could_fall != Success.Yes):
+					remove_one_from_animation_server(actor, Animation.bump);
 					add_to_animation_server(actor, [Animation.sfx, "fall"]);
 			set_actor_var(actor, "airborne", new_value, chrono);
 			
@@ -5455,6 +5456,13 @@ func add_to_animation_server(actor: ActorBase, animation: Array, with_priority: 
 		animation_server[animation_substep].push_front([actor, animation]);
 	else:
 		animation_server[animation_substep].push_back([actor, animation]);
+
+func remove_one_from_animation_server(actor: ActorBase, event: int):
+	for i in range(animation_server[animation_substep].size()):
+		var thing = animation_server[animation_substep][i];
+		if thing[0] == actor and thing[1][0] == event:
+			animation_server[animation_substep].remove(i);
+			return;
 
 func handle_global_animation(animation: Array) -> void:
 	var redfire = false;
