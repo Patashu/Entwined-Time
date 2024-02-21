@@ -263,6 +263,17 @@ func setup_rebinding_stuff() -> void:
 				button.theme = holder.theme;
 				button.clip_text = true;
 				setup_button(button); #must happen after button.rect_size and button.clip_text
+				# focus wraparound here
+				if (y == 0):
+					if (i == 0):
+						if (j == 0):
+							swapbutton.focus_neighbour_bottom = swapbutton.get_path_to(button);
+							okbutton.focus_neighbour_bottom = okbutton.get_path_to(button);
+					else:
+						if (j == 0):
+							resetbutton.focus_neighbour_bottom = resetbutton.get_path_to(button);
+					button.focus_neighbour_top = button.get_path_to(okbutton);
+					
 		label.theme = holder.theme;
 
 func setup_button(button: Button) -> void:
