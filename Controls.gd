@@ -150,7 +150,8 @@ func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
 		new_event.command = false;
 	just_danced = true;
 	# if we WERE an event, erase it.
-	if (button.event != null):
+	# But only if it's not our last event!
+	if (button.event != null and (new_event != null or get_event(button.action, 1, keyboard_mode ) != null)):
 		InputMap.action_erase_event(button.action, button.event);
 	# Now map the new one.
 	if (new_event != null):
@@ -163,7 +164,7 @@ func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
 	var refocus_index = button.i;
 	setup_rebinding_stuff();
 	buttons_by_action[refocus_action][refocus_index].grab_focus();
-	
+
 func whitelisted(a: String, b: String) -> bool:
 	if a == b:
 		return true;

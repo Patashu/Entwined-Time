@@ -20,13 +20,19 @@ func _toggled(is_button_pressed):
 		if (image != null):
 			image.queue_free();
 			image = null;
-		if (parent.rebinding_button != null):
+		if (parent.rebinding_button != null and parent.rebinding_button != self):
 			parent.rebinding_button.pressed = false;
 			parent.rebinding_button._toggled(false);
 		parent.rebinding_button = self;
 		release_focus();
 	else:
 		display_current_key()
+		
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_RIGHT and event.pressed:
+			parent.remap_dance(self, null);
+			pressed = false
 		
 func _unhandled_input(new_event : InputEvent):
 	if new_event is InputEventJoypadButton and !keyboard_mode and new_event.is_pressed():
