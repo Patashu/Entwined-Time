@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65538, 3, 0, 65540, 14, 262145, 131072, 14, 262145, 131074, 46, 0, 131075, 8, 0, 131076, 14, 262145, 196608, 14, 589826, 196609, 14, 196615, 196611, 14, 196613, 196612, 14, 589828, 262144, 14, 262145, 262148, 14, 262145, 327680, 14, 262145, 327681, 2, 0, 327683, 32, 0, 327684, 14, 262145, 393216, 14, 589826, 393217, 14, 196615, 393219, 14, 196613, 393220, 14, 589828, 458752, 14, 262145, 458756, 14, 262145, 524288, 14, 262145, 524292, 14, 262145, 589824, 14, 262145, 589825, 1, 0, 589826, 47, 0, 589827, 7, 0, 589828, 14, 262145, 655360, 14, 327681, 655361, 47, 0, 655362, 47, 0, 655363, 47, 0, 655364, 14, 327681 )
+
+[node name="@@3453" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 39, 0, 131075, 39, 0, 327681, 39, 0, 327683, 28, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Lead Planes (Insight)"
+level_author = "Patashu"
+level_replay = "Lead Planes (Insight)$mturn=8$wxassxwdxdxa"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = ""
