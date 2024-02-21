@@ -6227,6 +6227,10 @@ func _process(delta: float) -> void:
 			Static.visible = false;
 			Static.modulate = Color(1, 1, 1, 1);
 		
+	# allow mute to happen even when in menus
+	if (Input.is_action_just_pressed("mute")):
+		toggle_mute();
+		
 	if ui_stack.size() == 0:
 		var dir = Vector2.ZERO;
 		
@@ -6259,8 +6263,6 @@ func _process(delta: float) -> void:
 				load_level(1);
 			else:
 				play_sound("bump");
-		elif (Input.is_action_just_pressed("mute")):
-			toggle_mute();
 		elif (Input.is_action_just_pressed("toggle_replay")):
 			user_pressed_toggle_replay();
 		elif (doing_replay and pressed_or_key_repeated("replay_back1")):
