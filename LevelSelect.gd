@@ -11,6 +11,7 @@ onready var closebutton : Button = get_node("Holder/CloseButton");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, closebutton, pointer];
 var buttons_by_xy = {};
+var cutscene_button = null;
 
 func _ready() -> void:
 	prepare_chapter();
@@ -58,7 +59,15 @@ func update_focus_neighbors() -> void:
 		
 		# up
 		button.focus_neighbour_top = button.get_path_to(closebutton);
-		if (buttons_by_xy.has(pos + Vector2.UP)):
+		# also handle close button right right now ig
+		if (pos.x == 0 and pos.y == 1 and cutscene_button == null):
+			closebutton.focus_neighbour_right = closebutton.get_path_to(button);
+			prevbutton.focus_neighbour_bottom = prevbutton.get_path_to(button);
+		
+		if (pos.x == 0 and pos.y == 1 and cutscene_button != null):
+			button.focus_neighbour_top = button.get_path_to(cutscene_button);
+			prevbutton.focus_neighbour_bottom = prevbutton.get_path_to(cutscene_button);
+		elif (buttons_by_xy.has(pos + Vector2.UP)):
 			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.UP]);
 		elif (buttons_by_xy.has(pos + Vector2.UP + Vector2.UP)):
 			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.UP + Vector2.UP]);
@@ -74,10 +83,16 @@ func update_focus_neighbors() -> void:
 		else:
 			button.focus_neighbour_bottom = button.get_path_to(nextbutton);
 			sideways = Vector2.LEFT;
+		
 		if (buttons_by_xy.has(pos + Vector2.DOWN)):
 			button.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[pos + Vector2.DOWN]);
 		elif (buttons_by_xy.has(pos + Vector2.DOWN + Vector2.DOWN)):
 			button.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[pos + Vector2.DOWN + Vector2.DOWN]);
+		# make sure it's symmetrical
+		elif (button.focus_neighbour_bottom == button.get_path_to(prevbutton)):
+			prevbutton.focus_neighbour_top = prevbutton.get_path_to(button);
+		elif (button.focus_neighbour_bottom == button.get_path_to(nextbutton)):
+			nextbutton.focus_neighbour_top = prevbutton.get_path_to(button);
 			
 		# left and right
 		for i in range(10):
@@ -120,10 +135,15 @@ func prepare_chapter() -> void:
 	var all_advanced_stars = true;
 	
 	if (chapter == 0):
-		var button = Button.new();
-		holder.add_child(button);
-		button.text = "Intro Cutscene";
-		button.connect("pressed", self, "_intro_cutscene_pressed");
+		cutscene_button = Button.new();
+		holder.add_child(cutscene_button);
+		cutscene_button.text = "Intro Cutscene";
+		cutscene_button.connect("pressed", self, "_intro_cutscene_pressed");
+		cutscene_button.focus_neighbour_left = cutscene_button.get_path_to(closebutton);
+		cutscene_button.focus_neighbour_top = cutscene_button.get_path_to(prevbutton);
+		closebutton.focus_neighbour_right = closebutton.get_path_to(cutscene_button);
+	else:
+		cutscene_button = null;
 	
 	if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < unlock_requirement):
 		holder.text = "Chapter " + chapter_string + " - ???";
