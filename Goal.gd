@@ -5,7 +5,9 @@ var gamelogic = null;
 var actorname = ""
 var pos = Vector2.ZERO
 var dinged = false;
+#locked is for time crystals, locked2 is for crates
 var locked = false;
+var locked2 = false;
 var animations = [];
 var scalify_target = 0.1;
 var scalify_current = 0.1;
@@ -15,6 +17,14 @@ var particle_timer_max = 1;
 var last_particle_angle = 0;
 var facing_left = false; #dummied out
 
+func lock2() -> void:
+	locked2 = true;
+	modulate.a = 0.4;
+
+func unlock2() -> void:
+	locked2 = false;
+	modulate.a = 0.8;
+
 func lock() -> void:
 	locked = true;
 	modulate.r = 0.4;
@@ -23,15 +33,15 @@ func lock() -> void:
 	
 func unlock() -> void:
 	locked = false;
-	modulate.r = 1;
-	modulate.g = 1;
-	modulate.b = 1;
+	modulate.r = 1.0;
+	modulate.g = 1.0;
+	modulate.b = 1.0;
 
 func update_scalify_target() -> void:
 	scalify_target = 0.1;
 	if (actorname == Actor.Name.HeavyGoal):
 		scalify_target *= 1.7;
-	if (dinged and !locked):
+	if (dinged and !locked and !locked2):
 		scalify_target *= 2;
 
 func instantly_reach_scalify() -> void:

@@ -1395,6 +1395,7 @@ func refresh_puzzles_completed() -> void:
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 			puzzles_completed += 1;
 
+var has_crate_goals = false;
 var has_phase_walls = false;
 var has_phase_lightning = false;
 var has_checkpoints = false;
@@ -1471,6 +1472,7 @@ func ready_map() -> void:
 			insight_level_scene = load(insight_path);
 	
 	# if any of these become non-custom, then I can always check them or remove the boolean
+	has_crate_goals = false;
 	has_phase_walls = false;
 	has_phase_lightning = false;
 	has_checkpoints = false;
@@ -1481,6 +1483,10 @@ func ready_map() -> void:
 	has_slopes = false;
 	has_boulders = false;
 	has_nudges = false;
+	
+	if (any_layer_has_this_tile(Tiles.CrateGoal)):
+		has_crate_goals = true;
+	
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -2535,7 +2541,7 @@ boost_pad_reentrance: bool = false) -> int:
 		#ding logic
 		if (!actor.broken):
 			var old_terrain = terrain_in_tile(actor.pos - dir);
-			if (!actor.is_character):
+			if (!actor.is_character and !actor.is_crystal):
 				if terrain.has(Tiles.CrateGoal):
 					if !actor.dinged:
 						set_actor_var(actor, "dinged", true, chrono);
@@ -3670,7 +3676,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 						for goal in goals:
 							if goal.actorname == Actor.Name.LightGoal and !goal.dinged:
 								set_actor_var(goal, "dinged", true, chrono);
-				else:
+				elif !actor.is_crystal:
 					if terrain.has(Tiles.CrateGoal):
 						if !actor.dinged:
 							set_actor_var(actor, "dinged", true, chrono);
@@ -4048,7 +4054,30 @@ func check_won() -> void:
 		return
 	Shade.on = false;
 	
-	#check goal lock:
+	#check crate goal satisfaction
+	if (has_crate_goals):
+		var crate_goals = get_used_cells_by_id_one_array(Tiles.CrateGoal);
+		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
+		# maybe use DINGED?
+		for crate_goal in crate_goals:
+			var crate_goal_satisfied = false;
+			for actor in actors:
+				if actor.pos == crate_goal and !actor.is_character and !actor.broken and !actor.is_crystal:
+					crate_goal_satisfied = true;
+					break;
+			if (!crate_goal_satisfied):
+				locked = true;
+				won = false;
+				for goal in goals:
+					if !goal.locked2:
+						goal.lock2();
+				break;
+		if (!locked):
+			for goal in goals:
+				if goal.locked2:
+					goal.unlock2();
+		
+	#check time crystal goal lock:
 	for goal in goals:
 		if goal.locked:
 			locked = true;
@@ -4059,21 +4088,6 @@ func check_won() -> void:
 	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos))
 	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos))) or nonstandard_won:
 		won = true;
-		# but wait!
-		# check for crate goals as well (crate must be non-broken)
-		# PERF: if this ends up being slow, I can cache it on level load since it won't ever change. but it seems fast enough?
-		var crate_goals = get_used_cells_by_id_one_array(Tiles.CrateGoal);
-		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
-		# maybe use DINGED?
-		for crate_goal in crate_goals:
-			var crate_goal_satisfied = false;
-			for actor in actors:
-				if !actor.broken and actor.pos == crate_goal:
-					crate_goal_satisfied = true;
-					break;
-			if (!crate_goal_satisfied):
-				won = false;
-				break;
 		if (won and test_mode):
 			var level_info = terrainmap.get_node_or_null("LevelInfo");
 			if (level_info != null):
