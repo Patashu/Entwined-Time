@@ -6207,10 +6207,12 @@ func _process(delta: float) -> void:
 		
 	# handle current music volume
 	var value = save_file["music_volume"];
-	if (value <= -30 and !music_speaker.stream_paused):
-		music_speaker.stream_paused = true;
-	elif music_speaker.stream_paused and !muted:
-		music_speaker.stream_paused = false;
+	if (value <= -30):
+		if (!music_speaker.stream_paused):
+			music_speaker.stream_paused = true;
+	elif !muted:
+		if (music_speaker.stream_paused):
+			music_speaker.stream_paused = false;
 	music_speaker.volume_db = value + music_discount;
 	if (current_track >= 0):
 		music_speaker.volume_db += music_db[current_track];
