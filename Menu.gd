@@ -15,7 +15,7 @@ onready var insightbutton : Button = get_node("Holder/InsightButton");
 onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var restartbutton : Button = get_node("Holder/RestartButton");
-onready var undorestartbutton : Button = get_node("Holder/UndoRestartButton");
+onready var quitgamebutton : Button = get_node("Holder/QuitGameButton");
 var is_web = false;
 
 func _ready() -> void:
@@ -34,7 +34,7 @@ func _ready() -> void:
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
 	settingsbutton.connect("pressed", self, "_settingsbutton_pressed");
 	restartbutton.connect("pressed", self, "_restartbutton_pressed");
-	undorestartbutton.connect("pressed", self, "_undorestartbutton_pressed");
+	quitgamebutton.connect("pressed", self, "_quitgamebutton_pressed");
 	#IF YOU CHANGE THE NUMBER OF BUTTONS, CHANGE FOCUS NEIGHBOURS IN EDITOR TOO!!
 	
 	if gamelogic.has_remix.has(gamelogic.level_name) or gamelogic.level_name.find("(Remix)") >= 0:
@@ -46,9 +46,6 @@ func _ready() -> void:
 		insightbutton.text = "Lose Insight";
 	elif !gamelogic.has_insight_level:
 		insightbutton.disabled = true;
-		
-	if gamelogic.user_replay_before_restarts.size() == 0:
-		undorestartbutton.disabled = true;
 		
 	if gamelogic.doing_replay:
 		authorsreplaybutton.text = "End Replay";
@@ -74,6 +71,10 @@ func _ready() -> void:
 	if (is_web):
 		pastereplaybutton.disabled = false;
 		pastereplaybutton.text = "Paste Replay/Lvl";
+		quitgamebutton.queue_free();
+		#then re-do focus
+		pastereplaybutton.focus_neighbour_bottom = pastereplaybutton.get_path_to(yourreplaybutton);
+		yourreplaybutton.focus_neighbour_top = yourreplaybutton.get_path_to(pastereplaybutton);
 	else:
 		var clipboard = OS.get_clipboard();
 		if (gamelogic.looks_like_level(clipboard)):
@@ -180,12 +181,11 @@ func _restartbutton_pressed() -> void:
 	gamelogic.restart();
 	gamelogic.update_info_labels();
 	
-func _undorestartbutton_pressed() -> void:
+func _quitgamebutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	destroy();
-	gamelogic.meta_undo_a_restart();
+	get_tree().quit();
 
 func destroy() -> void:
 	self.queue_free();

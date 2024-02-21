@@ -31,7 +31,7 @@ margin_left = 78.0
 margin_top = 17.0
 margin_right = 160.0
 margin_bottom = 32.0
-focus_neighbour_top = NodePath("../UndoRestartButton")
+focus_neighbour_top = NodePath("../QuitGameButton")
 focus_neighbour_right = NodePath("../OkButton")
 text = "Your Replay"
 
@@ -104,17 +104,17 @@ margin_left = 9.0
 margin_top = 107.0
 margin_right = 74.0
 margin_bottom = 122.0
-focus_neighbour_left = NodePath("../UndoRestartButton")
+focus_neighbour_left = NodePath("../QuitGameButton")
 focus_neighbour_bottom = NodePath("../OkButton")
 text = "Restart"
 
-[node name="UndoRestartButton" type="Button" parent="Holder"]
+[node name="QuitGameButton" type="Button" parent="Holder"]
 margin_left = 79.0
 margin_top = 107.0
 margin_right = 160.0
 margin_bottom = 122.0
 focus_neighbour_right = NodePath("../RestartButton")
 focus_neighbour_bottom = NodePath("../YourReplayButton")
-text = "Undo a Restart"
+text = "Quit Game"
 
 [node name="Pointer" type="Sprite" parent="Holder"]
