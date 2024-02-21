@@ -466,6 +466,12 @@ func default_save_file() -> void:
 		save_file["sfx_volume"] = 0.0;
 	if (!save_file.has("fanfare_volume")):
 		save_file["fanfare_volume"] = 0.0;
+	if (!save_file.has("resolution")):
+		var value = 2;
+		if (save_file.has("pixel_scale")):
+			value = save_file["pixel_scale"];
+		save_file["resolution"] = str(pixel_width*value) + "x" + str(pixel_height*value);
+		save_file.erase("pixel_scale");
 
 func load_game():
 	var file = File.new()
@@ -844,9 +850,10 @@ func get_largest_monitor() -> Vector2:
 func setup_resolution() -> void:
 	if (save_file.has("fullscreen")):
 		OS.window_fullscreen = save_file["fullscreen"];
-	if (save_file.has("pixel_scale")):
-		var value = save_file["pixel_scale"];
-		var size = Vector2(pixel_width*value, pixel_height*value);
+	if (save_file.has("resolution")):
+		var value = save_file["resolution"];
+		value = value.split("x");
+		var size = Vector2(int(value[0]), int(value[1]));
 		var monitor = get_largest_monitor();
 		if (monitor.x > 0 and size.x > monitor.x):
 			size.x = monitor.x;

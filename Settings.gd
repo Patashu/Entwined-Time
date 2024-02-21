@@ -6,7 +6,6 @@ onready var holder : Control = get_node("Holder");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
 onready var unlockeverything : CheckBox = get_node("Holder/UnlockEverything");
-onready var pixelscale : SpinBox = get_node("Holder/PixelScale");
 onready var vsync : CheckBox = get_node("Holder/VSync");
 onready var sfxslider : HSlider = get_node("Holder/SFXSlider");
 onready var fanfareslider : HSlider = get_node("Holder/FanfareSlider");
@@ -25,6 +24,7 @@ onready var pastesavefile : Button = get_node("Holder/PasteSaveFile");
 onready var newsavefile : Button = get_node("Holder/NewSaveFile");
 onready var virtualbuttons : SpinBox = get_node("Holder/VirtualButtons");
 onready var metaundoarestart : OptionButton = get_node("Holder/MetaUndoARestart");
+onready var resolution : OptionButton = get_node("Holder/Resolution");
 onready var jukebox : SpinBox = get_node("Holder/Jukebox");
 onready var fullscreenbutton: Button = get_node("Holder/FullScreenButton");
 
@@ -35,6 +35,29 @@ func floating_text(text: String) -> void:
 	label.rect_size.x = holder.rect_size.x;
 	label.rect_position.y = holder.rect_size.y/2-16;
 	label.text = text;
+
+func setup_resolution() -> void:
+	var current = gamelogic.save_file["resolution"];
+	var defaults = ["512x300 (x1)", "1024x600 (x2)", "1280x720 (720p)", "1536x900 (x3)", 
+	"1920x1080 (1080p)", "2048x1200 (x4)"];
+	for i in range(defaults.size()):
+		resolution.add_item(defaults[i], 0);
+		if (defaults[i].split(" ")[0] == current):
+			resolution.selected = i;
+	
+	var mult = 5;
+	var i = defaults.size();
+	var size = Vector2(gamelogic.pixel_width*mult, gamelogic.pixel_height*mult);
+	var monitor = gamelogic.get_largest_monitor();
+	# 512x32 is the largest width a Godot 3.x canvas can be anyway
+	while (i < 33 and (size.x < monitor.x or size.y < monitor.y)):
+		var result = str(size.x) + "x" + str(size.y) + " (x" + str(mult) + ")"
+		resolution.add_item(result, i);
+		i += 1;
+		mult += 1;
+		if (result.split(" ")[0] == current):
+			resolution.selected = i;
+	
 
 func _ready() -> void:
 	var os_name = OS.get_name();
@@ -53,13 +76,13 @@ func _ready() -> void:
 		metaundoarestart.selected = 2;
 	metaundoarestart.text = "Meta-Undo a Restart?:"
 	
+	setup_resolution();
+	
 	okbutton.connect("pressed", self, "destroy");
 	okbutton.grab_focus();
 	unlockeverything.pressed = gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"];
 	if (gamelogic.save_file.has("vsync_enabled")):
 		vsync.pressed = gamelogic.save_file["vsync_enabled"];
-	if (gamelogic.save_file.has("pixel_scale")):
-		pixelscale.value = gamelogic.save_file["pixel_scale"];
 	if (gamelogic.save_file.has("sfx_volume")):
 		sfxslider.value = gamelogic.save_file["sfx_volume"];
 		updatelabelsfx(sfxslider.value);
@@ -87,7 +110,6 @@ func _ready() -> void:
 	
 	unlockeverything.connect("pressed", self, "_unlockeverything_pressed");
 	vsync.connect("pressed", self, "_vsync_pressed");
-	pixelscale.connect("value_changed", self, "_pixelscale_value_changed");
 	sfxslider.connect("value_changed", self, "_sfxslider_value_changed");
 	fanfareslider.connect("value_changed", self, "_fanfareslider_value_changed");
 	musicslider.connect("value_changed", self, "_musicslider_value_changed");
@@ -101,13 +123,14 @@ func _ready() -> void:
 	virtualbuttons.connect("value_changed", self, "_virtualbuttons_value_changed");
 	metaundoarestart.connect("item_focused", self, "_metaundoarestart_item_whatever");
 	metaundoarestart.connect("item_selected", self, "_metaundoarestart_item_whatever");
+	resolution.connect("item_focused", self, "_resolution_item_whatever");
+	resolution.connect("item_selected", self, "_resolution_item_whatever");
 	jukebox.connect("value_changed", self, "_jukebox_value_changed");
 	fullscreenbutton.connect("pressed", self, "_fullscreenbutton_pressed");
 	
 	if (is_fixed_size):
-		$Holder/LabelResolutionMultiplier.queue_free();
+		resolution.queue_free();
 		vsync.queue_free();
-		pixelscale.queue_free();
 		fullscreenbutton.queue_free();
 
 func _unlockeverything_pressed() -> void:
@@ -123,11 +146,11 @@ func _vsync_pressed() -> void:
 	gamelogic.save_file["vsync_enabled"] = vsync.pressed;
 	OS.vsync_enabled = vsync.pressed;
 
-func _pixelscale_value_changed(value: float) -> void:
+func _resolution_item_whatever(index: int) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	gamelogic.save_file["pixel_scale"] = value;
+	gamelogic.save_file["resolution"] = resolution.get_item_text(index).split(" ")[0];
 	gamelogic.setup_resolution();
 	
 func _sfxslider_value_changed(value: float) -> void:
@@ -239,6 +262,9 @@ func _virtualbuttons_value_changed(value: float) -> void:
 	gamelogic.setup_virtual_buttons();
 	
 func _metaundoarestart_item_whatever(index: int) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
 	gamelogic.save_file["meta_undo_a_restart"] = index;
 	gamelogic.update_info_labels();
 	
