@@ -4607,6 +4607,7 @@ func load_level(impulse: int) -> void:
 	if (impulse != 0 and test_mode):
 		level_editor();
 		test_mode = false;
+		return;
 	
 	if (impulse != 0):
 		is_custom = false; # at least until custom campaigns :eyes:
