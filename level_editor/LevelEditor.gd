@@ -388,7 +388,7 @@ func serialize_current_level() -> String:
 			result += "\n";
 	
 	result += "EntwinedTimePuzzleEnd"
-	return result;
+	return result.split("\n").join("`\n");
 
 func copy_level() -> void:
 	var result = serialize_current_level();
