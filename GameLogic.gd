@@ -852,8 +852,9 @@ func setup_resolution() -> void:
 			size.x = monitor.x;
 		if (monitor.y > 0 and size.y > monitor.y):
 			size.y = monitor.y;
-		OS.set_window_size(size);
-		OS.center_window();
+		if (OS.get_window_size() != size):
+			OS.set_window_size(size);
+			OS.center_window();
 	if (save_file.has("vsync_enabled")):
 		OS.vsync_enabled = save_file["vsync_enabled"];
 		
