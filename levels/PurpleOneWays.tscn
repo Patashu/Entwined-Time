@@ -1,23 +1,25 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 5, 14, 524290, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65541, 14, 262145, 65543, 1, 0, 65544, 14, 262145, 131077, 14, 262145, 131079, 14, 524290, 131080, 14, 655364, 196608, 14, 524290, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 655364, 196614, 72, 0, 196615, 14, 262145, 262144, 14, 262145, 262145, 8, 0, 262149, 73, 0, 262150, 2, 0, 262151, 14, 262145, 327680, 14, 589826, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196615, 327685, 71, 0, 327686, 14, 524290, 327687, 14, 655364, 393216, 14, 262145, 393217, 70, 0, 393218, 73, 0, 393219, 73, 0, 393220, 73, 0, 393221, 73, 0, 393222, 14, 262145, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 655364 )
+tile_data = PoolIntArray( 4, 14, 524290, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65540, 14, 262145, 65541, 70, 0, 65542, 1, 0, 65543, 72, 0, 65544, 14, 262145, 131074, 14, 524290, 131075, 14, 196614, 131076, 14, 655364, 131077, 71, 0, 131078, 14, 196609, 131079, 72, 0, 131080, 14, 262145, 196610, 14, 262145, 196612, 73, 0, 196613, 2, 0, 196614, 14, 262145, 196616, 14, 262145, 262144, 14, 524290, 262145, 14, 196614, 262146, 14, 655364, 262147, 71, 0, 262148, 14, 524290, 262149, 14, 196614, 262150, 14, 655363, 262151, 14, 196614, 262152, 14, 655364, 327680, 14, 262145, 327681, 70, 0, 327683, 71, 0, 327684, 14, 262145, 393216, 14, 262145, 393217, 8, 0, 393218, 14, 524290, 393219, 14, 196614, 393220, 14, 655364, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 655364 )
+
+[node name="@@4542" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 393217, 7, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Purple One-Ways"
-level_replay = "Purple One-Ways$mturn=29$xdzdzdzdxwzxzwzxwxdxwzwzdxzssazazaza"
-heavy_max_moves = 3
-light_max_moves = 3
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 131078, 71, 0, 196614, 71, 0, 262145, 70, 0, 262146, 70, 0, 262147, 70, 0, 393217, 7, 0, 393218, 70, 0, 393219, 70, 0, 393220, 70, 0, 393221, 71, 0 )
+level_author = "Patashu"
+level_replay = "Purple One-Ways$mturn=30$xwdzzdwzzwzdxwxdxzwzdzxzzxazazazxaaxaz"
+heavy_max_moves = 1.0
+light_max_moves = 2.0
+clock_turns = ""
