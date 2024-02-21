@@ -24,6 +24,8 @@ margin_left = 189.0
 margin_top = 268.0
 margin_right = 300.0
 margin_bottom = 283.0
+focus_neighbour_left = NodePath("../SwapButton")
+focus_neighbour_right = NodePath("../ResetButton")
 text = "Ok"
 
 [node name="SwapButton" type="Button" parent="Holder"]
@@ -31,6 +33,8 @@ margin_left = 5.0
 margin_top = 268.0
 margin_right = 116.0
 margin_bottom = 283.0
+focus_neighbour_left = NodePath("../ResetButton")
+focus_neighbour_right = NodePath("../OkButton")
 text = "Controller Controls"
 
 [node name="ResetButton" type="Button" parent="Holder"]
@@ -38,6 +42,8 @@ margin_left = 378.0
 margin_top = 268.0
 margin_right = 489.0
 margin_bottom = 283.0
+focus_neighbour_left = NodePath("../OkButton")
+focus_neighbour_right = NodePath("../SwapButton")
 text = "Reset to Defaults"
 
 [node name="Instructions" type="Label" parent="Holder"]
