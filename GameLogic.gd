@@ -6057,6 +6057,11 @@ func shade_virtual_button(b: Button) -> void:
 	var label = b.get_node_or_null("Label");
 	if (label == null):
 		return;
+	if (b.name == "PauseButton"):
+		if replay_paused:
+			label.text = "|>";
+		else:
+			label.text = "||";
 	if (Input.is_action_just_pressed(virtual_button_name_to_action[b.name])):
 		label.modulate = Color(1.5, 1.5, 1.5, 1);
 		return;
