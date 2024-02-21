@@ -249,7 +249,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Entwined Time"
-config/description="A two time manipulation puzzle game."
+config/description="Entwined Time"
 run/main_scene="res://LevelScene.tscn"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
