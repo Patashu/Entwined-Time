@@ -5,28 +5,28 @@ onready var gamelogic = get_node("/root/LevelScene").gamelogic;
 onready var holder : Control = get_node("Holder");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
-onready var unlockeverything : CheckBox = get_node("Holder/UnlockEverything");
-onready var vsync : CheckBox = get_node("Holder/VSync");
-onready var sfxslider : HSlider = get_node("Holder/SFXSlider");
-onready var fanfareslider : HSlider = get_node("Holder/FanfareSlider");
-onready var musicslider : HSlider = get_node("Holder/MusicSlider");
-onready var animationslider : HSlider = get_node("Holder/AnimationSlider");
-onready var undotrailslider : HSlider = get_node("Holder/UndoTrailSlider");
-onready var labelsfx : Label = get_node("Holder/LabelSFX");
-onready var labelfanfare : Label = get_node("Holder/LabelFanfare");
-onready var labelmusic : Label = get_node("Holder/LabelMusic");
-onready var labelanimation : Label = get_node("Holder/LabelAnimation");
-onready var labelundotrail : Label = get_node("Holder/LabelUndoTrail");
-onready var puzzlecheckerboard : CheckBox = get_node("Holder/PuzzleCheckerboard");
-onready var colourblindmode : CheckBox = get_node("Holder/ColourblindMode");
-onready var copysavefile : Button = get_node("Holder/CopySaveFile");
-onready var pastesavefile : Button = get_node("Holder/PasteSaveFile");
-onready var newsavefile : Button = get_node("Holder/NewSaveFile");
-onready var virtualbuttons : SpinBox = get_node("Holder/VirtualButtons");
-onready var metaundoarestart : OptionButton = get_node("Holder/MetaUndoARestart");
-onready var resolution : OptionButton = get_node("Holder/Resolution");
-onready var jukebox : SpinBox = get_node("Holder/Jukebox");
-onready var fullscreenbutton: Button = get_node("Holder/FullScreenButton");
+onready var unlockeverything : CheckBox = get_node("Holder/TabContainer/Gameplay/UnlockEverything");
+onready var vsync : CheckBox = get_node("Holder/TabContainer/Graphics/VSync");
+onready var sfxslider : HSlider = get_node("Holder/TabContainer/Audio/SFXSlider");
+onready var fanfareslider : HSlider = get_node("Holder/TabContainer/Audio/FanfareSlider");
+onready var musicslider : HSlider = get_node("Holder/TabContainer/Audio/MusicSlider");
+onready var animationslider : HSlider = get_node("Holder/TabContainer/Graphics/AnimationSlider");
+onready var undotrailslider : HSlider = get_node("Holder/TabContainer/Graphics/UndoTrailSlider");
+onready var labelsfx : Label = get_node("Holder/TabContainer/Audio/LabelSFX");
+onready var labelfanfare : Label = get_node("Holder/TabContainer/Audio/LabelFanfare");
+onready var labelmusic : Label = get_node("Holder/TabContainer/Audio/LabelMusic");
+onready var labelanimation : Label = get_node("Holder/TabContainer/Graphics/LabelAnimation");
+onready var labelundotrail : Label = get_node("Holder/TabContainer/Graphics/LabelUndoTrail");
+onready var puzzlecheckerboard : CheckBox = get_node("Holder/TabContainer/Graphics/PuzzleCheckerboard");
+onready var colourblindmode : CheckBox = get_node("Holder/TabContainer/Graphics/ColourblindMode");
+onready var copysavefile : Button = get_node("Holder/TabContainer/Gameplay/CopySaveFile");
+onready var pastesavefile : Button = get_node("Holder/TabContainer/Gameplay/PasteSaveFile");
+onready var newsavefile : Button = get_node("Holder/TabContainer/Gameplay/NewSaveFile");
+onready var virtualbuttons : SpinBox = get_node("Holder/TabContainer/Gameplay/VirtualButtons");
+onready var metaundoarestart : OptionButton = get_node("Holder/TabContainer/Gameplay/MetaUndoARestart");
+onready var resolution : OptionButton = get_node("Holder/TabContainer/Graphics/Resolution");
+onready var jukebox : SpinBox = get_node("Holder/TabContainer/Audio/Jukebox");
+onready var fullscreenbutton: Button = get_node("Holder/TabContainer/Graphics/FullScreenButton");
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -132,6 +132,7 @@ func _ready() -> void:
 		resolution.queue_free();
 		vsync.queue_free();
 		fullscreenbutton.queue_free();
+		animationslider.focus_neighbour_top = animationslider.get_path_to(okbutton);
 
 func _unlockeverything_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -334,6 +335,28 @@ func _process(delta: float) -> void:
 	if parent is SpinBox:
 		focus = parent;
 
+	if (focus == okbutton):
+		if (Input.is_action_just_pressed("ui_left")):
+			var next_tab = $Holder/TabContainer.current_tab - 1;
+			if (next_tab < 0):
+				next_tab = $Holder/TabContainer.get_tab_count() - 1;
+			$Holder/TabContainer.current_tab = next_tab;
+		elif  (Input.is_action_just_pressed("ui_right")):
+			var next_tab = $Holder/TabContainer.current_tab + 1;
+			if (next_tab >= $Holder/TabContainer.get_tab_count()):
+				next_tab = 0;
+			$Holder/TabContainer.current_tab = next_tab;
+			
+		if ($Holder/TabContainer.current_tab == 0):
+			if is_instance_valid(resolution):
+				okbutton.focus_neighbour_bottom = okbutton.get_path_to(resolution);
+			else:
+				okbutton.focus_neighbour_bottom = okbutton.get_path_to(animationslider);
+		elif ($Holder/TabContainer.current_tab == 1):
+			okbutton.focus_neighbour_bottom = okbutton.get_path_to(sfxslider);
+		elif ($Holder/TabContainer.current_tab == 2):
+			okbutton.focus_neighbour_bottom = okbutton.get_path_to(unlockeverything);
+
 	var focus_middle_x = round(focus.rect_position.x + focus.rect_size.x / 2);
 	pointer.position.y = round(focus.rect_position.y + focus.rect_size.y / 2);
 	if (focus_middle_x > holder.rect_size.x / 2):
@@ -342,6 +365,8 @@ func _process(delta: float) -> void:
 	else:
 		pointer.texture = preload("res://assets/tutorial_arrows/RightArrow.tres");
 		pointer.position.x = round(focus.rect_position.x - 12);
+	if (focus != okbutton):
+		pointer.position += $Holder/TabContainer.rect_position + $Holder/TabContainer/Audio.rect_position;
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,
