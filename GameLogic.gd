@@ -848,6 +848,66 @@ func get_largest_monitor() -> Vector2:
 		if (result.y < monitor.y):
 			result.y = monitor.y;
 	return result;
+
+#https://gist.github.com/hiulit/772b8784436898fd7f942750ad99e33e
+func get_all_files(path: String, file_ext := "", files := []):
+	var dir = Directory.new()
+
+	if dir.open(path) == OK:
+		dir.list_dir_begin(true, true)
+
+		var file_name = dir.get_next()
+
+		while file_name != "":
+			if dir.current_is_dir():
+				files = get_all_files(dir.get_current_dir().plus_file(file_name), file_ext, files)
+			else:
+				if file_ext and file_name.get_extension() != file_ext:
+					file_name = dir.get_next()
+					continue
+
+				files.append(dir.get_current_dir().plus_file(file_name))
+
+			file_name = dir.get_next()
+	else:
+		print("An error occurred when trying to access %s." % path)
+
+	return files
+
+func filter_all_sprites(yes: bool) -> void:
+
+	var files = get_all_files("res://assets/", "png");
+	for file in files:
+		if (file.find("border") > -1):
+			continue;
+		var texture = ResourceLoader.load(file, "Texture");
+		if (texture != null):
+			if (yes):
+				texture.flags |= 4; #FLAG_FILTER
+			else:
+				texture.flags = texture.flags & ~4;
+	files = get_all_files("res://timeline/", "png");
+	for file in files:
+		var texture = ResourceLoader.load(file, "Texture");
+		if (texture != null):
+			if (yes):
+				texture.flags |= 4; #FLAG_FILTER
+			else:
+				texture.flags = texture.flags & ~4;
+	
+#	var tile_set = terrainmap.tile_set;
+#	for i in tile_set.get_tiles_ids():
+#		var texture = tile_set.tile_get_texture(i);
+#		if (texture != null):
+#			if (yes):
+#				texture.flags |= 4; #FLAG_FILTER
+#			else:
+#				texture.flags = texture.flags & ~4;
+
+	if (yes):
+		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_2X);
+	else:
+		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_DISABLED);
 	
 func setup_resolution() -> void:
 	if (save_file.has("fullscreen")):
@@ -864,6 +924,11 @@ func setup_resolution() -> void:
 		if (OS.get_window_size() != size):
 			OS.set_window_size(size);
 			OS.center_window();
+			if (float(size.x) / float(pixel_width) != round(float(size.x) / float(pixel_width))):
+				filter_all_sprites(true);
+			else:
+				filter_all_sprites(false);
+
 	if (save_file.has("vsync_enabled")):
 		OS.vsync_enabled = save_file["vsync_enabled"];
 		
