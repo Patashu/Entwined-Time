@@ -882,6 +882,10 @@ func filter_all_sprites(yes: bool) -> void:
 	for file in files:
 		if (file.find("border") > -1):
 			continue;
+		if (file.find("BigPortal") > -1):
+			continue;
+		if (file.find("star.png") > -1):
+			continue;
 		var texture = ResourceLoader.load(file, "Texture");
 		if (texture != null):
 			if (yes):
