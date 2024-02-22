@@ -468,6 +468,8 @@ func default_save_file() -> void:
 		save_file["sfx_volume"] = 0.0;
 	if (!save_file.has("fanfare_volume")):
 		save_file["fanfare_volume"] = 0.0;
+	if (!save_file.has("master_volume")):
+		save_file["master_volume"] = 0.0;
 	if (!save_file.has("resolution")):
 		var value = 2;
 		if (save_file.has("pixel_scale")):
@@ -934,17 +936,18 @@ func setup_resolution() -> void:
 		OS.vsync_enabled = save_file["vsync_enabled"];
 		
 func setup_volume() -> void:
+	var master_volume = save_file["master_volume"];
 	if (save_file.has("sfx_volume")):
 		var value = save_file["sfx_volume"];
 		for speaker in speakers:
-			speaker.volume_db = value;
+			speaker.volume_db = value + master_volume;
 	if (save_file.has("music_volume")):
 		var value = save_file["music_volume"];
-		music_speaker.volume_db = value;
+		music_speaker.volume_db = value + master_volume;
 		music_speaker.volume_db = music_speaker.volume_db + music_discount;
 	if (save_file.has("fanfare_volume")):
 		var value = save_file["fanfare_volume"];
-		won_speaker.volume_db = value;
+		won_speaker.volume_db = value + master_volume;
 	
 func setup_animation_speed() -> void:
 	if (save_file.has("animation_speed")):
@@ -2328,8 +2331,10 @@ func fade_in_lost():
 	if muted or (doing_replay and meta_undo_a_restart_mode):
 		return;
 	var db = save_file["fanfare_volume"];
-	if (db <= -30):
+	var master_volume = save_file["master_volume"];
+	if (db <= -30 or master_volume <= -30):
 		return;
+	db += master_volume;
 	lost_speaker.volume_db = -40 + db;
 	lost_speaker_volume_tween.interpolate_property(lost_speaker, "volume_db", -40 + db, -10 + db, 3.00, 1, Tween.EASE_IN, 0)
 	lost_speaker_volume_tween.start();
@@ -2348,9 +2353,9 @@ func play_sound(sound: String) -> void:
 		return;
 	if (sounds_played_this_frame.has(sound)):
 		return;
+	if (save_file["sfx_volume"] <= -30 or save_file["master_volume"] <= -30):
+		return;
 	for speaker in speakers:
-		if speaker.volume_db <= -30:
-			return;
 		if !speaker.playing:
 			speaker.stream = sounds[sound];
 			sounds_played_this_frame[sound] = true;
@@ -2363,8 +2368,7 @@ func play_won(sound: String) -> void:
 	if (sounds_played_this_frame.has(sound)):
 		return;
 	var speaker = won_speaker;
-	# might adjust to -40 db or whatever depending
-	if speaker.volume_db <= -30:
+	if save_file["fanfare_volume"] <= -30 or save_file["master_volume"] <= -30:
 		return;
 	if speaker.playing:
 		speaker.stop();
@@ -4686,7 +4690,8 @@ func play_next_song() -> void:
 		music_speaker.stream = music_tracks[current_track];
 		music_speaker.play();
 		var value = save_file["music_volume"];
-		if (value > -30 and !muted): #music is not muted
+		var master_volume = save_file["master_volume"];
+		if (value > -30 and master_volume > -30 and !muted): #music is not muted
 			if (ui_stack.size() == 0 or ui_stack[0].name != "TitleScreen"):
 				now_playing = preload("res://NowPlaying.tscn").instance();
 				self.get_parent().call_deferred("add_child", now_playing);
@@ -6300,13 +6305,14 @@ func _process(delta: float) -> void:
 		
 	# handle current music volume
 	var value = save_file["music_volume"];
-	if (value <= -30):
+	var master_volume = save_file["master_volume"];
+	if (value <= -30 or master_volume <= -30):
 		if (!music_speaker.stream_paused):
 			music_speaker.stream_paused = true;
 	elif !muted:
 		if (music_speaker.stream_paused):
 			music_speaker.stream_paused = false;
-	music_speaker.volume_db = value + music_discount;
+	music_speaker.volume_db = value + master_volume + music_discount;
 	if (current_track >= 0):
 		music_speaker.volume_db += music_db[current_track];
 	if fadeout_timer < fadeout_timer_max:
@@ -6314,7 +6320,7 @@ func _process(delta: float) -> void:
 		if (fadeout_timer >= fadeout_timer_max):
 			play_next_song();
 			# recalculate this now because the current song just changed...
-			music_speaker.volume_db = value + music_discount;
+			music_speaker.volume_db = value + master_volume +music_discount;
 			if (current_track >= 0):
 				music_speaker.volume_db += music_db[current_track];
 		else:

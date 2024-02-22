@@ -7,11 +7,13 @@ onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
 onready var unlockeverything : CheckBox = get_node("Holder/TabContainer/Gameplay/UnlockEverything");
 onready var vsync : CheckBox = get_node("Holder/TabContainer/Graphics/VSync");
+onready var masterslider : HSlider = get_node("Holder/TabContainer/Audio/MasterSlider");
 onready var sfxslider : HSlider = get_node("Holder/TabContainer/Audio/SFXSlider");
 onready var fanfareslider : HSlider = get_node("Holder/TabContainer/Audio/FanfareSlider");
 onready var musicslider : HSlider = get_node("Holder/TabContainer/Audio/MusicSlider");
 onready var animationslider : HSlider = get_node("Holder/TabContainer/Graphics/AnimationSlider");
 onready var undotrailslider : HSlider = get_node("Holder/TabContainer/Graphics/UndoTrailSlider");
+onready var labelmaster : Label = get_node("Holder/TabContainer/Audio/LabelMaster");
 onready var labelsfx : Label = get_node("Holder/TabContainer/Audio/LabelSFX");
 onready var labelfanfare : Label = get_node("Holder/TabContainer/Audio/LabelFanfare");
 onready var labelmusic : Label = get_node("Holder/TabContainer/Audio/LabelMusic");
@@ -92,6 +94,9 @@ func _ready() -> void:
 	unlockeverything.pressed = gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"];
 	if (gamelogic.save_file.has("vsync_enabled")):
 		vsync.pressed = gamelogic.save_file["vsync_enabled"];
+	if (gamelogic.save_file.has("master_volume")):
+		masterslider.value = gamelogic.save_file["master_volume"];
+		updatelabelmaster(masterslider.value);
 	if (gamelogic.save_file.has("sfx_volume")):
 		sfxslider.value = gamelogic.save_file["sfx_volume"];
 		updatelabelsfx(sfxslider.value);
@@ -119,6 +124,7 @@ func _ready() -> void:
 	
 	unlockeverything.connect("pressed", self, "_unlockeverything_pressed");
 	vsync.connect("pressed", self, "_vsync_pressed");
+	masterslider.connect("value_changed", self, "_masterslider_value_changed");
 	sfxslider.connect("value_changed", self, "_sfxslider_value_changed");
 	fanfareslider.connect("value_changed", self, "_fanfareslider_value_changed");
 	musicslider.connect("value_changed", self, "_musicslider_value_changed");
@@ -171,6 +177,15 @@ func _fps_item_whatever(index: int) -> void:
 	
 	gamelogic.save_file["fps"] = int(fps.get_item_text(index).split(" ")[0]);
 	Engine.target_fps = int(gamelogic.save_file["fps"]);
+
+func _masterslider_value_changed(value: float) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["master_volume"] = value;
+	gamelogic.setup_volume();
+	gamelogic.play_sound("switch");
+	updatelabelmaster(value);
 	
 func _sfxslider_value_changed(value: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -304,6 +319,12 @@ func _fullscreenbutton_pressed() -> void:
 		gamelogic.save_file["fullscreen"] = false;
 	gamelogic.setup_resolution();
 	
+func updatelabelmaster(value: int) -> void:
+	if (value <= -30):
+		labelmaster.text = "Master Volume: Muted";
+	else:
+		labelmaster.text = "Master Volume: " + str(value) + " dB";
+	
 func updatelabelsfx(value: int) -> void:
 	if (value <= -30):
 		labelsfx.text = "SFX Volume: Muted";
@@ -371,7 +392,7 @@ func _process(delta: float) -> void:
 			else:
 				okbutton.focus_neighbour_bottom = okbutton.get_path_to(animationslider);
 		elif ($Holder/TabContainer.current_tab == 1):
-			okbutton.focus_neighbour_bottom = okbutton.get_path_to(sfxslider);
+			okbutton.focus_neighbour_bottom = okbutton.get_path_to(masterslider);
 		elif ($Holder/TabContainer.current_tab == 2):
 			okbutton.focus_neighbour_bottom = okbutton.get_path_to(unlockeverything);
 
