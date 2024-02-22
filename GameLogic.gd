@@ -899,10 +899,11 @@ func filter_all_sprites(yes: bool) -> void:
 	
 	load("res://standardfont.tres").use_filter = yes;
 
-	if (yes):
-		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_2X);
-	else:
-		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_DISABLED);
+#	not convinced this does anything in my game
+#	if (yes):
+#		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_2X);
+#	else:
+#		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_DISABLED);
 	
 func setup_resolution() -> void:
 	Engine.target_fps = int(save_file["fps"]);
