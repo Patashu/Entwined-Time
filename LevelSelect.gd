@@ -268,13 +268,16 @@ func prepare_chapter() -> void:
 			y = 0;
 			x += 1;
 		
-		if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < advanced_unlock_requirement):
+		var a = gamelogic.how_many_standard_puzzles_are_solved_in_chapter(chapter);
+		var you_have = a[0];
+		var you_need = a[1];
+		if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and you_have < you_need):
 			all_advanced_stars = false;
 			var label = Label.new();
 			holder.add_child(label);
 			label.rect_position.x = round(xx + xxx*x);
 			label.rect_position.y = round(yy + yyy*y + 2);
-			label.text = "Complete more puzzles: " + str(gamelogic.puzzles_completed) + "/" + str(advanced_unlock_requirement);
+			label.text = "Complete puzzles here: " + str(you_have) + "/" + str(you_need);
 			label.theme = holder.theme;
 		else:
 			for i in range(advanced_end - advanced_start):

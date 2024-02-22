@@ -352,6 +352,7 @@ var afterimage_server = {}
 var save_file = {}
 var puzzles_completed = 0;
 var advanced_puzzles_completed = 0;
+var specific_puzzles_completed = [];
 
 # song-and-dance state
 var sounds = {}
@@ -1487,12 +1488,16 @@ func initialize_level_list() -> void:
 func refresh_puzzles_completed() -> void:
 	puzzles_completed = 0;
 	advanced_puzzles_completed = 0;
+	specific_puzzles_completed = [];
 	for i in range(level_list.size()):
 		var level_name = level_names[i];
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
+			specific_puzzles_completed.push_back(true);
 			puzzles_completed += 1;
 			if (level_extraness[i]):
 				advanced_puzzles_completed += 1;
+		else:
+			specific_puzzles_completed.push_back(false);
 
 var has_crate_goals = false;
 var has_phase_walls = false;
@@ -4220,6 +4225,7 @@ func check_won() -> void:
 					puzzles_completed += 1;
 					if (level_is_extra):
 						advanced_puzzles_completed += 1;
+					specific_puzzles_completed[level_number] = true;
 			if (!level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
 			else:
@@ -4629,6 +4635,21 @@ func level_select() -> void:
 	ui_stack.push_back(levelselect);
 	levelscene.add_child(levelselect);
 	
+func how_many_standard_puzzles_are_solved_in_chapter(chapter: int) -> Array:
+	if chapter >= chapter_standard_starting_levels.size():
+		return [0, 0];
+	var x = 0;
+	var y = -1;
+	var start = chapter_standard_starting_levels[chapter];
+	var end = chapter_advanced_starting_levels[chapter];
+	for i in range(start, end):
+		y += 1;
+		if (specific_puzzles_completed[i]):
+			x += 1;
+	if (y > 8):
+		y = 8;
+	return [x, y];
+	
 func trying_to_load_locked_level() -> bool:
 	if (is_custom):
 		return false;
@@ -4643,7 +4664,9 @@ func trying_to_load_locked_level() -> bool:
 			you_have = advanced_puzzles_completed;
 		unlock_requirement = chapter_standard_unlock_requirements[chapter];
 	else:
-		unlock_requirement = chapter_advanced_unlock_requirements[chapter];
+		var a = how_many_standard_puzzles_are_solved_in_chapter(chapter);
+		you_have = a[0];
+		unlock_requirement = a[1];
 	if you_have < unlock_requirement:
 		return true;
 	return false;
