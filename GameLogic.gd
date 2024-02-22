@@ -474,6 +474,8 @@ func default_save_file() -> void:
 			value = save_file["pixel_scale"];
 		save_file["resolution"] = str(pixel_width*value) + "x" + str(pixel_height*value);
 		save_file.erase("pixel_scale");
+	if (!save_file.has("fps")):
+		save_file["fps"] = 60;
 
 func load_game():
 	var file = File.new()
@@ -903,6 +905,7 @@ func filter_all_sprites(yes: bool) -> void:
 		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_DISABLED);
 	
 func setup_resolution() -> void:
+	Engine.target_fps = int(save_file["fps"]);
 	if (save_file.has("fullscreen")):
 		OS.window_fullscreen = save_file["fullscreen"];
 	if (save_file.has("resolution")):

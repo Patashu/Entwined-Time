@@ -42,53 +42,68 @@ margin_bottom = -4.0
 
 [node name="VSync" type="CheckBox" parent="Holder/TabContainer/Graphics"]
 margin_left = 3.0
-margin_top = 69.0
+margin_top = 38.0
 margin_right = 61.0
-margin_bottom = 89.0
+margin_bottom = 58.0
 pressed = true
 text = "VSync"
 
 [node name="PuzzleCheckerboard" type="CheckBox" parent="Holder/TabContainer/Graphics"]
 margin_left = 3.0
-margin_top = 110.0
+margin_top = 79.0
 margin_right = 135.0
-margin_bottom = 130.0
+margin_bottom = 99.0
 text = "Puzzle Checkerboard"
 
 [node name="ColourblindMode" type="CheckBox" parent="Holder/TabContainer/Graphics"]
 margin_left = 3.0
-margin_top = 150.0
+margin_top = 119.0
 margin_right = 111.0
-margin_bottom = 170.0
+margin_bottom = 139.0
 text = "Colourblind Mode"
 
 [node name="Resolution" type="OptionButton" parent="Holder/TabContainer/Graphics"]
 margin_left = 3.0
-margin_top = 28.0
+margin_top = -3.0
 margin_right = 72.0
-margin_bottom = 44.0
+margin_bottom = 13.0
 focus_neighbour_top = NodePath("../../../OkButton")
 text = "Resolution"
 
+[node name="FPS" type="OptionButton" parent="Holder/TabContainer/Graphics"]
+margin_left = 3.0
+margin_top = 146.0
+margin_right = 43.0
+margin_bottom = 162.0
+focus_neighbour_top = NodePath("../../../OkButton")
+text = "FPS"
+
 [node name="LabelAnimation" type="Label" parent="Holder/TabContainer/Graphics"]
 margin_left = 88.0
-margin_top = 93.0
+margin_top = 62.0
 margin_right = 195.0
-margin_bottom = 104.0
+margin_bottom = 73.0
 text = "Animation Speed: 1.0x"
+
+[node name="LabelAnimation2" type="Label" parent="Holder/TabContainer/Graphics"]
+margin_left = 47.0
+margin_top = 148.0
+margin_right = 154.0
+margin_bottom = 159.0
+text = "FPS"
 
 [node name="LabelUndoTrail" type="Label" parent="Holder/TabContainer/Graphics"]
 margin_left = 87.0
-margin_top = 135.0
+margin_top = 104.0
 margin_right = 236.0
-margin_bottom = 146.0
+margin_bottom = 115.0
 text = "Undo Prediction Opacity: 100%"
 
 [node name="AnimationSlider" type="HSlider" parent="Holder/TabContainer/Graphics"]
 margin_left = 3.0
-margin_top = 91.0
+margin_top = 60.0
 margin_right = 86.0
-margin_bottom = 107.0
+margin_bottom = 76.0
 min_value = 0.1
 max_value = 2.0
 step = 0.1
@@ -96,25 +111,25 @@ value = 1.0
 
 [node name="UndoTrailSlider" type="HSlider" parent="Holder/TabContainer/Graphics"]
 margin_left = 2.0
-margin_top = 133.0
+margin_top = 102.0
 margin_right = 85.0
-margin_bottom = 149.0
+margin_bottom = 118.0
 max_value = 1.0
 step = 0.1
 value = 1.0
 
 [node name="FullScreenButton" type="Button" parent="Holder/TabContainer/Graphics"]
 margin_left = 3.0
-margin_top = 49.0
+margin_top = 18.0
 margin_right = 70.0
-margin_bottom = 64.0
+margin_bottom = 33.0
 text = "Full Screen?"
 
 [node name="Label" type="Label" parent="Holder/TabContainer/Graphics"]
 margin_left = 117.0
-margin_top = 152.0
+margin_top = 121.0
 margin_right = 379.0
-margin_bottom = 177.0
+margin_bottom = 146.0
 text = "(Adds labels to the Chapter 6 mechanic, and changes
 the animation speed of a Chapter 3 and 8 mechanic.)"
 
@@ -126,63 +141,59 @@ margin_right = 44.0
 margin_bottom = 56.0
 
 [node name="Jukebox" type="SpinBox" parent="Holder/TabContainer/Audio"]
-margin_left = 6.0
-margin_top = 86.0
-margin_right = 80.0
-margin_bottom = 110.0
+margin_left = 2.0
+margin_top = 54.0
+margin_right = 76.0
+margin_bottom = 78.0
 min_value = -2.0
 max_value = 6.0
 
 [node name="LabelJukebox" type="Label" parent="Holder/TabContainer/Audio"]
-margin_left = 83.0
-margin_top = 92.0
-margin_right = 126.0
-margin_bottom = 103.0
+margin_left = 79.0
+margin_top = 60.0
+margin_right = 350.0
+margin_bottom = 71.0
 text = "Jukebox (Make your favourite song play ALL the time.)"
 
 [node name="LabelSFX" type="Label" parent="Holder/TabContainer/Audio"]
-margin_left = 89.0
-margin_top = 32.0
-margin_right = 181.0
-margin_bottom = 43.0
+margin_left = 85.0
+margin_right = 177.0
+margin_bottom = 11.0
 text = "SFX Volume: 0 dB"
 
 [node name="LabelFanfare" type="Label" parent="Holder/TabContainer/Audio"]
-margin_left = 89.0
-margin_top = 51.0
-margin_right = 199.0
-margin_bottom = 62.0
+margin_left = 85.0
+margin_top = 19.0
+margin_right = 195.0
+margin_bottom = 30.0
 text = "Fanfare Volume: 0 dB"
 
 [node name="LabelMusic" type="Label" parent="Holder/TabContainer/Audio"]
-margin_left = 89.0
-margin_top = 71.0
-margin_right = 186.0
-margin_bottom = 82.0
+margin_left = 85.0
+margin_top = 39.0
+margin_right = 182.0
+margin_bottom = 50.0
 text = "Music Volume: 0 dB"
 
 [node name="SFXSlider" type="HSlider" parent="Holder/TabContainer/Audio"]
-margin_left = 4.0
-margin_top = 29.0
-margin_right = 87.0
-margin_bottom = 45.0
+margin_top = -3.0
+margin_right = 83.0
+margin_bottom = 13.0
 focus_neighbour_top = NodePath("../../../OkButton")
 min_value = -30.0
 max_value = 10.0
 
 [node name="FanfareSlider" type="HSlider" parent="Holder/TabContainer/Audio"]
-margin_left = 4.0
-margin_top = 49.0
-margin_right = 87.0
-margin_bottom = 65.0
+margin_top = 17.0
+margin_right = 83.0
+margin_bottom = 33.0
 min_value = -30.0
 max_value = 10.0
 
 [node name="MusicSlider" type="HSlider" parent="Holder/TabContainer/Audio"]
-margin_left = 4.0
-margin_top = 69.0
-margin_right = 87.0
-margin_bottom = 85.0
+margin_top = 37.0
+margin_right = 83.0
+margin_bottom = 53.0
 min_value = -30.0
 max_value = 10.0
 
@@ -194,53 +205,47 @@ margin_right = 44.0
 margin_bottom = 56.0
 
 [node name="UnlockEverything" type="CheckBox" parent="Holder/TabContainer/Gameplay"]
-margin_left = 6.0
-margin_top = 29.0
-margin_right = 266.0
-margin_bottom = 49.0
+margin_top = -3.0
+margin_right = 260.0
+margin_bottom = 17.0
 focus_neighbour_top = NodePath("../../../OkButton")
 text = "Unlock all puzzles (while this checkbox is ticked)"
 
 [node name="VirtualButtons" type="SpinBox" parent="Holder/TabContainer/Gameplay"]
-margin_left = 6.0
-margin_top = 73.0
-margin_right = 80.0
-margin_bottom = 97.0
+margin_top = 41.0
+margin_right = 74.0
+margin_bottom = 65.0
 max_value = 6.0
 
 [node name="LabelVirtualButtons" type="Label" parent="Holder/TabContainer/Gameplay"]
-margin_left = 84.0
-margin_top = 79.0
-margin_right = 383.0
-margin_bottom = 90.0
+margin_left = 78.0
+margin_top = 47.0
+margin_right = 377.0
+margin_bottom = 58.0
 text = "Virtual Buttons Layout (displays clickable buttons on-screen)"
 
 [node name="NewSaveFile" type="Button" parent="Holder/TabContainer/Gameplay"]
-margin_left = 6.0
-margin_top = 133.0
-margin_right = 93.0
-margin_bottom = 148.0
+margin_top = 101.0
+margin_right = 87.0
+margin_bottom = 116.0
 text = "Reset Progress"
 
 [node name="PasteSaveFile" type="Button" parent="Holder/TabContainer/Gameplay"]
-margin_left = 6.0
-margin_top = 116.0
-margin_right = 93.0
-margin_bottom = 131.0
+margin_top = 84.0
+margin_right = 87.0
+margin_bottom = 99.0
 text = "Paste Save File"
 
 [node name="CopySaveFile" type="Button" parent="Holder/TabContainer/Gameplay"]
-margin_left = 6.0
-margin_top = 99.0
-margin_right = 93.0
-margin_bottom = 114.0
+margin_top = 67.0
+margin_right = 87.0
+margin_bottom = 82.0
 text = "Copy Save File"
 
 [node name="MetaUndoARestart" type="OptionButton" parent="Holder/TabContainer/Gameplay"]
-margin_left = 6.0
-margin_top = 53.0
-margin_right = 137.0
-margin_bottom = 69.0
+margin_top = 21.0
+margin_right = 131.0
+margin_bottom = 37.0
 text = "Meta-Undo a Restart?:"
 
 [node name="Pointer" type="Sprite" parent="Holder"]

@@ -25,6 +25,7 @@ onready var newsavefile : Button = get_node("Holder/TabContainer/Gameplay/NewSav
 onready var virtualbuttons : SpinBox = get_node("Holder/TabContainer/Gameplay/VirtualButtons");
 onready var metaundoarestart : OptionButton = get_node("Holder/TabContainer/Gameplay/MetaUndoARestart");
 onready var resolution : OptionButton = get_node("Holder/TabContainer/Graphics/Resolution");
+onready var fps : OptionButton = get_node("Holder/TabContainer/Graphics/FPS");
 onready var jukebox : SpinBox = get_node("Holder/TabContainer/Audio/Jukebox");
 onready var fullscreenbutton: Button = get_node("Holder/TabContainer/Graphics/FullScreenButton");
 
@@ -58,6 +59,13 @@ func setup_resolution() -> void:
 		if (result.split(" ")[0] == current):
 			resolution.selected = i;
 	
+func setup_fps() -> void:
+	var current = int(gamelogic.save_file["fps"]);
+	var defaults = ["20", "24", "30", "50", "60", "120", "144", "240"];
+	for i in range(defaults.size()):
+		fps.add_item(defaults[i], 0);
+		if (int(defaults[i]) == current):
+			fps.selected = i;
 
 func _ready() -> void:
 	var os_name = OS.get_name();
@@ -77,6 +85,7 @@ func _ready() -> void:
 	metaundoarestart.text = "Meta-Undo a Restart?:"
 	
 	setup_resolution();
+	setup_fps();
 	
 	okbutton.connect("pressed", self, "destroy");
 	okbutton.grab_focus();
@@ -125,6 +134,8 @@ func _ready() -> void:
 	metaundoarestart.connect("item_selected", self, "_metaundoarestart_item_whatever");
 	resolution.connect("item_focused", self, "_resolution_item_whatever");
 	resolution.connect("item_selected", self, "_resolution_item_whatever");
+	fps.connect("item_focused", self, "_fps_item_whatever");
+	fps.connect("item_selected", self, "_fps_item_whatever");
 	jukebox.connect("value_changed", self, "_jukebox_value_changed");
 	fullscreenbutton.connect("pressed", self, "_fullscreenbutton_pressed");
 	
@@ -153,6 +164,13 @@ func _resolution_item_whatever(index: int) -> void:
 	
 	gamelogic.save_file["resolution"] = resolution.get_item_text(index).split(" ")[0];
 	gamelogic.setup_resolution();
+	
+func _fps_item_whatever(index: int) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["fps"] = int(fps.get_item_text(index).split(" ")[0]);
+	Engine.target_fps = int(gamelogic.save_file["fps"]);
 	
 func _sfxslider_value_changed(value: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
