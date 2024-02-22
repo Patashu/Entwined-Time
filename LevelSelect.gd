@@ -279,6 +279,12 @@ func prepare_chapter() -> void:
 		else:
 			for i in range(advanced_end - advanced_start):
 				var button = preload("res://LevelButton.tscn").instance();
+				var stylebox = preload("res://dark_styleboxtexture.tres");
+				button.add_stylebox_override("hover", stylebox);
+				button.add_stylebox_override("pressed", stylebox);
+				button.add_stylebox_override("focus", stylebox);
+				button.add_stylebox_override("disabled", stylebox);
+				button.add_stylebox_override("normal", stylebox);
 				buttons_by_xy[Vector2(x, y)] = button;
 				holder.add_child(button);
 				button.rect_position.x = round(xx + xxx*x);
