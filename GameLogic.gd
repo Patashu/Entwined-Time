@@ -895,14 +895,7 @@ func filter_all_sprites(yes: bool) -> void:
 			else:
 				texture.flags = texture.flags & ~4;
 	
-#	var tile_set = terrainmap.tile_set;
-#	for i in tile_set.get_tiles_ids():
-#		var texture = tile_set.tile_get_texture(i);
-#		if (texture != null):
-#			if (yes):
-#				texture.flags |= 4; #FLAG_FILTER
-#			else:
-#				texture.flags = texture.flags & ~4;
+	load("res://standardfont.tres").use_filter = yes;
 
 	if (yes):
 		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_2X);
