@@ -2943,10 +2943,6 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 	var blocked = false;
 	flash_terrain = -1;
 	
-	# floorboards check
-	if (has_floorboards and (terrain.has(Tiles.Floorboards) || terrain.has(Tiles.GreenFloorboards) || terrain.has(Tiles.VoidFloorboards))):
-		return false;
-	
 	# hole check
 	if (actor.broken and has_holes):
 		var actors_there = actors_in_tile(actor.pos);
@@ -2959,6 +2955,12 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 	# besides that, glass blocks prevent exit.
 	for id in terrain:
 		match id:
+			Tiles.Floorboards:
+				return false;
+			Tiles.GreenFloorboards:
+				return false;
+			Tiles.VoidFloorboards:
+				return false;
 			Tiles.OnewayEast:
 				blocked = is_retro and dir == Vector2.RIGHT;
 				if (blocked):
@@ -3026,14 +3028,16 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 		return maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Mundane, chrono);
 	
 	var terrain = terrain_in_tile(pos);
-	
-	# floorboards check
-	if (has_floorboards and (terrain.has(Tiles.Floorboards) || terrain.has(Tiles.GreenFloorboards) || terrain.has(Tiles.VoidFloorboards))):
-		return Success.Yes;
-	
+
 	for i in range(terrain.size()):
 		var id = terrain[i];
 		match id:
+			Tiles.Floorboards:
+				return Success.Yes;
+			Tiles.GreenFloorboards:
+				return Success.Yes;
+			Tiles.VoidFloorboards:
+				return Success.Yes;
 			Tiles.Wall:
 				result = Success.No;
 			Tiles.LockClosed:
