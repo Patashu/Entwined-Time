@@ -50,7 +50,7 @@ func setup_resolution() -> void:
 	var size = Vector2(gamelogic.pixel_width*mult, gamelogic.pixel_height*mult);
 	var monitor = gamelogic.get_largest_monitor();
 	# 512x32 is the largest width a Godot 3.x canvas can be anyway
-	while (i < 33 and (size.x < monitor.x or size.y < monitor.y)):
+	while (i < 33 and (size.x <= monitor.x or size.y <= monitor.y)):
 		var result = str(size.x) + "x" + str(size.y) + " (x" + str(mult) + ")"
 		resolution.add_item(result, i);
 		i += 1;
