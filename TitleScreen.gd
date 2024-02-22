@@ -202,6 +202,7 @@ func skip_cutscene_label_grows(delta: float) -> void:
 	progressbar.value += delta;
 	if (progressbar.value >= progressbar.max_value):
 		begin_the_end();
+		end_timer_max = 1.0;
 
 func reset_skip_cutscene_label() -> void:
 	if (skip_cutscene_label != null):
