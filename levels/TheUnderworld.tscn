@@ -13,11 +13,11 @@ tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 19
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65542, 72, 0, 131078, 73, 0, 131080, 70, 0, 262149, 73, 0, 393221, 0, 0 )
+tile_data = PoolIntArray( 65542, 72, 0, 131078, 73, 0, 131080, 70, 0, 262149, 73, 0, 327685, 0, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "The Underworld"
-level_replay = "The Underworld$mturn=57$xdddxwxzzzwzddxwxdxzzwazaazzzwaszazzzaaxzzzaaxzxzzwazaaxzawaxzzzdssz"
+level_replay = "The Underworld$mturn=57$xdddxwxzzzwzddxwxdxzzwazaazzzwaszazzzaaxzzzaaszzzwazaaxzzawaxzzdzz"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
