@@ -125,7 +125,12 @@ func prepare_chapter() -> void:
 		if !specialbuttons.has(child):
 			child.queue_free();
 			
-	var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];	
+	var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];
+	var requires_advanced_levels = (chapter == 2);
+	if (requires_advanced_levels):
+		holder.add_stylebox_override("normal", preload("res://dark_styleboxtexture.tres"));
+	else:
+		holder.add_stylebox_override("normal", preload("res://default_styleboxtexture.tres"));
 	var chapter_string = str(chapter);
 	if gamelogic.chapter_replacements.has(chapter):
 		chapter_string = gamelogic.chapter_replacements[chapter];
@@ -145,7 +150,10 @@ func prepare_chapter() -> void:
 	else:
 		cutscene_button = null;
 	
-	if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and gamelogic.puzzles_completed < unlock_requirement):
+	var puzzles_completed = gamelogic.puzzles_completed;
+	if (requires_advanced_levels):
+		puzzles_completed = gamelogic.advanced_puzzles_completed;
+	if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and puzzles_completed < unlock_requirement):
 		holder.text = "Chapter " + chapter_string + " - ???";
 		var label = Label.new();
 		holder.add_child(label);
@@ -153,7 +161,10 @@ func prepare_chapter() -> void:
 		label.rect_size.x = holder.rect_size.x - 4;
 		label.rect_position.y = 18;
 		label.align = 1;
-		label.text = "Complete more puzzles: " + str(gamelogic.puzzles_completed) + "/" + str(unlock_requirement);
+		if (requires_advanced_levels):
+			label.text = "Complete more Advanced puzzles: " + str(puzzles_completed) + "/" + str(unlock_requirement);
+		else:
+			label.text = "Complete more puzzles: " + str(puzzles_completed) + "/" + str(unlock_requirement);
 		label.theme = holder.theme;
 		return
 		
@@ -322,7 +333,7 @@ func prepare_chapter() -> void:
 		holder.add_child(label);
 		label.rect_position.x = 8;
 		label.rect_position.y = round(yy + yyy*(10));
-		label.text = "(This chapter is optional. It teaches techniques used only in Advanced puzzles.)\n(If you get stuck, proceed to Chapter 3 - you can come back here anytime!)"
+		label.text = "(Welcome! The techniques taught here are used only in Advanced Puzzles.)\r\n(If you just want to beat all Standard Puzzles, you don't need to step foot here.)"
 		label.theme = holder.theme;
 		
 	# gold label flashes for completionists

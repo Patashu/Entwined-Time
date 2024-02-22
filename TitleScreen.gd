@@ -8,6 +8,7 @@ onready var beginbutton : Button = get_node("Holder/BeginButton");
 onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var creditsbutton : Button = get_node("Holder/CreditsButton");
+onready var disclaimer : Label = get_node("Holder/Disclaimer");
 var only_mouse = true;
 var using_controller = false;
 
@@ -33,7 +34,7 @@ func _ready() -> void:
 		is_web = true;
 	
 	if (!is_web):
-		$Holder/Disclaimer.visible = false;
+		disclaimer.visible = false;
 	
 	$CutsceneHolder.visible = false;
 	$CutsceneHolder/HeavyPortal.visible = false;
@@ -102,7 +103,8 @@ func cutscene_step() -> void:
 			creditsbutton.queue_free();
 			pointer.queue_free();
 			$Holder/Label.queue_free();
-			$Holder/Disclaimer.queue_free();
+			disclaimer.visible = false;
+			
 			$ColorRect2.queue_free();
 			pointer = null;
 			$CutsceneHolder.visible = true;
@@ -279,12 +281,12 @@ func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("any_controller") or Input.is_action_just_pressed("any_controller_2")):
 		using_controller = true;
 		only_mouse = false;
-		$Holder/Disclaimer.visible = false;
+		disclaimer.visible = false;
 	
 	if Input.is_action_just_pressed("any_keyboard"):
 		using_controller = false;
 		only_mouse = false;
-		$Holder/Disclaimer.visible = false;
+		disclaimer.visible = false;
 	
 	if (end_timer_max > 0):
 		end_timer += delta;

@@ -351,6 +351,7 @@ var afterimage_server = {}
 # save file, ooo!
 var save_file = {}
 var puzzles_completed = 0;
+var advanced_puzzles_completed = 0;
 
 # song-and-dance state
 var sounds = {}
@@ -424,6 +425,7 @@ var meta_undo_a_restart_mode = false;
 var level_list = [];
 var level_filenames = [];
 var level_names = [];
+var level_extraness = [];
 var has_remix = {};
 var chapter_names = [];
 var chapter_skies = [];
@@ -1021,7 +1023,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Secrets of Space-Time");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
-	chapter_standard_unlock_requirements.push_back(16);
+	chapter_standard_unlock_requirements.push_back(10);
 	chapter_skies.push_back(Color("#062138"));
 	chapter_tracks.push_back(2);
 	chapter_replacements[chapter_names.size() - 1] = "2?";
@@ -1373,6 +1375,22 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	
+	var current_standard_index = 0;
+	var current_advanced_index = 0;
+	var currently_extra = false;
+	var next_flip = chapter_advanced_starting_levels[current_advanced_index];
+	for i in range(level_filenames.size()):
+		if (i >= next_flip):
+			if currently_extra:
+				currently_extra = false;
+				current_advanced_index += 1;
+				next_flip = chapter_advanced_starting_levels[current_advanced_index];
+			else:
+				currently_extra = true;
+				current_standard_index += 1;
+				next_flip = chapter_standard_starting_levels[current_standard_index];
+		level_extraness.push_back(currently_extra);
+	
 	for level_filename in level_filenames:
 		level_list.push_back(load("res://levels/" + level_filename + ".tscn"));
 	
@@ -1399,9 +1417,13 @@ func initialize_level_list() -> void:
 		
 func refresh_puzzles_completed() -> void:
 	puzzles_completed = 0;
-	for level_name in level_names:
+	advanced_puzzles_completed = 0;
+	for i in range(level_list.size()):
+		var level_name = level_names[i];
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 			puzzles_completed += 1;
+			if (level_extraness[i]):
+				advanced_puzzles_completed += 1;
 
 var has_crate_goals = false;
 var has_phase_walls = false;
@@ -4122,6 +4144,8 @@ func check_won() -> void:
 				levelstar.flash();
 				if (!in_insight_level and !is_custom):
 					puzzles_completed += 1;
+					if (level_is_extra):
+						advanced_puzzles_completed += 1;
 			if (!level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
 			else:
@@ -4539,11 +4563,14 @@ func trying_to_load_locked_level() -> bool:
 	if (level_names[level_number] == "Chrono Lab Reactor" and !save_file["levels"].has("Chrono Lab Reactor")):
 		return true;
 	var unlock_requirement = 0;
+	var you_have = puzzles_completed;
 	if (!level_is_extra):
+		if (chapter == 2):
+			you_have = advanced_puzzles_completed;
 		unlock_requirement = chapter_standard_unlock_requirements[chapter];
 	else:
 		unlock_requirement = chapter_advanced_unlock_requirements[chapter];
-	if puzzles_completed < unlock_requirement:
+	if you_have < unlock_requirement:
 		return true;
 	return false;
 	
