@@ -2939,13 +2939,16 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile, animation_nonce], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
-		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked or new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards:
+		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
-			for actor in actors:
-				# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
-				if actor.pos == pos and !actor.broken and actor.durability <= Durability.PITS:
-					actor.post_mortem = Durability.PITS;
-					set_actor_var(actor, "broken", true, chrono);
+			if (chrono < Chrono.META_UNDO):
+				for actor in actors:
+					# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
+					if actor.pos == pos and !actor.broken and actor.durability <= Durability.PITS:
+						actor.post_mortem = Durability.PITS;
+						set_actor_var(actor, "broken", true, chrono);
+		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards:
+			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 		else:
 			if (old_tile == Tiles.Fuzz):
 				play_sound("fuzz");
