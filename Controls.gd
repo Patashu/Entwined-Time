@@ -150,14 +150,13 @@ func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
 		new_event.command = false;
 	just_danced = true;
 	# if we WERE an event, erase it.
-	# But only if it's not our last event!
-	if (button.event != null and (new_event != null or get_event(button.action, 1, keyboard_mode ) != null)):
+	if (button.event != null):
 		InputMap.action_erase_event(button.action, button.event);
 	# Now map the new one.
 	if (new_event != null):
 		InputMap.action_add_event(button.action, new_event);
-		# The dance can contain itself...
-		remap_dance_core(button.action, new_event);
+	# The dance can contain itself...
+	remap_dance_core(button.action, new_event);
 	
 	# Now refresh the bindings page to get everything back in canonical form.
 	var refocus_action = button.action;
