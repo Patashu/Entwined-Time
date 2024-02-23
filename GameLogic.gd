@@ -2716,9 +2716,6 @@ boost_pad_reentrance: bool = false) -> int:
 		# slopes 2b) also, if an actor moves upwards in this way, it immediately becomes 'rising',
 		# like a robot deliberately pressing up.
 		# (update: only if it was grounded
-		# (update: actually this is just going to be a thing for all non-characters
-		# since I want lifting power crate/chrono helix up to be possible
-		# is this going to break my slope thing, why did I choose that again?
 		if (slope_next_dir != Vector2.ZERO):
 			if (infinite_loop_check >= 100):
 				lose("Infinite loop.", null);
@@ -2728,9 +2725,8 @@ boost_pad_reentrance: bool = false) -> int:
 			infinite_loop_check += 1;
 			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
 			infinite_loop_check -= 1;
-		
-		if (dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and !actor.is_character):
-			set_actor_var(actor, "airborne", 2, chrono);
+			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
+				set_actor_var(actor, "airborne", 2, chrono);
 				
 		# boost pad check
 		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
@@ -3408,6 +3404,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 							eat_crystal(actor, actor_there, chrono);
 					else:
 						move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
+						# 'allow a power crate/chrono helix to be lifted up' clause.
+						if (!actor_there.is_character and actor_there.fall_speed() != 0 and dir == Vector2.UP and strength_check(actor_there.strength, actor.heaviness)):
+							set_actor_var(actor_there, "airborne", 2, chrono);
 				for actor_there in pushables_there:
 					actor_there.just_moved = false;
 		
