@@ -294,6 +294,7 @@ enum Tiles {
 	NudgeSouthGreen, #109
 	NudgeWestGreen, #110
 	AntiGrate, #111
+	MagentaFloorboards, #112
 }
 var voidlike_tiles = [];
 
@@ -1626,6 +1627,8 @@ func ready_map() -> void:
 			has_floorboards = true;
 		elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
 			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.MagentaFloorboards)):
+			has_floorboards = true;
 			
 		if (any_layer_has_this_tile(Tiles.Hole)):
 			has_holes = true;
@@ -2602,6 +2605,10 @@ boost_pad_reentrance: bool = false) -> int:
 					if (chrono < Chrono.META_UNDO and !is_retro):
 						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
 					break;
+				elif (tile == Tiles.MagentaFloorboards):
+					if (chrono < Chrono.META_UNDO):
+						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
+					break;
 				elif (tile == Tiles.GreenFloorboards):
 					if (chrono < Chrono.META_UNDO):
 						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Green, chrono, -1);
@@ -2709,6 +2716,9 @@ boost_pad_reentrance: bool = false) -> int:
 		# slopes 2b) also, if an actor moves upwards in this way, it immediately becomes 'rising',
 		# like a robot deliberately pressing up.
 		# (update: only if it was grounded
+		# (update: actually this is just going to be a thing for all non-characters
+		# since I want lifting power crate/chrono helix up to be possible
+		# is this going to break my slope thing, why did I choose that again?
 		if (slope_next_dir != Vector2.ZERO):
 			if (infinite_loop_check >= 100):
 				lose("Infinite loop.", null);
@@ -2718,8 +2728,9 @@ boost_pad_reentrance: bool = false) -> int:
 			infinite_loop_check += 1;
 			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
 			infinite_loop_check -= 1;
-			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
-				set_actor_var(actor, "airborne", 2, chrono);
+		
+		if (dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and !actor.is_character):
+			set_actor_var(actor, "airborne", 2, chrono);
 				
 		# boost pad check
 		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
@@ -2932,7 +2943,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile, animation_nonce], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
-		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked or new_tile == Tiles.Floorboards:
+		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked or new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			for actor in actors:
 				# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
@@ -2964,6 +2975,8 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 	for id in terrain:
 		match id:
 			Tiles.Floorboards:
+				return false;
+			Tiles.MagentaFloorboards:
 				return false;
 			Tiles.GreenFloorboards:
 				return false;
@@ -3041,6 +3054,8 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 		var id = terrain[i];
 		match id:
 			Tiles.Floorboards:
+				return Success.Yes;
+			Tiles.MagentaFloorboards:
 				return Success.Yes;
 			Tiles.GreenFloorboards:
 				return Success.Yes;

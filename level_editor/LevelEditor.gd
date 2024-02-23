@@ -115,6 +115,7 @@ enum Tiles {
 	NudgeSouthGreen, #109
 	NudgeWestGreen, #110
 	AntiGrate, #111
+	MagentaFloorboards, #112
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -258,6 +259,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.CheckpointBlue)
 		picker_array.append(Tiles.GreenFog)
 		picker_array.append(Tiles.Floorboards)
+		picker_array.append(Tiles.MagentaFloorboards)
 		picker_array.append(Tiles.GreenFloorboards)
 		picker_array.append(Tiles.VoidFloorboards)
 		picker_array.append(Tiles.Hole)
@@ -767,6 +769,8 @@ func picker_tooltip() -> void:
 			text = "Green Fog: Actors in Green Fog don't create character undo events."
 		Tiles.Floorboards:
 			text = "Floorboards: Solidity/Surprises of other terrain in this tile is ignored, including Holes. When an Actor leaves a tile with Floorboards using a non-retro move: The Floorboards is destroyed. In a stack of Floorboards, only the topmost one is considered."
+		Tiles.MagentaFloorboards:
+			text = "Magenta Floorboards: A Floorboards that can be destroyed also by retro moves."
 		Tiles.GreenFloorboards:
 			text = "Green Floorboards: A Floorboards that can be destroyed also by retro moves, and that does not create character undo events."
 		Tiles.VoidFloorboards:
