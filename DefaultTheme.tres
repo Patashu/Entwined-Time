@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=11 format=2]
+[gd_resource type="Theme" load_steps=13 format=2]
 
 [ext_resource path="res://standardfont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://default_styleboxtexture.tres" type="StyleBox" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://assets/checkbox_unticked.png" type="Texture" id=8]
 [ext_resource path="res://assets/checkbox_ticked_disabled.png" type="Texture" id=9]
 [ext_resource path="res://assets/checkbox_unticked_disabled.png" type="Texture" id=10]
+[ext_resource path="res://assets/optionbutton_updown.png" type="Texture" id=11]
+[ext_resource path="res://assets/spinbox_updown.png" type="Texture" id=12]
 
 [resource]
 Button/colors/font_color = Color( 0.952941, 0.733333, 0.588235, 1 )
@@ -45,6 +47,7 @@ MenuButton/styles/focus = ExtResource( 2 )
 MenuButton/styles/hover = ExtResource( 2 )
 MenuButton/styles/normal = ExtResource( 2 )
 MenuButton/styles/pressed = ExtResource( 2 )
+OptionButton/icons/arrow = ExtResource( 11 )
 PopupMenu/colors/font_color = Color( 0.952941, 0.733333, 0.588235, 1 )
 PopupMenu/colors/font_color_disabled = Color( 0.756863, 0.54902, 0.447059, 1 )
 PopupMenu/colors/font_color_hover = Color( 1, 1, 1, 1 )
@@ -57,6 +60,7 @@ PopupMenu/icons/radio_unchecked = ExtResource( 5 )
 PopupMenu/icons/unchecked = ExtResource( 5 )
 ProgressBar/colors/font_color = Color( 0.952941, 0.733333, 0.588235, 1 )
 ProgressBar/fonts/font = ExtResource( 1 )
+SpinBox/icons/updown = ExtResource( 12 )
 TabContainer/colors/font_color_bg = Color( 0.639216, 0.486275, 0.411765, 1 )
 TabContainer/colors/font_color_disabled = Color( 0.521569, 0.447059, 0.407843, 1 )
 TabContainer/colors/font_color_fg = Color( 0.952941, 0.733333, 0.588235, 1 )
