@@ -2683,9 +2683,12 @@ boost_pad_reentrance: bool = false) -> int:
 		#(June 21st 2023: Finally doing AD14, ahem)
 		#(AD15: Non-broken time crystals are sticky toppable! In fact, Heavy can PUSH them upwards thanks to some special logic elsewhere :D)
 		#(FIX: Broken time crystals can't be sticky top'd because they're basically not things
+		#(FIX: Heavy can't sticky top a falling strong thing downwards, because it desyncs the falling)
 		if actor.actorname == Actor.Name.Heavy and !is_retro and dir.y >= 0:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
+				if (sticky_actor.airborne == 0 and strength_check(sticky_actor.strength, actor.heaviness)):
+					continue;
 				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
 					sticky_actor.just_moved = true;
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);

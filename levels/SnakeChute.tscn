@@ -1,23 +1,25 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 3, 7, 0, 4, 2, 0, 5, 3, 0, 6, 8, 0, 65537, 14, 524290, 65538, 14, 196615, 65539, 29, 0, 65540, 14, 196613, 65541, 14, 393219, 65542, 14, 3, 65543, 14, 4, 131073, 14, 262145, 131077, 14, 589825, 131078, 14, 131075, 131079, 14, 589829, 196609, 14, 262145, 196611, 14, 262148, 196613, 14, 262145, 196615, 14, 262145, 262145, 14, 262145, 262149, 14, 589824, 262150, 14, 3, 262151, 14, 589830, 327681, 14, 655362, 327682, 14, 196615, 327683, 1, 0, 327684, 14, 196613, 327685, 14, 720899, 327686, 14, 131075, 327687, 14, 131076, 393216, 5, 0, 393219, 30, 0, 393224, 5, 0, 458753, 14, 196613, 458754, 14, 524292, 458756, 14, 524290, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196615, 524290, 14, 655362, 524291, 14, 196614, 524292, 14, 655364 )
+tile_data = PoolIntArray( 5, 2, 0, 6, 3, 0, 7, 8, 0, 65536, 14, 524290, 65537, 14, 196615, 65538, 29, 0, 65539, 14, 196613, 65540, 14, 524291, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 196615, 131072, 14, 262145, 131076, 14, 262145, 196608, 14, 262145, 196610, 14, 262148, 196612, 14, 262145, 262144, 14, 262145, 262148, 14, 262145, 327680, 14, 655362, 327681, 14, 524292, 327682, 32, 0, 327683, 14, 524290, 327684, 14, 655364, 393217, 14, 655362, 393218, 14, 196614, 393219, 14, 655364 )
+
+[node name="@@6312" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 1, 0, 7, 7, 0, 65538, 30, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Snake Chute"
-level_replay = "aaxawaasdxdwdddxaaxaaxzzzxwzxxdxzzzzzxdddszxwxxzwzxaaaaawcxaxw"
-heavy_max_moves = 22
-light_max_moves = 22
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 65539, 30, 0 )
+level_author = "Patashu"
+level_replay = "Snake Chute$mturn=24$xwxdxdsxwxadxdaaaaxzzxzzzzzzxaxzws"
+heavy_max_moves = 9.0
+light_max_moves = 9.0
+clock_turns = ""
