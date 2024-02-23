@@ -6406,7 +6406,9 @@ func _process(delta: float) -> void:
 		
 	# allow mute to happen even when in menus
 	if (Input.is_action_just_pressed("mute")):
-		toggle_mute();
+		# hack: no muting in LevelInfoEdit where the player might type M
+		if (ui_stack.size() == 0 or ui_stack[ui_stack.size() -1].name != "LevelInfoEdit"):
+			toggle_mute();
 		
 	if ui_stack.size() == 0:
 		var dir = Vector2.ZERO;
