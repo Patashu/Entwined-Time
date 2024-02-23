@@ -1,7 +1,15 @@
-[gd_resource type="Theme" load_steps=3 format=2]
+[gd_resource type="Theme" load_steps=11 format=2]
 
 [ext_resource path="res://standardfont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://default_styleboxtexture.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/radio_unchecked_disabled.png" type="Texture" id=3]
+[ext_resource path="res://assets/radio_checked.png" type="Texture" id=4]
+[ext_resource path="res://assets/radio_unchecked.png" type="Texture" id=5]
+[ext_resource path="res://assets/radio_checked_disabled.png" type="Texture" id=6]
+[ext_resource path="res://assets/checkbox_ticked.png" type="Texture" id=7]
+[ext_resource path="res://assets/checkbox_unticked.png" type="Texture" id=8]
+[ext_resource path="res://assets/checkbox_ticked_disabled.png" type="Texture" id=9]
+[ext_resource path="res://assets/checkbox_unticked_disabled.png" type="Texture" id=10]
 
 [resource]
 Button/colors/font_color = Color( 0.952941, 0.733333, 0.588235, 1 )
@@ -15,6 +23,14 @@ Button/styles/focus = ExtResource( 2 )
 Button/styles/hover = ExtResource( 2 )
 Button/styles/normal = ExtResource( 2 )
 Button/styles/pressed = ExtResource( 2 )
+CheckBox/icons/checked = ExtResource( 7 )
+CheckBox/icons/checked_disabled = ExtResource( 9 )
+CheckBox/icons/radio_checked = ExtResource( 4 )
+CheckBox/icons/radio_checked_disabled = ExtResource( 6 )
+CheckBox/icons/radio_unchecked = ExtResource( 5 )
+CheckBox/icons/radio_unchecked_disabled = ExtResource( 3 )
+CheckBox/icons/unchecked = ExtResource( 8 )
+CheckBox/icons/unchecked_disabled = ExtResource( 10 )
 Label/colors/font_color = Color( 0.952941, 0.733333, 0.588235, 1 )
 Label/colors/font_color_shadow = Color( 0, 0.0705882, 0.235294, 0.321569 )
 Label/fonts/font = ExtResource( 1 )
