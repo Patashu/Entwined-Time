@@ -3917,16 +3917,15 @@ func meta_undo_replay() -> bool:
 
 func character_undo(is_silent: bool = false) -> bool:
 	if (won or lost): return false;
-	finish_animations(Chrono.CHAR_UNDO);
 	var fuzzed = false;
 	if (heavy_selected):
 		
 		# check if we can undo
-		var terrain = terrain_in_tile(heavy_actor.pos);
 		if (heavy_turn <= 0):
 			if !is_silent:
 				play_sound("bump");
 			return false;
+		var terrain = terrain_in_tile(heavy_actor.pos);
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("bump");
@@ -3934,6 +3933,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			return false;
 		
 		# before undo effects
+		finish_animations(Chrono.CHAR_UNDO);
 		maybe_pulse_phase_blocks(Chrono.CHAR_UNDO);
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
@@ -3976,11 +3976,11 @@ func character_undo(is_silent: bool = false) -> bool:
 	else:
 		
 		# check if we can undo
-		var terrain = terrain_in_tile(light_actor.pos);
 		if (light_turn <= 0):
 			if !is_silent:
 				play_sound("bump");
 			return false;
+		var terrain = terrain_in_tile(light_actor.pos);
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("bump");
@@ -3988,6 +3988,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			return false;
 			
 		# before undo effects
+		finish_animations(Chrono.CHAR_UNDO);
 		maybe_pulse_phase_blocks(Chrono.CHAR_UNDO);
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
@@ -4496,8 +4497,6 @@ func meta_undo(is_silent: bool = false) -> bool:
 		play_sound("bump");
 		preserving_meta_redo_inputs = false;
 		return false;
-	end_lose();
-	finish_animations(Chrono.MOVE);
 	if (meta_turn <= 0):
 		if !key_repeat_this_frame_dict["meta_undo"]:
 			if (!doing_replay):
@@ -4507,6 +4506,8 @@ func meta_undo(is_silent: bool = false) -> bool:
 				play_sound("bump");
 		preserving_meta_redo_inputs = false;
 		return false;
+	end_lose();
+	finish_animations(Chrono.MOVE);
 	nonstandard_won = false;
 	var events = meta_undo_buffer.pop_back();
 	for event in events:
@@ -4853,12 +4854,12 @@ func character_move(dir: Vector2) -> bool:
 		chr = "a";
 	elif (dir == Vector2.RIGHT):
 		chr = "d";
-	finish_animations(Chrono.MOVE);
 	var result = false;
 	if heavy_selected:
 		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
+		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);
 		if (!valid_voluntary_airborne_move(heavy_actor, dir)):
 			result = Success.Surprise;
@@ -4869,6 +4870,7 @@ func character_move(dir: Vector2) -> bool:
 		if (light_actor.broken or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
+		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);
 		if (!valid_voluntary_airborne_move(light_actor, dir)):
 			result = Success.Surprise;
