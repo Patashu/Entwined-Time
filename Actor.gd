@@ -571,11 +571,11 @@ func _process(delta: float) -> void:
 					sprite.centered = false;
 					sprite.frame_timer_max = 0.05;
 					sprite.position = current_animation[1];
-					self.get_parent().get_parent().get_node("UnderActorsParticles").add_child(sprite);
+					gamelogic.underactorsparticles.add_child(sprite);
 				7: #explode
 					var broken = current_animation[1];
 					if (is_character):
-						var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+						var overactorsparticles = gamelogic.overactorsparticles;
 						if (broken):
 							for i in range(10):
 								var sprite = Sprite.new();
@@ -607,7 +607,7 @@ func _process(delta: float) -> void:
 								overactorsparticles.add_child(sprite);
 								sprite.modulate = color;
 				8: #shatter
-					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+					var overactorsparticles = gamelogic.overactorsparticles;
 					gamelogic.broadcast_animation_nonce(current_animation[4]);
 					for i in range(4):
 						var sprite = Sprite.new();
@@ -642,7 +642,7 @@ func _process(delta: float) -> void:
 						overactorsparticles.add_child(sprite);
 					gamelogic.play_sound("shatter");
 				9: #unshatter
-					var overactorsparticles = self.get_parent().get_parent().get_node("OverActorsParticles");
+					var overactorsparticles = gamelogic.overactorsparticles;
 					gamelogic.broadcast_animation_nonce(current_animation[4]);
 					for i in range(4):
 						var sprite = Sprite.new();

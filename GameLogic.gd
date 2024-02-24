@@ -1965,7 +1965,7 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for heavy_tile in tiles:
 			terrain_layers[i].set_cellv(heavy_tile, -1);
-			heavy_actor = make_actor(Actor.Name.Heavy, heavy_tile, true);
+			heavy_actor = make_actor(Actor.Name.Heavy, heavy_tile, true, i);
 			heavy_actor.heaviness = Heaviness.STEEL;
 			heavy_actor.strength = Strength.HEAVY;
 			heavy_actor.durability = Durability.FIRE;
@@ -1989,7 +1989,7 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for light_tile in tiles:
 			terrain_layers[i].set_cellv(light_tile, -1);
-			light_actor = make_actor(Actor.Name.Light, light_tile, true);
+			light_actor = make_actor(Actor.Name.Light, light_tile, true, i);
 			light_actor.heaviness = Heaviness.IRON;
 			light_actor.strength = Strength.LIGHT;
 			light_actor.durability = Durability.SPIKES;
@@ -2089,7 +2089,7 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 		var tiles = layers_tiles[i];
 		for tile in tiles:
 			terrain_layers[i].set_cellv(tile, -1);
-			var actor = make_actor(actorname, tile, false);
+			var actor = make_actor(actorname, tile, false, i);
 			actor.heaviness = heaviness;
 			actor.strength = strength;
 			actor.durability = durability;
@@ -2394,7 +2394,7 @@ func toggle_mute() -> void:
 	music_speaker.stream_paused = muted;
 	cut_sound();
 
-func make_actor(actorname: int, pos: Vector2, is_character: bool, chrono: int = Chrono.TIMELESS) -> Actor:
+func make_actor(actorname: int, pos: Vector2, is_character: bool, i: int, chrono: int = Chrono.TIMELESS) -> Actor:
 	var actor = Actor.new();
 	# do this before update_goal_lock()
 	actors.append(actor);
@@ -2405,8 +2405,9 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, chrono: int = 
 	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
-	if (actorname == Actor.Name.Hole || actorname == Actor.Name.GreenHole || actorname == Actor.Name.VoidHole):
-		underterrainfolder.add_child(actor);
+	if (is_custom):
+		terrain_layers[i].add_child(actor);
+		terrain_layers[i].move_child(actor, 0);
 	else:
 		actorsfolder.add_child(actor);
 	actor.time_colour = actor.native_colour();

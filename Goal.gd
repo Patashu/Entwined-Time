@@ -61,7 +61,7 @@ func set_next_texture(tex: Texture) -> void:
 func _process(delta: float) -> void:
 	particle_timer += delta;
 	if (particle_timer > particle_timer_max):
-		var underactorsparticles = gamelogic.get_parent().get_node("UnderActorsParticles");
+		var underactorsparticles = gamelogic.underactorsparticles;
 		particle_timer -= particle_timer_max;
 		var sprite = Sprite.new();
 		sprite.set_script(preload("res://GoalParticle.gd"));
