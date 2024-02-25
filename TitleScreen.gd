@@ -189,10 +189,8 @@ func advance_label() -> void:
 	tween.tween_property($CutsceneHolder/AdvanceLabel, "modulate", Color.white, 1);
 	if (only_mouse):
 		$CutsceneHolder/AdvanceLabel.text = "(Left click or tap the screen to advance cutscene)";
-	elif (using_controller):
-		$CutsceneHolder/AdvanceLabel.text = "(Bottom Face Button to advance cutscene)";
 	else:
-		$CutsceneHolder/AdvanceLabel.text = "(X to advance cutscene)";
+		$CutsceneHolder/AdvanceLabel.text = "(" + gamelogic.human_readable_input("ui_accept", 1) + " to advance cutscene)";
 	
 func skip_cutscene_label_grows(delta: float) -> void:
 	if (skip_cutscene_label == null):
