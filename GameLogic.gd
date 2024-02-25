@@ -1948,8 +1948,7 @@ func make_actors() -> void:
 					break;
 	
 	# find goals and goal-ify them
-	for layer in terrain_layers:
-		find_goals(layer);
+	find_goals();
 	
 	# find heavy and light and turn them into actors
 	# as a you-fucked-up backup, put them in 0,0 if there seems to be none
@@ -2051,37 +2050,56 @@ func tick_clocks() -> void:
 			if i >= clock_turns_array.size():
 				return
 	
-func find_goals(layer: TileMap) -> void:
-	var heavy_goal_tiles = layer.get_used_cells_by_id(Tiles.HeavyGoal);
-	for tile in heavy_goal_tiles:
-		var goal = Goal.new();
-		goal.gamelogic = self;
-		goal.actorname = Actor.Name.HeavyGoal;
-		goal.texture = preload("res://assets/BigPortalRed.png");
-		goal.centered = true;
-		goal.pos = tile;
-		goal.position = layer.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
-		goal.modulate = Color(1, 1, 1, 0.8);
-		goal.instantly_reach_scalify();
-		goals.append(goal);
-		actorsfolder.add_child(goal);
-		goal.update_graphics();
+func find_goals() -> void:
+	var layers = get_used_cells_by_id_all_layers(Tiles.HeavyGoal);
+	for i in range(layers.size()):
+		var heavy_goal_tiles = layers[i];
+		for tile in heavy_goal_tiles:
+			var goal = Goal.new();
+			goal.gamelogic = self;
+			goal.actorname = Actor.Name.HeavyGoal;
+			goal.texture = preload("res://assets/BigPortalRed.png");
+			goal.centered = true;
+			goal.pos = tile;
+			goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
+			goal.modulate = Color(1, 1, 1, 0.8);
+			goal.instantly_reach_scalify();
+			goals.append(goal);
+			add_actor_or_goal_at_appropriate_layer(goal, i);
+			goal.update_graphics();
 	
-	var light_goal_tiles = layer.get_used_cells_by_id(Tiles.LightGoal);
-	for tile in light_goal_tiles:
-		var goal = Goal.new();
-		goal.gamelogic = self;
-		goal.actorname = Actor.Name.LightGoal;
-		goal.texture = preload("res://assets/BigPortalBlue.png");
-		goal.centered = true;
-		goal.pos = tile;
-		goal.position = layer.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
-		goal.modulate = Color(1, 1, 1, 0.8);
-		goal.rotate_magnitude = -1;
-		goal.instantly_reach_scalify();
-		goals.append(goal);
-		actorsfolder.add_child(goal);
-		goal.update_graphics();
+	layers = get_used_cells_by_id_all_layers(Tiles.LightGoal);
+	for i in range(layers.size()):
+		var light_goal_tiles = layers[i];
+		for tile in light_goal_tiles:
+			var goal = Goal.new();
+			goal.gamelogic = self;
+			goal.actorname = Actor.Name.LightGoal;
+			goal.texture = preload("res://assets/BigPortalBlue.png");
+			goal.centered = true;
+			goal.pos = tile;
+			goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
+			goal.modulate = Color(1, 1, 1, 0.8);
+			goal.rotate_magnitude = -1;
+			goal.instantly_reach_scalify();
+			goals.append(goal);
+			add_actor_or_goal_at_appropriate_layer(goal, i);
+			goal.update_graphics();
+	
+func add_actor_or_goal_at_appropriate_layer(thing: ActorBase, i: int) -> void:
+	# backwards compatibility, so actors in the top layer of a custom puzzle/in any vanilla puzzle
+	# draw correctly wrt underactorsparticles/overactorsparticles, but
+	# actors in other layers of a custom pzuzle can layer with terrain arbitrariliy
+	# in the future, goals can be moved
+	# and also the concept of 'adding to overactors/underactors particles'
+	# can be generalized to
+	# 'if it's a custom puzzle, put particles in the appropriate place amongst terrain layers too'
+	if (is_custom and i > 0):
+		terrain_layers[i].add_child(thing);
+		if (i == terrain_layers.size() - 1):
+			terrain_layers[i].move_child(thing, terrain_layers[i-1].get_index());
+	else:
+		actorsfolder.add_child(thing);
 	
 func extract_actors(id: int, actorname: int, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -2405,11 +2423,7 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, i: int, chrono
 	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
-	if (is_custom):
-		terrain_layers[i].add_child(actor);
-		terrain_layers[i].move_child(actor, 0);
-	else:
-		actorsfolder.add_child(actor);
+	add_actor_or_goal_at_appropriate_layer(actor, i);
 	actor.time_colour = actor.native_colour();
 	move_actor_to(actor, pos, chrono, false, false);
 	if (chrono < Chrono.META_UNDO):
