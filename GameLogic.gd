@@ -1765,15 +1765,15 @@ func ready_tutorial() -> void:
 		elif (level_number == 2):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Character[/color]\n$SWAP: Swap [color=#FF7459]Character[/color]\n$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Heavy[/color]\n$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Undo [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
 		elif (level_number == 3):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$SWAP: Swap [color=#FF7459]Character[/color]\n$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Undo [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
 		elif (level_number == 4):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$UNDO: Undo [color=#FF7459]Character[/color]\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$UNDO: Undo [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
 		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
 			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Meta-Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
@@ -1793,9 +1793,10 @@ func ready_tutorial() -> void:
 func translate_tutorial_inputs() -> void:
 	if (level_number >= 2 and level_number <= 4):
 		if (heavy_selected):
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#7FC9FF", "#FF7459");
+			pass
 		else:
-			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("#FF7459", "#7FC9FF");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("[color=#FF7459]Heavy[/color]", "[color=#7FC9FF]Light[/color]");
+			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("[color=#7FC9FF]To Light[/color]", "[color=#FF7459]To Heavy[/color]");
 			
 	if tutoriallabel.visible:
 		if (meta_redo_inputs != "" and (level_number == 5 or level_number == 6)):
