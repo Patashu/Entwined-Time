@@ -4585,6 +4585,11 @@ func do_one_letter(replay_char: String) -> void:
 		character_switch();
 	elif (replay_char == "c"):
 		meta_undo();
+	elif (replay_char == "y"):
+		var old_doing_replay = doing_replay;
+		meta_redo();
+		doing_replay = old_doing_replay;
+		update_info_labels();
 		
 func do_one_letter_case_sensitive(replay_char: String) -> void:
 	if (replay_char == "v"):
@@ -5893,7 +5898,7 @@ func is_valid_replay(replay: String) -> bool:
 	if replay.length() <= 0:
 		return false;
 	for letter in replay:
-		if !(letter in "wasdzxc"):
+		if !(letter in "wasdzxcy"):
 			return false;
 	return true;
 
