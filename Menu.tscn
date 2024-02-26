@@ -105,6 +105,7 @@ margin_top = 107.0
 margin_right = 74.0
 margin_bottom = 122.0
 focus_neighbour_left = NodePath("../QuitGameButton")
+focus_neighbour_right = NodePath("../QuitGameButton")
 focus_neighbour_bottom = NodePath("../OkButton")
 text = "Restart"
 
