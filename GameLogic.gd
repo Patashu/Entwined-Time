@@ -452,6 +452,8 @@ func save_game():
 	file.open(save_file_string, File.WRITE)
 	file.store_line(to_json(save_file))
 	file.close()
+	if (heavy_actor != null):
+		update_info_labels();
 
 func default_save_file() -> void:
 	if (save_file == null or typeof(save_file) != TYPE_DICTIONARY):
