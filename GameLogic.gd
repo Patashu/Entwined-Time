@@ -4586,6 +4586,8 @@ func do_one_letter(replay_char: String) -> void:
 	elif (replay_char == "c"):
 		meta_undo();
 	elif (replay_char == "y"):
+		# buggy and difficult to make not-buggy since it requires redefining "v" properly.
+		# will leave as is, undocumented.
 		var old_doing_replay = doing_replay;
 		meta_redo();
 		doing_replay = old_doing_replay;
