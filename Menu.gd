@@ -123,8 +123,11 @@ func _copyreplaybutton_pressed() -> void:
 		return;
 	# must be kept in sync with GameLogic
 	destroy();
-	OS.set_clipboard(gamelogic.annotate_replay(gamelogic.user_replay));
-	gamelogic.floating_text("Ctrl+C: Replay copied");
+	if (len(gamelogic.user_replay) > 0):
+		OS.set_clipboard(gamelogic.annotate_replay(gamelogic.user_replay));
+		gamelogic.floating_text("Ctrl+C: Replay copied");
+	else:
+		gamelogic.floating_text("Ctrl+C: Make some moves first!");
 	
 func _pastereplaybutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):

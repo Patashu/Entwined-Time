@@ -6528,8 +6528,11 @@ func _process(delta: float) -> void:
 				copy_level();
 			else:
 				# must be kept in sync with Menu
-				OS.set_clipboard(annotate_replay(user_replay));
-				floating_text("Ctrl+C: Replay copied");
+				if (len(user_replay) > 0):
+					OS.set_clipboard(annotate_replay(user_replay));
+					floating_text("Ctrl+C: Replay copied");
+				else:
+					floating_text("Ctrl+C: Make some moves first!");
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("paste")):
 			# must be kept in sync with Menu
 			var clipboard = OS.get_clipboard();
