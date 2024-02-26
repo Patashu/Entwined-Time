@@ -9,10 +9,10 @@
 script = ExtResource( 3 )
 
 [node name="Holder" type="Label" parent="."]
-margin_left = 104.0
+margin_left = 10.0
 margin_top = 4.0
-margin_right = 419.0
-margin_bottom = 287.0
+margin_right = 505.0
+margin_bottom = 295.0
 theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 text = "Credits:
@@ -22,7 +22,7 @@ Art (Puzzles): Teal Knight
 Art (Title Screen, Cutscenes, Promotional): Ranoa
 Guest Level Design: Neonesque
 
-Playtesters: (TODO)
+Playtesters: VoxSomniator, knexator, zhuli, IMaginatory, my relatives and cousins, Gwendigo, Ben Taylor, fizzd, Leaving Leaves, Ricky Zhou, Mystic Sailboat, Peter Smith, butcherberries, nexinex, Neonesque, mathmasterzach, Alex Philips, Ranoa, dead0ne, TheAusSpideyGuy, Sean Green (Zixxy Zay), fifdspence
 
 Inspired by Braid and Meet me at NooN
 
@@ -31,17 +31,17 @@ align = 1
 autowrap = true
 
 [node name="OkButton" type="Button" parent="Holder"]
-margin_left = 101.0
-margin_top = 266.0
-margin_right = 212.0
-margin_bottom = 281.0
+margin_left = 191.0
+margin_top = 272.0
+margin_right = 302.0
+margin_bottom = 287.0
 text = "Ok"
 
 [node name="LinkLabel" type="RichTextLabel" parent="Holder"]
-margin_left = 4.0
-margin_top = 241.0
-margin_right = 312.0
-margin_bottom = 271.0
+margin_left = 94.0
+margin_top = 247.0
+margin_right = 402.0
+margin_bottom = 277.0
 theme = ExtResource( 2 )
 custom_colors/default_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
