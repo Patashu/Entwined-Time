@@ -9,6 +9,8 @@ func _process(delta: float) -> void:
 	update();
 
 func _draw():
+	if gamelogic.SuperScaling != null:
+		draw_rect(Rect2(0, 0, gamelogic.pixel_width, gamelogic.pixel_height), gamelogic.current_sky, true);
 	
 	if (gamelogic.undo_effect_strength > 0):
 		var color = Color(gamelogic.undo_effect_color);

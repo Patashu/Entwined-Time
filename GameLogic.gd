@@ -894,7 +894,6 @@ func filter_all_sprites(yes: bool) -> void:
 		SuperScaling.scale_factor = 2.0;
 		SuperScaling.smoothness = 0.25;
 		self.get_parent().get_parent().add_child(SuperScaling);
-		set_sky();
 	else:
 		# can I un-SuperScale? maybe? maybe not???
 		pass
@@ -6293,19 +6292,6 @@ var key_repeat_this_frame_dict = {};
 func pressed_or_key_repeated(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
 	
-var sky_rect = null;
-	
-func set_sky() -> void:
-	VisualServer.set_default_clear_color(current_sky);
-	if (SuperScaling != null):
-		# then we also need to set a real sky, since clear colour is no longer a real thing.
-		if (sky_rect == null):
-			sky_rect = ColorRect.new();
-			sky_rect.rect_size = Vector2(pixel_width, pixel_height);
-			self.get_parent().add_child(sky_rect);
-			self.get_parent().move_child(sky_rect, 0);
-		sky_rect.color = current_sky;
-	
 func _process(delta: float) -> void:
 	shade_virtual_buttons();
 	
@@ -6433,7 +6419,7 @@ func _process(delta: float) -> void:
 		var current_g = lerp(old_sky.g, target_sky.g, sky_timer/sky_timer_max);
 		var current_b = lerp(old_sky.b, target_sky.b, sky_timer/sky_timer_max);
 		current_sky = Color(current_r, current_g, current_b);
-		set_sky();
+		VisualServer.set_default_clear_color(current_sky);
 		
 	if (fuzz_timer_max > 0):
 		fuzz_timer += delta;
