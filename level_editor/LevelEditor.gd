@@ -119,7 +119,7 @@ enum Tiles {
 	GhostPlatform, #113
 }
 
-onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
 onready var menubutton : Button = get_node("MenuButton");
 onready var tilemaps : Node2D = get_node("TileMaps");
 onready var pen : Sprite = get_node("Pen");
@@ -825,7 +825,7 @@ func picker_tooltip() -> void:
 			text = "Ghost Platform: Solid to gravity moves of non-Character actors."
 	pickertooltip.change_text(text);
 	
-	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));
+	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));
 	pickertooltip.set_rect_size(Vector2(200, pickertooltip.get_rect_size().y));
 	if (pickertooltip.get_rect_position().x + 200 > 512):
 		pickertooltip.set_rect_size(Vector2(max(100, 512 - pickertooltip.get_rect_position().x), pickertooltip.get_rect_size().y));
@@ -851,7 +851,7 @@ func _process(delta: float) -> void:
 	if (Input.is_action_just_pressed("escape")):
 		_menubutton_pressed();
 		
-	var mouse_position = get_global_mouse_position();
+	var mouse_position = gamelogic.adjusted_mouse_position();
 	# probably needs some offset, I'll do the math
 	mouse_position.x = gamelogic.cell_size*round((mouse_position.x-gamelogic.cell_size/2)/float(gamelogic.cell_size));
 	mouse_position.y = gamelogic.cell_size*round((mouse_position.y-gamelogic.cell_size/2)/float(gamelogic.cell_size));
@@ -862,7 +862,7 @@ func _process(delta: float) -> void:
 		picker_tooltip();
 	
 	var over_menu_button = false;
-	if (Rect2(menubutton.rect_position, menubutton.rect_size).has_point(get_global_mouse_position())):
+	if (Rect2(menubutton.rect_position, menubutton.rect_size).has_point(mouse_position)):
 		over_menu_button = true;
 	if (!Input.is_mouse_button_pressed(1) and !Input.is_mouse_button_pressed(2)):
 		just_picked = false;

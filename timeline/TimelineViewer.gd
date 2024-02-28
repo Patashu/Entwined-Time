@@ -1,7 +1,7 @@
 extends Node2D
 class_name TimelineViewer
 
-onready var gamelogic = get_node("/root/LevelScene/GameLogic");
+onready var gamelogic = get_tree().get_root().find_node("GameLogic", true, false); #has to be different?
 export var is_heavy = false;
 var current_move = 0;
 var max_moves = 0;

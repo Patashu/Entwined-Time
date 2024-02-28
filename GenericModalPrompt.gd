@@ -1,7 +1,7 @@
 extends Node2D
 class_name GenericModalPrompt
 
-onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
 onready var okbutton : Button = get_node("Holder/OkButton");
 onready var cancelbutton : Button = get_node("Holder/CancelButton");
 onready var holder : Label = get_node("Holder");

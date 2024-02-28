@@ -1,7 +1,7 @@
 extends Node2D
 class_name LevelSelect
 
-onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
 onready var holder : Label = get_node("Holder");
 onready var chapter = gamelogic.chapter;
 onready var prevbutton : Button = get_node("Holder/PrevButton");

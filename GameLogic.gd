@@ -3,7 +3,7 @@ class_name GameLogic
 
 var debug_prints = false;
 
-onready var levelscene : Node2D = get_node("/root/LevelScene");
+onready var levelscene : Node2D = get_node("/root/LevelScene"); #this one runs before SupercCaling so it's safe!
 onready var underterrainfolder : Node2D = levelscene.get_node("UnderTerrainFolder");
 onready var actorsfolder : Node2D = levelscene.get_node("ActorsFolder");
 onready var ghostsfolder : Node2D = levelscene.get_node("GhostsFolder");
@@ -883,38 +883,22 @@ func get_all_files(path: String, file_ext := "", files := []):
 
 	return files
 
+var SuperScaling = null;
+
 func filter_all_sprites(yes: bool) -> void:
-
-	var files = get_all_files("res://assets/", "png");
-	for file in files:
-		if (file.find("border") > -1):
-			continue;
-		if (file.find("BigPortal") > -1):
-			continue;
-		if (file.find("star.png") > -1):
-			continue;
-		var texture = ResourceLoader.load(file, "Texture");
-		if (texture != null):
-			if (yes):
-				texture.flags |= 4; #FLAG_FILTER
-			else:
-				texture.flags = texture.flags & ~4;
-	files = get_all_files("res://timeline/", "png");
-	for file in files:
-		var texture = ResourceLoader.load(file, "Texture");
-		if (texture != null):
-			if (yes):
-				texture.flags |= 4; #FLAG_FILTER
-			else:
-				texture.flags = texture.flags & ~4;
-	
-	load("res://standardfont.tres").use_filter = yes;
-
-#	not convinced this does anything in my game
-#	if (yes):
-#		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_2X);
-#	else:
-#		VisualServer.viewport_set_msaa(get_viewport().get_viewport_rid(), VisualServer.VIEWPORT_MSAA_DISABLED);
+	if (yes and SuperScaling == null):
+		SuperScaling = load("res://SuperScaling/SuperScaling.tscn").instance();
+		SuperScaling.enable_on_play = true;
+		SuperScaling.usage = 1; #2D
+		SuperScaling.shadow_atlas = 1;
+		SuperScaling.scale_factor = 2.0;
+		SuperScaling.smoothness = 0.25;
+		self.get_parent().get_parent().add_child(SuperScaling);
+		set_sky();
+	else:
+		# can I un-SuperScale? maybe? maybe not???
+		pass
+	load("res://standardfont.tres").use_filter = yes; #still need to filter this or it looks gross lol
 	
 func setup_resolution() -> void:
 	Engine.target_fps = int(save_file["fps"]);
@@ -933,9 +917,9 @@ func setup_resolution() -> void:
 			OS.set_window_size(size);
 			OS.center_window();
 			if (float(size.x) / float(pixel_width) != round(float(size.x) / float(pixel_width))):
-				filter_all_sprites(true);
+				call_deferred("filter_all_sprites", true);
 			else:
-				filter_all_sprites(false);
+				call_deferred("filter_all_sprites", false);
 
 	if (save_file.has("vsync_enabled")):
 		OS.vsync_enabled = save_file["vsync_enabled"];
@@ -6003,12 +5987,19 @@ func unwin() -> void:
 	save_game();
 	update_level_label();
 	
+func adjusted_mouse_position() -> Vector2:
+	var result = get_parent().get_global_mouse_position();
+	if (SuperScaling != null):
+		result.x *= 2*pixel_width/OS.get_window_size().x;
+		result.y *= 2*pixel_height/OS.get_window_size().y;
+	return result;
+	
 func _input(event: InputEvent) -> void:
 	if (ui_stack.size() > 0):
 		return;
 	
 	if event is InputEventMouseButton:
-		var mouse_position = get_parent().get_global_mouse_position();
+		var mouse_position = adjusted_mouse_position();
 		var heavy_rect = heavy_actor.get_rect();
 		var light_rect = light_actor.get_rect();
 		heavy_rect.position += heavy_actor.global_position;
@@ -6302,6 +6293,19 @@ var key_repeat_this_frame_dict = {};
 func pressed_or_key_repeated(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
 	
+var sky_rect = null;
+	
+func set_sky() -> void:
+	VisualServer.set_default_clear_color(current_sky);
+	if (SuperScaling != null):
+		# then we also need to set a real sky, since clear colour is no longer a real thing.
+		if (sky_rect == null):
+			sky_rect = ColorRect.new();
+			sky_rect.rect_size = Vector2(pixel_width, pixel_height);
+			self.get_parent().add_child(sky_rect);
+			self.get_parent().move_child(sky_rect, 0);
+		sky_rect.color = current_sky;
+	
 func _process(delta: float) -> void:
 	shade_virtual_buttons();
 	
@@ -6429,7 +6433,7 @@ func _process(delta: float) -> void:
 		var current_g = lerp(old_sky.g, target_sky.g, sky_timer/sky_timer_max);
 		var current_b = lerp(old_sky.b, target_sky.b, sky_timer/sky_timer_max);
 		current_sky = Color(current_r, current_g, current_b);
-		VisualServer.set_default_clear_color(current_sky);
+		set_sky();
 		
 	if (fuzz_timer_max > 0):
 		fuzz_timer += delta;

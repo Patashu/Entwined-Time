@@ -1,7 +1,7 @@
 extends Node2D
 class_name Settings
 
-onready var gamelogic = get_node("/root/LevelScene").gamelogic;
+onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
 onready var holder : Control = get_node("Holder");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
