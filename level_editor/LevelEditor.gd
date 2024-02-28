@@ -541,8 +541,7 @@ func _menubutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://level_editor/LevelEditorMenu.tscn").instance();
-	add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, self);
 
 func destroy() -> void:
 	gamelogic.tile_changes(false);

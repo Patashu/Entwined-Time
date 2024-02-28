@@ -48,8 +48,7 @@ func _levelinfobutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://level_editor/LevelInfoEdit.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 	
 func _copylevelbutton_pressed() -> void:
@@ -71,8 +70,7 @@ func _instructionsbutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://level_editor/Instructions.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 	
 func _savetscnbutton_pressed() -> void:

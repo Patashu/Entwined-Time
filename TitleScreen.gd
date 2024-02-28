@@ -68,24 +68,21 @@ func _controlsbutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://Controls.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	
 func _settingsbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
 	var a = preload("res://Settings.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	
 func _creditsbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
 	var a = preload("res://CreditsModal.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	
 func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):

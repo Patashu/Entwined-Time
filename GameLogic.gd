@@ -518,6 +518,7 @@ func _ready() -> void:
 	connect_virtual_buttons();
 	prepare_audio();
 	call_deferred("adjust_winlabel");
+	call_deferred("setup_gui_holder");
 	load_game();
 	initialize_level_list();
 	tile_changes();
@@ -542,6 +543,25 @@ func prepare_voidlike_tiles() -> void:
 		var expected_tile_name = Tiles.keys()[i];
 		if expected_tile_name.findn("void") >= 0:
 			voidlike_tiles.append(i);
+
+var GuiHolder : Node2D;
+
+func setup_gui_holder() -> void:
+	GuiHolder = Node2D.new();
+	GuiHolder.name = "GuiHolder";
+	get_parent().get_parent().add_child(GuiHolder);
+	GuiHolder.z_index = 1;
+	var ui_elements = [heavyinfolabel, lightinfolabel, levelstar, levellabel, replaybuttons, virtualbuttons, winlabel, tutoriallabel, metainfolabel, menubutton];
+	for ui_element in ui_elements:
+		ui_element.get_parent().remove_child(ui_element);
+		GuiHolder.add_child(ui_element);
+
+func add_to_ui_stack(node: Node, parent: Node = null) -> void:
+	ui_stack.push_back(node);
+	if (parent != null):
+		parent.add_child(node);
+	else:
+		GuiHolder.add_child(node);
 
 func connect_virtual_buttons() -> void:
 	virtualbuttons.get_node("Verbs/UndoButton").connect("button_down", self, "_undobutton_pressed");
@@ -728,7 +748,7 @@ func react_to_save_file_update() -> void:
 	else:
 		checkerboard.visible = false;
 	setup_colourblind_mode();
-	setup_resolution();
+	call_deferred("setup_resolution");
 	setup_volume();
 	setup_animation_speed();
 	setup_virtual_buttons();
@@ -899,10 +919,11 @@ func filter_all_sprites(yes: bool) -> void:
 	if (yes and SuperScaling == null):
 		SuperScaling = load("res://SuperScaling/SuperScaling.tscn").instance();
 		SuperScaling.enable_on_play = true;
+		SuperScaling.ui_nodes = [get_parent().get_path_to(GuiHolder)] #path must be ../GuiHolder
 		SuperScaling.usage = 1; #2D
 		SuperScaling.shadow_atlas = 1;
 		SuperScaling.scale_factor = 2.0;
-		SuperScaling.smoothness = 0.5;
+		SuperScaling.smoothness = 0.25;
 		self.get_parent().get_parent().add_child(SuperScaling);
 	else:
 		pass
@@ -4653,19 +4674,16 @@ func escape() -> void:
 		var topmost_ui = ui_stack.pop_front();
 		topmost_ui.queue_free();
 		return;
-	var levelselect = preload("res://Menu.tscn").instance();
-	ui_stack.push_back(levelselect);
-	levelscene.add_child(levelselect);
+	var a = preload("res://Menu.tscn").instance();
+	add_to_ui_stack(a);
 	
 func title_screen() -> void:
 	var a = preload("res://TitleScreen.tscn").instance();
-	ui_stack.push_back(a);
-	levelscene.add_child(a);
+	add_to_ui_stack(a);
 	
 func level_editor() -> void:
 	var a = preload("res://level_editor/LevelEditor.tscn").instance();
-	ui_stack.push_back(a);
-	levelscene.add_child(a);
+	add_to_ui_stack(a);
 	
 func level_select() -> void:
 	if (test_mode):
@@ -4678,9 +4696,8 @@ func level_select() -> void:
 		var topmost_ui = ui_stack.pop_front();
 		topmost_ui.queue_free();
 		return;
-	var levelselect = preload("res://LevelSelect.tscn").instance();
-	ui_stack.push_back(levelselect);
-	levelscene.add_child(levelselect);
+	var a = preload("res://LevelSelect.tscn").instance();
+	add_to_ui_stack(a);
 	
 func how_many_standard_puzzles_are_solved_in_chapter(chapter: int) -> Array:
 	if chapter >= chapter_standard_starting_levels.size():
@@ -4768,7 +4785,7 @@ func play_next_song() -> void:
 		if (value > -30 and master_volume > -30 and !muted): #music is not muted
 			if (ui_stack.size() == 0 or ui_stack[0].name != "TitleScreen"):
 				now_playing = preload("res://NowPlaying.tscn").instance();
-				self.get_parent().call_deferred("add_child", now_playing);
+				GuiHolder.call_deferred("add_child", now_playing);
 				#self.get_parent().add_child(now_playing);
 				now_playing.initialize(music_info[current_track]);
 	else:
@@ -5373,8 +5390,7 @@ func authors_replay() -> void:
 		if (!unit_test_mode):
 			if (!save_file.has("authors_replay") or save_file["authors_replay"] != true):
 				var modal = preload("res://AuthorsReplayModalPrompt.tscn").instance();
-				ui_stack.push_back(modal);
-				levelscene.add_child(modal);
+				add_to_ui_stack(modal);
 				return;
 	
 	toggle_replay();
@@ -6038,8 +6054,7 @@ func gain_insight() -> void:
 	if (has_insight_level and !unit_test_mode):
 		if (!save_file.has("gain_insight") or save_file["gain_insight"] != true):
 			var modal = preload("res://GainInsightModalPrompt.tscn").instance();
-			ui_stack.push_back(modal);
-			levelscene.add_child(modal);
+			add_to_ui_stack(modal);
 			return;
 	
 	if (has_insight_level):

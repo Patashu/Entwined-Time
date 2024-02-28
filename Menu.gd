@@ -145,8 +145,7 @@ func _levelselectbutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://LevelSelect.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 	
 func _insightbutton_pressed() -> void:
@@ -161,8 +160,7 @@ func _controlsbutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://Controls.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 	
 func _settingsbutton_pressed() -> void:
@@ -170,8 +168,7 @@ func _settingsbutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://Settings.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 	
 func _restartbutton_pressed() -> void:

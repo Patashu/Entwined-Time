@@ -49,8 +49,7 @@ func _leveleditorbutton_pressed() -> void:
 		return;
 	
 	var a = preload("res://level_editor/LevelEditor.tscn").instance();
-	self.get_parent().add_child(a);
-	gamelogic.ui_stack.push_back(a);
+	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 
 func update_focus_neighbors() -> void:
