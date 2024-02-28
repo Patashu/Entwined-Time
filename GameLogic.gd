@@ -295,6 +295,7 @@ enum Tiles {
 	NudgeWestGreen, #110
 	AntiGrate, #111
 	MagentaFloorboards, #112
+	GhostPlatform, #113
 }
 var voidlike_tiles = [];
 
@@ -3191,6 +3192,11 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
 			Tiles.WoodenPlatform:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
+			Tiles.GhostPlatform:
+				result = no_if_true_yes_if_false(!actor.is_character and dir == Vector2.DOWN and is_gravity);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
 			Tiles.OnewayEast:
 				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.LEFT);
 				if (result == Success.No):

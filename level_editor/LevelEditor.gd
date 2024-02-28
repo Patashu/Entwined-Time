@@ -116,6 +116,7 @@ enum Tiles {
 	NudgeWestGreen, #110
 	AntiGrate, #111
 	MagentaFloorboards, #112
+	GhostPlatform, #113
 }
 
 onready var gamelogic = get_node("/root/LevelScene").gamelogic;
@@ -284,6 +285,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.NudgeWestGreen)
 		picker_array.append(Tiles.Grate)
 		picker_array.append(Tiles.AntiGrate)
+		picker_array.append(Tiles.GhostPlatform)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -819,6 +821,8 @@ func picker_tooltip() -> void:
 			text = "Grate: Solid to unbroken actors."
 		Tiles.AntiGrate:
 			text = "Anti-Grate: Solid to broken actors."
+		Tiles.GhostPlatform:
+			text = "Ghost Platform: Solid to gravity moves of non-Character actors."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(get_global_mouse_position() + Vector2(8, 8));
