@@ -901,6 +901,8 @@ func filter_all_sprites(yes: bool) -> void:
 	
 func setup_resolution() -> void:
 	Engine.target_fps = int(save_file["fps"]);
+	if (is_web):
+		return;
 	if (save_file.has("fullscreen")):
 		OS.window_fullscreen = save_file["fullscreen"];
 	if (save_file.has("resolution")):
