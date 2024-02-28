@@ -862,7 +862,8 @@ func _process(delta: float) -> void:
 		picker_tooltip();
 	
 	var over_menu_button = false;
-	if (Rect2(menubutton.rect_position, menubutton.rect_size).has_point(mouse_position)):
+	var draw_mode = menubutton.get_draw_mode();
+	if (draw_mode == 1 or draw_mode == 3 or draw_mode == 4):
 		over_menu_button = true;
 	if (!Input.is_mouse_button_pressed(1) and !Input.is_mouse_button_pressed(2)):
 		just_picked = false;
