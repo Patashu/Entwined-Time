@@ -886,6 +886,17 @@ func get_all_files(path: String, file_ext := "", files := []):
 var SuperScaling = null;
 
 func filter_all_sprites(yes: bool) -> void:
+	
+	if (SuperScaling != null):
+		var viewport = get_parent().get_parent();
+		var root = get_tree().get_root();
+		for node in viewport.get_children():
+			viewport.remove_child(node);
+			root.add_child(node);
+		SuperScaling.get_parent().remove_child(SuperScaling);
+		SuperScaling.queue_free();
+		SuperScaling = null;
+	
 	if (yes and SuperScaling == null):
 		SuperScaling = load("res://SuperScaling/SuperScaling.tscn").instance();
 		SuperScaling.enable_on_play = true;
@@ -895,7 +906,6 @@ func filter_all_sprites(yes: bool) -> void:
 		SuperScaling.smoothness = 0.25;
 		self.get_parent().get_parent().add_child(SuperScaling);
 	else:
-		# can I un-SuperScale? maybe? maybe not???
 		pass
 	load("res://standardfont.tres").use_filter = yes; #still need to filter this or it looks gross lol
 	
