@@ -902,7 +902,7 @@ func filter_all_sprites(yes: bool) -> void:
 		SuperScaling.usage = 1; #2D
 		SuperScaling.shadow_atlas = 1;
 		SuperScaling.scale_factor = 2.0;
-		SuperScaling.smoothness = 0.25;
+		SuperScaling.smoothness = 0.5;
 		self.get_parent().get_parent().add_child(SuperScaling);
 	else:
 		pass
