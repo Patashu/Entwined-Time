@@ -5,10 +5,15 @@ onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, fals
 onready var holder : Label = get_node("Holder");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var okbutton : Button = get_node("Holder/OkButton");
+onready var linklabel : RichTextLabel = get_node("Holder/LinkLabel");
 
 func _ready() -> void:
 	okbutton.connect("pressed", self, "destroy");
 	okbutton.grab_focus();
+	linklabel.connect("meta_clicked", self, "_meta_clicked");
+	
+func _meta_clicked(meta):
+	OS.shell_open(meta);
 
 func destroy() -> void:
 	self.queue_free();
