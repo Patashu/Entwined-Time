@@ -885,8 +885,7 @@ func get_all_files(path: String, file_ext := "", files := []):
 
 var SuperScaling = null;
 
-func filter_all_sprites(yes: bool) -> void:
-	
+func filter_all_sprites(yes: bool) -> void:	
 	if (SuperScaling != null):
 		var viewport = get_parent().get_parent();
 		var root = get_tree().get_root();
@@ -927,10 +926,11 @@ func setup_resolution() -> void:
 		if (OS.get_window_size() != size):
 			OS.set_window_size(size);
 			OS.center_window();
-			if (float(size.x) / float(pixel_width) != round(float(size.x) / float(pixel_width))):
-				call_deferred("filter_all_sprites", true);
-			else:
-				call_deferred("filter_all_sprites", false);
+	var size = OS.get_window_size();
+	if (float(size.x) / float(pixel_width) != round(float(size.x) / float(pixel_width))):
+		call_deferred("filter_all_sprites", true);
+	else:
+		call_deferred("filter_all_sprites", false);
 
 	if (save_file.has("vsync_enabled")):
 		OS.vsync_enabled = save_file["vsync_enabled"];
