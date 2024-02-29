@@ -5366,6 +5366,11 @@ func time_passes(chrono: int) -> void:
 	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
+	# 29th Feb 2024: not actually sure I want 'tiebreak by x' because then the esoterica of 'does light or heavy fall first?' is now
+	# horizontally asymmetric. tiebreak by id might be smart but idk if it ever desyncs to begin with.
+	# tiebreak by layer is basically just 'you can reverse the esoterica order invisible to the player'
+	# and I don't like that either.
+	# so I think it stays as-is.
 	return a.pos.y > b.pos.y;
 	
 func currently_fast_replay() -> bool:
