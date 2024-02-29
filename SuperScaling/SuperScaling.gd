@@ -264,7 +264,9 @@ func get_stretch_setting():
 func _input(event):
 	if viewport and is_inside_tree():
 		viewport.input(event)
+		#get_parent().get_node("GuiHolder").input(event);
 		
 func _unhandled_input(event):
 	if viewport and is_inside_tree():
 		viewport.unhandled_input(event)
+		#get_parent().get_node("GuiHolder").unhandled_input(event);

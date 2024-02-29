@@ -549,8 +549,8 @@ var GuiHolder : Node2D;
 func setup_gui_holder() -> void:
 	GuiHolder = Node2D.new();
 	GuiHolder.name = "GuiHolder";
-	get_parent().get_parent().add_child(GuiHolder);
 	GuiHolder.z_index = 1;
+	get_parent().get_parent().add_child(GuiHolder);
 	var ui_elements = [heavyinfolabel, lightinfolabel, levelstar, levellabel, replaybuttons, virtualbuttons, winlabel, tutoriallabel, metainfolabel, menubutton];
 	for ui_element in ui_elements:
 		ui_element.get_parent().remove_child(ui_element);
@@ -905,6 +905,11 @@ func get_all_files(path: String, file_ext := "", files := []):
 
 var SuperScaling = null;
 
+func move_viewport() -> void:
+	var viewport = get_parent().get_parent();
+	var root = get_tree().get_root();
+	root.move_child(viewport, 0);
+
 func filter_all_sprites(yes: bool) -> void:	
 	if (SuperScaling != null):
 		var viewport = get_parent().get_parent();
@@ -925,6 +930,7 @@ func filter_all_sprites(yes: bool) -> void:
 		SuperScaling.scale_factor = 2.0;
 		SuperScaling.smoothness = 0.25;
 		self.get_parent().get_parent().add_child(SuperScaling);
+		call_deferred("move_viewport");
 	else:
 		pass
 	load("res://standardfont.tres").use_filter = yes; #still need to filter this or it looks gross lol
