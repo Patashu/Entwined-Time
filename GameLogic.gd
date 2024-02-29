@@ -6471,9 +6471,9 @@ func _process(delta: float) -> void:
 			toggle_mute();
 	
 	if (ui_stack.size() > 0):
-		covered_cooldown_timer = 0.01;
+		covered_cooldown_timer = 2.0;
 	elif covered_cooldown_timer > 0.0:
-		covered_cooldown_timer -= delta;
+		covered_cooldown_timer -= 1.0;
 	
 	if ui_stack.size() == 0 and covered_cooldown_timer <= 0.0:
 		var dir = Vector2.ZERO;
