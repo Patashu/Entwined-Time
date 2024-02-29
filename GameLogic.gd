@@ -6321,6 +6321,7 @@ var key_repeat_timer_max_dict = {};
 var virtual_button_held_dict = {"meta_undo": false, "meta_redo": false, "previous_level": false, "next_level": false, 
 "replay_back1": false, "replay_fwd1": false, "speedup_replay": false, "slowdown_replay": false};
 var key_repeat_this_frame_dict = {};
+var covered_cooldown_timer = 0.0;
 	
 func pressed_or_key_repeated(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
@@ -6468,8 +6469,13 @@ func _process(delta: float) -> void:
 		# hack: no muting in LevelInfoEdit where the player might type M
 		if (ui_stack.size() == 0 or ui_stack[ui_stack.size() -1].name != "LevelInfoEdit"):
 			toggle_mute();
-		
-	if ui_stack.size() == 0:
+	
+	if (ui_stack.size() > 0):
+		covered_cooldown_timer = 0.01;
+	elif covered_cooldown_timer > 0.0:
+		covered_cooldown_timer -= delta;
+	
+	if ui_stack.size() == 0 and covered_cooldown_timer <= 0.0:
 		var dir = Vector2.ZERO;
 		
 		if (doing_replay and replay_timer > next_replay and !replay_paused):
