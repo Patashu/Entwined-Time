@@ -544,12 +544,11 @@ func prepare_voidlike_tiles() -> void:
 		if expected_tile_name.findn("void") >= 0:
 			voidlike_tiles.append(i);
 
-var GuiHolder : Node2D;
+var GuiHolder : CanvasLayer;
 
 func setup_gui_holder() -> void:
-	GuiHolder = Node2D.new();
+	GuiHolder = CanvasLayer.new();
 	GuiHolder.name = "GuiHolder";
-	GuiHolder.z_index = 1;
 	get_parent().get_parent().add_child(GuiHolder);
 	var ui_elements = [heavyinfolabel, lightinfolabel, levelstar, levellabel, replaybuttons, virtualbuttons, winlabel, tutoriallabel, metainfolabel, menubutton];
 	for ui_element in ui_elements:
@@ -919,6 +918,7 @@ func filter_all_sprites(yes: bool) -> void:
 			root.add_child(node);
 		SuperScaling.get_parent().remove_child(SuperScaling);
 		SuperScaling.queue_free();
+		viewport.queue_free();
 		SuperScaling = null;
 	
 	if (yes and SuperScaling == null):
