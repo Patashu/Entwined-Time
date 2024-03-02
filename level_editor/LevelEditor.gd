@@ -296,14 +296,14 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.AntiGrate)
 		picker_array.append(Tiles.GhostPlatform)
 		picker_array.append(Tiles.Propellor)
+		picker_array.append(Tiles.FallOne)
+		picker_array.append(Tiles.FallInf)
 		picker_array.append(Tiles.DurPlus)
 		picker_array.append(Tiles.DurMinus)
 		picker_array.append(Tiles.HvyPlus)
 		picker_array.append(Tiles.HvyMinus)
 		picker_array.append(Tiles.StrPlus)
 		picker_array.append(Tiles.StrMinus)
-		picker_array.append(Tiles.FallInf)
-		picker_array.append(Tiles.FallOne)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
