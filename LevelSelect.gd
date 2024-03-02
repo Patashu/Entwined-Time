@@ -7,11 +7,13 @@ onready var chapter = gamelogic.chapter;
 onready var prevbutton : Button = get_node("Holder/PrevButton");
 onready var nextbutton : Button = get_node("Holder/NextButton");
 onready var leveleditorbutton : Button = get_node("Holder/LevelEditorButton");
+onready var communitylevelsbutton : Button = get_node("Holder/CommunityLevelsButton");
 onready var closebutton : Button = get_node("Holder/CloseButton");
 onready var pointer : Sprite = get_node("Holder/Pointer");
-onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, closebutton, pointer];
+onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, communitylevelsbutton, closebutton, pointer];
 var buttons_by_xy = {};
 var cutscene_button = null;
+var in_community_puzzles = false;
 
 func _ready() -> void:
 	prepare_chapter();
@@ -19,7 +21,19 @@ func _ready() -> void:
 	prevbutton.connect("pressed", self, "_prevbutton_pressed");
 	nextbutton.connect("pressed", self, "_nextbutton_pressed");
 	leveleditorbutton.connect("pressed", self, "_leveleditorbutton_pressed");
+	communitylevelsbutton.connect("pressed", self, "_communitylevelsbutton_pressed");
 	closebutton.connect("pressed", self, "destroy");
+	
+	if (gamelogic.puzzles_completed < gamelogic.chapter_standard_unlock_requirements[gamelogic.custom_past_here]):
+		communitylevelsbutton.disabled = true;
+		communitylevelsbutton.text = "???";
+	
+	if (gamelogic.chapter >= gamelogic.custom_past_here):
+		in_community_puzzles = true;
+		communitylevelsbutton.text = "Campaign Levels";
+		if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
+			prevbutton.disabled = true;
+			nextbutton.disabled = true;
 	
 	nextbutton.text = "Next Chapter (" + gamelogic.human_readable_input("next_level", 1) + ")";
 	prevbutton.text = "Prev. Chapter (" + gamelogic.human_readable_input("previous_level", 1) + ")";
@@ -29,7 +43,10 @@ func _prevbutton_pressed() -> void:
 		return;
 	
 	chapter -= 1;
-	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
+	if (in_community_puzzles):
+		chapter = posmod(int(chapter) - gamelogic.custom_past_here, gamelogic.chapter_names.size() - gamelogic.custom_past_here) + gamelogic.custom_past_here;
+	else:
+		chapter = posmod(int(chapter), gamelogic.custom_past_here);
 	prepare_chapter();
 	update_focus_neighbors();
 	prevbutton.grab_focus();
@@ -39,7 +56,10 @@ func _nextbutton_pressed() -> void:
 		return;
 	
 	chapter += 1;
-	chapter = posmod(int(chapter), gamelogic.chapter_names.size());
+	if (in_community_puzzles):
+		chapter = posmod(int(chapter) - gamelogic.custom_past_here, gamelogic.chapter_names.size() - gamelogic.custom_past_here) + gamelogic.custom_past_here;
+	else:
+		chapter = posmod(int(chapter), gamelogic.custom_past_here);
 	prepare_chapter();
 	update_focus_neighbors();
 	nextbutton.grab_focus();
@@ -51,6 +71,27 @@ func _leveleditorbutton_pressed() -> void:
 	var a = preload("res://level_editor/LevelEditor.tscn").instance();
 	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
+
+func _communitylevelsbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+		
+	in_community_puzzles = !in_community_puzzles;
+	if (in_community_puzzles):
+		chapter = gamelogic.custom_past_here;
+		prepare_chapter();
+		update_focus_neighbors();
+		communitylevelsbutton.text = "Community Levels";
+		if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
+			prevbutton.disabled = true;
+			nextbutton.disabled = true;
+	else:
+		chapter = 0;
+		prepare_chapter();
+		update_focus_neighbors();
+		communitylevelsbutton.text = "Campaign Levels";
+		prevbutton.disabled = false;
+		nextbutton.disabled = false;
 
 func update_focus_neighbors() -> void:
 	for pos in buttons_by_xy.keys():
@@ -116,6 +157,12 @@ func update_focus_neighbors() -> void:
 			closebutton.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[Vector2(1, 0)]);
 		elif (buttons_by_xy.has(Vector2(1, 1))):
 			closebutton.focus_neighbour_bottom = button.get_path_to(buttons_by_xy[Vector2(1, 1)]);
+			
+	#copy over level editor and community levels up/down from neighbours
+	leveleditorbutton.focus_neighbour_top = prevbutton.focus_neighbour_top;
+	leveleditorbutton.focus_neighbour_bottom = prevbutton.focus_neighbour_bottom;
+	communitylevelsbutton.focus_neighbour_top = nextbutton.focus_neighbour_top;
+	communitylevelsbutton.focus_neighbour_bottom = nextbutton.focus_neighbour_bottom;
 
 func prepare_chapter() -> void:
 	buttons_by_xy.clear();

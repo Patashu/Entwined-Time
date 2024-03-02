@@ -36,20 +36,30 @@ margin_left = 308.0
 margin_top = 223.0
 margin_right = 404.0
 margin_bottom = 238.0
-focus_neighbour_left = NodePath("../LevelEditorButton")
+focus_neighbour_left = NodePath("../CommunityLevelsButton")
 focus_neighbour_right = NodePath("../PrevButton")
 focus_neighbour_bottom = NodePath("../CloseButton")
 text = "Next Chapter (F2)"
 
 [node name="LevelEditorButton" type="Button" parent="Holder"]
-margin_left = 172.0
+margin_left = 118.0
 margin_top = 223.0
-margin_right = 236.0
+margin_right = 182.0
 margin_bottom = 238.0
 focus_neighbour_left = NodePath("../PrevButton")
-focus_neighbour_right = NodePath("../NextButton")
+focus_neighbour_right = NodePath("../CommunityLevelsButton")
 focus_neighbour_bottom = NodePath("../CloseButton")
 text = "Level Editor"
+
+[node name="CommunityLevelsButton" type="Button" parent="Holder"]
+margin_left = 197.0
+margin_top = 223.0
+margin_right = 293.0
+margin_bottom = 238.0
+focus_neighbour_left = NodePath("../LevelEditorButton")
+focus_neighbour_right = NodePath("../NextButton")
+focus_neighbour_bottom = NodePath("../CloseButton")
+text = "Community Levels"
 
 [node name="CloseButton" type="Button" parent="Holder"]
 margin_left = 391.0
