@@ -24,9 +24,10 @@ func _ready() -> void:
 	communitylevelsbutton.connect("pressed", self, "_communitylevelsbutton_pressed");
 	closebutton.connect("pressed", self, "destroy");
 	
-	if (gamelogic.puzzles_completed < gamelogic.chapter_standard_unlock_requirements[gamelogic.custom_past_here]):
-		communitylevelsbutton.disabled = true;
-		communitylevelsbutton.text = "???";
+	if !(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]):
+		if (gamelogic.puzzles_completed < gamelogic.chapter_standard_unlock_requirements[gamelogic.custom_past_here]):
+			communitylevelsbutton.disabled = true;
+			communitylevelsbutton.text = "???";
 	
 	if (gamelogic.chapter >= gamelogic.custom_past_here):
 		in_community_puzzles = true;
