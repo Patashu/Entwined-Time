@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262147, 50, 0, 262148, 50, 0, 262149, 50, 0, 327682, 50, 0, 327683, 50, 0, 327684, 50, 0, 327685, 50, 0, 393217, 50, 0, 393218, 50, 0, 393219, 50, 0, 393220, 50, 0, 393221, 50, 0, 458754, 50, 0, 458755, 50, 0, 458756, 50, 0, 458757, 50, 0, 524290, 50, 0, 524291, 50, 0, 524292, 50, 0, 524293, 50, 0 )
+
+[node name="@@1829" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196609, 1, 0, 0, 2, 14, 196609, 65536, 14, 262145, 65537, 23, 0, 65538, 14, 262145, 131072, 14, 262145, 131074, 14, 655362, 131075, 14, 393219, 131076, 14, 3, 131077, 14, 3, 131078, 14, 4, 196608, 14, 262145, 196609, 32, 0, 196610, 7, 0, 196611, 14, 131074, 196612, 14, 131075, 196613, 14, 131075, 196614, 14, 589829, 262144, 14, 589824, 262145, 14, 4, 262146, 32, 0, 262147, 3, 0, 262149, 3, 0, 262150, 14, 262145, 327680, 14, 589825, 327681, 14, 131076, 327682, 23, 0, 327686, 14, 262145, 393216, 14, 262145, 393217, 1, 0, 393220, 23, 0, 393222, 14, 262145, 458752, 14, 589826, 458753, 14, 196615, 458755, 8, 0, 458758, 14, 262145, 524288, 14, 262145, 524289, 30, 0, 524291, 2, 0, 524294, 14, 262145, 589824, 14, 655362, 589825, 14, 196614, 589826, 14, 196614, 589827, 14, 196614, 589828, 14, 196614, 589829, 14, 196614, 589830, 14, 655364 )
+
+[node name="@@1830" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262147, 45, 0, 458755, 39, 0, 524291, 39, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Spacetime Oven"
+level_author = "Neonesque"
+level_replay = "Spacetime Oven$mturn=174$xdaxdwdxwaxaaxwaxaxaawxwxwwwaxazxzzxzzxdxddaaxsxdaxssssxzxwxdwdwxwaxaxzxadwddxzxdxdsssdaxaxwddsaxdxasxwawaaaxwxzxwxdxwaxazzxdsxdwddxawxawawxwzzzzsxaxdaddxdwdxadwaxwaxdxwxaxwxdsdxdxwxdwaawxwzzxazzxzxdxdssdsaxazzzxdsawxdxaxwdwxwaxaazxwxzddxsxwawaxwz"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.0784314, 0.286275, 0.164706, 1 )
+target_track = 1.0

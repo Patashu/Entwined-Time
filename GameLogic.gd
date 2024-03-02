@@ -301,6 +301,7 @@ var voidlike_tiles = [];
 
 # information about the level
 var is_custom = false;
+var is_community_level = false;
 var test_mode = false;
 var custom_string = "";
 var chapter = 0;
@@ -444,6 +445,8 @@ var chapter_standard_starting_levels = [];
 var chapter_advanced_starting_levels = [];
 var chapter_standard_unlock_requirements = [];
 var chapter_advanced_unlock_requirements = [];
+var custom_past_here = -1;
+var custom_past_here_level_count = -1;
 var save_file_string = "user://entwinedtime.sav";
 
 var is_web = false;
@@ -1466,6 +1469,27 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
 	level_replacements[level_filenames.size()] = "-1";
 	level_filenames.push_back("Joke")
+	
+	custom_past_here = chapter_names.size();
+	custom_past_here_level_count = level_filenames.size();
+	chapter_names.push_back("Community Levels A");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CLA";
+	level_filenames.push_back("No Strings Attached")
+	level_filenames.push_back("Small Miracle")
+	level_filenames.push_back("Hot Soup")
+	level_filenames.push_back("Wheelbarrow")
+	level_filenames.push_back("Beyond Even Gravity")
+	level_filenames.push_back("Hot Soup [VAR1]")
+	level_filenames.push_back("Luxury Flight")
+	level_filenames.push_back("Friendship Paradox")
+	level_filenames.push_back("Spacetime Oven")
+	level_filenames.push_back("Hot Soup [VAR2]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
 
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1516,6 +1540,8 @@ func refresh_puzzles_completed() -> void:
 	advanced_puzzles_completed = 0;
 	specific_puzzles_completed = [];
 	for i in range(level_list.size()):
+		if (i >= custom_past_here_level_count):
+			return;
 		var level_name = level_names[i];
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 			specific_puzzles_completed.push_back(true);
@@ -1595,11 +1621,19 @@ func ready_map() -> void:
 	
 	has_insight_level = false;
 	insight_level_scene = null;
-	if (!is_custom):
+	if (!is_custom or is_community_level):
 		var insight_path = "res://levels/insight/" + level_filenames[level_number] + "Insight.tscn";
 		if (ResourceLoader.exists(insight_path)):
 			has_insight_level = true;
 			insight_level_scene = load(insight_path);
+	
+	if (is_custom):
+		is_community_level = false;
+	elif (chapter >= custom_past_here):
+		is_custom = true;
+		is_community_level = true;
+	else:
+		is_community_level = false;
 	
 	# if any of these become non-custom, then I can always check them or remove the boolean
 	has_crate_goals = false;
@@ -4755,13 +4789,20 @@ func setup_chapter_etc() -> void:
 			else:
 				level_in_chapter = level_number - chapter_standard_starting_levels[i];
 			break;
-	if (target_sky != chapter_skies[chapter]):
+	var target_target_track = chapter_tracks[chapter]
+	var target_target_sky = chapter_skies[chapter];
+	if (chapter >= custom_past_here):
+		var level_info = terrainmap.get_node_or_null("LevelInfo");
+		if (level_info != null):
+			target_target_sky = level_info.target_sky;
+			target_target_track = level_info.target_track;
+	if (target_sky != target_target_sky):
 		sky_timer = 0;
 		sky_timer_max = 3.0;
 		old_sky = current_sky;
-		target_sky = chapter_skies[chapter];
-	if (target_track != chapter_tracks[chapter]):
-		target_track = chapter_tracks[chapter];
+		target_sky = target_target_sky;
+	if (target_track != target_target_track):
+		target_track = target_target_track;
 		if (jukebox_track == -1):
 			if (current_track == -1):
 				play_next_song();
@@ -4807,6 +4848,8 @@ func load_level_direct(new_level: int) -> void:
 	load_level(impulse);
 	
 func load_level(impulse: int) -> void:
+	if (is_community_level):
+		is_custom = false;
 	if (impulse != 0 and test_mode):
 		level_editor();
 		test_mode = false;
@@ -4824,8 +4867,6 @@ func load_level(impulse: int) -> void:
 	if (impulse != 0):
 		level_number += impulse;
 		level_number = posmod(int(level_number), level_list.size());
-	
-	setup_chapter_etc();
 	
 	# we might try to F1/F2 onto a level we don't have access to. if so, back up then show level select.
 	if trying_to_load_locked_level():
@@ -4849,7 +4890,7 @@ func load_level(impulse: int) -> void:
 		save_game();
 	
 	var level = null;
-	if (is_custom):
+	if (is_custom and !is_community_level):
 		load_custom_level(custom_string);
 		return;
 	if (impulse == 0 and has_insight_level and in_insight_level and insight_level_scene != null):
@@ -4866,6 +4907,7 @@ func load_level(impulse: int) -> void:
 		if child is TileMap:
 			terrain_layers.push_front(child);
 	
+	setup_chapter_etc();
 	ready_map();
 
 func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
@@ -5567,7 +5609,7 @@ func update_level_label() -> void:
 		if (level_is_extra):
 			levelnumberastext += "X";
 	levellabel.text = levelnumberastext + " - " + level_name;
-	if (level_author != "" and level_author != "Patashu"):
+	if (level_author != "" and (level_author != "Patashu" or is_custom)):
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
 		levellabel.text += " (REPLAY)"
@@ -6083,7 +6125,7 @@ func gain_insight() -> void:
 		undo_effect_color = Color("A9F05F");
 	
 func serialize_current_level() -> String:
-	if (is_custom):
+	if (is_custom and !is_community_level):
 		return custom_string;
 	
 	# keep in sync with LevelEditor.gd serialize_current_level()
@@ -6230,6 +6272,7 @@ func load_custom_level(custom: String) -> void:
 		return;
 	
 	is_custom = true;
+	is_community_level = false;
 	custom_string = custom;
 	var level_info = level.get_node("LevelInfo");
 	level_name = level_info["level_name"];

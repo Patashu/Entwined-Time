@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 65536, 14, 262145, 65539, 14, 262145, 131072, 14, 655362, 131073, 14, 524292, 131075, 14, 589826, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 524292, 196609, 14, 262145, 196611, 14, 327681, 196614, 14, 262145, 262145, 14, 262145, 262149, 14, 524290, 262150, 14, 655364, 327681, 14, 262145, 327682, 34, 0, 327683, 34, 0, 327684, 34, 0, 327685, 14, 262145, 393217, 14, 655362, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 655364 )
+
+[node name="@@673" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196613, 1, 0, 327682, 7, 0 )
+
+[node name="@@674" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 2, 0, 327682, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Hot Soup"
+level_author = "Patashu"
+level_replay = "Hot Soup$mturn=19$dsdxwddxzsxzxzdaxdxzdwdxzz"
+heavy_max_moves = 6.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

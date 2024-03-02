@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 2, 2, 14, 4, 65536, 14, 2, 65537, 14, 917509, 65538, 14, 65540, 65544, 7, 0, 131072, 14, 131074, 131073, 14, 131075, 131074, 14, 131076, 131075, 8, 0, 131080, 14, 2, 131081, 14, 4, 196611, 2, 0, 196616, 14, 65538, 196617, 14, 65540, 262146, 14, 2, 262147, 14, 3, 262148, 14, 3, 262149, 14, 3, 262150, 14, 3, 262151, 14, 3, 262152, 14, 917509, 262153, 14, 65540, 327681, 1, 0, 327682, 14, 131074, 327683, 14, 917512, 327684, 14, 65539, 327685, 14, 65539, 327686, 14, 65539, 327687, 14, 917511, 327688, 14, 131075, 327689, 14, 131076, 393219, 14, 131074, 393220, 14, 131075, 393221, 14, 131075, 393222, 14, 131075, 393223, 14, 131076 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "No Strings Attached"
+level_author = "Neonesque"
+level_replay = "No Strings Attached$mturn=30$xdxwzxzddxddxzzxzzxdaaawxdaxzxzwxzzzdxzzaa"
+heavy_max_moves = 2.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.317647, 0.286275, 1 )
+target_track = 0.0
