@@ -15,6 +15,7 @@ var strength = 0
 var heaviness = 0
 var durability = 0
 var fall_speed = -1
+var floats = false
 var climbs = false
 var is_character = false
 var time_colour = 0
@@ -346,7 +347,7 @@ func fall_speed() -> int:
 	
 # because I want Light to float but not cuckoo clocks <w<
 func floats() -> bool:
-	return fall_speed() == 1 and is_character;
+	return floats;
 	
 func climbs() -> bool:
 	return climbs and !broken;

@@ -297,6 +297,14 @@ enum Tiles {
 	MagentaFloorboards, #112
 	GhostPlatform, #113
 	Propellor, #114
+	DurPlus, #115
+	DurMinus, #116
+	HvyPlus, #117
+	HvyMinus, #118
+	StrPlus, #119
+	StrMinus, #120
+	FallInf, #121
+	FallOne, #122
 }
 var voidlike_tiles = [];
 
@@ -2055,6 +2063,7 @@ func make_actors() -> void:
 			light_actor.durability = Durability.SPIKES;
 			light_actor.fall_speed = 1;
 			light_actor.climbs = true;
+			light_actor.floats = true;
 			light_actor.color = light_color;
 			light_actor.powered = light_max_moves != 0;
 			if (light_actor.pos.x > (map_x_max / 2)):
@@ -2246,6 +2255,14 @@ func find_colour(id: int, time_colour : int) -> void:
 	
 func find_modifiers() -> void:
 	find_modifier(Tiles.Propellor);
+	find_modifier(Tiles.DurPlus);
+	find_modifier(Tiles.DurMinus);
+	find_modifier(Tiles.HvyPlus);
+	find_modifier(Tiles.HvyMinus);
+	find_modifier(Tiles.StrPlus);
+	find_modifier(Tiles.StrMinus);
+	find_modifier(Tiles.FallInf);
+	find_modifier(Tiles.FallOne);
 	
 func find_modifier(id: int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -2268,6 +2285,23 @@ func find_modifier(id: int) -> void:
 						Tiles.Propellor:
 							actor.propellor = sprite;
 							sprite.position += Vector2(0, -cell_size);
+						Tiles.DurPlus:
+							actor.durability += 1;
+						Tiles.DurMinus:
+							actor.durability -= 1;
+						Tiles.HvyPlus:
+							actor.heaviness += 1;
+						Tiles.HvyMinus:
+							actor.heaviness -= 1;
+						Tiles.StrPlus:
+							actor.strength += 1;
+						Tiles.StrMinus:
+							actor.strength -= 1;
+						Tiles.FallInf:
+							actor.fall_speed = 99;
+						Tiles.FallOne:
+							actor.fall_speed = 1;
+							actor.floats = false;
 	
 func calculate_map_size() -> void:
 	map_x_max = 0;

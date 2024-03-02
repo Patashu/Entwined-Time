@@ -118,6 +118,14 @@ enum Tiles {
 	MagentaFloorboards, #112
 	GhostPlatform, #113
 	Propellor, #114
+	DurPlus, #115
+	DurMinus, #116
+	HvyPlus, #117
+	HvyMinus, #118
+	StrPlus, #119
+	StrMinus, #120
+	FallInf, #121
+	FallOne, #122
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -288,6 +296,14 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.AntiGrate)
 		picker_array.append(Tiles.GhostPlatform)
 		picker_array.append(Tiles.Propellor)
+		picker_array.append(Tiles.DurPlus)
+		picker_array.append(Tiles.DurMinus)
+		picker_array.append(Tiles.HvyPlus)
+		picker_array.append(Tiles.HvyMinus)
+		picker_array.append(Tiles.StrPlus)
+		picker_array.append(Tiles.StrMinus)
+		picker_array.append(Tiles.FallInf)
+		picker_array.append(Tiles.FallOne)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -826,6 +842,22 @@ func picker_tooltip() -> void:
 			text = "Ghost Platform: Solid to gravity moves of non-Character actors."
 		Tiles.Propellor:
 			text = "Propellor: On level start, attaches to an actor in the tile below. That actor doesn't experience gravity, ever."
+		Tiles.DurPlus:
+			text = "Durability Plus: On level start, attaches to an actor in this tile. That actor gains +1 Durability."
+		Tiles.DurMinus:
+			text = "Durability Minus: On level start, attaches to an actor in this tile. That actor gains -1 Durability."
+		Tiles.HvyPlus:
+			text = "Heaviness Plus: On level start, attaches to an actor in this tile. That actor gains +1 Heaviness."
+		Tiles.HvyMinus:
+			text = "Heaviness Minus: On level start, attaches to an actor in this tile. That actor gains -1 Heaviness."
+		Tiles.StrPlus:
+			text = "Strength Plus: On level start, attaches to an actor in this tile. That actor gains +1 Strength."
+		Tiles.StrMinus:
+			text = "Strength Minus: On level start, attaches to an actor in this tile. That actor gains -1 Strength."
+		Tiles.FallInf:
+			text = "Fall Speed Infinite: On level start, attaches to an actor in this tile. That actor's Fall Speed is set to Infinite."
+		Tiles.FallOne:
+			text = "Fall Speed 1: On level start, attaches to an actor in this tile. That actor's Fall Speed is set to 1. (Additionally, if it's Light, it loses Floating.)"
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));
