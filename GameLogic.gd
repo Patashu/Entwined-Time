@@ -296,6 +296,7 @@ enum Tiles {
 	AntiGrate, #111
 	MagentaFloorboards, #112
 	GhostPlatform, #113
+	Propellor, #114
 }
 var voidlike_tiles = [];
 
@@ -2092,7 +2093,8 @@ func make_actors() -> void:
 		extract_actors(Tiles.Boulder, Actor.Name.Boulder, Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 1, false, Color(0.75, 0.75, 0.75, 1));
 	
 	find_colours();
-	
+	if (is_custom):
+		find_modifiers();
 	tick_clocks();
 	
 func tick_clocks() -> void:
@@ -2217,13 +2219,14 @@ func find_colours() -> void:
 	find_colour(Tiles.ColourMagenta, TimeColour.Magenta);
 	find_colour(Tiles.ColourGray, TimeColour.Gray);
 	find_colour(Tiles.ColourGreen, TimeColour.Green);
-	find_colour(Tiles.ColourVoid, TimeColour.Void);
-	find_colour(Tiles.ColourPurple, TimeColour.Purple);
-	find_colour(Tiles.ColourBlurple, TimeColour.Blurple);
-	find_colour(Tiles.ColourCyan, TimeColour.Cyan);
-	find_colour(Tiles.ColourOrange, TimeColour.Orange);
-	find_colour(Tiles.ColourYellow, TimeColour.Yellow);
-	find_colour(Tiles.ColourWhite, TimeColour.White);
+	if (is_custom):
+		find_colour(Tiles.ColourVoid, TimeColour.Void);
+		find_colour(Tiles.ColourPurple, TimeColour.Purple);
+		find_colour(Tiles.ColourBlurple, TimeColour.Blurple);
+		find_colour(Tiles.ColourCyan, TimeColour.Cyan);
+		find_colour(Tiles.ColourOrange, TimeColour.Orange);
+		find_colour(Tiles.ColourYellow, TimeColour.Yellow);
+		find_colour(Tiles.ColourWhite, TimeColour.White);
 	
 func find_colour(id: int, time_colour : int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -2240,6 +2243,31 @@ func find_colour(id: int, time_colour : int) -> void:
 						var value = save_file["colourblind_mode"];
 						actor.setup_colourblind_mode(value);
 					break;
+	
+func find_modifiers() -> void:
+	find_modifier(Tiles.Propellor);
+	
+func find_modifier(id: int) -> void:
+	var layers_tiles = get_used_cells_by_id_all_layers(id);
+	for i in range(layers_tiles.size()):
+		var tiles = layers_tiles[i];
+		for tile in tiles:
+			terrain_layers[i].set_cellv(tile, -1);
+			for actor in actors:
+				var condition = false;
+				if (id == Tiles.Propellor):
+					condition = (actor.pos == tile + Vector2.DOWN) and actor.propellor == null;
+				else:
+					condition = actor.pos == tile;
+				if condition:
+					var sprite = Sprite.new();
+					actor.add_child(sprite);
+					sprite.texture = terrainmap.tile_set.tile_get_texture(id);
+					sprite.centered = false;
+					match id:
+						Tiles.Propellor:
+							actor.propellor = sprite;
+							sprite.position += Vector2(0, -cell_size);
 	
 func calculate_map_size() -> void:
 	map_x_max = 0;
@@ -3313,7 +3341,8 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 	return result;
 	
 func is_suspended(actor: Actor):
-	#PERF: could try caching this and only updating it when an actor moves or breaks
+	if (actor.propellor != null):
+		return true;
 	if (!actor.climbs()):
 		return false;
 	var terrain = terrain_in_tile(actor.pos);

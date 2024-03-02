@@ -67,6 +67,7 @@ var joke_goal = null;
 # action lines!
 var action_lines_timer = 0;
 var action_lines_timer_max = 0.25;
+var propellor = null;
 
 # faster than string comparisons
 enum Name {
@@ -337,6 +338,8 @@ func setup_colourblind_mode(value: bool) -> void:
 # If fallspeed is 2 or higher, actor may move sideways at airborne 1 and in no direction at airborne 0.
 # (A forbidden direction is a null move and passes time.)
 func fall_speed() -> int:
+	if propellor != null:
+		return 0;
 	if broken and !is_crystal:
 		return 99;
 	return fall_speed;

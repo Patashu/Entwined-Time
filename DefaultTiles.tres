@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=363 format=2]
+[gd_resource type="TileSet" load_steps=364 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -334,6 +334,7 @@
 [ext_resource path="res://assets/antigrate.png" type="Texture" id=332]
 [ext_resource path="res://assets/floorboards_magenta.png" type="Texture" id=333]
 [ext_resource path="res://assets/ghost_platform.png" type="Texture" id=334]
+[ext_resource path="res://assets/propellor.png" type="Texture" id=335]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2536,3 +2537,17 @@ frame_7/delay_sec = 0.0
 113/shape_one_way_margin = 0.0
 113/shapes = [  ]
 113/z_index = 0
+114/name = "Propellor"
+114/texture = ExtResource( 335 )
+114/tex_offset = Vector2( 0, 0 )
+114/modulate = Color( 1, 1, 1, 1 )
+114/region = Rect2( 0, 0, 24, 24 )
+114/tile_mode = 0
+114/occluder_offset = Vector2( 12, 12 )
+114/navigation_offset = Vector2( 12, 12 )
+114/shape_offset = Vector2( 0, 0 )
+114/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+114/shape_one_way = false
+114/shape_one_way_margin = 0.0
+114/shapes = [  ]
+114/z_index = 0
