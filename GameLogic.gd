@@ -2103,8 +2103,7 @@ func make_actors() -> void:
 		extract_actors(Tiles.Boulder, Actor.Name.Boulder, Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 1, false, Color(0.75, 0.75, 0.75, 1));
 	
 	find_colours();
-	if (is_custom):
-		find_modifiers();
+	find_modifiers();
 	tick_clocks();
 	
 func tick_clocks() -> void:
@@ -2248,8 +2247,11 @@ Tiles.ColourOrange: TimeColour.Orange,
 Tiles.ColourYellow: TimeColour.Yellow,
 Tiles.ColourWhite: TimeColour.White
 }
+var loose_colours = false;
+var loose_modifiers = false;
 
 func find_colours() -> void:
+	loose_colours = false;
 	var n = 5;
 	if (is_custom):
 		n = colours_list.size();
@@ -2262,7 +2264,7 @@ func find_colour(id: int, time_colour : int) -> void:
 	for i in range(layers_tiles.size()):
 		var tiles = layers_tiles[i];
 		for tile in tiles:
-			terrain_layers[i].set_cellv(tile, -1);
+			var found = false;
 			# get first actor with the same pos and native colour and change their time_colour
 			for actor in actors:
 				if actor.pos == tile and actor.is_native_colour():
@@ -2271,25 +2273,23 @@ func find_colour(id: int, time_colour : int) -> void:
 					if (save_file.has("colourblind_mode")):
 						var value = save_file["colourblind_mode"];
 						actor.setup_colourblind_mode(value);
+					terrain_layers[i].set_cellv(tile, -1);
 					break;
+				if (!found):
+					loose_colours = true;
 	
 func find_modifiers() -> void:
-	find_modifier(Tiles.Propellor);
-	find_modifier(Tiles.DurPlus);
-	find_modifier(Tiles.DurMinus);
-	find_modifier(Tiles.HvyPlus);
-	find_modifier(Tiles.HvyMinus);
-	find_modifier(Tiles.StrPlus);
-	find_modifier(Tiles.StrMinus);
-	find_modifier(Tiles.FallInf);
-	find_modifier(Tiles.FallOne);
+	loose_modifiers = false;
+	if (is_custom):
+		for id in range(Tiles.Propellor, Tiles.FallOne + 1):
+			find_modifier(id);
 	
 func find_modifier(id: int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
 	for i in range(layers_tiles.size()):
 		var tiles = layers_tiles[i];
 		for tile in tiles:
-			terrain_layers[i].set_cellv(tile, -1);
+			var found = false;
 			for actor in actors:
 				var condition = false;
 				if (id == Tiles.Propellor):
@@ -2322,6 +2322,11 @@ func find_modifier(id: int) -> void:
 						Tiles.FallOne:
 							actor.fall_speed = 1;
 							actor.floats = false;
+					terrain_layers[i].set_cellv(tile, -1);
+					found = true;
+					break;
+			if (!found):
+				loose_modifiers = true;
 	
 func calculate_map_size() -> void:
 	map_x_max = 0;
