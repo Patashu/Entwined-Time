@@ -6234,6 +6234,9 @@ func _input(event: InputEvent) -> void:
 		return;
 	
 	if event is InputEventMouseButton:
+		replayturnslider.release_focus();
+		replayspeedslider.release_focus();
+		
 		var mouse_position = adjusted_mouse_position();
 		var heavy_rect = heavy_actor.get_rect();
 		var light_rect = light_actor.get_rect();
@@ -6808,6 +6811,8 @@ func _process(delta: float) -> void:
 			#end_replay(); #done in escape();
 			escape();
 		elif (!get_debounced):
+			# and !replayspeedslider.has_focus() and !replayturnslider.has_focus()
+			# (not necessary right now as they auto-unfocus in _input)
 			if (Input.is_action_just_pressed("ui_left")):
 				dir = Vector2.LEFT;
 			if (Input.is_action_just_pressed("ui_right")):
