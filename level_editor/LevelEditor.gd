@@ -681,13 +681,13 @@ func picker_tooltip() -> void:
 		Tiles.NoCrate:
 			text = "No Crate: Solid to non-Character actors."
 		Tiles.ColourRed:
-			text = "Red: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Heavy moves."
+			text = "Red: Colour. (Attaches to the first actor to enter or start in its tile it can modify.) Experiences time when Heavy moves."
 		Tiles.ColourBlue:
-			text = "Blue: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time when Light moves."
+			text = "Blue: Colour. (Attaches to the first actor to enter or start in its tile it can modify.) Experiences time when Light moves."
 		Tiles.ColourGray:
-			text = "Gray: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Experiences time during moves."
+			text = "Gray: Colour. (Attaches to the first actor to enter or start in its tile it can modify.) Experiences time during moves."
 		Tiles.ColourMagenta:
-			text = "Magenta: Colour. (Place a Colour in the same tile as an actor to assign it to the first actor in reading order.) Always experiences time."
+			text = "Magenta: Colour. (Attaches to the first actor to enter or start in its tile it can modify.) Always experiences time."
 		Tiles.WoodenCrate:
 			text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead."
 		Tiles.GlassBlock:
@@ -721,7 +721,7 @@ func picker_tooltip() -> void:
 		Tiles.PowerCrate:
 			text = "Power Crate: Actor. Heaviness: Wooden. Strength: Steel. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
 		Tiles.ColourVoid:
-			text = "Void: Colour. Always experiences time, INCLUDING after meta undos. Immune to character undo AND meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+			text = "Void: Colour. (Void coloured actors can't lose their colour even through meta-undos and can't be given other colours.) Always experiences time, INCLUDING after meta undos. Immune to character undo AND meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
 		Tiles.ColourCyan:
 			text = "Cyan: Colour. Experiences time when Light moves or undoes."
 		Tiles.ColourOrange:
