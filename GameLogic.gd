@@ -121,6 +121,7 @@ enum Undo {
 	# crystal undos over
 	tick, #26
 	time_bubble, #27
+	sprite, #28
 }
 
 # and same for animations
@@ -2285,7 +2286,7 @@ func find_modifiers() -> void:
 	if (is_custom):
 		for id in range(Tiles.Propellor, Tiles.FallOne + 1):
 			find_modifier(id);
-	
+
 func find_modifier(id: int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
 	for i in range(layers_tiles.size()):
@@ -2300,36 +2301,46 @@ func find_modifier(id: int) -> void:
 					condition = actor.pos == tile;
 				if condition:
 					var sprite = Sprite.new();
-					actor.add_child(sprite);
-					sprite.texture = terrainmap.tile_set.tile_get_texture(id);
-					sprite.centered = false;
-					match id:
-						Tiles.Propellor:
-							actor.propellor = sprite;
-							sprite.position += Vector2(0, -cell_size);
-						Tiles.DurPlus:
-							actor.durability += 1;
-						Tiles.DurMinus:
-							actor.durability -= 1;
-						Tiles.HvyPlus:
-							actor.heaviness += 1;
-						Tiles.HvyMinus:
-							actor.heaviness -= 1;
-						Tiles.StrPlus:
-							actor.strength += 1;
-						Tiles.StrMinus:
-							actor.strength -= 1;
-						Tiles.FallInf:
-							actor.fall_speed = 99;
-						Tiles.FallOne:
-							actor.fall_speed = 1;
-							actor.floats = false;
-					terrain_layers[i].set_cellv(tile, -1);
+					attach_modifier(actor, i, tile, id, Chrono.TIMELESS);
 					found = true;
 					break;
 			if (!found):
 				loose_modifiers = true;
-	
+
+func attach_modifier(actor, i, tile, id, chrono):
+	var sprite = Sprite.new();
+	actor.add_child(sprite);
+	sprite.texture = terrainmap.tile_set.tile_get_texture(id);
+	sprite.centered = false;
+	match id:
+		Tiles.Propellor:
+			set_actor_var(actor, "propellor", sprite, chrono);
+			sprite.position += Vector2(0, -cell_size);
+			if (actor.airborne != -1):
+				set_actor_var(actor, "airborne", -1, chrono);
+		Tiles.DurPlus:
+			set_actor_var(actor, "durability", actor.durability + 1, chrono);
+		Tiles.DurMinus:
+			set_actor_var(actor, "durability", actor.durability - 1, chrono);
+		Tiles.HvyPlus:
+			set_actor_var(actor, "heaviness", actor.durability + 1, chrono);
+		Tiles.HvyMinus:
+			set_actor_var(actor, "heaviness", actor.durability - 1, chrono);
+		Tiles.StrPlus:
+			set_actor_var(actor, "strength", actor.durability + 1, chrono);
+		Tiles.StrMinus:
+			set_actor_var(actor, "strength", actor.durability - 1, chrono);
+		Tiles.FallInf:
+			set_actor_var(actor, "fall_speed", 99, chrono);
+		Tiles.FallOne:
+			set_actor_var(actor, "fall_speed", 1, chrono);
+			set_actor_var(actor, "floats", false, chrono);
+	if (chrono == Chrono.TIMELESS):
+		terrain_layers[i].set_cellv(tile, -1);
+	else:
+		maybe_change_terrain(actor, tile, i, false, Greenness.Green, chrono, -1);
+	return sprite;
+
 func calculate_map_size() -> void:
 	map_x_max = 0;
 	map_y_max = 0;
@@ -2892,13 +2903,23 @@ boost_pad_reentrance: bool = false) -> int:
 							maybe_change_terrain(actor, actor.pos, i, false, greenness, chrono, -1);
 						break;
 			if (loose_modifiers):
+				var chrono_to_use = chrono;
+				if (chrono_to_use < Chrono.CHAR_UNDO):
+					chrono_to_use = Chrono.CHAR_UNDO;
 				for i in range(terrain.size()):
 					var id = terrain[i];
 					if id >= Tiles.DurPlus and id <= Tiles.FallOne:
-						
+						var sprite = attach_modifier(actor, i, actor.pos, id, chrono_to_use);
+						add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
 						break;
-				# TODO: propellor
-				pass
+				if (actor.propellor == null):
+					var terrain_above = terrain_in_tile(actor.pos + Vector2.UP);
+					for i in range(terrain_above.size()):
+						var id = terrain_above[i];
+						if (id == Tiles.Propellor):
+							var sprite = attach_modifier(actor, i, actor.pos + Vector2.UP, id, chrono_to_use);
+							add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
+							break;
 		
 		# slopes 2) then after the !is_retro first move succeeds and commits,
 		# again we try to do the second moves in order, and take the first one that succeeds.
@@ -4661,6 +4682,11 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var old_time_colour = event[2];
 			actor.time_colour = old_time_colour;
 			actor.update_time_bubble();
+		Undo.sprite:
+			var actor = event[1];
+			var sprite = event[2];
+			sprite.get_parent().remove_child(sprite);
+			sprite.queue_free();
 
 func meta_undo_a_restart() -> bool:
 	var meta_undo_a_restart_type = 2;

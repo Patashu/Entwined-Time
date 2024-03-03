@@ -841,23 +841,23 @@ func picker_tooltip() -> void:
 		Tiles.GhostPlatform:
 			text = "Ghost Platform: Solid to gravity moves of non-Character actors."
 		Tiles.Propellor:
-			text = "Propellor: On level start, attaches to an actor in the tile below. That actor doesn't experience gravity, ever."
+			text = "Propellor: Hat. (Attaches to an actor in the tile below. Doesn't make a character undo event.) That actor doesn't experience gravity, ever."
 		Tiles.DurPlus:
-			text = "Durability Plus: On level start, attaches to an actor in this tile. That actor gains +1 Durability."
+			text = "Durability Plus: Modifier. (Attaches to an actor entering or starting in this tile.) On level start, attaches to an actor in this tile. That actor gains +1 Durability."
 		Tiles.DurMinus:
-			text = "Durability Minus: On level start, attaches to an actor in this tile. That actor gains -1 Durability."
+			text = "Durability Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Durability."
 		Tiles.HvyPlus:
-			text = "Heaviness Plus: On level start, attaches to an actor in this tile. That actor gains +1 Heaviness."
+			text = "Heaviness Plus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains +1 Heaviness."
 		Tiles.HvyMinus:
-			text = "Heaviness Minus: On level start, attaches to an actor in this tile. That actor gains -1 Heaviness."
+			text = "Heaviness Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Heaviness."
 		Tiles.StrPlus:
-			text = "Strength Plus: On level start, attaches to an actor in this tile. That actor gains +1 Strength."
+			text = "Strength Plus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains +1 Strength."
 		Tiles.StrMinus:
-			text = "Strength Minus: On level start, attaches to an actor in this tile. That actor gains -1 Strength."
+			text = "Strength Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Strength."
 		Tiles.FallInf:
-			text = "Fall Speed Infinite: On level start, attaches to an actor in this tile. That actor's Fall Speed is set to Infinite."
+			text = "Fall Speed Infinite: Modifier. (Attaches to an actor entering or starting in this tile.) That actor's Fall Speed is set to Infinite."
 		Tiles.FallOne:
-			text = "Fall Speed 1: On level start, attaches to an actor in this tile. That actor's Fall Speed is set to 1. (Additionally, if it's Light, it loses Floating.)"
+			text = "Fall Speed 1: Modifier. (Attaches to an actor entering or starting in this tile.) That actor's Fall Speed is set to 1. (Additionally, if it's Light, it loses Floating.)"
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));
