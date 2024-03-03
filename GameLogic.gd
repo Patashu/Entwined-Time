@@ -1175,6 +1175,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("EventHorizon")
 	level_filenames.push_back("PushingItSequel")
 	level_filenames.push_back("Daredevils")
+	level_filenames.push_back("FootWiggle")
 	level_filenames.push_back("SolidPuzzle")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -1495,7 +1496,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Small Miracle")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Wheelbarrow")
-	level_filenames.push_back("Foot Wiggle")
 	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("PezDispenser")
 	level_filenames.push_back("Donk")
