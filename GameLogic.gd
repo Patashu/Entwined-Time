@@ -2222,21 +2222,40 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 				goal.update_graphics();
 				actor.joke_goal = goal;
 				actor.add_child(goal);
-	
+
+var colours_list = [Tiles.ColourRed,
+Tiles.ColourBlue,
+Tiles.ColourMagenta,
+Tiles.ColourGray,
+Tiles.ColourGreen,
+Tiles.ColourVoid,
+Tiles.ColourPurple,
+Tiles.ColourBlurple,
+Tiles.ColourCyan,
+Tiles.ColourOrange,
+Tiles.ColourYellow,
+Tiles.ColourWhite];
+var colours_dictionary = {Tiles.ColourRed: TimeColour.Red,
+Tiles.ColourBlue: TimeColour.Blue,
+Tiles.ColourMagenta: TimeColour.Magenta,
+Tiles.ColourGray: TimeColour.Gray,
+Tiles.ColourGreen: TimeColour.Green,
+Tiles.ColourVoid: TimeColour.Void,
+Tiles.ColourPurple: TimeColour.Purple,
+Tiles.ColourBlurple: TimeColour.Blurple,
+Tiles.ColourCyan: TimeColour.Cyan,
+Tiles.ColourOrange: TimeColour.Orange,
+Tiles.ColourYellow: TimeColour.Yellow,
+Tiles.ColourWhite: TimeColour.White
+}
+
 func find_colours() -> void:
-	find_colour(Tiles.ColourRed, TimeColour.Red);
-	find_colour(Tiles.ColourBlue, TimeColour.Blue);
-	find_colour(Tiles.ColourMagenta, TimeColour.Magenta);
-	find_colour(Tiles.ColourGray, TimeColour.Gray);
-	find_colour(Tiles.ColourGreen, TimeColour.Green);
+	var n = 5;
 	if (is_custom):
-		find_colour(Tiles.ColourVoid, TimeColour.Void);
-		find_colour(Tiles.ColourPurple, TimeColour.Purple);
-		find_colour(Tiles.ColourBlurple, TimeColour.Blurple);
-		find_colour(Tiles.ColourCyan, TimeColour.Cyan);
-		find_colour(Tiles.ColourOrange, TimeColour.Orange);
-		find_colour(Tiles.ColourYellow, TimeColour.Yellow);
-		find_colour(Tiles.ColourWhite, TimeColour.White);
+		n = colours_list.size();
+	for i in range(n):
+		var id = colours_list[i];
+		find_colour(id, colours_dictionary[id]);
 	
 func find_colour(id: int, time_colour : int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
