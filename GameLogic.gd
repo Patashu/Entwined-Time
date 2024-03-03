@@ -120,6 +120,7 @@ enum Undo {
 	light_filling_turn_actual,
 	# crystal undos over
 	tick, #26
+	time_bubble, #27
 }
 
 # and same for animations
@@ -155,6 +156,7 @@ enum Animation {
 	intro_hop, #28
 	stall, #29
 	dust, #30
+	time_bubble, #31
 }
 
 enum TimeColour {
@@ -2871,6 +2873,28 @@ boost_pad_reentrance: bool = false) -> int:
 				if (actor.momentum != dir):
 					set_actor_var(actor, "momentum", dir, chrono);
 		
+		# loose colours/modifiers check
+		if (chrono < Chrono.META_UNDO or (!is_retro and chrono < Chrono.TIMELESS)):
+			if (loose_colours):
+				for i in range(terrain.size()):
+					var id = terrain[i];
+					if colours_dictionary.has(id):
+						var time_colour = colours_dictionary[id];
+						if (actor.time_colour != TimeColour.Void and actor.time_colour != time_colour):
+							var old_time_colour = actor.time_colour;
+							actor.time_colour = time_colour;
+							add_undo_event([Undo.time_bubble, actor, old_time_colour],
+								chrono_for_maybe_green_actor(actor, Chrono.CHAR_UNDO));
+							actor.update_time_bubble();
+							add_to_animation_server(actor, [Animation.time_bubble, time_colour]);
+							var greenness = Greenness.Green;
+							if (time_colour == TimeColour.Void):
+								greenness = Greenness.Void;
+							maybe_change_terrain(actor, actor.pos, i, false, greenness, chrono, -1);
+			if (loose_modifiers):
+				# TODO: loose modifiers
+				pass
+		
 		# slopes 2) then after the !is_retro first move succeeds and commits,
 		# again we try to do the second moves in order, and take the first one that succeeds.
 		# (actually, I seem to have retconned this into 'remember which move we think is the valid next one
@@ -3114,6 +3138,8 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		else:
 			if (old_tile == Tiles.Fuzz):
 				play_sound("fuzz");
+			elif (colours_dictionary.has(old_tile)):
+				pass;
 			else:
 				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 	return Success.Surprise;
@@ -4625,6 +4651,11 @@ func undo_one_event(event: Array, chrono : int) -> void:
 				add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
 			else:
 				clock_ticks(actor, -amount, chrono, animation_nonce);
+		Undo.time_bubble:
+			var actor = event[1];
+			var old_time_colour = event[2];
+			actor.time_colour = old_time_colour;
+			actor.update_time_bubble();
 
 func meta_undo_a_restart() -> bool:
 	var meta_undo_a_restart_type = 2;

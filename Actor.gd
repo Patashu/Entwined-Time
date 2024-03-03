@@ -310,18 +310,18 @@ func is_native_colour():
 	return native_colour() == time_colour;
 
 func update_time_bubble():
-	if is_native_colour():
-		if time_bubble != null:
-			time_bubble.queue_free();
-			time_bubble = null;
-	else:
-		time_bubble = Sprite.new();
-		time_bubble.set_script(preload("res://TimeBubble.gd"));
-		time_bubble.texture = preload("res://assets/time_bubble.png");
-		time_bubble.centered = true;
+	if time_bubble != null:
+		time_bubble.queue_free();
+		time_bubble = null;
+	if !is_native_colour():
+		if (time_bubble == null):
+			time_bubble = Sprite.new();
+			time_bubble.set_script(preload("res://TimeBubble.gd"));
+			time_bubble.texture = preload("res://assets/time_bubble.png");
+			time_bubble.centered = true;
+			time_bubble.position = Vector2(12, 12);
+			self.add_child(time_bubble);
 		time_bubble.time_colour = time_colour;
-		time_bubble.position = Vector2(12, 12);
-		self.add_child(time_bubble);
 		time_bubble.time_bubble_colour()
 		
 func setup_colourblind_mode(value: bool) -> void:
@@ -953,6 +953,17 @@ func _process(delta: float) -> void:
 								sprite.position += sprite.velocity*0.25;
 								sprite.velocity *= -1;
 								sprite.modulate = color;
+				31: #time_bubble
+					update_time_bubble();
+					# PERF: static/global/const or something
+					var time_colours = [Color("808080"), Color("B200FF"), Color("5400FF"), Color("FF00DC"),
+					Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040"),
+					Color("00FFFF"), Color("FF6A00"), Color("FFD800"), Color("FFFFFF")];
+					var color = time_colours[current_animation[1]];
+					gamelogic.play_sound("usegreenality");
+					gamelogic.undo_effect_strength = 0.4;
+					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
+					gamelogic.undo_effect_color = color;
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;
