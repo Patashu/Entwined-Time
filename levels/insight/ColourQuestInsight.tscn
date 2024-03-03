@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 1, 0, 4, 14, 524290, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65539, 14, 524290, 65540, 14, 655364, 65542, 7, 0, 65543, 14, 262145, 131072, 14, 524290, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 589828, 131078, 14, 196613, 131079, 14, 589828, 196608, 14, 262145, 196611, 14, 655362, 196612, 14, 196615, 196615, 14, 262145, 262144, 14, 262145, 262146, 8, 0, 262147, 39, 0, 262150, 14, 524290, 262151, 14, 655364, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 655364 )
+
+[node name="@@20054" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 2, 0, 65541, 21, 0, 131077, 21, 0, 196613, 21, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Colour Quest (Insight)"
+level_author = "Patashu"
+level_replay = "Colour Quest (Insight)$mturn=21$xwawdwaddzzddddzzazzdz"
+heavy_max_moves = 0.0
+light_max_moves = 9.0
+clock_turns = ""
+target_sky = Color( 0.0784314, 0.286275, 0.164706, 1 )
+target_track = 1.0
