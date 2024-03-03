@@ -2885,7 +2885,6 @@ boost_pad_reentrance: bool = false) -> int:
 							actor.time_colour = time_colour;
 							add_undo_event([Undo.time_bubble, actor, old_time_colour],
 								chrono_for_maybe_green_actor(actor, Chrono.CHAR_UNDO));
-							actor.update_time_bubble();
 							add_to_animation_server(actor, [Animation.time_bubble, time_colour]);
 							var greenness = Greenness.Green;
 							if (time_colour == TimeColour.Void):
@@ -2893,7 +2892,12 @@ boost_pad_reentrance: bool = false) -> int:
 							maybe_change_terrain(actor, actor.pos, i, false, greenness, chrono, -1);
 						break;
 			if (loose_modifiers):
-				# TODO: loose modifiers
+				for i in range(terrain.size()):
+					var id = terrain[i];
+					if id >= Tiles.DurPlus and id <= Tiles.FallOne:
+						
+						break;
+				# TODO: propellor
 				pass
 		
 		# slopes 2) then after the !is_retro first move succeeds and commits,
@@ -3139,7 +3143,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		else:
 			if (old_tile == Tiles.Fuzz):
 				play_sound("fuzz");
-			elif (colours_dictionary.has(old_tile)):
+			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne)):
 				pass;
 			else:
 				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
