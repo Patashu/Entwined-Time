@@ -2891,6 +2891,7 @@ boost_pad_reentrance: bool = false) -> int:
 							if (time_colour == TimeColour.Void):
 								greenness = Greenness.Void;
 							maybe_change_terrain(actor, actor.pos, i, false, greenness, chrono, -1);
+						break;
 			if (loose_modifiers):
 				# TODO: loose modifiers
 				pass
