@@ -1491,6 +1491,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Small Miracle")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Wheelbarrow")
+	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("Beyond Even Gravity")
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Luxury Flight")
