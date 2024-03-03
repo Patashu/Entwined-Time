@@ -15,6 +15,8 @@ level_name = "Pez Dispenser"
 level_replay = "Pez Dispenser$mturn=19$adxdxadxaxadxaxaxzaxdxzaxaxzaxd"
 heavy_max_moves = 10
 light_max_moves = 4
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 7
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )

@@ -15,3 +15,5 @@ level_name = "Donk [VAR1]"
 level_replay = "Donk [VAR1]$mturn=20$wswxwaaxwxzzzdwdwsxzzxzdxw"
 heavy_max_moves = 6
 light_max_moves = 6
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 7
