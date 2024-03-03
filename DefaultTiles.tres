@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=372 format=2]
+[gd_resource type="TileSet" load_steps=373 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -343,6 +343,7 @@
 [ext_resource path="res://assets/FallOne.png" type="Texture" id=341]
 [ext_resource path="res://assets/DurPlus.png" type="Texture" id=342]
 [ext_resource path="res://assets/StrMinus.png" type="Texture" id=343]
+[ext_resource path="res://assets/colour_native.png" type="Texture" id=344]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2671,3 +2672,17 @@ frame_7/delay_sec = 0.0
 122/shape_one_way_margin = 0.0
 122/shapes = [  ]
 122/z_index = 0
+123/name = "ColourNative"
+123/texture = ExtResource( 344 )
+123/tex_offset = Vector2( 0, 0 )
+123/modulate = Color( 1, 1, 1, 1 )
+123/region = Rect2( 0, 0, 24, 24 )
+123/tile_mode = 0
+123/occluder_offset = Vector2( 12, 12 )
+123/navigation_offset = Vector2( 12, 12 )
+123/shape_offset = Vector2( 0, 0 )
+123/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+123/shape_one_way = false
+123/shape_one_way_margin = 0.0
+123/shapes = [  ]
+123/z_index = 0

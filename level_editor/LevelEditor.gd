@@ -126,6 +126,7 @@ enum Tiles {
 	StrMinus, #120
 	FallInf, #121
 	FallOne, #122
+	ColourNative, #123
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -242,8 +243,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.ColourPurple);
 		picker_array.append(Tiles.ColourBlurple);
 		picker_array.append(Tiles.ColourWhite);
-		picker_array.append(Tiles.VoidSpikeball);
-		picker_array.append(Tiles.VoidGlassBlock);
+		picker_array.append(Tiles.ColourNative)
 		picker_array.append(Tiles.ChronoHelixBlue);
 		picker_array.append(Tiles.ChronoHelixRed);
 		picker_array.append(Tiles.HeavyGoalJoke);
@@ -251,6 +251,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.PowerSocket);
 		picker_array.append(Tiles.GreenPowerSocket);
 		picker_array.append(Tiles.VoidPowerSocket);
+		picker_array.append(Tiles.VoidSpikeball);
+		picker_array.append(Tiles.VoidGlassBlock);
 		picker_array.append(Tiles.GlassBlockCracked);
 		picker_array.append(Tiles.PhaseWallBlue)
 		picker_array.append(Tiles.PhaseWallRed)
@@ -304,6 +306,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.HvyMinus)
 		picker_array.append(Tiles.StrPlus)
 		picker_array.append(Tiles.StrMinus)
+		
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -858,6 +861,8 @@ func picker_tooltip() -> void:
 			text = "Fall Speed Infinite: Modifier. (Attaches to an actor entering or starting in this tile.) That actor's Fall Speed is set to Infinite."
 		Tiles.FallOne:
 			text = "Fall Speed 1: Modifier. (Attaches to an actor entering or starting in this tile.) That actor's Fall Speed is set to 1. (Additionally, if it's Light, it loses Floating.)"
+		Tiles.ColourNative:
+			text = "Native Colour: A Colour that will change actors back to their native Time Colour. (For example, a Crate would become Gray, and Light would become Blurple.)";
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));

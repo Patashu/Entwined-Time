@@ -308,6 +308,7 @@ enum Tiles {
 	StrMinus, #120
 	FallInf, #121
 	FallOne, #122
+	ColourNative, #123
 }
 var voidlike_tiles = [];
 
@@ -2253,7 +2254,8 @@ Tiles.ColourBlurple: TimeColour.Blurple,
 Tiles.ColourCyan: TimeColour.Cyan,
 Tiles.ColourOrange: TimeColour.Orange,
 Tiles.ColourYellow: TimeColour.Yellow,
-Tiles.ColourWhite: TimeColour.White
+Tiles.ColourWhite: TimeColour.White,
+Tiles.ColourNative: -1
 }
 var loose_colours = false;
 var loose_modifiers = false;
@@ -2896,6 +2898,8 @@ boost_pad_reentrance: bool = false) -> int:
 					var id = terrain[i];
 					if colours_dictionary.has(id):
 						var time_colour = colours_dictionary[id];
+						if (time_colour == -1):
+							time_colour = actor.native_colour();
 						if (actor.time_colour != TimeColour.Void and actor.time_colour != time_colour):
 							var old_time_colour = actor.time_colour;
 							actor.time_colour = time_colour;
