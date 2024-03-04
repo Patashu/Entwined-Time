@@ -243,12 +243,18 @@ func prepare_chapter() -> void:
 		yy = 13;
 		yyy = 15;
 		
+	# final squish
+	if (advanced_end - normal_start) > 26:
+		y = -1;
+		
 	var standard_label = Label.new();
 	holder.add_child(standard_label);
 	standard_label.rect_position.x = round(xx + xxx*x);
 	standard_label.rect_position.y = round(yy + yyy*y + 2);
 	standard_label.text = "Standard:"
 	standard_label.theme = holder.theme;
+	if (y == -1):
+		standard_label.rect_position.y += 2;
 	
 	y += 1;
 	if (y == y_max):
