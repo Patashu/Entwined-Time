@@ -1,23 +1,27 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 3, 7, 0, 4, 1, 0, 65536, 2, 0, 65539, 14, 196613, 65540, 14, 196615, 65543, 8, 0, 131072, 14, 196609, 131079, 14, 196609, 196608, 14, 589824, 196609, 14, 4, 196614, 14, 2, 196615, 14, 589830, 262144, 14, 131074, 262145, 14, 786435, 262146, 14, 196615, 262149, 14, 196613, 262150, 14, 720899, 262151, 14, 131076 )
+tile_data = PoolIntArray( 0, 36, 0, 11, 35, 0, 65541, 7, 0, 65542, 1, 0, 131072, 14, 2, 131073, 14, 4, 131074, 2, 0, 131077, 14, 196613, 131078, 14, 196615, 131081, 8, 0, 131082, 14, 2, 131083, 14, 4, 196608, 14, 65538, 196609, 14, 917510, 196610, 14, 4, 196617, 14, 2, 196618, 14, 917509, 196619, 14, 65540, 262144, 14, 65538, 262145, 14, 65539, 262146, 14, 917510, 262147, 14, 4, 262152, 14, 2, 262153, 14, 917509, 262154, 14, 65539, 262155, 14, 65540, 327680, 14, 131074, 327681, 14, 131075, 327682, 14, 131075, 327683, 14, 131076, 327688, 14, 131074, 327689, 14, 131075, 327690, 14, 131075, 327691, 14, 131076 )
+
+[node name="@@2874" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 35, 0, 131081, 36, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Blue and Red"
-level_replay = "Blue and Red$mturn=11$wdddxwaaawxwdxa"
-heavy_max_moves = 6
-light_max_moves = 6
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 65536, 36, 0, 65543, 35, 0 )
+level_author = "Patashu"
+level_replay = "Blue and Red$mturn=25$waawzzzdddxwddwzzzaaaxwxaxzds"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
