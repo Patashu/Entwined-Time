@@ -82,7 +82,7 @@ func _communitylevelsbutton_pressed() -> void:
 		chapter = gamelogic.custom_past_here;
 		prepare_chapter();
 		update_focus_neighbors();
-		communitylevelsbutton.text = "Community Levels";
+		communitylevelsbutton.text = "Campaign Levels";
 		if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
 			prevbutton.disabled = true;
 			nextbutton.disabled = true;
@@ -90,7 +90,7 @@ func _communitylevelsbutton_pressed() -> void:
 		chapter = 0;
 		prepare_chapter();
 		update_focus_neighbors();
-		communitylevelsbutton.text = "Campaign Levels";
+		communitylevelsbutton.text = "Community Levels";
 		prevbutton.disabled = false;
 		nextbutton.disabled = false;
 
