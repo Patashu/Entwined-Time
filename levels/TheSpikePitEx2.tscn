@@ -17,7 +17,7 @@ tile_data = PoolIntArray( 196612, 19, 0, 196614, 22, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "The Spike Pit [VAR2]"
-level_replay = "The Spike Pit [VAR2]$mturn=45$xaasxddwdxzzxzzzzxzwxaxdxwzxzzdsxdxzzddxdxzzsssxdwdddxzzzaaa"
+level_name = "The Spikiest Pit"
+level_replay = "The Spikiest Pit$mturn=45$xaasxddwdxzzxzzzzxzwxaxdxwzxzzdsxdxzzddxdxzzsssxdwdddxzzzaaa"
 heavy_max_moves = 8
 light_max_moves = 3
