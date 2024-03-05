@@ -11,8 +11,8 @@ tile_data = PoolIntArray( 1, 8, 0, 2, 2, 0, 65536, 14, 196613, 65537, 14, 196615
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Invisible Bridge [VAR2]"
-level_replay = "Invisible Bridge [VAR2]$mturn=31$xwxaawxdxddxzzxwzwzwxdxzdxazxzzzzzzdxdddds"
+level_name = "Unfinished Bridge [VAR1]"
+level_replay = "Unfinished Bridge [VAR1]$mturn=31$xwxaawxdxddxzzxwzwzwxdxzdxazxzzzzzzdxdddds"
 heavy_max_moves = 8
 light_max_moves = 8
 
