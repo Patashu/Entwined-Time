@@ -211,6 +211,18 @@ func prepare_chapter() -> void:
 		if (requires_advanced_levels):
 			label.text = "Complete more Advanced puzzles: " + str(puzzles_completed) + "/" + str(unlock_requirement);
 			#ch2 is locked disclaimer
+			var b = Button.new();
+			holder.add_child(b);
+			b.text = nextbutton.text;
+			b.connect("pressed", self, "_nextbutton_pressed");
+			b.rect_position = Vector2(int(holder.rect_size.x/2-48), 51);
+			b.focus_neighbour_bottom = b.get_path_to(nextbutton);
+			nextbutton.focus_neighbour_top = nextbutton.get_path_to(b);
+			prevbutton.focus_neighbour_top = prevbutton.get_path_to(b);
+			leveleditorbutton.focus_neighbour_top = leveleditorbutton.get_path_to(b);
+			communitylevelsbutton.focus_neighbour_top = communitylevelsbutton.get_path_to(b);
+			closebutton.focus_neighbour_left = closebutton.get_path_to(b);
+			closebutton.focus_neighbour_bottom = closebutton.get_path_to(b);
 			var label2 = Label.new();
 			holder.add_child(label2);
 			label2.rect_position.x = 2;
