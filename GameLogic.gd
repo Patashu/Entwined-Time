@@ -1501,6 +1501,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
+	level_filenames.push_back("Soft Landing")
 	level_filenames.push_back("Pure Vertical")
 	level_filenames.push_back("Beyond Even Gravity")
 	level_filenames.push_back("Hot Soup [VAR1]")
