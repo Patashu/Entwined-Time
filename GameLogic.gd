@@ -1497,16 +1497,20 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Small Miracle")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Wheelbarrow")
-	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("PezDispenser")
+	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
+	level_filenames.push_back("Pure Vertical")
 	level_filenames.push_back("Beyond Even Gravity")
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Luxury Flight")
 	level_filenames.push_back("Friendship Paradox")
-	level_filenames.push_back("Spacetime Oven")
 	level_filenames.push_back("Hot Soup [VAR2]")
+	level_filenames.push_back("Kinematic Stability")
+	level_filenames.push_back("Second Wind")
+	level_filenames.push_back("Spacetime Oven")
+	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
 
