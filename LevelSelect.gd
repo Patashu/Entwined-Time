@@ -185,12 +185,32 @@ func prepare_chapter() -> void:
 	holder.finish_animations();
 	var all_standard_stars = true;
 	var all_advanced_stars = true;
+	var ending_part_1 = false;
+	var ending_part_2 = false;
 	
 	if (chapter == 0):
 		cutscene_button = Button.new();
 		holder.add_child(cutscene_button);
 		cutscene_button.text = "Intro Cutscene";
 		cutscene_button.connect("pressed", self, "_intro_cutscene_pressed");
+		cutscene_button.focus_neighbour_left = cutscene_button.get_path_to(closebutton);
+		cutscene_button.focus_neighbour_top = cutscene_button.get_path_to(prevbutton);
+		closebutton.focus_neighbour_right = closebutton.get_path_to(cutscene_button);
+	elif (chapter == 11):
+		cutscene_button = Button.new();
+		holder.add_child(cutscene_button);
+		
+		if gamelogic.save_file["levels"].has("A Way In?") and gamelogic.save_file["levels"]["A Way In?"].has("won") and gamelogic.save_file["levels"]["A Way In?"]["won"]:
+			ending_part_1 = true;
+		if gamelogic.save_file["levels"].has("Chrono Lab Reactor") and gamelogic.save_file["levels"]["Chrono Lab Reactor"].has("won") and gamelogic.save_file["levels"]["Chrono Lab Reactor"]["won"]:
+			ending_part_2 = true;
+		
+		if (ending_part_1):
+			cutscene_button.text = "Outro Cutscene";
+			cutscene_button.connect("pressed", self, "_outro_cutscene_pressed");
+		else:
+			cutscene_button.text = "???";
+			cutscene_button.disabled = true;
 		cutscene_button.focus_neighbour_left = cutscene_button.get_path_to(closebutton);
 		cutscene_button.focus_neighbour_top = cutscene_button.get_path_to(prevbutton);
 		closebutton.focus_neighbour_right = closebutton.get_path_to(cutscene_button);
@@ -297,6 +317,17 @@ func prepare_chapter() -> void:
 		button.theme = holder.theme;
 		button.levelselect = self;
 		
+		if (chapter == 11):
+			if (level_name == "A Way In?"):
+				var stylebox = preload("res://heavy_styleboxtexture.tres")
+				if (gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]):
+					stylebox = preload("res://meta_styleboxtexture.tres");
+				button.add_stylebox_override("hover", stylebox);
+				button.add_stylebox_override("pressed", stylebox);
+				button.add_stylebox_override("focus", stylebox);
+				button.add_stylebox_override("disabled", stylebox);
+				button.add_stylebox_override("normal", stylebox);
+		
 		# if we beat it, add a star :3
 		if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
 			var star = Sprite.new();
@@ -380,9 +411,20 @@ func prepare_chapter() -> void:
 					button.grab_focus();
 					
 				# lock Chrono Lab Reactor if not seen yet
-				if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and level_name == "Chrono Lab Reactor" and !gamelogic.save_file["levels"].has(level_name)):
-					button.text = "???";
-					button.disabled = true;
+				if (chapter == 11):
+					if (level_name == "Chrono Lab Reactor"):
+						if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and !gamelogic.save_file["levels"].has(level_name)):
+							button.text = "???";
+							button.disabled = true;
+							
+						stylebox = preload("res://heavy_styleboxtexture.tres")
+						if (gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]):
+							stylebox = preload("res://meta_styleboxtexture.tres");
+						button.add_stylebox_override("hover", stylebox);
+						button.add_stylebox_override("pressed", stylebox);
+						button.add_stylebox_override("focus", stylebox);
+						button.add_stylebox_override("disabled", stylebox);
+						button.add_stylebox_override("normal", stylebox);
 					
 				# if we beat it, add a star :3
 				if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
@@ -432,6 +474,10 @@ func prepare_chapter() -> void:
 func _intro_cutscene_pressed() -> void:
 	destroy();
 	gamelogic.title_screen();
+	
+func _outro_cutscene_pressed() -> void:
+	destroy();
+	gamelogic.ending_cutscene_1();
 
 func destroy() -> void:
 	self.queue_free();

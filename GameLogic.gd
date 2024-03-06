@@ -4928,6 +4928,12 @@ func title_screen() -> void:
 	var a = preload("res://TitleScreen.tscn").instance();
 	add_to_ui_stack(a);
 	
+func ending_cutscene_1() -> void:
+	pass
+	
+func ending_cutscene_2() -> void:
+	pass
+	
 func level_editor() -> void:
 	var a = preload("res://level_editor/LevelEditor.tscn").instance();
 	add_to_ui_stack(a);
