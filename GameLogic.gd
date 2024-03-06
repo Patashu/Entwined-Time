@@ -1765,16 +1765,51 @@ func ready_map() -> void:
 func intro_hop() -> void:
 	if (!ready_done):
 		return;
+	var dur = 0.5;
+	heavy_actor.modulate.a = 0.0;
+	add_to_animation_server(heavy_actor, [Animation.fade, 0.0, 1.0, dur]);
 	if (heavy_max_moves > 0):
+		add_to_animation_server(heavy_actor, [Animation.stall, dur/2]);
 		add_to_animation_server(heavy_actor, [Animation.intro_hop]);
+	light_actor.modulate.a = 0.0;
+	add_to_animation_server(light_actor, [Animation.fade, 0.0, 1.0, dur]);
 	if (light_max_moves > 0):
+		add_to_animation_server(light_actor, [Animation.stall, dur/2]);
 		add_to_animation_server(light_actor, [Animation.intro_hop]);
 	#heavy warp
-	#var sprite = Sprite.new();
-	#sprite.set_script(preload("res://GoalParticle.gd"));
-	#sprite.set_texture("res://assets/BigPortalRed.png");
-	#sprite.position = heavy_actor.position;
-	#overactorsparticles.add_child(sprite);
+	var sprite = Sprite.new();
+	sprite.set_script(preload("res://GoalParticle.gd"));
+	sprite.set_texture(preload("res://assets/BigPortalRed.png"));
+	sprite.position = heavy_actor.position + Vector2(cell_size/2, cell_size/2);
+	sprite.rotate_magnitude = 4.0;
+	sprite.scale = Vector2(0.0, 0.0);
+	sprite.fadeout_timer_max = dur;
+	sprite.alpha_max = 0.5;
+	var tween = Tween.new();
+	sprite.add_child(tween);
+	tween.interpolate_property(sprite, "scale", Vector2(0.0, 0.0), Vector2(0.5, 0.5), sprite.fadeout_timer_max/2,
+	Tween.TRANS_QUART, Tween.EASE_OUT);
+	tween.interpolate_property(sprite, "scale", Vector2(0.5, 0.5), Vector2(0.0, 0.0), sprite.fadeout_timer_max/2,
+	Tween.TRANS_QUART, Tween.EASE_IN, sprite.fadeout_timer_max/2);
+	overactorsparticles.add_child(sprite);
+	tween.start();
+	#light warp
+	sprite = Sprite.new();
+	sprite.set_script(preload("res://GoalParticle.gd"));
+	sprite.set_texture(preload("res://assets/BigPortalBlue.png"));
+	sprite.position = light_actor.position + Vector2(cell_size/2, cell_size/2);
+	sprite.rotate_magnitude = -4.0;
+	sprite.scale = Vector2(0.0, 0.0);
+	sprite.fadeout_timer_max = dur;
+	sprite.alpha_max = 0.5;
+	tween = Tween.new();
+	sprite.add_child(tween);
+	tween.interpolate_property(sprite, "scale", Vector2(0.0, 0.0), Vector2(0.375, 0.375), sprite.fadeout_timer_max/2,
+	Tween.TRANS_QUART, Tween.EASE_OUT);
+	tween.interpolate_property(sprite, "scale", Vector2(0.375, 0.375), Vector2(0.0, 0.0), sprite.fadeout_timer_max/2,
+	Tween.TRANS_QUART, Tween.EASE_IN, sprite.fadeout_timer_max/2);
+	overactorsparticles.add_child(sprite);
+	tween.start();
 
 func ready_tutorial() -> void:
 	if (winlabel.visible):
@@ -4870,7 +4905,7 @@ func restart(_is_silent: bool = false) -> void:
 	load_level(0);
 	cut_sound();
 	play_sound("restart");
-	undo_effect_strength = 0.5;
+	undo_effect_strength = 0.3;
 	undo_effect_per_second = undo_effect_strength*(1/0.5);
 	finish_animations(Chrono.TIMELESS);
 	undo_effect_color = meta_color;
@@ -6061,10 +6096,10 @@ func update_animation_server(skip_globals: bool = false) -> void:
 			won_fade_started = true;
 			if (lost):
 				fade_in_lost();
-			add_to_animation_server(heavy_actor, [Animation.fade]);
-			add_to_animation_server(light_actor, [Animation.fade]);
-			#add_to_animation_server(heavy_actor, [Animation.intro_hop]);
-			#add_to_animation_server(light_actor, [Animation.intro_hop]);
+			add_to_animation_server(heavy_actor, [Animation.fade, 1.0, 0.0, 3.0]);
+			add_to_animation_server(light_actor, [Animation.fade, 1.0, 0.0, 3.0]);
+			add_to_animation_server(heavy_actor, [Animation.intro_hop]);
+			add_to_animation_server(light_actor, [Animation.intro_hop]);
 		return;
 	
 	# we found new animations - give them to everyone at once

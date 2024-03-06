@@ -69,6 +69,7 @@ var joke_goal = null;
 var action_lines_timer = 0;
 var action_lines_timer_max = 0.25;
 var propellor = null;
+var fade_tween = null;
 
 # faster than string comparisons
 enum Name {
@@ -108,29 +109,33 @@ func update_graphics() -> void:
 		offset = Vector2(12, 12)/0.1;
 		scale = Vector2(0.1, 0.1);
 
-func get_next_texture() -> Texture:
+func get_next_texture(skip_powered: bool = false) -> Texture:
 	# powered modulate also update here, since I want that to be instant
 	
 	# powered
-	if is_character and !is_ghost:
-		if powered:
-			self.modulate = Color(1, 1, 1, 1);
-		else:
-			self.modulate = Color(0.5, 0.5, 0.5, 1);
-	elif (!is_character and !is_ghost):
-		if dinged and ding == null:
-			var sprite = Sprite.new();
-			sprite.set_script(preload("res://OneTimeSprite.gd"));
-			sprite.texture = preload("res://assets/crate_goal_success.png");
-			sprite.hframes = 10;
-			sprite.centered = false;
-			sprite.frame_max = 99;
-			sprite.frame_timer_max = 0.05;
-			self.add_child(sprite);
-			ding = sprite;
-		elif !dinged and ding != null:
-			ding.queue_free();
-			ding = null;
+	if (!skip_powered):
+		if is_character and !is_ghost:
+			if (fade_tween != null):
+				fade_tween.queue_free();
+				fade_tween = null;
+			if powered:
+				self.modulate = Color(1, 1, 1, 1);
+			else:
+				self.modulate = Color(0.5, 0.5, 0.5, 1);
+		elif (!is_character and !is_ghost):
+			if dinged and ding == null:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://OneTimeSprite.gd"));
+				sprite.texture = preload("res://assets/crate_goal_success.png");
+				sprite.hframes = 10;
+				sprite.centered = false;
+				sprite.frame_max = 99;
+				sprite.frame_timer_max = 0.05;
+				self.add_child(sprite);
+				ding = sprite;
+			elif !dinged and ding != null:
+				ding.queue_free();
+				ding = null;
 	
 	# airborne, broken
 	match actorname:
@@ -677,13 +682,12 @@ func _process(delta: float) -> void:
 				10: #afterimage_at
 					gamelogic.afterimage_terrain(current_animation[1], current_animation[2], current_animation[3]);
 				11: #fade
-					animation_timer_max = 3;
-					animation_timer += delta;
-					if (animation_timer > animation_timer_max):
-						self.modulate.a = 0;
-					else:
-						is_done = false;
-						self.modulate.a = 1-(animation_timer/animation_timer_max);
+					if (fade_tween != null):
+						fade_tween.queue_free();
+					fade_tween = Tween.new();
+					self.add_child(fade_tween);
+					fade_tween.interpolate_property(self, "modulate:a", current_animation[1], current_animation[2], current_animation[3]);
+					fade_tween.start();
 				12: #heavy_green_time_crystal_raw
 					var color = current_animation[1].color;
 					gamelogic.heavytimeline.add_max_turn();
@@ -818,40 +822,44 @@ func _process(delta: float) -> void:
 				27: #light_timeline_finish_animations
 					gamelogic.lighttimeline.finish_animations();
 				28: #intro_hop
-					var mult = 5;
-					if (actorname == Name.Heavy):
-						animation_timer_max = 0.5;
-						mult = 8;
+					if (!powered):
+						is_done = true;
 					else:
-						animation_timer_max = 1.0;
-						
-					
-					position.y += sin((animation_timer/animation_timer_max)*PI)*mult;
-					animation_timer += delta;
-					if (animation_timer > animation_timer_max):
+						var mult = 5;
 						if (actorname == Name.Heavy):
-							set_next_texture(preload("res://assets/heavy_idle.png"), facing_left);
+							animation_timer_max = 0.5;
+							mult = 8;
 						else:
-							set_next_texture(preload("res://assets/light_idle_animation.png"), facing_left);
-					else:
-						is_done = false;
-						position.y -= sin((animation_timer/animation_timer_max)*PI)*mult;
-						
-						if (animation_timer < animation_timer_max * (1.5/4.0)):
+							animation_timer_max = 1.0;
+							
+						position.y += sin((animation_timer/animation_timer_max)*PI)*mult;
+						animation_timer += delta;
+						if (animation_timer > animation_timer_max):
 							if (actorname == Name.Heavy):
-								set_next_texture(preload("res://assets/heavy_rising.png"), facing_left);
+								var tex = get_next_texture(true);
+								set_next_texture(tex, facing_left);
 							else:
-								set_next_texture(preload("res://assets/light_rising.png"), facing_left);
-						elif (animation_timer > animation_timer_max * (2.5/4.0)):
-							if (actorname == Name.Heavy):
-								set_next_texture(preload("res://assets/heavy_falling.png"), facing_left);
-							else:
-								set_next_texture(preload("res://assets/light_falling.png"), facing_left);
+								var tex = get_next_texture(true);
+								set_next_texture(tex, facing_left);
 						else:
-							if (actorname == Name.Heavy):
-								set_next_texture(preload("res://assets/heavy_idle.png"), facing_left);
+							is_done = false;
+							position.y -= sin((animation_timer/animation_timer_max)*PI)*mult;
+							
+							if (animation_timer < animation_timer_max * (1.5/4.0)):
+								if (actorname == Name.Heavy):
+									set_next_texture(preload("res://assets/heavy_rising.png"), facing_left);
+								else:
+									set_next_texture(preload("res://assets/light_rising.png"), facing_left);
+							elif (animation_timer > animation_timer_max * (2.5/4.0)):
+								if (actorname == Name.Heavy):
+									set_next_texture(preload("res://assets/heavy_falling.png"), facing_left);
+								else:
+									set_next_texture(preload("res://assets/light_falling.png"), facing_left);
 							else:
-								set_next_texture(preload("res://assets/light_idle_animation.png"), facing_left);
+								if (actorname == Name.Heavy):
+									set_next_texture(preload("res://assets/heavy_idle.png"), facing_left);
+								else:
+									set_next_texture(preload("res://assets/light_idle_animation.png"), facing_left);
 				29: #stall
 					animation_timer_max = current_animation[1];
 					animation_timer += delta;
