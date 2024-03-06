@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://CreditsModal.gd"
 }, {
+"base": "Node2D",
+"class": "EndingCutscene1",
+"language": "GDScript",
+"path": "res://EndingCutscene1.gd"
+}, {
 "base": "Sprite",
 "class": "FadingSprite",
 "language": "GDScript",
@@ -216,6 +221,7 @@ _global_script_class_icons={
 "BindingButton": "",
 "Controls": "",
 "CreditsModal": "",
+"EndingCutscene1": "",
 "FadingSprite": "",
 "FloatingText": "",
 "GainInsightModalPrompt": "",

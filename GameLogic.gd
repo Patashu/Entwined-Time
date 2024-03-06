@@ -4500,6 +4500,8 @@ func check_won() -> void:
 		if (won == true and !doing_replay):
 			if (level_name == "Joke"):
 				play_won("winbadtime");
+			elif (level_name == "A Way In?"):
+				pass
 			else:
 				play_won("winentwined");
 			var levels_save_data = save_file["levels"];
@@ -4542,13 +4544,15 @@ func check_won() -> void:
 		won_cooldown = 0;
 		if (level_name == "Joke"):
 			winlabel.change_text("Thanks for playing :3")
-		elif !using_controller and !doing_replay:
+		elif (level_name == "A Way In?" and !doing_replay):
+			target_track = -1;
+			fadeout_timer_max = 3.0;
+			fadeout_timer = 0.0;
+			Shade.on = true;
+			winlabel.change_text("You carefully enter the Chrono Lab Reactor...\n\n[" + human_readable_input("ui_accept", 1) + "]: Outro Cutscene\nWatch Replay: Menu -> Your Replay")
+		elif !doing_replay:
 			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue\nWatch Replay: Menu -> Your Replay")
-		elif !using_controller and doing_replay:
-			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue")
-		elif using_controller and !doing_replay:
-			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue\nWatch Replay: Menu -> Your Replay")
-		else:
+		elif doing_replay:
 			winlabel.change_text("You have won!\n\n[" + human_readable_input("ui_accept", 1) + "]: Continue")
 		won_fade_started = false;
 		tutoriallabel.visible = false;
@@ -4929,7 +4933,8 @@ func title_screen() -> void:
 	add_to_ui_stack(a);
 	
 func ending_cutscene_1() -> void:
-	pass
+	var a = preload("res://EndingCutscene1.tscn").instance();
+	add_to_ui_stack(a);
 	
 func ending_cutscene_2() -> void:
 	pass
@@ -6752,6 +6757,8 @@ func _process(delta: float) -> void:
 			end_replay();
 			if (in_insight_level):
 				gain_insight();
+			elif (level_name == "A Way In?" and !doing_replay):
+				ending_cutscene_1();
 			elif last_level_of_section():
 				level_select();
 			else:
