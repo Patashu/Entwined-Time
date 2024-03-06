@@ -1769,6 +1769,12 @@ func intro_hop() -> void:
 		add_to_animation_server(heavy_actor, [Animation.intro_hop]);
 	if (light_max_moves > 0):
 		add_to_animation_server(light_actor, [Animation.intro_hop]);
+	#heavy warp
+	#var sprite = Sprite.new();
+	#sprite.set_script(preload("res://GoalParticle.gd"));
+	#sprite.set_texture("res://assets/BigPortalRed.png");
+	#sprite.position = heavy_actor.position;
+	#overactorsparticles.add_child(sprite);
 
 func ready_tutorial() -> void:
 	if (winlabel.visible):
@@ -2380,7 +2386,7 @@ func update_targeter() -> void:
 	if (!downarrow.visible):
 		return;
 	
-	downarrow.position = targeter.position - Vector2(-2, 22);
+	downarrow.position = targeter.position + Vector2(-12, -36);
 	
 	if (heavy_turn > 0 and heavy_selected):
 		rightarrow.position = heavytimeline.position - Vector2(24, 24) + Vector2(0, 24)*heavy_turn;
@@ -6057,6 +6063,8 @@ func update_animation_server(skip_globals: bool = false) -> void:
 				fade_in_lost();
 			add_to_animation_server(heavy_actor, [Animation.fade]);
 			add_to_animation_server(light_actor, [Animation.fade]);
+			#add_to_animation_server(heavy_actor, [Animation.intro_hop]);
+			#add_to_animation_server(light_actor, [Animation.intro_hop]);
 		return;
 	
 	# we found new animations - give them to everyone at once
