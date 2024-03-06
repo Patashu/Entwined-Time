@@ -70,7 +70,7 @@ func begin_the_end() -> void:
 	gamelogic.target_track = old_target_track;
 	gamelogic.fadeout_timer_max = 0.0;
 	gamelogic.fadeout_timer = 0.0;
-	gamelogic.finish_animations();
+	gamelogic.finish_animations(0);
 	
 func advance_label() -> void:
 	if (has_shown_advance_label or (cutscene_step > 1 and cutscene_step < 7)):
