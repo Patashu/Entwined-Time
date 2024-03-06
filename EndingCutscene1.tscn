@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://EndingCutscene1.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/ET_final_puzzle_2.png" type="Texture" id=2]
@@ -8,12 +8,14 @@
 [ext_resource path="res://assets/cutscenes/heavy_front.png" type="Texture" id=6]
 [ext_resource path="res://assets/cutscenes/helix_blue.png" type="Texture" id=7]
 [ext_resource path="res://assets/cutscenes/helix_red.png" type="Texture" id=8]
+[ext_resource path="res://assets/cutscenes/light_frontt.png" type="Texture" id=9]
+[ext_resource path="res://assets/cutscenes/light_back.png" type="Texture" id=10]
+[ext_resource path="res://assets/cutscenes/heavy_back.png" type="Texture" id=11]
 [ext_resource path="res://assets/cutscenes/lightfall.png" type="Texture" id=17]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Animate"
 length = 12.0
-step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("Panel3/ChronoHelixRed:visible")
 tracks/0/interp = 1
@@ -81,10 +83,10 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [  ]
+"values": [ Vector2( 70, 522 ), Vector2( 110, 502 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("Panel3/HeavyActor:scale")
@@ -93,10 +95,10 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [  ]
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("Panel3/ChronoHelixBlue:scale")
@@ -117,10 +119,10 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [  ]
+"values": [ Vector2( 986, 566 ), Vector2( 902, 506 ) ]
 }
 tracks/9/type = "value"
 tracks/9/path = NodePath("Panel3/LightActor:scale")
@@ -129,10 +131,10 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [  ]
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
 }
 tracks/10/type = "method"
 tracks/10/path = NodePath("..")
@@ -163,10 +165,10 @@ tracks/12/loop_wrap = true
 tracks/12/imported = false
 tracks/12/enabled = true
 tracks/12/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [  ]
+"values": [ ExtResource( 11 ), ExtResource( 6 ) ]
 }
 tracks/13/type = "value"
 tracks/13/path = NodePath("Panel3/LightActor:texture")
@@ -175,10 +177,34 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
+"times": PoolRealArray( 0, 1.1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [  ]
+"values": [ ExtResource( 10 ), ExtResource( 9 ) ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Panel3/HeavyActor:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Panel3/LightActor:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -237,7 +263,7 @@ texture = ExtResource( 7 )
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel3"]
 position = Vector2( 110, 502 )
-texture = ExtResource( 6 )
+texture = ExtResource( 11 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel3"]
 position = Vector2( 902, 506 )
