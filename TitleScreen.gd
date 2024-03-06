@@ -227,6 +227,7 @@ func ghost(sprite: Sprite) -> void:
 	ghost.target = sprite;
 	ghost.texture = sprite.texture;
 	ghost.centered = sprite.centered;
+	ghost.scale = sprite.scale;
 	$CutsceneHolder/Panel6.add_child(ghost);
 	
 func destroy() -> void:

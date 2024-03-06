@@ -57,7 +57,7 @@ func cutscene_step() -> void:
 			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 0.5);
 			$CutsceneHolder/AnimationPlayer.play("Animate");
 			has_shown_advance_label = false;
-			ghost_type = 2;
+			change_ghosts();
 		3:
 			$CutsceneHolder/Panel2.visible = false;
 			begin_the_end();
@@ -128,6 +128,7 @@ func ghost(sprite: Sprite) -> void:
 	ghost.target = sprite;
 	ghost.texture = sprite.texture;
 	ghost.centered = sprite.centered;
+	ghost.scale = sprite.scale;
 	$CutsceneHolder/Panel3.add_child(ghost);
 	
 func destroy() -> void:
@@ -150,12 +151,16 @@ func _process(delta: float) -> void:
 			ghost_timer -= ghost_timer_max;
 			afterimage($CutsceneHolder/Panel3/HeavyActor, gamelogic.heavy_color);
 			afterimage($CutsceneHolder/Panel3/LightActor, gamelogic.light_color);
+			afterimage($CutsceneHolder/Panel3/ChronoHelixRed, gamelogic.heavy_color);
+			afterimage($CutsceneHolder/Panel3/ChronoHelixBlue, gamelogic.light_color);
 	elif (ghost_type == 2):
 		ghost_timer += delta;
 		if (ghost_timer > ghost_timer_max):
 			ghost_timer -= ghost_timer_max;
 			ghost($CutsceneHolder/Panel3/HeavyActor);
 			ghost($CutsceneHolder/Panel3/LightActor);
+			ghost($CutsceneHolder/Panel3/ChronoHelixRed);
+			ghost($CutsceneHolder/Panel3/ChronoHelixBlue);
 	
 	if (cutscene_step > 0):
 		if (cutscene_step == 3 and !$CutsceneHolder/AnimationPlayer.is_playing()):

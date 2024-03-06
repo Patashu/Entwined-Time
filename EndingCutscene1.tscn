@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://EndingCutscene1.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/ET_final_puzzle_2.png" type="Texture" id=2]
@@ -11,109 +11,171 @@
 [ext_resource path="res://assets/cutscenes/light_frontt.png" type="Texture" id=9]
 [ext_resource path="res://assets/cutscenes/light_back.png" type="Texture" id=10]
 [ext_resource path="res://assets/cutscenes/heavy_back.png" type="Texture" id=11]
+[ext_resource path="res://assets/cutscenes/heavyfall.png" type="Texture" id=15]
 [ext_resource path="res://assets/cutscenes/lightfall.png" type="Texture" id=17]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Animate"
 length = 12.0
 tracks/0/type = "value"
-tracks/0/path = NodePath("Panel3/ChronoHelixRed:visible")
+tracks/0/path = NodePath("Panel3/HeavyActor:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 1,
-"values": [  ]
+"times": PoolRealArray( 0, 1, 1.9, 2.5, 2.7, 3.4, 4, 4.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 70, 522 ), Vector2( 110, 502 ), Vector2( 110, 502 ), Vector2( 318, 502 ), Vector2( 318, 502 ), Vector2( 318, 502 ), Vector2( 78, 502 ), Vector2( 128, 502 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Panel3/LightActor:visible")
+tracks/1/path = NodePath("Panel3/HeavyActor:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 1,
-"values": [  ]
+"times": PoolRealArray( 0, 1, 3.44, 3.45 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 2, 2 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Panel3/ChronoHelixBlue:visible")
+tracks/2/path = NodePath("Panel3/LightActor:position")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 1,
-"values": [  ]
+"times": PoolRealArray( 0, 1, 1.7, 2.3, 2.7, 3.4, 4, 4.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 986, 566 ), Vector2( 902, 506 ), Vector2( 902, 506 ), Vector2( 762, 506 ), Vector2( 762, 506 ), Vector2( 762, 506 ), Vector2( 972, 506 ), Vector2( 942, 506 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Panel3/HeavyActor:visible")
+tracks/3/path = NodePath("Panel3/LightActor:scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 1,
-"values": [  ]
+"times": PoolRealArray( 0, 1, 3.46, 3.47 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 2, 2 ) ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Panel3/ChronoHelixRed:scale")
+tracks/4/type = "method"
+tracks/4/path = NodePath("..")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 0,
-"values": [  ]
+"times": PoolRealArray( 0, 0.4, 0.8, 1.8, 1.9, 2, 2.2, 2.5, 3.4, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "push" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "push" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "push" ],
+"method": "play_sound"
+}, {
+"args": [ "involuntarybump" ],
+"method": "play_sound"
+} ]
 }
-tracks/5/type = "value"
-tracks/5/path = NodePath("Panel3/HeavyActor:position")
+tracks/5/type = "method"
+tracks/5/path = NodePath("..")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 70, 522 ), Vector2( 110, 502 ) ]
+"times": PoolRealArray( 0.3, 0.7, 1, 1.7, 2, 2.3, 2.7, 3.4, 3.6, 3.8, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"values": [ {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "usegreenality" ],
+"method": "play_sound"
+}, {
+"args": [ "fall" ],
+"method": "play_sound"
+}, {
+"args": [ "fall" ],
+"method": "play_sound"
+}, {
+"args": [ "fall" ],
+"method": "play_sound"
+}, {
+"args": [ "involuntarybumplight" ],
+"method": "play_sound"
+} ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Panel3/HeavyActor:scale")
+tracks/6/path = NodePath("Panel3/HeavyActor:texture")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
+"times": PoolRealArray( 0, 1.5, 3.45 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ), ExtResource( 6 ), ExtResource( 15 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Panel3/ChronoHelixBlue:scale")
+tracks/7/path = NodePath("Panel3/LightActor:texture")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 0,
-"values": [  ]
+"times": PoolRealArray( 0, 1.3, 3.47 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 10 ), ExtResource( 9 ), ExtResource( 17 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Panel3/LightActor:position")
+tracks/8/path = NodePath("Panel3/HeavyActor:modulate")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -122,10 +184,10 @@ tracks/8/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 986, 566 ), Vector2( 902, 506 ) ]
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Panel3/LightActor:scale")
+tracks/9/path = NodePath("Panel3/LightActor:modulate")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -134,95 +196,55 @@ tracks/9/keys = {
 "times": PoolRealArray( 0, 1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 2, 2 ), Vector2( 1, 1 ) ]
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
-tracks/10/type = "method"
-tracks/10/path = NodePath("..")
+tracks/10/type = "value"
+tracks/10/path = NodePath("Panel3/ChronoHelixRed:position")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 0, 0.4, 0.8 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [ "heavystep" ],
-"method": "play_sound"
-}, {
-"args": [ "heavystep" ],
-"method": "play_sound"
-}, {
-"args": [ "heavystep" ],
-"method": "play_sound"
-} ]
+"times": PoolRealArray( 0, 1.9, 2.5, 2.7, 3.3, 3.4, 3.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 258, 422 ), Vector2( 258, 422 ), Vector2( 446, 422 ), Vector2( 446, 422 ), Vector2( 492, 422 ), Vector2( 492, 422 ), Vector2( 416, 422 ) ]
 }
-tracks/11/type = "method"
-tracks/11/path = NodePath("..")
+tracks/11/type = "value"
+tracks/11/path = NodePath("Panel3/ChronoHelixBlue:position")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
 tracks/11/enabled = true
 tracks/11/keys = {
-"times": PoolRealArray( 0.3, 0.7, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"values": [ {
-"args": [ "lightstep" ],
-"method": "play_sound"
-}, {
-"args": [ "lightstep" ],
-"method": "play_sound"
-}, {
-"args": [ "lightstep" ],
-"method": "play_sound"
-} ]
+"times": PoolRealArray( 0, 1.7, 2.3, 2.7, 3.3, 3.4, 3.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 740, 418 ), Vector2( 740, 418 ), Vector2( 608, 418 ), Vector2( 608, 418 ), Vector2( 556, 418 ), Vector2( 556, 418 ), Vector2( 652, 418 ) ]
 }
 tracks/12/type = "value"
-tracks/12/path = NodePath("Panel3/HeavyActor:texture")
+tracks/12/path = NodePath("Panel3/HeavyActor:visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
 tracks/12/enabled = true
 tracks/12/keys = {
-"times": PoolRealArray( 0, 1.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 3.44, 3.45 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 11 ), ExtResource( 6 ) ]
+"values": [ true, false, true ]
 }
 tracks/13/type = "value"
-tracks/13/path = NodePath("Panel3/LightActor:texture")
+tracks/13/path = NodePath("Panel3/LightActor:visible")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0, 1.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 3.46, 3.47 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 10 ), ExtResource( 9 ) ]
-}
-tracks/14/type = "value"
-tracks/14/path = NodePath("Panel3/HeavyActor:modulate")
-tracks/14/interp = 1
-tracks/14/loop_wrap = true
-tracks/14/imported = false
-tracks/14/enabled = true
-tracks/14/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
-}
-tracks/15/type = "value"
-tracks/15/path = NodePath("Panel3/LightActor:modulate")
-tracks/15/interp = 1
-tracks/15/loop_wrap = true
-tracks/15/imported = false
-tracks/15/enabled = true
-tracks/15/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+"values": [ true, false, true ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -272,19 +294,21 @@ texture = ExtResource( 4 )
 centered = false
 
 [node name="ChronoHelixRed" type="Sprite" parent="CutsceneHolder/Panel3"]
-position = Vector2( 258, 422 )
+position = Vector2( 416, 422 )
 texture = ExtResource( 8 )
 
 [node name="ChronoHelixBlue" type="Sprite" parent="CutsceneHolder/Panel3"]
-position = Vector2( 738, 384 )
+position = Vector2( 652, 418 )
 texture = ExtResource( 7 )
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel3"]
-position = Vector2( 110, 502 )
-texture = ExtResource( 11 )
+position = Vector2( 78, 502 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel3"]
-position = Vector2( 902, 506 )
+position = Vector2( 972, 506 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 17 )
 
 [node name="AdvanceLabel" type="Label" parent="CutsceneHolder"]
