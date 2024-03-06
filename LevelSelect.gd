@@ -205,7 +205,7 @@ func prepare_chapter() -> void:
 		if gamelogic.save_file["levels"].has("Chrono Lab Reactor") and gamelogic.save_file["levels"]["Chrono Lab Reactor"].has("won") and gamelogic.save_file["levels"]["Chrono Lab Reactor"]["won"]:
 			ending_part_2 = true;
 		
-		if (ending_part_1):
+		if (ending_part_1 or (gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"])):
 			cutscene_button.text = "Outro Cutscene";
 			cutscene_button.connect("pressed", self, "_outro_cutscene_pressed");
 		else:
