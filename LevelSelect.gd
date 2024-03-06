@@ -210,6 +210,15 @@ func prepare_chapter() -> void:
 		label.align = 1;
 		if (requires_advanced_levels):
 			label.text = "Complete more Advanced puzzles: " + str(puzzles_completed) + "/" + str(unlock_requirement);
+			#ch2 is locked disclaimer
+			var label2 = Label.new();
+			holder.add_child(label2);
+			label2.rect_position.x = 2;
+			label2.rect_position.y = 35;
+			label2.rect_size.x = holder.rect_size.x - 4;
+			label2.align = 1;
+			label2.text = "(This chapter is optional.)"
+			label2.theme = holder.theme;
 		else:
 			label.text = "Complete more puzzles: " + str(puzzles_completed) + "/" + str(unlock_requirement);
 		label.theme = holder.theme;
