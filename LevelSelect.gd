@@ -191,7 +191,7 @@ func prepare_chapter() -> void:
 	if (chapter == 0):
 		cutscene_button = Button.new();
 		holder.add_child(cutscene_button);
-		cutscene_button.text = "Intro Cutscene";
+		cutscene_button.text = "Intro/Credits";
 		cutscene_button.connect("pressed", self, "_intro_cutscene_pressed");
 		cutscene_button.focus_neighbour_left = cutscene_button.get_path_to(closebutton);
 		cutscene_button.focus_neighbour_top = cutscene_button.get_path_to(prevbutton);
