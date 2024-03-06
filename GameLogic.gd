@@ -2373,9 +2373,9 @@ func calculate_map_size() -> void:
 		
 func update_targeter() -> void:
 	if (heavy_selected):
-		targeter.position = heavy_actor.position + terrainmap.position - Vector2(2, 2);
+		targeter.position = heavy_actor.position + terrainmap.position + Vector2(12, 12);
 	else:
-		targeter.position = light_actor.position + terrainmap.position - Vector2(2, 2);
+		targeter.position = light_actor.position + terrainmap.position + Vector2(12, 12);
 	
 	if (!downarrow.visible):
 		return;
@@ -4851,6 +4851,13 @@ func character_switch() -> void:
 	timeline_activation_change();
 	update_ghosts();
 	play_sound("switch")
+	if (!currently_fast_replay()):
+		#targeter.scale = Vector2(2, 2);
+		var tween = targeter.get_node("Tween");
+		tween.interpolate_property(targeter, "scale",
+		Vector2(1.2, 1.2), Vector2(1, 1), 0.2,
+		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+		tween.start();
 	append_replay("x")
 
 func restart(_is_silent: bool = false) -> void:
