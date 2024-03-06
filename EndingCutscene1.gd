@@ -20,6 +20,10 @@ var ghost_timer = 0.0;
 var ghost_timer_max = 0.2;
 
 func _ready() -> void:
+	gamelogic.target_track = -1;
+	gamelogic.fadeout_timer_max = 1.0;
+	gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
+	
 	$CutsceneHolder/Panel3.visible = false;
 	cutscene_step();
 
@@ -43,7 +47,7 @@ func cutscene_step() -> void:
 			$CutsceneHolder/Panel2.visible = true;
 			var tween = get_tree().create_tween()
 			$CutsceneHolder/Panel2.modulate = Color(1, 1, 1, 0);
-			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.1);
+			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.2);
 			gamelogic.play_sound("broken"); #maybe
 		2:
 			$CutsceneHolder/Panel1.visible = false;
