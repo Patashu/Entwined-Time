@@ -2547,6 +2547,9 @@ func prepare_audio() -> void:
 	music_tracks.append(preload("res://music/Cutscene C.ogg"));
 	music_info.append("Patashu - Cutscene C");
 	music_db.append(6.0);
+	music_tracks.append(preload("res://sfx/lose.ogg"));
+	music_info.append("Patashu - Abyss of the Lost");
+	music_db.append(-3.0);
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
