@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 458755, 2, 14, 196614, 3, 14, 196614, 4, 14, 393219, 5, 14, 4, 65536, 14, 65538, 65537, 14, 65540, 65538, 55, 0, 65540, 14, 65538, 65541, 14, 65540, 131072, 14, 131074, 131073, 14, 786435, 131074, 14, 393219, 131075, 14, 458755, 131076, 14, 720899, 131077, 14, 131076, 196610, 14, 131074, 196611, 14, 131076, 327681, 2, 0, 327684, 8, 0, 393217, 14, 196609, 393220, 14, 196609, 458753, 14, 655362, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 655364, 524289, 7, 0, 524292, 1, 0, 589825, 14, 196609, 589828, 14, 196609, 655361, 14, 655362, 655362, 14, 196614, 655363, 14, 196614, 655364, 14, 655364 )
+
+[node name="@@133" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327681, 35, 0, 327684, 36, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Out of Service"
+level_author = "Neonesque"
+level_replay = "Out of Service$mturn=89$xaaxdxzzxzxaxddxzwxzxzwxzxzxdxaxdxzsxzxzxzwsxdxzzxzdxwdxzwxzzdxzdsxzxzxadxzsxzzwxdxzxzzaxadxzsxzzxzdsxaxzxaxzwxzzxzxddxwxzxzxzsdxwxzdxzdxzaxza"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = "4"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0

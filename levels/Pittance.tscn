@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 14, 7, 0, 65536, 2, 0, 65537, 8, 0, 131072, 14, 2, 131073, 14, 3, 131074, 14, 4, 131075, 12, 0, 131076, 12, 0, 131077, 12, 0, 131078, 12, 0, 131079, 14, 196609, 131084, 14, 2, 131085, 14, 3, 131086, 14, 4, 196608, 14, 65538, 196609, 14, 917511, 196610, 14, 131076, 196615, 14, 262145, 196620, 14, 131074, 196621, 14, 917512, 196622, 14, 65540, 262144, 14, 131074, 262145, 14, 131076, 262151, 14, 327681, 262157, 14, 131074, 262158, 14, 131076 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Pittance"
+level_author = "Neonesque"
+level_replay = "Pittance$mturn=101$wxaxzwxdxzaxzxzwxaxzwxdxzaxzxzwxaxzwxdxzaxzxzxdxdxzzzzddxzxdsxdxzzzzxzxadsxdxzzxzxadsxdxzzxzxawxdxzdxzdxzxzxzzzdwasxdxzzzdddxzdxzzzxzxzxdzxwdxdxzzdaxzxzzxw"
+heavy_max_moves = 1.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.164706, 0.121569, 0.509804, 1 )
+target_track = 2.0
