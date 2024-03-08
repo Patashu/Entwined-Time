@@ -2932,6 +2932,9 @@ boost_pad_reentrance: bool = false) -> int:
 				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
 					sticky_actor.just_moved = true;
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
+					# hack fix for 'heavy steps right, starts falling and pulls something down with it'
+					# specifically, heavy would be stalled due to falling but the thing being pulled would not
+					copy_one_from_animation_server(actor, Animation.stall, sticky_actor);
 			for sticky_actor in sticky_actors:
 				sticky_actor.just_moved = false;
 				
@@ -5974,6 +5977,13 @@ func remove_one_from_animation_server(actor: ActorBase, event: int):
 		var thing = animation_server[animation_substep][i];
 		if thing[0] == actor and thing[1][0] == event:
 			animation_server[animation_substep].remove(i);
+			return;
+			
+func copy_one_from_animation_server(actor: ActorBase, event: int, second_actor: ActorBase):
+	for i in range(animation_server[animation_substep].size()):
+		var thing = animation_server[animation_substep][i];
+		if thing[0] == actor and thing[1][0] == event:
+			add_to_animation_server(second_actor, thing[1], true);
 			return;
 
 func handle_global_animation(animation: Array) -> void:
