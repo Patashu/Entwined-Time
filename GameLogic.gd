@@ -3033,11 +3033,11 @@ boost_pad_reentrance: bool = false) -> int:
 		if (!is_gravity):
 			add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
 		else:
-			if (actor.airborne != -1):
+			if (actor.airborne == 0):
 				add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
 			else:
 				for pusher in pushers_list:
-					if pusher.airborne != -1:
+					if pusher.airborne == 0:
 						add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
 						break;
 	
