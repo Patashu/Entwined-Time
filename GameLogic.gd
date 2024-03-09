@@ -4248,7 +4248,8 @@ func character_undo(is_silent: bool = false) -> bool:
 		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
-			play_sound("undostrong");
+			if (!fuzzed):
+				play_sound("undostrong");
 			if (!currently_fast_replay()):
 				if (fuzzed):
 					undo_effect_strength = 0.25;
@@ -4303,13 +4304,14 @@ func character_undo(is_silent: bool = false) -> bool:
 		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
+			if (!fuzzed):
+				play_sound("undostrong");
 			if (!currently_fast_replay()):
 				if (fuzzed):
 					undo_effect_strength = 0.25;
 					undo_effect_per_second = undo_effect_strength*(1/0.5);
 					undo_effect_color = meta_color;
 				else:
-					play_sound("undostrong");
 					undo_effect_strength = 0.08;
 					undo_effect_per_second = undo_effect_strength*(1/0.4);
 					undo_effect_color = light_color;
