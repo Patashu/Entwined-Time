@@ -72,12 +72,9 @@ func begin_the_end() -> void:
 		return;
 	
 	ghost_type = 0;
-	end_timer_max = 1.0;
-	gamelogic.fadeout_timer_max = 1.0;
-	gamelogic.fadeout_timer = 0.0;
-	var old_target_track = gamelogic.target_track;
+	end_timer_max = 4.0;
 	gamelogic.load_level_direct(gamelogic.level_filenames.find("ChronoLabReactor"));
-	gamelogic.target_track = old_target_track;
+	gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene D");
 	gamelogic.fadeout_timer_max = 0.0;
 	gamelogic.fadeout_timer = 0.0;
 	gamelogic.finish_animations(0);
