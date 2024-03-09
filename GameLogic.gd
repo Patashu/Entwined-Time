@@ -1498,6 +1498,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Wheelbarrow")
 	level_filenames.push_back("PezDispenser")
+	level_filenames.push_back("Rushing Rivers")
 	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
