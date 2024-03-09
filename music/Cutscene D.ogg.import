@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Cutscene D.ogg-6edc54e8228b1aae1a6b8b27404fc983.oggstr"
+
+[deps]
+
+source_file="res://music/Cutscene D.ogg"
+dest_files=[ "res://.import/Cutscene D.ogg-6edc54e8228b1aae1a6b8b27404fc983.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=18.936

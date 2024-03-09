@@ -49,6 +49,10 @@ func cutscene_step() -> void:
 			$CutsceneHolder/Panel2.modulate = Color(1, 1, 1, 0);
 			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.2);
 			gamelogic.play_sound("broken"); #maybe
+			
+			gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene D");
+			gamelogic.fadeout_timer_max = 0.5;
+			gamelogic.fadeout_timer = 0.0;
 		2:
 			$CutsceneHolder/Panel1.visible = false;
 			$CutsceneHolder/Panel3.visible = true;

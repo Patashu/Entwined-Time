@@ -2549,6 +2549,9 @@ func prepare_audio() -> void:
 	music_tracks.append(preload("res://music/Cutscene C.ogg"));
 	music_info.append("Patashu - Cutscene C");
 	music_db.append(6.0);
+	music_tracks.append(preload("res://music/Cutscene D.ogg"));
+	music_info.append("Patashu - Cutscene D");
+	music_db.append(6.0);
 	music_tracks.append(preload("res://sfx/lose.ogg"));
 	music_info.append("Patashu - Abyss of the Lost");
 	music_db.append(-3.0);
@@ -5061,7 +5064,7 @@ func play_next_song() -> void:
 		var value = save_file["music_volume"];
 		var master_volume = save_file["master_volume"];
 		if (value > -30 and master_volume > -30 and !muted): #music is not muted
-			if (ui_stack.size() == 0 or ui_stack[0].name != "TitleScreen"):
+			if (ui_stack.size() == 0 or (ui_stack[0].name != "TitleScreen" and ui_stack[0].name != "EndingCutscene1")):
 				now_playing = preload("res://NowPlaying.tscn").instance();
 				GuiHolder.call_deferred("add_child", now_playing);
 				#self.get_parent().add_child(now_playing);
