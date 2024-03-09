@@ -224,7 +224,7 @@ margin_top = -3.0
 margin_right = 260.0
 margin_bottom = 17.0
 focus_neighbour_top = NodePath("../../../OkButton")
-text = "Unlock all puzzles (while this checkbox is ticked)"
+text = "Unlock everything (while this checkbox is ticked)"
 
 [node name="VirtualButtons" type="SpinBox" parent="Holder/TabContainer/Gameplay"]
 margin_top = 41.0
