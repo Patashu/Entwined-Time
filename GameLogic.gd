@@ -1487,12 +1487,12 @@ func initialize_level_list() -> void:
 	
 	custom_past_here = chapter_names.size();
 	custom_past_here_level_count = level_filenames.size();
-	chapter_names.push_back("Community Levels A");
+	chapter_names.push_back("Voices from the Void");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
-	chapter_replacements[chapter_names.size() - 1] = "CLA";
+	chapter_replacements[chapter_names.size() - 1] = "!A";
 	level_filenames.push_back("No Strings Attached")
 	level_filenames.push_back("Small Miracle")
 	level_filenames.push_back("Hot Soup")
