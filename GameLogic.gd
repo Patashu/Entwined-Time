@@ -5121,7 +5121,7 @@ func load_level_direct(new_level: int) -> void:
 	var impulse = new_level - self.level_number;
 	load_level(impulse);
 	
-func load_level(impulse: int) -> void:
+func load_level(impulse: int, ignore_locked: bool = false) -> void:
 	if (is_community_level):
 		is_custom = false;
 	if (impulse != 0 and test_mode):
@@ -5143,7 +5143,7 @@ func load_level(impulse: int) -> void:
 		level_number = posmod(int(level_number), level_list.size());
 	
 	# we might try to F1/F2 onto a level we don't have access to. if so, back up then show level select.
-	if impulse != 0 and trying_to_load_locked_level():
+	if impulse != 0 and !ignore_locked and trying_to_load_locked_level():
 		impulse *= -1;
 		if (impulse == 0):
 			impulse = -1;
