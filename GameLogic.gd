@@ -2504,8 +2504,8 @@ func prepare_audio() -> void:
 	sounds["fixit1"] = preload("res://sfx/fixit1.ogg");
 	sounds["fixit2"] = preload("res://sfx/fixit2.ogg");
 	
-	#unused
-	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep
+	#unused except by custom elements
+	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep, now used by nudge
 	sounds["undo"] = preload("res://sfx/undo.ogg"); #actually used by checkpoint but it should be a different sfx
 	
 	music_tracks.append(preload("res://music/New Bounds.ogg"));
@@ -5398,6 +5398,7 @@ func time_passes(chrono: int) -> void:
 			var terrain = terrain_in_tile(actor.pos);
 			for id in terrain:
 				if id >= Tiles.NudgeEast and id <= Tiles.NudgeEast + 3:
+					add_to_animation_server(actor, [Animation.sfx, "step"]);
 					var attempt = move_actor_relative(actor, directions[id - Tiles.NudgeEast], chrono, false, false);
 					if (attempt == Success.Yes):
 						break;
@@ -5407,6 +5408,7 @@ func time_passes(chrono: int) -> void:
 			var terrain = terrain_in_tile(actor.pos);
 			for id in terrain:
 				if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
+					add_to_animation_server(actor, [Animation.sfx, "step"]);
 					var attempt = move_actor_relative(actor, directions[id - Tiles.NudgeEastGreen], chrono, false, false);
 					if (attempt == Success.Yes):
 						break;
