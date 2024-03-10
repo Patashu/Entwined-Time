@@ -1619,6 +1619,8 @@ func ready_map() -> void:
 	for ghost in ghosts:
 		ghost.queue_free();
 	ghosts.clear();
+	for whatever in underterrainfolder.get_children():
+		whatever.queue_free();
 	for whatever in actorsfolder.get_children():
 		whatever.queue_free();
 	for whatever in underactorsparticles.get_children():
@@ -1773,6 +1775,16 @@ func ready_map() -> void:
 	
 	calculate_map_size();
 	make_actors();
+	
+	#have to do it now when underterrainfolder is positioned
+	if (level_name == "Chrono Lab Reactor"):
+		var bg = Sprite.new();
+		bg.texture = load("res://assets/cutscenes/reactor_bg.png");
+		bg.centered = false;
+		bg.scale = Vector2(0.5, 0.5);
+		bg.modulate = Color(1, 1, 1, 0.35);
+		bg.position = Vector2(-underterrainfolder.position.x, -underterrainfolder.position.y);
+		underterrainfolder.add_child(bg);
 	
 	finish_animations(Chrono.TIMELESS);
 	update_info_labels();
