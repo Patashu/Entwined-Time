@@ -5053,6 +5053,21 @@ func trying_to_load_locked_level() -> bool:
 		return false;
 	if (level_names[level_number] == "Chrono Lab Reactor" and !save_file["levels"].has("Chrono Lab Reactor")):
 		return true;
+	
+	# copied from setup_chapter_etc(), modified to use local instead of global variables
+	var chapter = 0;
+	var level_is_extra = false;
+	var level_in_chapter;
+	for i in range(chapter_names.size()):
+		if level_number < chapter_standard_starting_levels[i + 1]:
+			chapter = i;
+			if level_number >= chapter_advanced_starting_levels[i]:
+				level_is_extra = true;
+				level_in_chapter = level_number - chapter_advanced_starting_levels[i];
+			else:
+				level_in_chapter = level_number - chapter_standard_starting_levels[i];
+			break;
+		
 	var unlock_requirement = 0;
 	var you_have = puzzles_completed;
 	if (!level_is_extra):
