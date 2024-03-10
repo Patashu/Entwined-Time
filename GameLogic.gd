@@ -1503,6 +1503,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Luxury Flight")
 	level_filenames.push_back("Friendship Paradox")
+	level_filenames.push_back("Proxy Timeline")
 	level_filenames.push_back("Kinematic Stability")
 	level_filenames.push_back("Hot Soup [VAR2]")
 	level_filenames.push_back("Spacetime Oven")
