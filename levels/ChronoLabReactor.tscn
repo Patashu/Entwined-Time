@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://assets/cutscenes/reactor_bg.png" type="Texture" id=3]
 
 [node name="TerrainMap" type="TileMap"]
 tile_set = ExtResource( 2 )
@@ -21,3 +22,11 @@ tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 65541, 5, 0, 65542, 5, 0, 131077, 5, 0, 131078, 5, 0, 196613, 5, 0, 196614, 5, 0, 262149, 5, 0, 262150, 5, 0, 327682, 23, 0, 327683, 23, 0, 327684, 23, 0, 327685, 23, 0, 327686, 23, 0, 327687, 23, 0, 327688, 23, 0, 327689, 23, 0 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.34902 )
+position = Vector2( -112, -60 )
+scale = Vector2( 0.5, 0.5 )
+z_index = -1
+texture = ExtResource( 3 )
+centered = false
