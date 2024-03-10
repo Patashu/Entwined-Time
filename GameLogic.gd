@@ -5143,7 +5143,7 @@ func load_level(impulse: int) -> void:
 		level_number = posmod(int(level_number), level_list.size());
 	
 	# we might try to F1/F2 onto a level we don't have access to. if so, back up then show level select.
-	if trying_to_load_locked_level():
+	if impulse != 0 and trying_to_load_locked_level():
 		impulse *= -1;
 		if (impulse == 0):
 			impulse = -1;
