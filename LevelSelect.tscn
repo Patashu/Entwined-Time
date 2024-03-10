@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://default_styleboxtexture.tres" type="StyleBox" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
 [ext_resource path="res://LevelSelect.gd" type="Script" id=3]
 [ext_resource path="res://GoldLabel.gd" type="Script" id=4]
+[ext_resource path="res://meta_styleboxtexture.tres" type="StyleBox" id=5]
+[ext_resource path="res://light_styleboxtexture.tres" type="StyleBox" id=6]
 
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource( 3 )
@@ -49,6 +51,11 @@ margin_bottom = 238.0
 focus_neighbour_left = NodePath("../PrevButton")
 focus_neighbour_right = NodePath("../CommunityLevelsButton")
 focus_neighbour_bottom = NodePath("../CloseButton")
+custom_styles/hover = ExtResource( 5 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/focus = ExtResource( 5 )
+custom_styles/disabled = ExtResource( 5 )
+custom_styles/normal = ExtResource( 5 )
 text = "Level Editor"
 
 [node name="CommunityLevelsButton" type="Button" parent="Holder"]
@@ -59,6 +66,11 @@ margin_bottom = 238.0
 focus_neighbour_left = NodePath("../LevelEditorButton")
 focus_neighbour_right = NodePath("../NextButton")
 focus_neighbour_bottom = NodePath("../CloseButton")
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/focus = ExtResource( 6 )
+custom_styles/disabled = ExtResource( 6 )
+custom_styles/normal = ExtResource( 6 )
 text = "Community Levels"
 
 [node name="CloseButton" type="Button" parent="Holder"]

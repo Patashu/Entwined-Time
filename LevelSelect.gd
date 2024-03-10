@@ -26,10 +26,16 @@ func _ready() -> void:
 	
 	if (gamelogic.chapter >= gamelogic.custom_past_here):
 		in_community_puzzles = true;
+		var stylebox = preload("res://heavy_styleboxtexture.tres")
 		communitylevelsbutton.text = "Campaign Levels";
 		if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
 			prevbutton.disabled = true;
 			nextbutton.disabled = true;
+		communitylevelsbutton.add_stylebox_override("hover", stylebox);
+		communitylevelsbutton.add_stylebox_override("pressed", stylebox);
+		communitylevelsbutton.add_stylebox_override("focus", stylebox);
+		communitylevelsbutton.add_stylebox_override("disabled", stylebox);
+		communitylevelsbutton.add_stylebox_override("normal", stylebox);
 	elif !(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]):
 		if (gamelogic.puzzles_completed < gamelogic.chapter_standard_unlock_requirements[gamelogic.custom_past_here]):
 			communitylevelsbutton.disabled = true;
@@ -75,7 +81,8 @@ func _leveleditorbutton_pressed() -> void:
 func _communitylevelsbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
-		
+	
+	var stylebox = preload("res://heavy_styleboxtexture.tres")
 	in_community_puzzles = !in_community_puzzles;
 	if (in_community_puzzles):
 		chapter = gamelogic.custom_past_here;
@@ -92,6 +99,13 @@ func _communitylevelsbutton_pressed() -> void:
 		communitylevelsbutton.text = "Community Levels";
 		prevbutton.disabled = false;
 		nextbutton.disabled = false;
+		stylebox = preload("res://light_styleboxtexture.tres")
+		
+	communitylevelsbutton.add_stylebox_override("hover", stylebox);
+	communitylevelsbutton.add_stylebox_override("pressed", stylebox);
+	communitylevelsbutton.add_stylebox_override("focus", stylebox);
+	communitylevelsbutton.add_stylebox_override("disabled", stylebox);
+	communitylevelsbutton.add_stylebox_override("normal", stylebox);
 
 func update_focus_neighbors() -> void:
 	for pos in buttons_by_xy.keys():
