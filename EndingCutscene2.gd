@@ -96,8 +96,21 @@ func begin_the_end() -> void:
 	gamelogic.play_sound("bootup");
 	
 func random_good_level() -> void:
-	# TODO: actually pick
-	gamelogic.load_level_direct(gamelogic.level_filenames.find("No Strings Attached"));
+	# logic:
+	# if first community puzzle isn't beaten, take the player to that
+	# else, take the player to a random unbeaten puzzle
+	# else, take the player to a random puzzle
+	if (gamelogic.specific_puzzles_completed[gamelogic.custom_past_here_level_count] == false):
+		gamelogic.load_level_direct(gamelogic.custom_past_here_level_count);
+	else:
+		var candidates = [];
+		for i in range(gamelogic.specific_puzzles_completed.size()):
+			if !gamelogic.specific_puzzles_completed[i]:
+				candidates.append(i);
+		if (candidates.size()) > 0:
+			gamelogic.load_level_direct(candidates[gamelogic.rng.randi_range(0, candidates.size() - 1)]);
+		else:
+			gamelogic.load_level_direct(gamelogic.rng.randi_range(0, gamelogic.specific_puzzles_completed.size() - 1));
 	
 func advance_label() -> void:
 	if (has_shown_advance_label or (cutscene_step > 1 and cutscene_step < 3)):

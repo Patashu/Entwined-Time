@@ -1567,8 +1567,6 @@ func refresh_puzzles_completed() -> void:
 	advanced_puzzles_completed = 0;
 	specific_puzzles_completed = [];
 	for i in range(level_list.size()):
-		if (i >= custom_past_here_level_count):
-			return;
 		var level_name = level_names[i];
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 			specific_puzzles_completed.push_back(true);
@@ -4536,10 +4534,11 @@ func check_won() -> void:
 				level_save_data["won"] = true;
 				levelstar.previous_modulate = Color(1, 1, 1, 0);
 				levelstar.flash();
-				if (!in_insight_level and !is_custom):
-					puzzles_completed += 1;
-					if (level_is_extra):
-						advanced_puzzles_completed += 1;
+				if (!in_insight_level):
+					if (!is_custom):
+						puzzles_completed += 1;
+						if (level_is_extra):
+							advanced_puzzles_completed += 1;
 					specific_puzzles_completed[level_number] = true;
 			if (!level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
