@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/Sparkle.png" type="Texture" id=1]
+[ext_resource path="res://TransitionToTheEnd.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Animate"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.33, 0.66, 0.99, 1.32, 1.65, 1.98, 2.31, 2.64, 3.96 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 2, 2 ), Vector2( 1.5, 1.5 ), Vector2( 4, 4 ), Vector2( 3, 3 ), Vector2( 8, 8 ), Vector2( 6, 6 ), Vector2( 16, 16 ), Vector2( 12, 12 ), Vector2( 60, 60 ) ]
+}
+
+[node name="TransitionToTheEnd" type="Sprite"]
+texture = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Animate = SubResource( 1 )

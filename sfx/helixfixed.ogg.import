@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/helixfixed.ogg-7eab83eb6c4d94cd64d7e5a5b79a3df4.oggstr"
+
+[deps]
+
+source_file="res://sfx/helixfixed.ogg"
+dest_files=[ "res://.import/helixfixed.ogg-7eab83eb6c4d94cd64d7e5a5b79a3df4.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

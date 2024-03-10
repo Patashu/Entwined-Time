@@ -2503,6 +2503,7 @@ func prepare_audio() -> void:
 	sounds["getgreenality"] = preload("res://sfx/getgreenality.ogg");
 	sounds["fixit1"] = preload("res://sfx/fixit1.ogg");
 	sounds["fixit2"] = preload("res://sfx/fixit2.ogg");
+	sounds["helixfixed"] = preload("res://sfx/helixfixed.ogg");
 	
 	#unused except by custom elements
 	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep, now used by nudge
@@ -4521,6 +4522,8 @@ func check_won() -> void:
 				play_won("winbadtime");
 			elif (level_name == "A Way In?"):
 				pass
+			elif (level_name == "Chrono Lab Reactor"):
+				pass
 			else:
 				play_won("winentwined");
 			var levels_save_data = save_file["levels"];
@@ -4563,6 +4566,8 @@ func check_won() -> void:
 		won_cooldown = 0;
 		if (level_name == "Joke"):
 			winlabel.change_text("Thanks for playing :3")
+		elif (level_name == "Chrono Lab Reactor" and !doing_replay):
+			transition_to_ending_cutscene_2();
 		elif (level_name == "A Way In?" and !doing_replay):
 			target_track = -1;
 			fadeout_timer_max = 3.0;
@@ -4954,6 +4959,20 @@ func title_screen() -> void:
 func ending_cutscene_1() -> void:
 	var a = preload("res://EndingCutscene1.tscn").instance();
 	add_to_ui_stack(a);
+	
+func transition_to_ending_cutscene_2() -> void:
+	# find position of bump
+	var position_a = Vector2.ZERO;
+	var position_b = Vector2.ZERO;
+	for actor in actors:
+		if (actor.actorname == Actor.Name.ChronoHelixRed):
+			position_a = actor.position;
+		elif (actor.actorname == Actor.Name.ChronoHelixBlue):
+			position_b = actor.position;
+	var position_c = terrainmap.position + (position_a + position_b)/2;
+	var t = preload("res://TransitionToTheEnd.tscn").instance();
+	t.position = position_c;
+	add_to_ui_stack(t);
 	
 func ending_cutscene_2() -> void:
 	pass

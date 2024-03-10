@@ -213,6 +213,11 @@ _global_script_classes=[ {
 "class": "TitleScreen",
 "language": "GDScript",
 "path": "res://TitleScreen.gd"
+}, {
+"base": "Sprite",
+"class": "TransitionToTheEnd",
+"language": "GDScript",
+"path": "res://TransitionToTheEnd.gd"
 } ]
 _global_script_class_icons={
 "Actor": "",
@@ -255,7 +260,8 @@ _global_script_class_icons={
 "TimelineSlot": "",
 "TimelineSprite": "",
 "TimelineViewer": "",
-"TitleScreen": ""
+"TitleScreen": "",
+"TransitionToTheEnd": ""
 }
 
 [application]
