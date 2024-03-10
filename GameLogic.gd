@@ -5119,7 +5119,7 @@ func load_level_direct(new_level: int) -> void:
 	in_insight_level = false;
 	has_insight_level = false;
 	var impulse = new_level - self.level_number;
-	load_level(impulse);
+	load_level(impulse, true);
 	
 func load_level(impulse: int, ignore_locked: bool = false) -> void:
 	if (is_community_level):
