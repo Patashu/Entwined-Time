@@ -5257,8 +5257,6 @@ func character_move(dir: Vector2) -> bool:
 			#AD10: Light floats gracefully downwards
 			#elif !heavy_selected and !is_suspended(light_actor):
 			#	set_actor_var(light_actor, "airborne", 0, Chrono.MOVE);
-	if (result != Success.No or nonstandard_won):
-		append_replay(chr);
 	if (result != Success.No):
 		time_passes(Chrono.MOVE);
 		if anything_happened_meta():
@@ -5270,6 +5268,10 @@ func character_move(dir: Vector2) -> bool:
 				if anything_happened_char():
 					adjust_turn(false, 1, Chrono.MOVE);
 				adjust_meta_turn(1);
+		else:
+			result = Success.No;
+	if (result != Success.No or nonstandard_won):
+		append_replay(chr);
 	if (result != Success.Yes):
 		play_sound("bump")
 	return result != Success.No;
