@@ -77,7 +77,7 @@ func cutscene_step() -> void:
 			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.5);
 			
 		2:
-			# TODO: change holder.get_node("Label").text
+			setup_label_text();
 			$CutsceneHolder/Panel1.visible = false;
 			$CutsceneHolder/Panel3.visible = true;
 			var tween = get_tree().create_tween()
@@ -85,6 +85,36 @@ func cutscene_step() -> void:
 			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 0.5);
 			has_shown_advance_label = false;
 	cutscene_step += 1;
+	
+func setup_label_text() -> void:
+	var label = holder.get_node("Label");
+	label.text = "Congratulations on beating Entwined Time!\n\nAs a reward, all custom level editor elements are now unlocked!\n\n"
+	var standard_completion = standard_completion();
+	label.text += "Your rate for Standard puzzle completion is: " + str(standard_completion[0]) + "/" + str(standard_completion[1]);
+	if (standard_completion[1] - standard_completion[0] < 5):
+		label.text += "! Well done!\n\n"
+		var campaign_completion = campaign_completion();
+		label.text += "Your rate for Campaign puzzle completion is: " + str(campaign_completion[0]) + "/" + str(campaign_completion[1]) + "\n\n";
+		if (campaign_completion[0] >= campaign_completion[1]):
+			label.text += "Wow! I couldn't stump you at all! Maybe you can make a puzzle we can't solve now...?"
+	
+func standard_completion() -> Array:
+	# count all standard puzzles except Victory Lap, Secrets of Space-Time and Community Levels
+	var result = [0, 0];
+	for i in range(gamelogic.custom_past_here - 1):
+		if (i == 2):
+			continue;
+		var standard_start = gamelogic.chapter_standard_starting_levels[i];
+		var advanced_start = gamelogic.chapter_advanced_starting_levels[i];
+		for j in range(standard_start, advanced_start):
+			if (gamelogic.specific_puzzles_completed[j]):
+				result[0] += 1;
+			result[1] += 1;
+	return result;
+	
+func campaign_completion() -> Array:
+	var result = [gamelogic.puzzles_completed, gamelogic.custom_past_here_level_count];
+	return result;
 	
 func begin_the_end() -> void:
 	if (end_timer_max > 0.0):

@@ -1570,6 +1570,8 @@ func refresh_puzzles_completed() -> void:
 		var level_name = level_names[i];
 		if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 			specific_puzzles_completed.push_back(true);
+			if (i >= custom_past_here_level_count):
+				continue;
 			puzzles_completed += 1;
 			if (level_extraness[i]):
 				advanced_puzzles_completed += 1;

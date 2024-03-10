@@ -39,7 +39,6 @@ theme = ExtResource( 3 )
 text = "(Panel 2 TBD)"
 
 [node name="Panel3" type="Sprite" parent="CutsceneHolder"]
-visible = false
 self_modulate = Color( 0.796078, 0.380392, 0.380392, 1 )
 texture = ExtResource( 2 )
 centered = false
@@ -52,10 +51,10 @@ align = 1
 
 [node name="ColorRect2" type="ColorRect" parent="CutsceneHolder/Panel3/Holder"]
 modulate = Color( 0, 0, 0, 0.478431 )
-margin_left = 200.0
-margin_top = 195.0
-margin_right = 326.0
-margin_bottom = 263.0
+margin_left = 47.0
+margin_top = 16.0
+margin_right = 473.0
+margin_bottom = 262.0
 
 [node name="CreditsButton" type="Button" parent="CutsceneHolder/Panel3/Holder"]
 margin_left = 230.0
