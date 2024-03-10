@@ -24,17 +24,16 @@ func _ready() -> void:
 	communitylevelsbutton.connect("pressed", self, "_communitylevelsbutton_pressed");
 	closebutton.connect("pressed", self, "destroy");
 	
-	if !(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]):
-		if (gamelogic.puzzles_completed < gamelogic.chapter_standard_unlock_requirements[gamelogic.custom_past_here]):
-			communitylevelsbutton.disabled = true;
-			communitylevelsbutton.text = "???";
-	
 	if (gamelogic.chapter >= gamelogic.custom_past_here):
 		in_community_puzzles = true;
 		communitylevelsbutton.text = "Campaign Levels";
 		if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
 			prevbutton.disabled = true;
 			nextbutton.disabled = true;
+	elif !(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]):
+		if (gamelogic.puzzles_completed < gamelogic.chapter_standard_unlock_requirements[gamelogic.custom_past_here]):
+			communitylevelsbutton.disabled = true;
+			communitylevelsbutton.text = "???";
 	
 	nextbutton.text = "Next Chapter (" + gamelogic.human_readable_input("next_level", 1) + ")";
 	prevbutton.text = "Prev. Chapter (" + gamelogic.human_readable_input("previous_level", 1) + ")";
