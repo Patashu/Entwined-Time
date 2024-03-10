@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65536, 14, 262145, 65538, 8, 0, 65539, 78, 0, 65540, 77, 0, 65542, 7, 0, 65543, 14, 262145, 131072, 14, 655362, 131073, 14, 524292, 131074, 2, 0, 131075, 78, 0, 131076, 77, 0, 131077, 3, 0, 131078, 1, 0, 131079, 14, 262145, 196609, 14, 262145, 196610, 26, 0, 196611, 26, 0, 196612, 77, 0, 196613, 23, 0, 196614, 14, 524290, 196615, 14, 655364, 262145, 14, 655362, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Wall of Force"
+level_author = "Neonesque"
+level_replay = "Wall of Force$mturn=74$xdxwzwaxzwxzzxzwxdwxaxzaxwxzxwxdxzzzzdwdxzzxzxdxawzzddxwxzzzzawxzwxaxzaxdxzzxzxdxzdxdzzxzxwxaxzaxzzzwxdzzdxwxd"
+heavy_max_moves = 2.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

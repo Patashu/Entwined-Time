@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 393219, 3, 14, 3, 4, 14, 3, 5, 14, 4, 65536, 14, 262145, 65537, 1, 0, 65538, 14, 131074, 65539, 14, 917512, 65540, 14, 65539, 65541, 14, 65540, 131072, 14, 262145, 131073, 7, 0, 131075, 14, 131074, 131076, 14, 917512, 131077, 14, 65540, 196608, 14, 589824, 196609, 14, 4, 196610, 27, 0, 196612, 14, 65538, 196613, 14, 65540, 262144, 14, 589825, 262145, 14, 131076, 262148, 14, 65538, 262149, 14, 65540, 327680, 14, 262145, 327682, 26, 0, 327683, 14, 2, 327684, 14, 917509, 327685, 14, 65540, 393216, 14, 262145, 393219, 14, 131074, 393220, 14, 917512, 393221, 14, 65540, 458752, 14, 262145, 458753, 2, 0, 458754, 8, 0, 458755, 97, 0, 458756, 14, 131074, 458757, 14, 589829, 524288, 14, 589824, 524289, 14, 3, 524290, 14, 4, 524291, 99, 0, 524292, 97, 0, 524293, 14, 262145, 589824, 14, 65538, 589825, 14, 917511, 589826, 14, 131076, 589827, 96, 0, 589828, 98, 0, 589829, 14, 262145, 655360, 14, 65538, 655361, 14, 65540, 655363, 98, 0, 655364, 14, 2, 655365, 14, 589830, 720896, 14, 131074, 720897, 14, 786435, 720898, 14, 196614, 720899, 14, 196614, 720900, 14, 720899, 720901, 14, 131076 )
+
+[node name="@@118" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 77, 0, 196610, 77, 0, 196611, 77, 0, 262146, 77, 0, 262147, 77, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Waterslide"
+level_author = "Neonesque"
+level_replay = "Waterslide$mturn=53$xwxdxzaxwzzxzxddwwxdxzzzwxzxzdwxdxzzsxzddwwxdxzzzwxzxzdxdxzswxzxzdsxzzxzzzxwxz"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
