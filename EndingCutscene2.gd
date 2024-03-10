@@ -21,9 +21,7 @@ var has_shown_advance_label = false;
 var skip_cutscene_label = null;
 
 func _ready() -> void:
-	#TODO: music
-	#gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene E");
-	gamelogic.target_track = -1;
+	gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene E");
 	gamelogic.fadeout_timer_max = 1.0;
 	gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
 	
