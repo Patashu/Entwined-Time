@@ -1514,7 +1514,7 @@ func initialize_level_list() -> void:
 	
 	chapter_names.push_back("Future Technology");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
-	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_standard_unlock_requirements.push_back(min(48, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	level_filenames.push_back("Rushing Rivers")
