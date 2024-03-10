@@ -4969,7 +4969,7 @@ func transition_to_ending_cutscene_2() -> void:
 			position_a = actor.position;
 		elif (actor.actorname == Actor.Name.ChronoHelixBlue):
 			position_b = actor.position;
-	var position_c = terrainmap.position + (position_a + position_b)/2;
+	var position_c = terrainmap.position + (position_a + position_b)/2 + Vector2(cell_size/2, cell_size/2);
 	var t = preload("res://TransitionToTheEnd.tscn").instance();
 	t.position = position_c;
 	add_to_ui_stack(t);
