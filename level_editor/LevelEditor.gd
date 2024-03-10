@@ -171,6 +171,7 @@ func _ready() -> void:
 	
 func initialize_picker_array() -> void:
 	var puzzles = gamelogic.puzzles_completed;
+	# TODO: or chrono lab reactor completion
 	if gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]:
 		puzzles += 99999;
 		

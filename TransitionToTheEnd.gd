@@ -23,8 +23,8 @@ func _animation_finished(anim_name: String) -> void:
 var sparkle_timer = 0.0;
 func _process(delta: float) -> void:
 	sparkle_timer += delta;
-	if (sparkle_timer > 0.05):
-		sparkle_timer -= 0.05;
+	if (sparkle_timer > 0.01):
+		sparkle_timer -= 0.01;
 		add_sparkle();
 
 func add_sparkle() -> void:

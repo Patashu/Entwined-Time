@@ -293,9 +293,11 @@ func _process(delta: float) -> void:
 			self.modulate = Color(1, 1, 1, ((end_timer_max-end_timer)/end_timer_max));
 	
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		pointer.visible = false;
 		return;
 	
 	if (pointer != null):
+		pointer.visible = true;
 		var focus = holder.get_focus_owner();
 		if (focus == null):
 			beginbutton.grab_focus();

@@ -4566,7 +4566,7 @@ func check_won() -> void:
 		won_cooldown = 0;
 		if (level_name == "Joke"):
 			winlabel.change_text("Thanks for playing :3")
-		elif (level_name == "Chrono Lab Reactor" and !doing_replay):
+		elif (level_name == "Chrono Lab Reactor" and !doing_replay and ui_stack.size() == 0):
 			transition_to_ending_cutscene_2();
 		elif (level_name == "A Way In?" and !doing_replay):
 			target_track = -1;
@@ -4975,7 +4975,8 @@ func transition_to_ending_cutscene_2() -> void:
 	add_to_ui_stack(t);
 	
 func ending_cutscene_2() -> void:
-	pass
+	var a = preload("res://EndingCutscene2.tscn").instance();
+	add_to_ui_stack(a);
 	
 func level_editor() -> void:
 	var a = preload("res://level_editor/LevelEditor.tscn").instance();
@@ -5086,15 +5087,14 @@ func play_next_song() -> void:
 		var value = save_file["music_volume"];
 		var master_volume = save_file["master_volume"];
 		if (value > -30 and master_volume > -30 and !muted): #music is not muted
-			if (ui_stack.size() == 0 or (ui_stack[0].name != "TitleScreen" and ui_stack[0].name != "EndingCutscene1")):
+			if (ui_stack.size() == 0 or (ui_stack[0].name != "TitleScreen" and ui_stack[0].name != "EndingCutscene1" and ui_stack[0].name != "EndingCutscene2")):
 				now_playing = preload("res://NowPlaying.tscn").instance();
 				GuiHolder.call_deferred("add_child", now_playing);
 				#self.get_parent().add_child(now_playing);
 				now_playing.initialize(music_info[current_track]);
 	else:
 		music_speaker.stop();
-	
-	
+
 func load_level_direct(new_level: int) -> void:
 	is_custom = false;
 	end_replay();
