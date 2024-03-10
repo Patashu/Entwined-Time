@@ -294,13 +294,11 @@ color = Color( 0.176471, 0.054902, 0.027451, 1 )
 
 [node name="Panel1" type="Sprite" parent="CutsceneHolder"]
 visible = false
-scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
 centered = false
 
 [node name="Panel2" type="Sprite" parent="CutsceneHolder"]
 visible = false
-scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 centered = false
 
