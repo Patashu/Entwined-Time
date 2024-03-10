@@ -170,6 +170,8 @@ func _ready() -> void:
 	pickertooltip.squish_mode();
 	
 func initialize_picker_array() -> void:
+	# always true now
+	show_tooltips = true;
 	var puzzles = gamelogic.puzzles_completed;
 	if gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]:
 		puzzles += 99999;
@@ -235,7 +237,6 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.TheNight);
 		picker_array.append(Tiles.TheStars);
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
-		show_tooltips = true;
 		picker_array.append(Tiles.SteelCrate);
 		picker_array.append(Tiles.PowerCrate);
 		picker_array.append(Tiles.ColourVoid);
