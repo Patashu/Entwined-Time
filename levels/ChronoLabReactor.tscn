@@ -15,6 +15,7 @@ level_name = "Chrono Lab Reactor"
 level_replay = "Chrono Lab Reactor$mturn=9$ddaxwaaaxzxa"
 heavy_max_moves = 6
 light_max_moves = 6
+target_track = 14
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )

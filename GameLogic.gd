@@ -1778,6 +1778,11 @@ func ready_map() -> void:
 	
 	#have to do it now when underterrainfolder is positioned
 	if (level_name == "Chrono Lab Reactor"):
+		# maintain cutscene music if it's playing
+		if (current_track == 14):
+			target_track = 14;
+			fadeout_timer_max = 0.0;
+			fadeout_timer = 0.0;
 		var bg = Sprite.new();
 		bg.texture = load("res://assets/cutscenes/reactor_bg.png");
 		bg.centered = false;
