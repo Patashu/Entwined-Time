@@ -30,7 +30,7 @@ var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up
 ]
 
 var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",
-"Undo", "Meta-Undo", "Meta-Redo", "Swap", "Restart",
+"Rewind", "Undo", "Redo", "Swap", "Restart",
 "Next Lev/Chap", "Prev Lev/Chap", "Mute",
 "Gain Insight", "Level Select",
 "Replay Mode", "Author's Replay", "Your Replay",

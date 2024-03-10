@@ -84,7 +84,7 @@ func _ready() -> void:
 		metaundoarestart.selected = gamelogic.save_file["meta_undo_a_restart"];
 	else:
 		metaundoarestart.selected = 2;
-	metaundoarestart.text = "Meta-Undo a Restart?:"
+	metaundoarestart.text = "Undo a Restart?:"
 	
 	setup_resolution();
 	setup_fps();
@@ -347,7 +347,7 @@ func updatelabelanimation(value: float) -> void:
 	labelanimation.text = "Animation Speed: " + ("%0.1f" % value) + "x";
 
 func updatelabelundotrail(value: float) -> void:
-	labelundotrail.text = "Undo Prediction Opacity: " + str(int(round(value * 100))) + "%";
+	labelundotrail.text = "Rewind Prediction Opacity: " + str(int(round(value * 100))) + "%";
 
 func destroy() -> void:
 	gamelogic.save_game();

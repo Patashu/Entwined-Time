@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -29,9 +29,7 @@ tile_data = PoolIntArray( 131074, 39, 0, 131075, 39, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Limited Undo (Insight)"
-level_author = "Patashu"
-level_replay = "Limited Undo (Insight)$mturn=38$xddaaxwdddxzxdaawaaxdddxzxdaaaaxwddddddaaaawaa"
+level_name = "Limited Rewind (Insight)"
+level_replay = "Limited Rewind (Insight)$mturn=38$xddaaxwdddxzxdaawaaxdddxzxdaaaaxwddddddaaaawaa"
 heavy_max_moves = 2.0
 light_max_moves = 2.0
-clock_turns = ""

@@ -1866,7 +1866,7 @@ func ready_tutorial() -> void:
 		if (level_number == 0):
 			virtualbuttons.get_node("Verbs/SwapButton").visible = false;
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Undo\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Rewind\n$RESTART: Restart";
 			if (in_insight_level):
 				tutoriallabel.rect_position.y -= 24;
 			
@@ -1885,7 +1885,7 @@ func ready_tutorial() -> void:
 		elif (level_number == 1):
 			virtualbuttons.get_node("Verbs/SwapButton").visible = false;
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Undo\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Rewind\n$RESTART: Restart";
 			
 			for a in actorsfolder.get_children():
 				if (a.name == "Pictogram" or a.name == "Pictogram2"):
@@ -1903,21 +1903,21 @@ func ready_tutorial() -> void:
 		elif (level_number == 2):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Heavy[/color]\n$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Undo [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Heavy[/color]\n$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
 		elif (level_number == 3):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Undo [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
 		elif (level_number == 4):
 			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$UNDO: Undo [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+			tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
 		elif (level_number == 5):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Meta-Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Meta-Undo[/color] undoes your last Move or Undo.)";
+			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Undo[/color] undoes your last Move or Rewind.)";
 		elif (level_number == 6):
 			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Meta-Undo[/color]\n$RESTART: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Meta-Undo[/color] that too!)";
+			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Undo[/color] that too!)";
 		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 		translate_tutorial_inputs();
 			
@@ -1938,7 +1938,7 @@ func translate_tutorial_inputs() -> void:
 			
 	if tutoriallabel.visible:
 		if (meta_redo_inputs != "" and (level_number == 5 or level_number == 6)):
-			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Meta-Undo[/color]\n$RESTART: Restart\n$META-REDO: [color=#A9F05F]Meta-Redo[/color]";
+			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n$META-REDO: [color=#A9F05F]Redo[/color]";
 			tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 		
 		if using_controller:
@@ -3972,7 +3972,7 @@ func lose(reason: String, suspect: Actor) -> void:
 		winlabel.change_text(reason + "\n\nRestart to continue.")
 	else:
 		lost_void = false;
-		winlabel.change_text(reason + "\n\nMeta-Undo or Restart to continue.")
+		winlabel.change_text(reason + "\n\nUndo or Restart to continue.")
 	
 func end_lose() -> void:
 	lost = false;
@@ -5993,7 +5993,7 @@ func update_info_labels() -> void:
 	if light_max_moves >= 0:
 		lightinfolabel.text += "/" + str(light_max_moves);
 	
-	metainfolabel.text = "Meta-Turn: " + str(meta_turn)
+	metainfolabel.text = "Turn: " + str(meta_turn)
 	
 	if (doing_replay):
 		replaybuttons.visible = true;

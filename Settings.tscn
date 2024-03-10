@@ -97,7 +97,7 @@ margin_left = 87.0
 margin_top = 104.0
 margin_right = 236.0
 margin_bottom = 115.0
-text = "Undo Prediction Opacity: 100%"
+text = "Rewind Prediction Opacity: 100%"
 
 [node name="AnimationSlider" type="HSlider" parent="Holder/TabContainer/Graphics"]
 margin_left = 3.0
@@ -259,9 +259,9 @@ text = "Copy Save File"
 
 [node name="MetaUndoARestart" type="OptionButton" parent="Holder/TabContainer/Gameplay"]
 margin_top = 21.0
-margin_right = 131.0
+margin_right = 97.0
 margin_bottom = 37.0
-text = "Meta-Undo a Restart?:"
+text = "Undo a Restart?:"
 
 [node name="Pointer" type="Sprite" parent="Holder"]
 

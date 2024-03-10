@@ -699,19 +699,19 @@ func picker_tooltip() -> void:
 		Tiles.GlassBlock:
 			text = "Glass Block: Solid to moves entering or exiting its tile. Surprise: If the actor is Iron weight or greater, the Glass Block breaks. When a Glass Block unbreaks, it breaks any actors that don't have Unbreakable durability."
 		Tiles.ColourGreen:
-			text = "Green: Colour. Always experiences time. Immune to character undo events."
+			text = "Green: Colour. Always experiences time. Doesn't create rewind events."
 		Tiles.GreenSpikeball:
-			text = "Green Spikeball: A Spikeball that does not create character undo events."
+			text = "Green Spikeball: A Spikeball that does not create rewind events."
 		Tiles.GreenFire:
-			text = "Green Fire: A Fire that activates after regular Fires even for actors not experiencing time and does not create character undo events."
+			text = "Green Fire: A Fire that activates after regular Fires even for actors not experiencing time and does not create rewind events."
 		Tiles.GreenGlassBlock:
-			text = "Green Glass Block: A Glass Block that does not create character undo events."
+			text = "Green Glass Block: A Glass Block that does not create rewind events."
 		Tiles.Fuzz:
-			text = "Fuzz: When a character undoes while inside Fuzz, the Fuzz is consumed (creating only a meta undo event), the undo happens but is not consumed, and time does not pass."
+			text = "Fuzz: When a character rewinds while inside Fuzz, the Fuzz is consumed, the rewind happens but is not consumed, and time does not pass."
 		Tiles.OneUndo:
-			text = "One Undo: When a character undoes while inside One Undo, one of them is replaced with a No Undo (creating only a meta undo event)."
+			text = "One Rewind: When a character rewinds while inside One Rewind, one of them is replaced with a No Rewind."
 		Tiles.NoUndo:
-			text = "No Undo: When a character undoes while inside No Undo and on no One Undos, it is prevented and nothing happens."
+			text = "No Rewind: When a character rewinds while inside No Rewind and on no One Rewind, it is prevented and nothing happens."
 		Tiles.TimeCrystalGreen:
 			text = "Green Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. Time Crystals existing locks goals. When consumed by an unbroken Cuckoo Clock: Increase ticks by 1. When consumed by a Character: If the character has no locked moves: Increase turn limit by 1. Else, unlock the most recently locked move and place it on the end of the character's filled timeline."
 		Tiles.TimeCrystalMagenta:
@@ -721,29 +721,29 @@ func picker_tooltip() -> void:
 		Tiles.TheNight:
 			text = "Night: Actors inside Night don't experience time passing (except for being burned by fire and green fire)."
 		Tiles.TheStars:
-			text = "Stars: Actors inside Stars are immune to character undo events."
+			text = "Stars: Actors inside Stars are immune to rewind events."
 		Tiles.SteelCrate:
 			text = "Steel Crate: Actor. Heaviness: Steel. Strength: Iron. Durability: Fire. Fall speed: Infinite. Native Time Colour: Gray. When a unbroken Steel Crate fails to move into an unstacked unbroken Light or Cuckoo Clock, the target first breaks."
 		Tiles.PowerCrate:
 			text = "Power Crate: Actor. Heaviness: Wooden. Strength: Steel. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
 		Tiles.ColourVoid:
-			text = "Void: Colour. (Void coloured actors can't lose their colour even through meta-undos and can't be given other colours.) Always experiences time, INCLUDING after meta undos. Immune to character undo AND meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+			text = "Void: Colour. (Void coloured actors can't lose their colour even through undos and can't be given other colours.) Always experiences time, INCLUDING after undos. Immune to rewind events AND undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.ColourCyan:
-			text = "Cyan: Colour. Experiences time when Light moves or undoes."
+			text = "Cyan: Colour. Experiences time when Light moves or rewinds."
 		Tiles.ColourOrange:
-			text = "Orange: Colour. Experiences time when Heavy moves or undoes."
+			text = "Orange: Colour. Experiences time when Heavy moves or rewinds."
 		Tiles.ColourYellow:
-			text = "Yellow: Colour. Experiences time during undos."
+			text = "Yellow: Colour. Experiences time during rewinds."
 		Tiles.ColourPurple:
-			text = "Purple: Colour. Experiences time except when Heavy undoes."
+			text = "Purple: Colour. Experiences time except when Heavy rewinds."
 		Tiles.ColourBlurple:
-			text = "Blurple: Colour. Experiences time except when Light undoes."
+			text = "Blurple: Colour. Experiences time except when Light rewinds."
 		Tiles.ColourWhite:
 			text = "White: Colour. Never experiences time."
 		Tiles.VoidSpikeball:
-			text = "Void Spikeball: A Spikeball that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+			text = "Void Spikeball: A Spikeball that does not create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidGlassBlock:
-			text = "Void Glass Block: A Glass Block that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+			text = "Void Glass Block: A Glass Block that does not create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.ChronoHelixBlue:
 			text = "Chrono Helix Blue: Actor. Heaviness: Iron. Strength: Steel. Durability: Unbreakable. Fall speed: 1. Native Time Colour: Gray. When experiencing time, after gravity and before fire, if 8-way adjacent to a Chrono Helix Red, both move away from each other. When bumped with a Chrono Helix Red, you win."
 		Tiles.ChronoHelixRed:
@@ -755,27 +755,27 @@ func picker_tooltip() -> void:
 		Tiles.PowerSocket:
 			text = "Power Socket: A Spikeball that breaks ALL Actors. (Put a No Heavy/Light/Crate on top if you want it to avoid some actors.)"
 		Tiles.GreenPowerSocket:
-			text = "Green Power Socket: A Power Socket that does not create character undo events."
+			text = "Green Power Socket: A Power Socket that does not create rewind events."
 		Tiles.VoidPowerSocket:
-			text = "Void Power Socket: A Power Socket that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+			text = "Void Power Socket: A Power Socket that does not create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.GlassBlockCracked:
 			text = "Cracked Glass Block: A Glass Block without the weight requirement."
 		Tiles.PhaseWallBlue:
-			text = "Phase Wall Blue: Solid during Light moves and undoes."
+			text = "Phase Wall Blue: Solid during Light moves and rewinds."
 		Tiles.PhaseWallRed:
-			text = "Phase Wall Red: Solid during Heavy moves and undoes."
+			text = "Phase Wall Red: Solid during Heavy moves and rewinds."
 		Tiles.PhaseWallGray:
 			text = "Phase Wall Gray: Solid during character moves."
 		Tiles.PhaseWallPurple:
-			text = "Phase Wall Purple: Solid during character undoes."
+			text = "Phase Wall Purple: Solid during character rewinds."
 		Tiles.PhaseLightningBlue:
-			text = "Phase Lightning Blue: After Light moves and undoes, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Blue: After Light moves and rewinds, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.PhaseLightningRed:
-			text = "Phase Lightning Red: After Heavy moves and undoes, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Red: After Heavy moves and rewinds, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.PhaseLightningGray:
-			text = "Phase Lightning Gray: After character moves, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Gray: After moves, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.PhaseLightningPurple:
-			text = "Phase Lightning Purple: After character undoes, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
+			text = "Phase Lightning Purple: After rewinds, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.OnewayEastLose:
 			text = "Lose One Way: A Green One Way that if bumped, you lose."
 		Tiles.OnewayNorthLose:
@@ -791,25 +791,25 @@ func picker_tooltip() -> void:
 		Tiles.CheckpointBlue:
 			text = "Light Checkpoint: At end of turn, Light on this tile has its timeline cleared."
 		Tiles.GreenFog:
-			text = "Green Fog: Actors in Green Fog don't create character undo events."
+			text = "Green Fog: Actors in Green Fog don't create rewind events."
 		Tiles.Floorboards:
 			text = "Floorboards: Solidity/Surprises of other terrain in this tile is ignored, including Holes. When an Actor leaves a tile with Floorboards using a non-retro move: The Floorboards is destroyed. In a stack of Floorboards, only the topmost one is considered."
 		Tiles.MagentaFloorboards:
-			text = "Magenta Floorboards: A Floorboards that can be destroyed also by retro moves."
+			text = "Magenta Floorboards: A Floorboards that can be destroyed also by retroactive moves."
 		Tiles.GreenFloorboards:
-			text = "Green Floorboards: A Floorboards that can be destroyed also by retro moves, and that does not create character undo events."
+			text = "Green Floorboards: A Floorboards that can be destroyed also by retroactive moves, and that does not create rewind events."
 		Tiles.VoidFloorboards:
-			text = "Void Floorboards: A Floorboards that can be destroyed also by retro and meta-undo moves, and that does not create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+			text = "Void Floorboards: A Floorboards that can be destroyed also by retroactive moves and undos, and that does not create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.Hole:
 			text = "Hole: (Technically an Actor, so you CAN use Green or Void on this.) When an actor enters a Hole: If the Hole isn't broken: The actor suffers pit damage. Then if the actor was an unbroken crate/boulder, the hole breaks. Holes (broken or unbroken) prevent broken actors from leaving them."
 		Tiles.GreenHole:
-			text = "Green Hole: A hole that doesn't create character undo events."
+			text = "Green Hole: A hole that doesn't create rewindevents."
 		Tiles.VoidHole:
-			text = "Void Hole: A hole that doesn't create character undo OR meta undo events. (Puzzles containing 'Void' will record meta-undos in their replays.)"
+			text = "Void Hole: A hole that doesn't create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.BoostPad:
-			text = "Boost Pad: Non-retro movements leaving this tile happen one additional time."
+			text = "Boost Pad: Forward movements leaving this tile happen one additional time."
 		Tiles.GreenBoostPad:
-			text = "Green Boost Pad: Non-retro AND retro movements leaving this tile happen one additional time."
+			text = "Green Boost Pad: ALL movements leaving this tile happen one additional time."
 		Tiles.SlopeNW:
 			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
 		Tiles.SlopeNE:
@@ -821,9 +821,9 @@ func picker_tooltip() -> void:
 		Tiles.Boulder:
 			text = "Boulder: (TODO. It's complicated, but it's an Iron Crate with Momentum [tm].)"
 		Tiles.PhaseWallGreenEven:
-			text = "Phase Wall Green Even: Solid during even Meta-Turns. (Meta-Turn increments at the end of a turn.)"
+			text = "Phase Wall Green Even: Solid during even Turns. (Turn increments at the end of a turn.)"
 		Tiles.PhaseWallGreenOdd:
-			text = "Phase Wall Green Even: Solid during odd Meta-Turns. (Meta-Turn increments at the end of a turn.)"
+			text = "Phase Wall Green Even: Solid during odd Turns. (Turn increments at the end of a turn.)"
 		Tiles.NudgeEast:
 			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
 		Tiles.NudgeNorth:
@@ -847,7 +847,7 @@ func picker_tooltip() -> void:
 		Tiles.GhostPlatform:
 			text = "Ghost Platform: Solid to gravity moves of non-Character actors."
 		Tiles.Propellor:
-			text = "Propellor: Hat. (Attaches to an actor in the tile below. Doesn't make a character undo event.) That actor doesn't experience gravity, ever."
+			text = "Propellor: Hat. (Attaches to an actor entering or starting in the tile below.) That actor doesn't experience gravity, ever."
 		Tiles.DurPlus:
 			text = "Durability Plus: Modifier. (Attaches to an actor entering or starting in this tile.) On level start, attaches to an actor in this tile. That actor gains +1 Durability."
 		Tiles.DurMinus:

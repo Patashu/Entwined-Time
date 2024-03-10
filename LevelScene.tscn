@@ -315,12 +315,12 @@ custom_styles/normal = ExtResource( 12 )
 text = "Y"
 
 [node name="MetaRedoLabel" type="Label" parent="VirtualButtons/Verbs/MetaRedoButton"]
-margin_left = -58.0
+margin_left = -31.0
 margin_top = 6.0
 margin_right = -1.0
 margin_bottom = 17.0
 custom_colors/font_color = Color( 0.662745, 0.941176, 0.372549, 1 )
-text = "Meta-Redo:"
+text = "Redo:"
 
 [node name="Label" type="Label" parent="VirtualButtons/Verbs/MetaRedoButton"]
 margin_left = 8.0
