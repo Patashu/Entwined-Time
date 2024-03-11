@@ -3459,31 +3459,27 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.OnewayEastLose:
 				result = no_if_true_yes_if_false(dir == Vector2.LEFT);
 				if (result == Success.No):
-					result = Success.Surprise;
+					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
 					flash_terrain = id;
 					flash_colour = oneway_green_flash;
-					lose("A Lose One-Way was bumped.", actor)
 			Tiles.OnewayWestLose:
 				result = no_if_true_yes_if_false(dir == Vector2.RIGHT);
 				if (result == Success.No):
-					result = Success.Surprise;
+					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
 					flash_terrain = id;
 					flash_colour = oneway_green_flash;
-					lose("A Lose One-Way was bumped.", actor)
 			Tiles.OnewayNorthLose:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN);
 				if (result == Success.No):
-					result = Success.Surprise;
+					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
 					flash_terrain = id;
 					flash_colour = oneway_green_flash;
-					lose("A Lose One-Way was bumped.", actor)
 			Tiles.OnewaySouthLose:
 				result = no_if_true_yes_if_false(dir == Vector2.UP);
 				if (result == Success.No):
-					result = Success.Surprise;
+					result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
 					flash_terrain = id;
 					flash_colour = oneway_green_flash;
-					lose("A Lose One-Way was bumped.", actor)
 			Tiles.LadderPlatform:
 				result = no_if_true_yes_if_false(dir == Vector2.DOWN and is_gravity);
 			Tiles.WoodenPlatform:

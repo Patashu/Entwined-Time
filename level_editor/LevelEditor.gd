@@ -777,13 +777,13 @@ func picker_tooltip() -> void:
 		Tiles.PhaseLightningPurple:
 			text = "Phase Lightning Purple: After rewinds, when time passes, before gravity, ALL actors on this tile that don't have Fire or greater Durability break."
 		Tiles.OnewayEastLose:
-			text = "Lose One Way: A Green One Way that if bumped, you lose."
+			text = "Green Zappy One Way: A Green One Way that acts like a Green Power Socket when bumped."
 		Tiles.OnewayNorthLose:
-			text = "Lose One Way: A Green One Way that if bumped, you lose."
+			text = "Green Zappy One Way: A Green One Way that acts like a Green Power Socket when bumped."
 		Tiles.OnewaySouthLose:
-			text = "Lose One Way: A Green One Way that if bumped, you lose."
+			text = "Green Zappy One Way: A Green One Way that acts like a Green Power Socket when bumped."
 		Tiles.OnewayWestLose:
-			text = "Lose One Way: A Green One Way that if bumped, you lose."
+			text = "Green Zappy One Way: A Green One Way that acts like a Green Power Socket when bumped."
 		Tiles.Checkpoint:
 			text = "Checkpoint: At end of turn, Heavy or Light on this tile has its timeline cleared."
 		Tiles.CheckpointRed:
