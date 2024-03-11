@@ -5285,8 +5285,9 @@ func character_move(dir: Vector2) -> bool:
 			#AD10: Light floats gracefully downwards
 			#elif !heavy_selected and !is_suspended(light_actor):
 			#	set_actor_var(light_actor, "airborne", 0, Chrono.MOVE);
-	if (result != Success.No):
-		time_passes(Chrono.MOVE);
+	if (result != Success.No or nonstandard_won):
+		if (!nonstandard_won):
+			time_passes(Chrono.MOVE);
 		if anything_happened_meta():
 			if heavy_selected:
 				if anything_happened_char():
@@ -5329,7 +5330,9 @@ func anything_happened_char(destructive: bool = true) -> bool:
 	return false;
 	
 func anything_happened_meta() -> bool:
-	if (lost == true):
+	if (lost == true or nonstandard_won == true):
+		while (meta_undo_buffer.size() <= meta_turn):
+			meta_undo_buffer.append([]);
 		return true;
 	if anything_happened_char(false):
 		return true;
