@@ -302,8 +302,11 @@ visible = false
 texture = ExtResource( 2 )
 centered = false
 
-[node name="Panel3" type="Sprite" parent="CutsceneHolder"]
+[node name="Panel3" type="Node2D" parent="CutsceneHolder"]
 scale = Vector2( 0.5, 0.5 )
+
+[node name="Sprite" type="Sprite" parent="CutsceneHolder/Panel3"]
+scale = Vector2( 2, 2 )
 texture = ExtResource( 4 )
 centered = false
 

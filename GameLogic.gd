@@ -1786,7 +1786,6 @@ func ready_map() -> void:
 		var bg = Sprite.new();
 		bg.texture = load("res://assets/cutscenes/reactor_bg.png");
 		bg.centered = false;
-		bg.scale = Vector2(0.5, 0.5);
 		bg.modulate = Color(1, 1, 1, 0.35);
 		bg.position = Vector2(-underterrainfolder.position.x, -underterrainfolder.position.y);
 		underterrainfolder.add_child(bg);
