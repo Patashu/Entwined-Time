@@ -1509,6 +1509,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Out of Service")
 	level_filenames.push_back("Pittance")
 	level_filenames.push_back("Second Wind")
+	level_filenames.push_back("Ionic Capacitor")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -5817,6 +5818,8 @@ func do_one_replay_turn() -> void:
 			if (unit_test_mode):
 				floating_text("Tested up to level: " + str(level_number) + " (This is 0 indexed lol)" );
 				end_replay();
+				if (level_number == level_filenames.size() - 1):
+					load_level_direct(0); # Patashu anti-spoiler protection :3;
 			return;
 	next_replay = replay_timer+replay_interval();
 	var replay_char = level_replay[replay_turn];
