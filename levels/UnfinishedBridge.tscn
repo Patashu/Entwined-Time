@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 8, 0, 2, 2, 0, 65536, 14, 196613, 65537, 14, 196615, 65538, 19, 0, 196608, 27, 0, 196609, 27, 0, 196610, 27, 0, 196611, 27, 0, 196612, 27, 0, 196613, 27, 0, 196614, 1, 0, 196615, 7, 0, 262150, 14, 196613, 262151, 14, 196615 )
+
+[node name="@@303" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 20, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Unfinished Bridge"
+level_author = "Patashu"
+level_replay = "Unfinished Bridge$mturn=79$xwxaxzxaddxaxwxzxzdxwzxzzzwxdxwxdxzzxzzdwxaxzdxwzxzzxwxaxdxaxzzzxzxadxzxwxdxzdxwxzzwxzzxwzwxdxzdxdxzzzzzdxzwzdxddxzxzaxdxwz"
+heavy_max_moves = 5.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0

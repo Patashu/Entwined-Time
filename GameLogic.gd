@@ -1190,8 +1190,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("OneWayToBurn")
 	level_filenames.push_back("FootWiggleEx")
 	level_filenames.push_back("FootWiggleEx2")
-	level_filenames.push_back("InvisibleBridgeEx")
-	level_filenames.push_back("InvisibleBridgeEx2")
+	level_filenames.push_back("UnfinishedBridge")
 	level_filenames.push_back("TheOneWayPitEx2")
 	level_filenames.push_back("Heaven")
 	
