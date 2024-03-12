@@ -842,36 +842,37 @@ func setup_virtual_buttons() -> void:
 			for button in folder.get_children():
 				button.disabled = false;
 		virtualbuttons.visible = true;
-		if value == 1:
-			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
-			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
-			replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
-			replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
-		elif value == 2:
-			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
-			virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
-			replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
-			replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
-		elif value == 3:
-			virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
-			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
-			replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
-			replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
-		elif value == 4:
-			virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
-			virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
-			replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
-			replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
-		elif value == 5:
-			virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
-			virtualbuttons.get_node("Dirs").position = Vector2(-300, 0);
-			replaybuttons.get_node("ReplayTurn").position = Vector2(160, 0);
-			replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
-		elif value == 6:
-			virtualbuttons.get_node("Verbs").position = Vector2(300, 0);
-			virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
-			replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
-			replaybuttons.get_node("ReplaySpeed").position = Vector2(-150, 0);
+		match value:
+			1:
+				virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
+				virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+				replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
+				replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
+			2:
+				virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
+				virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
+				replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
+				replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
+			3:
+				virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
+				virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+				replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
+				replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
+			4:
+				virtualbuttons.get_node("Verbs").position = Vector2(128, 0);
+				virtualbuttons.get_node("Dirs").position = Vector2(-108, 0);
+				replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
+				replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
+			5:
+				virtualbuttons.get_node("Verbs").position = Vector2(0, 0);
+				virtualbuttons.get_node("Dirs").position = Vector2(-300, 0);
+				replaybuttons.get_node("ReplayTurn").position = Vector2(160, 0);
+				replaybuttons.get_node("ReplaySpeed").position = Vector2(138, 0);
+			6:
+				virtualbuttons.get_node("Verbs").position = Vector2(300, 0);
+				virtualbuttons.get_node("Dirs").position = Vector2(0, 0);
+				replaybuttons.get_node("ReplayTurn").position = Vector2(-128, 0);
+				replaybuttons.get_node("ReplaySpeed").position = Vector2(-150, 0);
 	else:
 		replaybuttons.get_node("ReplayTurn").position = Vector2(0, 0);
 		replaybuttons.get_node("ReplaySpeed").position = Vector2(0, 0);
@@ -1880,61 +1881,62 @@ func ready_tutorial() -> void:
 		leftarrow.visible = true;
 		rightarrow.visible = true;
 		tutoriallabel.rect_position = Vector2(0, 72);
-		if (level_number == 0):
-			virtualbuttons.get_node("Verbs/SwapButton").visible = false;
-			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Rewind\n$RESTART: Restart";
-			if (in_insight_level):
+		match level_number:
+			0:
+				virtualbuttons.get_node("Verbs/SwapButton").visible = false;
+				virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
+				tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Rewind\n$RESTART: Restart";
+				if (in_insight_level):
+					tutoriallabel.rect_position.y -= 24;
+				
+				
+				for a in actorsfolder.get_children():
+					if (a.name == "Pictogram" or a.name == "Pictogram2"):
+						a.queue_free();
+				var sprite = Sprite.new();
+				sprite.name = "Pictogram";
+				sprite.texture = preload("res://assets/light_goal_tutorial.png");
+				actorsfolder.add_child(sprite);
+				sprite.position = Vector2(84, 84);
+				if (in_insight_level):
+					sprite.position.y += 48;
+			
+			1:
+				virtualbuttons.get_node("Verbs/SwapButton").visible = false;
+				virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
+				tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Rewind\n$RESTART: Restart";
+				
+				for a in actorsfolder.get_children():
+					if (a.name == "Pictogram" or a.name == "Pictogram2"):
+						a.queue_free();
+				var sprite = Sprite.new();
+				sprite.name = "Pictogram";
+				sprite.texture = preload("res://assets/light_goal_tutorial.png");
+				actorsfolder.add_child(sprite);
+				sprite.position = Vector2(84, 84);
+				sprite = Sprite.new();
+				sprite.name = "Pictogram2";
+				sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
+				actorsfolder.add_child(sprite);
+				sprite.position = Vector2(84, 84+24);
+			2:
+				virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 				tutoriallabel.rect_position.y -= 24;
-			
-			
-			for a in actorsfolder.get_children():
-				if (a.name == "Pictogram" or a.name == "Pictogram2"):
-					a.queue_free();
-			var sprite = Sprite.new();
-			sprite.name = "Pictogram";
-			sprite.texture = preload("res://assets/light_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84, 84);
-			if (in_insight_level):
-				sprite.position.y += 48;
-			
-		elif (level_number == 1):
-			virtualbuttons.get_node("Verbs/SwapButton").visible = false;
-			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			tutoriallabel.bbcode_text = "$MOVE: Move\n$UNDO: Rewind\n$RESTART: Restart";
-			
-			for a in actorsfolder.get_children():
-				if (a.name == "Pictogram" or a.name == "Pictogram2"):
-					a.queue_free();
-			var sprite = Sprite.new();
-			sprite.name = "Pictogram";
-			sprite.texture = preload("res://assets/light_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84, 84);
-			sprite = Sprite.new();
-			sprite.name = "Pictogram2";
-			sprite.texture = preload("res://assets/heavy_goal_tutorial.png");
-			actorsfolder.add_child(sprite);
-			sprite.position = Vector2(84, 84+24);
-		elif (level_number == 2):
-			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Heavy[/color]\n$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
-		elif (level_number == 3):
-			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
-		elif (level_number == 4):
-			virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
-			tutoriallabel.rect_position.y -= 24;
-			tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
-		elif (level_number == 5):
-			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Undo[/color] undoes your last Move or Rewind.)";
-		elif (level_number == 6):
-			tutoriallabel.rect_position.y -= 48;
-			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Undo[/color] that too!)";
+				tutoriallabel.bbcode_text = "$MOVE: Move [color=#FF7459]Heavy[/color]\n$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+			3:
+				virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
+				tutoriallabel.rect_position.y -= 24;
+				tutoriallabel.bbcode_text = "$SWAP: Swap [color=#7FC9FF]To Light[/color]\n$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+			4:
+				virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
+				tutoriallabel.rect_position.y -= 24;
+				tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+			5:
+				tutoriallabel.rect_position.y -= 48;
+				tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Undo[/color] undoes your last Move or Rewind.)";
+			6:
+				tutoriallabel.rect_position.y -= 48;
+				tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Undo[/color] that too!)";
 		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 		translate_tutorial_inputs();
 			
@@ -2872,22 +2874,23 @@ boost_pad_reentrance: bool = false) -> int:
 			var old_terrain = terrain_in_tile(old_pos);
 			for i in range(old_terrain.size() - 1):
 				var tile = old_terrain[i];
-				if (tile == Tiles.Floorboards):
-					if (chrono < Chrono.META_UNDO and !is_retro):
-						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
-					break;
-				elif (tile == Tiles.MagentaFloorboards):
-					if (chrono < Chrono.META_UNDO):
-						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
-					break;
-				elif (tile == Tiles.GreenFloorboards):
-					if (chrono < Chrono.META_UNDO):
-						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Green, chrono, -1);
-					break;
-				elif (tile == Tiles.VoidFloorboards):
-					if (chrono < Chrono.TIMELESS):
-						maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Void, chrono, -1);
-					break;
+				match tile:
+					Tiles.Floorboards:
+						if (chrono < Chrono.META_UNDO and !is_retro):
+							maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
+						break;
+					Tiles.MagentaFloorboards:
+						if (chrono < Chrono.META_UNDO):
+							maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
+						break;
+					Tiles.GreenFloorboards:
+						if (chrono < Chrono.META_UNDO):
+							maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Green, chrono, -1);
+						break;
+					Tiles.VoidFloorboards:
+						if (chrono < Chrono.TIMELESS):
+							maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Void, chrono, -1);
+						break;
 		
 		# update night and stars state
 		var terrain = terrain_in_tile(actor.pos);
@@ -4810,22 +4813,23 @@ func meta_undo_a_restart() -> bool:
 		level_replay = user_replay_before_restarts.pop_back();
 		cut_sound();
 		play_sound("metarestart");
-		if (meta_undo_a_restart_type == 0): # Yes
-			meta_undo_a_restart_mode = true;
-			replay_advance_turn(level_replay.length());
-			end_replay();
-			finish_animations(Chrono.TIMELESS);
-			meta_undo_a_restart_mode = false;
-		elif (meta_undo_a_restart_type == 1): # Replay (Instant)
-			meta_undo_a_restart_mode = true;
-			replay_advance_turn(level_replay.length());
-			finish_animations(Chrono.TIMELESS);
-			meta_undo_a_restart_mode = false;
-		elif (meta_undo_a_restart_type == 2): # Replay (Fast)
-			meta_undo_a_restart_mode = true;
-			next_replay = -1;
-		elif (meta_undo_a_restart_type == 3): # Replay
-			pass
+		match meta_undo_a_restart_type:
+			0: # Yes
+				meta_undo_a_restart_mode = true;
+				replay_advance_turn(level_replay.length());
+				end_replay();
+				finish_animations(Chrono.TIMELESS);
+				meta_undo_a_restart_mode = false;
+			1: # Replay (Instant)
+				meta_undo_a_restart_mode = true;
+				replay_advance_turn(level_replay.length());
+				finish_animations(Chrono.TIMELESS);
+				meta_undo_a_restart_mode = false;
+			2: # Replay (Fast)
+				meta_undo_a_restart_mode = true;
+				next_replay = -1;
+			3: # Replay
+				pass
 		return true;
 	return false;
 
@@ -4891,27 +4895,28 @@ func meta_redo() -> bool:
 	return true;
 	
 func do_one_letter(replay_char: String) -> void:
-	if (replay_char == "w"):
-		character_move(Vector2.UP);
-	elif (replay_char == "a"):
-		character_move(Vector2.LEFT);
-	elif (replay_char == "s"):
-		character_move(Vector2.DOWN);
-	elif (replay_char == "d"):
-		character_move(Vector2.RIGHT);
-	elif (replay_char == "z"):
-		character_undo();
-	elif (replay_char == "x"):
-		character_switch();
-	elif (replay_char == "c"):
-		meta_undo();
-	elif (replay_char == "y"):
-		# buggy and difficult to make not-buggy since it requires redefining "v" properly.
-		# will leave as is, undocumented.
-		var old_doing_replay = doing_replay;
-		meta_redo();
-		doing_replay = old_doing_replay;
-		update_info_labels();
+	match replay_char:
+		"w":
+			character_move(Vector2.UP);
+		"a":
+			character_move(Vector2.LEFT);
+		"s":
+			character_move(Vector2.DOWN);
+		"d":
+			character_move(Vector2.RIGHT);
+		"z":
+			character_undo();
+		"x":
+			character_switch();
+		"c":
+			meta_undo();
+		"y":
+			# buggy and difficult to make not-buggy since it requires redefining "v" properly.
+			# will leave as is, undocumented.
+			var old_doing_replay = doing_replay;
+			meta_redo();
+			doing_replay = old_doing_replay;
+			update_info_labels();
 		
 func do_one_letter_case_sensitive(replay_char: String) -> void:
 	if (replay_char == "v"):
@@ -5238,14 +5243,15 @@ func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 func character_move(dir: Vector2) -> bool:
 	if (won or lost): return false;
 	var chr = "";
-	if (dir == Vector2.UP):
-		chr = "w";
-	elif (dir == Vector2.DOWN):
-		chr = "s";
-	elif (dir == Vector2.LEFT):
-		chr = "a";
-	elif (dir == Vector2.RIGHT):
-		chr = "d";
+	match dir:
+		Vector2.UP:
+			chr = "w";
+		Vector2.DOWN:
+			chr = "s";
+		Vector2.LEFT:
+			chr = "a";
+		Vector2.RIGHT:
+			chr = "d";
 	var result = false;
 	if heavy_selected:
 		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
@@ -5390,42 +5396,43 @@ func time_passes(chrono: int) -> void:
 	#		Cyan: Time passes if Blue is moving or undoing.
 	#		Yellow: Time passes if a character is undoing.
 	#		White: Time never passes.
-			if actor.time_colour == TimeColour.Gray:
-				if (chrono == Chrono.MOVE):
-					time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Purple:
-				if (chrono == Chrono.MOVE):
-					time_actors.push_back(actor);
-				else:
-					if (!heavy_selected):
+			match actor.time_colour:
+				TimeColour.Gray:
+					if (chrono == Chrono.MOVE):
 						time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Blurple:
-				if (chrono == Chrono.MOVE):
-					time_actors.push_back(actor);
-				else:
-					if (heavy_selected):
+				TimeColour.Purple:
+					if (chrono == Chrono.MOVE):
 						time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Red:
-				if chrono == Chrono.MOVE and heavy_selected:
+					else:
+						if (!heavy_selected):
+							time_actors.push_back(actor);
+				TimeColour.Blurple:
+					if (chrono == Chrono.MOVE):
+						time_actors.push_back(actor);
+					else:
+						if (heavy_selected):
+							time_actors.push_back(actor);
+				TimeColour.Red:
+					if chrono == Chrono.MOVE and heavy_selected:
+						time_actors.push_back(actor);
+				TimeColour.Blue:
+					if chrono == Chrono.MOVE and !heavy_selected:
+						time_actors.push_back(actor);
+				TimeColour.Green:
 					time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Blue:
-				if chrono == Chrono.MOVE and !heavy_selected:
+				TimeColour.Void:
 					time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Green:
-				time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Void:
-				time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Magenta:
-				time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Cyan:
-				if !heavy_selected:
+				TimeColour.Magenta:
 					time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Orange:
-				if heavy_selected:
-					time_actors.push_back(actor);
-			elif actor.time_colour == TimeColour.Yellow:
-				if (chrono == Chrono.CHAR_UNDO):
-					time_actors.push_back(actor);
+				TimeColour.Cyan:
+					if !heavy_selected:
+						time_actors.push_back(actor);
+				TimeColour.Orange:
+					if heavy_selected:
+						time_actors.push_back(actor);
+				TimeColour.Yellow:
+					if (chrono == Chrono.CHAR_UNDO):
+						time_actors.push_back(actor);
 			# White: No
 	
 	# Flash time bubbles (Can add other effects here if I think of any).

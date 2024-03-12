@@ -261,29 +261,30 @@ func set_next_texture(tex: Texture, facing_left_at_the_time: bool) -> void:
 	
 	frame_timer = 0;
 	frame = 0;
-	if texture == preload("res://assets/heavy_broken.png"):
-		frame_timer_max = 0.4;
-		hframes = 8;
-	elif texture == preload("res://assets/light_broken.png"):
-		frame_timer_max = 0.4;
-		hframes = 8;
-	elif texture == preload("res://assets/light_rising.png"):
-		frame_timer_max = 0.1;
-		hframes = 6;
-	elif texture == preload("res://assets/light_falling.png"):
-		frame_timer_max = 0.1;
-		hframes = 6;
-	elif texture == preload("res://assets/light_idle_animation.png"):
-		frame_timer_max = 0.1;
-		hframes = 12;
-	elif texture == preload("res://assets/power_crate_animation.png"):
-		frame_timer_max = 0.1;
-		hframes = 4;
-	elif texture == preload("res://assets/cuckoo_clock_end.png"):
-		frame_timer_max = 0.4;
-		hframes = 3;
-	else:
-		hframes = 1;
+	match texture:
+		preload("res://assets/heavy_broken.png"):
+			frame_timer_max = 0.4;
+			hframes = 8;
+		preload("res://assets/light_broken.png"):
+			frame_timer_max = 0.4;
+			hframes = 8;
+		preload("res://assets/light_rising.png"):
+			frame_timer_max = 0.1;
+			hframes = 6;
+		preload("res://assets/light_falling.png"):
+			frame_timer_max = 0.1;
+			hframes = 6;
+		preload("res://assets/light_idle_animation.png"):
+			frame_timer_max = 0.1;
+			hframes = 12;
+		preload("res://assets/power_crate_animation.png"):
+			frame_timer_max = 0.1;
+			hframes = 4;
+		preload("res://assets/cuckoo_clock_end.png"):
+			frame_timer_max = 0.4;
+			hframes = 3;
+		_:
+			hframes = 1;
 		
 	if (thought_bubble != null):
 		if broken:
