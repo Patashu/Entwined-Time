@@ -4250,7 +4250,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("bump");
-			add_to_animation_server(heavy_actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.NoUndo), terrainmap.map_to_world(heavy_actor.pos), Color(0, 0, 0, 1)]);
+			add_to_animation_server(heavy_actor, [Animation.afterimage_at, preload("res://assets/undo_eye_final.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 0, 1, 1)]);
 			return false;
 		
 		# before undo effects
