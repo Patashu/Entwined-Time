@@ -6388,7 +6388,7 @@ func afterimage_terrain(texture: Texture, position: Vector2, color: Color) -> vo
 	afterimage.texture = texture;
 	afterimage.position = position;
 	afterimage.set_material(get_afterimage_material_for(color));
-	underactorsparticles.add_child(afterimage);
+	overactorsparticles.add_child(afterimage);
 		
 func last_level_of_section() -> bool:
 	var chapter_standard_starting_level = chapter_standard_starting_levels[chapter+1];
