@@ -1178,6 +1178,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("PushingItSequel")
 	level_filenames.push_back("Daredevils")
 	level_filenames.push_back("SolidPuzzle")
+	level_filenames.push_back("FlowControl")
 	level_filenames.push_back("FootWiggle")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
