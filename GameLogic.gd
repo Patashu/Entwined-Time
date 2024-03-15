@@ -2508,6 +2508,8 @@ func prepare_audio() -> void:
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
 	sounds["push"] = preload("res://sfx/push.ogg");
 	sounds["redfire"] = preload("res://sfx/redfire.ogg");
+	sounds["rewindnoticed"] = preload("res://sfx/rewindnoticed.ogg");
+	sounds["rewindstopped"] = preload("res://sfx/rewindstopped.ogg");
 	sounds["remembertimecrystal"] = preload("res://sfx/remembertimecrystal.ogg");
 	sounds["restart"] = preload("res://sfx/restart.ogg");	
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
@@ -3269,6 +3271,8 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		else:
 			if (old_tile == Tiles.Fuzz):
 				play_sound("fuzz");
+			elif (old_tile == Tiles.OneUndo):
+				play_sound("rewindnoticed");
 			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne)):
 				pass;
 			else:
@@ -4249,7 +4253,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		var terrain = terrain_in_tile(heavy_actor.pos);
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
-				play_sound("bump");
+				play_sound("rewindstopped");
 			add_to_animation_server(heavy_actor, [Animation.afterimage_at, preload("res://assets/undo_eye_final.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 0, 1, 1)]);
 			return false;
 		
@@ -4305,7 +4309,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		var terrain = terrain_in_tile(light_actor.pos);
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
-				play_sound("bump");
+				play_sound("rewindstopped");
 			add_to_animation_server(light_actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.NoUndo), terrainmap.map_to_world(light_actor.pos), Color(0, 0, 0, 1)]);
 			return false;
 			
