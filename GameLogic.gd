@@ -2538,6 +2538,8 @@ func prepare_audio() -> void:
 	sounds["getgreenality"] = preload("res://sfx/getgreenality.ogg");
 	sounds["fixit1"] = preload("res://sfx/fixit1.ogg");
 	sounds["fixit2"] = preload("res://sfx/fixit2.ogg");
+	sounds["fixit3"] = preload("res://sfx/fixit3.ogg");
+	sounds["fixit4"] = preload("res://sfx/fixit4.ogg");
 	sounds["helixfixed"] = preload("res://sfx/helixfixed.ogg");
 	
 	#unused except by custom elements

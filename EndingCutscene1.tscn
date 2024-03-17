@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://EndingCutscene1.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/ET_final_puzzle_2.png" type="Texture" id=2]
@@ -13,11 +13,14 @@
 [ext_resource path="res://assets/cutscenes/heavy_back.png" type="Texture" id=11]
 [ext_resource path="res://assets/cutscenes/heavy_fall.png" type="Texture" id=12]
 [ext_resource path="res://assets/cutscenes/light_fall.png" type="Texture" id=13]
+[ext_resource path="res://assets/cutscenes/light_fixit.png" type="Texture" id=14]
+[ext_resource path="res://assets/cutscenes/heavy_thumbsup.png" type="Texture" id=15]
 [ext_resource path="res://assets/cutscenes/lightfall.png" type="Texture" id=17]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Animate"
-length = 7.0
+length = 9.0
+step = 0.01
 tracks/0/type = "value"
 tracks/0/path = NodePath("Panel3/HeavyActor:position")
 tracks/0/interp = 1
@@ -123,8 +126,8 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0.3, 0.7, 1, 2, 2.3, 2.6, 3.2, 4.4, 4.6, 4.8, 5, 6.2, 6.8 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0.3, 0.7, 1, 2, 2.3, 2.6, 3.2, 4.4, 4.6, 4.8, 5, 6.2, 6.8, 7.5, 8.34 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ "lightstep" ],
 "method": "play_sound"
@@ -163,6 +166,12 @@ tracks/5/keys = {
 "method": "play_sound"
 }, {
 "args": [ "lightland" ],
+"method": "play_sound"
+}, {
+"args": [ "fixit3" ],
+"method": "play_sound"
+}, {
+"args": [ "fixit4" ],
 "method": "play_sound"
 } ]
 }
@@ -262,6 +271,30 @@ tracks/13/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/14/type = "value"
+tracks/14/path = NodePath("Panel3/HeavyFixIt:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 8.34, 8.49 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Panel3/LightFixIt:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0, 7.5, 7.67 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 1e-05, 1e-05 ), Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "Onload"
@@ -311,24 +344,30 @@ texture = ExtResource( 4 )
 centered = false
 
 [node name="ChronoHelixRed" type="Sprite" parent="CutsceneHolder/Panel3"]
-position = Vector2( 258, 422 )
+position = Vector2( 410, 422 )
 texture = ExtResource( 8 )
 
 [node name="ChronoHelixBlue" type="Sprite" parent="CutsceneHolder/Panel3"]
-position = Vector2( 760, 418 )
+position = Vector2( 652, 418 )
 texture = ExtResource( 7 )
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel3"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 70, 522 )
-scale = Vector2( 2, 2 )
-texture = ExtResource( 11 )
+position = Vector2( 128, 502 )
+texture = ExtResource( 6 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel3"]
-modulate = Color( 0, 0, 0, 1 )
-position = Vector2( 986, 566 )
-scale = Vector2( 2, 2 )
+position = Vector2( 942, 506 )
 texture = ExtResource( 17 )
+
+[node name="HeavyFixIt" type="Sprite" parent="CutsceneHolder/Panel3"]
+position = Vector2( 130, 402 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 15 )
+
+[node name="LightFixIt" type="Sprite" parent="CutsceneHolder/Panel3"]
+position = Vector2( 936, 442 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 14 )
 
 [node name="AdvanceLabel" type="Label" parent="CutsceneHolder"]
 visible = false

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/fixit3.ogg-6c7ec6d06f8ce1c1d479499d4d99daed.oggstr"
+
+[deps]
+
+source_file="res://sfx/fixit3.ogg"
+dest_files=[ "res://.import/fixit3.ogg-6c7ec6d06f8ce1c1d479499d4d99daed.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

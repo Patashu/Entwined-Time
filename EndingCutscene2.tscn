@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://EndingCutscene2.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/MAIN_MENU_BG.png" type="Texture" id=2]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=3]
+[ext_resource path="res://assets/cutscenes/Panel_6_finish.png" type="Texture" id=4]
+[ext_resource path="res://assets/cutscenes/ET_station_fixed.png" type="Texture" id=5]
 
 [node name="EndingCutscene2" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,31 +16,18 @@ color = Color( 0.133333, 0.235294, 0.321569, 1 )
 
 [node name="CutsceneHolder" type="Node2D" parent="."]
 
-[node name="Panel1" type="ColorRect" parent="CutsceneHolder"]
+[node name="Panel1" type="Sprite" parent="CutsceneHolder"]
 visible = false
-color = Color( 0.133333, 0.235294, 0.321569, 1 )
+texture = ExtResource( 4 )
+centered = false
 
-[node name="Label" type="Label" parent="CutsceneHolder/Panel1"]
-margin_left = 186.0
-margin_top = 73.0
-margin_right = 250.0
-margin_bottom = 87.0
-theme = ExtResource( 3 )
-text = "(Panel 1 TBD)"
-
-[node name="Panel2" type="ColorRect" parent="CutsceneHolder"]
+[node name="Panel2" type="Sprite" parent="CutsceneHolder"]
 visible = false
-color = Color( 0.133333, 0.235294, 0.321569, 1 )
-
-[node name="Label" type="Label" parent="CutsceneHolder/Panel2"]
-margin_left = 186.0
-margin_top = 73.0
-margin_right = 250.0
-margin_bottom = 87.0
-theme = ExtResource( 3 )
-text = "(Panel 2 TBD)"
+texture = ExtResource( 5 )
+centered = false
 
 [node name="Panel3" type="Sprite" parent="CutsceneHolder"]
+visible = false
 self_modulate = Color( 0.796078, 0.380392, 0.380392, 1 )
 texture = ExtResource( 2 )
 centered = false
