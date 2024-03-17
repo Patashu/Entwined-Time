@@ -5393,9 +5393,8 @@ func time_passes(chrono: int) -> void:
 			
 	elif chrono < Chrono.META_UNDO:
 		for actor in actors:
-			# broken time crystals being in stacks was messing up the just_moved gravity code,
-			# and nothing related to time passage effects time crystals anyway, so just eject them here
-			if actor.is_crystal:
+			# eject broken time crystals, we should pretend they no longer exist
+			if actor.is_crystal and actor.broken:
 				continue;
 			
 			#AD06: Characters are Purple, other actors are Gray. (But with time colours you can make your own arbitrary rules!
