@@ -1045,6 +1045,7 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, null);
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlock, Color(1, 1, 1, 0.8));
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlockCracked, Color(1, 1, 1, 0.8));
+		terrainmap.tile_set.tile_set_texture(Tiles.NoUndo, preload("res://assets/one_undo.png"));
 	else:
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, preload("res://assets/light_goal.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, preload("res://assets/heavy_goal.png"));
@@ -1052,6 +1053,7 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoalJoke, preload("res://assets/heavy_goal_joke.png"));
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlock, Color(1, 1, 1, 1));
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlockCracked, Color(1, 1, 1, 1));
+		terrainmap.tile_set.tile_set_texture(Tiles.NoUndo, preload("res://assets/no_undo.png"));
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
@@ -1605,6 +1607,8 @@ var has_boost_pads = false;
 var has_slopes = false;
 var has_boulders = false;
 var has_nudges = false;
+var has_limited_undo = false;
+var limited_undo_sprites = {};
 
 func ready_map() -> void:
 	won = false;
@@ -1692,9 +1696,16 @@ func ready_map() -> void:
 	has_slopes = false;
 	has_boulders = false;
 	has_nudges = false;
+	has_limited_undo = false;
+	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
 		has_crate_goals = true;
+	
+	if (any_layer_has_this_tile(Tiles.NoUndo)):
+		has_limited_undo = true;
+	elif (any_layer_has_this_tile(Tiles.OneUndo)):
+		has_limited_undo = true;
 	
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
@@ -1778,6 +1789,10 @@ func ready_map() -> void:
 	calculate_map_size();
 	make_actors();
 	
+	#have to do it now so it layers on top of other actors
+	if (has_limited_undo):
+		setup_limited_undo_sprites();
+	
 	#have to do it now when underterrainfolder is positioned
 	if (level_name == "Chrono Lab Reactor"):
 		# maintain cutscene music if it's playing
@@ -1801,6 +1816,53 @@ func ready_map() -> void:
 	update_level_label();
 	
 	intro_hop();
+	
+func setup_limited_undo_sprites() -> void:
+	var poses = get_used_cells_by_id_one_array(Tiles.NoUndo);
+	var more_poses = get_used_cells_by_id_one_array(Tiles.OneUndo);
+	poses.append_array(more_poses);
+	for pos in poses:
+		if !limited_undo_sprites.has(pos):
+			var sprite = Sprite.new();
+			sprite.set_script(preload("res://OneTimeSprite.gd"));
+			sprite.texture = preload("res://assets/undo_dice.png");
+			sprite.position = terrainmap.map_to_world(pos);
+			sprite.vframes = 1;
+			sprite.hframes = 6;
+			sprite.frame = 0;
+			sprite.centered = false;
+			sprite.frame_timer_max = 1e100;
+			sprite.frame_max = 99;
+			actorsfolder.add_child(sprite);
+			limited_undo_sprites[pos] = sprite;
+	
+	for pos in limited_undo_sprites:
+		update_limited_undo_sprite(pos);
+	
+func update_limited_undo_sprite(pos: Vector2) -> void:
+	var sprite = limited_undo_sprites[pos];
+	var terrain = terrain_in_tile(pos);
+	var count = 0;
+	for id in terrain:
+		if id == Tiles.OneUndo:
+			count += 1;
+	
+	if count > 6:
+		count = 6;
+	
+	if count == 0 and sprite.texture != preload("res://assets/undo_eye.png"):
+		sprite.texture = preload("res://assets/undo_eye.png");
+		sprite.hframes = 5;
+		sprite.frame = 0;
+		sprite.frame_timer = 0.0;
+		sprite.frame_timer_max = 0.1;
+		sprite.frame_max = 99;
+	else:
+		sprite.texture = preload("res://assets/undo_dice.png");
+		sprite.hframes = 6;
+		sprite.frame = count - 1;
+		sprite.frame_timer_max = 1e100;
+		sprite.frame_max = 99;
 	
 func intro_hop() -> void:
 	if (!ready_done):
@@ -3287,6 +3349,9 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				pass;
 			else:
 				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+			
+			if (old_tile == Tiles.OneUndo or new_tile == Tiles.OneUndo):
+				update_limited_undo_sprite(pos);
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_retro: bool) -> bool:
@@ -4264,7 +4329,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("rewindstopped");
-			add_to_animation_server(heavy_actor, [Animation.afterimage_at, preload("res://assets/undo_eye_final.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 0, 1, 1)]);
+			add_to_animation_server(heavy_actor, [Animation.afterimage_at, preload("res://assets/undo_eye_final.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 1, 1, 1)]);
 			return false;
 		
 		# before undo effects
@@ -4902,7 +4967,7 @@ func meta_redo() -> bool:
 	var letter = meta_redo_inputs[meta_redo_inputs.length() - 1];
 	meta_redo_inputs = meta_redo_inputs.left(meta_redo_inputs.length() - 1);
 	do_one_letter_case_sensitive(letter);
-	cut_sound();
+	#cut_sound();
 	play_sound("metaredo");
 	#just_did_meta();
 	preserving_meta_redo_inputs = false;

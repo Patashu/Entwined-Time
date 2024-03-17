@@ -709,9 +709,9 @@ func picker_tooltip() -> void:
 		Tiles.Fuzz:
 			text = "Fuzz: When a character rewinds while inside Fuzz, the Fuzz is consumed, the rewind happens but is not consumed, and time does not pass."
 		Tiles.OneUndo:
-			text = "One Rewind: When a character rewinds while inside One Rewind, one of them is replaced with a No Rewind."
+			text = "One Rewind: When a character rewinds while inside One Rewind, one of them is replaced with a No Rewind. (In-game, the number of purple dots shows the number of remaining One Rewinds. The open eye is effectively 'zero'.)"
 		Tiles.NoUndo:
-			text = "No Rewind: When a character rewinds while inside No Rewind and on no One Rewind, it is prevented and nothing happens."
+			text = "No Rewind: When a character rewinds while inside No Rewind and on no One Rewind, it is prevented and nothing happens. (In-game, the number of purple dots shows the number of remaining One Rewinds. The open eye is effectively 'zero'.)"
 		Tiles.TimeCrystalGreen:
 			text = "Green Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. Time Crystals existing locks goals. When consumed by an unbroken Cuckoo Clock: Increase ticks by 1. When consumed by a Character: If the character has no locked moves: Increase turn limit by 1. Else, unlock the most recently locked move and place it on the end of the character's filled timeline."
 		Tiles.TimeCrystalMagenta:
