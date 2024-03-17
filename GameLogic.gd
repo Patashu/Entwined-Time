@@ -2164,9 +2164,9 @@ func make_actors() -> void:
 	
 	# crates
 	extract_actors(Tiles.IronCrate, Actor.Name.IronCrate, Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
-	extract_actors(Tiles.SteelCrate, Actor.Name.SteelCrate, Heaviness.STEEL, Strength.LIGHT, Durability.PITS, 99, false, Color(0.25, 0.25, 0.25, 1));
-	extract_actors(Tiles.PowerCrate, Actor.Name.PowerCrate, Heaviness.WOODEN, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0, 0.86, 1));
-	extract_actors(Tiles.WoodenCrate, Actor.Name.WoodenCrate, Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.5, 0.25, 0, 1));
+	extract_actors(Tiles.SteelCrate, Actor.Name.SteelCrate, Heaviness.STEEL, Strength.LIGHT, Durability.PITS, 99, false, Color(0.4, 0.4, 0.4, 1));
+	extract_actors(Tiles.PowerCrate, Actor.Name.PowerCrate, Heaviness.WOODEN, Strength.HEAVY, Durability.FIRE, 99, false, Color(1, 0.2, 0.86, 1));
+	extract_actors(Tiles.WoodenCrate, Actor.Name.WoodenCrate, Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 99, false, Color(0.7, 0.5, 0, 1));
 	
 	# cuckoo clocks
 	extract_actors(Tiles.CuckooClock, Actor.Name.CuckooClock, Heaviness.WOODEN, Strength.WOODEN, Durability.SPIKES, 1, false, Color("#AD8255"));
@@ -2262,9 +2262,12 @@ func add_actor_or_goal_at_appropriate_layer(thing: ActorBase, i: int) -> void:
 			terrain_layers[i].move_child(thing, terrain_layers[i-1].get_index());
 	else:
 		actorsfolder.add_child(thing);
-	
+		
+var tints = [[1.0, 1.0, 1.0], [0.8, 0.8, 0.8], [0.7, 1.0, 1.0], [1.0, 0.7, 0.7], [1.3, 1.3, 1.3]];
+		
 func extract_actors(id: int, actorname: int, heaviness: int, strength: int, durability: int, fall_speed: int, climbs: bool, color: Color) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
+	var count = 0;
 	for i in range(layers_tiles.size()):
 		var tiles = layers_tiles[i];
 		for tile in tiles:
@@ -2277,7 +2280,12 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 			actor.climbs = climbs;
 			actor.is_character = false;
 			actor.color = color;
+			var tint = tints[count % tints.size()];
+			actor.color.r *= tint[0];
+			actor.color.g *= tint[1];
+			actor.color.b *= tint[2];
 			actor.update_graphics();
+			count += 1;
 			
 			if (actor.actorname == Actor.Name.HeavyGoalJoke):
 				joke_portals_present = true;
