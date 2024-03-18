@@ -3276,6 +3276,8 @@ func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terr
 				chrono = Chrono.CHAR_UNDO;
 			if (green_terrain == Greenness.Void and chrono < Chrono.META_UNDO):
 				chrono = Chrono.META_UNDO;
+			if (actor.is_crystal and chrono < Chrono.CHAR_UNDO):
+				chrono = Chrono.CHAR_UNDO;
 			set_actor_var(actor, "broken", true, chrono);
 		return Success.Surprise;
 	else:
