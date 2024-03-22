@@ -281,7 +281,7 @@ tracks/14/keys = {
 "times": PoolRealArray( 0, 8.34, 8.49 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1e-05, 1e-05 ), Vector2( 0, 0 ), Vector2( 2, 2 ) ]
 }
 tracks/15/type = "value"
 tracks/15/path = NodePath("Panel3/LightFixIt:scale")
@@ -293,7 +293,7 @@ tracks/15/keys = {
 "times": PoolRealArray( 0, 7.5, 7.67 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( 1e-05, 1e-05 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 1e-05, 1e-05 ), Vector2( 2, 2 ) ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -361,12 +361,12 @@ texture = ExtResource( 17 )
 
 [node name="HeavyFixIt" type="Sprite" parent="CutsceneHolder/Panel3"]
 position = Vector2( 130, 402 )
-scale = Vector2( 4, 4 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 15 )
 
 [node name="LightFixIt" type="Sprite" parent="CutsceneHolder/Panel3"]
 position = Vector2( 936, 442 )
-scale = Vector2( 4, 4 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 14 )
 
 [node name="AdvanceLabel" type="Label" parent="CutsceneHolder"]
