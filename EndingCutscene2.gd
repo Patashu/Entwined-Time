@@ -20,6 +20,10 @@ var has_shown_advance_label = false;
 
 var skip_cutscene_label = null;
 
+var sparkle_timer = 0;
+var sparkle_timer_max = 0.01;
+var sparkles_remaining = 0.0;
+
 func _ready() -> void:
 	gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene E");
 	gamelogic.fadeout_timer_max = 1.0;
@@ -69,12 +73,14 @@ func cutscene_step() -> void:
 			$CutsceneHolder/Panel1.modulate = Color(1, 1, 1, 0);
 			tween.tween_property($CutsceneHolder/Panel1, "modulate", Color.white, 0.5);
 		1:
+			$CutsceneHolder/Panel1/AnimationPlayer.play("Animate");
+		2:
 			$CutsceneHolder/Panel2.visible = true;
 			var tween = get_tree().create_tween()
 			$CutsceneHolder/Panel2.modulate = Color(1, 1, 1, 0);
 			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.5);
 			
-		2:
+		3:
 			setup_label_text();
 			$CutsceneHolder/Panel1.visible = false;
 			$CutsceneHolder/Panel3.visible = true;
@@ -141,7 +147,7 @@ func random_good_level() -> void:
 			gamelogic.load_level_direct(gamelogic.rng.randi_range(0, gamelogic.specific_puzzles_completed.size() - 1));
 	
 func advance_label() -> void:
-	if (has_shown_advance_label or (cutscene_step > 1 and cutscene_step < 3)):
+	if (has_shown_advance_label or (cutscene_step > 1 and cutscene_step < 4)):
 		return;
 	has_shown_advance_label = true;
 	$CutsceneHolder/AdvanceLabel.visible = true;
@@ -169,6 +175,8 @@ func reset_skip_cutscene_label() -> void:
 	
 func play_sound(sound: String) -> void:
 	gamelogic.play_sound(sound);
+	if sound == "usegreenality":
+		sparkles_remaining = 0.75;
 	
 func destroy() -> void:
 	self.queue_free();
@@ -180,8 +188,30 @@ func _input(event: InputEvent) -> void:
 			if event.pressed:
 				cutscene_step();
 
+func add_sparkle() -> void:
+	var rng = gamelogic.rng;
+	var sprite = Sprite.new();
+	sprite.set_script(preload("res://FadingSprite.gd"));
+	sprite.texture = preload("res://assets/Sparkle.png")
+	sprite.position = Vector2(gamelogic.pixel_width/2, gamelogic.pixel_height/2);
+	sprite.position += Vector2(gamelogic.rng.randf_range(0, 100), 0).rotated(gamelogic.rng.randf_range(0, 2*PI));
+	sprite.frame = 0;
+	sprite.centered = true;
+	sprite.modulate = Color("A9F05F");
+	var scalify = gamelogic.rng.randf_range(0.25, 0.5);
+	sprite.scale = Vector2(scalify, scalify);
+	
+	self.add_child(sprite);
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (sparkles_remaining > 0.0):
+		sparkles_remaining -= delta;
+		sparkle_timer += delta;
+		if (sparkle_timer > sparkle_timer_max):
+			sparkle_timer -= sparkle_timer_max;
+			add_sparkle();
+	
 	cutscene_step_cooldown += delta;
 
 	if (cutscene_step > 0):

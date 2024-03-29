@@ -548,9 +548,12 @@ func _ready() -> void:
 	ready_done = true;
 	
 	if (puzzles_completed > 0):
-		play_sound("bootup");
-		fadeout_timer = 0.0;
-		fadeout_timer_max = 2.5;
+		if (OS.is_debug_build()):
+			call_deferred("ending_cutscene_2");
+		else:
+			play_sound("bootup");
+			fadeout_timer = 0.0;
+			fadeout_timer_max = 2.5;
 	else:
 		call_deferred("title_screen");
 
@@ -2663,7 +2666,7 @@ func prepare_audio() -> void:
 	music_db.append(6.0);
 	music_tracks.append(preload("res://music/Cutscene E.ogg"));
 	music_info.append("Patashu - Cutscene E");
-	music_db.append(6.0);
+	music_db.append(3.0);
 	music_tracks.append(preload("res://sfx/lose.ogg"));
 	music_info.append("Patashu - Abyss of the Lost");
 	music_db.append(-3.0);
