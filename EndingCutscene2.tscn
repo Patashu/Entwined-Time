@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://EndingCutscene2.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/MAIN_MENU_BG.png" type="Texture" id=2]
@@ -25,6 +25,8 @@
 [ext_resource path="res://assets/cutscenes/props/heavy_exert.png" type="Texture" id=23]
 [ext_resource path="res://assets/cutscenes/props/heavy_exert_clone.png" type="Texture" id=24]
 [ext_resource path="res://assets/cutscenes/props/light_exert_clone.png" type="Texture" id=25]
+[ext_resource path="res://assets/cutscenes/props/atari.png" type="Texture" id=26]
+[ext_resource path="res://assets/cutscenes/props/AnimatedAtari.tres" type="Texture" id=27]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Animate"
@@ -92,8 +94,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1.97, 2.19, 2.44, 2.72, 3.05, 6.5, 6.7, 6.9, 7.1, 7.6, 7.8, 8, 8.3, 8.5, 8.7, 8.9, 9.1, 9.41, 10.1, 10.3, 10.5, 11.1, 11.3, 11.5, 11.7, 12, 12.2, 12.4, 12.6, 12.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 1.97, 2.19, 2.44, 2.72, 3.05, 6.5, 6.7, 6.9, 7.1, 7.6, 7.8, 8, 8.3, 8.5, 8.7, 8.9, 9.1, 9.41, 10.1, 10.3, 10.5, 11.1, 11.3, 11.5, 11.7, 12, 12.2, 12.4, 12.6, 12.9, 13.6, 14.4, 15.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ "heavycoyote" ],
 "method": "play_sound"
@@ -184,6 +186,15 @@ tracks/0/keys = {
 }, {
 "args": [ "usegreenality" ],
 "method": "play_sound"
+}, {
+"args": [ "push" ],
+"method": "play_sound"
+}, {
+"args": [ "push" ],
+"method": "play_sound"
+}, {
+"args": [ "push" ],
+"method": "play_sound"
 } ]
 }
 tracks/1/type = "method"
@@ -193,8 +204,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.97, 2.44, 2.72, 2.86, 3.24, 6.6, 6.9, 7.2, 7.5, 7.8, 8.3, 9.41, 12, 12.9 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 1.97, 2.44, 2.72, 2.86, 3.24, 6.6, 6.9, 7.2, 7.5, 7.8, 8.3, 9.41, 12, 12.9, 16.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ "lightcoyote" ],
 "method": "play_sound"
@@ -237,6 +248,9 @@ tracks/1/keys = {
 }, {
 "args": [ 2 ],
 "method": "change_ghosts"
+}, {
+"args": [ "noodling" ],
+"method": "play_sound"
 } ]
 }
 tracks/2/type = "value"
@@ -246,10 +260,10 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.88, 1.2, 3.88, 4.6, 11, 12.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.88, 1.2, 3.88, 4.6, 11, 12.4, 12.9, 14.7, 15.2, 15.6, 17.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 9 ), ExtResource( 12 ), ExtResource( 9 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ) ]
+"values": [ ExtResource( 9 ), ExtResource( 12 ), ExtResource( 9 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 12 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("HeavyActor:flip_h")
@@ -270,10 +284,10 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5.56, 6.34, 6.39, 7.09, 7.57, 8.01, 8.3, 8.6, 8.88, 9.22, 10, 10.4, 10.7, 11, 11.4, 11.7, 12, 12.2, 12.4, 12.6, 12.8 ),
-"transitions": PoolRealArray( 1, 0.366021, 2.37842, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5.56, 6.34, 6.39, 7.09, 7.57, 8.01, 8.3, 8.6, 8.88, 9.22, 10, 10.4, 10.7, 11, 11.4, 11.7, 12, 12.2, 12.4, 12.6, 12.8, 12.9, 13.6, 13.9, 14.4, 14.7, 15.2, 15.6, 17.4, 17.6 ),
+"transitions": PoolRealArray( 1, 0.366021, 2.37842, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 192, 247 ), Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 239, 214 ), Vector2( 228, 263 ), Vector2( 228, 263 ), Vector2( 239, 214 ), Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 137, 267 ), Vector2( 137, 267 ), Vector2( -30, 267 ), Vector2( -30, 267 ), Vector2( 98, 267 ), Vector2( 98, 267 ), Vector2( 64, 213 ), Vector2( 64, 213 ), Vector2( 98, 267 ), Vector2( 98, 267 ), Vector2( -30, 267 ), Vector2( -30, 267 ), Vector2( 79, 265 ), Vector2( 76, 379 ), Vector2( 76, 379 ), Vector2( 79, 265 ), Vector2( -30, 267 ), Vector2( -30, 267 ), Vector2( 79, 265 ), Vector2( 76, 379 ), Vector2( 79, 265 ), Vector2( -30, 267 ) ]
+"values": [ Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 192, 247 ), Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 239, 214 ), Vector2( 228, 263 ), Vector2( 228, 263 ), Vector2( 239, 214 ), Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 137, 267 ), Vector2( 137, 267 ), Vector2( -30, 267 ), Vector2( -30, 267 ), Vector2( 98, 267 ), Vector2( 98, 267 ), Vector2( 64, 213 ), Vector2( 64, 213 ), Vector2( 98, 267 ), Vector2( 98, 267 ), Vector2( -30, 267 ), Vector2( -30, 267 ), Vector2( 79, 265 ), Vector2( 76, 379 ), Vector2( 76, 379 ), Vector2( 79, 265 ), Vector2( -30, 267 ), Vector2( -30, 267 ), Vector2( 79, 265 ), Vector2( 76, 379 ), Vector2( 79, 265 ), Vector2( -30, 267 ), Vector2( -140, 267 ), Vector2( -140, 267 ), Vector2( -57, 265 ), Vector2( -57, 265 ), Vector2( 40, 266 ), Vector2( 40, 266 ), Vector2( 182, 272 ), Vector2( 182, 272 ), Vector2( 210, 289 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("LightActor:texture")
@@ -282,10 +296,10 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 0.94, 1.16, 3.88, 4.51, 10.1, 10.5, 12.4, 12.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.94, 1.16, 3.88, 4.51, 10.1, 10.5, 12.4, 12.7, 18.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 16 ), ExtResource( 10 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 22 ), ExtResource( 16 ) ]
+"values": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 16 ), ExtResource( 10 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 22 ), ExtResource( 16 ), ExtResource( 11 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("LightActor:flip_h")
@@ -306,10 +320,10 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5.56, 6.34, 6.39, 6.53, 7.19, 7.38, 7.86, 8.3, 8.6, 8.88, 9.22, 9.3, 10.1, 10.5, 12, 12.4, 12.7 ),
-"transitions": PoolRealArray( 1, 0.420448, 2.46229, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5.56, 6.34, 6.39, 6.53, 7.19, 7.38, 7.86, 8.3, 8.6, 8.88, 9.22, 9.3, 10.1, 10.5, 12, 12.4, 12.7, 13.8, 14.2, 14.9, 15.9, 18.1, 18.3 ),
+"transitions": PoolRealArray( 1, 0.420448, 2.46229, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 334, 248 ), Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 297, 209 ), Vector2( 309, 273 ), Vector2( 309, 273 ), Vector2( 297, 209 ), Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 392, 268 ), Vector2( 392, 268 ), Vector2( 544, 268 ), Vector2( 544, 268 ), Vector2( 544, 268 ), Vector2( 436, 215 ), Vector2( 436, 215 ), Vector2( 413, 267 ), Vector2( 413, 267 ), Vector2( 436, 215 ), Vector2( 436, 215 ), Vector2( 544, 268 ), Vector2( 583, 270 ), Vector2( 583, 270 ), Vector2( 478, 229 ), Vector2( 478, 229 ), Vector2( 478, 229 ), Vector2( 583, 270 ) ]
+"values": [ Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 334, 248 ), Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 297, 209 ), Vector2( 309, 273 ), Vector2( 309, 273 ), Vector2( 297, 209 ), Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 392, 268 ), Vector2( 392, 268 ), Vector2( 544, 268 ), Vector2( 544, 268 ), Vector2( 544, 268 ), Vector2( 436, 215 ), Vector2( 436, 215 ), Vector2( 413, 267 ), Vector2( 413, 267 ), Vector2( 436, 215 ), Vector2( 436, 215 ), Vector2( 544, 268 ), Vector2( 583, 270 ), Vector2( 583, 270 ), Vector2( 478, 229 ), Vector2( 478, 229 ), Vector2( 478, 229 ), Vector2( 583, 270 ), Vector2( 583, 270 ), Vector2( 500, 270 ), Vector2( 500, 270 ), Vector2( 314, 275 ), Vector2( 314, 275 ), Vector2( 296, 292 ) ]
 }
 tracks/8/type = "value"
 tracks/8/path = NodePath("ColorRect:modulate")
@@ -430,6 +444,42 @@ tracks/17/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( -125, 209 ), Vector2( 452, 188 ), Vector2( 475, 190 ), Vector2( 499, 192 ), Vector2( -38, 252 ), Vector2( -38, 252 ), Vector2( 499, 192 ), Vector2( 475, 190 ), Vector2( 452, 188 ), Vector2( -125, 209 ) ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Atari:position")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 13.6, 13.9, 14.4, 14.7, 15.2, 15.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -55, 266 ), Vector2( -55, 266 ), Vector2( 28, 266 ), Vector2( 28, 266 ), Vector2( 124, 267 ), Vector2( 124, 267 ), Vector2( 259, 264 ) ]
+}
+tracks/19/type = "value"
+tracks/19/path = NodePath("Atari:texture")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/keys = {
+"times": PoolRealArray( 0, 16.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 26 ), ExtResource( 27 ) ]
+}
+tracks/20/type = "value"
+tracks/20/path = NodePath("Label:modulate")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 18.3, 20 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -870,43 +920,47 @@ anims/Animate = SubResource( 1 )
 texture = ExtResource( 8 )
 centered = false
 
+[node name="Atari" type="Sprite" parent="CutsceneHolder/Panel2"]
+position = Vector2( 259, 264 )
+texture = ExtResource( 27 )
+
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 192, 267 )
-texture = ExtResource( 9 )
+position = Vector2( 210, 289 )
+texture = ExtResource( 12 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 334, 268 )
-texture = ExtResource( 10 )
+position = Vector2( 296, 292 )
+texture = ExtResource( 11 )
 
 [node name="HeavyClone1" type="Sprite" parent="CutsceneHolder/Panel2"]
-modulate = Color( 1, 1, 1, 0.5 )
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 228, 263 )
 texture = ExtResource( 13 )
 
 [node name="HeavyClone2" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 64, 213 )
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -30, 267 )
 texture = ExtResource( 13 )
-flip_h = true
 
 [node name="HeavyClone3" type="Sprite" parent="CutsceneHolder/Panel2"]
-modulate = Color( 1, 1, 1, 0.37394 )
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( -30, 267 )
-texture = ExtResource( 24 )
-flip_h = true
+texture = ExtResource( 13 )
 
 [node name="LightClone1" type="Sprite" parent="CutsceneHolder/Panel2"]
-modulate = Color( 1, 1, 1, 0.5 )
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 309, 273 )
 texture = ExtResource( 14 )
 
 [node name="LightClone2" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 413, 267 )
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 544, 268 )
 texture = ExtResource( 14 )
 
 [node name="LightClone3" type="Sprite" parent="CutsceneHolder/Panel2"]
-modulate = Color( 1, 1, 1, 0.37394 )
-position = Vector2( 478, 229 )
-texture = ExtResource( 14 )
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 583, 270 )
+texture = ExtResource( 25 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CutsceneHolder/Panel2"]
 autoplay = "RESET"
@@ -923,10 +977,12 @@ anims/Animate = SubResource( 5 )
 anims/Animate = SubResource( 6 )
 
 [node name="Broom" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( -27, 272 )
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -26, 272 )
 texture = ExtResource( 18 )
 
 [node name="Mop" type="Sprite" parent="CutsceneHolder/Panel2"]
+modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 532, 272 )
 texture = ExtResource( 17 )
 flip_h = true
@@ -939,18 +995,27 @@ margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
 
 [node name="Stack" type="Sprite" parent="CutsceneHolder/Panel2"]
-modulate = Color( 1, 1, 1, 0.37394 )
-position = Vector2( -27, 210 )
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 79, 326 )
 texture = ExtResource( 21 )
 
 [node name="Toolbox" type="Sprite" parent="CutsceneHolder/Panel2"]
-modulate = Color( 1, 1, 1, 0.37394 )
-position = Vector2( 434, 207 )
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 531, 250 )
 texture = ExtResource( 19 )
 
 [node name="Screwdriver" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( -38, 252 )
+position = Vector2( -125, 209 )
 texture = ExtResource( 20 )
+
+[node name="Label" type="Label" parent="CutsceneHolder/Panel2"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 240.0
+margin_top = 41.0
+margin_right = 284.0
+margin_bottom = 55.0
+theme = ExtResource( 3 )
+text = "THE END"
 
 [node name="Panel3" type="Sprite" parent="CutsceneHolder"]
 visible = false
