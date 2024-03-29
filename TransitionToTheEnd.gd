@@ -22,6 +22,11 @@ func _animation_finished(anim_name: String) -> void:
 
 var sparkle_timer = 0.0;
 func _process(delta: float) -> void:
+	if (Input.is_action_pressed(("escape"))):
+		$AnimationPlayer.playback_speed = 3.0;
+	else:
+		$AnimationPlayer.playback_speed = 1.0;
+	
 	sparkle_timer += delta;
 	if (sparkle_timer > 0.01):
 		sparkle_timer -= 0.01;

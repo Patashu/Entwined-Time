@@ -187,7 +187,10 @@ func _process(delta: float) -> void:
 		only_mouse = false;
 	
 	if (end_timer_max > 0):
-		end_timer += delta;
+		if (Input.is_action_pressed("escape")):
+			end_timer += delta*3;
+		else:
+			end_timer += delta;
 		if (end_timer >= end_timer_max):
 			destroy();
 		else:

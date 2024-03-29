@@ -32,6 +32,7 @@ var clones_active = 0;
 onready var clone_players = [$CutsceneHolder/Panel2/AnimationPlayerClone1, $CutsceneHolder/Panel2/AnimationPlayerClone2, $CutsceneHolder/Panel2/AnimationPlayerClone3];
 
 func _ready() -> void:
+	gamelogic.cut_sound();
 	gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene E");
 	gamelogic.fadeout_timer_max = 1.0;
 	gamelogic.fadeout_timer = gamelogic.fadeout_timer_max - 0.0001;
@@ -322,7 +323,10 @@ func _process(delta: float) -> void:
 		only_mouse = false;
 	
 	if (end_timer_max > 0):
-		end_timer += delta;
+		if (Input.is_action_pressed("escape")):
+			end_timer += delta*3;
+		else:
+			end_timer += delta;
 		if (end_timer >= end_timer_max):
 			destroy();
 		else:

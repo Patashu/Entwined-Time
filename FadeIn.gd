@@ -14,7 +14,10 @@ var timer = 1.5;
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	timer -= delta;
+	if (Input.is_action_pressed("escape")):
+		timer -= delta*3;
+	else:
+		timer -= delta;
 	self.modulate = Color(1, 1, 1, timer/1.5);
 	if (timer < 0):
 		queue_free();
