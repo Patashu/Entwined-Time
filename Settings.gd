@@ -150,8 +150,6 @@ func _ready() -> void:
 		vsync.queue_free();
 		fullscreenbutton.queue_free();
 		animationslider.focus_neighbour_top = animationslider.get_path_to(okbutton);
-	else:
-		$Holder/TabContainer/Gameplay/SaveDisclaimer.queue_free();
 
 func _unlockeverything_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):

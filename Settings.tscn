@@ -239,14 +239,6 @@ margin_right = 377.0
 margin_bottom = 58.0
 text = "Virtual Buttons Layout (displays clickable buttons on-screen)"
 
-[node name="SaveDisclaimer" type="Label" parent="Holder/TabContainer/Gameplay"]
-margin_left = 3.0
-margin_top = 118.0
-margin_right = 302.0
-margin_bottom = 129.0
-text = "(Back up your save regularly if it's valuable to you - it will be lost if your browser
-clears its cache or if itch.io changes CDNs again.)"
-
 [node name="NewSaveFile" type="Button" parent="Holder/TabContainer/Gameplay"]
 margin_top = 101.0
 margin_right = 87.0
