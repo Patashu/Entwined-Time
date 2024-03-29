@@ -148,7 +148,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.3, 0.59, 5 ),
+"times": PoolRealArray( 0, 0.3, 0.59, 5.56 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ false, true, false, true ]
@@ -160,7 +160,7 @@ tracks/4/loop_wrap = true
 tracks/4/imported = false
 tracks/4/enabled = true
 tracks/4/keys = {
-"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5, 5.73 ),
+"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5.56, 6.34 ),
 "transitions": PoolRealArray( 1, 0.366021, 2.37842, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 192, 247 ), Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 239, 214 ), Vector2( 228, 263 ), Vector2( 228, 263 ), Vector2( 239, 214 ), Vector2( 192, 267 ), Vector2( 192, 267 ), Vector2( 137, 267 ), Vector2( 137, 267 ), Vector2( -30, 267 ) ]
@@ -184,7 +184,7 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.33, 0.54, 5 ),
+"times": PoolRealArray( 0, 0.33, 0.54, 5.56 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ false, true, false, true ]
@@ -196,7 +196,7 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5, 5.73 ),
+"times": PoolRealArray( 0, 1.57, 1.69, 1.81, 1.97, 2.19, 2.44, 2.72, 2.86, 3.05, 3.88, 4.29, 5.56, 6.34 ),
 "transitions": PoolRealArray( 1, 0.420448, 2.46229, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 334, 248 ), Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 297, 209 ), Vector2( 309, 273 ), Vector2( 309, 273 ), Vector2( 297, 209 ), Vector2( 334, 268 ), Vector2( 334, 268 ), Vector2( 392, 268 ), Vector2( 392, 268 ), Vector2( 544, 268 ) ]
@@ -208,7 +208,7 @@ tracks/8/loop_wrap = true
 tracks/8/imported = false
 tracks/8/enabled = true
 tracks/8/keys = {
-"times": PoolRealArray( 0, 5, 5.73, 5.78, 6.14 ),
+"times": PoolRealArray( 0, 5.61, 6.34, 6.39, 6.75 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -220,7 +220,7 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 5.75 ),
+"times": PoolRealArray( 6.36 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
@@ -232,7 +232,7 @@ tracks/10/loop_wrap = true
 tracks/10/imported = false
 tracks/10/enabled = true
 tracks/10/keys = {
-"times": PoolRealArray( 5.75 ),
+"times": PoolRealArray( 6.36 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
@@ -345,14 +345,12 @@ texture = ExtResource( 8 )
 centered = false
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( -30, 267 )
+position = Vector2( 137, 267 )
 texture = ExtResource( 9 )
-flip_h = true
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 544, 268 )
+position = Vector2( 392, 268 )
 texture = ExtResource( 10 )
-flip_h = true
 
 [node name="HeavyClone1" type="Sprite" parent="CutsceneHolder/Panel2"]
 modulate = Color( 1, 1, 1, 0 )
@@ -374,7 +372,7 @@ anims/Animate = SubResource( 3 )
 
 [node name="ColorRect" type="ColorRect" parent="CutsceneHolder/Panel2"]
 visible = false
-modulate = Color( 1, 1, 1, 0.888889 )
+modulate = Color( 1, 1, 1, 0 )
 margin_right = 512.0
 margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )

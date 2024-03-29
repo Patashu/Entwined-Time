@@ -246,6 +246,7 @@ func ghost(sprite: Sprite) -> void:
 	ghost.centered = sprite.centered;
 	ghost.scale = sprite.scale;
 	ghost.flip_h = sprite.flip_h;
+	ghost.fadeout_timer = $CutsceneHolder/Panel2/ColorRect.modulate.a;
 	$CutsceneHolder/Panel2.add_child(ghost);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
