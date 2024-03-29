@@ -20,9 +20,16 @@ var has_shown_advance_label = false;
 
 var skip_cutscene_label = null;
 
+var ghost_type = 0;
+var ghost_timer = 0.0;
+var ghost_timer_max = 0.1;
+
 var sparkle_timer = 0;
 var sparkle_timer_max = 0.01;
 var sparkles_remaining = 0.0;
+
+var clones_active = 0;
+onready var clone_players = [$CutsceneHolder/Panel2/AnimationPlayerClone1];
 
 func _ready() -> void:
 	gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene E");
@@ -62,6 +69,8 @@ func _quitbutton_pressed() -> void:
 func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):
 		return;
+	if ($CutsceneHolder/Panel2/AnimationPlayer.current_animation == "Animate" and $CutsceneHolder/Panel2/AnimationPlayer.is_playing()):
+		return;
 	cutscene_step_cooldown = 0;
 	$CutsceneHolder/AdvanceLabel.visible = false;
 	
@@ -69,18 +78,21 @@ func cutscene_step() -> void:
 		0:
 			$CutsceneHolder.visible = true;
 			$CutsceneHolder/Panel1.visible = true;
+			$CutsceneHolder/Panel2.visible = false;
 			var tween = get_tree().create_tween()
 			$CutsceneHolder/Panel1.modulate = Color(1, 1, 1, 0);
 			tween.tween_property($CutsceneHolder/Panel1, "modulate", Color.white, 0.5);
 		1:
 			$CutsceneHolder/Panel1/AnimationPlayer.play("Animate");
 		2:
+			change_ghosts(2);
 			$CutsceneHolder/Panel2.visible = true;
 			var tween = get_tree().create_tween()
 			$CutsceneHolder/Panel2.modulate = Color(1, 1, 1, 0);
 			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.5);
-			
+			$CutsceneHolder/Panel2/AnimationPlayer.play("Animate");
 		3:
+			ghost_type = 0;
 			setup_label_text();
 			$CutsceneHolder/Panel1.visible = false;
 			$CutsceneHolder/Panel3.visible = true;
@@ -147,8 +159,10 @@ func random_good_level() -> void:
 			gamelogic.load_level_direct(gamelogic.rng.randi_range(0, gamelogic.specific_puzzles_completed.size() - 1));
 	
 func advance_label() -> void:
-	if (has_shown_advance_label or (cutscene_step > 1 and cutscene_step < 4)):
-		return;
+	if (has_shown_advance_label):
+		return
+	if ($CutsceneHolder/Panel2/AnimationPlayer.is_playing()):
+		return
 	has_shown_advance_label = true;
 	$CutsceneHolder/AdvanceLabel.visible = true;
 	var tween = get_tree().create_tween()
@@ -177,6 +191,9 @@ func play_sound(sound: String) -> void:
 	gamelogic.play_sound(sound);
 	if sound == "usegreenality":
 		sparkles_remaining = 0.75;
+		if $CutsceneHolder/Panel2.visible:
+			clone_players[clones_active].play("Animate");
+			clones_active += 1;
 	
 func destroy() -> void:
 	self.queue_free();
@@ -203,8 +220,47 @@ func add_sparkle() -> void:
 	
 	self.add_child(sprite);
 
+func change_ghosts(type: int) -> void:
+	ghost_type = type;
+	ghost_timer = 0.0;
+	if (ghost_type == 2):
+		ghost_timer_max = 0.5;
+	else:
+		ghost_timer_max = 0.1;
+	
+func afterimage(sprite: Sprite, color: Color) -> void:
+	var afterimage = preload("res://Afterimage.tscn").instance();
+	afterimage.actor = sprite;
+	afterimage.set_material(gamelogic.get_afterimage_material_for(color));
+	$CutsceneHolder/Panel2.add_child(afterimage);
+	afterimage.scale = sprite.scale;
+	afterimage.get_child(0).centered = sprite.centered;
+	
+func ghost(sprite: Sprite) -> void:
+	var ghost = Sprite.new();
+	ghost.script = preload("res://GhostSprite.gd");
+	ghost.position = sprite.position;
+	ghost.target = sprite;
+	ghost.texture = sprite.texture;
+	ghost.centered = sprite.centered;
+	ghost.scale = sprite.scale;
+	$CutsceneHolder/Panel2.add_child(ghost);
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (ghost_type == 1):
+		ghost_timer += delta;
+		if (ghost_timer > ghost_timer_max):
+			ghost_timer -= ghost_timer_max;
+			afterimage($CutsceneHolder/Panel2/HeavyActor, gamelogic.heavy_color);
+			afterimage($CutsceneHolder/Panel2/LightActor, gamelogic.light_color);
+	elif (ghost_type == 2):
+		ghost_timer += delta;
+		if (ghost_timer > ghost_timer_max):
+			ghost_timer -= ghost_timer_max;
+			ghost($CutsceneHolder/Panel2/HeavyActor);
+			ghost($CutsceneHolder/Panel2/LightActor);
+	
 	if (sparkles_remaining > 0.0):
 		sparkles_remaining -= delta;
 		sparkle_timer += delta;
