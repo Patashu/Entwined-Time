@@ -109,7 +109,7 @@ func cutscene_step() -> void:
 			$CutsceneHolder/Panel3.visible = true;
 			var tween = get_tree().create_tween()
 			$CutsceneHolder/Panel3.modulate = Color(1, 1, 1, 0);
-			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 0.5);
+			tween.tween_property($CutsceneHolder/Panel3, "modulate", Color.white, 1.0);
 			has_shown_advance_label = false;
 	cutscene_step += 1;
 	
@@ -216,13 +216,18 @@ func _input(event: InputEvent) -> void:
 			if event.pressed:
 				cutscene_step();
 
-func add_sparkle() -> void:
+func add_sparkle(end: bool = false) -> void:
 	var rng = gamelogic.rng;
 	var sprite = Sprite.new();
 	sprite.set_script(preload("res://FadingSprite.gd"));
 	sprite.texture = preload("res://assets/Sparkle.png")
-	sprite.position = Vector2(gamelogic.pixel_width/2, gamelogic.pixel_height/2);
-	sprite.position += Vector2(gamelogic.rng.randf_range(0, 100), 0).rotated(gamelogic.rng.randf_range(0, 2*PI));
+	if (end):
+		sprite.position = $CutsceneHolder/Panel2/Label.rect_position;
+		sprite.position.x += $CutsceneHolder/Panel2/Label.rect_size.x*gamelogic.rng.randf_range(0.0, 1.0);
+		sprite.position.y += $CutsceneHolder/Panel2/Label.rect_size.y*gamelogic.rng.randf_range(0.0, 1.0);
+	else:
+		sprite.position = Vector2(gamelogic.pixel_width/2, gamelogic.pixel_height/2);
+		sprite.position += Vector2(gamelogic.rng.randf_range(0, 100), 0).rotated(gamelogic.rng.randf_range(0, 2*PI));
 	sprite.frame = 0;
 	sprite.centered = true;
 	sprite.modulate = Color("A9F05F");
@@ -259,6 +264,12 @@ func ghost(sprite: Sprite) -> void:
 	ghost.fadeout_timer = $CutsceneHolder/Panel2/ColorRect.modulate.a;
 	$CutsceneHolder/Panel2.add_child(ghost);
 
+var end_sparkles_remaining = 0.0;
+func the_end_sparkles() -> void:
+	sparkle_timer = 0.0;
+	end_sparkles_remaining = 3.0;
+	sparkle_timer_max *= 10.0;
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (ghost_type == 1):
@@ -279,7 +290,14 @@ func _process(delta: float) -> void:
 		sparkle_timer += delta;
 		if (sparkle_timer > sparkle_timer_max):
 			sparkle_timer -= sparkle_timer_max;
-			add_sparkle();
+			add_sparkle(false);
+			
+	if (end_sparkles_remaining > 0.0):
+		end_sparkles_remaining -= delta;
+		sparkle_timer += delta;
+		if (sparkle_timer > sparkle_timer_max):
+			sparkle_timer -= sparkle_timer_max;
+			add_sparkle(true);
 	
 	cutscene_step_cooldown += delta;
 

@@ -86,7 +86,7 @@ tracks/3/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "Animate"
-length = 20.0
+length = 21.0
 tracks/0/type = "method"
 tracks/0/path = NodePath("../..")
 tracks/0/interp = 1
@@ -94,9 +94,12 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1.97, 2.19, 2.44, 2.72, 3.05, 6.5, 6.7, 6.9, 7.1, 7.6, 7.8, 8, 8.3, 8.5, 8.7, 8.9, 9.1, 9.41, 10.1, 10.3, 10.5, 11.1, 11.3, 11.5, 11.7, 12, 12.2, 12.4, 12.6, 12.9, 13.6, 14.4, 15.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 1.57, 1.97, 2.19, 2.44, 2.72, 3.05, 6.5, 6.7, 6.9, 7.1, 7.6, 7.8, 8, 8.3, 8.5, 8.7, 8.9, 9.1, 9.41, 10.1, 10.3, 10.5, 11.1, 11.3, 11.5, 11.7, 12, 12.2, 12.4, 12.6, 12.9, 13.6, 14.4, 15.2, 18.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
 "args": [ "heavycoyote" ],
 "method": "play_sound"
 }, {
@@ -195,6 +198,9 @@ tracks/0/keys = {
 }, {
 "args": [ "push" ],
 "method": "play_sound"
+}, {
+"args": [  ],
+"method": "the_end_sparkles"
 } ]
 }
 tracks/1/type = "method"
@@ -204,9 +210,12 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.97, 2.44, 2.72, 2.86, 3.24, 6.6, 6.9, 7.2, 7.5, 7.8, 8.3, 9.41, 12, 12.9, 16.4 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 1.57, 1.97, 2.44, 2.72, 2.86, 3.24, 6.6, 6.9, 7.2, 7.5, 7.8, 8.3, 9.41, 12, 12.1, 12.3, 12.9, 16.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
 "args": [ "lightcoyote" ],
 "method": "play_sound"
 }, {
@@ -246,6 +255,12 @@ tracks/1/keys = {
 "args": [ 1 ],
 "method": "change_ghosts"
 }, {
+"args": [ "unpush" ],
+"method": "play_sound"
+}, {
+"args": [ "unpush" ],
+"method": "play_sound"
+}, {
 "args": [ 2 ],
 "method": "change_ghosts"
 }, {
@@ -263,7 +278,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0, 0.88, 1.2, 3.88, 4.6, 11, 12.4, 12.9, 14.7, 15.2, 15.6, 17.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 9 ), ExtResource( 12 ), ExtResource( 9 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 12 ) ]
+"values": [ ExtResource( 9 ), ExtResource( 12 ), ExtResource( 9 ), ExtResource( 15 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 9 ), ExtResource( 23 ), ExtResource( 15 ), ExtResource( 12 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("HeavyActor:flip_h")
@@ -476,10 +491,10 @@ tracks/20/loop_wrap = true
 tracks/20/imported = false
 tracks/20/enabled = true
 tracks/20/keys = {
-"times": PoolRealArray( 18.3, 20 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 18.3, 21 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -921,16 +936,16 @@ texture = ExtResource( 8 )
 centered = false
 
 [node name="Atari" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 259, 264 )
-texture = ExtResource( 27 )
+position = Vector2( -55, 266 )
+texture = ExtResource( 26 )
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 210, 289 )
-texture = ExtResource( 12 )
+position = Vector2( 229.76, 255.16 )
+texture = ExtResource( 9 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 296, 292 )
-texture = ExtResource( 11 )
+position = Vector2( 307.08, 262.76 )
+texture = ExtResource( 10 )
 
 [node name="HeavyClone1" type="Sprite" parent="CutsceneHolder/Panel2"]
 modulate = Color( 1, 1, 1, 0 )
@@ -978,7 +993,7 @@ anims/Animate = SubResource( 6 )
 
 [node name="Broom" type="Sprite" parent="CutsceneHolder/Panel2"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( -26, 272 )
+position = Vector2( -26.625, 272 )
 texture = ExtResource( 18 )
 
 [node name="Mop" type="Sprite" parent="CutsceneHolder/Panel2"]
@@ -1010,12 +1025,16 @@ texture = ExtResource( 20 )
 
 [node name="Label" type="Label" parent="CutsceneHolder/Panel2"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = 240.0
-margin_top = 41.0
-margin_right = 284.0
-margin_bottom = 55.0
+margin_left = 238.0
+margin_top = 18.0
+margin_right = 282.0
+margin_bottom = 57.0
 theme = ExtResource( 3 )
-text = "THE END"
+text = "=======
+THE END
+======="
+align = 1
+valign = 1
 
 [node name="Panel3" type="Sprite" parent="CutsceneHolder"]
 visible = false

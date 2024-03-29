@@ -548,12 +548,9 @@ func _ready() -> void:
 	ready_done = true;
 	
 	if (puzzles_completed > 0):
-		if (OS.is_debug_build()):
-			call_deferred("ending_cutscene_2");
-		else:
-			play_sound("bootup");
-			fadeout_timer = 0.0;
-			fadeout_timer_max = 2.5;
+		play_sound("bootup");
+		fadeout_timer = 0.0;
+		fadeout_timer_max = 2.5;
 	else:
 		call_deferred("title_screen");
 
