@@ -2614,6 +2614,7 @@ func prepare_audio() -> void:
 	sounds["fixit3"] = preload("res://sfx/fixit3.ogg");
 	sounds["fixit4"] = preload("res://sfx/fixit4.ogg");
 	sounds["helixfixed"] = preload("res://sfx/helixfixed.ogg");
+	sounds["outofthewarp"] = preload("res://sfx/outofthewarp.ogg"); #unused? whoops
 	
 	#unused except by custom elements
 	sounds["step"] = preload("res://sfx/step.ogg"); #replaced by heavystep, now used by nudge
