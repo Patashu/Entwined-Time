@@ -82,6 +82,8 @@ func cutscene_step() -> void:
 			$CutsceneHolder/Panel2/ColorRect.visible = true;
 			$CutsceneHolder/Panel2/Mop.modulate = Color(1, 1, 1, 1);
 			$CutsceneHolder/Panel2/Broom.modulate = Color(1, 1, 1, 1);
+			$CutsceneHolder/Panel2/Stack.modulate = Color(1, 1, 1, 1);
+			$CutsceneHolder/Panel2/Toolbox.modulate = Color(1, 1, 1, 1);
 			$CutsceneHolder/Panel2/HeavyClone1.modulate = Color(1, 1, 1, 0);
 			$CutsceneHolder/Panel2/HeavyClone2.modulate = Color(1, 1, 1, 0);
 			$CutsceneHolder/Panel2/HeavyClone3.modulate = Color(1, 1, 1, 0);

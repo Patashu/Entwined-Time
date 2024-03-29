@@ -90,8 +90,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 1.97, 2.19, 2.44, 2.72, 3.05, 8.3, 8.5, 8.7, 8.9, 9.1, 9.41, 10.1, 10.3, 10.5, 11.1, 11.3, 11.5, 11.7 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 1.97, 2.19, 2.44, 2.72, 3.05, 6.5, 6.7, 6.9, 7.1, 7.6, 7.8, 8, 8.3, 8.5, 8.7, 8.9, 9.1, 9.41, 10.1, 10.3, 10.5, 11.1, 11.3, 11.5, 11.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ "heavycoyote" ],
 "method": "play_sound"
@@ -107,6 +107,27 @@ tracks/0/keys = {
 }, {
 "args": [ 2 ],
 "method": "change_ghosts"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
+}, {
+"args": [ "heavystep" ],
+"method": "play_sound"
 }, {
 "args": [ "undostrong" ],
 "method": "play_sound"
@@ -155,8 +176,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 1.97, 2.44, 2.72, 2.86, 3.24, 8.3, 9.41 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 1.97, 2.44, 2.72, 2.86, 3.24, 6.6, 6.9, 7.2, 7.5, 7.8, 8.3, 9.41 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "values": [ {
 "args": [ "lightcoyote" ],
 "method": "play_sound"
@@ -171,6 +192,21 @@ tracks/1/keys = {
 "method": "play_sound"
 }, {
 "args": [ "usegreenality" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
+"method": "play_sound"
+}, {
+"args": [ "lightstep" ],
 "method": "play_sound"
 }, {
 "args": [ 1 ],
@@ -652,13 +688,13 @@ texture = ExtResource( 8 )
 centered = false
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( -30, 267 )
-texture = ExtResource( 23 )
+position = Vector2( 64, 213 )
+texture = ExtResource( 9 )
 flip_h = true
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 478, 229 )
-texture = ExtResource( 16 )
+position = Vector2( 413, 267 )
+texture = ExtResource( 10 )
 
 [node name="HeavyClone1" type="Sprite" parent="CutsceneHolder/Panel2"]
 modulate = Color( 1, 1, 1, 0 )
@@ -705,12 +741,13 @@ anims/Animate = SubResource( 5 )
 
 [node name="Broom" type="Sprite" parent="CutsceneHolder/Panel2"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( -26, 272 )
+position = Vector2( 30, 211 )
 texture = ExtResource( 18 )
+flip_h = true
 
 [node name="Mop" type="Sprite" parent="CutsceneHolder/Panel2"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 532, 272 )
+position = Vector2( 389, 275 )
 texture = ExtResource( 17 )
 flip_h = true
 
@@ -722,15 +759,15 @@ margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
 
 [node name="Stack" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( -27, 210 )
+position = Vector2( 79, 326 )
 texture = ExtResource( 21 )
 
 [node name="Toolbox" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( 434, 207 )
+position = Vector2( 531, 250 )
 texture = ExtResource( 19 )
 
 [node name="Screwdriver" type="Sprite" parent="CutsceneHolder/Panel2"]
-position = Vector2( -38, 252 )
+position = Vector2( -125, 209 )
 texture = ExtResource( 20 )
 
 [node name="Panel3" type="Sprite" parent="CutsceneHolder"]
