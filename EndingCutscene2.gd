@@ -29,7 +29,7 @@ var sparkle_timer_max = 0.01;
 var sparkles_remaining = 0.0;
 
 var clones_active = 0;
-onready var clone_players = [$CutsceneHolder/Panel2/AnimationPlayerClone1, $CutsceneHolder/Panel2/AnimationPlayerClone2];
+onready var clone_players = [$CutsceneHolder/Panel2/AnimationPlayerClone1, $CutsceneHolder/Panel2/AnimationPlayerClone2, $CutsceneHolder/Panel2/AnimationPlayerClone3];
 
 func _ready() -> void:
 	gamelogic.target_track = gamelogic.music_info.find("Patashu - Cutscene E");
@@ -84,8 +84,10 @@ func cutscene_step() -> void:
 			$CutsceneHolder/Panel2/Broom.modulate = Color(1, 1, 1, 1);
 			$CutsceneHolder/Panel2/HeavyClone1.modulate = Color(1, 1, 1, 0);
 			$CutsceneHolder/Panel2/HeavyClone2.modulate = Color(1, 1, 1, 0);
+			$CutsceneHolder/Panel2/HeavyClone3.modulate = Color(1, 1, 1, 0);
 			$CutsceneHolder/Panel2/LightClone1.modulate = Color(1, 1, 1, 0);
 			$CutsceneHolder/Panel2/LightClone2.modulate = Color(1, 1, 1, 0);
+			$CutsceneHolder/Panel2/LightClone3.modulate = Color(1, 1, 1, 0);
 			var tween = get_tree().create_tween()
 			$CutsceneHolder/Panel1.modulate = Color(1, 1, 1, 0);
 			tween.tween_property($CutsceneHolder/Panel1, "modulate", Color.white, 0.5);
