@@ -79,6 +79,7 @@ func cutscene_step() -> void:
 			$CutsceneHolder.visible = true;
 			$CutsceneHolder/Panel1.visible = true;
 			$CutsceneHolder/Panel2.visible = false;
+			$CutsceneHolder/Panel2/ColorRect.visible = true;
 			var tween = get_tree().create_tween()
 			$CutsceneHolder/Panel1.modulate = Color(1, 1, 1, 0);
 			tween.tween_property($CutsceneHolder/Panel1, "modulate", Color.white, 0.5);
@@ -244,6 +245,7 @@ func ghost(sprite: Sprite) -> void:
 	ghost.texture = sprite.texture;
 	ghost.centered = sprite.centered;
 	ghost.scale = sprite.scale;
+	ghost.flip_h = sprite.flip_h;
 	$CutsceneHolder/Panel2.add_child(ghost);
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
