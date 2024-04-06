@@ -218,6 +218,7 @@ func afterimage(sprite: Sprite, color: Color) -> void:
 	afterimage.set_material(gamelogic.get_afterimage_material_for(color));
 	$CutsceneHolder/Panel6.add_child(afterimage);
 	afterimage.scale = sprite.scale;
+	afterimage.rotation_degrees = sprite.rotation_degrees;
 	afterimage.get_child(0).centered = sprite.centered;
 	
 func ghost(sprite: Sprite) -> void:
@@ -228,6 +229,7 @@ func ghost(sprite: Sprite) -> void:
 	ghost.texture = sprite.texture;
 	ghost.centered = sprite.centered;
 	ghost.scale = sprite.scale;
+	ghost.rotation_degrees = sprite.rotation_degrees;
 	$CutsceneHolder/Panel6.add_child(ghost);
 	
 func destroy() -> void:

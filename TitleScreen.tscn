@@ -14,13 +14,13 @@
 [ext_resource path="res://assets/cutscenes/Panel_5_finish.png" type="Texture" id=12]
 [ext_resource path="res://assets/cutscenes/eyes.png" type="Texture" id=13]
 [ext_resource path="res://assets/cutscenes/heavyportal.png" type="Texture" id=14]
-[ext_resource path="res://assets/cutscenes/heavyfall.png" type="Texture" id=15]
+[ext_resource path="res://assets/cutscenes/props/heavy_forward.png" type="Texture" id=15]
 [ext_resource path="res://assets/cutscenes/lightportal.png" type="Texture" id=16]
-[ext_resource path="res://assets/cutscenes/lightfall.png" type="Texture" id=17]
-[ext_resource path="res://assets/cutscenes/heavywalk.png" type="Texture" id=18]
-[ext_resource path="res://assets/cutscenes/lightwalk.png" type="Texture" id=19]
-[ext_resource path="res://assets/cutscenes/heavyback.png" type="Texture" id=20]
-[ext_resource path="res://assets/cutscenes/lightback.png" type="Texture" id=21]
+[ext_resource path="res://assets/cutscenes/props/heavy_back.png" type="Texture" id=18]
+[ext_resource path="res://assets/cutscenes/props/light_forward.png" type="Texture" id=19]
+[ext_resource path="res://assets/cutscenes/props/light_exert.png" type="Texture" id=20]
+[ext_resource path="res://assets/cutscenes/props/light_back.png" type="Texture" id=21]
+[ext_resource path="res://assets/cutscenes/props/heavy_exert.png" type="Texture" id=22]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Animate"
@@ -132,7 +132,7 @@ tracks/8/keys = {
 "times": PoolRealArray( 2.5, 3.5, 4.32, 4.39, 4.46, 4.53, 4.72, 5.2, 5.9, 6.86 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 0.34151, 0.5, 0.34151, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 434, 78 ), Vector2( 434, 210 ), Vector2( 434, 210 ), Vector2( 432, 210 ), Vector2( 436, 210 ), Vector2( 434, 210 ), Vector2( 434, 200 ), Vector2( 434, 210 ), Vector2( 434, 210 ), Vector2( 280, 210 ) ]
+"values": [ Vector2( 434, 78 ), Vector2( 434, 220 ), Vector2( 434, 220 ), Vector2( 432, 220 ), Vector2( 436, 220 ), Vector2( 434, 220 ), Vector2( 434, 210 ), Vector2( 434, 220 ), Vector2( 434, 220 ), Vector2( 280, 220 ) ]
 }
 tracks/9/type = "value"
 tracks/9/path = NodePath("LightActor:scale")
@@ -259,7 +259,7 @@ tracks/12/keys = {
 "times": PoolRealArray( 0, 4, 7.58 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 15 ), ExtResource( 18 ), ExtResource( 20 ) ]
+"values": [ ExtResource( 22 ), ExtResource( 15 ), ExtResource( 18 ) ]
 }
 tracks/13/type = "value"
 tracks/13/path = NodePath("LightActor:texture")
@@ -271,7 +271,7 @@ tracks/13/keys = {
 "times": PoolRealArray( 0, 4.53, 8.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 17 ), ExtResource( 19 ), ExtResource( 21 ) ]
+"values": [ ExtResource( 20 ), ExtResource( 19 ), ExtResource( 21 ) ]
 }
 tracks/14/type = "value"
 tracks/14/path = NodePath("HeavyFix:visible")
@@ -345,6 +345,30 @@ tracks/19/keys = {
 "update": 0,
 "values": [ Vector2( 280, 174 ), Vector2( 280, 174 ) ]
 }
+tracks/20/type = "value"
+tracks/20/path = NodePath("HeavyActor:rotation_degrees")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/keys = {
+"times": PoolRealArray( 0.01, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 90.0, 0.0 ]
+}
+tracks/21/type = "value"
+tracks/21/path = NodePath("LightActor:rotation_degrees")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/keys = {
+"times": PoolRealArray( 0, 4.53 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 180.0, 0.0 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "Onload"
@@ -395,17 +419,17 @@ margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
 
 [node name="MainMenuBg" type="Sprite" parent="."]
-modulate = Color( 0.2226, 0.29169, 0.42, 1 )
+modulate = Color( 0.635294, 0.345098, 0.345098, 0 )
 texture = ExtResource( 10 )
 centered = false
 
 [node name="PatagameNoBg" type="Sprite" parent="."]
-modulate = Color( 0.917647, 0.713726, 0.713726, 1 )
+modulate = Color( 0, 0, 0, 1 )
 texture = ExtResource( 11 )
 centered = false
 
 [node name="Eyes" type="Sprite" parent="."]
-modulate = Color( 0.917647, 0.713726, 0.713726, 0 )
+modulate = Color( 0, 0, 0, 1 )
 texture = ExtResource( 13 )
 centered = false
 
@@ -477,7 +501,6 @@ align = 1
 valign = 1
 
 [node name="CutsceneHolder" type="Node2D" parent="."]
-visible = false
 
 [node name="Panel1" type="Sprite" parent="CutsceneHolder"]
 modulate = Color( 1, 1, 1, 0 )
@@ -517,36 +540,28 @@ texture = ExtResource( 6 )
 centered = false
 
 [node name="HeavyPortal" type="Sprite" parent="CutsceneHolder"]
-visible = false
 position = Vector2( 68, 75 )
 scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 14 )
 
 [node name="LightPortal" type="Sprite" parent="CutsceneHolder"]
-visible = false
 position = Vector2( 435, 78 )
 scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 16 )
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder"]
-visible = false
 position = Vector2( 220, 218 )
-scale = Vector2( 1e-05, 1e-05 )
-texture = ExtResource( 15 )
+texture = ExtResource( 18 )
 
 [node name="HeavyFix" type="Sprite" parent="CutsceneHolder"]
-visible = false
 position = Vector2( 220, 165 )
 texture = ExtResource( 9 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder"]
-visible = false
-position = Vector2( 280, 210 )
-scale = Vector2( 1e-05, 1e-05 )
-texture = ExtResource( 17 )
+position = Vector2( 280, 220 )
+texture = ExtResource( 21 )
 
 [node name="LightFix" type="Sprite" parent="CutsceneHolder"]
-visible = false
 position = Vector2( 280, 174 )
 texture = ExtResource( 7 )
 
