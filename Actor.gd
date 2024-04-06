@@ -99,7 +99,9 @@ func update_graphics() -> void:
 	set_next_texture(tex, facing_left);
 	if (thought_bubble != null):
 		thought_bubble.update_ticks(ticks);
-	update_grayscale(in_night);
+	# I should figure out a nice way to have arbitrarily many materials, but in the mean time
+	if (actorname != Name.ChronoHelixRed and actorname != Name.ChronoHelixBlue):
+		update_grayscale(in_night);
 	if (is_ghost and actorname == Name.HeavyGoalJoke):
 		texture = preload("res://assets/BigPortalRed.png");
 		offset = Vector2(12, 12)/0.1;
@@ -504,6 +506,16 @@ func _process(delta: float) -> void:
 	if hframes <= 1:
 		pass
 	else:
+		if (!is_ghost and actorname == Name.ChronoHelixRed or actorname == Name.ChronoHelixBlue):
+			var glow_color = Color(1, 0.4, 0.1, 1);
+			if (actorname == Name.ChronoHelixBlue):
+				glow_color = Color(0.2, 0.5, 1, 1);
+			#reusing this lol
+			crystal_timer += delta;
+			var coeff = 0.1+(1+sin(crystal_timer*2.5))/5;
+			glow_color.a = coeff;
+			material.set_shader_param("color", glow_color);
+		
 		frame_timer += delta;
 		if (frame_timer > frame_timer_max):
 			frame_timer -= frame_timer_max;
