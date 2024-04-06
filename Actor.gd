@@ -210,9 +210,9 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 				return preload("res://assets/timecrystalmagenta.png");
 				
 		Name.ChronoHelixBlue:
-			return preload("res://assets/chrono_helix_blue.png");
+			return preload("res://assets/chrono_helix_blue_anim.png");
 		Name.ChronoHelixRed:
-			return preload("res://assets/chrono_helix_red.png");
+			return preload("res://assets/chrono_helix_red_anim.png");
 			
 		Name.Hole:
 			if broken:
@@ -283,6 +283,12 @@ func set_next_texture(tex: Texture, facing_left_at_the_time: bool) -> void:
 		preload("res://assets/cuckoo_clock_end.png"):
 			frame_timer_max = 0.4;
 			hframes = 3;
+		preload("res://assets/chrono_helix_red_anim.png"):
+			frame_timer_max = 0.1;
+			hframes = 24;
+		preload("res://assets/chrono_helix_blue_anim.png"):
+			frame_timer_max = 0.1;
+			hframes = 24;
 		_:
 			hframes = 1;
 		
