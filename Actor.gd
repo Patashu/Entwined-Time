@@ -212,9 +212,15 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 				return preload("res://assets/timecrystalmagenta.png");
 				
 		Name.ChronoHelixBlue:
-			return preload("res://assets/chrono_helix_blue_anim.png");
+			if (gamelogic.nonstandard_won):
+				return null;
+			else:
+				return preload("res://assets/chrono_helix_blue_anim.png");
 		Name.ChronoHelixRed:
-			return preload("res://assets/chrono_helix_red_anim.png");
+			if (gamelogic.nonstandard_won):
+				return preload("res://assets/chrono_helix_all_anim.png");
+			else:
+				return preload("res://assets/chrono_helix_red_anim.png");
 			
 		Name.Hole:
 			if broken:
@@ -289,6 +295,9 @@ func set_next_texture(tex: Texture, facing_left_at_the_time: bool) -> void:
 			frame_timer_max = 0.1;
 			hframes = 24;
 		preload("res://assets/chrono_helix_blue_anim.png"):
+			frame_timer_max = 0.1;
+			hframes = 24;
+		preload("res://assets/chrono_helix_all_anim.png"):
 			frame_timer_max = 0.1;
 			hframes = 24;
 		_:
@@ -507,9 +516,13 @@ func _process(delta: float) -> void:
 		pass
 	else:
 		if (!is_ghost and actorname == Name.ChronoHelixRed or actorname == Name.ChronoHelixBlue):
-			var glow_color = Color(1, 0.4, 0.1, 1);
-			if (actorname == Name.ChronoHelixBlue):
-				glow_color = Color(0.2, 0.5, 1, 1);
+			var glow_color = Color(0.2, 0.5, 1, 1);
+			if (actorname == Name.ChronoHelixRed):
+				if (gamelogic.nonstandard_won):
+					glow_color = Color("A9F05F");
+				else:
+					glow_color = Color(1, 0.4, 0.1, 1);
+				
 			#reusing this lol
 			crystal_timer += delta;
 			var coeff = 0.1+(1+sin(crystal_timer*2.5))/5;

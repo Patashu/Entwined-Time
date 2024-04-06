@@ -3718,10 +3718,20 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				if actor.actorname == Actor.Name.ChronoHelixBlue:
 					nonstandard_won = true;
 					check_won();
+					add_to_animation_server(actor_there, [Animation.bump, -dir, -1]);
+					add_to_animation_server(actor, [Animation.move, dir/2, false, -1]);
+					add_to_animation_server(actor_there, [Animation.move, -dir/2, false, -1]);
+					add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
+					add_to_animation_server(actor_there, [Animation.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
 					return Success.No;
 			elif (actor_there.actorname == Actor.Name.ChronoHelixBlue):
 				if actor.actorname == Actor.Name.ChronoHelixRed:
 					nonstandard_won = true;
+					add_to_animation_server(actor_there, [Animation.bump, -dir, -1]);
+					add_to_animation_server(actor, [Animation.move, dir/2, false, -1]);
+					add_to_animation_server(actor_there, [Animation.move, -dir/2, false, -1]);
+					add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
+					add_to_animation_server(actor_there, [Animation.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
 					check_won();
 					return Success.No;
 			

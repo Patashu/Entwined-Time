@@ -18,6 +18,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 2, 2 ), Vector2( 1.5, 1.5 ), Vector2( 4, 4 ), Vector2( 3, 3 ), Vector2( 8, 8 ), Vector2( 6, 6 ), Vector2( 16, 16 ), Vector2( 12, 12 ), Vector2( 60, 60 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
 
 [node name="TransitionToTheEnd" type="Sprite"]
 texture = ExtResource( 1 )
