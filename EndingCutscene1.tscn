@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://EndingCutscene1.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/ET_final_puzzle_2.png" type="Texture" id=2]
@@ -15,7 +15,6 @@
 [ext_resource path="res://assets/cutscenes/props/heavy_exert.png" type="Texture" id=13]
 [ext_resource path="res://assets/cutscenes/light_fixit.png" type="Texture" id=14]
 [ext_resource path="res://assets/cutscenes/heavy_thumbsup.png" type="Texture" id=15]
-[ext_resource path="res://assets/cutscenes/lightfall.png" type="Texture" id=17]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Animate"
@@ -326,18 +325,6 @@ length = 4.0
 
 [sub_resource type="Animation" id=3]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Panel3/LightActor:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ ExtResource( 17 ) ]
-}
 
 [node name="EndingCutscene1" type="Node2D"]
 script = ExtResource( 1 )
@@ -376,14 +363,14 @@ position = Vector2( 652, 418 )
 texture = ExtResource( 7 )
 
 [node name="HeavyActor" type="Sprite" parent="CutsceneHolder/Panel3"]
-position = Vector2( 128, 502 )
+position = Vector2( 128, 466.865 )
 scale = Vector2( 2, 2 )
 texture = ExtResource( 6 )
 
 [node name="LightActor" type="Sprite" parent="CutsceneHolder/Panel3"]
 position = Vector2( 942, 506 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 17 )
+texture = ExtResource( 9 )
 
 [node name="HeavyFixIt" type="Sprite" parent="CutsceneHolder/Panel3"]
 position = Vector2( 130, 402 )
@@ -392,7 +379,7 @@ texture = ExtResource( 15 )
 
 [node name="LightFixIt" type="Sprite" parent="CutsceneHolder/Panel3"]
 position = Vector2( 936, 442 )
-scale = Vector2( 2, 2 )
+scale = Vector2( 1e-05, 1e-05 )
 texture = ExtResource( 14 )
 
 [node name="AdvanceLabel" type="Label" parent="CutsceneHolder"]
