@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/entwined time temp cover art.png-94df69d49105b8252ada5a392b162295.stex"
+path="res://.import/entwined time jacket.png-d2e6c13bd16ad89bf7bdc816d821fb49.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cutscenes/entwined time temp cover art.png"
-dest_files=[ "res://.import/entwined time temp cover art.png-94df69d49105b8252ada5a392b162295.stex" ]
+source_file="res://assets/cutscenes/entwined time jacket.png"
+dest_files=[ "res://.import/entwined time jacket.png-d2e6c13bd16ad89bf7bdc816d821fb49.stex" ]
 
 [params]
 
