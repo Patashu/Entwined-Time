@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://TitleScreen.gd" type="Script" id=1]
 [ext_resource path="res://assets/cutscenes/Panel_1_finish.png" type="Texture" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://assets/cutscenes/heavyportal.png" type="Texture" id=14]
 [ext_resource path="res://assets/cutscenes/props/heavy_forward.png" type="Texture" id=15]
 [ext_resource path="res://assets/cutscenes/lightportal.png" type="Texture" id=16]
+[ext_resource path="res://assets/cutscenes/logosmol.png" type="Texture" id=17]
 [ext_resource path="res://assets/cutscenes/props/heavy_back.png" type="Texture" id=18]
 [ext_resource path="res://assets/cutscenes/props/light_forward.png" type="Texture" id=19]
 [ext_resource path="res://assets/cutscenes/props/light_exert.png" type="Texture" id=20]
@@ -372,7 +373,7 @@ tracks/21/keys = {
 
 [sub_resource type="Animation" id=2]
 resource_name = "Onload"
-length = 4.0
+length = 5.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("../MainMenuBg:modulate")
 tracks/0/interp = 1
@@ -409,6 +410,30 @@ tracks/2/keys = {
 "update": 0,
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0.7176, 0.815427, 0.92, 1 ), Color( 0.917647, 0.713726, 0.713726, 0 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Holder/Label:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2, 4, 4.5, 5.1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 2, 2, 2, 0 ), Color( 2, 2, 2, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("../Holder/Logosmol:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2.4, 3.6, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 2, 2, 2, 0 ), Color( 2, 2, 2, 1 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="TitleScreen" type="Node2D"]
 script = ExtResource( 1 )
@@ -419,17 +444,17 @@ margin_bottom = 300.0
 color = Color( 0.133333, 0.235294, 0.321569, 1 )
 
 [node name="MainMenuBg" type="Sprite" parent="."]
-modulate = Color( 0.635294, 0.345098, 0.345098, 0 )
+modulate = Color( 0.2226, 0.29169, 0.42, 1 )
 texture = ExtResource( 10 )
 centered = false
 
 [node name="PatagameNoBg" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 1 )
+modulate = Color( 0.717647, 0.815686, 0.921569, 1 )
 texture = ExtResource( 11 )
 centered = false
 
 [node name="Eyes" type="Sprite" parent="."]
-modulate = Color( 0, 0, 0, 1 )
+modulate = Color( 0.917647, 0.713726, 0.713726, 0 )
 texture = ExtResource( 13 )
 centered = false
 
@@ -478,15 +503,17 @@ text = "Credits"
 
 [node name="Pointer" type="Sprite" parent="Holder"]
 
-[node name="Label" type="Label" parent="Holder"]
-margin_left = 170.0
-margin_top = 23.0
-margin_right = 354.0
-margin_bottom = 62.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Entwined Time
+[node name="Logosmol" type="Sprite" parent="Holder"]
+position = Vector2( 230, 68 )
+texture = ExtResource( 17 )
 
-A two time manipulation puzzle game"
+[node name="Label" type="Label" parent="Holder"]
+margin_left = 162.0
+margin_top = 98.0
+margin_right = 346.0
+margin_bottom = 137.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "A two time manipulation puzzle game"
 align = 1
 valign = 1
 
@@ -501,6 +528,7 @@ align = 1
 valign = 1
 
 [node name="CutsceneHolder" type="Node2D" parent="."]
+visible = false
 
 [node name="Panel1" type="Sprite" parent="CutsceneHolder"]
 modulate = Color( 1, 1, 1, 0 )
