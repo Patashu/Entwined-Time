@@ -116,6 +116,7 @@ func cutscene_step() -> void:
 			$MainMenuBg.visible = false;
 			$PatagameNoBg.visible = false;
 			$Eyes.visible = false;
+			$Holder/Logosmol.visible = false;
 			
 			var tween = get_tree().create_tween()
 			tween.tween_property($CutsceneHolder/Panel2, "modulate", Color.white, 0.5);
