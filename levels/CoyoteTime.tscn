@@ -1,23 +1,27 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap2" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 4, 12, 0, 65536, 1, 0, 65537, 2, 0, 65538, 8, 0, 65541, 7, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196615, 131077, 14, 262148 )
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 3, 2, 14, 3, 3, 14, 3, 4, 14, 3, 5, 14, 4, 65536, 14, 131074, 65537, 14, 131075, 65538, 14, 131075, 65539, 14, 131075, 65540, 14, 786440, 65541, 14, 131076, 131076, 14, 327681, 196608, 1, 0, 196609, 2, 0, 196610, 8, 0, 196613, 7, 0, 262144, 14, 2, 262145, 14, 3, 262146, 14, 4, 262149, 14, 196609, 327680, 14, 131074, 327681, 14, 131075, 327682, 14, 131076, 327685, 14, 327681 )
+
+[node name="@@415" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 19, 0, 196609, 19, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Coyote Time"
+level_author = "Patashu"
 level_replay = "Coyote Time$mturn=8$xdaxdxzdxzxdxa"
-heavy_max_moves = 1
-light_max_moves = 3
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 1, 19, 0, 65537, 19, 0 )
+heavy_max_moves = 1.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
