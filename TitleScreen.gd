@@ -99,7 +99,7 @@ func cutscene_step() -> void:
 			settingsbutton.queue_free();
 			creditsbutton.queue_free();
 			pointer.queue_free();
-			$Holder/Label.queue_free();
+			$Holder/Label.visible = false;
 			disclaimer.visible = false;
 			
 			$ColorRect2.queue_free();
