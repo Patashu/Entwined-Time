@@ -5393,15 +5393,14 @@ func character_move(dir: Vector2) -> bool:
 			if heavy_selected:
 				if anything_happened_char():
 					adjust_turn(true, 1, Chrono.MOVE);
-				adjust_meta_turn(1);
 			else:
 				if anything_happened_char():
 					adjust_turn(false, 1, Chrono.MOVE);
-				adjust_meta_turn(1);
 		else:
 			result = Success.No;
 	if (result != Success.No or nonstandard_won):
 		append_replay(chr);
+		adjust_meta_turn(1);
 	if (result != Success.Yes):
 		play_sound("bump")
 	return result != Success.No;
