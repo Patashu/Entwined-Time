@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 12, 0, 4, 12, 0, 65539, 12, 0, 65540, 12, 0, 131075, 12, 0, 131076, 12, 0, 196608, 1, 0, 196609, 2, 0, 196610, 8, 0, 196613, 7, 0, 262144, 14, 2, 262145, 14, 3, 262146, 14, 4, 262149, 14, 196609, 327680, 14, 131074, 327681, 14, 131075, 327682, 14, 131076, 327685, 14, 327681 )
+
+[node name="@@256" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 19, 0, 196609, 19, 0, 196610, 19, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Coyote Time?"
+level_replay = "Coyote Time?$mturn=21$xwxdxzwaaxzxzxaxzzsddxzxzzzddxa"
+heavy_max_moves = 1.0
+light_max_moves = 3.0
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
