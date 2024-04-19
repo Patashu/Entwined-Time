@@ -6006,7 +6006,7 @@ func calm_down_timelines() -> void:
 	lighttimeline.calm_down();
 
 func point_at_broken_event(is_heavy: bool, slot: Sprite) -> void:
-	if (chapter == 1 and level_in_chapter <= 4):
+	if (chapter == 1 and level_in_chapter <= 4 and !level_is_extra and !is_custom):
 		if (is_heavy):
 			rightarrow.visible = true;
 			rightarrow.position = slot.global_position - Vector2(24, 0);
