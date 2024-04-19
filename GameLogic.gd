@@ -1500,6 +1500,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("No Strings Attached")
 	level_filenames.push_back("Small Miracle")
 	level_filenames.push_back("Hot Soup")
+	level_filenames.push_back("Floor Change")
 	level_filenames.push_back("Wheelbarrow")
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Soft Landing")

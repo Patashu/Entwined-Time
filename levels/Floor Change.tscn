@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 7, 0, 2, 2, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196615, 65540, 14, 196613, 65541, 14, 196614, 65542, 14, 196615, 196609, 1, 0, 196613, 8, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196615, 262148, 14, 196613, 262149, 14, 196614, 262150, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Floor Change"
+level_author = "Sandra53"
+level_replay = "Floor Change$mturn=29$dsxaaxzzxzzszxwzxaassxdaxzzxzaxwzzwaaxa"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+target_sky = Color( 0.560784, 0.6, 0.329412, 1 )
+target_track = 0.0
