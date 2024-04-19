@@ -70,6 +70,8 @@ func _quitbutton_pressed() -> void:
 func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):
 		return;
+	if ($CutsceneHolder/Panel1/AnimationPlayer.current_animation == "Animate" and $CutsceneHolder/Panel1/AnimationPlayer.is_playing()):
+		return;
 	if ($CutsceneHolder/Panel2/AnimationPlayer.current_animation == "Animate" and $CutsceneHolder/Panel2/AnimationPlayer.is_playing()):
 		return;
 	cutscene_step_cooldown = 0;
@@ -185,14 +187,18 @@ func advance_label() -> void:
 		$CutsceneHolder/AdvanceLabel.text = "(" + gamelogic.human_readable_input("ui_accept", 1) + " to advance cutscene)";
 	
 func skip_cutscene_label_grows(delta: float) -> void:
+	if (cutscene_step > 3):
+		return;
 	if (skip_cutscene_label == null):
 		skip_cutscene_label = preload("res://SkipCutsceneLabel.tscn").instance();
 		self.add_child(skip_cutscene_label);
 	var progressbar = skip_cutscene_label.get_node("ProgressBar");
 	progressbar.value += delta;
 	if (progressbar.value >= progressbar.max_value):
-		begin_the_end();
-		end_timer_max = 1.0;
+		cutscene_step = 3;
+		$CutsceneHolder/Panel1/AnimationPlayer.stop();
+		$CutsceneHolder/Panel2/AnimationPlayer.stop();
+		cutscene_step();
 
 func reset_skip_cutscene_label() -> void:
 	if (skip_cutscene_label != null):
