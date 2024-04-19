@@ -1460,6 +1460,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "-1";
+	level_filenames.push_back("CliffsL2")
 	level_filenames.push_back("RoommatesExL2")
 	level_filenames.push_back("SpelunkingL2")
 	level_filenames.push_back("UphillL2")
