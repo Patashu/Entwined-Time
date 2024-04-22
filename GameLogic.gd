@@ -1539,6 +1539,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
+	level_filenames.push_back("Jet Engine [VAR1]")
 	chapter_replacements[chapter_names.size() - 1] = "!R";
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
