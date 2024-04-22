@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196615, 65539, 25, 0, 65541, 28, 0, 131075, 19, 0, 131076, 26, 0, 131077, 22, 0, 196609, 7, 0, 196610, 2, 0, 196611, 19, 0, 196613, 22, 0, 196614, 8, 0, 196615, 1, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 524292, 262148, 27, 0, 262149, 14, 524290, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615, 327683, 14, 262145, 327684, 20, 0, 327685, 14, 262145, 393219, 14, 655362, 393220, 14, 196614, 393221, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The One-Way Pit [VAR2] [VAR1]"
+level_author = "Slabdrill"
+level_replay = "The One-Way Pit [VAR2] [VAR1]$mturn=57$xwdaaasxddxzzzzxzzxzzxwxaxaxzawxdxzzsxwdwzzzzdxzxdxaxwxzxzwxwxzwxwdxzdxzxzzzzddxaa"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0

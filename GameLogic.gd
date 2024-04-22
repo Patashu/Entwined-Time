@@ -1491,24 +1491,32 @@ func initialize_level_list() -> void:
 	
 	custom_past_here = chapter_names.size();
 	custom_past_here_level_count = level_filenames.size();
-	chapter_names.push_back("Voices from the Void");
+	
+	chapter_names.push_back("Sweet Treats");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
-	chapter_replacements[chapter_names.size() - 1] = "!A";
+	chapter_replacements[chapter_names.size() - 1] = "!S";
 	level_filenames.push_back("No Strings Attached")
 	level_filenames.push_back("Small Miracle")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Floor Change")
 	level_filenames.push_back("Wheelbarrow")
-	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Soft Landing")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Voices from the Void");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "!V";
 	level_filenames.push_back("Pure Vertical")
 	level_filenames.push_back("Beyond Even Gravity")
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Luxury Flight")
-	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Friendship Paradox")
 	level_filenames.push_back("Proxy Timeline")
 	level_filenames.push_back("Kinematic Stability")
@@ -1518,6 +1526,20 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Pittance")
 	level_filenames.push_back("Second Wind")
 	level_filenames.push_back("Ionic Capacitor")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Revisions");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	level_filenames.push_back("Pushing It")
+	level_filenames.push_back("Graduation [REV1]")
+	level_filenames.push_back("Coyote Time")
+	level_filenames.push_back("Heaven [REV1]")
+	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
+	chapter_replacements[chapter_names.size() - 1] = "!R";
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1533,7 +1555,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("DonkEx")
 	level_filenames.push_back("Waterslide")
 	level_filenames.push_back("Wall of Force")
-	chapter_replacements[chapter_names.size() - 1] = "!B";
+	chapter_replacements[chapter_names.size() - 1] = "!F";
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
