@@ -1100,9 +1100,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheFirstPitEx")
 	level_filenames.push_back("TheFirstPitEx2")
 	level_filenames.push_back("CarryingItEx")
-	level_filenames.push_back("BraidEx")
 	level_filenames.push_back("ShouldveCalledaCab")
 	level_filenames.push_back("UncabYourself")
+	level_filenames.push_back("BraidEx")
 	level_filenames.push_back("Cliffs")
 	
 	chapter_names.push_back("Hazards");
@@ -1132,9 +1132,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("FirewallEx2")
 	level_filenames.push_back("HellEx")
 	level_filenames.push_back("CampfireEx")
+	level_filenames.push_back("OrbitalDrop")
 	level_filenames.push_back("FireInTheSky")
 	level_filenames.push_back("HopscorchEx")
-	level_filenames.push_back("OrbitalDrop")
 	
 	chapter_names.push_back("Secrets of Space-Time");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1191,12 +1191,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("HawkingRadiation")
 	level_filenames.push_back("TheOneWayPitEx")
 	level_filenames.push_back("TheSpikePitEx2")
+	level_filenames.push_back("Heaven")
 	level_filenames.push_back("OneWayToBurn")
 	level_filenames.push_back("FootWiggleEx")
 	level_filenames.push_back("FootWiggleEx2")
 	level_filenames.push_back("UnfinishedBridge")
 	level_filenames.push_back("TheOneWayPitEx2")
-	level_filenames.push_back("Heaven")
 	
 	chapter_names.push_back("Trap Doors and Ladders");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1224,9 +1224,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bonfire")
 	level_filenames.push_back("TrophyCabinetEx2")
 	level_filenames.push_back("TripleJump")
-	level_filenames.push_back("CarEngine")
-	level_filenames.push_back("JetEngine")
 	level_filenames.push_back("RocketEngine")
+	level_filenames.push_back("JetEngine")
+	level_filenames.push_back("CarEngine")
 	level_filenames.push_back("PhotonDrive")
 	level_filenames.push_back("FirefightersEx")
 	
@@ -1256,13 +1256,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Weakness")
 	level_filenames.push_back("ThirdRoommateEx")
 	level_filenames.push_back("ThirdRoommateEx2")
+	level_filenames.push_back("QuantumEntanglement")
 	level_filenames.push_back("Levitation")
 	level_filenames.push_back("InstantDefeat")
-	level_filenames.push_back("QuantumEntanglement")
+	level_filenames.push_back("InevitableDemise")
 	level_filenames.push_back("ShippingSolutions")
 	level_filenames.push_back("TheTower")
 	level_filenames.push_back("InvisibleBridgeCrate")
-	level_filenames.push_back("InevitableDemise")
 	level_filenames.push_back("Jenga")
 	
 	chapter_names.push_back("There Are Many Colours");
