@@ -11,8 +11,8 @@ tile_data = PoolIntArray( 0, 1, 0, 65536, 2, 0, 65537, 8, 0, 458753, 7, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "LEVEL_NOT_FOUND [VAR2]"
-level_replay = "LEVEL_NOT_FOUND [VAR2]$mturn=25$xsxdxzxzxsxdxzxzxsxdxzsxsxzxzxsxsxzxzxsxsxzxzzw"
+level_name = "LEVEL_NOT_FOUND [VAR1]"
+level_replay = "LEVEL_NOT_FOUND [VAR1]$mturn=25$xsxdxzxzxsxdxzxzxsxdxzsxsxzxzxsxsxzxzxsxsxzxzzw"
 heavy_max_moves = 2
 light_max_moves = 1
 

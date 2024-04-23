@@ -11,8 +11,8 @@ tile_data = PoolIntArray( 0, 8, 0, 65536, 2, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "World's Smallest Puzzle! [VAR2]"
-level_replay = "World's Smallest Puzzle! [VAR2]$mturn=10$xaxwxzssxaxzzdxz"
+level_name = "World's Smallest Puzzle! [VAR1]"
+level_replay = "World's Smallest Puzzle! [VAR1]$mturn=10$xaxwxzssxaxzzdxz"
 heavy_max_moves = 4
 light_max_moves = 4
 
