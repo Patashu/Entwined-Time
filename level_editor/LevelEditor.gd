@@ -156,6 +156,7 @@ func _ready() -> void:
 	
 	if (gamelogic.test_mode):
 		custom_string = gamelogic.custom_string;
+		gamelogic.test_mode = false;
 	else:
 		custom_string = gamelogic.serialize_current_level();
 	deserialize_custom_level(custom_string);

@@ -37,6 +37,15 @@ func _ready() -> void:
 	quitgamebutton.connect("pressed", self, "_quitgamebutton_pressed");
 	#IF YOU CHANGE THE NUMBER OF BUTTONS, CHANGE FOCUS NEIGHBOURS IN EDITOR TOO!!
 	
+	if (gamelogic.test_mode):
+		levelselectbutton.text = "Level Editor";
+		var stylebox = preload("res://meta_styleboxtexture.tres");
+		levelselectbutton.add_stylebox_override("hover", stylebox);
+		levelselectbutton.add_stylebox_override("pressed", stylebox);
+		levelselectbutton.add_stylebox_override("focus", stylebox);
+		levelselectbutton.add_stylebox_override("disabled", stylebox);
+		levelselectbutton.add_stylebox_override("normal", stylebox);
+	
 	if gamelogic.has_remix.has(gamelogic.level_name) or gamelogic.level_name.find("(Remix)") >= 0:
 		if gamelogic.in_insight_level:
 			insightbutton.text = "Lose Remix";
@@ -144,8 +153,12 @@ func _levelselectbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	var a = preload("res://LevelSelect.tscn").instance();
-	gamelogic.add_to_ui_stack(a, get_parent());
+	if (gamelogic.test_mode):
+		var a = preload("res://level_editor/LevelEditor.tscn").instance();
+		gamelogic.add_to_ui_stack(a, get_parent());
+	else:
+		var a = preload("res://LevelSelect.tscn").instance();
+		gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 	
 func _insightbutton_pressed() -> void:

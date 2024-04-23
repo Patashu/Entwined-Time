@@ -5098,7 +5098,7 @@ func restart(_is_silent: bool = false) -> void:
 	undo_effect_color = meta_color;
 	
 func escape() -> void:
-	if (test_mode):
+	if (test_mode and won):
 		level_editor();
 		test_mode = false;
 		return;
@@ -5144,7 +5144,6 @@ func level_editor() -> void:
 func level_select() -> void:
 	if (test_mode):
 		level_editor();
-		test_mode = false;
 		return;
 	
 	if (ui_stack.size() > 0):
