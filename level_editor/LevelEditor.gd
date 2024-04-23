@@ -331,6 +331,10 @@ func deserialize_custom_level(custom_string: String) -> void:
 	
 	tilemaps.add_child(level);
 	level_info = level.get_node("LevelInfo");
+	
+	if (level_info.map_x_max > gamelogic.map_x_max_max or level_info.map_y_max > gamelogic.map_y_max_max):
+		if (tilemaps.scale == Vector2(1, 1)):
+			toggle_zoom();
 
 	terrain_layers.append(level);
 	for child in level.get_children():
@@ -884,6 +888,13 @@ func test_level() -> void:
 		gamelogic.test_mode = true;
 	destroy();
 
+func toggle_zoom() -> void:
+	if (tilemaps.scale == Vector2(1, 1)):
+		tilemaps.scale = Vector2(0.5, 0.5);
+	else:
+		tilemaps.scale = Vector2(1, 1);
+	pen.scale = tilemaps.scale;
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (level_info != null):
@@ -896,11 +907,12 @@ func _process(delta: float) -> void:
 		_menubutton_pressed();
 		
 	var mouse_position = gamelogic.adjusted_mouse_position();
+	var cell_size = gamelogic.cell_size*tilemaps.scale.x;
 	# probably needs some offset, I'll do the math
-	mouse_position.x = gamelogic.cell_size*round((mouse_position.x-gamelogic.cell_size/2)/float(gamelogic.cell_size));
-	mouse_position.y = gamelogic.cell_size*round((mouse_position.y-gamelogic.cell_size/2)/float(gamelogic.cell_size));
+	mouse_position.x = cell_size*round((mouse_position.x-cell_size/2)/float(cell_size));
+	mouse_position.y = cell_size*round((mouse_position.y-cell_size/2)/float(cell_size));
 	pen.position = mouse_position;
-	pen_xy = Vector2(round(mouse_position.x/float(gamelogic.cell_size)), round(mouse_position.y/float(gamelogic.cell_size)));
+	pen_xy = Vector2(round(mouse_position.x/float(cell_size)), round(mouse_position.y/float(cell_size)));
 	
 	if (picker_mode and show_tooltips):
 		picker_tooltip();
@@ -969,4 +981,5 @@ func _process(delta: float) -> void:
 		change_layer(7);
 	if (Input.is_action_just_pressed("9")):
 		change_layer(8);
-		
+	if (Input.is_action_just_pressed("zoom")):
+		toggle_zoom();
