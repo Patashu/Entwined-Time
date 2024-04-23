@@ -2539,8 +2539,23 @@ func calculate_map_size() -> void:
 				map_x_max = tile.x;
 			if tile.y > map_y_max:
 				map_y_max = tile.y;
-	terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2)-8;
-	terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2)+12;
+	if (is_custom and (map_x_max > map_x_max_max or map_y_max > map_y_max_max)):
+		terrainmap.scale = Vector2(0.5, 0.5);
+	else:
+		terrainmap.scale = Vector2(1.0, 1.0);
+	underterrainfolder.scale = terrainmap.scale;
+	actorsfolder.scale = terrainmap.scale;
+	ghostsfolder.scale = terrainmap.scale;
+	underactorsparticles.scale = terrainmap.scale;
+	overactorsparticles.scale = terrainmap.scale;
+	checkerboard.rect_scale = terrainmap.scale;
+	targeter.scale = terrainmap.scale;
+	if (terrainmap.scale == Vector2(0.5, 0.5)):
+		terrainmap.position.x = (map_x_max_max-map_x_max*0.5)*(cell_size/2)-8;
+		terrainmap.position.y = (map_y_max_max-map_y_max*0.5)*(cell_size/2)+12;
+	else:
+		terrainmap.position.x = (map_x_max_max-map_x_max)*(cell_size/2)-8;
+		terrainmap.position.y = (map_y_max_max-map_y_max)*(cell_size/2)+12;
 	underterrainfolder.position = terrainmap.position;
 	actorsfolder.position = terrainmap.position;
 	ghostsfolder.position = terrainmap.position;
@@ -2554,9 +2569,9 @@ func calculate_map_size() -> void:
 		
 func update_targeter() -> void:
 	if (heavy_selected):
-		targeter.position = heavy_actor.position + terrainmap.position + Vector2(12, 12);
+		targeter.position = heavy_actor.position*terrainmap.scale + terrainmap.position + Vector2(12, 12)*terrainmap.scale;
 	else:
-		targeter.position = light_actor.position + terrainmap.position + Vector2(12, 12);
+		targeter.position = light_actor.position*terrainmap.scale + terrainmap.position + Vector2(12, 12)*terrainmap.scale;
 	
 	if (!downarrow.visible):
 		return;
@@ -5083,7 +5098,7 @@ func character_switch() -> void:
 		#targeter.scale = Vector2(2, 2);
 		var tween = targeter.get_node("Tween");
 		tween.interpolate_property(targeter, "scale",
-		Vector2(1.2, 1.2), Vector2(1, 1), 0.2,
+		terrainmap.scale*Vector2(1.2, 1.2), terrainmap.scale*Vector2(1, 1), 0.2,
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
 		tween.start();
 	append_replay("x")
