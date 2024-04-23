@@ -278,7 +278,10 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 			elif size == 12:
 				return preload("res://timeline/timeline-tick-12.png");
 			
-	return null
+	if size == 8:
+		return preload("res://timeline/timeline-what-8.png");
+	else:
+		return preload("res://timeline/timeline-what-12.png");
 
 func fuzz_on() -> void:
 	if (!showing_fuzz):
