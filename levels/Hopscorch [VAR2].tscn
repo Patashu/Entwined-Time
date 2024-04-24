@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 7, 0, 65539, 30, 0, 131075, 30, 0, 196611, 30, 0, 196612, 29, 0, 262144, 2, 0, 262148, 1, 0, 262149, 8, 0, 327680, 29, 0, 327681, 30, 0, 327682, 29, 0, 327683, 30, 0, 327684, 29, 0, 327685, 29, 0 )
+
+[node name="@@267" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 262144, 27, 0, 262145, 27, 0, 262146, 27, 0, 262147, 27, 0, 262148, 27, 0, 262149, 27, 0 )
+
+[node name="@@268" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 28, 0, 5, 25, 0, 65536, 28, 0, 65541, 25, 0, 131072, 28, 0, 131077, 25, 0, 196608, 28, 0, 196613, 25, 0, 262144, 28, 0, 262149, 25, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Hopscorch [VAR2]"
+level_author = "Patashu"
+level_replay = "Hopscorch [VAR2]$mturn=40$xaaaaxwddxzxwaaxzzxzzzwdwddxzwdxzxzzwaxdxdssxzxzzzwaxa"
+heavy_max_moves = 8.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

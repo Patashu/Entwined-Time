@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 4, 2, 7, 0, 3, 14, 2, 4, 14, 4, 65536, 14, 65538, 65537, 14, 65540, 65539, 14, 65538, 65540, 14, 65540, 131072, 14, 65538, 131073, 14, 65540, 131075, 14, 65538, 131076, 14, 65540, 196608, 14, 65538, 196609, 14, 65540, 196611, 14, 65538, 196612, 14, 65540, 262144, 14, 65538, 262145, 14, 65540, 262147, 14, 65538, 262148, 14, 65540, 327680, 14, 65538, 327681, 14, 65540, 327683, 14, 65538, 327684, 14, 65540, 393216, 14, 65538, 393217, 14, 65540, 393219, 14, 65538, 393220, 14, 65540, 458752, 14, 65538, 458753, 14, 65540, 458755, 14, 65538, 458756, 14, 65540, 524288, 14, 65538, 524289, 14, 65540, 524291, 14, 65538, 524292, 14, 65540, 589824, 14, 65538, 589825, 14, 65540, 589827, 14, 65538, 589828, 14, 65540, 655360, 14, 65538, 655361, 14, 65540, 655363, 14, 131074, 655364, 14, 589829, 720896, 14, 589825, 720897, 14, 131076, 720900, 14, 262145, 786432, 14, 262145, 786433, 2, 0, 786434, 1, 0, 786435, 8, 0, 786436, 14, 262145, 851968, 14, 655362, 851969, 14, 196614, 851970, 14, 196614, 851971, 14, 196614, 851972, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Purest Verticalest"
+level_author = "Neonesque & dead0ne"
+level_replay = "Purest Verticalest$mturn=154$dwxaxzzdxzaxzswxzxzdxaxzzswxzxzdxaxzzswxzxzdxaxzswxzxzdxaxzzswxzxzdxaxzzswxzxzxdxazaxzxzaxawxzxzxzsxzsxwxaxzdxzxzzzxzwwzxwzxaxwxzxzdxaxzswxzxzdxaxzzswxzxzdxaxzzswxzxzdxaxzswxzxzdxaxzzswxzxzdxaxzzswxzxzxdxaxzxzxwxdxzaxzdxzxzzzwxzwzwzwzw"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.0235294, 0.129412, 0.219608, 1 )
+target_track = 2.0
