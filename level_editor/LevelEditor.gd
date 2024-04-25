@@ -893,7 +893,7 @@ func toggle_zoom() -> void:
 		tilemaps.scale = Vector2(0.5, 0.5);
 	else:
 		tilemaps.scale = Vector2(1, 1);
-	pen.scale = tilemaps.scale;
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -907,8 +907,11 @@ func _process(delta: float) -> void:
 		_menubutton_pressed();
 		
 	var mouse_position = gamelogic.adjusted_mouse_position();
-	var cell_size = gamelogic.cell_size*tilemaps.scale.x;
-	# probably needs some offset, I'll do the math
+	if (picker_mode):
+		pen.scale = Vector2(1, 1);
+	else:
+		pen.scale = tilemaps.scale;
+	var cell_size = gamelogic.cell_size*pen.scale.x;
 	mouse_position.x = cell_size*round((mouse_position.x-cell_size/2)/float(cell_size));
 	mouse_position.y = cell_size*round((mouse_position.y-cell_size/2)/float(cell_size));
 	pen.position = mouse_position;
