@@ -4363,24 +4363,24 @@ func append_replay(move: String) -> void:
 		user_replay += move;
 	
 func meta_undo_replay() -> bool:
-	if (voidlike_puzzle):
-		user_replay += "c";
-		meta_redo_inputs += "v";
-	else:
-		if !user_replay.ends_with("x"):
-			if (heavy_selected):
-				meta_redo_inputs += user_replay[user_replay.length() - 1];
-			else:
-				meta_redo_inputs += user_replay[user_replay.length() - 1].to_upper();
-			user_replay = user_replay.left(user_replay.length() - 1);
-			
+#	if (voidlike_puzzle):
+#		user_replay += "c";
+#		meta_redo_inputs += "v";
+#	else:
+	if !user_replay.ends_with("x"):
+		if (heavy_selected):
+			meta_redo_inputs += user_replay[user_replay.length() - 1];
 		else:
-			if (heavy_selected):
-				meta_redo_inputs += user_replay[user_replay.length() - 2].to_upper();
-			else:
-				meta_redo_inputs += user_replay[user_replay.length() - 2];
-			user_replay = user_replay.left(user_replay.length() - 2);
-			append_replay("x");
+			meta_redo_inputs += user_replay[user_replay.length() - 1].to_upper();
+		user_replay = user_replay.left(user_replay.length() - 1);
+		
+	else:
+		if (heavy_selected):
+			meta_redo_inputs += user_replay[user_replay.length() - 2].to_upper();
+		else:
+			meta_redo_inputs += user_replay[user_replay.length() - 2];
+		user_replay = user_replay.left(user_replay.length() - 2);
+		append_replay("x");
 	return true;
 
 func character_undo(is_silent: bool = false) -> bool:
@@ -5059,27 +5059,27 @@ func do_one_letter(replay_char: String) -> void:
 			character_switch();
 		"c":
 			meta_undo();
-		"y":
-			# buggy and difficult to make not-buggy since it requires redefining "v" properly.
-			# will leave as is, undocumented.
-			var old_doing_replay = doing_replay;
-			meta_redo();
-			doing_replay = old_doing_replay;
-			update_info_labels();
+#		"y":
+#			# buggy and difficult to make not-buggy since it requires redefining "v" properly.
+#			# will leave as is, undocumented.
+#			var old_doing_replay = doing_replay;
+#			meta_redo();
+#			doing_replay = old_doing_replay;
+#			update_info_labels();
 		
 func do_one_letter_case_sensitive(replay_char: String) -> void:
-	if (replay_char == "v"):
-		var replay = user_replay;
-		load_level(0);
-		start_specific_replay(replay);
-		#hack to make the sounds not play
-		var old_muted = muted;
-		muted = true;
-		replay_advance_turn(replay.length() - 1);
-		end_replay();
-		muted = old_muted;
-		return;
-	
+#	if (replay_char == "v"):
+#		var replay = user_replay;
+#		load_level(0);
+#		start_specific_replay(replay);
+#		#hack to make the sounds not play
+#		var old_muted = muted;
+#		muted = true;
+#		replay_advance_turn(replay.length() - 1);
+#		end_replay();
+#		muted = old_muted;
+#		return;
+
 	if (replay_char.to_upper() == replay_char and heavy_selected):
 		character_switch();
 	if (replay_char.to_lower() == replay_char and !heavy_selected):
