@@ -5510,6 +5510,10 @@ func anything_happened_meta() -> bool:
 			return true;
 	meta_undo_buffer.pop_at(meta_turn);
 	anything_happened_char(true); #to destroy
+	#for voidlike puzzles, moves that were successful but appeared to do nothing should be
+	#recorded in the replay anyway, just in case they had voidlike effects
+	if (voidlike_puzzle):
+		return true;
 	return false;
 
 func time_passes(chrono: int) -> void:
