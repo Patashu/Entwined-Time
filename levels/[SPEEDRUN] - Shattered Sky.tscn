@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 8, 0, 3, 2, 0, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 524291, 65539, 14, 196615, 131072, 14, 262145, 131073, 57, 0, 131074, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 655364, 327685, 7, 0, 327686, 1, 0, 393221, 14, 196613, 393222, 14, 524292, 458758, 14, 262145, 524294, 14, 327681 )
+
+[node name="@@249" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 39, 0 )
+
+[node name="@@250" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 55, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "[SPEEDRUN] - Shattered Sky"
+level_author = "Sandra53"
+level_replay = "[SPEEDRUN] - Shattered Sky$mturn=9$wxddsxddxzxdxd"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = "10"
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

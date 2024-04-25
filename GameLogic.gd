@@ -1492,27 +1492,12 @@ func initialize_level_list() -> void:
 	custom_past_here = chapter_names.size();
 	custom_past_here_level_count = level_filenames.size();
 	
-	chapter_names.push_back("Sweet Treats");
-	chapter_standard_starting_levels.push_back(level_filenames.size());
-	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
-	chapter_skies.push_back(Color("#223C52"));
-	chapter_tracks.push_back(0);
-	chapter_replacements[chapter_names.size() - 1] = "!S";
-	level_filenames.push_back("No Strings Attached")
-	level_filenames.push_back("Small Miracle")
-	level_filenames.push_back("Hot Soup")
-	level_filenames.push_back("Floor Change")
-	level_filenames.push_back("Wheelbarrow")
-	level_filenames.push_back("Soft Landing")
-	chapter_advanced_starting_levels.push_back(level_filenames.size());
-	chapter_advanced_unlock_requirements.push_back(0);
-	
 	chapter_names.push_back("Voices from the Void");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
-	chapter_replacements[chapter_names.size() - 1] = "!V";
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Pure Vertical")
 	level_filenames.push_back("Beyond Even Gravity")
 	level_filenames.push_back("Hot Soup [VAR1]")
@@ -1535,46 +1520,81 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Revisions");
+	chapter_names.push_back("Patashu's World");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
-	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
-	level_filenames.push_back("Pushing It")
-	level_filenames.push_back("Hopscorch [VAR2]")
-	level_filenames.push_back("Fire In The Sky [REV1]")
-	level_filenames.push_back("Graduation [REV1]")
-	level_filenames.push_back("Coyote Time")
-	level_filenames.push_back("Coyote TimeExEx")
-	level_filenames.push_back("Heaven [REV1]")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
-	level_filenames.push_back("Foot Wiggle [VAR3]")
-	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
-	level_filenames.push_back("Jet Engine [VAR1]")
-	level_filenames.push_back("Campfrost [VAR2]")
-	chapter_replacements[chapter_names.size() - 1] = "!R";
-	chapter_advanced_starting_levels.push_back(level_filenames.size());
-	chapter_advanced_unlock_requirements.push_back(0);
-	
-	chapter_names.push_back("Future Technology");
-	chapter_standard_starting_levels.push_back(level_filenames.size());
-	chapter_standard_unlock_requirements.push_back(min(48, level_filenames.size()));
-	chapter_skies.push_back(Color("#223C52"));
-	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Rushing Rivers")
 	level_filenames.push_back("PezDispenser")
 	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
-	level_filenames.push_back("Waterslide")
-	level_filenames.push_back("Wall of Force")
-	chapter_replacements[chapter_names.size() - 1] = "!F";
+	level_filenames.push_back("Pushing It")
+	level_filenames.push_back("Soft Landing")
+	level_filenames.push_back("Coyote Time")
+	level_filenames.push_back("Hot Soup [VAR1]")
+	level_filenames.push_back("Hot Soup [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Sandra53's World");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Floor Change")
+	level_filenames.push_back("[SPEEDRUN] - Shattered Sky")
+	level_filenames.push_back("Limitations of Love.")
+	level_filenames.push_back("Window of Oppertunity")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
-	chapter_advanced_unlock_requirements.push_back(level_filenames.size());
-
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Slabdrill's World");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Collaborative Motion")
+	level_filenames.push_back("Graduation [REV1]")
+	level_filenames.push_back("Hopscorch [VAR2]")
+	level_filenames.push_back("Fire In The Sky [REV1]")
+	level_filenames.push_back("Crate Moving Service")
+	level_filenames.push_back("Heaven [REV1]")
+	level_filenames.push_back("Campfrost [VAR2]")
+	level_filenames.push_back("The Half-Magenta Pit")
+	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
+	level_filenames.push_back("Coyote TimeExEx")
+	level_filenames.push_back("Elevator Pitch")
+	level_filenames.push_back("Elevator Pitch [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
+	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("One-Way Bridge")
+	level_filenames.push_back("Firemaze")
+	level_filenames.push_back("Firemaze [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("Foot Wiggle [VAR3]")
+	level_filenames.push_back("Durability-")
+	level_filenames.push_back("[SPEEDRUN] A Way In-")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("dead0ne's World");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Purest Verticalest")
+	level_filenames.push_back("Third Roommate [VAR-]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
