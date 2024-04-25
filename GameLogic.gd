@@ -5451,11 +5451,12 @@ func character_move(dir: Vector2) -> bool:
 					adjust_turn(false, 1, Chrono.MOVE);
 		else:
 			result = Success.No;
-	if (result != Success.No or nonstandard_won):
+	if (result != Success.No or nonstandard_won or voidlike_puzzle):
 		append_replay(chr);
-		adjust_meta_turn(1);
-	if (result != Success.Yes):
+	else:
 		play_sound("bump")
+	if (result != Success.No or nonstandard_won):
+		adjust_meta_turn(1);
 	return result != Success.No;
 
 func anything_happened_char(destructive: bool = true) -> bool:
@@ -5510,10 +5511,6 @@ func anything_happened_meta() -> bool:
 			return true;
 	meta_undo_buffer.pop_at(meta_turn);
 	anything_happened_char(true); #to destroy
-	#for voidlike puzzles, moves that were successful but appeared to do nothing should be
-	#recorded in the replay anyway, just in case they had voidlike effects
-	if (voidlike_puzzle):
-		return true;
 	return false;
 
 func time_passes(chrono: int) -> void:
@@ -5984,7 +5981,7 @@ func do_one_replay_turn() -> void:
 	do_one_letter(replay_char);
 	if replay_char == "x":
 		return
-	elif old_meta_turn == meta_turn:
+	elif old_meta_turn == meta_turn and !voidlike_puzzle:
 		replay_turn -= 1;
 		# replay contains a bump - silently delete the bump so we don't desync when trying to meta-undo it
 		level_replay = level_replay.left(replay_turn) + level_replay.right(replay_turn + 1)
