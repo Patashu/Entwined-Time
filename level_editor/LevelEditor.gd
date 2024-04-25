@@ -332,7 +332,7 @@ func deserialize_custom_level(custom_string: String) -> void:
 	tilemaps.add_child(level);
 	level_info = level.get_node("LevelInfo");
 	
-	if (level_info.map_x_max > gamelogic.map_x_max_max or level_info.map_y_max > gamelogic.map_y_max_max+1):
+	if (level_info.map_x_max > gamelogic.map_x_max_max or level_info.map_y_max > gamelogic.map_y_max_max+2):
 		if (tilemaps.scale == Vector2(1, 1)):
 			toggle_zoom();
 
