@@ -312,6 +312,7 @@ enum Tiles {
 	RepairStation, #124
 	RepairStationGray, #125
 	RepairStationGreen, #126
+	ZombieTile, #127
 }
 var voidlike_tiles = [];
 
@@ -5435,7 +5436,7 @@ func character_move(dir: Vector2) -> bool:
 			chr = "d";
 	var result = false;
 	if heavy_selected:
-		if (heavy_actor.broken or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
+		if ((heavy_actor.broken and !terrain_in_tile(heavy_actor.pos).has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		finish_animations(Chrono.MOVE);
@@ -5446,7 +5447,7 @@ func character_move(dir: Vector2) -> bool:
 			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
 	else:
-		if (light_actor.broken or (light_turn >= light_max_moves and light_max_moves >= 0)):
+		if ((light_actor.broken and !terrain_in_tile(light_actor.pos).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		finish_animations(Chrono.MOVE);

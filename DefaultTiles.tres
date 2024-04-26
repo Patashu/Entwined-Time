@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=376 format=2]
+[gd_resource type="TileSet" load_steps=381 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -347,6 +347,10 @@
 [ext_resource path="res://assets/repair_station.png" type="Texture" id=345]
 [ext_resource path="res://assets/repair_station_gray.png" type="Texture" id=346]
 [ext_resource path="res://assets/repair_station_green.png" type="Texture" id=347]
+[ext_resource path="res://assets/zombie_tile_1.png" type="Texture" id=348]
+[ext_resource path="res://assets/zombie_tile_4.png" type="Texture" id=349]
+[ext_resource path="res://assets/zombie_tile_3.png" type="Texture" id=350]
+[ext_resource path="res://assets/zombie_tile_0.png" type="Texture" id=351]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -375,6 +379,17 @@ frame_6/texture = ExtResource( 42 )
 frame_6/delay_sec = 0.0
 frame_7/texture = ExtResource( 41 )
 frame_7/delay_sec = 0.0
+
+[sub_resource type="AnimatedTexture" id=30]
+frames = 4
+fps = 6.0
+frame_0/texture = ExtResource( 349 )
+frame_1/texture = ExtResource( 350 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 348 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 351 )
+frame_3/delay_sec = 0.0
 
 [sub_resource type="AnimatedTexture" id=9]
 frames = 8
@@ -2731,3 +2746,17 @@ frame_7/delay_sec = 0.0
 126/shape_one_way_margin = 0.0
 126/shapes = [  ]
 126/z_index = 0
+127/name = "ZombieTile"
+127/texture = SubResource( 30 )
+127/tex_offset = Vector2( 0, 0 )
+127/modulate = Color( 1, 1, 1, 1 )
+127/region = Rect2( 0, 0, 24, 24 )
+127/tile_mode = 0
+127/occluder_offset = Vector2( 12, 12 )
+127/navigation_offset = Vector2( 12, 12 )
+127/shape_offset = Vector2( 0, 0 )
+127/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+127/shape_one_way = false
+127/shape_one_way_margin = 0.0
+127/shapes = [  ]
+127/z_index = 0

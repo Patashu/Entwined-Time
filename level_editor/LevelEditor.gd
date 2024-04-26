@@ -130,6 +130,7 @@ enum Tiles {
 	RepairStation, #124
 	RepairStationGray, #125
 	RepairStationGreen, #126
+	ZombieTile, #127
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -316,6 +317,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.RepairStation)
 		picker_array.append(Tiles.RepairStationGray)
 		picker_array.append(Tiles.RepairStationGreen)
+		picker_array.append(Tiles.ZombieTile)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -882,6 +884,8 @@ func picker_tooltip() -> void:
 			text = "Repair Station: When time passes following a move, after clocks tick, repair an unbroken actor in this tile, consuming this."
 		Tiles.RepairStationGreen:
 			text = "Repair Station: When time passes, after clocks tick, repair an unbroken actor in this tile (greenly), consuming this (greenly)."
+		Tiles.ZombieTile:
+			text = "Zombie Tile: Broken robots can make moves from this tile."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));
