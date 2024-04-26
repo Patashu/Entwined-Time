@@ -1,23 +1,23 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
 [node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 14, 196609, 8, 14, 196609, 65536, 14, 262145, 65544, 14, 262145, 131072, 14, 262145, 131075, 8, 0, 131077, 0, 0, 131080, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196615, 196616, 14, 262145, 262144, 7, 0, 262145, 0, 0, 262146, 48, 0, 262147, 48, 0, 262149, 2, 0, 262151, 1, 0, 262152, 14, 262145, 327680, 48, 0, 327681, 14, 196613, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 196615, 327687, 48, 0, 327688, 14, 327681 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Final Firewall"
 level_replay = "Final Firewall$mturn=36$xdssxdawadxzxzzzaxwxaddxaxaxaxaddxawxzzzzzzzzxzaxz"
 heavy_max_moves = 11
 light_max_moves = 11
 
 [node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 196613, 6, 0, 262145, 22, 0, 262149, 5, 0, 262151, 0, 0, 327680, 46, 0, 327687, 46, 0 )

@@ -1501,19 +1501,17 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("No Strings Attached")
+	level_filenames.push_back("Small Miracle")
+	level_filenames.push_back("Wheelbarrow")
+	level_filenames.push_back("Waterslide")
+	level_filenames.push_back("Wall of Force")
 	level_filenames.push_back("Pure Vertical")
 	level_filenames.push_back("Beyond Even Gravity")
-	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Luxury Flight")
-	level_filenames.push_back("Elevator Pitch")
-	level_filenames.push_back("Elevator Pitch [VAR1]")
-	level_filenames.push_back("Crate Moving Service")
-	level_filenames.push_back("One-Way Bridge")
-	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Friendship Paradox")
 	level_filenames.push_back("Proxy Timeline")
 	level_filenames.push_back("Kinematic Stability")
-	level_filenames.push_back("Hot Soup [VAR2]")
 	level_filenames.push_back("Spacetime Oven")
 	level_filenames.push_back("Out of Service")
 	level_filenames.push_back("Pittance")
@@ -1601,7 +1599,9 @@ func initialize_level_list() -> void:
 	# sentinel to make overflow checks easy
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
-	
+
+	#OS.set_clipboard(str(level_filenames));
+
 	var current_standard_index = 0;
 	var current_advanced_index = 0;
 	var currently_extra = false;
