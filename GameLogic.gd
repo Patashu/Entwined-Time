@@ -4391,15 +4391,21 @@ func meta_undo_replay() -> bool:
 			meta_redo_inputs += user_replay[user_replay.length() - 1];
 		else:
 			meta_redo_inputs += user_replay[user_replay.length() - 1].to_upper();
-		user_replay = user_replay.left(user_replay.length() - 1);
+		if (voidlike_puzzle):
+			user_replay += "c";
+		else:
+			user_replay = user_replay.left(user_replay.length() - 1);
 		
 	else:
 		if (heavy_selected):
 			meta_redo_inputs += user_replay[user_replay.length() - 2].to_upper();
 		else:
 			meta_redo_inputs += user_replay[user_replay.length() - 2];
-		user_replay = user_replay.left(user_replay.length() - 2);
-		append_replay("x");
+		if (voidlike_puzzle):
+			user_replay += "c";
+		else:
+			user_replay = user_replay.left(user_replay.length() - 2);
+			append_replay("x");
 	return true;
 
 func character_undo(is_silent: bool = false) -> bool:
