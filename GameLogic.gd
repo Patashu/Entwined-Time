@@ -1559,27 +1559,27 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Collaborative Motion")
-	level_filenames.push_back("Graduation [REV1]")
-	level_filenames.push_back("Hopscorch [VAR2]")
-	level_filenames.push_back("Fire In The Sky [REV1]")
-	level_filenames.push_back("Crate Moving Service")
-	level_filenames.push_back("Heaven [REV1]")
-	level_filenames.push_back("Campfrost [VAR2]")
-	level_filenames.push_back("The Half-Magenta Pit")
-	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
 	level_filenames.push_back("Coyote TimeExEx")
-	level_filenames.push_back("Elevator Pitch")
+	level_filenames.push_back("Durability-")
+	level_filenames.push_back("Hopscorch [VAR2]")
+	level_filenames.push_back("Graduation [REV1]")
+	level_filenames.push_back("Crate Moving Service")
+	level_filenames.push_back("Campfrost [VAR2]")
+	level_filenames.push_back("Heaven [REV1]")
+	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
-	level_filenames.push_back("Jet Engine [VAR1]")
 	level_filenames.push_back("One-Way Bridge")
-	level_filenames.push_back("Elevator Pitch [VAR1]")
+	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("Elevator Pitch")
+	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Firemaze")
 	level_filenames.push_back("Firemaze [VAR1]")
-	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("The Half-Magenta Pit")
+	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
 	level_filenames.push_back("Foot Wiggle [VAR3]")
-	level_filenames.push_back("Durability-")
 	level_filenames.push_back("[SPEEDRUN] A Way In-")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("Elevator Pitch [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1591,6 +1591,7 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Purest Verticalest")
 	level_filenames.push_back("Third Roommate [VAR-]")
+	level_filenames.push_back("Second Wind [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
