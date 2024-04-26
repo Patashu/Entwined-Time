@@ -668,6 +668,12 @@ func _process(delta: float) -> void:
 								sprite.texture = preload("res://assets/floorboards_void.png")
 							112:
 								sprite.texture = preload("res://assets/floorboards_magenta.png")
+							124:
+								sprite.texture = preload("res://assets/repair_station.png");
+							125:
+								sprite.texture = preload("res://assets/repair_station_gray.png");
+							126:
+								sprite.texture = preload("res://assets/repair_station_green.png");
 							_:
 								sprite.texture = preload("res://assets/glass_block.png")
 						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
@@ -695,6 +701,10 @@ func _process(delta: float) -> void:
 								sprite.texture = preload("res://assets/floorboards_gray.png")
 							112:
 								sprite.texture = preload("res://assets/floorboards_magenta.png")
+							124:
+								sprite.texture = preload("res://assets/repair_station.png");
+							125:
+								sprite.texture = preload("res://assets/repair_station_gray.png");
 							_:
 								sprite.texture = preload("res://assets/glass_block.png")
 						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);

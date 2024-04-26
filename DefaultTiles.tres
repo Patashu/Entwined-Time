@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=373 format=2]
+[gd_resource type="TileSet" load_steps=376 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -344,6 +344,9 @@
 [ext_resource path="res://assets/DurPlus.png" type="Texture" id=342]
 [ext_resource path="res://assets/StrMinus.png" type="Texture" id=343]
 [ext_resource path="res://assets/colour_native.png" type="Texture" id=344]
+[ext_resource path="res://assets/repair_station.png" type="Texture" id=345]
+[ext_resource path="res://assets/repair_station_gray.png" type="Texture" id=346]
+[ext_resource path="res://assets/repair_station_green.png" type="Texture" id=347]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2686,3 +2689,45 @@ frame_7/delay_sec = 0.0
 123/shape_one_way_margin = 0.0
 123/shapes = [  ]
 123/z_index = 0
+124/name = "RepairStation"
+124/texture = ExtResource( 345 )
+124/tex_offset = Vector2( 0, 0 )
+124/modulate = Color( 1, 1, 1, 1 )
+124/region = Rect2( 0, 0, 24, 24 )
+124/tile_mode = 0
+124/occluder_offset = Vector2( 12, 12 )
+124/navigation_offset = Vector2( 12, 12 )
+124/shape_offset = Vector2( 0, 0 )
+124/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+124/shape_one_way = false
+124/shape_one_way_margin = 0.0
+124/shapes = [  ]
+124/z_index = 0
+125/name = "RepairStationGray"
+125/texture = ExtResource( 346 )
+125/tex_offset = Vector2( 0, 0 )
+125/modulate = Color( 1, 1, 1, 1 )
+125/region = Rect2( 0, 0, 24, 24 )
+125/tile_mode = 0
+125/occluder_offset = Vector2( 12, 12 )
+125/navigation_offset = Vector2( 12, 12 )
+125/shape_offset = Vector2( 0, 0 )
+125/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+125/shape_one_way = false
+125/shape_one_way_margin = 0.0
+125/shapes = [  ]
+125/z_index = 0
+126/name = "RepairStationGreen"
+126/texture = ExtResource( 347 )
+126/tex_offset = Vector2( 0, 0 )
+126/modulate = Color( 1, 1, 1, 1 )
+126/region = Rect2( 0, 0, 24, 24 )
+126/tile_mode = 0
+126/occluder_offset = Vector2( 12, 12 )
+126/navigation_offset = Vector2( 12, 12 )
+126/shape_offset = Vector2( 0, 0 )
+126/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+126/shape_one_way = false
+126/shape_one_way_margin = 0.0
+126/shapes = [  ]
+126/z_index = 0

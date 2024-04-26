@@ -240,7 +240,11 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 							return preload("res://timeline/timeline-broken-8.png");
 						elif size == 12:
 							return preload("res://timeline/timeline-broken-12.png");
-					pass
+					else:
+						if size == 8:
+							return preload("res://timeline/timeline-unbroken-8.png");
+						elif size == 12:
+							return preload("res://timeline/timeline-unbroken-12.png");
 				"momentum":
 					if (new_value == Vector2.ZERO):
 						if size == 8:

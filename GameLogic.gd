@@ -309,6 +309,9 @@ enum Tiles {
 	FallInf, #121
 	FallOne, #122
 	ColourNative, #123
+	RepairStation, #124
+	RepairStationGray, #125
+	RepairStationGreen, #126
 }
 var voidlike_tiles = [];
 
@@ -1667,6 +1670,7 @@ var has_slopes = false;
 var has_boulders = false;
 var has_nudges = false;
 var has_limited_undo = false;
+var has_repair_stations = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -1756,6 +1760,7 @@ func ready_map() -> void:
 	has_boulders = false;
 	has_nudges = false;
 	has_limited_undo = false;
+	has_repair_stations = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -1844,6 +1849,13 @@ func ready_map() -> void:
 			has_nudges = true;
 		elif (any_layer_has_this_tile(Tiles.NudgeWestGreen)):
 			has_nudges = true;
+			
+		if (any_layer_has_this_tile(Tiles.RepairStation)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
+			has_repair_stations = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -3416,7 +3428,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 					if actor.pos == pos and !actor.broken and actor.durability <= Durability.PITS:
 						actor.post_mortem = Durability.PITS;
 						set_actor_var(actor, "broken", true, chrono);
-		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards:
+		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards or new_tile == Tiles.RepairStation or new_tile == Tiles.RepairStationGray:
 			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 		else:
 			if (old_tile == Tiles.Fuzz):
@@ -4321,6 +4333,8 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		add_to_animation_server(actor, [Animation.stall, 0.14]);
 
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
+	if (has_repair_stations):
+		return true;
 	# not edge cases: chrono, actor colour (since we always check)
 	# yes edge cases: could be a locked turn or a fuzz doubled turn
 	#this code looks HILARIOUS but I swear it is legitimately the best way to write it
@@ -5894,6 +5908,28 @@ func time_passes(chrono: int) -> void:
 			continue;
 		if actor.ticks != 1000 and !actor.broken:
 			clock_ticks(actor, -1, chrono);
+		
+	#Luckier laster - repair stations repair.
+	if (has_repair_stations):
+		for actor in time_actors:
+			if (actor.broken):
+				var terrain = terrain_in_tile(actor.pos);
+				if (terrain.has(Tiles.RepairStation)):
+					set_actor_var(actor, "broken", false, chrono);
+					maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStation), false, false, chrono, -1);
+		if (chrono == Chrono.MOVE):
+			for actor in actors:
+				if (actor.broken):
+					var terrain = terrain_in_tile(actor.pos);
+					if (terrain.has(Tiles.RepairStationGray)):
+						set_actor_var(actor, "broken", false, chrono);
+						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGray), false, false, chrono, -1);
+		for actor in actors:
+			if (actor.broken):
+				var terrain = terrain_in_tile(actor.pos);
+				if (terrain.has(Tiles.RepairStationGreen)):
+					set_actor_var(actor, "broken", false, max(Chrono.CHAR_UNDO, chrono));
+					maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGreen), false, true, chrono, -1);
 	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?

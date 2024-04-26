@@ -1,4 +1,4 @@
-[gd_scene load_steps=373 format=2]
+[gd_scene load_steps=376 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -344,6 +344,9 @@
 [ext_resource path="res://assets/DurPlus.png" type="Texture" id=342]
 [ext_resource path="res://assets/StrMinus.png" type="Texture" id=343]
 [ext_resource path="res://assets/colour_native.png" type="Texture" id=344]
+[ext_resource path="res://assets/repair_station.png" type="Texture" id=345]
+[ext_resource path="res://assets/repair_station_gray.png" type="Texture" id=346]
+[ext_resource path="res://assets/repair_station_green.png" type="Texture" id=347]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1447,3 +1450,15 @@ texture = ExtResource( 341 )
 [node name="ColourNative" type="Sprite" parent="."]
 position = Vector2( 374, 205 )
 texture = ExtResource( 344 )
+
+[node name="RepairStation" type="Sprite" parent="."]
+position = Vector2( 386, 141 )
+texture = ExtResource( 345 )
+
+[node name="RepairStationGray" type="Sprite" parent="."]
+position = Vector2( 387, 142 )
+texture = ExtResource( 346 )
+
+[node name="RepairStationGreen" type="Sprite" parent="."]
+position = Vector2( 389, 144 )
+texture = ExtResource( 347 )
