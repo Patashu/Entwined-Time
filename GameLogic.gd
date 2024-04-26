@@ -5655,7 +5655,7 @@ func time_passes(chrono: int) -> void:
 			for id in terrain:
 				if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
 					add_to_animation_server(actor, [Animation.sfx, "step"]);
-					var dir = directions[id - Tiles.NudgeEast];
+					var dir = directions[id - Tiles.NudgeEastGreen];
 					var attempt = move_actor_relative(actor, dir, chrono, false, false);
 					if (attempt == Success.Yes):
 						# nudge up now sets airborne like slopes do
