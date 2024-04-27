@@ -192,7 +192,7 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 				return preload("res://assets/wooden_crate.png");
 				
 		Name.CuckooClock:
-			if ticks == 0:
+			if ticks == 0 and gamelogic.lost:
 				return preload("res://assets/cuckoo_clock_end.png");
 			elif broken:
 				return preload("res://assets/cuckoo_clock_broken.png");
@@ -805,7 +805,7 @@ func _process(delta: float) -> void:
 					var new_ticks = current_animation[2];
 					gamelogic.broadcast_animation_nonce(current_animation[3]);
 					thought_bubble.update_ticks(new_ticks);
-					if (new_ticks == 0):
+					if (new_ticks == 0 and !broken):
 						gamelogic.play_sound("timesup");
 						ripple = preload("res://Ripple.tscn").instance();
 						ripple_timer = 0;

@@ -4155,7 +4155,7 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: in
 	if (animation_nonce == -1):
 		animation_nonce = animation_nonce_fountain_dispense();
 	actor.update_ticks(actor.ticks + amount);
-	if (actor.ticks == 0):
+	if (actor.ticks == 0 and !actor.broken and (chrono < Chrono.META_UNDO or actor.time_colour == TimeColour.Void)):
 		if actor.actorname == Actor.Name.CuckooClock:
 			# end the world
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
