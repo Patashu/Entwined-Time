@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524292, 65536, 14, 524290, 65537, 14, 655364, 65539, 8, 0, 65541, 14, 655362, 65542, 14, 524292, 131072, 14, 262145, 131073, 1, 0, 131074, 15, 0, 131075, 2, 0, 131076, 76, 0, 131077, 7, 0, 131078, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 524291, 196611, 14, 196614, 196612, 14, 196615, 196614, 14, 262145, 262146, 14, 262145, 262147, 32, 0, 262148, 32, 0, 262150, 14, 262145, 327682, 14, 655362, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 655364 )
+
+[node name="@@147" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131076, 25, 0, 262148, 3, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Mail-In Parasite"
+level_author = "Neonesque"
+level_replay = "Mail-In Parasite$mturn=90$xdsxwdxzxzxzxzaswxaaxzzxzxzswxzxzaxdxzzaxzdxzxaxdxwzzxwzzasxzwaxzxdsxzxzzxdaxzzxwxaxzxadxdxdxzsxzzxaxaxzxzzzsxdxzwxzxzaxzzxwxazxwsxzxzzsxaxzw"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0

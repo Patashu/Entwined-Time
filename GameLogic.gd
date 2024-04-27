@@ -1524,6 +1524,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Pittance")
 	level_filenames.push_back("Second Wind")
 	level_filenames.push_back("Ionic Capacitor")
+	level_filenames.push_back("Mail-In Parasite")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -3075,7 +3076,7 @@ boost_pad_reentrance: bool = false) -> int:
 		if (chrono == Chrono.MOVE):
 			phased_out_of = [];
 			for actor in actors:
-				if actor.pushable() and actor.pos == old_pos:
+				if actor.pushable(true) and actor.pos == old_pos:
 					phased_out_of.append(actor);
 		if (animation_nonce == -1):
 			animation_nonce = animation_nonce_fountain_dispense();

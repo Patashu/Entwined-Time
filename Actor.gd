@@ -383,8 +383,8 @@ func climbs() -> bool:
 func is_hole() -> bool:
 	return !broken and (actorname == Name.Hole or actorname == Name.GreenHole or actorname == Name.VoidHole);
 
-func pushable() -> bool:
-	if (just_moved):
+func pushable(checking_phased_out: bool = false) -> bool:
+	if (!checking_phased_out and just_moved):
 		return false;
 	if (broken):
 		return is_character;
