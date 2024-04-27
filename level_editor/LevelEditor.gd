@@ -133,6 +133,7 @@ enum Tiles {
 	ZombieTile, #127
 	HeavyMimic, #128
 	LightMimic, #129
+	GhostFog, #130
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -322,6 +323,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.ZombieTile)
 		picker_array.append(Tiles.HeavyMimic)
 		picker_array.append(Tiles.LightMimic)
+		picker_array.append(Tiles.GhostFog)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -894,6 +896,8 @@ func picker_tooltip() -> void:
 			text = "Heavy Mimic: After Heavy moves, all Heavy Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.LightMimic:
 			text = "Light Mimic: After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
+		Tiles.GhostFog:
+			text = "Ghost Fog: If an Actor fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));

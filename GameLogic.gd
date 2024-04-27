@@ -315,6 +315,7 @@ enum Tiles {
 	ZombieTile, #127
 	HeavyMimic, #128
 	LightMimic, #129
+	GhostFog, #130
 }
 var voidlike_tiles = [];
 
@@ -3896,7 +3897,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			# Strength Rule
 			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
 			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness) and !can_eat(actor_there, actor):
-				if (actor.phases_into_actors()):
+				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest).has(Tiles.GhostFog))):
 					pushables_there.clear();
 					break;
 				else:
@@ -3925,7 +3926,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				continue;
 			var actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
 			if actor_there_result == Success.No:
-				if (actor.phases_into_actors()):
+				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest).has(Tiles.GhostFog))):
 					pushables_there.clear();
 					result = Success.Yes;
 					break;
