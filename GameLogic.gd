@@ -1539,6 +1539,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Hot Soup [VAR2]")
+	level_filenames.push_back("Engine Room [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1552,6 +1553,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("[SPEEDRUN] - Shattered Sky")
 	level_filenames.push_back("Limitations of Love.")
 	level_filenames.push_back("Window of Oppertunity")
+	level_filenames.push_back("Grate Expectations")
+	level_filenames.push_back("Stepping Stone [Loop 2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1583,6 +1586,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("[SPEEDRUN] A Way In-")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
 	level_filenames.push_back("Elevator Pitch [VAR1]")
+	level_filenames.push_back("Void Recovery")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
