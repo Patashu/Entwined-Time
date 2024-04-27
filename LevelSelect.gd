@@ -309,6 +309,8 @@ func prepare_chapter() -> void:
 	standard_label.theme = holder.theme;
 	if (y == -1):
 		standard_label.rect_position.y += 2;
+	if (chapter == 0 and !in_community_puzzles):
+		standard_label.rect_position.x += 52;
 	
 	y += 1;
 	if (y == y_max):

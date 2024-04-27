@@ -1083,6 +1083,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("MeetHeavy")
 	level_filenames.push_back("Initiation")
 	level_filenames.push_back("Orientation")
+	level_filenames.push_back("SteppingStone")
 	level_filenames.push_back("PushingIt")
 	level_filenames.push_back("Wall")
 	level_filenames.push_back("Tall")
@@ -2000,12 +2001,12 @@ func ready_tutorial() -> void:
 		rightarrow.visible = false;
 		return;
 	
-	if level_number > 4:
+	if level_number > 5:
 		metainfolabel.visible = true;
 	else:
 		metainfolabel.visible = false;
 		
-	if level_number > 6:
+	if level_number > 7:
 		tutoriallabel.visible = false;
 		downarrow.visible = false;
 		leftarrow.visible = false;
@@ -2067,9 +2068,13 @@ func ready_tutorial() -> void:
 				tutoriallabel.rect_position.y -= 24;
 				tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
 			5:
+				virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
+				tutoriallabel.rect_position.y -= 24;
+				tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+			6:
 				tutoriallabel.rect_position.y -= 48;
 				tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Undo[/color] undoes your last Move or Rewind.)";
-			6:
+			7:
 				tutoriallabel.rect_position.y -= 48;
 				tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n(If you Restart by mistake, you can [color=#A9F05F]Undo[/color] that too!)";
 		tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
@@ -2083,7 +2088,7 @@ func ready_tutorial() -> void:
 		translate_tutorial_inputs();
 		
 func translate_tutorial_inputs() -> void:
-	if (level_number >= 2 and level_number <= 4):
+	if (level_number >= 2 and level_number <= 5):
 		if (heavy_selected):
 			pass
 		else:
@@ -2091,7 +2096,7 @@ func translate_tutorial_inputs() -> void:
 			tutoriallabel.bbcode_text = tutoriallabel.bbcode_text.replace("[color=#7FC9FF]To Light[/color]", "[color=#FF7459]To Heavy[/color]");
 			
 	if tutoriallabel.visible:
-		if (meta_redo_inputs != "" and (level_number == 5 or level_number == 6)):
+		if (meta_redo_inputs != "" and (level_number == 6 or level_number == 7)):
 			tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n$META-REDO: [color=#A9F05F]Redo[/color]";
 			tutoriallabel.bbcode_text = "[center]" + tutoriallabel.bbcode_text + "[/center]";
 		

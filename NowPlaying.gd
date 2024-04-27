@@ -22,6 +22,8 @@ func initialize(textt: String) -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if (Input.is_action_pressed("escape")):
+		delta *= 6;
 	if (destination_x == 0):
 		self.modulate = Color(1, 1, 1, 1);
 		self.rect_position.x = 512-self.rect_size.x-32; # -32 is a magic number for spacing
