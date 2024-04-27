@@ -4050,6 +4050,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, light_turn]);
 		else: #cuckoo clock
 			clock_ticks(eater, 1, Chrono.CHAR_UNDO);
+			add_to_animation_server(eatee, [Animation.sfx, "greentimecrystal"])
 			add_to_animation_server(eater, [Animation.generic_green_time_crystal, eatee]);
 	else: # magenta time crystal
 		add_to_animation_server(eatee, [Animation.sfx, "magentatimecrystal"])
@@ -4153,6 +4154,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# animation
 			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
 		else: #cuckoo clock
+			add_to_animation_server(eatee, [Animation.sfx, "magentatimecrystal"])
 			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee]);
 
