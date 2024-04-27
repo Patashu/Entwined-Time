@@ -131,6 +131,8 @@ enum Tiles {
 	RepairStationGray, #125
 	RepairStationGreen, #126
 	ZombieTile, #127
+	HeavyMimic, #128
+	LightMimic, #129
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -318,6 +320,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.RepairStationGray)
 		picker_array.append(Tiles.RepairStationGreen)
 		picker_array.append(Tiles.ZombieTile)
+		picker_array.append(Tiles.HeavyMimic)
+		picker_array.append(Tiles.LightMimic)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -641,9 +645,9 @@ func picker_tooltip() -> void:
 		-1:
 			text = "";
 		Tiles.HeavyIdle:
-			text = "Heavy: Actor. Character. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move."
+			text = "Heavy: Actor. Character. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move. (Only the first Heavy in layer-then-reading-order will be real. The rest will be like Mimics that don't move.)"
 		Tiles.LightIdle:
-			text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs. Clumsy (loses one strength when indirectly pushed)."
+			text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs. Clumsy (loses one strength when indirectly pushed). (Only the first Heavy in layer-then-reading-order will be real. The rest will be like Mimics that don't move.)"
 		Tiles.HeavyGoal:
 			text = "Heavy Goal: At end of turn, if unbroken Heavy is on a Heavy Goal and unbroken Light is on a Light Goal, you win."
 		Tiles.LightGoal:
@@ -886,6 +890,10 @@ func picker_tooltip() -> void:
 			text = "Repair Station: When time passes, after clocks tick, repair an unbroken actor in this tile (greenly), consuming this (greenly)."
 		Tiles.ZombieTile:
 			text = "Zombie Tile: Broken robots can make moves from this tile."
+		Tiles.HeavyMimic:
+			text = "Heavy Mimic: After Heavy moves, all Heavy Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
+		Tiles.LightMimic:
+			text = "Light Mimic: After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));
