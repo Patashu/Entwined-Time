@@ -765,7 +765,7 @@ func picker_tooltip() -> void:
 		Tiles.LightGoalJoke:
 			text = "Light Goal (Joke): Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Gray. Not solid. Counts as a Light Goal. Phases through terrain and actors."
 		Tiles.PowerSocket:
-			text = "Power Socket: A Spikeball that breaks ALL Actors. (Put a No Heavy/Light/Crate on top if you want it to avoid some actors.)"
+			text = "Power Socket: A Spikeball with the same strength as a Bottomless Pit. (Put a No Heavy/Light/Crate on top if you want it to avoid some actors.)"
 		Tiles.GreenPowerSocket:
 			text = "Green Power Socket: A Power Socket that does not create rewind events."
 		Tiles.VoidPowerSocket:
@@ -815,7 +815,7 @@ func picker_tooltip() -> void:
 		Tiles.Hole:
 			text = "Hole: (Technically an Actor, so you CAN use Green or Void on this.) When an actor enters a Hole: If the Hole isn't broken: The actor suffers pit damage. Then if the actor was an unbroken crate/boulder, the hole breaks. Holes (broken or unbroken) prevent broken actors from leaving them."
 		Tiles.GreenHole:
-			text = "Green Hole: A hole that doesn't create rewindevents."
+			text = "Green Hole: A hole that doesn't create rewind events."
 		Tiles.VoidHole:
 			text = "Void Hole: A hole that doesn't create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.BoostPad:
@@ -861,17 +861,17 @@ func picker_tooltip() -> void:
 		Tiles.Propellor:
 			text = "Propellor: Hat. (Attaches to an actor entering or starting in the tile below.) That actor doesn't experience gravity, ever."
 		Tiles.DurPlus:
-			text = "Durability Plus: Modifier. (Attaches to an actor entering or starting in this tile.) On level start, attaches to an actor in this tile. That actor gains +1 Durability."
+			text = "Durability Plus: Modifier. (Attaches to an actor entering or starting in this tile.) On level start, attaches to an actor in this tile. That actor gains +1 Durability. Starting at 0, the Durabilities are: Spikes, Fire, Bottomless Pits, Unbreakable."
 		Tiles.DurMinus:
-			text = "Durability Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Durability."
+			text = "Durability Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Durability. Starting at 0, the Durabilities are: Spikes, Fire, Bottomless Pits, Unbreakable."
 		Tiles.HvyPlus:
-			text = "Heaviness Plus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains +1 Heaviness."
+			text = "Heaviness Plus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains +1 Heaviness. Starting at 0, the Heavinesses are: None, Crystal, Wooden, Iron, Steel, Superheavy, Infinite."
 		Tiles.HvyMinus:
-			text = "Heaviness Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Heaviness."
+			text = "Heaviness Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Heaviness. Starting at 0, the Heavinesses are: None, Crystal, Wooden, Iron, Steel, Superheavy, Infinite."
 		Tiles.StrPlus:
-			text = "Strength Plus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains +1 Strength."
+			text = "Strength Plus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains +1 Strength. Starting at 0, the Strengths are: None, Crystal, Wooden, Iron, Steel, Gravity."
 		Tiles.StrMinus:
-			text = "Strength Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Strength."
+			text = "Strength Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Strength. Starting at 0, the Strengths are: None, Crystal, Wooden, Iron, Steel, Gravity."
 		Tiles.FallInf:
 			text = "Fall Speed Infinite: Modifier. (Attaches to an actor entering or starting in this tile.) That actor's Fall Speed is set to Infinite."
 		Tiles.FallOne:
