@@ -810,7 +810,7 @@ func _process(delta: float) -> void:
 					var new_ticks = current_animation[2];
 					gamelogic.broadcast_animation_nonce(current_animation[3]);
 					thought_bubble.update_ticks(new_ticks);
-					if (new_ticks == 0 and !broken):
+					if (new_ticks == 0 and gamelogic.lost):
 						gamelogic.play_sound("timesup");
 						ripple = preload("res://Ripple.tscn").instance();
 						ripple_timer = 0;

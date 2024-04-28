@@ -735,7 +735,7 @@ func picker_tooltip() -> void:
 		Tiles.TimeCrystalMagenta:
 			text = "Magenta Time Crystal: Actor. Heaviness: Crystal. Strength: Crystal. Durability: Unbreakable. Fall speed: 0. Native Time Colour: Green. Time Crystals existing locks goals. When consumed by an unbroken Cuckoo Clock: Decrease ticks by 1. When consumed by a Character: If the character's turn limit is 0: You lose. Else, if the character is filling a timeline slot: Lock it. Else, if the character has a filled timeline slot: Lock the highest numbered one. Else, lock an empty timeline slot. (Crystals breaking never makes a rewind event, broken crystals don't experience the passage of time.)"
 		Tiles.CuckooClock:
-			text = "Cuckoo Clock: Actor. Heaviness: Wooden. Strength: Wooden. Durability: Nothing. Fall speed: 1. Native Time Colour: Gray. To start a puzzle with ticks: Fill out Clock Turns field with a comma separated list, and turns will be assigned to clocks in layer+reading order. When experiencing time, after green fire, if it has ticks and isn't broken, decrease ticks by 1. Whenever a cuckoo clock's ticks are 0: You lose."
+			text = "Cuckoo Clock: Actor. Heaviness: Wooden. Strength: Wooden. Durability: Nothing. Fall speed: 1. Native Time Colour: Gray. To start a puzzle with ticks: Fill out Clock Turns field with a comma separated list, and turns will be assigned to clocks in layer+reading order. When experiencing time, after green fire, if it has ticks and isn't broken, decrease ticks by 1. When a cuckoo clock strikes exactly 0, and isn't broken, and it's not during a fuzz undo: You lose."
 		Tiles.TheNight:
 			text = "Night: Actors inside Night don't experience time passing (except for being burned by fire and green fire)."
 		Tiles.TheStars:

@@ -4222,7 +4222,6 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			# animation
 			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
 		else: #cuckoo clock
-			add_to_animation_server(eatee, [Animation.sfx, "magentatimecrystal"])
 			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
 			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee]);
 
@@ -4230,7 +4229,7 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: in
 	if (animation_nonce == -1):
 		animation_nonce = animation_nonce_fountain_dispense();
 	actor.update_ticks(actor.ticks + amount);
-	if (actor.ticks == 0 and !actor.broken and (chrono < Chrono.META_UNDO or actor.time_colour == TimeColour.Void)):
+	if (actor.ticks == 0 and !fuzzed and !actor.broken and (chrono < Chrono.META_UNDO or actor.time_colour == TimeColour.Void)):
 		if actor.actorname == Actor.Name.CuckooClock:
 			# end the world
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
@@ -4492,9 +4491,9 @@ func meta_undo_replay() -> bool:
 			append_replay("x");
 	return true;
 
+var fuzzed: bool = false;
 func character_undo(is_silent: bool = false) -> bool:
 	if (won or lost): return false;
-	var fuzzed = false;
 	if (heavy_selected):
 		
 		# check if we can undo
@@ -4550,6 +4549,7 @@ func character_undo(is_silent: bool = false) -> bool:
 					undo_effect_strength = 0.12; #yes stronger on purpose. it doesn't show up as well.
 					undo_effect_per_second = undo_effect_strength*(1/0.4);
 					undo_effect_color = heavy_color;
+		fuzzed = false;
 		return true;
 	else:
 		
@@ -4606,6 +4606,7 @@ func character_undo(is_silent: bool = false) -> bool:
 					undo_effect_strength = 0.08;
 					undo_effect_per_second = undo_effect_strength*(1/0.4);
 					undo_effect_color = light_color;
+		fuzzed = false;
 		return true;
 
 func make_ghost_here_with_texture(pos: Vector2, texture: Texture) -> Actor:
@@ -5774,18 +5775,19 @@ func time_passes(chrono: int) -> void:
 						break;
 		
 		# Green nudges activate
-		for actor in actors:
-			var terrain = terrain_in_tile(actor.pos);
-			for id in terrain:
-				if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
-					add_to_animation_server(actor, [Animation.sfx, "step"]);
-					var dir = directions[id - Tiles.NudgeEastGreen];
-					var attempt = move_actor_relative(actor, dir, chrono, false, false);
-					if (attempt == Success.Yes):
-						# nudge up now sets airborne like slopes do
-						if (dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
-							set_actor_var(actor, "airborne", 2, chrono);
-						break;
+		if chrono < Chrono.META_UNDO:
+			for actor in actors:
+				var terrain = terrain_in_tile(actor.pos);
+				for id in terrain:
+					if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
+						add_to_animation_server(actor, [Animation.sfx, "step"]);
+						var dir = directions[id - Tiles.NudgeEastGreen];
+						var attempt = move_actor_relative(actor, dir, chrono, false, false);
+						if (attempt == Success.Yes):
+							# nudge up now sets airborne like slopes do
+							if (dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
+								set_actor_var(actor, "airborne", 2, chrono);
+							break;
 	
 	# Boulders ride their momentum.
 	if (has_boulders):
@@ -6034,12 +6036,13 @@ func time_passes(chrono: int) -> void:
 					if (terrain.has(Tiles.RepairStationGray)):
 						set_actor_var(actor, "broken", false, chrono);
 						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGray), false, false, chrono, -1);
-		for actor in actors:
-			if (actor.broken):
-				var terrain = terrain_in_tile(actor.pos);
-				if (terrain.has(Tiles.RepairStationGreen)):
-					set_actor_var(actor, "broken", false, max(Chrono.CHAR_UNDO, chrono));
-					maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGreen), false, true, chrono, -1);
+		if chrono < Chrono.META_UNDO:
+			for actor in actors:
+				if (actor.broken):
+					var terrain = terrain_in_tile(actor.pos);
+					if (terrain.has(Tiles.RepairStationGreen)):
+						set_actor_var(actor, "broken", false, max(Chrono.CHAR_UNDO, chrono));
+						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGreen), false, true, chrono, -1);
 	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
