@@ -867,9 +867,9 @@ func picker_tooltip() -> void:
 		Tiles.Propellor:
 			text = "Propellor: Hat. (Attaches to an actor entering or starting in the tile below.) That actor doesn't experience gravity, ever."
 		Tiles.DurPlus:
-			text = "Durability Plus: Modifier. (Attaches to an actor entering or starting in this tile.) On level start, attaches to an actor in this tile. That actor gains +1 Durability. Starting at 0, the Durabilities are: Spikes, Fire, Bottomless Pits, Unbreakable."
+			text = "Durability Plus: Modifier. (Attaches to an actor entering or starting in this tile.) On level start, attaches to an actor in this tile. That actor gains +1 Durability. Starting at 0, the Durabilities are: Nothing, Spikes, Fire, Unbreakable."
 		Tiles.DurMinus:
-			text = "Durability Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Durability. Starting at 0, the Durabilities are: Spikes, Fire, Bottomless Pits, Unbreakable."
+			text = "Durability Minus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains -1 Durability. Starting at 0, the Durabilities are: Nothing, Spikes, Fire, Unbreakable."
 		Tiles.HvyPlus:
 			text = "Heaviness Plus: Modifier. (Attaches to an actor entering or starting in this tile.) That actor gains +1 Heaviness. Starting at 0, the Heavinesses are: None, Crystal, Wooden, Iron, Steel, Superheavy, Infinite."
 		Tiles.HvyMinus:
