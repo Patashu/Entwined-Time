@@ -2631,13 +2631,13 @@ func attach_modifier(actor, i, tile, id, chrono):
 		Tiles.DurMinus:
 			set_actor_var(actor, "durability", actor.durability - 1, chrono);
 		Tiles.HvyPlus:
-			set_actor_var(actor, "heaviness", actor.durability + 1, chrono);
+			set_actor_var(actor, "heaviness", actor.heaviness + 1, chrono);
 		Tiles.HvyMinus:
-			set_actor_var(actor, "heaviness", actor.durability - 1, chrono);
+			set_actor_var(actor, "heaviness", actor.heaviness - 1, chrono);
 		Tiles.StrPlus:
-			set_actor_var(actor, "strength", actor.durability + 1, chrono);
+			set_actor_var(actor, "strength", actor.strength + 1, chrono);
 		Tiles.StrMinus:
-			set_actor_var(actor, "strength", actor.durability - 1, chrono);
+			set_actor_var(actor, "strength", actor.strength - 1, chrono);
 		Tiles.FallInf:
 			set_actor_var(actor, "fall_speed", 99, chrono);
 		Tiles.FallOne:
