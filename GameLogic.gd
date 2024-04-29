@@ -2299,6 +2299,8 @@ func make_actors() -> void:
 			if (heavy_actor.pos.x > (map_x_max / 2)):
 				heavy_actor.facing_left = true;
 			heavy_actor.update_graphics();
+			#have to do it now to pre-activate goals as they're not is_main_character() fast enough
+			move_actor_to(heavy_actor, heavy_actor.pos, Chrono.TIMELESS, false, false);
 			count += 1;
 			
 	#heavy mimics (TODO: refactor)
@@ -2324,6 +2326,8 @@ func make_actors() -> void:
 			if (actor.pos.x > (map_x_max / 2)):
 				actor.facing_left = true;
 			actor.update_graphics();
+			#have to do it now to pre-activate goals as they're not is_main_character() fast enough
+			move_actor_to(light_actor, light_actor.pos, Chrono.TIMELESS, false, false);
 			count += 1;
 	
 	layers_tiles = get_used_cells_by_id_all_layers(Tiles.LightIdle);
