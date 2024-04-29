@@ -115,8 +115,8 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 	# powered modulate also update here, since I want that to be instant
 	
 	# powered
-	if (!skip_powered):
-		if is_character and !is_ghost:
+	if (!skip_powered and !is_ghost):
+		if is_main_character():
 			if (fade_tween != null):
 				fade_tween.queue_free();
 				fade_tween = null;
@@ -124,7 +124,7 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 				self.modulate = Color(1, 1, 1, 1);
 			else:
 				self.modulate = Color(0.5, 0.5, 0.5, 1);
-		elif (!is_character and !is_ghost):
+		else:
 			if dinged and ding == null:
 				var sprite = Sprite.new();
 				sprite.set_script(preload("res://OneTimeSprite.gd"));
@@ -382,6 +382,9 @@ func climbs() -> bool:
 
 func is_hole() -> bool:
 	return !broken and (actorname == Name.Hole or actorname == Name.GreenHole or actorname == Name.VoidHole);
+
+func is_main_character() -> bool:
+	return is_character and (gamelogic.heavy_actor == self or gamelogic.light_actor == self);
 
 func pushable(checking_phased_out: bool = false) -> bool:
 	if (!checking_phased_out and just_moved):

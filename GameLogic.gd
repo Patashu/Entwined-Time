@@ -3164,7 +3164,7 @@ boost_pad_reentrance: bool = false) -> int:
 		#ding logic
 		if (!actor.broken):
 			var old_terrain = terrain_in_tile(actor.pos - dir);
-			if (!actor.is_character and !actor.is_crystal):
+			if (!actor.is_main_character() and !actor.is_crystal):
 				if terrain.has(Tiles.CrateGoal):
 					if !actor.dinged:
 						set_actor_var(actor, "dinged", true, chrono);
@@ -4773,7 +4773,7 @@ func check_won() -> void:
 		for crate_goal in crate_goals:
 			var crate_goal_satisfied = false;
 			for actor in actors:
-				if actor.pos == crate_goal and !actor.is_character and !actor.broken and !actor.is_crystal:
+				if actor.pos == crate_goal and !actor.is_main_character() and !actor.broken and !actor.is_crystal:
 					crate_goal_satisfied = true;
 					break;
 			if (!crate_goal_satisfied):
