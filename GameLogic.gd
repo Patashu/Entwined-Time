@@ -1524,7 +1524,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Pittance")
 	level_filenames.push_back("Second Wind")
 	level_filenames.push_back("Ionic Capacitor")
-	#level_filenames.push_back("Mail-In Parasite")
+	level_filenames.push_back("Mail-In Parasite")
+	level_filenames.push_back("Lightspeed Quarry")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1545,6 +1546,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Hot Soup [VAR2]")
+	level_filenames.push_back("Heavy Moving Service [VAR1]")
+	level_filenames.push_back("Heavy Moving Service [VAR2]")
+	level_filenames.push_back("Heavy Moving Service [VAR3]")
+	level_filenames.push_back("Light Moving Service [VAR1]")
+	level_filenames.push_back("Light Moving Service [VAR2]")
 	level_filenames.push_back("Engine Room [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
@@ -1557,10 +1563,12 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Floor Change")
 	level_filenames.push_back("[SPEEDRUN] - Shattered Sky")
+	level_filenames.push_back("Sinkhole")
 	level_filenames.push_back("Limitations of Love.")
 	level_filenames.push_back("Window of Oppertunity")
 	level_filenames.push_back("Grate Expectations")
 	level_filenames.push_back("Stepping Stone [Loop 2]")
+	level_filenames.push_back("Eau de Null")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1571,8 +1579,10 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Collaborative Motion")
+	level_filenames.push_back("Fuzzy Parkour [VAR1]")
 	level_filenames.push_back("Coyote TimeExEx")
 	level_filenames.push_back("Durability-")
+	level_filenames.push_back("Parity Drive")
 	level_filenames.push_back("Hopscorch [VAR2]")
 	level_filenames.push_back("Graduation [REV1]")
 	level_filenames.push_back("Crate Moving Service")

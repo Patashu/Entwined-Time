@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 1, 14, 196613, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 196609, 65538, 7, 0, 65540, 14, 262145, 131072, 14, 262145, 131076, 14, 262145, 196608, 14, 262145, 196612, 14, 262145, 262144, 14, 262145, 262148, 14, 262145, 327680, 14, 262145, 327684, 14, 262145, 393216, 14, 262145, 393218, 8, 0, 393220, 14, 262145, 458752, 14, 262145, 458754, 102, 0, 458756, 14, 262145, 524288, 14, 262145, 524290, 102, 0, 524292, 14, 262145, 589824, 14, 655362, 589825, 14, 196614, 589826, 14, 196614, 589827, 14, 196614, 589828, 14, 655364 )
+
+[node name="@@150" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Parity Drive (Remix)"
+level_author = "Slabdrill"
+level_replay = "Parity Drive (Remix)$mturn=27$xswwzswwzzzzsswwzswwzzzzzzzw"
+heavy_max_moves = 0.0
+light_max_moves = 7.0
+clock_turns = ""
+target_sky = Color( 0.0235294, 0.129412, 0.219608, 1 )
+target_track = 2.0

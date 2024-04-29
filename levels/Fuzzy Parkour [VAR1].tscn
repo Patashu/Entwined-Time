@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 21, 0, 3, 1, 0, 4, 7, 0, 8, 52, 0, 9, 14, 196609, 10, 8, 0, 13, 52, 0, 65538, 20, 0, 65539, 14, 196613, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 524291, 65545, 14, 655363, 65546, 14, 524292, 65547, 52, 0, 65548, 14, 524290, 65549, 14, 196615, 131073, 52, 0, 131080, 14, 262145, 131081, 55, 0, 131082, 14, 589826, 131083, 14, 196614, 131084, 14, 655364, 196616, 14, 655362, 196617, 14, 196614, 196618, 14, 655364, 262145, 2, 0, 327681, 14, 262148, 393218, 52, 0, 458752, 52, 0 )
+
+[node name="@@200" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 10, 36, 0, 262145, 35, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Fuzzy Parkour [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Fuzzy Parkour [VAR1]$mturn=37$waszzxdddxzzdszzzxzzzdzzxwszzzxzasdzzzaaxdd"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = "0"
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0
