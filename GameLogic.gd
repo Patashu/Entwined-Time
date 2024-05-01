@@ -3469,7 +3469,7 @@ func find_or_create_layer_having_this_tile(pos: Vector2, assumed_old_tile: int) 
 	var new_layer = TileMap.new();
 	new_layer.tile_set = terrainmap.tile_set;
 	new_layer.cell_size = terrainmap.cell_size;
-	# new layer will have to be at the back (first cihld, last terrain_layer), so I don't desync existing memories of layers.
+	# new layer will have to be at the back (first child, last terrain_layer), so I don't desync existing memories of layers.
 	terrainmap.add_child(new_layer);
 	terrainmap.move_child(new_layer, 0);
 	terrain_layers.push_back(new_layer);
