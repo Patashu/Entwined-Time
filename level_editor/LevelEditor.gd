@@ -811,7 +811,7 @@ func picker_tooltip() -> void:
 		Tiles.GreenFog:
 			text = "Green Fog: Actors in Green Fog don't create rewind events."
 		Tiles.Floorboards:
-			text = "Floorboards: Solidity/Surprises of other terrain in this tile is ignored, including Holes. When an Actor leaves a tile with Floorboards using a non-retro move: The Floorboards is destroyed. In a stack of Floorboards, only the topmost one is considered."
+			text = "Floorboards: Solidity/Surprises of lower layer terrain in this tile is ignored, including Holes. When an Actor leaves a tile with Floorboards using a non-retro move: The Floorboards is destroyed. In a stack of Floorboards, only the topmost one is considered."
 		Tiles.MagentaFloorboards:
 			text = "Magenta Floorboards: A Floorboards that can be destroyed also by retroactive moves."
 		Tiles.GreenFloorboards:
