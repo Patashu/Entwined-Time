@@ -898,6 +898,7 @@ func picker_tooltip() -> void:
 			text = "Light Mimic: After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.GhostFog:
 			text = "Ghost Fog: If an Actor fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
+	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));
@@ -906,6 +907,8 @@ func picker_tooltip() -> void:
 		pickertooltip.set_rect_size(Vector2(max(100, 512 - pickertooltip.get_rect_position().x), pickertooltip.get_rect_size().y));
 	if (pickertooltip.get_rect_position().x + 100 > 512):
 		pickertooltip.set_rect_position(Vector2(512-100, pickertooltip.get_rect_position().y));
+	if (pickertooltip.get_rect_position().y + pickertooltip.get_rect_size().y > 300):
+		pickertooltip.set_rect_position(Vector2(pickertooltip.get_rect_position().x, 300-pickertooltip.get_rect_size().y));
 	
 func test_level() -> void:
 	var result = serialize_current_level();
