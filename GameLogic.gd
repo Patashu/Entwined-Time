@@ -1465,6 +1465,44 @@ func initialize_level_list() -> void:
 	level_replacements[level_filenames.size()] = "Ω";
 	level_filenames.push_back("ChronoLabReactor")
 	
+	chapter_names.push_back("Floorboards (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(128);
+	chapter_replacements[chapter_names.size() - 1] = "A";
+	chapter_skies.push_back(Color("#363C3F"));
+	chapter_tracks.push_back(7);
+	level_filenames.push_back("Boarding School")
+	level_filenames.push_back("Simple Diffusion")
+	level_filenames.push_back("Slippery Glass")
+	level_filenames.push_back("Hardtack")
+	level_filenames.push_back("Double Dose")
+	level_filenames.push_back("Pushing It Magenta")
+	level_filenames.push_back("Simultaneous Smuggle")
+	level_filenames.push_back("Bunker Door")
+	level_filenames.push_back("Miracle Switch")
+	level_filenames.push_back("Cement Pit")
+	level_filenames.push_back("Phantom Heist")
+	level_filenames.push_back("The Floorboard Pit")
+	level_filenames.push_back("Blackberry Bush")
+	level_filenames.push_back("Green Cement Pit")
+	level_filenames.push_back("Green Adventure")
+	
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(8);
+	level_filenames.push_back("Cement Pit [VAR1]")
+	level_filenames.push_back("Magenta Adventure")
+	level_filenames.push_back("Board Ring A")
+	level_filenames.push_back("Board Ring B")
+	level_filenames.push_back("Gain Leverage")
+	level_filenames.push_back("Slippery Glass [VAR1]")
+	level_filenames.push_back("Phantom Heist [Low Power]")
+	level_filenames.push_back("Compact Transport")
+	level_filenames.push_back("Triple Boarded")
+	level_filenames.push_back("Hidden Potential")
+	level_filenames.push_back("Return Path")
+	level_filenames.push_back("Bridge Building")
+	level_filenames.push_back("Duplication")
+	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(256, level_filenames.size()));
@@ -1850,6 +1888,15 @@ func ready_map() -> void:
 	elif (any_layer_has_this_tile(Tiles.OneUndo)):
 		has_limited_undo = true;
 	
+	if (any_layer_has_this_tile(Tiles.Floorboards)):
+		has_floorboards = true;
+	elif (any_layer_has_this_tile(Tiles.GreenFloorboards)):
+		has_floorboards = true;
+	elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
+		has_floorboards = true;
+	elif (any_layer_has_this_tile(Tiles.MagentaFloorboards)):
+		has_floorboards = true;
+	
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -1878,15 +1925,6 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.GreenFog)):
 			has_green_fog = true;
-			
-		if (any_layer_has_this_tile(Tiles.Floorboards)):
-			has_floorboards = true;
-		elif (any_layer_has_this_tile(Tiles.GreenFloorboards)):
-			has_floorboards = true;
-		elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
-			has_floorboards = true;
-		elif (any_layer_has_this_tile(Tiles.MagentaFloorboards)):
-			has_floorboards = true;
 			
 		if (any_layer_has_this_tile(Tiles.Hole)):
 			has_holes = true;
