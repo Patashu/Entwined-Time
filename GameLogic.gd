@@ -3282,7 +3282,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# and do that', which should be OK?
 		# slopes 2b) also, if an actor moves upwards in this way, it immediately becomes 'rising',
 		# like a robot deliberately pressing up.
-		# (update: only if it was grounded
+		# (update: grounded robot or any other actor)
 		if (slope_next_dir != Vector2.ZERO):
 			if (infinite_loop_check >= 100):
 				lose("Infinite loop.", null);
@@ -5990,10 +5990,10 @@ func time_passes(chrono: int) -> void:
 				
 	# slope cleanup step:
 	# at the end of time_passes, ALL actors still in slopes attempt to be ejected
-	# (first sideways, then vertically, then backwards sideways, then backwards vertically,
+	# (first sideways, then vertically,
 	# then if all of that fails we break for infinite damage).
 	# this continues recursively until nothing changes. if we loop 100 times, lose (infinite loop).
-	if (has_slopes and chrono <= Chrono.META_UNDO):
+	if (has_slopes and chrono < Chrono.META_UNDO):
 		something_happened = true;
 		var c = 0;
 		while (something_happened and !lost):
