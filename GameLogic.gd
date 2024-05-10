@@ -6014,12 +6014,12 @@ func time_passes(chrono: int) -> void:
 						for j in range(2):
 							var slope_next_dir = next_dirs[j];
 							slope_success = move_actor_relative(actor, slope_next_dir, chrono, false, false);
-							if (slope_success == Success.Yes):
+							if (slope_success != Success.No):
 								something_happened = true;
 								break;
 					if (slope_success == Success.Yes):
 						break;
-				if (slope_success != Success.Yes and found_a_slope and !actor.broken):
+				if (slope_success == Success.No and found_a_slope and !actor.broken):
 					set_actor_var(actor, "broken", true, chrono);
 					something_happened = true;
 		
