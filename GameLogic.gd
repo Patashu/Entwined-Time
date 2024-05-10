@@ -5961,17 +5961,23 @@ func time_passes(chrono: int) -> void:
 					if actor2.actorname == Actor.Name.ChronoHelixBlue:
 						var diff = actor.pos - actor2.pos;
 						if (abs(diff.x) <= 1 and abs(diff.y) <= 1):
-							add_to_animation_server(actor, [Animation.sfx, "fall"]);
-							move_actor_relative(actor, diff, chrono, false, false);
-							move_actor_relative(actor2, -diff, chrono, false, false);
+							if (diff.x == 0 and diff.y == 0):
+								lose("What have you DONE", actor);
+							else:
+								add_to_animation_server(actor, [Animation.sfx, "fall"]);
+								move_actor_relative(actor, diff, chrono, false, false);
+								move_actor_relative(actor2, -diff, chrono, false, false);
 			elif actor.actorname == Actor.Name.ChronoHelixBlue:
 				for actor2 in actors:
 					if actor2.actorname == Actor.Name.ChronoHelixRed:
 						var diff = actor.pos - actor2.pos;
 						if (abs(diff.x) <= 1 and abs(diff.y) <= 1):
-							add_to_animation_server(actor, [Animation.sfx, "fall"]);
-							move_actor_relative(actor, diff, chrono, false, false);
-							move_actor_relative(actor2, -diff, chrono, false, false);
+							if (diff.x == 0 and diff.y == 0):
+								lose("What have you DONE", actor);
+							else:
+								add_to_animation_server(actor, [Animation.sfx, "fall"]);
+								move_actor_relative(actor, diff, chrono, false, false);
+								move_actor_relative(actor2, -diff, chrono, false, false);
 	
 	# Things in fire break.
 	# TODO: once colours exist this gets more complicated
