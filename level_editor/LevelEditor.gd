@@ -837,7 +837,7 @@ func picker_tooltip() -> void:
 		Tiles.SlopeSW:
 			text = "Slope: (TODO: It's complicated, but you can make Terraria hoiks!)"
 		Tiles.Boulder:
-			text = "Boulder: (TODO. It's complicated, but it's an Iron Crate with Momentum [tm].)"
+			text = "Boulder: Actor. Heaviness: Iron. Strength: Wood. Durability: Spikes. Fall speed: 1. Native Time Colour: Gray. Boulders can fill holes. If a non-broken Boulder makes a non-retro move with a horizontal component: Its momentum becomes Left or Right. (This is a timeline event.) When time passes, after nudges and before gravity: A non-broken boulder with momentum will attempt to move in that direction, and its momentum will become Zero if the move fails. Boulders rolling under their own momentum can push with +1 strength, but will remain stationary (and thus lose their momentum)."
 		Tiles.PhaseWallGreenEven:
 			text = "Phase Wall Green Even: Solid during even Turns. (Turn increments at the end of a turn.)"
 		Tiles.PhaseWallGreenOdd:
