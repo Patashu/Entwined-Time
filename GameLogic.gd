@@ -4431,6 +4431,10 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 			add_to_animation_server(actor, [Animation.stall, 0.07]);
 	elif (prop == "broken"):
 		add_to_animation_server(actor, [Animation.stall, 0.14]);
+		
+	#in custom puzzles, move broken crystals to -9, -9 so they get out of the way
+	if (is_custom and actor.is_crystal and actor.broken and prop == "broken" and !old_value and value):
+		move_actor_to(actor, Vector2(-9, -9), max(chrono, Chrono.CHAR_UNDO), false, false);
 
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	if (has_repair_stations):
