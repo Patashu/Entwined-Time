@@ -16,6 +16,7 @@ var particle_timer = 1;
 var particle_timer_max = 1;
 var last_particle_angle = 0;
 var facing_left = false; #dummied out
+var is_crystal = false; #dummied out
 
 func lock2() -> void:
 	locked2 = true;
