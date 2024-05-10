@@ -1469,7 +1469,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(128);
 	chapter_replacements[chapter_names.size() - 1] = "A";
-	chapter_skies.push_back(Color("#2C314C"));
+	chapter_skies.push_back(Color("#363C3F"));
 	chapter_tracks.push_back(7);
 	level_filenames.push_back("Boarding School")
 	level_filenames.push_back("Simple Diffusion")
