@@ -3119,15 +3119,19 @@ boost_pad_reentrance: bool = false) -> int:
 		# hole check
 		if (has_holes and chrono < Chrono.META_UNDO):
 			var actors = actors_in_tile(pos);
-			for actor_there in actors:
-				if (actor_there.is_hole()):
-					if (!actor.broken and (actor.actorname == Actor.Name.IronCrate
-					or actor.actorname == Actor.Name.PowerCrate
-					or actor.actorname == Actor.Name.WoodenCrate
-					or actor.actorname == Actor.Name.SteelCrate
-					or actor.actorname == Actor.Name.Boulder)):
-						maybe_break_actor(actor_there, 9999, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
-					maybe_break_actor(actor, Durability.PITS, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
+			var terrain = terrain_in_tile(pos);
+			if (terrain.has(Tiles.Floorboards) or terrain.has(Tiles.MagentaFloorboards) or terrain.has(Tiles.GreenFloorboards) or terrain.has(Tiles.VoidFloorboards)):
+				pass
+			else:
+				for actor_there in actors:
+					if (actor_there.is_hole()):
+						if (!actor.broken and (actor.actorname == Actor.Name.IronCrate
+						or actor.actorname == Actor.Name.PowerCrate
+						or actor.actorname == Actor.Name.WoodenCrate
+						or actor.actorname == Actor.Name.SteelCrate
+						or actor.actorname == Actor.Name.Boulder)):
+							maybe_break_actor(actor_there, 9999, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
+						maybe_break_actor(actor, Durability.PITS, hypothetical, actor_there.actorname - Actor.Name.Hole, chrono);
 		
 		# floorboards check - happens now so it goes 'move off, then floorboards break' so as an undo 'floorboards come back, move is undone'
 		if (has_floorboards and chrono < Chrono.TIMELESS):
