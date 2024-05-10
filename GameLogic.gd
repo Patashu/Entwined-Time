@@ -1888,16 +1888,16 @@ func ready_map() -> void:
 	elif (any_layer_has_this_tile(Tiles.OneUndo)):
 		has_limited_undo = true;
 	
-	if (any_layer_has_this_tile(Tiles.Floorboards)):
-		has_floorboards = true;
-	elif (any_layer_has_this_tile(Tiles.GreenFloorboards)):
-		has_floorboards = true;
-	elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
-		has_floorboards = true;
-	elif (any_layer_has_this_tile(Tiles.MagentaFloorboards)):
-		has_floorboards = true;
-	
-	if (is_custom):
+	if (is_custom or chapter >= 12):
+		if (any_layer_has_this_tile(Tiles.Floorboards)):
+			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.GreenFloorboards)):
+			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
+			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.MagentaFloorboards)):
+			has_floorboards = true;
+			
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
 		elif (any_layer_has_this_tile(Tiles.PhaseWallRed)):
@@ -1906,7 +1906,8 @@ func ready_map() -> void:
 			has_phase_walls = true;
 		elif (any_layer_has_this_tile(Tiles.PhaseWallPurple)):
 			has_phase_walls = true;
-		
+	
+	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseLightningBlue)):
 			has_phase_lightning = true;
 		elif (any_layer_has_this_tile(Tiles.PhaseLightningRed)):
