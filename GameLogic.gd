@@ -3001,6 +3001,7 @@ func slope_helper(id: int, dir: Vector2) -> Array:
 	return []; #unreachable
 	
 var infinite_loop_check : int = 0;
+var slope_positions : Array = [];
 	
 func move_actor_relative(actor: Actor, dir: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall = false, was_push = false,
@@ -3036,7 +3037,7 @@ boost_pad_reentrance: bool = false) -> int:
 	# and keep trying hypotheticals until the whole thing is cleared as OK)
 	var slope_next_dir = Vector2.ZERO;
 	if (has_slopes and chrono < Chrono.META_UNDO and !is_retro):
-		success = try_enter(actor, dir, chrono, can_push, false, is_gravity, is_retro, pushers_list,
+		success = try_enter(actor, dir, chrono, can_push, true, is_gravity, is_retro, pushers_list,
 	phased_out_of);
 		var terrain_there = terrain_in_tile(pos);
 		var new_success = Success.Yes;
@@ -3048,7 +3049,15 @@ boost_pad_reentrance: bool = false) -> int:
 					if (slope_next_dir * -1 == dir):
 						continue;
 					actor.pos = pos;
-					new_success = try_enter(actor, slope_next_dir, chrono, can_push, true, is_gravity, is_retro, pushers_list, phased_out_of);
+					if (slope_positions.has(old_pos) and slope_positions.has(pos)):
+						new_success = Success.Yes; #because it's an infinite loop
+					else:
+						slope_positions.append(pos);
+						# recursively check...
+						new_success = move_actor_to(actor, pos + slope_next_dir, chrono, true, is_gravity, is_retro, pushers_list,
+						was_fall, was_push, phased_out_of, animation_nonce, is_move, can_push, boost_pad_reentrance);
+						#new_success = try_enter(actor, slope_next_dir, chrono, can_push, true, is_gravity, is_retro, pushers_list, phased_out_of);
+						slope_positions.pop_back();
 					actor.pos = old_pos;
 					if (new_success == Success.Yes):
 						break;
@@ -3058,7 +3067,7 @@ boost_pad_reentrance: bool = false) -> int:
 			success = Success.No;
 		else:
 			if (!hypothetical):
-				try_enter(actor, dir, chrono, can_push, true, is_gravity, is_retro, pushers_list, phased_out_of);
+				try_enter(actor, dir, chrono, can_push, false, is_gravity, is_retro, pushers_list, phased_out_of);
 	else:
 		success = try_enter(actor, dir, chrono, can_push, hypothetical, is_gravity, is_retro, pushers_list, phased_out_of);
 	
@@ -3103,7 +3112,7 @@ boost_pad_reentrance: bool = false) -> int:
 			elif (dir == Vector2.RIGHT):
 				if (actor.facing_left):
 					set_actor_var(actor, "facing_left", false, Chrono.MOVE);
-			
+		
 		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of, animation_nonce],
 		chrono_for_maybe_green_actor(actor, chrono));
 		
@@ -3322,16 +3331,18 @@ boost_pad_reentrance: bool = false) -> int:
 					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"], true);
 		# bump animation always happens, I think?
 		# ah, not if it's a 'null' gravity move (everything in the stack was already grounded)
-		if (!is_gravity):
-			add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
-		else:
-			if (actor.airborne == 0):
+		# and bumps are getting a bit ridiculous for slopes so let's tamp down on that
+		if (infinite_loop_check == 0 and slope_positions.size() == 0):
+			if (!is_gravity):
 				add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
 			else:
-				for pusher in pushers_list:
-					if pusher.airborne == 0:
-						add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
-						break;
+				if (actor.airborne == 0):
+					add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
+				else:
+					for pusher in pushers_list:
+						if pusher.airborne == 0:
+							add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
+							break;
 	
 	return success;
 		
