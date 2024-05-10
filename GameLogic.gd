@@ -1612,7 +1612,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Eau de Null")
 	level_filenames.push_back("Friction")
 	level_filenames.push_back("Convergence")
-	level_filenames.push_back("[TROLL] - Light Instantly Dies.")
+	level_filenames.push_back("[Troll] - Light Instantly Dies.")
 	level_filenames.push_back("Permafrost")
 	level_filenames.push_back("Liquidation")
 	level_filenames.push_back("Sandra's Idea")
@@ -1880,6 +1880,9 @@ func ready_map() -> void:
 	has_repair_stations = false;
 	limited_undo_sprites.clear();
 	
+	if (any_layer_has_this_tile(Tiles.Fuzz)):
+		fuzz_rotation();
+	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
 		has_crate_goals = true;
 	
@@ -1897,6 +1900,9 @@ func ready_map() -> void:
 			has_floorboards = true;
 		elif (any_layer_has_this_tile(Tiles.MagentaFloorboards)):
 			has_floorboards = true;
+			
+		if (has_floorboards):
+			floorboards_rotation();
 			
 		if (any_layer_has_this_tile(Tiles.PhaseWallBlue)):
 			has_phase_walls = true;
@@ -3552,6 +3558,44 @@ func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
 			return Chrono.CHAR_UNDO;
 	return chrono;
 	
+func floorboards_rotation() -> void:
+	all_rotation(floorboards_ids);
+	
+func fuzz_rotation() -> void:
+	all_rotation([Tiles.Fuzz]);
+	
+func all_rotation(candidates: Array) -> void:
+	var floorboard_counts = {};
+	for i in range(terrain_layers.size()-1, -1, -1):
+		var layer = terrain_layers[i];
+		for id in candidates:
+			var tiles = layer.get_used_cells_by_id(id);
+			for tile in tiles:
+				if floorboard_counts.has(tile):
+					var count = floorboard_counts[tile] + 1;
+					floorboard_counts[tile] = count;
+					layer.set_cellv(tile, id, count % 2 == 1, (count / 2) % 2 == 1, (count / 4) % 2 == 1);
+				else:
+					floorboard_counts[tile] = 0;
+
+var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
+
+func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
+	if id in floorboards_ids:
+		set_cellv_rotation(id, tile, layer, floorboards_ids);
+	elif id == Tiles.Fuzz:
+		set_cellv_rotation(id, tile, layer, [Tiles.Fuzz]);
+	else:
+		terrain_layers[layer].set_cellv(tile, id);
+
+func set_cellv_rotation(id: int, tile: Vector2, layer: int, candidates: Array) -> void:
+	var terrain = terrain_in_tile(tile);
+	var count = 0;
+	for i in range(terrain.size()):
+		if terrain[i] in candidates:
+			count += 1;
+	terrain_layers[layer].set_cellv(tile, id, count % 2 == 1, (count / 2) % 2 == 1, (count / 4) % 2 == 1);
+	
 func maybe_break_actor(actor: Actor, hazard: int, hypothetical: bool, green_terrain: int, chrono: int) -> int:
 	# AD04: being broken makes you immune to breaking :D
 	if (!actor.broken and actor.durability <= hazard):
@@ -3605,7 +3649,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			terrain_layer = terrain_layers[layer];
 			# set old_tile again (I guess it'll always be -1 at this point but just to be explicit about it)
 			old_tile = terrain_layer.get_cellv(pos);
-		terrain_layer.set_cellv(pos, new_tile);
+		set_cellv_maybe_rotation(new_tile, pos, layer);
 		if (green_terrain == Greenness.Green and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
 		if (green_terrain == Greenness.Void and chrono < Chrono.META_UNDO):
