@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65540, 26, 0, 786433, 55, 0, 851968, 14, 2, 851969, 14, 3, 851970, 14, 458755, 851971, 14, 196615, 851973, 14, 196613, 851974, 14, 393219, 851975, 14, 3, 851976, 14, 4, 917504, 14, 65538, 917505, 14, 917511, 917506, 14, 131076, 917510, 14, 131074, 917511, 14, 917512, 917512, 14, 65540, 983040, 14, 589825, 983041, 14, 131076, 983047, 14, 131074, 983048, 14, 589829, 1048576, 14, 262145, 1048584, 14, 262145, 1114112, 14, 262145, 1114113, 52, 0, 1114116, 3, 0, 1114119, 52, 0, 1114120, 14, 262145, 1179648, 14, 262145, 1179649, 52, 0, 1179650, 2, 0, 1179651, 1, 0, 1179652, 23, 0, 1179653, 7, 0, 1179654, 8, 0, 1179655, 52, 0, 1179656, 14, 262145, 1245184, 14, 655362, 1245185, 14, 196614, 1245186, 14, 196614, 1245187, 14, 196614, 1245188, 14, 196614, 1245189, 14, 196614, 1245190, 14, 196614, 1245191, 14, 196614, 1245192, 14, 655364 )
+
+[node name="@@2786" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 32, 0, 65540, 45, 0, 131076, 45, 0, 196612, 45, 0, 262148, 45, 0, 327684, 45, 0, 393220, 45, 0, 458756, 45, 0, 524292, 45, 0, 589828, 45, 0, 655364, 45, 0, 720900, 45, 0, 786433, 43, 0, 786436, 45, 0, 1179650, 39, 0, 1179654, 39, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Rapid Ascent"
+level_author = "Slabdrill"
+level_replay = "Rapid Ascent$mturn=45$xaawxddxwxwwxwxwdddzzxwxaxzzxaxaxwxaxwaaaaxaaawaxzzxwxdxzzxdxdxwxddd"
+heavy_max_moves = 2.0
+light_max_moves = 4.0
+clock_turns = "5"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 31, 0, 65536, 2, 0, 65537, 8, 0, 393216, 1, 0, 393217, 7, 0 )
+
+[node name="@@1850" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 68, 0, 65536, 68, 0, 65537, 68, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The White Pit (Remix)"
+level_author = "Slabdrill"
+level_replay = "The White Pit (Remix)$mturn=77$xwaxdxzxdxzxzxswxdxzzxzzxawxwxzxzxswzzzssssxdxzxzxzzzawxwxzxzxzssssxdxzxzxzzzawxwxzxzxzssssxdxzxzxzzzawxwxzzxzsxssss"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524292, 65536, 14, 262145, 65541, 14, 262145, 131072, 14, 262145, 131073, 32, 0, 131074, 8, 0, 131075, 3, 0, 131076, 2, 0, 131077, 14, 262145, 196608, 14, 589826, 196609, 14, 196614, 196610, 14, 524291, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 655364, 262144, 14, 262145, 262145, 1, 0, 262146, 14, 262145, 327680, 14, 589826, 327681, 14, 196614, 327682, 14, 589828, 393216, 14, 262145, 393217, 7, 0, 393218, 14, 262145, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 655364 )
+
+[node name="@@2210" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196609, 88, 0, 327681, 88, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Bunker Door"
+level_author = "Sandra53"
+level_replay = "Bunker Door$mturn=49$xwxaxzaxdxdwxaxddxwzxzzzwaxdxzzxzxdsxzwxzxwxzxzzzzxdwxdxzzxzxaaxwxdxaxzxasxzzz"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

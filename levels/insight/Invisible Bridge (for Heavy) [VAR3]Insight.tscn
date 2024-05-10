@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 1, 0, 65541, 14, 2, 65542, 14, 4, 131072, 7, 0, 131077, 14, 65538, 131078, 14, 65540, 196608, 2, 0, 196609, 8, 0, 196613, 14, 131074, 196614, 14, 131076, 262144, 14, 2, 262145, 14, 4, 327680, 14, 65538, 327681, 14, 65540, 393216, 14, 131074, 393217, 14, 131076 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Invisible Bridge (for Heavy) [VAR3] (Remix)"
+level_author = "Slabdrill"
+level_replay = "Invisible Bridge (for Heavy) [VAR3] (Remix)$mturn=81$xwxdxzaxwxzxzdxaxzzwawxzxzzzaxaxzawxzxzzssxaxzzawxzxzzsssxaxzzzawxzxzdxaxzwaxzxzzaxaxzawxzxzzssxaxzzaxzxwxdxzdxzxzzzwdxw"
+heavy_max_moves = 3.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.0235294, 0.129412, 0.219608, 1 )
+target_track = 2.0

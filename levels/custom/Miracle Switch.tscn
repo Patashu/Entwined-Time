@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 8, 14, 524290, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 524292, 65536, 14, 262145, 65540, 14, 589826, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 589828, 65548, 14, 262145, 131072, 14, 262145, 131074, 8, 0, 131076, 14, 262145, 131078, 2, 0, 131080, 14, 262145, 131082, 3, 0, 131084, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 655363, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 655363, 196617, 14, 196614, 196618, 14, 196614, 196619, 14, 196614, 196620, 14, 655364 )
+
+[node name="@@2758" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 1, 0, 131076, 88, 0, 131078, 32, 0, 131080, 88, 0, 131082, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Miracle Switch"
+level_author = "Sandra53"
+level_replay = "Miracle Switch$mturn=45$aaawxdxzzzaxwxzxzzxzddddxdxzxzxzzzdddxwddxaxzxzxzxzxzaxzzxzdddxaa"
+heavy_max_moves = 4.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.176471, 0.380392, 0.372549, 1 )
+target_track = 16.0

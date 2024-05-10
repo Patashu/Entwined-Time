@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 262148, 10, 14, 262148, 65540, 14, 262148, 65542, 14, 262148, 131077, 29, 0, 196609, 14, 196613, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 524292, 196613, 1, 0, 196614, 14, 524290, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196615, 262148, 14, 262145, 262149, 7, 0, 262150, 14, 262145, 327684, 14, 655362, 327685, 14, 196614, 327686, 14, 655364 )
+
+[node name="@@1401" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131075, 2, 0, 131077, 112, 0, 131079, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Simultaneous Smuggle"
+level_author = "Sandra53 & Patashu"
+level_replay = "Simultaneous Smuggle$mturn=20$axaaaawxzxzzzzaxwxzxwdxzxwdxd"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
+target_track = 7.0

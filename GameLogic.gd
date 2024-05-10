@@ -1226,6 +1226,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TrophyCabinet")
 	level_filenames.push_back("DoubleJump")
 	level_filenames.push_back("FirefightersNew")
+	level_filenames.push_back("HighsAndLows")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(32);
@@ -1526,6 +1527,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Ionic Capacitor")
 	level_filenames.push_back("Mail-In Parasite")
 	level_filenames.push_back("Lightspeed Quarry")
+	level_filenames.push_back("Locke's Conjecture")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1564,11 +1566,21 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Floor Change")
 	level_filenames.push_back("[SPEEDRUN] - Shattered Sky")
 	level_filenames.push_back("Sinkhole")
+	level_filenames.push_back("Sinkhole [VAR1]")
 	level_filenames.push_back("Limitations of Love.")
 	level_filenames.push_back("Window of Oppertunity")
 	level_filenames.push_back("Grate Expectations")
 	level_filenames.push_back("Stepping Stone [Loop 2]")
 	level_filenames.push_back("Eau de Null")
+	level_filenames.push_back("Friction")
+	level_filenames.push_back("Convergence")
+	level_filenames.push_back("[TROLL] - Light Instantly Dies.")
+	level_filenames.push_back("Permafrost")
+	level_filenames.push_back("Liquidation")
+	level_filenames.push_back("Sandra's Idea")
+	level_filenames.push_back("Smooth Sailing")
+	level_filenames.push_back("Combination Lockdown")
+	level_filenames.push_back("King Crimson-")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1583,7 +1595,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Coyote TimeExEx")
 	level_filenames.push_back("Parity Drive")
 	level_filenames.push_back("Hopscorch [VAR2]")
-	level_filenames.push_back("Graduation [REV1]")
+	level_filenames.push_back("Graduation [VAR1]")
 	level_filenames.push_back("Crate Moving Service")
 	level_filenames.push_back("Campfrost [VAR2]")
 	level_filenames.push_back("Heaven [REV1]")
@@ -1596,13 +1608,45 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Firemaze")
 	level_filenames.push_back("Firemaze [VAR1]")
-	level_filenames.push_back("The Half-Magenta Pit")
 	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
 	level_filenames.push_back("Foot Wiggle [VAR3]")
 	level_filenames.push_back("[SPEEDRUN] A Way In-")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
 	level_filenames.push_back("Elevator Pitch [VAR1]")
 	level_filenames.push_back("Void Recovery")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Slabdrill's World (Page 2)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Woodskip")
+	level_filenames.push_back("Woodskip [VAR1]")
+	level_filenames.push_back("Rapid Ascent")
+	level_filenames.push_back("Green Slippery Glass")
+	level_filenames.push_back("Spelunking-- [VAR2]")
+	level_filenames.push_back("Separated Escape")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
+	level_filenames.push_back("Light Bridge")
+	level_filenames.push_back("Jenga-")
+	level_filenames.push_back("The Green Fire Pit")
+	level_filenames.push_back("The White Pit")
+	level_filenames.push_back("Sparkling Glass [VAR2]")
+	level_filenames.push_back("Undying Army (Type A)")
+	level_filenames.push_back("Undying Army (Type B)")
+	level_filenames.push_back("Side Shuffle")
+	level_filenames.push_back("Toggle Latch")
+	level_filenames.push_back("Nomadic [VAR1]")
+	level_filenames.push_back("The Zombie Pit")
+	level_filenames.push_back("The Checkpoint Pit")
+	level_filenames.push_back("The Checkpoint Pit (checkpoint shortage)")
+	level_filenames.push_back("The Half-Magenta Pit")
+	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
+	level_filenames.push_back("Delay Circuit")
+	level_filenames.push_back("Crate Sorting Facility")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1615,6 +1659,17 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Purest Verticalest")
 	level_filenames.push_back("Third Roommate [VAR-]")
 	level_filenames.push_back("Second Wind [VAR1]")
+	level_filenames.push_back("Low Ceiling")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Meo's World");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("The Wall (alpha build)")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

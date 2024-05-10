@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 196613, 4, 14, 393219, 5, 14, 3, 6, 14, 3, 7, 14, 3, 8, 14, 3, 9, 14, 3, 10, 14, 3, 11, 14, 4, 65540, 14, 131074, 65541, 14, 917512, 65542, 14, 65539, 65543, 14, 65539, 65544, 14, 65539, 65545, 14, 65539, 65546, 14, 65539, 65547, 14, 65540, 131077, 14, 131074, 131078, 14, 917512, 131079, 14, 65539, 131080, 14, 65539, 131081, 14, 65539, 131082, 14, 65539, 131083, 14, 65540, 196614, 14, 131074, 196615, 14, 917512, 196616, 14, 65539, 196617, 14, 65539, 196618, 14, 65539, 196619, 14, 65540, 262144, 8, 0, 262151, 14, 131074, 262152, 14, 917512, 262153, 14, 65539, 262154, 14, 65539, 262155, 14, 65540, 327680, 2, 0, 327688, 14, 131074, 327689, 14, 131075, 327690, 14, 917512, 327691, 14, 65540, 393217, 45, 0, 393226, 14, 131074, 393227, 14, 131076, 458757, 45, 0, 458762, 7, 0, 458763, 1, 0, 524293, 75, 0, 524296, 45, 0 )
+
+[node name="@@2420" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 393216, 20, 0, 393217, 20, 0, 393218, 20, 0, 458755, 20, 0, 458756, 20, 0, 458757, 20, 0, 458758, 20, 0, 458759, 20, 0, 524296, 20, 0, 524297, 20, 0, 524298, 20, 0, 524299, 20, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Spelunking?? [VAR2] (Insight)"
+level_author = "Slabdrill"
+level_replay = "Spelunking?? [VAR2]$mturn=332$xdxwxzxzdxwdxzsxzzdxwxzxzdxwdxzsxzzdxwxzxzdxwdxzsxzzxzzzsxdxwxzxzzaxaxdxzxwzddxdwxzzxzxwzwxzxzdxwdxzsxzzdxwxzxzdxwdxzsxzzdsxzzsxzxwxzxzdxwdxzsxzzdsxzzsxzxwxzxzdxwdxzsxzzdxzsxzddxzszzxzadxwxzdxzdsxzzwxzxawxzzxzzzaxzdxzxwxaxzzxzsxadwxdxzzzxzxaxdxzsxzzzxwxaxzaxzxzzsxwaxzaxzzdxwzxzxaxwawxzxzaxwzxzwxaxzzxzxzaxwxzxzdxaxzswxzxzdxaxzswxzxzdxaxzzzswxzxzaxdxzsxdxzdxzzdxdxzxzxadxdxzzwxzzxdzxzxzadxzdxzaawxdxzaxwzxzzzxzzaxddxddxzzdxdxzxzwxdzxzdxzxzzxdawxzxzaxwxzzwdxdwxzdxzzdxzzxzwxwzxwxaxzzzxzdxzxdzdxdxzzzwxdddxd"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
+target_track = 7.0

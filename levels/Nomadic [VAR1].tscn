@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196615, 65536, 14, 262145, 65542, 70, 0, 65543, 70, 0, 65545, 29, 0, 65546, 1, 0, 131072, 14, 262145, 131073, 7, 0, 131076, 52, 0, 131077, 52, 0, 131078, 70, 0, 131079, 70, 0, 131081, 29, 0, 131082, 2, 0, 131083, 8, 0, 196608, 14, 655362, 196609, 14, 196615, 196610, 12, 0, 196611, 12, 0, 196612, 14, 196613, 196613, 14, 196615, 196614, 12, 0, 196615, 12, 0, 196616, 12, 0, 196617, 14, 196613, 196618, 14, 196614, 196619, 14, 196615 )
+
+[node name="@@563" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131082, 38, 0, 131083, 38, 0 )
+
+[node name="@@564" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65547, 25, 0, 131083, 25, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Nomadic [VAR1]"
+level_author = "Slabdrill & Sandra"
+level_replay = "Nomadic [VAR1]$mturn=57$xwxdxzaxwzxzwxzxzdxdxaxwzxzwxzxzdxdxaxzdxaxadxaxadxaxwzxzzzzwxaxzzzaaxzzzzzzxzdzzzaxw"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524291, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65536, 14, 262145, 65537, 6, 0, 65538, 6, 0, 65539, 6, 0, 65540, 6, 0, 65541, 14, 262145, 65542, 6, 0, 65543, 6, 0, 65544, 14, 262145, 131072, 14, 262145, 131073, 6, 0, 131074, 6, 0, 131075, 14, 262148, 131076, 6, 0, 131077, 14, 655362, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 589828, 196608, 14, 262145, 196609, 6, 0, 196610, 6, 0, 196611, 6, 0, 196612, 6, 0, 196613, 6, 0, 196614, 6, 0, 196615, 6, 0, 196616, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 524292, 262148, 6, 0, 262149, 14, 262148, 262150, 6, 0, 262151, 6, 0, 262152, 14, 262145, 327683, 14, 262145, 327684, 6, 0, 327685, 6, 0, 327686, 6, 0, 327687, 6, 0, 327688, 14, 262145, 393219, 14, 655362, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 655364 )
+
+[node name="@@2154" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 2, 0, 65542, 8, 0, 65543, 7, 0, 131074, 129, 0, 131076, 3, 0, 196611, 3, 0, 196613, 50, 0, 196614, 3, 0, 262150, 3, 0, 262151, 1, 0, 327686, 3, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Locke's Conjecture"
+level_author = "Neonesque"
+level_replay = "Locke's Conjecture$mturn=59$asxdxsaxzxzzzssdwxdxzzzzzxzxssddwsxdxzxzxwsxdxzzzzzzzddaaxzxwsxdxzxzxwsxdxzzzzzwd"
+heavy_max_moves = 7.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.317647, 0.286275, 1 )
+target_track = 0.0
