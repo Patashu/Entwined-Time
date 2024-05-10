@@ -6065,6 +6065,10 @@ func time_passes(chrono: int) -> void:
 					a.just_moved = false;
 				just_moveds.clear();
 	
+	if (tries == 0):
+		lose("Infinite loop.", null);
+		return;
+	
 	#possible to leak this out the for loop
 	for a in just_moveds:
 		a.just_moved = false;
@@ -6163,9 +6167,9 @@ func time_passes(chrono: int) -> void:
 			animation_substep(chrono);
 			something_happened = false;
 			c += 1;
-			if (c >= 100):
+			if (c >= 99):
 				lose("Infinite loop.", null);
-				break;
+				return;
 			for actor in actors:
 				var found_a_slope = false;
 				var slope_success = Success.No;
