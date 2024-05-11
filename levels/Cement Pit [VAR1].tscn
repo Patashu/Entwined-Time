@@ -31,7 +31,7 @@ tile_data = PoolIntArray( 458753, 2, 0, 458755, 8, 0 )
 script = ExtResource( 2 )
 level_name = "Cement Pit [VAR1]"
 level_author = "Slabdrill"
-level_replay = "Cement Pit [VAR1]$mturn=14$dxwaxwxzxazzzwxwxwxwxw"
+level_replay = "Cement Pit [VAR1]$mturn=24$dxwaxwxazxwzzzwxdzazxwzzwxzsxawxz"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
 target_sky = Color( 0.211765, 0.235294, 0.247059, 1 )
