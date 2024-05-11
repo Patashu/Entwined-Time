@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 3, 2, 14, 3, 3, 14, 3, 4, 14, 4, 65536, 14, 65538, 65537, 14, 65539, 65538, 14, 65539, 65539, 14, 65539, 65540, 14, 65540, 131072, 14, 65538, 131073, 14, 65539, 131074, 14, 65539, 131075, 14, 65539, 131076, 14, 65540, 196608, 14, 65538, 196609, 14, 65539, 196610, 14, 65539, 196611, 14, 65539, 196612, 14, 65540, 262144, 14, 131074, 262145, 14, 131075, 262146, 14, 131075, 262147, 14, 131075, 262148, 14, 131076 )
+
+[node name="@@278" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 112, 0, 65538, 112, 0, 65539, 112, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 112, 0, 131074, 112, 0, 131075, 112, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 112, 0, 196610, 112, 0, 196611, 112, 0, 196612, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655364 )
+
+[node name="@@279" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 7, 0, 196609, 1, 0 )
+
+[node name="@@280" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 2, 0, 196609, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Cement Pit (Remix)"
+level_author = "Slabdrill"
+level_replay = "Cement Pit$mturn=10$xwxaxdxwxazzxaxzd"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.211765, 0.235294, 0.247059, 1 )
+target_track = 7.0

@@ -1486,20 +1486,19 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Blackberry Bush")
 	level_filenames.push_back("Green Cement Pit")
 	level_filenames.push_back("Green Adventure")
+	level_filenames.push_back("Return Path")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
-	level_filenames.push_back("Cement Pit [VAR1]")
 	level_filenames.push_back("Magenta Adventure")
 	level_filenames.push_back("Board Ring A")
 	level_filenames.push_back("Board Ring B")
 	level_filenames.push_back("Gain Leverage")
-	level_filenames.push_back("Slippery Glass [VAR1]")
+	level_filenames.push_back("Cement Pit [VAR1]")
 	level_filenames.push_back("Phantom Heist [Low Power]")
-	level_filenames.push_back("Compact Transport")
+	level_filenames.push_back("Slippery Glass [VAR1]")
 	level_filenames.push_back("Triple Boarded")
 	level_filenames.push_back("Hidden Potential")
-	level_filenames.push_back("Return Path")
 	level_filenames.push_back("Bridge Building")
 	level_filenames.push_back("Duplication")
 	
@@ -1685,6 +1684,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
 	level_filenames.push_back("Delay Circuit")
 	level_filenames.push_back("Crate Sorting Facility")
+	level_filenames.push_back("Compact Transport")
+	level_filenames.push_back("Compact Transport [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
