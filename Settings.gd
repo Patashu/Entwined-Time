@@ -81,7 +81,7 @@ func _ready() -> void:
 	metaundoarestart.add_item("Replay", 3);
 	metaundoarestart.add_item("No", 4);
 	if (gamelogic.save_file.has("meta_undo_a_restart")):
-		metaundoarestart.selected = gamelogic.save_file["meta_undo_a_restart"];
+		metaundoarestart.selected = int(gamelogic.save_file["meta_undo_a_restart"]);
 	else:
 		metaundoarestart.selected = 2;
 	metaundoarestart.text = "Undo a Restart?:"

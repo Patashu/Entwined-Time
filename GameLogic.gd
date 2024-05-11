@@ -5233,7 +5233,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 func meta_undo_a_restart() -> bool:
 	var meta_undo_a_restart_type = 2;
 	if (save_file.has("meta_undo_a_restart")):
-		meta_undo_a_restart_type = save_file["meta_undo_a_restart"];
+		meta_undo_a_restart_type = int(save_file["meta_undo_a_restart"]);
 	if (meta_undo_a_restart_type == 4): #No
 		return false;
 	
