@@ -2373,6 +2373,8 @@ func make_actors() -> void:
 	# find goals and goal-ify them
 	find_goals();
 	
+	var where_are_actors = {};
+	
 	# find heavy and light and turn them into actors
 	# as a you-fucked-up backup, put them in 0,0 if there seems to be none
 	var layers_tiles = get_used_cells_by_id_all_layers(Tiles.HeavyIdle);
@@ -2388,7 +2390,8 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for heavy_tile in tiles:
 			terrain_layers[i].set_cellv(heavy_tile, -1);
-			heavy_actor = make_actor(Actor.Name.Heavy, heavy_tile, true, i);
+			heavy_actor = make_actor(Actor.Name.Heavy, Vector2(-99, -99), true, i);
+			where_are_actors[heavy_actor] = heavy_tile;
 			heavy_actor.heaviness = Heaviness.STEEL;
 			heavy_actor.strength = Strength.HEAVY;
 			heavy_actor.durability = Durability.FIRE;
@@ -2400,8 +2403,6 @@ func make_actors() -> void:
 			if (heavy_actor.pos.x > (map_x_max / 2)):
 				heavy_actor.facing_left = true;
 			heavy_actor.update_graphics();
-			#have to do it now to pre-activate goals as they're not is_main_character() fast enough
-			move_actor_to(heavy_actor, heavy_actor.pos, Chrono.TIMELESS, false, false);
 			count += 1;
 			
 	#heavy mimics (TODO: refactor)
@@ -2427,8 +2428,6 @@ func make_actors() -> void:
 			if (actor.pos.x > (map_x_max / 2)):
 				actor.facing_left = true;
 			actor.update_graphics();
-			#have to do it now to pre-activate goals as they're not is_main_character() fast enough
-			move_actor_to(light_actor, light_actor.pos, Chrono.TIMELESS, false, false);
 			count += 1;
 	
 	layers_tiles = get_used_cells_by_id_all_layers(Tiles.LightIdle);
@@ -2444,7 +2443,8 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for light_tile in tiles:
 			terrain_layers[i].set_cellv(light_tile, -1);
-			light_actor = make_actor(Actor.Name.Light, light_tile, true, i);
+			light_actor = make_actor(Actor.Name.Light, Vector2(-99, -99), true, i);
+			where_are_actors[light_actor] = light_tile;
 			light_actor.heaviness = Heaviness.IRON;
 			light_actor.strength = Strength.LIGHT;
 			light_actor.durability = Durability.SPIKES;
@@ -2484,6 +2484,11 @@ func make_actors() -> void:
 				actor.facing_left = true;
 			actor.update_graphics();
 			count += 1;
+	
+	# HACK: move actors to where they are, so now that is_main_character and so on is determined,
+	# they correctly ding/don't ding different kinds of goals
+	for actor in where_are_actors.keys():
+		move_actor_to(actor, where_are_actors[actor], Chrono.TIMELESS, false, false);
 	
 	# crates
 	extract_actors(Tiles.IronCrate, Actor.Name.IronCrate, Heaviness.IRON, Strength.WOODEN, Durability.FIRE, 99, false, Color(0.5, 0.5, 0.5, 1));
