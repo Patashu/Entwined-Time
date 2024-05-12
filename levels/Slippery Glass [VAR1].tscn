@@ -3,17 +3,17 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 8, 0, 1, 2, 0, 3, 45, 0, 5, 7, 0, 11, 1, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 196614, 65546, 14, 196614, 65547, 14, 196615 )
+tile_data = PoolIntArray( 3, 45, 0, 5, 7, 0, 11, 1, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 196614, 65546, 14, 196614, 65547, 14, 196615 )
 
 [node name="@@318" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 3, 88, 0 )
+tile_data = PoolIntArray( 0, 8, 0, 1, 2, 0, 3, 88, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
@@ -22,6 +22,5 @@ level_author = "Slabdrill"
 level_replay = "Slippery Glass [VAR1]$mturn=70$wxdxaxdxzzxzzxddzzaddzzxaxaddzzxaxdzxwxzxzxdxaxwzxzzzxzwxdxzdxzxzaadzxdxzxwzzwxdxzasadxzxzzzzxzzdddd"
 heavy_max_moves = 4.0
 light_max_moves = 4.0
-clock_turns = ""
 target_sky = Color( 0.211765, 0.235294, 0.247059, 1 )
 target_track = 7.0
