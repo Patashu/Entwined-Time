@@ -1509,13 +1509,18 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#28442A"));
 	chapter_tracks.push_back(1);
 	level_filenames.push_back("Hospital")
+	level_filenames.push_back("Permafrost")
 	level_filenames.push_back("Grate Access")
-	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("Sewer Crawl")
+	level_filenames.push_back("Toggle Latch")
+	level_filenames.push_back("Zombie Mode")
+	level_filenames.push_back("The Zombie Pit")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("Three-Grate Monte")
+	level_filenames.push_back("Undying Army (Type A)")
+	level_filenames.push_back("Undying Army (Type B)")
 	level_filenames.push_back("Timelock")
 	level_filenames.push_back("Insurance Fraud")
 	level_filenames.push_back("Alternating Staircase")
@@ -1630,7 +1635,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Friction")
 	level_filenames.push_back("Convergence")
 	level_filenames.push_back("[Troll] - Light Instantly Dies.")
-	level_filenames.push_back("Permafrost")
 	level_filenames.push_back("Liquidation")
 	level_filenames.push_back("Sandra's Idea")
 	level_filenames.push_back("Smooth Sailing")
@@ -1690,12 +1694,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Green Fire Pit")
 	level_filenames.push_back("The White Pit")
 	level_filenames.push_back("Sparkling Glass [VAR2]")
-	level_filenames.push_back("Undying Army (Type A)")
-	level_filenames.push_back("Undying Army (Type B)")
 	level_filenames.push_back("Side Shuffle")
-	level_filenames.push_back("Toggle Latch")
 	level_filenames.push_back("Nomadic [VAR1]")
-	level_filenames.push_back("The Zombie Pit")
 	level_filenames.push_back("The Checkpoint Pit")
 	level_filenames.push_back("The Checkpoint Pit (checkpoint shortage)")
 	level_filenames.push_back("The Half-Magenta Pit")
@@ -1899,9 +1899,6 @@ func ready_map() -> void:
 	has_repair_stations = false;
 	limited_undo_sprites.clear();
 	
-	if (any_layer_has_this_tile(Tiles.Fuzz)):
-		fuzz_rotation();
-	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
 		has_crate_goals = true;
 	
@@ -1911,6 +1908,9 @@ func ready_map() -> void:
 		has_limited_undo = true;
 	
 	if (is_custom or chapter >= 12):
+		if (any_layer_has_this_tile(Tiles.Fuzz)):
+			fuzz_rotation();
+		
 		if (any_layer_has_this_tile(Tiles.Floorboards)):
 			has_floorboards = true;
 		elif (any_layer_has_this_tile(Tiles.GreenFloorboards)):
@@ -1931,6 +1931,13 @@ func ready_map() -> void:
 			has_phase_walls = true;
 		elif (any_layer_has_this_tile(Tiles.PhaseWallPurple)):
 			has_phase_walls = true;
+			
+		if (any_layer_has_this_tile(Tiles.RepairStation)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
+			has_repair_stations = true;
 	
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseLightningBlue)):
@@ -1992,13 +1999,6 @@ func ready_map() -> void:
 			has_nudges = true;
 		elif (any_layer_has_this_tile(Tiles.NudgeWestGreen)):
 			has_nudges = true;
-			
-		if (any_layer_has_this_tile(Tiles.RepairStation)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
-			has_repair_stations = true;
 	
 	calculate_map_size();
 	make_actors();
