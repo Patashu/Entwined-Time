@@ -1367,12 +1367,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("DragonsGate")
 	level_filenames.push_back("HelpYourselfEx")
 	level_filenames.push_back("Skip")
-	level_filenames.push_back("Airdodging")
 	level_filenames.push_back("Impossible")
 	level_filenames.push_back("LightHurtingServiceEx2")
 	level_filenames.push_back("GreenGrass")
 	level_filenames.push_back("SpikesGreenEx")
 	level_filenames.push_back("CampfireGreenEx")
+	level_filenames.push_back("Airdodging")
 	
 	chapter_names.push_back("Exotic Matter");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
