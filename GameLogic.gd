@@ -1514,13 +1514,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Sewer Crawl")
 	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("The Zombie Pit")
+	level_filenames.push_back("Undying Army (Type A)")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
+	level_filenames.push_back("Undying Army (Type B)")
 	level_filenames.push_back("Toggle Latch")
 	level_filenames.push_back("Three-Grate Monte")
-	level_filenames.push_back("Undying Army (Type A)")
-	level_filenames.push_back("Undying Army (Type B)")
 	level_filenames.push_back("Timelock")
 	level_filenames.push_back("Insurance Fraud")
 	level_filenames.push_back("Alternating Staircase")
