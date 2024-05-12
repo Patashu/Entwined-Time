@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 14, 196613, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 393219, 9, 14, 4, 65539, 24, 0, 65542, 19, 0, 65543, 1, 0, 65544, 14, 65538, 65545, 14, 65540, 131075, 24, 0, 131077, 48, 0, 131078, 19, 0, 131079, 5, 0, 131080, 14, 131074, 131081, 14, 589829, 196609, 7, 0, 196610, 124, 0, 196611, 24, 0, 196612, 8, 0, 196614, 2, 0, 196615, 56, 0, 196617, 14, 262145, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 655364 )
+
+[node name="@@224" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65543, 22, 0, 131079, 22, 0, 196612, 35, 0, 196614, 35, 0, 196615, 55, 0 )
+
+[node name="@@225" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196614, 19, 0, 196615, 39, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Insurance Fraud"
+level_author = "Patashu"
+level_replay = "Insurance Fraud$mturn=26$xdaxaxzxzxdwxaxzxaxzzxdxaaassxzzzxzdxdww"
+heavy_max_moves = 3.0
+light_max_moves = 6.0
+clock_turns = "4"
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

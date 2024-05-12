@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 8, 0, 4, 0, 0, 7, 3, 0, 65537, 0, 0, 65540, 2, 0, 65543, 0, 0, 131072, 14, 196609, 131073, 24, 0, 131074, 14, 2, 131075, 14, 4, 131076, 24, 0, 131077, 14, 2, 131078, 14, 4, 131079, 24, 0, 131080, 14, 196609, 196608, 14, 262145, 196609, 1, 0, 196610, 14, 65538, 196611, 14, 65540, 196612, 124, 0, 196613, 14, 65538, 196614, 14, 65540, 196615, 7, 0, 196616, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 720899, 262147, 14, 786435, 262148, 14, 196614, 262149, 14, 720899, 262150, 14, 786435, 262151, 14, 196614, 262152, 14, 655364 )
+
+[node name="@@197" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 5, 0, 196612, 32, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Three-Grate Monte"
+level_author = "Patashu"
+level_replay = "Three-Grate Monte$mturn=47$xdsxddwddxzzxzxdxzzzzaxwxaxzdxwzxzxwxzaxzzzdwddxzxzzxdxzzaaaxdddxzxz"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

@@ -1465,7 +1465,7 @@ func initialize_level_list() -> void:
 	level_replacements[level_filenames.size()] = "Ω";
 	level_filenames.push_back("ChronoLabReactor")
 	
-	chapter_names.push_back("Floorboards (WIP)");
+	chapter_names.push_back("Floorboards");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(128);
 	chapter_replacements[chapter_names.size() - 1] = "A";
@@ -1501,6 +1501,24 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hidden Potential")
 	level_filenames.push_back("Bridge Building")
 	level_filenames.push_back("Duplication")
+	
+	chapter_names.push_back("Afterlife (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(144);
+	chapter_replacements[chapter_names.size() - 1] = "B";
+	chapter_skies.push_back(Color("#28442A"));
+	chapter_tracks.push_back(1);
+	level_filenames.push_back("Hospital")
+	level_filenames.push_back("Grate Access")
+	level_filenames.push_back("Zombie Mode")
+	level_filenames.push_back("Sewer Crawl")
+	
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(8);
+	level_filenames.push_back("Three-Grate Monte")
+	level_filenames.push_back("Timelock")
+	level_filenames.push_back("Insurance Fraud")
+	level_filenames.push_back("Alternating Staircase")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
