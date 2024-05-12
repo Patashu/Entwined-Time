@@ -2602,7 +2602,7 @@ func add_actor_or_goal_at_appropriate_layer(thing: ActorBase, i: int) -> void:
 	# and also the concept of 'adding to overactors/underactors particles'
 	# can be generalized to
 	# 'if it's a custom puzzle, put particles in the appropriate place amongst terrain layers too'
-	if (is_custom and i > 0):
+	if ((is_custom or chapter >= 12) and i > 0):
 		terrain_layers[i].add_child(thing);
 		if (i == terrain_layers.size() - 1):
 			terrain_layers[i].move_child(thing, terrain_layers[i-1].get_index());
