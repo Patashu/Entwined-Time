@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 196609, 7, 0, 196612, 34, 0, 196615, 1, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 524292, 262148, 75, 0, 262149, 14, 524290, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615, 327683, 14, 262145, 327685, 14, 262145, 393219, 14, 655362, 393220, 14, 196614, 393221, 14, 655364 )
+
+[node name="@@5329" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 28, 0, 8, 25, 0, 65536, 28, 0, 65544, 25, 0, 131072, 28, 0, 131080, 25, 0, 196608, 28, 0, 196609, 2, 0, 196615, 8, 0, 196616, 25, 0, 262148, 27, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Blue Phase Pit [VAR1]"
+level_author = "Patashu"
+level_replay = "The Blue Phase Pit [VAR1]$mturn=44$ddxaaaxwxaxzaxzzxzsxaxwxaxzzaxzzxzsxaxwxaxaxzzzaaaxzzzdxdxdxzaaxdd"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.184314, 0.168627, 0.337255, 1 )
+target_track = 6.0

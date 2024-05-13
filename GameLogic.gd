@@ -1465,7 +1465,7 @@ func initialize_level_list() -> void:
 	level_replacements[level_filenames.size()] = "Ω";
 	level_filenames.push_back("ChronoLabReactor")
 	
-	chapter_names.push_back("Time Cube");
+	chapter_names.push_back("Intermission - Phase Blocks");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(96);
 	chapter_replacements[chapter_names.size() - 1] = "[-]";
@@ -1477,7 +1477,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Purple Phase Pit")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
-	chapter_advanced_unlock_requirements.push_back(8);
+	chapter_advanced_unlock_requirements.push_back(4);
+	level_filenames.push_back("The Red Phase Pit [VAR1]")
+	level_filenames.push_back("The Blue Phase Pit [VAR1]")
+	level_filenames.push_back("The Gray Phase Pit [VAR1]")
+	level_filenames.push_back("The Purple Phase Pit [VAR1]")
 	
 	chapter_names.push_back("Floorboards");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
