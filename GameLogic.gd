@@ -1545,8 +1545,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Death Smiles")
 	level_filenames.push_back("Timelock")
 	level_filenames.push_back("Insurance Fraud")
-	level_filenames.push_back("Alternating Staircase")
 	level_filenames.push_back("Stable Loop")
+	level_filenames.push_back("Alternating Staircase")	
 	level_filenames.push_back("Truly Unbounded Skies")
 	level_filenames.push_back("Truly Unbounded Skies [VAR1]")
 	
