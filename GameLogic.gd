@@ -4636,9 +4636,11 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 	elif (prop == "broken"):
 		add_to_animation_server(actor, [Animation.stall, 0.14]);
 		
-	#in custom puzzles, move broken crystals to -9, -9 so they get out of the way
+	#in custom puzzles, banish broken crystals to -9, -9 so they get out of the way
 	if (is_custom and actor.is_crystal and actor.broken and prop == "broken" and !old_value and value):
-		move_actor_to(actor, Vector2(-9, -9), max(chrono, Chrono.CHAR_UNDO), false, false);
+		banished_time_crystals[actor] = chrono;
+
+var banished_time_crystals = {};
 
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	if (has_repair_stations):
@@ -4761,6 +4763,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
 					continue
 				undo_one_event(event, Chrono.CHAR_UNDO);
+			time_passes(Chrono.TIMELESS);
 		else:
 			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 			for event in events:
@@ -4818,6 +4821,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
 					continue
 				undo_one_event(event, Chrono.CHAR_UNDO);
+			time_passes(Chrono.TIMELESS);
 		else:
 			var events = light_undo_buffer.pop_at(light_turn - 1);
 			for event in events:
@@ -5892,11 +5896,23 @@ func anything_happened_meta() -> bool:
 
 func time_passes(chrono: int) -> void:
 	animation_substep(chrono);
+	
+	# in custom puzzles, banish broken crystals to -9, -9 so they get out of the way
+	# do this now so we know it's not in the middle of any operation
+	# also do it even if it's an undo or fuzz rewind
+	if (is_custom):
+		for actor in banished_time_crystals.keys():
+			move_actor_to(actor, Vector2(-9, -9), max(banished_time_crystals[actor], Chrono.CHAR_UNDO), false, false);
+		banished_time_crystals.clear();
+	
+	if (chrono >= Chrono.TIMELESS):
+		return;
+	
 	var time_actors = []
 	
 	if chrono == Chrono.META_UNDO:
 		for actor in actors:
-			if actor.is_crystal:
+			if actor.is_crystal and actor.broken:
 				continue;
 			if actor.time_colour == TimeColour.Void:
 				time_actors.push_back(actor);
