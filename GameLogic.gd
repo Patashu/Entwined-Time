@@ -1547,8 +1547,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Insurance Fraud")
 	level_filenames.push_back("Alternating Staircase")
 	level_filenames.push_back("Stable Loop")
-	level_filenames.push_back("Truly Unbound Skies")
-	level_filenames.push_back("Truly Unbound Skies [VAR1]")
+	level_filenames.push_back("Truly Unbounded Skies")
+	level_filenames.push_back("Truly Unbounded Skies [VAR1]")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
