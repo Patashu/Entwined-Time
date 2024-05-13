@@ -1465,6 +1465,20 @@ func initialize_level_list() -> void:
 	level_replacements[level_filenames.size()] = "Ω";
 	level_filenames.push_back("ChronoLabReactor")
 	
+	chapter_names.push_back("Time Cube");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(96);
+	chapter_replacements[chapter_names.size() - 1] = "[-]";
+	chapter_skies.push_back(Color("#2F2B56"));
+	chapter_tracks.push_back(6);
+	level_filenames.push_back("The Red Phase Pit")
+	level_filenames.push_back("The Blue Phase Pit")
+	level_filenames.push_back("The Gray Phase Pit")
+	level_filenames.push_back("The Purple Phase Pit")
+	
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(8);
+	
 	chapter_names.push_back("Floorboards");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(128);

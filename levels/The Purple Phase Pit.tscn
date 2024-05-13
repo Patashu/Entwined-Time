@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 14, 196609, 65540, 14, 262145, 131074, 14, 196613, 131075, 14, 196614, 131076, 14, 655363, 131077, 14, 196614, 131078, 14, 196615, 196609, 7, 0, 196615, 1, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 524292, 262148, 78, 0, 262149, 14, 524290, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615, 327683, 14, 262145, 327684, 78, 0, 327685, 14, 262145, 393219, 14, 655362, 393220, 14, 196614, 393221, 14, 655364 )
+
+[node name="@@24005" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196609, 2, 0, 196615, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Purple Phase Pit"
+level_author = "Patashu"
+level_replay = "The Purple Phase Pit$mturn=32$dddzzzwzwzddxwxdxzxdxaxwzxzaaaxaxzzzwzaaa"
+heavy_max_moves = 5.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
