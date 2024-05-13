@@ -1530,18 +1530,25 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Grate Access")
 	level_filenames.push_back("Permafrost")
 	level_filenames.push_back("Sewer Crawl")
+	level_filenames.push_back("Antigrated")
 	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("The Zombie Pit")
 	level_filenames.push_back("Undying Army (Type A)")
+	level_filenames.push_back("Spare Door.")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("Undying Army (Type B)")
 	level_filenames.push_back("Toggle Latch")
 	level_filenames.push_back("Three-Grate Monte")
+	level_filenames.push_back("Death Smiles")
 	level_filenames.push_back("Timelock")
+	level_filenames.push_back("Hookjump")
 	level_filenames.push_back("Insurance Fraud")
 	level_filenames.push_back("Alternating Staircase")
+	level_filenames.push_back("Stable Loop")
+	level_filenames.push_back("Truly Unbound Skies")
+	level_filenames.push_back("Truly Unbound Skies [VAR1]")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1658,6 +1665,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Smooth Sailing")
 	level_filenames.push_back("Combination Lockdown")
 	level_filenames.push_back("King Crimson-")
+	level_filenames.push_back("Wooden Gate")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1722,6 +1730,18 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Crate Sorting Facility")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Slabdrill's World (Page 3)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Heavy Vertical")
+	level_filenames.push_back("Tile Selector")
+	level_filenames.push_back("Tile Selector [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 131072, 14, 262145, 131076, 14, 655362, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 524292, 196608, 14, 262145, 196611, 19, 0, 196612, 15, 0, 196613, 33, 0, 196614, 1, 0, 196615, 7, 0, 196616, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 655364 )
+
+[node name="@@279" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196609, 2, 0, 196610, 8, 0, 196611, 33, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Wooden Gate"
+level_author = "Sandra53"
+level_replay = "Wooden Gate$mturn=47$xdxdxzxwxaxzxazxdxzaxzxwzzwxaxzdxzxdxdxzxzxdxwzxzzwxdxzxddxdxzzxzxzzwxddxzddd"
+heavy_max_moves = 4.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0

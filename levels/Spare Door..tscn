@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65539, 14, 262145, 65544, 14, 262145, 131075, 14, 262145, 131080, 14, 262145, 196611, 14, 262145, 196616, 14, 655362, 196617, 14, 524292, 262144, 14, 524290, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 589828, 262148, 20, 0, 262150, 2, 0, 262152, 28, 0, 262153, 14, 262145, 327680, 14, 262145, 327681, 8, 0, 327682, 7, 0, 327683, 14, 262145, 327684, 15, 0, 327685, 14, 196613, 327686, 14, 196614, 327687, 14, 196615, 327688, 5, 0, 327689, 14, 655362, 327690, 14, 524292, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 589828, 393220, 33, 0, 393223, 25, 0, 393224, 25, 0, 393225, 32, 0, 393226, 14, 262145, 458755, 14, 655362, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196614, 458760, 14, 196614, 458761, 14, 196614, 458762, 14, 655364 )
+
+[node name="@@160" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262148, 33, 0, 327684, 124, 0, 393220, 54, 0, 393222, 1, 0, 393223, 33, 0, 393224, 3, 0 )
+
+[node name="@@161" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327684, 32, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Spare Door."
+level_author = "Sandra53"
+level_replay = "Spare Door.$mturn=28$aawxdxwxzxzzxdxzdddxzxzzwazzzxdxaaxzxzzxd"
+heavy_max_moves = 4.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0
