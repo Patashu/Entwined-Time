@@ -1474,6 +1474,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Red Phase Pit")
 	level_filenames.push_back("Heavy Footing")
 	level_filenames.push_back("The Blue Phase Pit")
+	level_filenames.push_back("Pushing It Phases")
 	level_filenames.push_back("The Gray Phase Pit")
 	level_filenames.push_back("Safety Glass")
 	level_filenames.push_back("The Purple Phase Pit")
