@@ -5838,6 +5838,8 @@ func character_move(dir: Vector2) -> bool:
 		play_sound("bump")
 	if (result != Success.No or nonstandard_won):
 		adjust_meta_turn(1);
+	elif (voidlike_puzzle):
+		adjust_meta_turn(0);
 	return result != Success.No;
 
 func anything_happened_char(destructive: bool = true) -> bool:
