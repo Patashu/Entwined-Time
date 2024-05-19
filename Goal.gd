@@ -19,24 +19,32 @@ var facing_left = false; #dummied out
 var is_crystal = false; #dummied out
 
 func lock2() -> void:
-	locked2 = true;
-	modulate.a = 0.4;
+	if (!locked2):
+		locked2 = true;
+		modulate.a = 0.4;
+		gamelogic.add_to_animation_server(self, [2]);
 
 func unlock2() -> void:
-	locked2 = false;
-	modulate.a = 0.8;
+	if (locked2):
+		locked2 = false;
+		modulate.a = 0.8;
+		gamelogic.add_to_animation_server(self, [2]);
 
 func lock() -> void:
-	locked = true;
-	modulate.r = 0.4;
-	modulate.g = 0.4;
-	modulate.b = 0.4;
+	if (!locked):
+		locked = true;
+		modulate.r = 0.4;
+		modulate.g = 0.4;
+		modulate.b = 0.4;
+		gamelogic.add_to_animation_server(self, [2]);
 	
 func unlock() -> void:
-	locked = false;
-	modulate.r = 1.0;
-	modulate.g = 1.0;
-	modulate.b = 1.0;
+	if (locked):
+		locked = false;
+		modulate.r = 1.0;
+		modulate.g = 1.0;
+		modulate.b = 1.0;
+		gamelogic.add_to_animation_server(self, [2]);
 
 func update_scalify_target() -> void:
 	scalify_target = 0.1;

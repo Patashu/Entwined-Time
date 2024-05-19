@@ -2063,6 +2063,9 @@ func ready_map() -> void:
 	update_info_labels();
 	check_won();
 	
+	for goal in goals:
+		goal.instantly_reach_scalify();
+	
 	initialize_timeline_viewers();
 	ready_tutorial();
 	update_level_label();
@@ -2609,7 +2612,6 @@ func find_goals() -> void:
 			goal.pos = tile;
 			goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
 			goal.modulate = Color(1, 1, 1, 0.8);
-			goal.instantly_reach_scalify();
 			goals.append(goal);
 			add_actor_or_goal_at_appropriate_layer(goal, i);
 			goal.update_graphics();
@@ -2627,7 +2629,6 @@ func find_goals() -> void:
 			goal.position = terrainmap.map_to_world(goal.pos) + Vector2(cell_size/2, cell_size/2);
 			goal.modulate = Color(1, 1, 1, 0.8);
 			goal.rotate_magnitude = -1;
-			goal.instantly_reach_scalify();
 			goals.append(goal);
 			add_actor_or_goal_at_appropriate_layer(goal, i);
 			goal.update_graphics();
@@ -2685,7 +2686,6 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 				goal.pos = actor.pos;
 				goal.position = Vector2(cell_size/2, cell_size/2);
 				goal.modulate = Color(1, 1, 1, 0.8);
-				goal.instantly_reach_scalify();
 				goals.append(goal);
 				goal.update_graphics();
 				actor.joke_goal = goal;
@@ -2702,7 +2702,6 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 				goal.position = Vector2(cell_size/2, cell_size/2);
 				goal.modulate = Color(1, 1, 1, 0.8);
 				goal.rotate_magnitude = -1;
-				goal.instantly_reach_scalify();
 				goals.append(goal);
 				goal.update_graphics();
 				actor.joke_goal = goal;
@@ -3092,7 +3091,7 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, i: int, chrono
 	actor.actorname = actorname;
 	if actor.actorname == Actor.Name.TimeCrystalGreen or actor.actorname == Actor.Name.TimeCrystalMagenta:
 		actor.is_crystal = true;
-		update_goal_lock(chrono);
+		update_goal_lock();
 	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
@@ -3105,7 +3104,7 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, i: int, chrono
 		print("TODO")
 	return actor;
 	
-func update_goal_lock(chrono: int) -> void:
+func update_goal_lock() -> void:
 	var locked = false;
 	for actor in actors:
 		if actor.is_crystal and !actor.broken:
@@ -3119,8 +3118,6 @@ func update_goal_lock(chrono: int) -> void:
 		for goal in goals:
 			if !goal.locked:
 				goal.lock();
-				if (goal.dinged):
-					set_actor_var(goal, "dinged", false, chrono);
 
 func animation_nonce_fountain_dispense() -> int:
 	var result = animation_nonce_fountain;
@@ -4575,7 +4572,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 			
 			#check goal lock when a crystal breaks or unbreaks
 			if (actor.is_crystal):
-				update_goal_lock(chrono);
+				update_goal_lock();
 			
 			var terrain = terrain_in_tile(actor.pos);
 			if value == true:
