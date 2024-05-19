@@ -4637,7 +4637,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		add_to_animation_server(actor, [Animation.stall, 0.14]);
 		
 	#in custom puzzles, banish broken crystals to -9, -9 so they get out of the way
-	if (is_custom and actor.is_crystal and actor.broken and prop == "broken" and !old_value and value):
+	if (is_custom and actor.is_crystal and !is_retro and actor.broken and prop == "broken" and !old_value and value):
 		banished_time_crystals[actor] = chrono;
 
 var banished_time_crystals = {};
@@ -5894,16 +5894,23 @@ func anything_happened_meta() -> bool:
 	anything_happened_char(true); #to destroy
 	return false;
 
-func time_passes(chrono: int) -> void:
-	animation_substep(chrono);
-	
+func banish_time_crystals() -> void:
 	# in custom puzzles, banish broken crystals to -9, -9 so they get out of the way
 	# do this now so we know it's not in the middle of any operation
 	# also do it even if it's an undo or fuzz rewind
+	# also directly set the properties so nothing else like push might override
 	if (is_custom):
 		for actor in banished_time_crystals.keys():
-			move_actor_to(actor, Vector2(-9, -9), max(banished_time_crystals[actor], Chrono.CHAR_UNDO), false, false);
+			var dir = Vector2(-9, -9) - actor.pos;
+			actor.pos = Vector2(-9, -9);
+			add_undo_event([Undo.move, actor, dir, false, false, null, -1],
+			chrono_for_maybe_green_actor(actor, max(banished_time_crystals[actor], Chrono.CHAR_UNDO)));
 		banished_time_crystals.clear();
+
+func time_passes(chrono: int) -> void:
+	animation_substep(chrono);
+	
+	banish_time_crystals();
 	
 	if (chrono >= Chrono.TIMELESS):
 		return;
@@ -6143,13 +6150,14 @@ func time_passes(chrono: int) -> void:
 					a.just_moved = false;
 				just_moveds.clear();
 	
-	if (tries == 0):
-		lose("Infinite loop.", null);
-		return;
-	
 	#possible to leak this out the for loop
 	for a in just_moveds:
 		a.just_moved = false;
+		
+	if (tries == 0):
+		lose("Infinite loop.", null);
+		banish_time_crystals();
+		return;
 	
 	animation_substep(chrono);
 	
@@ -6247,6 +6255,7 @@ func time_passes(chrono: int) -> void:
 			c += 1;
 			if (c >= 99):
 				lose("Infinite loop.", null);
+				banish_time_crystals();
 				return;
 			for actor in actors:
 				var found_a_slope = false;
@@ -6302,6 +6311,9 @@ func time_passes(chrono: int) -> void:
 					if (terrain.has(Tiles.RepairStationGreen)):
 						set_actor_var(actor, "broken", false, max(Chrono.CHAR_UNDO, chrono));
 						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGreen), false, true, chrono, -1);
+	
+	#Luckiest lastest - a final crystal banish.
+	banish_time_crystals();
 	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
