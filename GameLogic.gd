@@ -1539,6 +1539,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Permafrost")
 	level_filenames.push_back("Sewer Crawl")
 	level_filenames.push_back("Antigrated")
+	level_filenames.push_back("Iron Barbecue")
 	level_filenames.push_back("Electrical Education")
 	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("The Zombie Pit")
@@ -1561,6 +1562,31 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Truly Unbounded Skies")
 	level_filenames.push_back("Truly Unbounded Skies [VAR1]")
 	
+	chapter_names.push_back("Even More Crates (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(160);
+	chapter_replacements[chapter_names.size() - 1] = "C";
+	chapter_skies.push_back(Color("#514025"));
+	chapter_tracks.push_back(5);
+	level_filenames.push_back("Wooden Crates Tutorial")
+	level_filenames.push_back("Wooden Gate")
+	level_filenames.push_back("Cramped Roommates")
+	level_filenames.push_back("Hokey Pokey")
+	level_filenames.push_back("Power Crates Tutorial")
+	level_filenames.push_back("PezDispenser")
+	level_filenames.push_back("Donk")
+	level_filenames.push_back("DonkEx")
+	level_filenames.push_back("Steel Crates Tutorial")
+	
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(8);
+	level_filenames.push_back("Wooden Glass")
+	level_filenames.push_back("TheoryOfEverythingA")
+	level_filenames.push_back("TheoryOfEverythingB")
+	level_filenames.push_back("The Steel Crate Pit")
+	level_filenames.push_back("Unstacking Station")
+	level_filenames.push_back("Donking Skies")
+	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(256, level_filenames.size()));
@@ -1578,8 +1604,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("KnotRemixL2")
 	level_filenames.push_back("KnotL2")
 	level_filenames.push_back("CallACabL2")
-	level_filenames.push_back("TheoryOfEverythingA")
-	level_filenames.push_back("TheoryOfEverythingB")
 	level_filenames.push_back("PachinkoL2")
 	level_filenames.push_back("TheFirstPitL2")
 	level_filenames.push_back("BraidL2")
@@ -1635,10 +1659,6 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Rushing Rivers")
-	level_filenames.push_back("PezDispenser")
-	level_filenames.push_back("Hokey Pokey")
-	level_filenames.push_back("Donk")
-	level_filenames.push_back("DonkEx")
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Soft Landing")
 	level_filenames.push_back("Coyote Time")
@@ -1676,11 +1696,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Smooth Sailing")
 	level_filenames.push_back("Combination Lockdown")
 	level_filenames.push_back("King Crimson-")
-	level_filenames.push_back("Wooden Gate")
 	level_filenames.push_back("Airstall (don't die please)")
 	level_filenames.push_back("Sandra's Magic Trick")
-	level_filenames.push_back("Iron Barbecue")
-	level_filenames.push_back("Cramped Roommates")
 	level_filenames.push_back("Self Containment")
 	level_filenames.push_back("Logging Out")
 	level_filenames.push_back("Logging Out [VAR1]")
@@ -1765,12 +1782,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Time Crystal Pits")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
 	level_filenames.push_back("Limitations of Love. [VAR1]")
+	level_filenames.push_back("The Crate Pit-")
 	level_filenames.push_back("Stack Split")
-	level_filenames.push_back("Unstacking Station")
-	level_filenames.push_back("The Steel Crate Pit")
-	level_filenames.push_back("Donking Skies")
-	level_filenames.push_back("Wooden Glass")
-	level_filenames.push_back("The Greenish Pit")
 	level_filenames.push_back("The Greenish Pit")
 	level_filenames.push_back("The Voidish Pit")
 	level_filenames.push_back("Engine Room [VAR2]")
