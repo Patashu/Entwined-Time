@@ -1698,7 +1698,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("King Crimson-")
 	level_filenames.push_back("Airstall (don't die please)")
 	level_filenames.push_back("Sandra's Magic Trick")
-	level_filenames.push_back("Self Containment")
 	level_filenames.push_back("Logging Out")
 	level_filenames.push_back("Logging Out [VAR1]")
 	level_filenames.push_back("In Defiance of Time")
