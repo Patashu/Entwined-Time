@@ -811,14 +811,16 @@ func _process(delta: float) -> void:
 				18: #tick
 					var amount = current_animation[1];
 					var new_ticks = current_animation[2];
-					gamelogic.broadcast_animation_nonce(current_animation[3]);
+					var newly_lost = current_animation[3];
+					gamelogic.broadcast_animation_nonce(current_animation[4]);
 					thought_bubble.update_ticks(new_ticks);
-					if (new_ticks == 0 and gamelogic.lost):
+					if (newly_lost):
 						gamelogic.play_sound("timesup");
 						ripple = preload("res://Ripple.tscn").instance();
 						ripple_timer = 0;
 						ripple.rect_position += Vector2(12, 12);
 						self.add_child(ripple);
+					elif new_ticks == 0 and gamelogic.lost:
 						self.update_graphics();
 					elif (amount < 0):
 						gamelogic.play_sound("tick");

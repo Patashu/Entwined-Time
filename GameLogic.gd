@@ -3092,7 +3092,7 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, i: int, chrono
 	actor.actorname = actorname;
 	if actor.actorname == Actor.Name.TimeCrystalGreen or actor.actorname == Actor.Name.TimeCrystalMagenta:
 		actor.is_crystal = true;
-		update_goal_lock();
+		update_goal_lock(chrono);
 	actor.is_character = is_character;
 	actor.gamelogic = self;
 	actor.offset = Vector2(cell_size/2, cell_size/2);
@@ -3105,7 +3105,7 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, i: int, chrono
 		print("TODO")
 	return actor;
 	
-func update_goal_lock() -> void:
+func update_goal_lock(chrono: int) -> void:
 	var locked = false;
 	for actor in actors:
 		if actor.is_crystal and !actor.broken:
@@ -3119,6 +3119,8 @@ func update_goal_lock() -> void:
 		for goal in goals:
 			if !goal.locked:
 				goal.lock();
+				if (goal.dinged):
+					set_actor_var(goal, "dinged", false, chrono);
 
 func animation_nonce_fountain_dispense() -> int:
 	var result = animation_nonce_fountain;
@@ -4458,12 +4460,13 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: in
 	if (animation_nonce == -1):
 		animation_nonce = animation_nonce_fountain_dispense();
 	actor.update_ticks(actor.ticks + amount);
+	var newly_lost = false;
 	if (actor.ticks == 0 and !fuzzed and !actor.broken and (chrono < Chrono.META_UNDO or actor.time_colour == TimeColour.Void)):
-		if actor.actorname == Actor.Name.CuckooClock:
-			# end the world
+		if actor.actorname == Actor.Name.CuckooClock and !lost:
+			newly_lost = true;
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
 	add_undo_event([Undo.tick, actor, amount, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
-	add_to_animation_server(actor, [Animation.tick, amount, actor.ticks, animation_nonce]);
+	add_to_animation_server(actor, [Animation.tick, amount, actor.ticks, newly_lost, animation_nonce]);
 
 func lose(reason: String, suspect: Actor) -> void:
 	lost = true;
@@ -4572,7 +4575,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 			
 			#check goal lock when a crystal breaks or unbreaks
 			if (actor.is_crystal):
-				update_goal_lock();
+				update_goal_lock(chrono);
 			
 			var terrain = terrain_in_tile(actor.pos);
 			if value == true:
