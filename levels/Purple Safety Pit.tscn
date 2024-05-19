@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524292, 65536, 14, 524290, 65537, 14, 655364, 65541, 14, 655362, 65542, 14, 524292, 131072, 14, 262145, 131073, 1, 0, 131074, 20, 0, 131075, 23, 0, 131076, 20, 0, 131077, 7, 0, 131078, 14, 262145, 196608, 14, 655362, 196609, 14, 196615, 196610, 78, 0, 196611, 78, 0, 196612, 78, 0, 196613, 14, 196613, 196614, 14, 655364 )
+
+[node name="@@2880" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 8, 0, 131077, 2, 0 )
+
+[node name="@@2881" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 38, 0, 131077, 38, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Purple Safety Pit"
+level_author = "Slabdrill"
+level_replay = "Purple Safety Pit$mturn=39$xdxaxzxzxwxaxzdxzxdxaxzzxzxwxaxzdxzwaxzwxzxzdxdaxzwxzsxaxzzaxzzd"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

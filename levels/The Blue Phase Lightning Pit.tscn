@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 7, 0, 2, 2, 0, 6, 8, 0, 7, 1, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 524292, 65540, 79, 0, 65541, 14, 524290, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196615, 131075, 14, 262145, 131076, 79, 0, 131077, 14, 262145, 196611, 14, 655362, 196612, 14, 196614, 196613, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Blue Phase Lightning Pit"
+level_author = "Slabdrill"
+level_replay = "The First Pit [VAR4]$mturn=85$xaaawxdxzaxwzxzzzzxzwxdxzaxzdxzswxzxzaxdxzzswxzxzaxdxzsxwxdxzzxzzzsxdxzazxaxaxdxzsxzxzxdzddxdaxzzxzwzwzdwdxzzaxzxaxzzzwdddxa"
+heavy_max_moves = 4.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.0235294, 0.129412, 0.219608, 1 )
+target_track = 2.0

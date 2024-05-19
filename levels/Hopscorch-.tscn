@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 7, 0, 65539, 75, 0, 131075, 75, 0, 196611, 75, 0, 196612, 76, 0, 262144, 2, 0, 262148, 1, 0, 262149, 8, 0, 327680, 76, 0, 327681, 75, 0, 327682, 76, 0, 327683, 75, 0, 327684, 76, 0, 327685, 76, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Hopscorch?"
+level_author = "Slabdrill"
+level_replay = "Hopscorch?$mturn=94$dxaaaaxzdxzssxzdxzzzzzsssxzaxzzzasxzaxsxzdddxzzzssxzaxzzaxzaxzssxzdaaxzzaaxzzxzzssxsxzzdxzsxzssxzsxzdxzsxzsxzsxdxzsxzsxzxzzzwdxd"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

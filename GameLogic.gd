@@ -1465,16 +1465,19 @@ func initialize_level_list() -> void:
 	level_replacements[level_filenames.size()] = "Ω";
 	level_filenames.push_back("ChronoLabReactor")
 	
-	chapter_names.push_back("Intermission - Phase Blocks");
+	chapter_names.push_back("Phase Blocks");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(96);
 	chapter_replacements[chapter_names.size() - 1] = "[-]";
 	chapter_skies.push_back(Color("#2F2B56"));
 	chapter_tracks.push_back(6);
 	level_filenames.push_back("The Red Phase Pit")
+	level_filenames.push_back("Heavy Footing")
 	level_filenames.push_back("The Blue Phase Pit")
 	level_filenames.push_back("The Gray Phase Pit")
+	level_filenames.push_back("Safety Glass")
 	level_filenames.push_back("The Purple Phase Pit")
+	level_filenames.push_back("Just 3 Steps")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(4);
@@ -1482,6 +1485,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Blue Phase Pit [VAR1]")
 	level_filenames.push_back("The Gray Phase Pit [VAR1]")
 	level_filenames.push_back("The Purple Phase Pit [VAR1]")
+	level_filenames.push_back("Safety Glass [Safety Shortage]")
+	level_filenames.push_back("Purple Safety Pit")
+	level_filenames.push_back("The Blue Phase Lightning Pit")
+	level_filenames.push_back("The Purple Phase Lightning Pit")
 	
 	chapter_names.push_back("Floorboards");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1531,6 +1538,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Permafrost")
 	level_filenames.push_back("Sewer Crawl")
 	level_filenames.push_back("Antigrated")
+	level_filenames.push_back("Electrical Education")
 	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("The Zombie Pit")
 	level_filenames.push_back("Undying Army (Type A)")
@@ -1545,8 +1553,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Death Smiles")
 	level_filenames.push_back("Insurance Fraud")
 	level_filenames.push_back("Stable Loop")
+	level_filenames.push_back("Electrical Education [VAR1]")
 	level_filenames.push_back("Timelock")
 	level_filenames.push_back("Alternating Staircase")	
+	level_filenames.push_back("Grate Catch.")
 	level_filenames.push_back("Truly Unbounded Skies")
 	level_filenames.push_back("Truly Unbounded Skies [VAR1]")
 	
@@ -1666,6 +1676,14 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Combination Lockdown")
 	level_filenames.push_back("King Crimson-")
 	level_filenames.push_back("Wooden Gate")
+	level_filenames.push_back("Airstall (don't die please)")
+	level_filenames.push_back("Sandra's Magic Trick")
+	level_filenames.push_back("Iron Barbecue")
+	level_filenames.push_back("Cramped Roommates")
+	level_filenames.push_back("Self Containment")
+	level_filenames.push_back("Logging Out")
+	level_filenames.push_back("Logging Out [VAR1]")
+	level_filenames.push_back("In Defiance of Time")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1675,30 +1693,30 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Collaborative Motion")
 	level_filenames.push_back("Fuzzy Parkour [VAR1]")
-	level_filenames.push_back("Coyote TimeExEx")
-	level_filenames.push_back("Parity Drive")
+	level_filenames.push_back("Collaborative Motion")
+	level_filenames.push_back("Light Bridge")
+	level_filenames.push_back("The White Pit")
 	level_filenames.push_back("Hopscorch [VAR2]")
-	level_filenames.push_back("Graduation [VAR1]")
+	level_filenames.push_back("Slippery Glass [VAR2]")
 	level_filenames.push_back("Crate Moving Service")
+	level_filenames.push_back("Rapid Ascent")
+	level_filenames.push_back("Tile Selector")
+	level_filenames.push_back("Parity Drive")
 	level_filenames.push_back("Campfrost [VAR2]")
+	level_filenames.push_back("The Checkpoint Pit")
+	level_filenames.push_back("Graduation [VAR1]")
+	level_filenames.push_back("Tile Selector [VAR1]")
+	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
-	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
-	level_filenames.push_back("One-Way Bridge")
-	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("Side Shuffle")
+	level_filenames.push_back("Heavy Vertical")
 	level_filenames.push_back("Elevator Pitch")
-	level_filenames.push_back("Durability-")
+	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
-	level_filenames.push_back("Firemaze")
-	level_filenames.push_back("Firemaze [VAR1]")
-	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
-	level_filenames.push_back("Foot Wiggle [VAR3]")
-	level_filenames.push_back("[SPEEDRUN] A Way In-")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
-	level_filenames.push_back("Elevator Pitch [VAR1]")
-	level_filenames.push_back("Void Recovery")
+	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("Delay Circuit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1708,28 +1726,31 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("The Checkpoint Pit (checkpoint shortage)")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
+	level_filenames.push_back("One-Way Bridge")
+	level_filenames.push_back("Durability-")
+	level_filenames.push_back("Firemaze")
+	level_filenames.push_back("Firemaze [VAR1]")
+	level_filenames.push_back("Separated Escape")
+	level_filenames.push_back("Jenga-")
 	level_filenames.push_back("Woodskip")
 	level_filenames.push_back("Woodskip [VAR1]")
-	level_filenames.push_back("Rapid Ascent")
-	level_filenames.push_back("Green Slippery Glass")
-	level_filenames.push_back("Spelunking-- [VAR2]")
-	level_filenames.push_back("Separated Escape")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
-	level_filenames.push_back("Light Bridge")
-	level_filenames.push_back("Jenga-")
-	level_filenames.push_back("The Green Fire Pit")
-	level_filenames.push_back("The White Pit")
-	level_filenames.push_back("Sparkling Glass [VAR2]")
-	level_filenames.push_back("Side Shuffle")
-	level_filenames.push_back("Nomadic [VAR1]")
-	level_filenames.push_back("The Checkpoint Pit")
-	level_filenames.push_back("The Checkpoint Pit (checkpoint shortage)")
-	level_filenames.push_back("The Half-Magenta Pit")
-	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
-	level_filenames.push_back("Delay Circuit")
-	level_filenames.push_back("Crate Sorting Facility")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("The Green Fire Pit")
+	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
+	level_filenames.push_back("Foot Wiggle [VAR3]")
+	level_filenames.push_back("Void Recovery")
+	level_filenames.push_back("Elevator Pitch [VAR1]")
+	level_filenames.push_back("[SPEEDRUN] A Way In-")
+	level_filenames.push_back("The Half-Magenta Pit")
+	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
+	level_filenames.push_back("Crate Sorting Facility")
+	level_filenames.push_back("Spelunking-- [VAR2]")
+	level_filenames.push_back("Repeat Customer")
+	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1739,9 +1760,21 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Heavy Vertical")
-	level_filenames.push_back("Tile Selector")
-	level_filenames.push_back("Tile Selector [VAR1]")
+	level_filenames.push_back("Combination Lock")
+	level_filenames.push_back("The Time Crystal Pits")
+	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
+	level_filenames.push_back("Limitations of Love. [VAR1]")
+	level_filenames.push_back("Stack Split")
+	level_filenames.push_back("Unstacking Station")
+	level_filenames.push_back("The Steel Crate Pit")
+	level_filenames.push_back("Donking Skies")
+	level_filenames.push_back("Wooden Glass")
+	level_filenames.push_back("The Greenish Pit")
+	level_filenames.push_back("The Greenish Pit")
+	level_filenames.push_back("The Voidish Pit")
+	level_filenames.push_back("Engine Room [VAR2]")
+	level_filenames.push_back("Hopscorch-")
+	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2783,7 +2816,6 @@ func find_modifier(id: int) -> void:
 				else:
 					condition = actor.pos == tile;
 				if condition:
-					var sprite = Sprite.new();
 					attach_modifier(actor, i, tile, id, Chrono.TIMELESS);
 					found = true;
 					break;

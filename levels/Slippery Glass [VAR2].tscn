@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -23,11 +23,10 @@ tile_data = PoolIntArray( 65538, 118, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Sparkling Glass [VAR2]"
+level_name = "Slippery Glass [VAR2]"
 level_author = "Slabdrill"
-level_replay = "Sparkling Glass [VAR2]$mturn=55$wxdxzdxdxddwsxdxzzxzxzzzxddxawaaxzzzzxzzzwxdxzzddxdxzzaxzzwxdxzdxzzddxwxdxzzxdxd"
+level_replay = "Slippery Glass [VAR2]$mturn=55$wxdxzdxdxddwsxdxzzxzxzzzxddxawaaxzzzzxzzzwxdxzzddxdxzzaxzzwxdxzdxzzddxwxdxzzxdxd"
 heavy_max_moves = 5.0
 light_max_moves = 4.0
-clock_turns = ""
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0

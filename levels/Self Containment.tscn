@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524292, 65536, 14, 262145, 65539, 15, 0, 65541, 14, 589826, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 524292, 131072, 14, 262145, 131075, 14, 262148, 131076, 27, 0, 131077, 14, 327681, 131079, 1, 0, 131080, 14, 262145, 196608, 14, 262145, 196609, 2, 0, 196610, 8, 0, 196611, 33, 0, 196612, 32, 0, 196613, 33, 0, 196615, 7, 0, 196616, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 655364 )
+
+[node name="@@1795" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 39, 0 )
+
+[node name="@@1796" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 29, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Self Containment"
+level_author = "Sandra53"
+level_replay = "Self Containment$mturn=50$xwxdxasxzxzzxddddxdddxwxdxzzzzzxzxaaaxzzzzxaxwdwasxzxzzxzxzzzsdxzzdxdxwxd"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0

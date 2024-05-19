@@ -7,27 +7,27 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 1, 1, 0, 655361, 8, 0, 720897, 124, 0, 786432, 14, 196613, 786433, 14, 196614, 786434, 14, 196615 )
+tile_data = PoolIntArray( 0, 1, 0, 6, 7, 0, 655360, 2, 0, 655366, 8, 0, 720896, 26, 0, 720902, 26, 0 )
 
-[node name="@@232" type="TileMap" parent="."]
+[node name="@@252" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 655361, 7, 0, 720897, 2, 0 )
+tile_data = PoolIntArray( 655360, 37, 0, 655366, 37, 0 )
 
-[node name="@@233" type="TileMap" parent="."]
+[node name="@@253" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 720897, 37, 0 )
+tile_data = PoolIntArray( 655360, 124, 0, 655366, 127, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Truly Unbounded Skies"
 level_author = "Slabdrill"
-level_replay = "Truly Unbounded Skies$mturn=109$xdsxaxzzxwzwxaxzaxzdxzzxwxwxaxzaxzxzswxaxzaxzxzzswxaxzaxzxzzswxaxzaxzzxzzxwxwxaxzaxzxzswxaxzaxzxzzswxaxzaxzxzzswxaxzxzzxzxwxwxaxzaxzxzswxaxzaxzxzzswxaxzaxzxzzswxaxzzxzzzw"
+level_replay = "Truly Unbounded Skies$mturn=94$waxwxzzxsxwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzxzzasxsxzzwxsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzwxzsxzxzz"
 heavy_max_moves = 2.0
-light_max_moves = 3.0
+light_max_moves = 2.0
 clock_turns = ""
-target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
 target_track = 1.0

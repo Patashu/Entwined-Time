@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 126, 0, 1, 14, 196613, 2, 14, 196614, 3, 14, 524292, 65536, 8, 0, 65538, 7, 0, 65539, 14, 262145, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 524291, 131075, 14, 655364, 196608, 96, 0, 196609, 97, 0, 196610, 14, 262145, 262144, 99, 0, 262145, 53, 0, 262146, 14, 262145, 327680, 103, 0, 327681, 2, 0, 327682, 14, 262145, 393216, 14, 196613, 393217, 14, 196614, 393218, 14, 655364 )
+
+[node name="@@3416" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196609, 87, 0, 262145, 87, 0, 327681, 1, 0 )
+
+[node name="@@3417" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196609, 27, 0, 262145, 68, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Repeat Customer (Insight)"
+level_author = "Slabdrill"
+level_replay = "Repeat Customer (Insight)$mturn=23$aaaaaaaaawzzzzzzzzzxwzdd"
+heavy_max_moves = 10.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0

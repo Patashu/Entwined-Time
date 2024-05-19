@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 65536, 14, 262145, 65537, 15, 0, 65538, 33, 0, 65539, 14, 655362, 65540, 14, 524292, 131072, 14, 262145, 131073, 24, 0, 131074, 33, 0, 131075, 1, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 32, 0, 196610, 33, 0, 196611, 7, 0, 196612, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655364 )
+
+[node name="@@2123" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 30, 0, 131074, 2, 0, 196610, 8, 0 )
+
+[node name="@@2124" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 21, 0, 131074, 28, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Cramped Roommates"
+level_author = "Sandra53"
+level_replay = "Cramped Roommates$mturn=12$waxaxzzwaxzdxzzd"
+heavy_max_moves = 2.0
+light_max_moves = 1.0
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
