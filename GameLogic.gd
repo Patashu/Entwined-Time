@@ -1294,7 +1294,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheMagentaPit")
 	level_filenames.push_back("TheGrayPit")
 	level_filenames.push_back("PaperPlanes")
-	level_filenames.push_back("TimelessBridge")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(48);
@@ -1305,7 +1304,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheMagentaPitEx")
 	level_filenames.push_back("TheGrayPitEx")
 	level_filenames.push_back("PaperPlanesEx")
-	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Towerplex")
 	level_filenames.push_back("TheMagentaPitEx2")
 	level_filenames.push_back("InvisibleBridgeLMagenta")
@@ -1545,7 +1543,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("The Zombie Pit")
 	level_filenames.push_back("Undying Army (Type A)")
-	level_filenames.push_back("Spare Door.")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
@@ -1570,9 +1567,11 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#514025"));
 	chapter_tracks.push_back(5);
 	level_filenames.push_back("Wooden Crates Tutorial")
+	level_filenames.push_back("TimelessBridge")
 	level_filenames.push_back("Wooden Gate")
 	level_filenames.push_back("Cramped Roommates")
 	level_filenames.push_back("Hokey Pokey")
+	level_filenames.push_back("Spare Door.")
 	level_filenames.push_back("Power Crates Tutorial")
 	level_filenames.push_back("PezDispenser")
 	level_filenames.push_back("Donk")
@@ -1584,9 +1583,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Wooden Glass")
 	level_filenames.push_back("TheoryOfEverythingA")
 	level_filenames.push_back("TheoryOfEverythingB")
-	level_filenames.push_back("The Steel Crate Pit")
+	level_filenames.push_back("Woodskip")
+	level_filenames.push_back("Low Ceiling")
 	level_filenames.push_back("Unstacking Station")
 	level_filenames.push_back("Donking Skies")
+	level_filenames.push_back("The Steel Crate Pit")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1663,6 +1664,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Soft Landing")
 	level_filenames.push_back("Coyote Time")
+	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Hot Soup [VAR2]")
 	level_filenames.push_back("Heavy Moving Service [VAR1]")
@@ -1752,7 +1754,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Firemaze [VAR1]")
 	level_filenames.push_back("Separated Escape")
 	level_filenames.push_back("Jenga-")
-	level_filenames.push_back("Woodskip")
 	level_filenames.push_back("Woodskip [VAR1]")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
@@ -1800,7 +1801,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Purest Verticalest")
 	level_filenames.push_back("Third Roommate [VAR-]")
 	level_filenames.push_back("Second Wind [VAR1]")
-	level_filenames.push_back("Low Ceiling")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
