@@ -2016,14 +2016,6 @@ func ready_map() -> void:
 		elif (any_layer_has_this_tile(Tiles.PhaseWallPurple)):
 			has_phase_walls = true;
 			
-		if (any_layer_has_this_tile(Tiles.RepairStation)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
-			has_repair_stations = true;
-	
-	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.PhaseLightningBlue)):
 			has_phase_lightning = true;
 		elif (any_layer_has_this_tile(Tiles.PhaseLightningRed)):
@@ -2032,7 +2024,15 @@ func ready_map() -> void:
 			has_phase_lightning = true;
 		elif (any_layer_has_this_tile(Tiles.PhaseLightningPurple)):
 			has_phase_lightning = true;
-		
+			
+		if (any_layer_has_this_tile(Tiles.RepairStation)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
+			has_repair_stations = true;
+	
+	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.Checkpoint)):
 			has_checkpoints = true;
 		elif (any_layer_has_this_tile(Tiles.CheckpointBlue)):
