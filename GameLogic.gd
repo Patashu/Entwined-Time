@@ -1577,6 +1577,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
 	level_filenames.push_back("Steel Crates Tutorial")
+	level_filenames.push_back("Crunch Time")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
@@ -1661,6 +1662,8 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Rushing Rivers")
+	level_filenames.push_back("Green Sokoban")
+	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Soft Landing")
 	level_filenames.push_back("Coyote Time")
@@ -1810,7 +1813,10 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("booster tutorial")
+	level_filenames.push_back("green booster tutorial")
 	level_filenames.push_back("The Wall (alpha build)")
+	level_filenames.push_back("Cannon")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
