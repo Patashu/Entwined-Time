@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -31,7 +31,7 @@ tile_data = PoolIntArray( 262145, 38, 0 )
 script = ExtResource( 2 )
 level_name = "Crunch Time"
 level_author = "Sandra53"
-level_replay = "Crunch Time$mturn=43$sddxddxzddxsxzxzxdxzzxzdzzzddxddxwxdxzzzxzzxswxddxzzxzzzwaaxz"
+level_replay = "Crunch Time$mturn=32$sdxsxzdxddxzxzxdxdxwzzxzzzaxwxaxzwxdxzddxzzaxzzz"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
 clock_turns = "2"
