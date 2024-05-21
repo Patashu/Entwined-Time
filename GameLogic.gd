@@ -7194,6 +7194,7 @@ func looks_like_level(custom: String) -> bool:
 	return false;
 	
 func deserialize_custom_level(custom: String) -> Node:
+	custom = custom.strip_edges();
 	if custom.find("\n") >= 0:
 		custom = custom.replace("`", "");
 	else:

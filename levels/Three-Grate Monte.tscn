@@ -18,7 +18,7 @@ tile_data = PoolIntArray( 7, 5, 0, 196612, 32, 0 )
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Three-Grate Monte"
-level_replay = "Three-Grate Monte$mturn=57$xdsxddwddxzzxzxdxzzzzaxwxaxzdxwzxzxwxzaxzzzdwddxzxzzxdxawxdxzxzzdwxaxzxwxddddxzaaxzxz"
+level_replay = "Three-Grate Monte$mturn=65$xdsxddwddxzzxzxdxzzzzaxwxaxzdxwzxzxwxzaxzzzdwddxzxzzxdxawzwzwxdxzdxzwxaxzzxzzzzzaaaxddddxzxz"
 heavy_max_moves = 6.0
 light_max_moves = 6.0
 target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
