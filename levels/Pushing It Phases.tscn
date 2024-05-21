@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,10 +18,8 @@ tile_data = PoolIntArray( 196612, 8, 0, 196613, 2, 0 )
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Pushing It Phases"
-level_author = "Patashu"
-level_replay = "Pushing It Phases$mturn=29$xaxaxzxzxdxaaaxwxaxzxwxdxzzzxdzxzxdzxzxdzzzddd"
+level_replay = "Pushing It Phases$mturn=23$aaaxwxaxzwdxzzxdzzzxzxdxzxdzzddd"
 heavy_max_moves = 5.0
 light_max_moves = 3.0
-clock_turns = ""
 target_sky = Color( 0.184314, 0.168627, 0.337255, 1 )
 target_track = 6.0
