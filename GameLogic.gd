@@ -3445,7 +3445,9 @@ boost_pad_reentrance: bool = false) -> int:
 		if actor.actorname == Actor.Name.Heavy and !is_retro:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
-				if (dir.y >= 0 and sticky_actor.pushable()):
+				if (sticky_actor == actor):
+					continue;
+				if (dir.y <= -1 and sticky_actor.pushable()):
 					continue;
 				if (pushers_list.has(sticky_actor)):
 					continue;
