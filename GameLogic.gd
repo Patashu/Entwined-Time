@@ -3441,12 +3441,16 @@ boost_pad_reentrance: bool = false) -> int:
 		#(AD15: Non-broken time crystals are sticky toppable! In fact, Heavy can PUSH them upwards thanks to some special logic elsewhere :D)
 		#(FIX: Broken time crystals can't be sticky top'd because they're basically not things
 		#(FIX: If Heavy is being pushed downwards, don't try to sticky top that thing down)
-		if actor.actorname == Actor.Name.Heavy and !is_retro and dir.y >= 0:
+		#(FIX: Do allow a broken crate to be sticky top'd upwards since we wouldn't push it
+		if actor.actorname == Actor.Name.Heavy and !is_retro:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
+				if (dir.y >= 0 and sticky_actor.pushable()):
+					continue;
 				if (pushers_list.has(sticky_actor)):
 					continue;
-				if (strength_check(actor.strength, sticky_actor.heaviness) and (!sticky_actor.broken or !sticky_actor.is_crystal)):
+				if (strength_check(actor.strength, sticky_actor.heaviness)
+				and (!sticky_actor.broken or !sticky_actor.is_crystal)):
 					sticky_actor.just_moved = true;
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
 					# hack fix for 'heavy steps right, starts falling and pulls something down with it'
