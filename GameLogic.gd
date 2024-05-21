@@ -1572,8 +1572,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TimelessBridge")
 	level_filenames.push_back("Wooden Gate")
 	level_filenames.push_back("Cramped Roommates")
-	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("Spare Door.")
+	level_filenames.push_back("Hokey Pokey")
+	level_filenames.push_back("Pry")
 	level_filenames.push_back("Power Crates Tutorial")
 	level_filenames.push_back("PezDispenser")
 	level_filenames.push_back("Donk")
@@ -1589,6 +1590,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Woodskip")
 	level_filenames.push_back("Low Ceiling")
 	level_filenames.push_back("Unstacking Station")
+	level_filenames.push_back("Donk [VAR2]")
 	level_filenames.push_back("Donking Skies")
 	level_filenames.push_back("The Steel Crate Pit")
 	
@@ -1668,6 +1670,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Soft Landing")
+	level_filenames.push_back("Yet Another Crate Pit")
+	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Hot Soup [VAR1]")
@@ -1709,6 +1713,17 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Logging Out")
 	level_filenames.push_back("Logging Out [VAR1]")
 	level_filenames.push_back("In Defiance of Time")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Sandra53's World (Page 2)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Red Replica")
+	level_filenames.push_back("Too Many Roommates")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1789,10 +1804,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
 	level_filenames.push_back("Limitations of Love. [VAR1]")
 	level_filenames.push_back("The Crate Pit-")
+	level_filenames.push_back("The Crate Pit- [VAR1]")
 	level_filenames.push_back("Stack Split")
 	level_filenames.push_back("The Greenish Pit")
 	level_filenames.push_back("The Voidish Pit")
 	level_filenames.push_back("Engine Room [VAR2]")
+	level_filenames.push_back("Light's Way In")
+	level_filenames.push_back("Foot Wiggle [VAR4]")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
@@ -1817,6 +1835,7 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("booster tutorial")
 	level_filenames.push_back("green booster tutorial")
+	level_filenames.push_back("SO LONG GAY HOLE")
 	level_filenames.push_back("The Wall (alpha build)")
 	level_filenames.push_back("Cannon")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());

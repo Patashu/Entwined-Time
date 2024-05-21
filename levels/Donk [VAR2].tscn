@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 9, 7, 0, 65545, 14, 196609, 131081, 14, 262145, 196617, 14, 262145, 262148, 14, 524290, 262149, 14, 196614, 262150, 14, 524292, 262153, 14, 262145, 327684, 14, 262145, 327685, 31, 0, 327686, 14, 262145, 327689, 14, 262145, 393220, 14, 262145, 393221, 69, 0, 393222, 14, 262145, 393225, 14, 262145, 458754, 14, 524290, 458755, 14, 196614, 458756, 14, 655364, 458757, 69, 0, 458758, 14, 327681, 458761, 14, 262145, 524288, 14, 524290, 524289, 14, 196614, 524290, 14, 589828, 524293, 5, 0, 524297, 14, 262145, 589824, 14, 262145, 589825, 1, 0, 589826, 14, 262145, 589829, 5, 0, 589833, 14, 262145, 655360, 14, 262145, 655361, 2, 0, 655362, 14, 262145, 655365, 5, 0, 655366, 8, 0, 655369, 14, 262145, 720896, 14, 655362, 720897, 14, 196614, 720898, 14, 655363, 720899, 14, 196614, 720900, 14, 196614, 720901, 14, 196614, 720902, 14, 196614, 720903, 14, 196614, 720904, 14, 196614, 720905, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Donk [VAR2]"
+level_author = "Slabdrill"
+level_replay = "Donk [VAR2]$mturn=49$wswxwaaxwxzzzaxzxzsawdxwxzzxzxzzdsxzxzzwaxzzxzzxwxsssssxzxzzzzzddxw"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0
