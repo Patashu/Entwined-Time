@@ -2511,7 +2511,7 @@ func make_actors() -> void:
 			heavy_actor.color = heavy_color;
 			tint_actor(heavy_actor, count);
 			heavy_actor.powered = heavy_max_moves != 0;
-			if (heavy_actor.pos.x > (map_x_max / 2)):
+			if (heavy_tile.x > (map_x_max / 2)):
 				heavy_actor.facing_left = true;
 			heavy_actor.update_graphics();
 			count += 1;
@@ -2565,7 +2565,7 @@ func make_actors() -> void:
 			light_actor.color = light_color;
 			tint_actor(light_actor, count);
 			light_actor.powered = light_max_moves != 0;
-			if (light_actor.pos.x > (map_x_max / 2)):
+			if (light_tile.x > (map_x_max / 2)):
 				light_actor.facing_left = true;
 			light_actor.update_graphics();
 			count += 1;
