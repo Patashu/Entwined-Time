@@ -1533,9 +1533,11 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "B";
 	chapter_skies.push_back(Color("#28442A"));
 	chapter_tracks.push_back(1);
+	level_filenames.push_back("Life After Death")
 	level_filenames.push_back("Hospital")
 	level_filenames.push_back("Grate Access")
 	level_filenames.push_back("Permafrost")
+	level_filenames.push_back("Integrity Checker")
 	level_filenames.push_back("Sewer Crawl")
 	level_filenames.push_back("Antigrated")
 	level_filenames.push_back("Iron Barbecue")
