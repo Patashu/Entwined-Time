@@ -298,11 +298,11 @@ func prepare_chapter() -> void:
 		yyy = 15;
 		
 	# final squish
-	if (advanced_end - normal_start) > 26 or ((advanced_end - advanced_start) == 14 and (advanced_start - normal_start) == 12):
+	if (advanced_end - normal_start) > 26 or ((advanced_end - advanced_start) >= 14 and (advanced_start - normal_start) >= 12):
 		y = -1;
 		
 	# one more squish!!
-	if (advanced_end - normal_start) > 27:
+	if (advanced_end - normal_start) > 27 or ((advanced_end - advanced_start) >= 14 and (advanced_start - normal_start) >= 12):
 		y_max = 15;
 		yy = 13;
 		yyy = 14;

@@ -1544,6 +1544,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Electrical Education")
 	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("The Zombie Pit")
+	level_filenames.push_back("Island of Stability")
 	level_filenames.push_back("Undying Army (Type A)")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -1684,6 +1685,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Light Moving Service [VAR1]")
 	level_filenames.push_back("Light Moving Service [VAR2]")
 	level_filenames.push_back("Engine Room [VAR1]")
+	level_filenames.push_back("Integrity Checker [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
