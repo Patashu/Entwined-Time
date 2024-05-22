@@ -3,31 +3,29 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 5, 0, 0, 6, 111, 0, 65536, 1, 0, 65537, 7, 0, 65540, 8, 0, 65541, 111, 0, 65542, 111, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196615 )
+tile_data = PoolIntArray( 4, 0, 0, 5, 111, 0, 65536, 1, 0, 65537, 7, 0, 65539, 8, 0, 65540, 111, 0, 65541, 111, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196615 )
 
-[node name="@@1944" type="TileMap" parent="."]
+[node name="@@1161" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65541, 2, 0 )
+tile_data = PoolIntArray( 65540, 2, 0 )
 
-[node name="@@1945" type="TileMap" parent="."]
+[node name="@@1162" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65541, 36, 0 )
+tile_data = PoolIntArray( 65540, 36, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Integrity Checker"
-level_author = "Patashu"
-level_replay = "Integrity Checker$mturn=22$dawxdxzzzxzxdxwxzadxdxzzaaaxzaa"
+level_replay = "Integrity Checker$mturn=13$dawxdxzzzxzxaaaxaa"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
-clock_turns = ""
 target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
 target_track = 1.0

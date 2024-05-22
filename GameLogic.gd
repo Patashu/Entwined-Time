@@ -1549,6 +1549,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("Undying Army (Type B)")
+	level_filenames.push_back("Integrity Checker [VAR1]")
 	level_filenames.push_back("Toggle Latch")
 	level_filenames.push_back("Three-Grate Monte")
 	level_filenames.push_back("Hookjump")
@@ -1576,6 +1577,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hokey Pokey")
 	level_filenames.push_back("Pry")
 	level_filenames.push_back("Power Crates Tutorial")
+	level_filenames.push_back("Pushing It Power")
 	level_filenames.push_back("PezDispenser")
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
@@ -1815,6 +1817,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Engine Room [VAR2]")
 	level_filenames.push_back("Light's Way In")
 	level_filenames.push_back("Foot Wiggle [VAR4]")
+	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);

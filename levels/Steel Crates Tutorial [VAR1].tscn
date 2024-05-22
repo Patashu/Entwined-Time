@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 655364, 65540, 1, 0, 65546, 14, 262145, 131072, 14, 262145, 131073, 7, 0, 131074, 48, 0, 131075, 48, 0, 131078, 2, 0, 131079, 13, 0, 131080, 8, 0, 131082, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 524292, 196612, 6, 0, 196613, 6, 0, 196614, 6, 0, 196615, 6, 0, 196616, 6, 0, 196617, 6, 0, 196618, 14, 262145, 262147, 14, 655362, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 655364 )
+
+[node name="@@554" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 111, 0, 131075, 32, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Steel Crates Tutorial [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Steel Crates Tutorial [VAR1]$mturn=74$dxsaaxwddaxzzzxzxsxdaxzxzxsaaxsxzzzxzdaxddwxzxzxzzzzzxzzaaaxwxwxdxwxzxzzwxdxwxaxzzxzxzzzwdxdxdsxzxzzzzxzzzaw"
+heavy_max_moves = 10.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0
