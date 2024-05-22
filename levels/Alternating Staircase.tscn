@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,9 +19,8 @@ tile_data = PoolIntArray( 1, 39, 0, 65540, 1, 0, 131074, 33, 0, 131075, 26, 0, 3
 script = ExtResource( 2 )
 level_name = "Alternating Staircase"
 level_author = "Slabdrill"
-level_replay = "Alternating Staircase$mturn=207$sdddddaxaxzaxaxaxaxzxzsxazwxaaaxdsxzxwxzzxsxzxadzwzxzxsdddxzxzaxaxzzzzxdzxdxaaxaaaadzddwzzsxzzxzzxsxazaxaaxwxaaxsxzzzzzddxwxzsxsxzzdxdaaxdaaxwdxzzxszzxzxaxdxwxzdxsddaaxdxdxaxwxzxszzxzxaxdxwxzdxsddaaxdxdxaxwxzxszzxzxaxdxwxzdxdsdaaxaxwxzxsxdxzzxzxdaxdxwxzdxsddaaazwswdszzzxzdzxzxzdxzxzzdxzxzzdxzxzzdxdxzzxsd"
+level_replay = "Alternating Staircase$mturn=192$sdddddaaaadzwzzzzsdddxaasaxaxaxaxzzaaxzadxzzzzzaxaadzddwzzszxzaaxzxzzxdxasaaaxaaaxzzzzzdxdaaxddxzxzzxdxaxwxzxszxdxdaaxaxwzzsdxzxaxdxwxzdxsddaaxaxwzzdsxzxaxdxwxzdxsddaaxaxwzzdsxzxaxdxwxzdxsddaaxaxwzzsdxzxaxdxwxzdxsddaaazwwwdszzzxzdzxzxzdxzxzzdzxzxzdzxzxzdxsddxzz"
 heavy_max_moves = 7.0
 light_max_moves = 6.0
-clock_turns = ""
 target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
 target_track = 1.0

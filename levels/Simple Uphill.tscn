@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 6, 1, 0, 7, 7, 0, 65541, 14, 196613, 65542, 14, 393219, 65543, 14, 4, 131076, 14, 262148, 131077, 129, 0, 131078, 14, 131074, 131079, 14, 589829, 196609, 2, 0, 196610, 8, 0, 196611, 14, 196609, 196613, 56, 0, 196614, 128, 0, 196615, 14, 262145, 262144, 14, 2, 262145, 14, 3, 262146, 14, 3, 262147, 14, 786439, 262148, 14, 4, 262149, 23, 0, 262150, 14, 2, 262151, 14, 589830, 327680, 14, 131074, 327681, 14, 131075, 327682, 14, 131075, 327683, 14, 131075, 327684, 14, 786435, 327685, 14, 196614, 327686, 14, 720899, 327687, 14, 131076 )
+
+[node name="@@146" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196613, 55, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Simple Uphill"
+level_author = "Sandra53"
+level_replay = "Simple Uphill$mturn=70$xwxdxzdxzxzxwxwxzwddwdxzdxzzdwdzzzzsxzxzdxdxzsxwxzddwdxzdxzzzsxzxzdxdxwdxzzwaawwxzxdxzddxzzzzzddw"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = "1,"
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

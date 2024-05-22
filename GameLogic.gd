@@ -1724,6 +1724,10 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Red Replica")
 	level_filenames.push_back("Too Many Roommates")
+	level_filenames.push_back("Jumpless Jack")
+	level_filenames.push_back("Simple Uphill")
+	level_filenames.push_back("Self Care")
+	level_filenames.push_back("Self Sacrifice")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1881,7 +1885,7 @@ func initialize_level_list() -> void:
 		if (ResourceLoader.exists(insight_path)):
 			var insight_level = load(insight_path).instance();
 			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
-			if (insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0):
+			if insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or insight_level_name.find("Theory Of Everything")  >= 0:
 				has_remix[level_name] = true;
 			insight_level.queue_free();
 		
