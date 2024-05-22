@@ -4642,7 +4642,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		# We also need to handle abysschime and meta-undoing it.
 		# (I'll write that logic separately just so it's not a giant mess, the performance hit is miniscule.)
 		if prop == "broken":
-			if actor.is_character:
+			if actor.is_main_character():
 				if value:
 					if (!actor_has_broken_event_anywhere(actor)):
 						add_to_animation_server(actor, [Animation.lose]);
