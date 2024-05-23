@@ -1597,6 +1597,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Unstacking Station")
 	level_filenames.push_back("Donk [VAR2]")
 	level_filenames.push_back("Donking Skies")
+	level_filenames.push_back("Simple Hierarchy")
 	level_filenames.push_back("The Steel Crate Pit")
 	
 	chapter_names.push_back("Victory Lap");
@@ -1735,6 +1736,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Simple Uphill")
 	level_filenames.push_back("Self Care")
 	level_filenames.push_back("Self Sacrifice")
+	level_filenames.push_back("Anonymous Delivery")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1823,6 +1825,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Light's Way In")
 	level_filenames.push_back("Foot Wiggle [VAR4]")
 	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
+	level_filenames.push_back("Phantom Push")
+	level_filenames.push_back("Phantom Push [VAR1]")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);

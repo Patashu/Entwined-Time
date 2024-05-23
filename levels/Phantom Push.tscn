@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196615, 4, 3, 0, 6, 32, 0, 7, 14, 196613, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65540, 26, 0, 65541, 26, 0, 65542, 26, 0, 65546, 14, 262145, 131072, 14, 262145, 131075, 14, 262148, 131076, 32, 0, 131078, 7, 0, 131079, 14, 262148, 131082, 14, 262145, 196608, 14, 262145, 196612, 128, 0, 196613, 8, 0, 196614, 2, 0, 196618, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 524291, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615, 262153, 27, 0, 262154, 14, 262145, 327682, 14, 262145, 327683, 1, 0, 327684, 22, 0, 327685, 22, 0, 327686, 22, 0, 327687, 22, 0, 327688, 22, 0, 327689, 22, 0, 327690, 14, 262145, 393218, 14, 655362, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 655364 )
+
+[node name="@@1063" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 23, 0, 131074, 23, 0, 131075, 23, 0, 131076, 23, 0, 131077, 23, 0, 131078, 23, 0, 131079, 23, 0, 131080, 23, 0, 131081, 23, 0, 196609, 23, 0, 196610, 23, 0, 196611, 23, 0, 196612, 23, 0, 196613, 23, 0, 196614, 23, 0, 196615, 23, 0, 196616, 23, 0, 196617, 23, 0, 262153, 23, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Phantom Push"
+level_author = "Slabdrill"
+level_replay = "Phantom Push$mturn=64$wxaxzaxaaaxaaawxzxzxaxswxzxzwxzzxzzzzzsxwxsxddxzzsxzzzzxzzddssdszzxaaaxzzzzaaaaaaxzzs"
+heavy_max_moves = 6.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0
