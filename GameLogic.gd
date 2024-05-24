@@ -1239,7 +1239,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("JetEngine")
 	level_filenames.push_back("PhotonDrive")
 	level_filenames.push_back("CarEngine")
-	level_filenames.push_back("FirefightersEx")
+	level_filenames.push_back("Firefighters (ladder shortage)")
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1489,8 +1489,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Safety Glass [Safety Shortage]")
 	level_filenames.push_back("Hopscorch-")
 	level_filenames.push_back("Purple Safety Pit")
-	level_filenames.push_back("The Blue Phase Lightning Pit")
-	level_filenames.push_back("The Purple Phase Lightning Pit")
+	level_filenames.push_back("The Phase Lightning Pit")
 	
 	chapter_names.push_back("Floorboards");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1690,6 +1689,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Light Moving Service [VAR2]")
 	level_filenames.push_back("Engine Room [VAR1]")
 	level_filenames.push_back("Integrity Checker [VAR2]")
+	level_filenames.push_back("Collectathon [VAR1]")
+	level_filenames.push_back("Firefighters (ladder shortage) [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1828,6 +1829,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
 	level_filenames.push_back("Phantom Push")
 	level_filenames.push_back("Phantom Push [VAR1]")
+	level_filenames.push_back("Anonymous Delivery [VAR1]")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);

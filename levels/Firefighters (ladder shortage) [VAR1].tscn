@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196609, 4, 14, 196609, 65536, 14, 262145, 65537, 1, 0, 65539, 7, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 23, 0, 131074, 23, 0, 131075, 23, 0, 131076, 14, 262145, 196608, 14, 262145, 196612, 14, 262145, 262144, 14, 262145, 262148, 14, 262145, 327680, 14, 262145, 327684, 14, 262145, 393216, 14, 262145, 393217, 2, 0, 393219, 8, 0, 393220, 14, 262145, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 655364 )
+
+[node name="@@8440" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 0, 0, 2, 0, 0, 3, 0, 0, 65537, 0, 0, 65538, 0, 0, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Firefighters (ladder shortage) [VAR1]"
+level_author = "Patashu"
+level_replay = "Firefighters (ladder shortage) [VAR1]$mturn=114$dxwxdxzaxzxzsxzxaxwxaxzdxzzwxzxzwxaxzdxdxzsxzzxzdxwxzdxzwxdxzaxzxwxzxzzxaxaxwxaxzdxzaxzdxzxzwxzxzaxwxzxzawxaxzzswxzxzzxzaxssxzzdxzzxzsxaxzwaxzxzzdxaxzwsxzxzaxaxzdxzssxzaxzzdaxzdxzz"
+heavy_max_moves = 2.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.231373, 0.247059, 0.101961, 1 )
+target_track = 4.0
