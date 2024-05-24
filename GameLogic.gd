@@ -1713,6 +1713,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("[Troll] - Light Instantly Dies.")
 	level_filenames.push_back("Liquidation")
 	level_filenames.push_back("Sandra's Idea")
+	level_filenames.push_back("Unpacking")
 	level_filenames.push_back("Smooth Sailing")
 	level_filenames.push_back("Combination Lockdown")
 	level_filenames.push_back("King Crimson-")
