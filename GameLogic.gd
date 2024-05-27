@@ -1588,14 +1588,14 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
-	level_filenames.push_back("Wooden Glass")
 	level_filenames.push_back("TheoryOfEverythingA")
 	level_filenames.push_back("TheoryOfEverythingB")
+	level_filenames.push_back("Donk [VAR2]")
+	level_filenames.push_back("Donking Skies")
+	level_filenames.push_back("Wooden Glass")
 	level_filenames.push_back("Woodskip")
 	level_filenames.push_back("Low Ceiling")
 	level_filenames.push_back("Unstacking Station")
-	level_filenames.push_back("Donk [VAR2]")
-	level_filenames.push_back("Donking Skies")
 	level_filenames.push_back("Simple Hierarchy")
 	level_filenames.push_back("The Steel Crate Pit")
 	
@@ -1904,6 +1904,7 @@ func initialize_level_list() -> void:
 			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
 			if insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or insight_level_name.find("Theory of Everything")  >= 0:
 				has_remix[level_name] = true;
+				has_remix[insight_level_name] = true;
 			insight_level.queue_free();
 		
 	refresh_puzzles_completed();

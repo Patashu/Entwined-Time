@@ -46,13 +46,16 @@ func _ready() -> void:
 		levelselectbutton.add_stylebox_override("disabled", stylebox);
 		levelselectbutton.add_stylebox_override("normal", stylebox);
 	
-	if gamelogic.has_remix.has(gamelogic.level_name) or gamelogic.level_name.find("(Remix)") >= 0:
-		if gamelogic.in_insight_level:
+	if gamelogic.in_insight_level:
+		if gamelogic.has_remix.has(gamelogic.level_name) or gamelogic.level_name.find("(Remix)") >= 0:
 			insightbutton.text = "Lose Remix";
 		else:
+			insightbutton.text = "Lose Insight";
+	elif gamelogic.has_insight_level:
+		if gamelogic.has_remix.has(gamelogic.level_name):
 			insightbutton.text = "Gain Remix";
-	elif gamelogic.in_insight_level:
-		insightbutton.text = "Lose Insight";
+		else:
+			insightbutton.text = "Gain Insight";
 	elif !gamelogic.has_insight_level:
 		insightbutton.disabled = true;
 		
