@@ -1528,7 +1528,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bridge Building")
 	level_filenames.push_back("Duplication")
 	
-	chapter_names.push_back("Afterlife (WIP)");
+	chapter_names.push_back("Afterlife");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(144);
 	chapter_replacements[chapter_names.size() - 1] = "B";
@@ -1565,7 +1565,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Truly Unbounded Skies")
 	level_filenames.push_back("Truly Unbounded Skies [VAR1]")
 	
-	chapter_names.push_back("Even More Crates (WIP)");
+	chapter_names.push_back("Even More Crates");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(160);
 	chapter_replacements[chapter_names.size() - 1] = "C";
