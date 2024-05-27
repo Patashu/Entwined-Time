@@ -1624,6 +1624,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("WallL2")
 	level_filenames.push_back("WallL2Ex")
 	level_filenames.push_back("PushingItL2")
+	level_filenames.push_back("PushingItL2Ex")
 	level_filenames.push_back("OrientationL2")
 	level_filenames.push_back("OrientationL2Ex")
 	level_filenames.push_back("OrientationL2Ex2")
@@ -1739,6 +1740,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Self Care")
 	level_filenames.push_back("Self Sacrifice")
 	level_filenames.push_back("Anonymous Delivery")
+	level_filenames.push_back("Stealing from Fort Knex")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1832,6 +1834,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Anonymous Delivery [VAR1]")
 	level_filenames.push_back("Ankh [VAR1]")
 	level_filenames.push_back("Quantum Entanglement [VAR1]")
+	level_filenames.push_back("Quantum Entanglement [VAR2]")
+	level_filenames.push_back("Island of Stability [VAR1]")
+	level_filenames.push_back("The Magenta Pit [VAR4]")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 524292, 65536, 14, 262145, 65547, 7, 0, 65548, 14, 262145, 131072, 14, 262145, 131074, 14, 196613, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 524291, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 196614, 131082, 14, 196614, 131083, 14, 196614, 131084, 14, 655364, 196608, 14, 262145, 196612, 8, 0, 196613, 1, 0, 196614, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 655364 )
+
+[node name="284" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 29, 0, 196613, 2, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Pushing It (Loop 2) [VAR1]"
+level_replay = "Pushing It (Loop 2) [VAR1]$mturn=73$aaaxwxaxzwdxzzxzzxzaaaxaxwxaxzzzzzxdxaaaxzxzzzxdxaaaxzwxaxzxdxsxzzxzxazxdxaxzwxadxzxzzxdxaxzwxaxzzzxzzzzzzxddd"
+heavy_max_moves = 6.0
+light_max_moves = 3.0
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,7 +18,7 @@ tile_data = PoolIntArray( 65540, 88, 0, 196609, 2, 0, 196610, 8, 0 )
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Simple Diffusion"
-level_author = "Sandra53"
+level_author = "Sandra53 & Patashu"
 level_replay = "Simple Diffusion$mturn=32$dxwxdxzxwxassxzwxdxzwddddxzxzzzxzzzddddxaaxsa"
 heavy_max_moves = 10.0
 light_max_moves = 10.0
