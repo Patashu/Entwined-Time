@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 47, 0, 1, 47, 0, 2, 47, 0, 3, 47, 0, 4, 47, 0, 65536, 47, 0, 65540, 47, 0, 131072, 47, 0, 131073, 20, 0, 131074, 47, 0, 131075, 20, 0, 131076, 47, 0, 196608, 47, 0, 196610, 47, 0, 196612, 47, 0, 262144, 47, 0, 262145, 47, 0, 262146, 47, 0, 262147, 47, 0, 262148, 47, 0 )
+
+[node name="@@818" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 8, 0, 65539, 2, 0, 131074, 88, 0, 196609, 1, 0, 196611, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Verdant Crossroads"
+level_author = "Sandra53"
+level_replay = "Verdant Crossroads$mturn=43$axddxwxzxzxzaxzxzxaxddxwxzzxzxaaxzxzzaxazxzxaxddxwxzzxzxaazxdxaxzzxzxaa"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

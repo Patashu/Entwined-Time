@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 524292, 65536, 14, 262145, 65547, 14, 262145, 131072, 14, 262145, 131074, 2, 0, 131075, 15, 0, 131076, 15, 0, 131077, 15, 0, 131082, 1, 0, 131083, 14, 262145, 196608, 14, 589826, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 196614, 196619, 14, 589828, 262144, 14, 262145, 262155, 14, 262145, 327680, 14, 262145, 327682, 8, 0, 327683, 15, 0, 327684, 15, 0, 327685, 15, 0, 327690, 7, 0, 327691, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 196614, 393227, 14, 655364 )
+
+[node name="@@221" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 36, 0, 131075, 36, 0, 131076, 36, 0, 131077, 36, 0, 327683, 35, 0, 327684, 35, 0, 327685, 35, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Crate Tunneling"
+level_author = "Slabdrill"
+level_replay = "Crate Tunneling$mturn=113$wxwxzxzxddddxwxzzxzxzzxwxsxzwxwxzwxzxzxddxwxzxzxzzaddxwxzzxzxadxwxzxzxadxwxzzzzddddxzwddddxzxzzzzzadxwxzzdwddsxzxzzzzzaxdxzwddsxzxzzzzaaxdxzwddsxzxzzzzzdddddxd"
+heavy_max_moves = 4.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0

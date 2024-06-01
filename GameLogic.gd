@@ -1422,6 +1422,8 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(80);
 	level_filenames.push_back("Elementary")
 	level_filenames.push_back("BlockageEx")
+	level_filenames.push_back("Crystal Removing Service")
+	level_filenames.push_back("The Time Crystal Pits")
 	level_filenames.push_back("Smuggler")
 	level_filenames.push_back("Frangible")
 	level_filenames.push_back("Switcheroo")
@@ -1480,6 +1482,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Purple Phase Pit [VAR1]")
 	level_filenames.push_back("Phase Lightning")
 	level_filenames.push_back("Lethal Rewind")
+	level_filenames.push_back("Bunnyhop")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(4);
@@ -1591,13 +1594,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("TheoryOfEverythingA")
 	level_filenames.push_back("TheoryOfEverythingB")
 	level_filenames.push_back("Donk [VAR2]")
-	level_filenames.push_back("Donking Skies")
 	level_filenames.push_back("Wooden Glass")
-	level_filenames.push_back("Woodskip")
-	level_filenames.push_back("Low Ceiling")
 	level_filenames.push_back("Unstacking Station")
 	level_filenames.push_back("Simple Hierarchy")
+	level_filenames.push_back("Woodskip")
 	level_filenames.push_back("The Steel Crate Pit")
+	level_filenames.push_back("Low Ceiling")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1672,6 +1674,7 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Rushing Rivers")
+	level_filenames.push_back("Rise As One")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Pushing It")
@@ -1741,6 +1744,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Self Sacrifice")
 	level_filenames.push_back("Anonymous Delivery")
 	level_filenames.push_back("Stealing from Fort Knex")
+	level_filenames.push_back("Verdant Crossroads")
+	level_filenames.push_back("Erase [VAR1]")
+	level_filenames.push_back("Curveball")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1817,7 +1823,6 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Combination Lock")
-	level_filenames.push_back("The Time Crystal Pits")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
 	level_filenames.push_back("Limitations of Love. [VAR1]")
 	level_filenames.push_back("The Crate Pit-")
@@ -1836,8 +1841,26 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Quantum Entanglement [VAR1]")
 	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	level_filenames.push_back("Island of Stability [VAR1]")
-	level_filenames.push_back("The Magenta Pit [VAR4]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Slabdrill's World (Page 4)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("The Magenta Pit [VAR4]")
+	level_filenames.push_back("Acrobatics (Loop 2)")
+	level_filenames.push_back("Timeless Bridge [VAR2]")
+	level_filenames.push_back("Bunnyhop [VAR1]")
+	level_filenames.push_back("Orbital Drop [VAR1]")
+	level_filenames.push_back("Orbital Drop [VAR2]")
+	level_filenames.push_back("Rise As One [VAR1]")
+	level_filenames.push_back("Crate Tunneling")
+	level_filenames.push_back("Undying Army (Type C)")
+	level_filenames.push_back("The Joke Pit")
+	level_filenames.push_back("The Yellow Pit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1847,9 +1870,10 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Purest Verticalest")
 	level_filenames.push_back("Third Roommate [VAR-]")
 	level_filenames.push_back("Second Wind [VAR1]")
+	level_filenames.push_back("Friendship Paradox [VAR1]")
+	level_filenames.push_back("Purest Verticalest")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1864,6 +1888,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("SO LONG GAY HOLE")
 	level_filenames.push_back("The Wall (alpha build)")
 	level_filenames.push_back("Cannon")
+	level_filenames.push_back("Violent pushback")
+	level_filenames.push_back("time crash")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

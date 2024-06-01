@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 35, 14, 196613, 36, 14, 196614, 37, 14, 196614, 38, 14, 196614, 39, 14, 196614, 40, 14, 196615, 41, 8, 0, 65536, 1, 0, 65572, 2, 0, 65574, 13, 0, 65575, 98, 0, 65576, 55, 0, 65577, 14, 262148, 131072, 14, 262148, 131107, 14, 196613, 131108, 14, 196614, 131109, 14, 196614, 131110, 14, 196614, 131111, 14, 196614, 131112, 14, 196615 )
+
+[node name="@@145" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 41, 7, 0, 65572, 118, 0, 65575, 99, 0 )
+
+[node name="@@146" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 41, 40, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Violent pushback"
+level_author = "Meo"
+level_replay = "Violent pushback$mturn=25$ddczddzcdzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddzddccccccccccccccccccccccccccccccccccccczd"
+heavy_max_moves = 5.0
+light_max_moves = 0.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.317647, 0.286275, 1 )
+target_track = 0.0
