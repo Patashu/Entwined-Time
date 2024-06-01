@@ -20,4 +20,4 @@ light_max_moves = 7
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 2, 39, 0, 131081, 39, 0 )
+tile_data = PoolIntArray( 2, 39, 0, 65545, 36, 0, 131081, 39, 0 )
