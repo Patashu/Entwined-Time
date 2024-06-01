@@ -23,7 +23,7 @@ tile_data = PoolIntArray( 65540, 1, 0, 131074, 7, 0, 196609, 32, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Iron Crates (Insight)"
-level_replay = "Iron Crates (Insight)$mturn=33$xsawdddsawaassdwawdwwasdssddwasaww"
+level_name = "Iron Crates (Remix)"
+level_replay = "Iron Crates (Remix)$mturn=33$xsawdddsawaassdwawdwwasdssddwasaww"
 heavy_max_moves = 0
 light_max_moves = 33

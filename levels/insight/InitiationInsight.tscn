@@ -11,7 +11,7 @@ tile_data = PoolIntArray( 1, 2, 0, 2, 8, 0, 4, 1, 0, 8, 7, 0, 65536, 14, 196613,
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 1 )
-level_name = "Initiation (Insight)"
-level_replay = "Initiation (Insight)$mturn=6$dddxddd"
+level_name = "Initiation (Remix)"
+level_replay = "Initiation (Remix)$mturn=6$dddxddd"
 heavy_max_moves = 3
 light_max_moves = 3
