@@ -1520,9 +1520,9 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("Magenta Adventure")
 	level_filenames.push_back("Board Ring A")
-	level_filenames.push_back("Board Ring B")
 	level_filenames.push_back("Gain Leverage")
 	level_filenames.push_back("Blackberry Bush")
+	level_filenames.push_back("Verdant Crossroads")
 	level_filenames.push_back("Cement Pit [VAR1]")
 	level_filenames.push_back("Triple Boarded")
 	level_filenames.push_back("Phantom Heist [Low Power]")
@@ -1593,11 +1593,11 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("TheoryOfEverythingA")
 	level_filenames.push_back("TheoryOfEverythingB")
-	level_filenames.push_back("Donk [VAR2]")
 	level_filenames.push_back("Wooden Glass")
 	level_filenames.push_back("Unstacking Station")
 	level_filenames.push_back("Simple Hierarchy")
 	level_filenames.push_back("Woodskip")
+	level_filenames.push_back("Donk [VAR2]")
 	level_filenames.push_back("The Steel Crate Pit")
 	level_filenames.push_back("Low Ceiling")
 	
@@ -1744,7 +1744,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Self Sacrifice")
 	level_filenames.push_back("Anonymous Delivery")
 	level_filenames.push_back("Stealing from Fort Knex")
-	level_filenames.push_back("Verdant Crossroads")
 	level_filenames.push_back("Erase [VAR1]")
 	level_filenames.push_back("Curveball")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -1933,7 +1932,9 @@ func initialize_level_list() -> void:
 		if (ResourceLoader.exists(insight_path)):
 			var insight_level = load(insight_path).instance();
 			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
-			if insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or insight_level_name.find("Theory of Everything")  >= 0:
+			if (insight_level_name.find("(Insight)")) >= 0:
+				pass
+			elif insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or insight_level_name.find("Theory of Everything") >= 0 or insight_level_name.find("Board Ring B") >= 0:
 				has_remix[level_name] = true;
 				has_remix[insight_level_name] = true;
 			insight_level.queue_free();

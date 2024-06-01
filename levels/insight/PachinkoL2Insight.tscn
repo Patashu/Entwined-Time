@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 14, 524290, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65538, 14, 262145, 65541, 2, 0, 65544, 14, 262145, 131073, 14, 524290, 131074, 14, 655364, 131076, 14, 262148, 131077, 1, 0, 131078, 14, 262148, 131080, 14, 655362, 131081, 14, 524292, 196609, 14, 262145, 196613, 14, 262148, 196616, 27, 0, 196617, 14, 262145, 262144, 14, 524290, 262145, 14, 655364, 262147, 14, 262148, 262151, 14, 262148, 262153, 14, 655362, 262154, 14, 524292, 327680, 14, 262145, 327690, 14, 262145, 393216, 14, 262145, 393217, 8, 0, 393225, 7, 0, 393226, 14, 262145, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196614, 458760, 14, 196614, 458761, 14, 196614, 458762, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Pachinko (Loop 2) (Remix)"
+level_author = "Patashu"
+level_replay = "Pachinko (Loop 2) (Remix)$mturn=179$aaaxwzxzzaxdxaxdxzsxzzddxzzzsxzzxzadxwzxzzxaaxawxzxzdxzxzsxdxzdwxzxzdxaxzxwzwxaxzxzxzwxaxzasxzxzzwxzzwdxzddxazzzaxzzdxzswxzxzaxdxzswxzxzzaxdxzzswxzxzaxdxzswxzxzzaxdxzsxzxwxadxzxzxzdxzxzswxaxzaxzxzzzxwzwzxwxaxzdwxzxzawxaxzaxzxzaxaxzdxzxzxdxwxaxzaxzxzsxzxzzxdxasxzddxzzzwaa"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
