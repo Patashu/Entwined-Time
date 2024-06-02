@@ -316,6 +316,7 @@ enum Tiles {
 	HeavyMimic, #128
 	LightMimic, #129
 	GhostFog, #130
+	Eclipse, #131
 }
 var voidlike_tiles = [];
 
@@ -1519,7 +1520,7 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
-	level_filenames.push_back("Magenta Adventure")
+	level_filenames.push_back("Green Adventure [VAR1]")
 	level_filenames.push_back("Board Ring A")
 	level_filenames.push_back("Gain Leverage")
 	level_filenames.push_back("Blackberry Bush")
@@ -1973,6 +1974,7 @@ var has_boulders = false;
 var has_nudges = false;
 var has_limited_undo = false;
 var has_repair_stations = false;
+var has_eclipses = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2167,6 +2169,9 @@ func ready_map() -> void:
 			has_nudges = true;
 		elif (any_layer_has_this_tile(Tiles.NudgeWestGreen)):
 			has_nudges = true;
+			
+		if (any_layer_has_this_tile(Tiles.Eclipse)):
+			has_eclipses = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -3080,6 +3085,7 @@ func prepare_audio() -> void:
 	sounds["bootup"] = preload("res://sfx/bootup.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
 	sounds["bump"] = preload("res://sfx/bump.ogg");
+	sounds["eclipse"] = preload("res://sfx/eclipse.ogg");
 	sounds["fall"] = preload("res://sfx/fall.ogg");
 	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
 	sounds["greenfire"] = preload("res://sfx/greenfire.ogg");
@@ -4921,6 +4927,7 @@ func meta_undo_replay() -> bool:
 
 var fuzzed: bool = false;
 func character_undo(is_silent: bool = false) -> bool:
+	var eclipsed: bool = false;
 	if (won or lost): return false;
 	if (heavy_selected):
 		
@@ -4942,6 +4949,11 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
 		
+		if (has_eclipses and terrain.has(Tiles.Eclipse)):
+			play_sound("eclipse");
+			eclipsed = true;
+			fuzzed = true;
+		
 		#the undo itself
 		if (terrain.has(Tiles.Fuzz)):
 			fuzzed = true;
@@ -4956,21 +4968,24 @@ func character_undo(is_silent: bool = false) -> bool:
 				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
 					continue
 				undo_one_event(event, Chrono.CHAR_UNDO);
-			time_passes(Chrono.TIMELESS);
 		else:
 			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 			for event in events:
 				undo_one_event(event, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
+			
+		if (fuzzed):
+			time_passes(Chrono.TIMELESS);
+		else:
 			time_passes(Chrono.CHAR_UNDO);
 		
 		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
-			if (!fuzzed):
+			if (!fuzzed or eclipsed):
 				play_sound("undostrong");
 			if (!currently_fast_replay()):
-				if (fuzzed):
+				if (fuzzed and !eclipsed):
 					undo_effect_strength = 0.25;
 					undo_effect_per_second = undo_effect_strength*(1/0.5);
 					undo_effect_color = meta_color;
@@ -5000,6 +5015,10 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
 		
+		if (has_eclipses and terrain.has(Tiles.Eclipse)):
+			play_sound("eclipse");
+			fuzzed = true;
+		
 		#the undo itself
 		if (terrain.has(Tiles.Fuzz)):
 			fuzzed = true;
@@ -5014,21 +5033,24 @@ func character_undo(is_silent: bool = false) -> bool:
 				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
 					continue
 				undo_one_event(event, Chrono.CHAR_UNDO);
-			time_passes(Chrono.TIMELESS);
 		else:
 			var events = light_undo_buffer.pop_at(light_turn - 1);
 			for event in events:
 				undo_one_event(event, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
+		
+		if (fuzzed):
+			time_passes(Chrono.TIMELESS);
+		else:
 			time_passes(Chrono.CHAR_UNDO);
 			
 		append_replay("z");
 		adjust_meta_turn(1);
 		if (!is_silent):
-			if (!fuzzed):
+			if (!fuzzed or eclipsed):
 				play_sound("undostrong");
 			if (!currently_fast_replay()):
-				if (fuzzed):
+				if (fuzzed and !eclipsed):
 					undo_effect_strength = 0.25;
 					undo_effect_per_second = undo_effect_strength*(1/0.5);
 					undo_effect_color = meta_color;
@@ -5971,7 +5993,8 @@ func character_move(dir: Vector2) -> bool:
 			chr = "d";
 	var result = false;
 	if heavy_selected:
-		if ((heavy_actor.broken and !terrain_in_tile(heavy_actor.pos).has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
+		var pos = heavy_actor.pos;
+		if ((heavy_actor.broken and !terrain_in_tile(pos).has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		finish_animations(Chrono.MOVE);
@@ -5981,8 +6004,12 @@ func character_move(dir: Vector2) -> bool:
 		else:
 			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
+		if (result != Success.No and has_eclipses and terrain_in_tile(pos).has(Tiles.Eclipse)):
+			fuzzed = true;
+			play_sound("eclipse");
 	else:
-		if ((light_actor.broken and !terrain_in_tile(light_actor.pos).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
+		var pos = light_actor.pos;
+		if ((light_actor.broken and !terrain_in_tile(pos).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		finish_animations(Chrono.MOVE);
@@ -5992,6 +6019,9 @@ func character_move(dir: Vector2) -> bool:
 		else:
 			result = move_actor_relative(light_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
+		if (result != Success.No and has_eclipses and terrain_in_tile(pos).has(Tiles.Eclipse)):
+			fuzzed = true;
+			play_sound("eclipse");
 	if (result == Success.Yes):
 		if (!heavy_selected):
 			play_sound("lightstep")
@@ -6018,7 +6048,10 @@ func character_move(dir: Vector2) -> bool:
 				try_move_mimic(mimic, dir);
 	if (result != Success.No or nonstandard_won):
 		if (!nonstandard_won):
-			time_passes(Chrono.MOVE);
+			if (fuzzed):
+				time_passes(Chrono.TIMELESS);
+			else:
+				time_passes(Chrono.MOVE);
 		if anything_happened_meta():
 			if heavy_selected:
 				if anything_happened_char():
@@ -6036,6 +6069,7 @@ func character_move(dir: Vector2) -> bool:
 		adjust_meta_turn(1);
 	elif (voidlike_puzzle):
 		adjust_meta_turn(0);
+	fuzzed = false;
 	return result != Success.No;
 
 func anything_happened_char(destructive: bool = true) -> bool:
