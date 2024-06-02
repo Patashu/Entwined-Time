@@ -385,6 +385,7 @@ var music_tracks = [];
 var music_info = [];
 var music_db = [];
 var now_playing = null;
+var nag_timer = null;
 var speakers = [];
 var target_track = -1;
 var current_track = -1;
@@ -2297,13 +2298,16 @@ func intro_hop() -> void:
 	tween.start();
 
 func nag_label_start() -> void:
-	var timer = Timer.new();
-	timer.name = "NagTimer";
-	timer.connect("timeout", self, "nag_label_end");
-	actorsfolder.add_child(timer);
-	timer.wait_time = 60*10; #10 minutes
-	timer.one_shot = true;
-	timer.start();
+	if (nag_timer != null):
+		if !nag_timer.is_stopped():
+			return;
+	nag_timer = Timer.new();
+	nag_timer.name = "NagTimer";
+	nag_timer.connect("timeout", self, "nag_label_end");
+	self.get_parent().add_child(nag_timer);
+	nag_timer.wait_time = 60*10; #10 minutes
+	nag_timer.one_shot = true;
+	nag_timer.start();
 	
 func nag_label_end() -> void:
 	if (ui_stack.size() == 0):
@@ -2314,11 +2318,13 @@ func nag_label_end() -> void:
 		label.text = "Stuck? Try Menu > Gain Insight.";
 		label.rect_position = Vector2(182,260)-actorsfolder.position;
 		label.flash();
+		if (nag_timer != null):
+			nag_timer.queue_free();
+			nag_timer = null;
 	else:
-		var timer = actorsfolder.get_node_or_null("NagTimer");
-		if (timer != null):
-			timer.wait_time = 60; # wait 1 more minute and try again
-			timer.start();
+		if (nag_timer != null):
+			nag_timer.wait_time = 60; # wait 1 more minute and try again
+			nag_timer.start();
 
 func ready_tutorial() -> void:
 	if (winlabel.visible):
@@ -2329,9 +2335,17 @@ func ready_tutorial() -> void:
 	# we're not in an insight (or remix)
 	# we have an insight (and not a remix)
 	# we haven't beaten this puzzle yet
+	# we've never used gain insight
+	# additionally, stop/restart it if we change puzzles, but don't stop/restart it if we restart
 	if (chapter == 0):
-		if in_insight_level or !has_insight_level or has_remix.has(level_name):
-			pass;
+		if (save_file.has("gain_insight") and save_file["gain_insight"] == true):
+			if (nag_timer != null):
+				nag_timer.queue_free();
+				nag_timer = null;
+		elif in_insight_level or !has_insight_level or has_remix.has(level_name):
+			if (nag_timer != null):
+				nag_timer.queue_free();
+				nag_timer = null;
 		else:
 			var levels_save_data = save_file["levels"];
 			if (!levels_save_data.has(level_name)):
@@ -2339,7 +2353,9 @@ func ready_tutorial() -> void:
 			else:
 				var level_save_data = levels_save_data[level_name];
 				if (level_save_data.has("won") and level_save_data["won"]):
-					pass;
+					if (nag_timer != null):
+						nag_timer.queue_free();
+						nag_timer = null;
 				else:
 					nag_label_start();
 	
@@ -5833,6 +5849,9 @@ func load_level(impulse: int, ignore_locked: bool = false) -> void:
 		return;
 	
 	if (impulse != 0):
+		if (nag_timer != null):
+			nag_timer.queue_free();
+			nag_timer = null;
 		is_custom = false; # at least until custom campaigns :eyes:
 	level_number = posmod(int(level_number), level_list.size());
 	
