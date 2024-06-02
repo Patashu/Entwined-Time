@@ -139,6 +139,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Menu.gd"
 }, {
+"base": "GoldLabel",
+"class": "NagLabel",
+"language": "GDScript",
+"path": "res://NagLabel.gd"
+}, {
 "base": "Label",
 "class": "NowPlaying",
 "language": "GDScript",
@@ -251,6 +256,7 @@ _global_script_class_icons={
 "LevelScene": "",
 "LevelSelect": "",
 "Menu": "",
+"NagLabel": "",
 "NowPlaying": "",
 "OneTimeSprite": "",
 "OutlinedLabel": "",

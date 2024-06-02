@@ -7,9 +7,9 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65540, 14, 655362, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 524292, 131072, 14, 262145, 131076, 54, 0, 131077, 54, 0, 131078, 54, 0, 131079, 54, 0, 131080, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 6, 14, 524290, 7, 14, 196614, 8, 14, 524292, 65536, 14, 262145, 65540, 14, 655362, 65541, 14, 196614, 65542, 14, 655364, 65543, 53, 0, 65544, 14, 262145, 131072, 14, 262145, 131076, 54, 0, 131077, 54, 0, 131078, 54, 0, 131079, 54, 0, 131080, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 655364 )
 
-[node name="@@929" type="TileMap" parent="."]
+[node name="@@464" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,7 +19,7 @@ tile_data = PoolIntArray( 131074, 2, 0, 131075, 8, 0, 131078, 7, 0, 131079, 1, 0
 script = ExtResource( 2 )
 level_name = "Crystal Removing Service"
 level_author = "Sandra53"
-level_replay = "Crystal Removing Service$mturn=46$xwxdxzaxwzxzxzxwdxadxzzxzxwdxadxazzzxzxwdxaxzzxzxdsxzaxzwaxzzdddxzzdd"
+level_replay = "Crystal Removing Service$mturn=64$xdaxwxaxzdxzzxzaxdxzxwzxaxzwxzxzxadxasxzxzzxadxasxzxzzdxwzxzwxzzxzaxaxwxaxzdxwzxzzxwxaxzxwxzzdddxzzdd"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
 clock_turns = ""

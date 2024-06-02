@@ -2295,9 +2295,52 @@ func intro_hop() -> void:
 	overactorsparticles.add_child(sprite);
 	tween.start();
 
+func nag_label_start() -> void:
+	var timer = Timer.new();
+	timer.name = "NagTimer";
+	timer.connect("timeout", self, "nag_label_end");
+	actorsfolder.add_child(timer);
+	timer.wait_time = 60*10; #10 minutes
+	timer.one_shot = true;
+	timer.start();
+	
+func nag_label_end() -> void:
+	if (ui_stack.size() == 0):
+		var label = Label.new();
+		label.script = preload("res://NagLabel.gd");
+		label.theme = preload("res://DefaultTheme.tres");
+		actorsfolder.add_child(label);
+		label.text = "Stuck? Try Menu > Gain Insight.";
+		label.rect_position = Vector2(182,260)-actorsfolder.position;
+		label.flash();
+	else:
+		var timer = actorsfolder.get_node_or_null("NagTimer");
+		if (timer != null):
+			timer.wait_time = 60; # wait 1 more minute and try again
+			timer.start();
+
 func ready_tutorial() -> void:
 	if (winlabel.visible):
 		return;
+	
+	# start a timer for 10 minutes to suggest Gain Insight if:
+	# we're in chapter 0
+	# we're not in an insight (or remix)
+	# we have an insight (and not a remix)
+	# we haven't beaten this puzzle yet
+	if (chapter == 0):
+		if in_insight_level or !has_insight_level or has_remix.has(level_name):
+			pass;
+		else:
+			var levels_save_data = save_file["levels"];
+			if (!levels_save_data.has(level_name)):
+				nag_label_start();
+			else:
+				var level_save_data = levels_save_data[level_name];
+				if (level_save_data.has("won") and level_save_data["won"]):
+					pass;
+				else:
+					nag_label_start();
 	
 	virtualbuttons.get_node("Verbs/SwapButton").visible = true;
 	virtualbuttons.get_node("Verbs/MetaUndoButton").visible = true;
