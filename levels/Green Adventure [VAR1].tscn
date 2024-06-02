@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,11 +17,9 @@ tile_data = PoolIntArray( 65542, 89, 0, 196614, 89, 0, 196616, 8, 0, 196617, 2, 
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Green Adventure (Remix)"
-level_author = "Patashu"
-level_replay = "Green Adventure (Remix)$mturn=65$xwxaxzdsxzwxaxzwaxzxzzswxaxzzdxzzzwxzaaazzzxzwaxawxzzxzzaxdxzaxssxdaxzxzzzdxdxzdddzzzdwdxz"
+level_name = "Green Adventure [VAR1]"
+level_replay = "Green Adventure [VAR1]$mturn=65$xwxaxzdsxzwxaxzwaxzxzzswxaxzzdxzzzwxzaaazzzxzwaxawxzzxzzaxdxzaxssxdaxzxzzzdxdxzdddzzzdwdxz"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
-clock_turns = ""
 target_sky = Color( 0.211765, 0.235294, 0.247059, 1 )
 target_track = 7.0
