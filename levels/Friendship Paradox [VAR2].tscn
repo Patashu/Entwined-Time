@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 28, 0, 8, 25, 0, 65540, 28, 0, 65544, 25, 0, 131076, 14, 2, 131077, 14, 4, 131078, 1, 0, 131079, 14, 2, 131080, 14, 4, 196612, 14, 65538, 196613, 14, 65540, 196614, 7, 0, 196615, 14, 65538, 196616, 14, 65540, 262148, 14, 65538, 262149, 14, 65540, 262150, 23, 0, 262151, 14, 65538, 262152, 14, 65540, 327680, 14, 196609, 327681, 12, 0, 327684, 14, 131074, 327685, 14, 131076, 327687, 14, 65538, 327688, 14, 65540, 393216, 14, 262145, 393217, 12, 0, 393223, 14, 65538, 393224, 14, 65540, 458752, 14, 262145, 458753, 12, 0, 458755, 2, 0, 458757, 8, 0, 458759, 14, 65538, 458760, 14, 65540, 524288, 14, 589824, 524289, 14, 3, 524290, 14, 4, 524291, 23, 0, 524292, 14, 2, 524293, 14, 3, 524294, 14, 3, 524295, 14, 917509, 524296, 14, 65540, 589824, 14, 131074, 589825, 14, 917512, 589826, 14, 917510, 589827, 14, 3, 589828, 14, 917509, 589829, 14, 917511, 589830, 14, 131075, 589831, 14, 131075, 589832, 14, 131076, 655360, 71, 0, 655361, 14, 131074, 655362, 14, 131075, 655363, 14, 131075, 655364, 14, 131075, 655365, 14, 131076, 655366, 71, 0, 655367, 71, 0, 655368, 71, 0, 720897, 71, 0, 720898, 71, 0, 720899, 71, 0, 720900, 71, 0, 720901, 71, 0 )
+
+[node name="@@193" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 131078, 72, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Friendship Paradox [VAR2]"
+level_author = "Slabdrill"
+level_replay = "Friendship Paradox [VAR2]$mturn=107$dxdxdxzxzwxaxzwxaxzdwxzxzdxzxzzzwxaxzsxwxaxzxzwxzxzaxwxdxzaaxzzsxzxwzxzwxaxzdxzxzsxwxdxzaxzzaaxzzsxzzwxaxzdxzxzsxwxdxzaxzzaaxzzsxzzwxaxzdxzzwxzwdxzwxzzxwxdxzxzxzxdxzwxz"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.0784314, 0.286275, 0.164706, 1 )
+target_track = 1.0

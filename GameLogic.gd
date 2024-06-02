@@ -1423,8 +1423,8 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(80);
 	level_filenames.push_back("Elementary")
 	level_filenames.push_back("BlockageEx")
-	level_filenames.push_back("Crystal Removing Service")
 	level_filenames.push_back("The Time Crystal Pits")
+	level_filenames.push_back("Crystal Removing Service")
 	level_filenames.push_back("Smuggler")
 	level_filenames.push_back("Frangible")
 	level_filenames.push_back("Switcheroo")
@@ -1861,6 +1861,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Undying Army (Type C)")
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Yellow Pit")
+	level_filenames.push_back("Friendship Paradox")
 	level_filenames.push_back("Meet Heavy (Loop 2)")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
