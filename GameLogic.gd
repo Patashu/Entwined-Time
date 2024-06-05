@@ -3795,11 +3795,18 @@ func actors_in_tile(pos: Vector2) -> Array:
 		if actor.pos == pos:
 			result.append(actor);
 	return result;
-	
-func terrain_in_tile(pos: Vector2) -> Array:
+
+func terrain_in_tile(pos: Vector2, xray: bool = false) -> Array:
 	var result = [];
 	for layer in terrain_layers:
 		result.append(layer.get_cellv(pos));
+	if (has_floorboards and !xray):
+		var found = false;
+		for i in range(result.size()):
+			if found:
+				result[i] = -99;
+			elif floorboards_dict.has(result[i]):
+				found = true;
 	return result;
 
 func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
@@ -3839,6 +3846,7 @@ func all_rotation(candidates: Array) -> void:
 					floorboard_counts[tile] = 0;
 
 var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
+var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true};
 
 func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 	if id in floorboards_ids:
@@ -3849,7 +3857,7 @@ func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 		terrain_layers[layer].set_cellv(tile, id);
 
 func set_cellv_rotation(id: int, tile: Vector2, layer: int, candidates: Array) -> void:
-	var terrain = terrain_in_tile(tile);
+	var terrain = terrain_in_tile(tile, true);
 	var count = 0;
 	for i in range(terrain.size()):
 		if terrain[i] in candidates:
@@ -3962,14 +3970,6 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 	# besides that, glass blocks prevent exit.
 	for id in terrain:
 		match id:
-			Tiles.Floorboards:
-				return false;
-			Tiles.MagentaFloorboards:
-				return false;
-			Tiles.GreenFloorboards:
-				return false;
-			Tiles.VoidFloorboards:
-				return false;
 			Tiles.OnewayEast:
 				blocked = is_retro and dir == Vector2.RIGHT;
 				if (blocked):
@@ -4041,14 +4041,6 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 	for i in range(terrain.size()):
 		var id = terrain[i];
 		match id:
-			Tiles.Floorboards:
-				return Success.Yes;
-			Tiles.MagentaFloorboards:
-				return Success.Yes;
-			Tiles.GreenFloorboards:
-				return Success.Yes;
-			Tiles.VoidFloorboards:
-				return Success.Yes;
 			Tiles.Wall:
 				result = Success.No;
 			Tiles.LockClosed:
