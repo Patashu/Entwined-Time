@@ -2217,6 +2217,9 @@ func ready_map() -> void:
 		elif (any_layer_has_this_tile(Tiles.PhaseBoardCrate)):
 			has_floorboards = true;
 			has_phaseboards = true;
+			
+		if (has_phaseboards):
+			phaseboards_rotation();
 	
 	calculate_map_size();
 	make_actors();
@@ -3896,6 +3899,9 @@ func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
 func floorboards_rotation() -> void:
 	all_rotation(floorboards_ids);
 	
+func phaseboards_rotation() -> void:
+	all_rotation(phaseboards_ids);	
+
 func fuzz_rotation() -> void:
 	all_rotation([Tiles.Fuzz]);
 	
