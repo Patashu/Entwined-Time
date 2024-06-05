@@ -1976,6 +1976,7 @@ var has_phase_lightning = false;
 var has_checkpoints = false;
 var has_green_fog = false;
 var has_floorboards = false;
+var has_phaseboards = false;
 var has_holes = false;
 var has_boost_pads = false;
 var has_slopes = false;
@@ -2070,6 +2071,7 @@ func ready_map() -> void:
 	has_checkpoints = false;
 	has_green_fog = false;
 	has_floorboards = false;
+	has_phaseboards = false;
 	has_holes = false;
 	has_boost_pads = false;
 	has_slopes = false;
@@ -2187,6 +2189,34 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.Eclipse)):
 			has_eclipses = true;
+			
+		if (any_layer_has_this_tile(Tiles.PhaseBoardRed)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardBlue)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardGray)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardPurple)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardDeath)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardLife)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardHeavy)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardLight)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardCrate)):
+			has_floorboards = true;
+			has_phaseboards = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -2211,7 +2241,7 @@ func ready_map() -> void:
 	
 	finish_animations(Chrono.TIMELESS);
 	update_info_labels();
-	check_won();
+	check_won(Chrono.TIMELESS);
 	
 	for goal in goals:
 		goal.instantly_reach_scalify();
@@ -2246,7 +2276,7 @@ func setup_limited_undo_sprites() -> void:
 	
 func update_limited_undo_sprite(pos: Vector2) -> void:
 	var sprite = limited_undo_sprites[pos];
-	var terrain = terrain_in_tile(pos);
+	var terrain = terrain_in_tile(pos, null, Chrono.TIMELESS, true);
 	var count = 0;
 	for id in terrain:
 		if id == Tiles.OneUndo:
@@ -3422,7 +3452,7 @@ boost_pad_reentrance: bool = false) -> int:
 	if (has_slopes and chrono < Chrono.META_UNDO and !is_retro):
 		success = try_enter(actor, dir, chrono, can_push, true, is_gravity, is_retro, pushers_list,
 	phased_out_of);
-		var terrain_there = terrain_in_tile(pos);
+		var terrain_there = terrain_in_tile(pos, actor, chrono);
 		var new_success = Success.Yes;
 		for id in terrain_there:
 			if id >= Tiles.SlopeNW and id <= Tiles.SlopeNW + 3:
@@ -3502,7 +3532,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# hole check
 		if (has_holes and chrono < Chrono.META_UNDO):
 			var actors = actors_in_tile(pos);
-			var terrain = terrain_in_tile(pos);
+			var terrain = terrain_in_tile(pos, actor, chrono);
 			if (terrain.has(Tiles.Floorboards) or terrain.has(Tiles.MagentaFloorboards) or terrain.has(Tiles.GreenFloorboards) or terrain.has(Tiles.VoidFloorboards)):
 				pass
 			else:
@@ -3518,7 +3548,7 @@ boost_pad_reentrance: bool = false) -> int:
 		
 		# floorboards check - happens now so it goes 'move off, then floorboards break' so as an undo 'floorboards come back, move is undone'
 		if (has_floorboards and chrono < Chrono.TIMELESS):
-			var old_terrain = terrain_in_tile(old_pos);
+			var old_terrain = terrain_in_tile(old_pos, actor, chrono);
 			for i in range(old_terrain.size() - 1):
 				var tile = old_terrain[i];
 				match tile:
@@ -3540,7 +3570,7 @@ boost_pad_reentrance: bool = false) -> int:
 						break;
 		
 		# update night and stars state
-		var terrain = terrain_in_tile(actor.pos);
+		var terrain = terrain_in_tile(actor.pos, actor, chrono);
 		if (has_night_or_stars):
 			update_night_and_stars(actor, terrain);
 		
@@ -3554,16 +3584,11 @@ boost_pad_reentrance: bool = false) -> int:
 		if (was_fall and !is_retro):
 			add_to_animation_server(actor, [Animation.sfx, "fall"]);
 		
-		#do trapdoor animation (removed until Teal Knight draws something better)
-		#if (dir == Vector2.DOWN):
-		#	var new_terrain = terrain_in_tile(actor.pos);
-		#	if new_terrain.has(Tiles.WoodenPlatform) or new_terrain.has(Tiles.LadderPlatform):
-		#		add_to_animation_server(actor, [Animation.trapdoor_opens, terrainmap.map_to_world(actor.pos)]);
 		add_to_animation_server(actor, [Animation.move, dir, is_retro, animation_nonce]);
 		
 		#ding logic
 		if (!actor.broken):
-			var old_terrain = terrain_in_tile(actor.pos - dir);
+			var old_terrain = terrain_in_tile(actor.pos - dir, actor, chrono);
 			if (!actor.is_main_character() and !actor.is_crystal):
 				if terrain.has(Tiles.CrateGoal):
 					if !actor.dinged:
@@ -3660,7 +3685,7 @@ boost_pad_reentrance: bool = false) -> int:
 						add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
 						break;
 				if (actor.propellor == null):
-					var terrain_above = terrain_in_tile(actor.pos + Vector2.UP);
+					var terrain_above = terrain_in_tile(actor.pos + Vector2.UP, actor, chrono);
 					for i in range(terrain_above.size()):
 						var id = terrain_above[i];
 						if (id == Tiles.Propellor):
@@ -3684,12 +3709,12 @@ boost_pad_reentrance: bool = false) -> int:
 			infinite_loop_check += 1;
 			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
 			infinite_loop_check -= 1;
-			if (slope_next_dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
+			if (slope_next_dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
 				set_actor_var(actor, "airborne", 2, chrono);
 				
 		# boost pad check
 		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
-			var old_terrain = terrain_in_tile(actor.pos - dir);
+			var old_terrain = terrain_in_tile(actor.pos - dir, actor, chrono);
 			if ((!is_retro and old_terrain.has(Tiles.BoostPad)) or old_terrain.has(Tiles.GreenBoostPad)):
 				animation_substep(chrono);
 				add_to_animation_server(actor, [Animation.sfx, "redfire"]);
@@ -3775,9 +3800,9 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 		#if (debug_prints):
 		#	print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
 		
-func check_checkpoints() -> void:
+func check_checkpoints(chrono: int) -> void:
 	if (heavy_turn > 0):
-		var terrain = terrain_in_tile(heavy_actor.pos);
+		var terrain = terrain_in_tile(heavy_actor.pos, heavy_actor, chrono);
 		if (terrain.has(Tiles.Checkpoint) or terrain.has(Tiles.CheckpointRed)):
 			add_to_animation_server(heavy_actor, [Animation.sfx, "undo"]);
 			while (heavy_turn > 0):
@@ -3793,7 +3818,7 @@ func check_checkpoints() -> void:
 			add_to_animation_server(heavy_actor, [Animation.heavy_timeline_finish_animations]);
 	
 	if (light_turn > 0):
-		var terrain = terrain_in_tile(light_actor.pos);
+		var terrain = terrain_in_tile(light_actor.pos, light_actor, chrono);
 		if (terrain.has(Tiles.Checkpoint) or terrain.has(Tiles.CheckpointBlue)):
 			add_to_animation_server(light_actor, [Animation.sfx, "undo"]);
 			while (light_turn > 0):
@@ -3815,7 +3840,29 @@ func actors_in_tile(pos: Vector2) -> Array:
 			result.append(actor);
 	return result;
 
-func terrain_in_tile(pos: Vector2, xray: bool = false) -> Array:
+func phaseboard_active(pos: Vector2, actor: Actor, chrono: int, id: int) -> bool:
+	match (id):
+		Tiles.PhaseBoardRed:
+			return heavy_selected;
+		Tiles.PhaseBoardBlue:
+			return !heavy_selected;
+		Tiles.PhaseBoardGray:
+			return chrono == Chrono.MOVE;
+		Tiles.PhaseBoardPurple:
+			return chrono == Chrono.CHAR_UNDO;
+		Tiles.PhaseBoardDeath:
+			return heavy_actor.broken or light_actor.broken;
+		Tiles.PhaseBoardLife:
+			return !(heavy_actor.broken or light_actor.broken);
+		Tiles.PhaseBoardHeavy:
+			return actor == heavy_actor;
+		Tiles.PhaseBoardLight:
+			return actor == light_actor;
+		Tiles.PhaseBoardCrate:
+			return actor != heavy_actor and actor != light_actor;
+	return false;
+
+func terrain_in_tile(pos: Vector2, actor: Actor = null, chrono: int = Chrono.TIMELESS, xray: bool = false) -> Array:
 	var result = [];
 	for layer in terrain_layers:
 		result.append(layer.get_cellv(pos));
@@ -3825,6 +3872,8 @@ func terrain_in_tile(pos: Vector2, xray: bool = false) -> Array:
 			if found:
 				result[i] = -99;
 			elif floorboards_dict.has(result[i]):
+				found = true;
+			elif phaseboards_dict.has(result[i]) and phaseboard_active(pos, actor, chrono, result[i]):
 				found = true;
 	return result;
 
@@ -3838,7 +3887,7 @@ func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
 	elif (actor.time_colour == TimeColour.Green):
 		return Chrono.CHAR_UNDO;
 	if (has_green_fog):
-		var terrain = terrain_in_tile(actor.pos);
+		var terrain = terrain_in_tile(actor.pos, actor, chrono);
 		if (terrain.has(Tiles.GreenFog)):
 			add_to_animation_server(actor, [Animation.sfx, "greenfire"]);
 			return Chrono.CHAR_UNDO;
@@ -3866,6 +3915,8 @@ func all_rotation(candidates: Array) -> void:
 
 var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
 var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true};
+var phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife, Tiles.PhaseBoardHeavy, Tiles.PhaseBoardLight, Tiles.PhaseBoardCrate];
+var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true};
 
 func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 	if id in floorboards_ids:
@@ -3876,7 +3927,7 @@ func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 		terrain_layers[layer].set_cellv(tile, id);
 
 func set_cellv_rotation(id: int, tile: Vector2, layer: int, candidates: Array) -> void:
-	var terrain = terrain_in_tile(tile, true);
+	var terrain = terrain_in_tile(tile, null, Chrono.TIMELESS, true);
 	var count = 0;
 	for i in range(terrain.size()):
 		if terrain[i] in candidates:
@@ -3975,12 +4026,12 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		if (has_night_or_stars):
 			for actor in actors:
 				if actor.pos == pos:
-					update_night_and_stars(actor, terrain_in_tile(pos));
+					update_night_and_stars(actor, terrain_in_tile(pos, actor, chrono));
 		
 	return Success.Surprise;
 
-func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_retro: bool) -> bool:
-	var terrain = terrain_in_tile(actor.pos);
+func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_retro: bool, chrono: int) -> bool:
+	var terrain = terrain_in_tile(actor.pos, actor, chrono);
 	var blocked = false;
 	flash_terrain = -1;
 	
@@ -4062,7 +4113,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 	if (pos.y > map_y_max):
 		return maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Mundane, chrono);
 	
-	var terrain = terrain_in_tile(pos);
+	var terrain = terrain_in_tile(pos, actor, chrono);
 
 	for i in range(terrain.size()):
 		var id = terrain[i];
@@ -4240,18 +4291,18 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			return result;
 	return result;
 	
-func is_suspended(actor: Actor):
+func is_suspended(actor: Actor, chrono: int):
 	if (actor.propellor != null):
 		return true;
 	if (!actor.climbs()):
 		return false;
-	var terrain = terrain_in_tile(actor.pos);
+	var terrain = terrain_in_tile(actor.pos, actor, chrono);
 	return terrain.has(Tiles.Ladder) || terrain.has(Tiles.LadderPlatform);
 
-func terrain_is_hazardous(actor: Actor, pos: Vector2) -> int:
+func terrain_is_hazardous(actor: Actor, pos: Vector2, chrono: int) -> int:
 	if (pos.y > map_y_max and actor.durability <= Durability.PITS):
 		return Durability.PITS;
-	var terrain = terrain_in_tile(pos);
+	var terrain = terrain_in_tile(pos, actor, chrono);
 	if (terrain.has(Tiles.Spikeball) and actor.durability <= Durability.SPIKES):
 		return Durability.SPIKES;
 	return -1;
@@ -4281,7 +4332,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	
 	# handle solidity in our tile, solidity in the tile over, hazards/surprises in the tile over
 	if (!actor.phases_into_terrain()):
-		if (current_tile_is_solid(actor, dir, is_gravity, is_retro)):
+		if (current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono)):
 			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
 				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
 			return Success.No;
@@ -4322,7 +4373,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			if (actor_there.actorname == Actor.Name.ChronoHelixRed):
 				if actor.actorname == Actor.Name.ChronoHelixBlue:
 					nonstandard_won = true;
-					check_won();
+					check_won(chrono);
 					add_to_animation_server(actor_there, [Animation.bump, -dir, -1]);
 					add_to_animation_server(actor, [Animation.move, dir/2, false, -1]);
 					add_to_animation_server(actor_there, [Animation.move, -dir/2, false, -1]);
@@ -4337,13 +4388,13 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					add_to_animation_server(actor_there, [Animation.move, -dir/2, false, -1]);
 					add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
 					add_to_animation_server(actor_there, [Animation.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
-					check_won();
+					check_won(chrono);
 					return Success.No;
 			
 			# Strength Rule
 			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
 			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness) and !can_eat(actor_there, actor):
-				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest).has(Tiles.GhostFog))):
+				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest, actor, chrono).has(Tiles.GhostFog))):
 					pushables_there.clear();
 					break;
 				else:
@@ -4372,7 +4423,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				continue;
 			var actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
 			if actor_there_result == Success.No:
-				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest).has(Tiles.GhostFog))):
+				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest, actor, chrono).has(Tiles.GhostFog))):
 					pushables_there.clear();
 					result = Success.Yes;
 					break;
@@ -4791,7 +4842,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 			if (actor.is_crystal):
 				update_goal_lock();
 			
-			var terrain = terrain_in_tile(actor.pos);
+			var terrain = terrain_in_tile(actor.pos, actor, chrono);
 			if value == true:
 				if (actor.actorname == Actor.Name.TimeCrystalGreen):
 					pass #done in eat_crystal now
@@ -4954,7 +5005,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			if !is_silent:
 				play_sound("bump");
 			return false;
-		var terrain = terrain_in_tile(heavy_actor.pos);
+		var terrain = terrain_in_tile(heavy_actor.pos, heavy_actor, Chrono.CHAR_UNDO);
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("rewindstopped");
@@ -4998,7 +5049,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			time_passes(Chrono.CHAR_UNDO);
 		
 		append_replay("z");
-		adjust_meta_turn(1);
+		adjust_meta_turn(1, Chrono.CHAR_UNDO);
 		if (!is_silent):
 			if (!fuzzed or eclipsed):
 				play_sound("undostrong");
@@ -5020,7 +5071,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			if !is_silent:
 				play_sound("bump");
 			return false;
-		var terrain = terrain_in_tile(light_actor.pos);
+		var terrain = terrain_in_tile(light_actor.pos, light_actor, Chrono.CHAR_UNDO);
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("rewindstopped");
@@ -5063,7 +5114,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			time_passes(Chrono.CHAR_UNDO);
 			
 		append_replay("z");
-		adjust_meta_turn(1);
+		adjust_meta_turn(1, Chrono.CHAR_UNDO);
 		if (!is_silent):
 			if (!fuzzed or eclipsed):
 				play_sound("undostrong");
@@ -5202,7 +5253,7 @@ func update_ghosts() -> void:
 		for event in events:
 			undo_one_event(event, Chrono.GHOSTS);
 	
-func adjust_meta_turn(amount: int) -> void:
+func adjust_meta_turn(amount: int, chrono: int) -> void:
 	#check ongoing 'magenta crystaled the current move' and clear:
 	if (light_filling_locked_turn_index > -1):
 		add_undo_event([Undo.light_filling_locked_turn_index, light_filling_locked_turn_index, -1], Chrono.CHAR_UNDO);
@@ -5219,15 +5270,15 @@ func adjust_meta_turn(amount: int) -> void:
 		heavy_filling_turn_actual = -1;
 	
 	if (has_checkpoints and amount > 0):
-		check_checkpoints();
+		check_checkpoints(chrono);
 	
 	meta_turn += amount;
 	#if (debug_prints):
 	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	update_ghosts();
-	check_won();
+	check_won(chrono);
 	
-func check_won() -> void:
+func check_won(chrono: int) -> void:
 	won = false;
 	var locked = false;
 	
@@ -5266,8 +5317,8 @@ func check_won() -> void:
 			break;
 	
 	if (!locked and !light_actor.broken and !heavy_actor.broken
-	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos))
-	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos))) or nonstandard_won:
+	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos, heavy_actor, chrono))
+	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos, light_actor, chrono))) or nonstandard_won:
 		won = true;
 		if (won and test_mode):
 			var level_info = terrainmap.get_node_or_null("LevelInfo");
@@ -5583,7 +5634,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 	var events = meta_undo_buffer.pop_back();
 	for event in events:
 		undo_one_event(event, Chrono.META_UNDO);
-	adjust_meta_turn(-1);
+	adjust_meta_turn(-1, Chrono.META_UNDO);
 	if (!is_silent):
 		cut_sound();
 		play_sound("metaundo");
@@ -5975,7 +6026,7 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 	animation_substep(Chrono.MOVE);
 	# TODO: refactor with character_move
 	var result = Success.No;
-	if actor.broken and !terrain_in_tile(actor.pos).has(Tiles.ZombieTile):
+	if actor.broken and !terrain_in_tile(actor.pos, actor, Chrono.MOVE).has(Tiles.ZombieTile):
 		return Success.No;
 	if (!valid_voluntary_airborne_move(actor, dir)):
 		result = Success.Surprise;
@@ -5988,12 +6039,12 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 		else:
 			play_sound("heavystep")
 		if (dir == Vector2.UP):
-			if heavy_selected and !is_suspended(actor):
+			if heavy_selected and !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 2, Chrono.MOVE);
-			elif !heavy_selected and !is_suspended(actor):
+			elif !heavy_selected and !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 2, Chrono.MOVE);
 		elif (dir == Vector2.DOWN):
-			if heavy_selected and !is_suspended(actor):
+			if heavy_selected and !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 0, Chrono.MOVE);
 	return result;
 
@@ -6012,7 +6063,7 @@ func character_move(dir: Vector2) -> bool:
 	var result = false;
 	if heavy_selected:
 		var pos = heavy_actor.pos;
-		if ((heavy_actor.broken and !terrain_in_tile(pos).has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
+		if ((heavy_actor.broken and !terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		finish_animations(Chrono.MOVE);
@@ -6022,12 +6073,12 @@ func character_move(dir: Vector2) -> bool:
 		else:
 			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
-		if (result != Success.No and has_eclipses and terrain_in_tile(pos).has(Tiles.Eclipse)):
+		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
 			fuzzed = true;
 			play_sound("eclipse");
 	else:
 		var pos = light_actor.pos;
-		if ((light_actor.broken and !terrain_in_tile(pos).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
+		if ((light_actor.broken and !terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
 		finish_animations(Chrono.MOVE);
@@ -6037,7 +6088,7 @@ func character_move(dir: Vector2) -> bool:
 		else:
 			result = move_actor_relative(light_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
-		if (result != Success.No and has_eclipses and terrain_in_tile(pos).has(Tiles.Eclipse)):
+		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
 			fuzzed = true;
 			play_sound("eclipse");
 	if (result == Success.Yes):
@@ -6046,15 +6097,15 @@ func character_move(dir: Vector2) -> bool:
 		else:
 			play_sound("heavystep")
 		if (dir == Vector2.UP):
-			if heavy_selected and !is_suspended(heavy_actor):
+			if heavy_selected and !is_suspended(heavy_actor, Chrono.MOVE):
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
-			elif !heavy_selected and !is_suspended(light_actor):
+			elif !heavy_selected and !is_suspended(light_actor, Chrono.MOVE):
 				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
 		elif (dir == Vector2.DOWN):
-			if heavy_selected and !is_suspended(heavy_actor):
+			if heavy_selected and !is_suspended(heavy_actor, Chrono.MOVE):
 				set_actor_var(heavy_actor, "airborne", 0, Chrono.MOVE);
 			#AD10: Light floats gracefully downwards
-			#elif !heavy_selected and !is_suspended(light_actor):
+			#elif !heavy_selected and !is_suspended(light_actor, Chrono.MOVE):
 			#	set_actor_var(light_actor, "airborne", 0, Chrono.MOVE);
 			
 		#mimics mimic
@@ -6084,9 +6135,9 @@ func character_move(dir: Vector2) -> bool:
 	else:
 		play_sound("bump")
 	if (result != Success.No or nonstandard_won):
-		adjust_meta_turn(1);
+		adjust_meta_turn(1, Chrono.MOVE);
 	elif (voidlike_puzzle):
-		adjust_meta_turn(0);
+		adjust_meta_turn(0, Chrono.MOVE);
 	fuzzed = false;
 	return result != Success.No;
 
@@ -6248,7 +6299,7 @@ func time_passes(chrono: int) -> void:
 				continue;
 			if (actor.durability > Durability.FIRE):
 				continue;
-			var terrain = terrain_in_tile(actor.pos);
+			var terrain = terrain_in_tile(actor.pos, actor, chrono);
 			#terrain.has(Tiles.Fire)
 			if (red and terrain.has(Tiles.PhaseLightningRed)):
 				actor.post_mortem = Durability.FIRE;
@@ -6268,7 +6319,7 @@ func time_passes(chrono: int) -> void:
 		# Nudges activate
 		var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
 		for actor in time_actors:
-			var terrain = terrain_in_tile(actor.pos);
+			var terrain = terrain_in_tile(actor.pos, actor, chrono);
 			for id in terrain:
 				if id >= Tiles.NudgeEast and id <= Tiles.NudgeEast + 3:
 					add_to_animation_server(actor, [Animation.sfx, "step"]);
@@ -6276,14 +6327,14 @@ func time_passes(chrono: int) -> void:
 					var attempt = move_actor_relative(actor, dir, chrono, false, false);
 					if (attempt == Success.Yes):
 						# nudge up now sets airborne like slopes do
-						if (dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
+						if (dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
 							set_actor_var(actor, "airborne", 2, chrono);
 						break;
 		
 		# Green nudges activate
 		if chrono < Chrono.META_UNDO:
 			for actor in actors:
-				var terrain = terrain_in_tile(actor.pos);
+				var terrain = terrain_in_tile(actor.pos, actor, chrono);
 				for id in terrain:
 					if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
 						add_to_animation_server(actor, [Animation.sfx, "step"]);
@@ -6291,7 +6342,7 @@ func time_passes(chrono: int) -> void:
 						var attempt = move_actor_relative(actor, dir, chrono, false, false);
 						if (attempt == Success.Yes):
 							# nudge up now sets airborne like slopes do
-							if (dir == Vector2.UP and !is_suspended(actor) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
+							if (dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
 								set_actor_var(actor, "airborne", 2, chrono);
 							break;
 	
@@ -6366,7 +6417,7 @@ func time_passes(chrono: int) -> void:
 			else:
 				clear_just_moveds = true;
 			
-			if actor.airborne == -1 and !is_suspended(actor):
+			if actor.airborne == -1 and !is_suspended(actor, chrono):
 				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or has_fallen[actor] <= 0)):
@@ -6378,7 +6429,7 @@ func time_passes(chrono: int) -> void:
 			
 			if actor.airborne == 0:
 				var did_fall = Success.No;
-				if (is_suspended(actor)):
+				if (is_suspended(actor, chrono)):
 					did_fall = Success.No;
 				else:
 					did_fall = move_actor_relative(actor, Vector2.DOWN, chrono, false, true);
@@ -6421,7 +6472,7 @@ func time_passes(chrono: int) -> void:
 		if (actor.in_night):
 			continue;
 		if (actor.airborne == 0):
-			if is_suspended(actor):
+			if is_suspended(actor, chrono):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
 			var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true,
@@ -6472,7 +6523,7 @@ func time_passes(chrono: int) -> void:
 			time_colour = TimeColour.Red;
 		add_to_animation_server(null, [Animation.fire_roars, time_colour])
 	for actor in time_actors:
-		var terrain = terrain_in_tile(actor.pos);
+		var terrain = terrain_in_tile(actor.pos, actor, chrono);
 		if !actor.broken and terrain.has(Tiles.Fire) and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
@@ -6486,7 +6537,7 @@ func time_passes(chrono: int) -> void:
 	# Green fire happens after regular fire, so you can have that matter if you'd like it to :D	
 	if chrono <= Chrono.CHAR_UNDO:
 		for actor in actors:
-			var terrain = terrain_in_tile(actor.pos);
+			var terrain = terrain_in_tile(actor.pos, actor, chrono);
 			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
 				actor.post_mortem = Durability.FIRE;
 				set_actor_var(actor, "broken", true, Chrono.CHAR_UNDO);
@@ -6510,7 +6561,7 @@ func time_passes(chrono: int) -> void:
 			for actor in actors:
 				var found_a_slope = false;
 				var slope_success = Success.No;
-				var terrain = terrain_in_tile(actor.pos);
+				var terrain = terrain_in_tile(actor.pos, actor, chrono);
 				for id in terrain:
 					if id >= Tiles.SlopeNW and id <= Tiles.SlopeNW + 3:
 						found_a_slope = true;
@@ -6543,21 +6594,21 @@ func time_passes(chrono: int) -> void:
 	if (has_repair_stations):
 		for actor in time_actors:
 			if (actor.broken):
-				var terrain = terrain_in_tile(actor.pos);
+				var terrain = terrain_in_tile(actor.pos, actor, chrono);
 				if (terrain.has(Tiles.RepairStation)):
 					set_actor_var(actor, "broken", false, chrono);
 					maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStation), false, false, chrono, -1);
 		if (chrono == Chrono.MOVE):
 			for actor in actors:
 				if (actor.broken):
-					var terrain = terrain_in_tile(actor.pos);
+					var terrain = terrain_in_tile(actor.pos, actor, chrono);
 					if (terrain.has(Tiles.RepairStationGray)):
 						set_actor_var(actor, "broken", false, chrono);
 						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGray), false, false, chrono, -1);
 		if chrono < Chrono.META_UNDO:
 			for actor in actors:
 				if (actor.broken):
-					var terrain = terrain_in_tile(actor.pos);
+					var terrain = terrain_in_tile(actor.pos, actor, chrono);
 					if (terrain.has(Tiles.RepairStationGreen)):
 						set_actor_var(actor, "broken", false, max(Chrono.CHAR_UNDO, chrono));
 						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGreen), false, true, chrono, -1);
@@ -6853,12 +6904,12 @@ func update_info_labels() -> void:
 	metaredobutton.visible = meta_redo_inputs != "";
 	
 	#also do fuzz indicator here
-	if terrain_in_tile(heavy_actor.pos).has(Tiles.Fuzz):
+	if terrain_in_tile(heavy_actor.pos, heavy_actor, Chrono.CHAR_UNDO).has(Tiles.Fuzz):
 		heavytimeline.fuzz_on();
 	else:
 		heavytimeline.fuzz_off();
 		
-	if terrain_in_tile(light_actor.pos).has(Tiles.Fuzz):
+	if terrain_in_tile(light_actor.pos, light_actor, Chrono.CHAR_UNDO).has(Tiles.Fuzz):
 		lighttimeline.fuzz_on();
 	else:
 		lighttimeline.fuzz_off();
