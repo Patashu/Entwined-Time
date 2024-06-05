@@ -1,4 +1,4 @@
-[gd_scene load_steps=386 format=2]
+[gd_scene load_steps=395 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -355,6 +355,15 @@
 [ext_resource path="res://assets/heavy_rising.png" type="Texture" id=353]
 [ext_resource path="res://assets/ghost_fog.png" type="Texture" id=354]
 [ext_resource path="res://assets/eclipse.png" type="Texture" id=355]
+[ext_resource path="res://assets/phase_board_purple.png" type="Texture" id=356]
+[ext_resource path="res://assets/phase_board_heavy.png" type="Texture" id=357]
+[ext_resource path="res://assets/phase_board_blue.png" type="Texture" id=358]
+[ext_resource path="res://assets/phase_board_gray.png" type="Texture" id=359]
+[ext_resource path="res://assets/phase_board_death.png" type="Texture" id=360]
+[ext_resource path="res://assets/phase_board_life.png" type="Texture" id=361]
+[ext_resource path="res://assets/phase_board_crate.png" type="Texture" id=362]
+[ext_resource path="res://assets/phase_board_light.png" type="Texture" id=363]
+[ext_resource path="res://assets/phase_board_red.png" type="Texture" id=364]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1505,3 +1514,39 @@ texture = ExtResource( 354 )
 [node name="Eclipse" type="Sprite" parent="."]
 position = Vector2( 344, 23 )
 texture = ExtResource( 355 )
+
+[node name="PhaseBoardRed" type="Sprite" parent="."]
+position = Vector2( 266, 131 )
+texture = ExtResource( 364 )
+
+[node name="PhaseBoardBlue" type="Sprite" parent="."]
+position = Vector2( 269, 132 )
+texture = ExtResource( 358 )
+
+[node name="PhaseBoardGray" type="Sprite" parent="."]
+position = Vector2( 271, 135 )
+texture = ExtResource( 359 )
+
+[node name="PhaseBoardPurple" type="Sprite" parent="."]
+position = Vector2( 275, 138 )
+texture = ExtResource( 356 )
+
+[node name="PhaseBoardDeath" type="Sprite" parent="."]
+position = Vector2( 279, 142 )
+texture = ExtResource( 360 )
+
+[node name="PhaseBoardLife" type="Sprite" parent="."]
+position = Vector2( 283, 146 )
+texture = ExtResource( 361 )
+
+[node name="PhaseBoardHeavy" type="Sprite" parent="."]
+position = Vector2( 285, 152 )
+texture = ExtResource( 357 )
+
+[node name="PhaseBoardLight" type="Sprite" parent="."]
+position = Vector2( 291, 155 )
+texture = ExtResource( 363 )
+
+[node name="PhaseBoardCrate" type="Sprite" parent="."]
+position = Vector2( 294, 163 )
+texture = ExtResource( 362 )

@@ -135,6 +135,15 @@ enum Tiles {
 	LightMimic, #129
 	GhostFog, #130
 	Eclipse, #131
+	PhaseBoardRed, #132
+	PhaseBoardBlue, #133
+	PhaseBoardGray, #134
+	PhaseBoardPurple, #135
+	PhaseBoardDeath, #136
+	PhaseBoardLife, #137
+	PhaseBoardHeavy, #138
+	PhaseBoardLight, #139
+	PhaseBoardCrate, #140
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -326,6 +335,15 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.LightMimic)
 		picker_array.append(Tiles.GhostFog)
 		picker_array.append(Tiles.Eclipse)
+		picker_array.append(Tiles.PhaseBoardRed)
+		picker_array.append(Tiles.PhaseBoardBlue)
+		picker_array.append(Tiles.PhaseBoardGray)
+		picker_array.append(Tiles.PhaseBoardPurple)
+		picker_array.append(Tiles.PhaseBoardDeath)
+		picker_array.append(Tiles.PhaseBoardLife)
+		picker_array.append(Tiles.PhaseBoardHeavy)
+		picker_array.append(Tiles.PhaseBoardLight)
+		picker_array.append(Tiles.PhaseBoardCrate)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -813,7 +831,7 @@ func picker_tooltip() -> void:
 		Tiles.GreenFog:
 			text = "Green Fog: Actors in Green Fog don't create rewind events."
 		Tiles.Floorboards:
-			text = "Floorboards: Solidity/Surprises of lower layer terrain in this tile is ignored, including Holes. When an Actor leaves a tile with Floorboards using a non-retro move: The Floorboards is destroyed. In a stack of Floorboards, only the topmost one is considered."
+			text = "Floorboards: Existence of lower layer terrain in this tile is ignored, including Holes. When an Actor leaves a tile with Floorboards using a non-retro move: The Floorboards is destroyed. In a stack of Floorboards, only the topmost one is considered."
 		Tiles.MagentaFloorboards:
 			text = "Magenta Floorboards: A Floorboards that can be destroyed also by retroactive moves."
 		Tiles.GreenFloorboards:
@@ -902,6 +920,24 @@ func picker_tooltip() -> void:
 			text = "Ghost Fog: If an Actor fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
 		Tiles.Eclipse:
 			text = "Eclipse: If you make a move or rewind from this tile, time does not pass."
+		Tiles.PhaseBoardRed:
+			text = "Phase Board Red: A non-destroyable floorboard that exists during Heavy moves and rewinds."
+		Tiles.PhaseBoardBlue:
+			text = "Phase Board Blue: A non-destroyable floorboard that exists during Light moves and rewinds."
+		Tiles.PhaseBoardGray:
+			text = "Phase Board Gray: A non-destroyable floorboard that exists during character moves."
+		Tiles.PhaseBoardPurple:
+			text = "Phase Board Purple: A non-destroyable floorboard that exists during character rewinds."
+		Tiles.PhaseBoardDeath:
+			text = "Phase Board Death: A non-destroyable floorboard that exists whenever one or both characters are broken. (Mimics and inerts don't count.)"
+		Tiles.PhaseBoardLight:
+			text = "Phase Board Life: A non-destroyable floorboard that exists whenever both characters are unbroken. (Mimics and inerts don't count.)"
+		Tiles.PhaseBoardHeavy:
+			text = "Phase Board Heavy: A non-destroyable floorboard that exists whenever the real Heavy is asking."
+		Tiles.PhaseBoardLight:
+			text = "Phase Board Light: A non-destroyable floorboard that exists whenever the real Light is asking."
+		Tiles.PhaseBoardCrate:
+			text = "Phase Board Crate: A non-destroyable floorboard that exists whenever any actor besides the real Heavy/Light is asking."
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	

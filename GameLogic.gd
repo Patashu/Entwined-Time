@@ -317,6 +317,15 @@ enum Tiles {
 	LightMimic, #129
 	GhostFog, #130
 	Eclipse, #131
+	PhaseBoardRed, #132
+	PhaseBoardBlue, #133
+	PhaseBoardGray, #134
+	PhaseBoardPurple, #135
+	PhaseBoardDeath, #136
+	PhaseBoardLife, #137
+	PhaseBoardHeavy, #138
+	PhaseBoardLight, #139
+	PhaseBoardCrate, #140
 }
 var voidlike_tiles = [];
 

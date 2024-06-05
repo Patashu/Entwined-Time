@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=386 format=2]
+[gd_resource type="TileSet" load_steps=395 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -355,6 +355,15 @@
 [ext_resource path="res://assets/heavy_rising.png" type="Texture" id=353]
 [ext_resource path="res://assets/ghost_fog.png" type="Texture" id=354]
 [ext_resource path="res://assets/eclipse.png" type="Texture" id=355]
+[ext_resource path="res://assets/phase_board_purple.png" type="Texture" id=356]
+[ext_resource path="res://assets/phase_board_heavy.png" type="Texture" id=357]
+[ext_resource path="res://assets/phase_board_blue.png" type="Texture" id=358]
+[ext_resource path="res://assets/phase_board_gray.png" type="Texture" id=359]
+[ext_resource path="res://assets/phase_board_death.png" type="Texture" id=360]
+[ext_resource path="res://assets/phase_board_life.png" type="Texture" id=361]
+[ext_resource path="res://assets/phase_board_crate.png" type="Texture" id=362]
+[ext_resource path="res://assets/phase_board_light.png" type="Texture" id=363]
+[ext_resource path="res://assets/phase_board_red.png" type="Texture" id=364]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -2824,3 +2833,129 @@ frame_7/delay_sec = 0.0
 131/shape_one_way_margin = 0.0
 131/shapes = [  ]
 131/z_index = 0
+132/name = "PhaseBoardRed"
+132/texture = ExtResource( 364 )
+132/tex_offset = Vector2( 0, 0 )
+132/modulate = Color( 1, 1, 1, 1 )
+132/region = Rect2( 0, 0, 24, 24 )
+132/tile_mode = 0
+132/occluder_offset = Vector2( 12, 12 )
+132/navigation_offset = Vector2( 12, 12 )
+132/shape_offset = Vector2( 0, 0 )
+132/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+132/shape_one_way = false
+132/shape_one_way_margin = 0.0
+132/shapes = [  ]
+132/z_index = 0
+133/name = "PhaseBoardBlue"
+133/texture = ExtResource( 358 )
+133/tex_offset = Vector2( 0, 0 )
+133/modulate = Color( 1, 1, 1, 1 )
+133/region = Rect2( 0, 0, 24, 24 )
+133/tile_mode = 0
+133/occluder_offset = Vector2( 12, 12 )
+133/navigation_offset = Vector2( 12, 12 )
+133/shape_offset = Vector2( 0, 0 )
+133/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+133/shape_one_way = false
+133/shape_one_way_margin = 0.0
+133/shapes = [  ]
+133/z_index = 0
+134/name = "PhaseBoardGray"
+134/texture = ExtResource( 359 )
+134/tex_offset = Vector2( 0, 0 )
+134/modulate = Color( 1, 1, 1, 1 )
+134/region = Rect2( 0, 0, 24, 24 )
+134/tile_mode = 0
+134/occluder_offset = Vector2( 12, 12 )
+134/navigation_offset = Vector2( 12, 12 )
+134/shape_offset = Vector2( 0, 0 )
+134/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+134/shape_one_way = false
+134/shape_one_way_margin = 0.0
+134/shapes = [  ]
+134/z_index = 0
+135/name = "PhaseBoardPurple"
+135/texture = ExtResource( 356 )
+135/tex_offset = Vector2( 0, 0 )
+135/modulate = Color( 1, 1, 1, 1 )
+135/region = Rect2( 0, 0, 24, 24 )
+135/tile_mode = 0
+135/occluder_offset = Vector2( 12, 12 )
+135/navigation_offset = Vector2( 12, 12 )
+135/shape_offset = Vector2( 0, 0 )
+135/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+135/shape_one_way = false
+135/shape_one_way_margin = 0.0
+135/shapes = [  ]
+135/z_index = 0
+136/name = "PhaseBoardDeath"
+136/texture = ExtResource( 360 )
+136/tex_offset = Vector2( 0, 0 )
+136/modulate = Color( 1, 1, 1, 1 )
+136/region = Rect2( 0, 0, 24, 24 )
+136/tile_mode = 0
+136/occluder_offset = Vector2( 12, 12 )
+136/navigation_offset = Vector2( 12, 12 )
+136/shape_offset = Vector2( 0, 0 )
+136/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+136/shape_one_way = false
+136/shape_one_way_margin = 0.0
+136/shapes = [  ]
+136/z_index = 0
+137/name = "PhaseBoardLife"
+137/texture = ExtResource( 361 )
+137/tex_offset = Vector2( 0, 0 )
+137/modulate = Color( 1, 1, 1, 1 )
+137/region = Rect2( 0, 0, 24, 24 )
+137/tile_mode = 0
+137/occluder_offset = Vector2( 12, 12 )
+137/navigation_offset = Vector2( 12, 12 )
+137/shape_offset = Vector2( 0, 0 )
+137/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+137/shape_one_way = false
+137/shape_one_way_margin = 0.0
+137/shapes = [  ]
+137/z_index = 0
+138/name = "PhaseBoardHeavy"
+138/texture = ExtResource( 357 )
+138/tex_offset = Vector2( 0, 0 )
+138/modulate = Color( 1, 1, 1, 1 )
+138/region = Rect2( 0, 0, 24, 24 )
+138/tile_mode = 0
+138/occluder_offset = Vector2( 12, 12 )
+138/navigation_offset = Vector2( 12, 12 )
+138/shape_offset = Vector2( 0, 0 )
+138/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+138/shape_one_way = false
+138/shape_one_way_margin = 0.0
+138/shapes = [  ]
+138/z_index = 0
+139/name = "PhaseBoardLight"
+139/texture = ExtResource( 363 )
+139/tex_offset = Vector2( 0, 0 )
+139/modulate = Color( 1, 1, 1, 1 )
+139/region = Rect2( 0, 0, 24, 24 )
+139/tile_mode = 0
+139/occluder_offset = Vector2( 12, 12 )
+139/navigation_offset = Vector2( 12, 12 )
+139/shape_offset = Vector2( 0, 0 )
+139/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+139/shape_one_way = false
+139/shape_one_way_margin = 0.0
+139/shapes = [  ]
+139/z_index = 0
+140/name = "PhaseBoardCrate"
+140/texture = ExtResource( 362 )
+140/tex_offset = Vector2( 0, 0 )
+140/modulate = Color( 1, 1, 1, 1 )
+140/region = Rect2( 0, 0, 24, 24 )
+140/tile_mode = 0
+140/occluder_offset = Vector2( 12, 12 )
+140/navigation_offset = Vector2( 12, 12 )
+140/shape_offset = Vector2( 0, 0 )
+140/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+140/shape_one_way = false
+140/shape_one_way_margin = 0.0
+140/shapes = [  ]
+140/z_index = 0
