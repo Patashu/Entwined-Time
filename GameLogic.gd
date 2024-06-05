@@ -1975,6 +1975,7 @@ var has_nudges = false;
 var has_limited_undo = false;
 var has_repair_stations = false;
 var has_eclipses = false;
+var has_night_or_stars = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2067,10 +2068,14 @@ func ready_map() -> void:
 	has_nudges = false;
 	has_limited_undo = false;
 	has_repair_stations = false;
+	has_night_or_stars = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
 		has_crate_goals = true;
+		
+	if (any_layer_has_this_tile(Tiles.TheNight) or any_layer_has_this_tile(Tiles.TheStars)):
+		has_night_or_stars = true;
 	
 	if (any_layer_has_this_tile(Tiles.NoUndo)):
 		has_limited_undo = true;
@@ -2078,6 +2083,7 @@ func ready_map() -> void:
 		has_limited_undo = true;
 	
 	if (is_custom or chapter >= 12):
+		# note: if I add Superpush to ch9, I would need to move this up top
 		if (any_layer_has_this_tile(Tiles.Fuzz)):
 			fuzz_rotation();
 		
@@ -3372,6 +3378,20 @@ boost_pad_reentrance: bool = false) -> int:
 	is_gravity, is_retro, pushers_list, was_push, was_fall, phased_out_of, animation_nonce, is_move, can_push,
 	boost_pad_reentrance);
 	
+func update_night_and_stars(actor: Actor, terrain: Array) -> void:
+	var actor_was_in_night = actor.in_night;
+	var actor_was_in_stars = actor.in_stars;
+	actor.in_night = false;
+	actor.in_stars = false;
+	if terrain.has(Tiles.TheNight):
+		actor.in_night = true;
+		if (!actor_was_in_night):
+			add_to_animation_server(actor, [Animation.grayscale, true]);
+	if terrain.has(Tiles.TheStars):
+		actor.in_stars = true;
+	if (actor_was_in_night and !actor.in_night):
+		add_to_animation_server(actor, [Animation.grayscale, false]);
+	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall: bool = false, was_push: bool = false,
 phased_out_of = null, animation_nonce: int = -1, is_move: bool = false, can_push: bool = true,
@@ -3512,18 +3532,8 @@ boost_pad_reentrance: bool = false) -> int:
 		
 		# update night and stars state
 		var terrain = terrain_in_tile(actor.pos);
-		var actor_was_in_night = actor.in_night;
-		var actor_was_in_stars = actor.in_stars;
-		actor.in_night = false;
-		actor.in_stars = false;
-		if terrain.has(Tiles.TheNight):
-			actor.in_night = true;
-			if (!actor_was_in_night):
-				add_to_animation_server(actor, [Animation.grayscale, true]);
-		if terrain.has(Tiles.TheStars):
-			actor.in_stars = true;
-		if (actor_was_in_night and !actor.in_night):
-			add_to_animation_server(actor, [Animation.grayscale, false]);
+		if (has_night_or_stars):
+			update_night_and_stars(actor, terrain);
 		
 		#do sound effects for special moves and their undoes
 		if (was_push and is_retro):
@@ -3951,6 +3961,13 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			
 			if (old_tile == Tiles.OneUndo or new_tile == Tiles.OneUndo):
 				update_limited_undo_sprite(pos);
+				
+		# if floorboards were made or destroyed here, have to update night/stars state
+		if (has_night_or_stars):
+			for actor in actors:
+				if actor.pos == pos:
+					update_night_and_stars(actor, terrain_in_tile(pos));
+		
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_retro: bool) -> bool:
