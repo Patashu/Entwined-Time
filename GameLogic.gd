@@ -1637,6 +1637,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("CallACabL2")
 	level_filenames.push_back("PachinkoL2")
 	level_filenames.push_back("TheFirstPitL2")
+	level_filenames.push_back("TheFirstPitL2Ex")
+	level_filenames.push_back("TheFirstPitL2Ex2")
 	level_filenames.push_back("BraidL2")
 	level_filenames.push_back("TallL2")
 	level_filenames.push_back("TallL2Ex")
@@ -1763,6 +1765,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Stealing from Fort Knex")
 	level_filenames.push_back("Erase [VAR1]")
 	level_filenames.push_back("Curveball")
+	level_filenames.push_back("Superpush")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

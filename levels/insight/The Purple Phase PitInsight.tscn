@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 2, 0, 65545, 7, 0, 131072, 8, 0, 327684, 78, 0, 458756, 27, 0 )
+
+[node name="@@2008" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 1, 0 )
+
+[node name="@@2009" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 35, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Purple Phase Pit (Remix)"
+level_author = "Slabdrill"
+level_replay = "The Purple Phase Pit (Remix)$mturn=57$xdddddzzsdzzzzssddzzsdzzzzzassddzzsdzzzzaaddzzsdzzadzzzzzw"
+heavy_max_moves = 0.0
+light_max_moves = 11.0
+clock_turns = ""
+target_sky = Color( 0.184314, 0.168627, 0.337255, 1 )
+target_track = 6.0
