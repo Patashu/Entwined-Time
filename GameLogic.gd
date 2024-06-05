@@ -3878,7 +3878,6 @@ func terrain_in_tile(pos: Vector2, actor: Actor = null, chrono: int = Chrono.TIM
 	if (has_floorboards and !xray):
 		var found = false;
 		for i in range(result.size()):
-			print(result[i], " and ", phaseboards_dict.has(result[i]));
 			if found:
 				result[i] = -99;
 			elif floorboards_dict.has(result[i]):
