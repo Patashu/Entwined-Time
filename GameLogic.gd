@@ -1074,6 +1074,12 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlock, Color(1, 1, 1, 1));
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlockCracked, Color(1, 1, 1, 1));
 		terrainmap.tile_set.tile_set_texture(Tiles.NoUndo, preload("res://assets/no_undo.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardRed, preload("res://assets/phase_board_red.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardBlue, preload("res://assets/phase_board_blue.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardDeath, preload("res://assets/phase_board_death.png"));
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
@@ -2252,7 +2258,7 @@ func ready_map() -> void:
 	initialize_timeline_viewers();
 	ready_tutorial();
 	update_level_label();
-	
+	maybe_update_phaseboards(Chrono.MOVE);
 	intro_hop();
 	
 func setup_limited_undo_sprites() -> void:
@@ -3872,6 +3878,7 @@ func terrain_in_tile(pos: Vector2, actor: Actor = null, chrono: int = Chrono.TIM
 	if (has_floorboards and !xray):
 		var found = false;
 		for i in range(result.size()):
+			print(result[i], " and ", phaseboards_dict.has(result[i]));
 			if found:
 				result[i] = -99;
 			elif floorboards_dict.has(result[i]):
@@ -3922,7 +3929,7 @@ func all_rotation(candidates: Array) -> void:
 var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
 var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true};
 var phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife, Tiles.PhaseBoardHeavy, Tiles.PhaseBoardLight, Tiles.PhaseBoardCrate];
-var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true};
+var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true};
 
 func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 	if id in floorboards_ids:
@@ -4835,6 +4842,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		# (I'll write that logic separately just so it's not a giant mess, the performance hit is miniscule.)
 		if prop == "broken":
 			if actor.is_main_character():
+				maybe_update_phaseboards(chrono);
 				if value:
 					if (!actor_has_broken_event_anywhere(actor)):
 						add_to_animation_server(actor, [Animation.lose]);
@@ -5749,6 +5757,7 @@ func character_switch() -> void:
 		Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
 		tween.start();
 	append_replay("x")
+	maybe_update_phaseboards(Chrono.MOVE);
 
 func restart(_is_silent: bool = false) -> void:
 	load_level(0);
@@ -7129,7 +7138,35 @@ func update_animation_server(skip_globals: bool = false) -> void:
 		else:
 			animation[0].animations.push_back(animation[1]);
 
+func maybe_update_phaseboards(chrono: int) -> void:
+	if (!has_phaseboards):
+		return
+	if (has_night_or_stars):
+		for actor in actors:
+			update_night_and_stars(actor, terrain_in_tile(actor.pos, actor, chrono));
+	if (heavy_selected):
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardRed, preload("res://assets/phase_board_red.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardBlue, preload("res://assets/phase_board_blue_unpowered.png"));
+	else:
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardRed, preload("res://assets/phase_board_red_unpowered.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardBlue, preload("res://assets/phase_board_blue.png"));
+		
+	if (chrono == Chrono.CHAR_UNDO):
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray_unpowered.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple.png"));
+	else: #note if it's META_UNDO or TIMELESS, we don't track the information to reconstruct what it was, and it doesn't matter anyway
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple_unpowered.png"));
+		
+	if (heavy_actor.broken or light_actor.broken):
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life_unpowered.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardDeath, preload("res://assets/phase_board_death.png"));
+	else:
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardDeath, preload("res://assets/phase_board_death_unpowered.png"));
+
 func maybe_pulse_phase_blocks(chrono: int) -> void:
+	maybe_update_phaseboards(chrono);
 	if (!has_phase_walls):
 		return
 	var pulse_red = heavy_selected;
