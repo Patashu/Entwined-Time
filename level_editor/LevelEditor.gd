@@ -930,7 +930,7 @@ func picker_tooltip() -> void:
 			text = "Phase Board Purple: A non-destroyable floorboard that exists during character rewinds."
 		Tiles.PhaseBoardDeath:
 			text = "Phase Board Death: A non-destroyable floorboard that exists whenever one or both characters are broken. (Mimics and inerts don't count.)"
-		Tiles.PhaseBoardLight:
+		Tiles.PhaseBoardLife:
 			text = "Phase Board Life: A non-destroyable floorboard that exists whenever both characters are unbroken. (Mimics and inerts don't count.)"
 		Tiles.PhaseBoardHeavy:
 			text = "Phase Board Heavy: A non-destroyable floorboard that exists whenever the real Heavy is asking."
