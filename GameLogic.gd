@@ -1766,6 +1766,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Erase [VAR1]")
 	level_filenames.push_back("Curveball")
 	level_filenames.push_back("Superpush")
+	level_filenames.push_back("Tiny Outpost")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1881,6 +1882,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Yellow Pit")
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Meet Heavy (Loop 2)")
+	level_filenames.push_back("Noclip")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -6091,7 +6093,6 @@ func character_move(dir: Vector2) -> bool:
 			false, false, false, [], false, false, null, -1, true);
 		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
 			fuzzed = true;
-			print("a")
 			play_sound("eclipse");
 	else:
 		var pos = light_actor.pos;
@@ -6107,7 +6108,6 @@ func character_move(dir: Vector2) -> bool:
 			false, false, false, [], false, false, null, -1, true);
 		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
 			fuzzed = true;
-			print("b")
 			play_sound("eclipse");
 	if (result == Success.Yes):
 		if (!heavy_selected):
@@ -6136,10 +6136,8 @@ func character_move(dir: Vector2) -> bool:
 	if (result != Success.No or nonstandard_won):
 		if (!nonstandard_won):
 			if (fuzzed):
-				print("d1")
 				time_passes(Chrono.TIMELESS);
 			else:
-				print("d2")
 				time_passes(Chrono.MOVE);
 		if anything_happened_meta():
 			if heavy_selected:
@@ -6158,7 +6156,6 @@ func character_move(dir: Vector2) -> bool:
 		adjust_meta_turn(1, Chrono.MOVE);
 	elif (voidlike_puzzle):
 		adjust_meta_turn(0, Chrono.MOVE);
-	print("c")
 	fuzzed = false;
 	return result != Success.No;
 
@@ -6239,6 +6236,11 @@ func time_passes(chrono: int) -> void:
 		for actor in actors:
 			if actor.airborne >= 2:
 				set_actor_var(actor, "airborne", 1, chrono);
+		# and boulders
+		if (has_boulders):
+			for actor in actors:
+				if actor.actorname == Actor.Name.Boulder:
+					actor.boulder_moved_horizontally_this_turn = false;
 		return;
 	
 	var time_actors = []
@@ -6381,10 +6383,6 @@ func time_passes(chrono: int) -> void:
 					var rollin = move_actor_relative(actor, actor.momentum, chrono, false, false);
 					if (rollin != Success.Yes):
 						set_actor_var(actor, "momentum", Vector2.ZERO, chrono);
-			
-		for actor in actors:
-			if actor.actorname == Actor.Name.Boulder:
-				actor.boulder_moved_horizontally_this_turn = false;
 	
 	# Decrement airborne by one (min zero).
 	# AD02: Maybe this should be a +1/-1 instead of a set. Haven't decided yet. Doesn't seem to matter until strange matter.
@@ -6640,6 +6638,11 @@ func time_passes(chrono: int) -> void:
 	
 	#Luckiest lastest - a final crystal banish.
 	banish_time_crystals();
+	# And boulder cleanup.
+	if (has_boulders):
+		for actor in actors:
+			if actor.actorname == Actor.Name.Boulder:
+				actor.boulder_moved_horizontally_this_turn = false;
 	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?

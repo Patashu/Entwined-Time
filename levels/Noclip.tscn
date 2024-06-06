@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 40, 0, 2, 8, 0, 3, 27, 0, 4, 2, 0, 6, 40, 0, 65537, 14, 524290, 65538, 14, 196615, 65539, 55, 0, 65540, 14, 196613, 65541, 14, 524292, 131073, 14, 262145, 131074, 1, 0, 131075, 14, 196609, 131076, 7, 0, 131077, 14, 262145, 196609, 14, 655362, 196610, 14, 196614, 196611, 14, 655363, 196612, 14, 196614, 196613, 14, 655364 )
+
+[node name="@@1440" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 43, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Noclip"
+level_author = "Slabdrill"
+level_replay = "Noclip$mturn=0$xaaxdcxcdxddcacxcdxa"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = "1"
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
