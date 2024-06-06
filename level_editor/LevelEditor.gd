@@ -681,9 +681,9 @@ func picker_tooltip() -> void:
 		Tiles.Fire:
 			text = "Fire: When an actor experiences time, after gravity, if it's on Fire and doesn't have Fire or greater Durability, it breaks."
 		Tiles.HeavyFire:
-			text = "Heavy Fire: Fire, but it can only break Heavy."
+			text = "Heavy Fire: Fire, but it can't break Light."
 		Tiles.LightFire:
-			text = "Light Fire: Fire, but it can only break Light."
+			text = "Light Fire: Fire, but it deals Spikes level damage."
 		Tiles.NoHeavy:
 			text = "No Heavy: Solid to Heavy."
 		Tiles.NoLight:
@@ -721,7 +721,7 @@ func picker_tooltip() -> void:
 		Tiles.IronCrate:
 			text = "Iron Crate: Actor. Heaviness: Iron. Strength: Wood. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
 		Tiles.CrateGoal:
-			text = "Crate Goal: If you would win due to Light and Heavy being on Goals: You do not unless every Crate Goal has a non-Character actor on its tile."
+			text = "Crate Goal: If you would win due to Light and Heavy being on Goals: You do not unless every Crate Goal has an unbroken non-Character actor on its tile."
 		Tiles.NoCrate:
 			text = "No Crate: Solid to non-Character actors."
 		Tiles.ColourRed:
@@ -839,11 +839,11 @@ func picker_tooltip() -> void:
 		Tiles.VoidFloorboards:
 			text = "Void Floorboards: A Floorboards that can be destroyed also by retroactive moves and undos, and that does not create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.Hole:
-			text = "Hole: (Technically an Actor, so you CAN use Green or Void on this.) When an actor enters a Hole: If the Hole isn't broken: The actor suffers pit damage. Then if the actor was an unbroken crate/boulder, the hole breaks. Holes (broken or unbroken) prevent broken actors from leaving them."
+			text = "Hole: Actor. Heaviness: Infinite. Strength: None. Durabilty: Unbreakable. Fall Speed: 0. Native Time Color: Gray. Not solid. When a non-Unbreakable actor enters an unbroken Hole, it breaks. If that actor was an unbroken crate or boulder, the Hole breaks. Holes (broken or unbroken) are solid to moves of broken actors exiting its tile, including itself. Holes get disabled by Floorboards on their tile."
 		Tiles.GreenHole:
-			text = "Green Hole: A hole that doesn't create rewind events."
+			text = "Green Hole: A Hole, but when it breaks an actor it does not create a rewind event. Also has Native Time Color: Green."
 		Tiles.VoidHole:
-			text = "Void Hole: A hole that doesn't create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Hole: A hole that doesn't create rewind OR undo events. Also has Native Time Colour: Void. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.BoostPad:
 			text = "Boost Pad: Forward movements leaving this tile happen one additional time."
 		Tiles.GreenBoostPad:
@@ -861,7 +861,7 @@ func picker_tooltip() -> void:
 		Tiles.PhaseWallGreenEven:
 			text = "Phase Wall Green Even: Solid during even Turns. (Turn increments at the end of a turn.)"
 		Tiles.PhaseWallGreenOdd:
-			text = "Phase Wall Green Even: Solid during odd Turns. (Turn increments at the end of a turn.)"
+			text = "Phase Wall Green Odd: Solid during odd Turns. (Turn increments at the end of a turn.)"
 		Tiles.NudgeEast:
 			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
 		Tiles.NudgeNorth:

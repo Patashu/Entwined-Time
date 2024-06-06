@@ -1808,7 +1808,6 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("The Checkpoint Pit (checkpoint shortage)")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
 	level_filenames.push_back("One-Way Bridge")
 	level_filenames.push_back("Durability-")
@@ -6092,6 +6091,7 @@ func character_move(dir: Vector2) -> bool:
 			false, false, false, [], false, false, null, -1, true);
 		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
 			fuzzed = true;
+			print("a")
 			play_sound("eclipse");
 	else:
 		var pos = light_actor.pos;
@@ -6107,6 +6107,7 @@ func character_move(dir: Vector2) -> bool:
 			false, false, false, [], false, false, null, -1, true);
 		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
 			fuzzed = true;
+			print("b")
 			play_sound("eclipse");
 	if (result == Success.Yes):
 		if (!heavy_selected):
@@ -6135,8 +6136,10 @@ func character_move(dir: Vector2) -> bool:
 	if (result != Success.No or nonstandard_won):
 		if (!nonstandard_won):
 			if (fuzzed):
+				print("d1")
 				time_passes(Chrono.TIMELESS);
 			else:
+				print("d2")
 				time_passes(Chrono.MOVE);
 		if anything_happened_meta():
 			if heavy_selected:
@@ -6155,6 +6158,7 @@ func character_move(dir: Vector2) -> bool:
 		adjust_meta_turn(1, Chrono.MOVE);
 	elif (voidlike_puzzle):
 		adjust_meta_turn(0, Chrono.MOVE);
+	print("c")
 	fuzzed = false;
 	return result != Success.No;
 
@@ -6231,6 +6235,10 @@ func time_passes(chrono: int) -> void:
 	banish_time_crystals();
 	
 	if (chrono >= Chrono.TIMELESS):
+		# fix up airborne on our way out
+		for actor in actors:
+			if actor.airborne >= 2:
+				set_actor_var(actor, "airborne", 1, chrono);
 		return;
 	
 	var time_actors = []
@@ -6547,7 +6555,7 @@ func time_passes(chrono: int) -> void:
 		if !actor.broken and terrain.has(Tiles.HeavyFire) and actor.durability <= Durability.FIRE and actor.actorname != Actor.Name.Light:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
-		if !actor.broken and terrain.has(Tiles.LightFire) and actor.durability <= Durability.FIRE and actor.actorname != Actor.Name.Heavy:
+		if !actor.broken and terrain.has(Tiles.LightFire) and actor.durability <= Durability.SPIKES:
 			actor.post_mortem = Durability.FIRE;
 			set_actor_var(actor, "broken", true, chrono);
 		
