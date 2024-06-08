@@ -3807,7 +3807,7 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move:
 		heavy_turn += amount;
 
 		#if (debug_prints):
-		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
+		print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
 		if (amount > 0):
 			if light_filling_locked_turn_index > -1:
@@ -4596,6 +4596,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				
 				# did we just pop an empty locked move?
 				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
+					print("making Undo.heavy_turn_unlocked -1")
 					add_undo_event([Undo.heavy_turn_unlocked, -1, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, -1]);
 					set_actor_var(eater, "powered", true, Chrono.CHAR_UNDO);
@@ -4609,6 +4610,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 						heavy_turn += 1;
 						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
 					heavy_undo_buffer.insert(heavy_turn, unlocked_move);
+					print("making Undo.heavy_turn_unlocked: ", heavy_turn)
 					add_undo_event([Undo.heavy_turn_unlocked, heavy_turn, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
 					if (!filling_turn_actual_set):
 						heavy_turn += 1;
@@ -5322,7 +5324,7 @@ func adjust_meta_turn(amount: int, chrono: int) -> void:
 	
 	meta_turn += amount;
 	#if (debug_prints):
-	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
+	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	update_ghosts();
 	check_won(chrono);
 	
@@ -5592,6 +5594,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		Undo.light_filling_turn_actual:
 			light_filling_turn_actual = event[1]; #the old value, event[2] is the new value
 		Undo.heavy_turn_unlocked:
+			print("consuming Undo.heavy_turn_unlocked: ", event[1])
 			# just lock it again ig
 			var was_turn = event[1];
 			if (was_turn == -1):
@@ -6215,7 +6218,8 @@ func anything_happened_char(destructive: bool = true) -> bool:
 				for i in range(buffer.size() - 1, -1, -1):
 					var event = buffer[i];
 					if event[0] == Undo.heavy_turn_unlocked:
-						event[1] -= 1;
+						print("adjusted heavy_turn_unlocked");
+						event[1] = max(event[1] - 1, -1);
 						break;
 	else:
 		var turn = light_turn;
@@ -6233,7 +6237,7 @@ func anything_happened_char(destructive: bool = true) -> bool:
 				for i in range(buffer.size() - 1, -1, -1):
 					var event = buffer[i];
 					if event[0] == Undo.light_turn_unlocked:
-						event[1] -= 1;
+						event[1] = max(event[1] - 1, -1);
 						break;
 	return false;
 	
