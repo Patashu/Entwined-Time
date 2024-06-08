@@ -211,7 +211,7 @@ func add_turn(buffer: Array) -> void:
 	current_move += 1;
 	finish_divider_position();
 	
-func remove_turn(color: Color, locked_turn: int, turn_filled_actual: int) -> void:
+func remove_turn(color: Color, locked_turn: int, turn_filled_actual: int, adjust_current_move: bool = true) -> void:
 	# 'we're meta-undoing a turn that ended up stuck behind an unlocked turn' is ALSO weird.
 	# Let me try and figure this out...
 	if turn_filled_actual > -1:
@@ -226,9 +226,12 @@ func remove_turn(color: Color, locked_turn: int, turn_filled_actual: int) -> voi
 	
 	# 'we're meta-undoing a turn we took that ended up locked' has different behaviour.
 	# I THINK this is correct.
+	# hi, me from the future! it's correct UNLESS a green robot eats a magenta crystal and otherwise nothing_happened_char.
+	# so we need to record and forward that fact to here as a flag.
 	elif (locked_turn > -1):
 		timelineslots.get_child(max_moves + locked_turn).clear(color);
-		current_move -= 1;
+		if adjust_current_move:
+			current_move -= 1;
 		finish_divider_position();
 		return;
 	

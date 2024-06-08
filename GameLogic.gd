@@ -3768,7 +3768,7 @@ boost_pad_reentrance: bool = false) -> int:
 	
 	return success;
 		
-func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
+func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move: bool) -> void:
 	if (is_heavy):
 		if (amount > 0):
 			if heavy_filling_locked_turn_index > -1:
@@ -3781,7 +3781,7 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 			var color = heavy_color;
 			if (chrono >= Chrono.META_UNDO):
 				color = meta_color;
-			heavytimeline.remove_turn(color, heavy_filling_locked_turn_index, heavy_filling_turn_actual);
+			heavytimeline.remove_turn(color, heavy_filling_locked_turn_index, heavy_filling_turn_actual, adjust_current_move);
 		if (heavy_turn + amount == heavy_max_moves):
 			set_actor_var(heavy_actor, "powered", false, chrono);
 		elif (!heavy_actor.powered):
@@ -3799,11 +3799,11 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 					break;
 			if (!were_good):
 				buffer.clear();
-				add_undo_event([Undo.heavy_turn, amount], Chrono.CHAR_UNDO);
+				add_undo_event([Undo.heavy_turn, amount, false], Chrono.CHAR_UNDO);
 			else:
-				add_undo_event([Undo.heavy_turn, amount], chrono);
+				add_undo_event([Undo.heavy_turn, amount, true], chrono);
 		else:
-			add_undo_event([Undo.heavy_turn, amount], chrono);
+			add_undo_event([Undo.heavy_turn, amount, true], chrono);
 		heavy_turn += amount;
 
 		#if (debug_prints):
@@ -3820,7 +3820,7 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 			var color = light_color;
 			if (chrono >= Chrono.META_UNDO):
 				color = meta_color;
-			lighttimeline.remove_turn(color, light_filling_locked_turn_index, light_filling_turn_actual);
+			lighttimeline.remove_turn(color, light_filling_locked_turn_index, light_filling_turn_actual, adjust_current_move);
 		if (light_turn + amount == light_max_moves):
 			set_actor_var(light_actor, "powered", false, chrono);
 		elif (!light_actor.powered):
@@ -3834,11 +3834,11 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 					break;
 			if (!were_good):
 				buffer.clear();
-				add_undo_event([Undo.light_turn, amount], Chrono.CHAR_UNDO);
+				add_undo_event([Undo.light_turn, amount, false], Chrono.CHAR_UNDO);
 			else:
-				add_undo_event([Undo.light_turn, amount], chrono);
+				add_undo_event([Undo.light_turn, amount, true], chrono);
 		else:
-			add_undo_event([Undo.light_turn, amount], chrono);
+			add_undo_event([Undo.light_turn, amount, true], chrono);
 		light_turn += amount;
 
 		#if (debug_prints):
@@ -5516,9 +5516,9 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	
 	match event[0]:
 		Undo.heavy_turn:
-			adjust_turn(true, -event[1], chrono);
+			adjust_turn(true, -event[1], chrono, event[2]);
 		Undo.light_turn:
-			adjust_turn(false, -event[1], chrono);
+			adjust_turn(false, -event[1], chrono, event[2]);
 		Undo.heavy_turn_direct:
 			heavy_turn -= event[1];
 		Undo.light_turn_direct:
@@ -6173,10 +6173,10 @@ func character_move(dir: Vector2) -> bool:
 		if anything_happened_meta():
 			if heavy_selected:
 				if anything_happened_char():
-					adjust_turn(true, 1, Chrono.MOVE);
+					adjust_turn(true, 1, Chrono.MOVE, true);
 			else:
 				if anything_happened_char():
-					adjust_turn(false, 1, Chrono.MOVE);
+					adjust_turn(false, 1, Chrono.MOVE, true);
 		else:
 			result = Success.No;
 	if (result != Success.No or nonstandard_won or voidlike_puzzle):
