@@ -6166,22 +6166,46 @@ func anything_happened_char(destructive: bool = true) -> bool:
 	if (heavy_filling_locked_turn_index > -1 or light_filling_locked_turn_index > -1):
 		return true;
 	if (heavy_selected):
-		while (heavy_undo_buffer.size() <= heavy_turn):
+		var turn = heavy_turn;
+		if (heavy_filling_turn_actual > -1):
+			turn = heavy_filling_turn_actual;
+		while (heavy_undo_buffer.size() <= turn):
 			heavy_undo_buffer.append([]);
-		for event in heavy_undo_buffer[heavy_turn]:
+		for event in heavy_undo_buffer[turn]:
 			if event[0] != Undo.animation_substep:
 				return true;
 		#clear out now unnecessary animation_substeps if nothing else happened
 		if (destructive):
-			heavy_undo_buffer[heavy_turn].clear();
+			heavy_undo_buffer.pop_at(turn);
+			# if we remembered a locked move but nothing happened on our 'real' move,
+			# then we need to find and adjust the related heavy_turn_unlocked event
+			# by -1 so it's correct
+			if (heavy_filling_turn_actual > -1):
+				var buffer = meta_undo_buffer[meta_undo_buffer.size()-1];
+				for i in range(buffer.size() - 1, -1, -1):
+					var event = buffer[i];
+					print(buffer.size(), ", ", i, ", ", event)
+					if event[0] == Undo.heavy_turn_unlocked:
+						event[1] -= 1;
+						break;
 	else:
-		while (light_undo_buffer.size() <= light_turn):
+		var turn = light_turn;
+		if (light_filling_turn_actual > -1):
+			turn = light_filling_turn_actual;
+		while (light_undo_buffer.size() <= turn):
 			light_undo_buffer.append([]);
-		for event in light_undo_buffer[light_turn]:
+		for event in light_undo_buffer[turn]:
 			if event[0] != Undo.animation_substep:
 				return true;
 		if (destructive):
-			light_undo_buffer[light_turn].clear();
+			light_undo_buffer.pop_at(turn);
+			if (light_filling_turn_actual > -1):
+				var buffer = meta_undo_buffer[meta_undo_buffer.size()-1];
+				for i in range(buffer.size() - 1, -1, -1):
+					var event = buffer[i];
+					if event[0] == Undo.light_turn_unlocked:
+						event[1] -= 1;
+						break;
 	return false;
 	
 func anything_happened_meta() -> bool:
