@@ -3807,7 +3807,7 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move:
 		heavy_turn += amount;
 
 		#if (debug_prints):
-		print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
+		#	print("=== IT IS NOW HEAVY TURN " + str(heavy_turn) + " ===");
 	else:
 		if (amount > 0):
 			if light_filling_locked_turn_index > -1:
@@ -5324,7 +5324,7 @@ func adjust_meta_turn(amount: int, chrono: int) -> void:
 	
 	meta_turn += amount;
 	#if (debug_prints):
-	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
+	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	update_ghosts();
 	check_won(chrono);
 	
