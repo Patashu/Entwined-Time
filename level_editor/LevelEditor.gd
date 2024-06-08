@@ -144,6 +144,14 @@ enum Tiles {
 	PhaseBoardHeavy, #138
 	PhaseBoardLight, #139
 	PhaseBoardCrate, #140
+	SpiderWeb, #141
+	SpiderWebGreen, #142
+	NoPush, #143
+	NoPushGreen, #144
+	YesPush, #145
+	YesPushGreen, #146
+	NoLeft, #147
+	NoLeftGreen, #148
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -344,6 +352,14 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.PhaseBoardHeavy)
 		picker_array.append(Tiles.PhaseBoardLight)
 		picker_array.append(Tiles.PhaseBoardCrate)
+		picker_array.append(Tiles.SpiderWeb)
+		picker_array.append(Tiles.SpiderWebGreen)
+		picker_array.append(Tiles.NoPush)
+		picker_array.append(Tiles.NoPushGreen)
+		picker_array.append(Tiles.YesPush)
+		picker_array.append(Tiles.YesPushGreen)
+		picker_array.append(Tiles.NoLeft)
+		picker_array.append(Tiles.NoLeftGreen)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -917,7 +933,7 @@ func picker_tooltip() -> void:
 		Tiles.LightMimic:
 			text = "Light Mimic: After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.GhostFog:
-			text = "Ghost Fog: If an Actor fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
+			text = "Ghost Fog: If an actor retro moves into this tile, they phase into any actors on that tile."
 		Tiles.Eclipse:
 			text = "Eclipse: If you make a move or rewind from this tile, time does not pass."
 		Tiles.PhaseBoardRed:
@@ -938,6 +954,22 @@ func picker_tooltip() -> void:
 			text = "Phase Board Light: A non-destroyable floorboard that exists whenever the real Light is asking."
 		Tiles.PhaseBoardCrate:
 			text = "Phase Board Crate: A non-destroyable floorboard that exists whenever any actor besides the real Heavy/Light is asking."
+		Tiles.SpiderWeb:
+			text = "Spider Web: Solid to non-retro moves exiting this tile if the actor has already non-retro moved 1 or more times this turn."
+		Tiles.SpiderWebGreen:
+			text = "Green Spider Web: Solid to moves exiting this tile if the actor has already moved 1 or more times this turn."
+		Tiles.NoPush:
+			text = "No Push: Solid to non-retro pushes."
+		Tiles.NoPushGreen:
+			text = "Green No Push: Solid to pushes/unpushes."
+		Tiles.YesPush:
+			text = "Yes Push: Solid to non-retro non-pushes."
+		Tiles.YesPushGreen:
+			text = "Yes Push Green: Solid to non-(pushes/unpushes)."
+		Tiles.NoLeft:
+			text = "No Left: Solid to robots that are facing left during non-retro moves."
+		Tiles.NoLeftGreen:
+			text = "No Left Green: Solid to robots that are facing left."
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	

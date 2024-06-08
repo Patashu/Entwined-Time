@@ -326,6 +326,14 @@ enum Tiles {
 	PhaseBoardHeavy, #138
 	PhaseBoardLight, #139
 	PhaseBoardCrate, #140
+	SpiderWeb, #141
+	SpiderWebGreen, #142
+	NoPush, #143
+	NoPushGreen, #144
+	YesPush, #145
+	YesPushGreen, #146
+	NoLeft, #147
+	NoLeftGreen, #148
 }
 var voidlike_tiles = [];
 
@@ -1997,6 +2005,7 @@ var has_limited_undo = false;
 var has_repair_stations = false;
 var has_eclipses = false;
 var has_night_or_stars = false;
+var has_ghost_fog = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2091,6 +2100,7 @@ func ready_map() -> void:
 	has_limited_undo = false;
 	has_repair_stations = false;
 	has_night_or_stars = false;
+	has_ghost_fog = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2231,6 +2241,9 @@ func ready_map() -> void:
 			
 		if (has_phaseboards):
 			phaseboards_rotation();
+			
+		if (any_layer_has_this_tile(Tiles.GhostFog)):
+			has_ghost_fog = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -3464,7 +3477,7 @@ boost_pad_reentrance: bool = false) -> int:
 	# and keep trying hypotheticals until the whole thing is cleared as OK)
 	var slope_next_dir = Vector2.ZERO;
 	if (has_slopes and chrono < Chrono.META_UNDO and !is_retro):
-		success = try_enter(actor, dir, chrono, can_push, true, is_gravity, is_retro, pushers_list,
+		success = try_enter(actor, dir, chrono, can_push, true, is_gravity, was_push, is_retro, pushers_list,
 	phased_out_of);
 		var terrain_there = terrain_in_tile(pos, actor, chrono);
 		var new_success = Success.Yes;
@@ -3494,9 +3507,9 @@ boost_pad_reentrance: bool = false) -> int:
 			success = Success.No;
 		else:
 			if (!hypothetical):
-				try_enter(actor, dir, chrono, can_push, false, is_gravity, is_retro, pushers_list, phased_out_of);
+				try_enter(actor, dir, chrono, can_push, false, is_gravity, was_push, is_retro, pushers_list, phased_out_of);
 	else:
-		success = try_enter(actor, dir, chrono, can_push, hypothetical, is_gravity, is_retro, pushers_list, phased_out_of);
+		success = try_enter(actor, dir, chrono, can_push, hypothetical, is_gravity, was_push, is_retro, pushers_list, phased_out_of);
 	
 	if (success == Success.Yes and !hypothetical):
 		
@@ -4135,6 +4148,25 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 				if (blocked):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
+			Tiles.SpiderWeb:
+				if (!is_retro):
+					while animation_server.size() <= animation_substep:
+						animation_server.push_back([]);
+					for i in range (animation_substep):
+						for anim in animation_server[i]:
+							if anim[0] == actor and anim[1][0] == Animation.move and !anim[1][2]:
+								flash_terrain = id;
+								flash_colour = no_foo_flash;
+								return true;
+			Tiles.SpiderWebGreen:
+				while animation_server.size() <= animation_substep:
+					animation_server.push_back([]);
+				for i in range (animation_substep):
+					for anim in animation_server[i]:
+						if anim[0] == actor and anim[1][0] == Animation.move:
+							flash_terrain = id;
+							flash_colour = no_foo_flash;
+							return true;
 		if blocked:
 			return true;
 	return false;
@@ -4152,7 +4184,7 @@ var oneway_green_flash = Color(1, 0, 0, 1);
 var oneway_purple_flash = Color(1, 1, 1, 1);
 var no_foo_flash = Color(1, 1, 1, 1);
 
-func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int) -> int:
+func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int, pushers_list: Array, was_push: bool) -> int:
 	var result = Success.Yes;
 	flash_terrain = -1;
 	
@@ -4334,6 +4366,36 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = no_if_true_yes_if_false(meta_turn % 2 == 0);
 			Tiles.PhaseWallGreenOdd:
 				result = no_if_true_yes_if_false(meta_turn % 2 == 1);
+			Tiles.NoPush:
+				result = no_if_true_yes_if_false(!is_retro and pushers_list.size() > 0);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.NoPushGreen:
+				result = no_if_true_yes_if_false(was_push or pushers_list.size() > 0);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.YesPush:
+				result = no_if_true_yes_if_false(!is_retro and pushers_list.size() == 0);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.YesPushGreen:
+				result = no_if_true_yes_if_false((is_retro and !was_push) or (!is_retro and pushers_list.size() == 0));
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.NoLeft:
+				result = no_if_true_yes_if_false(!is_retro and actor.is_character and actor.facing_left);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.NoLeftGreen:
+				result = no_if_true_yes_if_false(actor.is_character and actor.facing_left);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
 		if result != Success.Yes:
 			return result;
 	return result;
@@ -4369,7 +4431,7 @@ func strength_check(strength: int, heaviness: int) -> bool:
 		return strength >= Strength.GRAVITY;
 	return false;
 	
-func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, is_retro: bool = false, pushers_list: Array = [], phased_out_of = null) -> int:
+func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothetical: bool, is_gravity: bool, was_push: bool, is_retro: bool = false, pushers_list: Array = [], phased_out_of = null) -> int:
 	var dest = actor.pos + dir;
 	if (chrono >= Chrono.TIMELESS):
 		return Success.Yes;
@@ -4383,7 +4445,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
 				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
 			return Success.No;
-		var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono);
+		var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono, pushers_list, was_push);
 		if (solidity_check != Success.Yes):
 			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
 				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), flash_colour]);
@@ -4391,6 +4453,8 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	
 	# handle pushing
 	var actors_there = actors_in_tile(dest);
+	if (has_ghost_fog and is_retro and terrain_in_tile(dest).has(Tiles.GhostFog)):
+		actors_there = [];
 	var pushables_there = [];
 	#var tiny_pushables_there = [];
 	for actor_there in actors_there:
@@ -4441,7 +4505,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			# Strength Rule
 			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
 			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness) and !can_eat(actor_there, actor):
-				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest, actor, chrono).has(Tiles.GhostFog))):
+				if (actor.phases_into_actors()):
 					pushables_there.clear();
 					break;
 				else:
@@ -4596,7 +4660,6 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				
 				# did we just pop an empty locked move?
 				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
-					print("making Undo.heavy_turn_unlocked -1")
 					add_undo_event([Undo.heavy_turn_unlocked, -1, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
 					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, -1]);
 					set_actor_var(eater, "powered", true, Chrono.CHAR_UNDO);
@@ -4610,7 +4673,6 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 						heavy_turn += 1;
 						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
 					heavy_undo_buffer.insert(heavy_turn, unlocked_move);
-					print("making Undo.heavy_turn_unlocked: ", heavy_turn)
 					add_undo_event([Undo.heavy_turn_unlocked, heavy_turn, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
 					if (!filling_turn_actual_set):
 						heavy_turn += 1;
@@ -5594,7 +5656,6 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		Undo.light_filling_turn_actual:
 			light_filling_turn_actual = event[1]; #the old value, event[2] is the new value
 		Undo.heavy_turn_unlocked:
-			print("consuming Undo.heavy_turn_unlocked: ", event[1])
 			# just lock it again ig
 			var was_turn = event[1];
 			if (was_turn == -1):
@@ -6218,7 +6279,6 @@ func anything_happened_char(destructive: bool = true) -> bool:
 				for i in range(buffer.size() - 1, -1, -1):
 					var event = buffer[i];
 					if event[0] == Undo.heavy_turn_unlocked:
-						print("adjusted heavy_turn_unlocked");
 						event[1] = max(event[1] - 1, -1);
 						break;
 	else:

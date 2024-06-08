@@ -1,4 +1,4 @@
-[gd_scene load_steps=395 format=2]
+[gd_scene load_steps=403 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -364,6 +364,14 @@
 [ext_resource path="res://assets/phase_board_crate.png" type="Texture" id=362]
 [ext_resource path="res://assets/phase_board_light.png" type="Texture" id=363]
 [ext_resource path="res://assets/phase_board_red.png" type="Texture" id=364]
+[ext_resource path="res://assets/yes_push.png" type="Texture" id=365]
+[ext_resource path="res://assets/yes_push_green.png" type="Texture" id=366]
+[ext_resource path="res://assets/no_left.png" type="Texture" id=367]
+[ext_resource path="res://assets/no_push_green.png" type="Texture" id=368]
+[ext_resource path="res://assets/spider_web_green.png" type="Texture" id=369]
+[ext_resource path="res://assets/no_push.png" type="Texture" id=370]
+[ext_resource path="res://assets/no_left_green.png" type="Texture" id=371]
+[ext_resource path="res://assets/spider_web.png" type="Texture" id=372]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1550,3 +1558,35 @@ texture = ExtResource( 363 )
 [node name="PhaseBoardCrate" type="Sprite" parent="."]
 position = Vector2( 294, 163 )
 texture = ExtResource( 362 )
+
+[node name="SpiderWeb" type="Sprite" parent="."]
+position = Vector2( 477, 240 )
+texture = ExtResource( 372 )
+
+[node name="SpiderWebGreen" type="Sprite" parent="."]
+position = Vector2( 492, 239 )
+texture = ExtResource( 369 )
+
+[node name="NoPush" type="Sprite" parent="."]
+position = Vector2( 470, 271 )
+texture = ExtResource( 370 )
+
+[node name="NoPushGreen" type="Sprite" parent="."]
+position = Vector2( 470, 271 )
+texture = ExtResource( 368 )
+
+[node name="YesPush" type="Sprite" parent="."]
+position = Vector2( 471, 272 )
+texture = ExtResource( 365 )
+
+[node name="YesPushGreen" type="Sprite" parent="."]
+position = Vector2( 471, 272 )
+texture = ExtResource( 366 )
+
+[node name="NoLeft" type="Sprite" parent="."]
+position = Vector2( 470, 271 )
+texture = ExtResource( 367 )
+
+[node name="NoLeftGreen" type="Sprite" parent="."]
+position = Vector2( 470, 271 )
+texture = ExtResource( 371 )
