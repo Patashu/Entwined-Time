@@ -3786,7 +3786,24 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 			set_actor_var(heavy_actor, "powered", false, chrono);
 		elif (!heavy_actor.powered):
 			set_actor_var(heavy_actor, "powered", true, chrono);
-		add_undo_event([Undo.heavy_turn, amount], chrono);
+		# if we just locked a turn that's functionally empty,
+		# actually empty it, then add the turn changing event with Chrono.CHAR_UNDO
+		# so later we agree that we're unlocking an empty turn.
+		# (thought about trying to do this in anything_happened_char but let's see if this works)
+		if (chrono == Chrono.MOVE and heavy_filling_locked_turn_index > -1):
+			var buffer = heavy_locked_turns[heavy_filling_locked_turn_index];
+			var were_good = false;
+			for event in buffer:
+				if event[0] != Undo.animation_substep:
+					were_good = true;
+					break;
+			if (!were_good):
+				buffer.clear();
+				add_undo_event([Undo.heavy_turn, amount], Chrono.CHAR_UNDO);
+			else:
+				add_undo_event([Undo.heavy_turn, amount], chrono);
+		else:
+			add_undo_event([Undo.heavy_turn, amount], chrono);
 		heavy_turn += amount;
 
 		#if (debug_prints):
@@ -3808,7 +3825,20 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int) -> void:
 			set_actor_var(light_actor, "powered", false, chrono);
 		elif (!light_actor.powered):
 			set_actor_var(light_actor, "powered", true, chrono);
-		add_undo_event([Undo.light_turn, amount], chrono);
+		if (chrono == Chrono.MOVE and light_filling_locked_turn_index > -1):
+			var buffer = light_locked_turns[light_filling_locked_turn_index];
+			var were_good = false;
+			for event in buffer:
+				if event[0] != Undo.animation_substep:
+					were_good = true;
+					break;
+			if (!were_good):
+				buffer.clear();
+				add_undo_event([Undo.light_turn, amount], Chrono.CHAR_UNDO);
+			else:
+				add_undo_event([Undo.light_turn, amount], chrono);
+		else:
+			add_undo_event([Undo.light_turn, amount], chrono);
 		light_turn += amount;
 
 		#if (debug_prints):
@@ -6184,7 +6214,6 @@ func anything_happened_char(destructive: bool = true) -> bool:
 				var buffer = meta_undo_buffer[meta_undo_buffer.size()-1];
 				for i in range(buffer.size() - 1, -1, -1):
 					var event = buffer[i];
-					print(buffer.size(), ", ", i, ", ", event)
 					if event[0] == Undo.heavy_turn_unlocked:
 						event[1] -= 1;
 						break;
