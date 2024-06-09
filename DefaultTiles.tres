@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=403 format=2]
+[gd_resource type="TileSet" load_steps=408 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -372,6 +372,11 @@
 [ext_resource path="res://assets/no_push.png" type="Texture" id=370]
 [ext_resource path="res://assets/no_left_green.png" type="Texture" id=371]
 [ext_resource path="res://assets/spider_web.png" type="Texture" id=372]
+[ext_resource path="res://assets/oneway_east.png" type="Texture" id=373]
+[ext_resource path="res://assets/oneway_north.png" type="Texture" id=374]
+[ext_resource path="res://assets/phase_board_void.png" type="Texture" id=375]
+[ext_resource path="res://assets/oneway_west.png" type="Texture" id=376]
+[ext_resource path="res://assets/oneway_south.png" type="Texture" id=377]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3079,3 +3084,73 @@ frame_7/delay_sec = 0.0
 148/shape_one_way_margin = 0.0
 148/shapes = [  ]
 148/z_index = 0
+149/name = "PhaseBoardVoid"
+149/texture = ExtResource( 375 )
+149/tex_offset = Vector2( 0, 0 )
+149/modulate = Color( 1, 1, 1, 1 )
+149/region = Rect2( 0, 0, 24, 24 )
+149/tile_mode = 0
+149/occluder_offset = Vector2( 12, 12 )
+149/navigation_offset = Vector2( 12, 12 )
+149/shape_offset = Vector2( 0, 0 )
+149/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+149/shape_one_way = false
+149/shape_one_way_margin = 0.0
+149/shapes = [  ]
+149/z_index = 0
+150/name = "OnewayEastGray"
+150/texture = ExtResource( 373 )
+150/tex_offset = Vector2( 0, 0 )
+150/modulate = Color( 1, 1, 1, 1 )
+150/region = Rect2( 0, 0, 24, 24 )
+150/tile_mode = 0
+150/occluder_offset = Vector2( 12, 12 )
+150/navigation_offset = Vector2( 12, 12 )
+150/shape_offset = Vector2( 0, 0 )
+150/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+150/shape_one_way = false
+150/shape_one_way_margin = 0.0
+150/shapes = [  ]
+150/z_index = 0
+151/name = "OnewayNorthGray"
+151/texture = ExtResource( 374 )
+151/tex_offset = Vector2( 0, 0 )
+151/modulate = Color( 1, 1, 1, 1 )
+151/region = Rect2( 0, 0, 24, 24 )
+151/tile_mode = 0
+151/occluder_offset = Vector2( 12, 12 )
+151/navigation_offset = Vector2( 12, 12 )
+151/shape_offset = Vector2( 0, 0 )
+151/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+151/shape_one_way = false
+151/shape_one_way_margin = 0.0
+151/shapes = [  ]
+151/z_index = 0
+152/name = "OnewaySouthGray"
+152/texture = ExtResource( 377 )
+152/tex_offset = Vector2( 0, 0 )
+152/modulate = Color( 1, 1, 1, 1 )
+152/region = Rect2( 0, 0, 24, 24 )
+152/tile_mode = 0
+152/occluder_offset = Vector2( 12, 12 )
+152/navigation_offset = Vector2( 12, 12 )
+152/shape_offset = Vector2( 0, 0 )
+152/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+152/shape_one_way = false
+152/shape_one_way_margin = 0.0
+152/shapes = [  ]
+152/z_index = 0
+153/name = "OnewayWestGray"
+153/texture = ExtResource( 376 )
+153/tex_offset = Vector2( 0, 0 )
+153/modulate = Color( 1, 1, 1, 1 )
+153/region = Rect2( 0, 0, 24, 24 )
+153/tile_mode = 0
+153/occluder_offset = Vector2( 12, 12 )
+153/navigation_offset = Vector2( 12, 12 )
+153/shape_offset = Vector2( 0, 0 )
+153/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+153/shape_one_way = false
+153/shape_one_way_margin = 0.0
+153/shapes = [  ]
+153/z_index = 0

@@ -334,6 +334,11 @@ enum Tiles {
 	YesPushGreen, #146
 	NoLeft, #147
 	NoLeftGreen, #148
+	PhaseBoardVoid, #149
+	OnewayEastGray, #150
+	OnewayNorthGray, #151
+	OnewaySouthGray, #152
+	OnewayWestGray, #153
 }
 var voidlike_tiles = [];
 
@@ -1088,6 +1093,7 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardDeath, preload("res://assets/phase_board_death.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void.png"));
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
@@ -2236,6 +2242,9 @@ func ready_map() -> void:
 			has_floorboards = true;
 			has_phaseboards = true;
 		elif (any_layer_has_this_tile(Tiles.PhaseBoardCrate)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardVoid)):
 			has_floorboards = true;
 			has_phaseboards = true;
 			
@@ -3907,6 +3916,8 @@ func phaseboard_active(pos: Vector2, actor: Actor, chrono: int, id: int) -> bool
 			return chrono == Chrono.MOVE;
 		Tiles.PhaseBoardPurple:
 			return chrono == Chrono.CHAR_UNDO;
+		Tiles.PhaseBoardVoid:
+			return chrono == Chrono.META_UNDO;
 		Tiles.PhaseBoardDeath:
 			return heavy_actor.broken or light_actor.broken;
 		Tiles.PhaseBoardLife:
@@ -3975,8 +3986,8 @@ func all_rotation(candidates: Array) -> void:
 
 var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
 var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true};
-var phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife, Tiles.PhaseBoardHeavy, Tiles.PhaseBoardLight, Tiles.PhaseBoardCrate];
-var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true};
+var phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardVoid, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife, Tiles.PhaseBoardHeavy, Tiles.PhaseBoardLight, Tiles.PhaseBoardCrate];
+var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardVoid: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true};
 
 func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 	if id in floorboards_ids:
@@ -4278,6 +4289,26 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_purple_flash;
+			Tiles.OnewayEastGray:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.LEFT);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.OnewayWestGray:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.RIGHT);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.OnewayNorthGray:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.DOWN);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.OnewaySouthGray:
+				result = no_if_true_yes_if_false(!is_retro and dir == Vector2.UP);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
 			Tiles.OnewayEastLose:
 				result = no_if_true_yes_if_false(dir == Vector2.LEFT);
 				if (result == Success.No):
@@ -5766,6 +5797,7 @@ func just_did_meta() -> void:
 	finish_animations(Chrono.META_UNDO);
 	undo_effect_color = meta_color;
 	# void things experience time when you undo
+	maybe_update_phaseboards(Chrono.META_UNDO);
 	time_passes(Chrono.META_UNDO);
 
 func meta_redo() -> bool:
@@ -6245,7 +6277,7 @@ func character_move(dir: Vector2) -> bool:
 			result = Success.No;
 	if (result != Success.No or nonstandard_won or voidlike_puzzle):
 		append_replay(chr);
-	else:
+	if (result != Success.Yes):
 		play_sound("bump")
 	if (result != Success.No or nonstandard_won):
 		adjust_meta_turn(1, Chrono.MOVE);
@@ -7285,9 +7317,15 @@ func maybe_update_phaseboards(chrono: int) -> void:
 	if (chrono == Chrono.CHAR_UNDO):
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray_unpowered.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple.png"));
-	else: #note if it's META_UNDO or TIMELESS, we don't track the information to reconstruct what it was, and it doesn't matter anyway
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void_unpowered.png"));
+	elif (chrono == Chrono.META_UNDO):
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray_unpowered.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple_unpowered.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void.png"));
+	else: #MOVE or TIMELESS
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple_unpowered.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void_unpowered.png"));
 		
 	if (heavy_actor.broken or light_actor.broken):
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life_unpowered.png"));

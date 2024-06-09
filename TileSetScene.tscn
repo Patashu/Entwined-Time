@@ -1,4 +1,4 @@
-[gd_scene load_steps=403 format=2]
+[gd_scene load_steps=408 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -372,6 +372,11 @@
 [ext_resource path="res://assets/no_push.png" type="Texture" id=370]
 [ext_resource path="res://assets/no_left_green.png" type="Texture" id=371]
 [ext_resource path="res://assets/spider_web.png" type="Texture" id=372]
+[ext_resource path="res://assets/oneway_east.png" type="Texture" id=373]
+[ext_resource path="res://assets/oneway_north.png" type="Texture" id=374]
+[ext_resource path="res://assets/phase_board_void.png" type="Texture" id=375]
+[ext_resource path="res://assets/oneway_west.png" type="Texture" id=376]
+[ext_resource path="res://assets/oneway_south.png" type="Texture" id=377]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1590,3 +1595,23 @@ texture = ExtResource( 367 )
 [node name="NoLeftGreen" type="Sprite" parent="."]
 position = Vector2( 470, 271 )
 texture = ExtResource( 371 )
+
+[node name="PhaseBoardVoid" type="Sprite" parent="."]
+position = Vector2( 300, 168 )
+texture = ExtResource( 375 )
+
+[node name="OnewayEastGray" type="Sprite" parent="."]
+position = Vector2( 496, 286 )
+texture = ExtResource( 373 )
+
+[node name="OnewayNorthGray" type="Sprite" parent="."]
+position = Vector2( 497, 289 )
+texture = ExtResource( 374 )
+
+[node name="OnewaySouthGray" type="Sprite" parent="."]
+position = Vector2( 496, 286 )
+texture = ExtResource( 377 )
+
+[node name="OnewayWestGray" type="Sprite" parent="."]
+position = Vector2( 497, 288 )
+texture = ExtResource( 376 )

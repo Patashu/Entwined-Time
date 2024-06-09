@@ -152,6 +152,11 @@ enum Tiles {
 	YesPushGreen, #146
 	NoLeft, #147
 	NoLeftGreen, #148
+	PhaseBoardVoid, #149
+	OnewayEastGray, #150
+	OnewayNorthGray, #151
+	OnewaySouthGray, #152
+	OnewayWestGray, #153
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -347,6 +352,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.PhaseBoardBlue)
 		picker_array.append(Tiles.PhaseBoardGray)
 		picker_array.append(Tiles.PhaseBoardPurple)
+		picker_array.append(Tiles.PhaseBoardVoid)
 		picker_array.append(Tiles.PhaseBoardDeath)
 		picker_array.append(Tiles.PhaseBoardLife)
 		picker_array.append(Tiles.PhaseBoardHeavy)
@@ -360,6 +366,10 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.YesPushGreen)
 		picker_array.append(Tiles.NoLeft)
 		picker_array.append(Tiles.NoLeftGreen)
+		picker_array.append(Tiles.OnewayEastGray)
+		picker_array.append(Tiles.OnewayNorthGray)
+		picker_array.append(Tiles.OnewaySouthGray)
+		picker_array.append(Tiles.OnewayWestGray)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -970,6 +980,16 @@ func picker_tooltip() -> void:
 			text = "No Left: Solid to robots that are facing left during non-retro moves."
 		Tiles.NoLeftGreen:
 			text = "No Left Green: Solid to robots that are facing left."
+		Tiles.PhaseBoardVoid:
+			text = "Phase Board Purple: A non-destroyable floorboard that exists during undos. (Puzzles containing 'Void' will record undos in their replays.)"
+		Tiles.OnewayEastGray:
+			text = "Gray One Way: Solid to non-retro moves entering its tile."
+		Tiles.OnewayNorthGray:
+			text = "Gray One Way: Solid to non-retro moves entering its tile."
+		Tiles.OnewaySouthGray:
+			text = "Gray One Way: Solid to non-retro moves entering its tile."
+		Tiles.OnewayWestGray:
+			text = "Gray One Way: Solid to non-retro moves entering its tile."
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	
