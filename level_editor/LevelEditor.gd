@@ -981,7 +981,7 @@ func picker_tooltip() -> void:
 		Tiles.NoLeftGreen:
 			text = "No Left Green: Solid to robots that are facing left."
 		Tiles.PhaseBoardVoid:
-			text = "Phase Board Purple: A non-destroyable floorboard that exists during undos. (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Phase Board Void: A non-destroyable floorboard that exists during undos. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.OnewayEastGray:
 			text = "Gray One Way: Solid to non-retro moves entering its tile."
 		Tiles.OnewayNorthGray:
