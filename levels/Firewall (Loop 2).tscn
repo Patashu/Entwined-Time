@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 14, 524290, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 655364, 65547, 14, 262145, 131072, 14, 262145, 131073, 7, 0, 131074, 0, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 8, 0, 131081, 1, 0, 131082, 2, 0, 131083, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 196614, 196619, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Firewall (Loop 2)"
+level_author = "Patashu"
+level_replay = "Firewall (Loop 2)$mturn=78$axwxaxdxwzzzxzzwxdaxzdsxzzxzzxwzwzdxwxdaxzdsxzzxzzxwzwzdwxaxzdxzaxzxwzzxdxdxzdxdxzxaxaxzaxzzzdxzdxzaxzzzadxzddxza"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
