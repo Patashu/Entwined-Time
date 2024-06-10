@@ -1355,6 +1355,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("SpelunkingGlass")
 	level_filenames.push_back("DoubleGlazed")
 	level_filenames.push_back("TheGlassPit")
+	level_filenames.push_back("The Glass Pit-")
 	level_filenames.push_back("Aquarium")
 	level_filenames.push_back("TreasureHunt")
 	
