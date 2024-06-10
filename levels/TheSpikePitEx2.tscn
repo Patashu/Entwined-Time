@@ -13,7 +13,7 @@ tile_data = PoolIntArray( 5, 12, 0, 65541, 12, 0, 131076, 12, 0, 131077, 12, 0, 
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 262148, 19, 0, 262150, 22, 0 )
+tile_data = PoolIntArray( 65536, 12, 0, 65546, 12, 0, 262148, 19, 0, 262150, 22, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
