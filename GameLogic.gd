@@ -8033,7 +8033,7 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("start_saved_replay")):
 			if (Input.is_action_pressed("shift")):
 				# must be kept in sync with Menu
-				if (won):
+				if (user_replay != ""):
 					if (!save_file["levels"].has(level_name)):
 						save_file["levels"][level_name] = {};
 					save_file["levels"][level_name]["replay"] = annotate_replay(user_replay);

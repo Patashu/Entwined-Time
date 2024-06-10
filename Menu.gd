@@ -122,12 +122,11 @@ func _authorsreplaybutton_pressed() -> void:
 func _savereplaybutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
-	if (gamelogic.won):
-		if (!gamelogic.save_file["levels"].has(gamelogic.level_name)):
-			gamelogic.save_file["levels"][gamelogic.level_name] = {};
-		gamelogic.save_file["levels"][gamelogic.level_name]["replay"] = gamelogic.annotate_replay(gamelogic.user_replay);
-		gamelogic.save_game();
-		gamelogic.floating_text("Shift+F11: Replay force saved!");
+	if (!gamelogic.save_file["levels"].has(gamelogic.level_name)):
+		gamelogic.save_file["levels"][gamelogic.level_name] = {};
+	gamelogic.save_file["levels"][gamelogic.level_name]["replay"] = gamelogic.annotate_replay(gamelogic.user_replay);
+	gamelogic.save_game();
+	gamelogic.floating_text("Shift+F11: Replay force saved!");
 	destroy();
 	
 func _copyreplaybutton_pressed() -> void:
