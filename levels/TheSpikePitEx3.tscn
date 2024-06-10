@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 12, 0, 65536, 12, 0, 65541, 12, 0, 65546, 12, 0, 131076, 12, 0, 131077, 12, 0, 131078, 12, 0, 196610, 7, 0, 196611, 2, 0, 196615, 8, 0, 196616, 1, 0, 262145, 14, 196613, 262146, 14, 196614, 262147, 14, 196615, 262148, 12, 0, 262150, 12, 0, 262151, 14, 196613, 262152, 14, 196614, 262153, 14, 196615, 327684, 12, 0, 327686, 12, 0, 393220, 12, 0, 393221, 12, 0, 393222, 12, 0 )
+
+[node name="@@2418" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262148, 19, 0, 262150, 22, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Spikiest Pit [VAR1]"
+level_author = "Patashu"
+level_replay = "The Spikiest Pit [VAR1]$mturn=32$ddxaaxwxwxzzsxzxwxaxwxzzxwsxzxzzzwxaaaxzzzwddd"
+heavy_max_moves = 6.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
