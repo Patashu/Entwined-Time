@@ -1730,6 +1730,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Integrity Checker [VAR2]")
 	level_filenames.push_back("Collectathon [VAR1]")
 	level_filenames.push_back("Firefighters (ladder shortage) [VAR1]")
+	level_filenames.push_back("Consecutive Normal Pits")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
