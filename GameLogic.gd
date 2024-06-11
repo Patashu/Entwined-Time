@@ -3379,7 +3379,7 @@ func make_actor(actorname: int, pos: Vector2, is_character: bool, i: int, chrono
 	actor.time_colour = actor.native_colour();
 	move_actor_to(actor, pos, chrono, false, false);
 	if (!is_web and (actor.actorname == Actor.Name.ChronoHelixRed or actor.actorname == Actor.Name.ChronoHelixBlue)):
-		actor.material = preload("res://outline_shadermaterial.tres").duplicate();
+		actor.material = load("res://outline_shadermaterial.tres").duplicate();
 	if (chrono < Chrono.META_UNDO):
 		print("TODO")
 	return actor;
