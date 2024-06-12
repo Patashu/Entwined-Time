@@ -5443,6 +5443,11 @@ func check_won(chrono: int) -> void:
 		# would fix this O(n^2) with an actors_by_pos dictionary, but then I have to update it all the time.
 		# maybe use DINGED?
 		for crate_goal in crate_goals:
+			# boarded crate goals don't have to be satisfied
+			if (has_floorboards):
+				if (!terrain_in_tile(crate_goal, null, chrono).has(Tiles.CrateGoal)):
+					continue;
+			
 			var crate_goal_satisfied = false;
 			for actor in actors:
 				if actor.pos == crate_goal and !actor.is_main_character() and !actor.broken and !actor.is_crystal:
