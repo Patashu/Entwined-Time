@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 524292, 65539, 14, 262145, 65545, 14, 262145, 131074, 14, 524290, 131075, 14, 655364, 131081, 14, 262145, 196609, 14, 524290, 196610, 14, 655364, 196612, 28, 0, 196614, 60, 0, 196615, 8, 0, 196616, 2, 0, 196617, 14, 262145, 262144, 14, 524290, 262145, 14, 655364, 262146, 1, 0, 262147, 14, 524290, 262148, 14, 196615, 262149, 23, 0, 262150, 23, 0, 262151, 23, 0, 262152, 23, 0, 262153, 14, 262145, 327680, 14, 262145, 327681, 7, 0, 327682, 14, 524290, 327683, 14, 655364, 327684, 61, 0, 327685, 14, 524290, 327686, 14, 196614, 327687, 14, 196614, 327688, 14, 196614, 327689, 14, 655364, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 589828, 393219, 46, 0, 393220, 14, 524290, 393221, 14, 655364, 458754, 14, 655362, 458755, 14, 196614, 458756, 14, 655364 )
+
+[node name="@@244" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262149, 30, 0, 262150, 30, 0, 262151, 30, 0, 262152, 30, 0, 327684, 88, 0, 393219, 57, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Spacetime Launch"
+level_author = "Sandra53"
+level_replay = "Spacetime Launch$mturn=41$xwxaxzxaxaxwxzsxzzzxwxaxzxsawxsxwxaxzzxaxdxzxzxaaxzzzaaaaaxzzzzz"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
