@@ -1718,6 +1718,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("TimelessBridgeEx")
+	level_filenames.push_back("Consecutive Normal Pits")
 	level_filenames.push_back("Booster Seat [VAR1]")
 	level_filenames.push_back("Firewall (Loop 2)")
 	level_filenames.push_back("Hot Soup [VAR1]")
@@ -1731,7 +1732,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Integrity Checker [VAR2]")
 	level_filenames.push_back("Collectathon [VAR1]")
 	level_filenames.push_back("Firefighters (ladder shortage) [VAR1]")
-	level_filenames.push_back("Consecutive Normal Pits")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
