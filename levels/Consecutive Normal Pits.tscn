@@ -7,13 +7,13 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 7, 0, 1, 2, 0, 7, 8, 0, 8, 1, 0, 65536, 14, 196613, 65537, 14, 524292, 65539, 14, 196609, 65541, 14, 196609, 65543, 14, 524290, 65544, 14, 196615, 131073, 14, 262145, 131075, 14, 262145, 131077, 14, 262145, 131079, 14, 262145, 196609, 14, 655362, 196610, 14, 196614, 196611, 14, 655363, 196612, 14, 196614, 196613, 14, 655363, 196614, 14, 196614, 196615, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196615, 131073, 7, 0, 131074, 2, 0, 131080, 8, 0, 131081, 1, 0, 196609, 14, 196613, 196610, 14, 524292, 196612, 14, 196609, 196614, 14, 196609, 196616, 14, 524290, 196617, 14, 196615, 262146, 14, 262145, 262148, 14, 262145, 262150, 14, 262145, 262152, 14, 262145, 327682, 14, 655362, 327683, 14, 196614, 327684, 14, 655363, 327685, 14, 196614, 327686, 14, 655363, 327687, 14, 196614, 327688, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Consecutive Normal Pits"
 level_author = "Patashu"
-level_replay = "Consecutive Normal Pits$mturn=233$xaaaaaxwxzzzzzwdxzaxzaxwxaxzzswxzxzzdsxaxzzswxzxzzdssxaxzzzswxzxzdsxaxzzswxzxzaxwxdxzzzdxzxzawxdxzzsdxzxzzsdxzzzdxzxdxzwddssxdwdxzzzxzzxwxzxzxzzasxddxzzsxzzxwxaxzzasxzdxzzszsaxzzzdaddxzxzzxwxaxzasxddxzzsxzzdzzzzxaxaaddxzxzzxwxaxzzasxzzxzzsaxaaddxzxzzxwxaxzasxzzxzzsaxaawxzxzzsdxzzzdxzxdxzzzzaxaxzddssxzdwdxzzzxzzxzaaaaxzwdd"
+level_replay = "Consecutive Normal Pits$mturn=88$xaaaaaxaxzzzzzsxzdwdxzwaxzxzzdddssxzzwddwdxzzzxzxwxzzwdxzdssxzzzzwdxzzzxaxdxwsxzzxzxddssxzzdwdxzzzxzxwxzzwddxzzzaaa"
 heavy_max_moves = 5.0
 light_max_moves = 5.0
 clock_turns = ""
