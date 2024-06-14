@@ -1702,7 +1702,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Patashu's World");
+	chapter_names.push_back("The Cutting Room Floor");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1739,7 +1739,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Sandra53's World");
+	chapter_names.push_back("Formless Exploration");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1771,7 +1771,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Sandra53's World (Page 2)");
+	chapter_names.push_back("Formless Exploration (Page 2)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1798,7 +1798,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Slabdrill's World");
+	chapter_names.push_back("Limits of the Player");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1831,7 +1831,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Slabdrill's World (Page 2)");
+	chapter_names.push_back("Limits of the Player (Page 2)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1863,7 +1863,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Slabdrill's World (Page 3)");
+	chapter_names.push_back("Limits of the Player (Page 3)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1891,7 +1891,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Slabdrill's World (Page 4)");
+	chapter_names.push_back("Limits of the Player (Page 4)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1928,7 +1928,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Meo's World");
+	chapter_names.push_back("Limits of the Game");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
