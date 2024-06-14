@@ -2399,6 +2399,9 @@ func intro_hop() -> void:
 	tween.start();
 
 func nag_label_start() -> void:
+	if (!ready_done):
+		call_deferred("nag_label_start");
+		return
 	if (nag_timer != null):
 		if !nag_timer.is_stopped():
 			return;
