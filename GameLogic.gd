@@ -1492,9 +1492,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hassle")
 	level_filenames.push_back("MidnightParkour")
 	level_filenames.push_back("ControlledDemolitionEx")
-	level_filenames.push_back("ControlledDemolitionEx2")
 	level_filenames.push_back("Permify")
 	level_filenames.push_back("CelestialNavigation")
+	level_filenames.push_back("Chronofrag")
 	level_replacements[level_filenames.size()] = "Ω";
 	level_filenames.push_back("ChronoLabReactor")
 	
@@ -1652,6 +1652,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("KnotL2")
 	level_filenames.push_back("CallACabL2")
 	level_filenames.push_back("PachinkoL2")
+	level_filenames.push_back("PachinkoL2Ex")
 	level_filenames.push_back("TheFirstPitL2")
 	level_filenames.push_back("TheFirstPitL2Ex")
 	level_filenames.push_back("TheFirstPitL2Ex2")
@@ -1790,6 +1791,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Portal Repairing Crew (Insight)")
 	level_filenames.push_back("Circle Dance")
 	level_filenames.push_back("Spacetime Launch")
+	level_filenames.push_back("Spacetime Launch-")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1906,6 +1908,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Meet Heavy (Loop 2)")
 	level_filenames.push_back("Noclip")
+	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

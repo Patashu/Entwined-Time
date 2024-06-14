@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 524292, 65536, 14, 262145, 65537, 45, 0, 65538, 14, 262145, 131072, 14, 262145, 131074, 14, 589826, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 524292, 196608, 14, 262145, 196610, 14, 327681, 196612, 55, 0, 196614, 14, 262145, 262144, 14, 262145, 262148, 8, 0, 262149, 1, 0, 262150, 14, 262145, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 524291, 327683, 14, 196614, 327684, 14, 196615, 327685, 23, 0, 327686, 14, 262145, 393218, 14, 262145, 393219, 7, 0, 393220, 22, 0, 393221, 23, 0, 393222, 14, 262145, 458754, 14, 655362, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 655364 )
+
+[node name="@@546" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196612, 36, 0, 262145, 29, 0, 262147, 2, 0, 262149, 21, 0, 327685, 21, 0, 393221, 22, 0 )
+
+[node name="@@547" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262148, 23, 0, 327685, 29, 0 )
+
+[node name="@@548" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327685, 33, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Chronofrag"
+level_author = "Sandra53"
+level_replay = "Chronofrag$mturn=107$wxaaxzdxzzwxzxzdxdxzswxzxzdxdxzsxzaxzzwxdzdzzdxdxdzaxzdxaxzxzdzzxwxaxzxaxsxzzxzaxzaxzxzxaxwddxzwxzxzaxzzxzxdxaxzxzxadxdxzxzwxaxzwxzxzwxaxzwxzxzzxzxdxwxdxaxzwxzxzsxdxzzsaa"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = "3"
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 7.0
