@@ -477,6 +477,7 @@ var level_filenames = [];
 var level_names = [];
 var level_extraness = [];
 var has_remix = {};
+var insight_level_names = {};
 var chapter_names = [];
 var chapter_skies = [];
 var chapter_tracks = [];
@@ -1989,6 +1990,7 @@ func initialize_level_list() -> void:
 			elif insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or insight_level_name.find("Theory of Everything") >= 0 or insight_level_name.find("Board Ring B") >= 0:
 				has_remix[level_name] = true;
 				has_remix[insight_level_name] = true;
+			insight_level_names[level_name] = insight_level_name;
 			insight_level.queue_free();
 		
 	refresh_puzzles_completed();

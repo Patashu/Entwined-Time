@@ -14,8 +14,12 @@ onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, communi
 var buttons_by_xy = {};
 var cutscene_button = null;
 var in_community_puzzles = false;
+var star_tints = false;
 
 func _ready() -> void:
+	if gamelogic.save_file["levels"].has("Joke") and gamelogic.save_file["levels"]["Joke"].has("won") and gamelogic.save_file["levels"]["Joke"]["won"]:
+		star_tints = true;
+	
 	prepare_chapter();
 	update_focus_neighbors();
 	prevbutton.connect("pressed", self, "_prevbutton_pressed");
@@ -351,12 +355,7 @@ func prepare_chapter() -> void:
 		
 		# if we beat it, add a star :3
 		if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
-			var star = Sprite.new();
-			star.texture = preload("res://assets/star.png");
-			star.scale = Vector2(1.0/6.0, 1.0/6.0);
-			star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
-			star.centered = false;
-			holder.add_child(star);
+			star(button, level_name)
 		else:
 			all_standard_stars = false;
 		
@@ -449,12 +448,7 @@ func prepare_chapter() -> void:
 					
 				# if we beat it, add a star :3
 				if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
-					var star = Sprite.new();
-					star.texture = preload("res://assets/star.png");
-					star.scale = Vector2(1.0/6.0, 1.0/6.0);
-					star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
-					star.centered = false;
-					holder.add_child(star);
+					star(button, level_name)
 				else:
 					all_advanced_stars = false;
 				
@@ -491,6 +485,24 @@ func prepare_chapter() -> void:
 	if (all_advanced_stars and advanced_label != null):
 		advanced_label.set_script(preload("res://GoldLabel.gd"));
 		advanced_label.flash();
+
+func star(button: Button, level_name: String) -> void:
+	var star = Sprite.new();
+	star.texture = preload("res://assets/star.png");
+	star.scale = Vector2(1.0/6.0, 1.0/6.0);
+	star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
+	star.centered = false;
+	holder.add_child(star);
+	if (star_tints):
+		var insight_path = "res://levels/insight/" + gamelogic.level_filenames[button.level_number] + "Insight.tscn";
+		if (ResourceLoader.exists(insight_path)):
+			var insight_level_name = gamelogic.insight_level_names[level_name];
+			if gamelogic.save_file["levels"].has(insight_level_name) and gamelogic.save_file["levels"][insight_level_name].has("won") and gamelogic.save_file["levels"][insight_level_name]["won"]:
+				pass
+			elif gamelogic.has_remix.has(level_name):
+				star.modulate = Color(0.83, 1.0, 0.83);
+			else:
+				star.modulate = Color(1.13, 0.87, 0.87);
 
 func _intro_cutscene_pressed() -> void:
 	destroy();
