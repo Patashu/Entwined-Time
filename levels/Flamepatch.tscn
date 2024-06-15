@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 524291, 6, 14, 196614, 7, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 589828, 65540, 3, 0, 65541, 14, 262145, 65542, 3, 0, 65543, 14, 589826, 65544, 14, 196614, 65545, 14, 196614, 65546, 14, 524292, 131072, 14, 262145, 131075, 14, 327681, 131076, 23, 0, 131077, 14, 327681, 131078, 23, 0, 131079, 14, 327681, 131082, 14, 262145, 196608, 14, 262145, 196610, 2, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 8, 0, 196618, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 655364 )
+
+[node name="@@124" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131076, 32, 0, 131078, 32, 0, 196610, 7, 0, 196611, 88, 0, 196612, 88, 0, 196613, 88, 0, 196614, 88, 0, 196615, 88, 0, 196616, 1, 0 )
+
+[node name="@@125" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196612, 23, 0, 196614, 23, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Flamepatch"
+level_author = "Sandra53"
+level_replay = "Flamepatch$mturn=38$ddwxaaaaxzzzxzzzzxsddwxaaxzzzxzzxsddwxaxzzzxaaaaa"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

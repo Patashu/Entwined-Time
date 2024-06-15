@@ -1796,6 +1796,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Circle Dance")
 	level_filenames.push_back("Spacetime Launch")
 	level_filenames.push_back("Spacetime Launch-")
+	level_filenames.push_back("Flamepatch")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1913,6 +1914,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Meet Heavy (Loop 2)")
 	level_filenames.push_back("Noclip")
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
+	level_filenames.push_back("Heavy Fuzzing Service")
+	level_filenames.push_back("Foot Wiggle [VAR5]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
