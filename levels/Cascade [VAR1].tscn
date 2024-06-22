@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 47, 0, 1, 55, 0, 5, 47, 0, 65537, 23, 0, 65539, 47, 0, 65541, 55, 0, 65543, 55, 0, 131073, 55, 0, 131075, 55, 0, 131077, 23, 0, 131078, 5, 0, 131079, 23, 0, 131080, 47, 0, 196608, 47, 0, 196609, 14, 262148, 196611, 23, 0, 196613, 55, 0, 196614, 47, 0, 262144, 27, 0, 262146, 55, 0, 262147, 2, 0, 262148, 8, 0, 262149, 14, 196609, 327680, 27, 0, 327681, 47, 0, 327682, 14, 196613, 327683, 14, 393219, 327684, 14, 3, 327685, 14, 720904, 327686, 14, 196614, 327687, 14, 196615, 327688, 27, 0, 393216, 19, 0, 393217, 19, 0, 393218, 1, 0, 393219, 14, 65538, 393220, 14, 65539, 393221, 14, 65540, 393222, 7, 0, 393223, 22, 0, 393224, 22, 0, 458752, 14, 196613, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 720899, 458756, 14, 131075, 458757, 14, 786435, 458758, 14, 196614, 458759, 14, 196614, 458760, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Cascade [VAR1]"
+level_author = "Green"
+level_replay = "Cascade [VAR1]$mturn=200$azxwdzxdxzdxzxzxwzwxaxzaxzxzxwxdxzaxzwxzxzwxaxzdxzwxzsxzxzxdxaxzwxzsxzaxzdxzdxzsxzxazxaxzxzxazxdzaxazaxzxzxaxaxzxwzwzzwxaxzdxzaxzsxzxzxwzwxaxzdxzwxzaxzxzxwxwzxzwzxdxaxzdxzxzxwzxdxwzxzwxdxzwxzxzxwxaxzdxzxzxdxaxzwxzxzxwxaxzdxzaxzxzsxwxzwazzsdxzwzxzzxddxdxzwzxzxzdxwxdxzaxzaxzsxzaxzasxzxzaxwxzzddxzzxzzddxaazzxzzaaxdd"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = "3,3,3,3,3,2,1"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0

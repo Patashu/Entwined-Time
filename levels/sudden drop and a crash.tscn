@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 8, 0, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 196614, 65546, 14, 524292, 131072, 14, 262145, 131075, 3, 0, 131076, 98, 0, 131077, 98, 0, 131078, 98, 0, 131079, 98, 0, 131080, 98, 0, 131081, 98, 0, 131082, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 524292, 196615, 98, 0, 196616, 14, 196609, 196617, 98, 0, 196618, 14, 262145, 262150, 14, 262145, 262151, 98, 0, 262152, 14, 262145, 262153, 98, 0, 262154, 14, 262145, 327686, 14, 262145, 327687, 98, 0, 327688, 14, 262145, 327689, 98, 0, 327690, 14, 262145, 393222, 14, 262145, 393223, 98, 0, 393224, 14, 262145, 393225, 98, 0, 393226, 14, 262145, 458758, 14, 262145, 458759, 98, 0, 458760, 14, 327681, 458761, 98, 0, 458762, 14, 262145, 524294, 14, 262145, 524295, 98, 0, 524296, 98, 0, 524297, 98, 0, 524298, 14, 262145, 589830, 14, 655362, 589831, 14, 196614, 589832, 14, 196614, 589833, 14, 196614, 589834, 14, 655364 )
+
+[node name="@@161" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131076, 96, 0, 131077, 96, 0, 131078, 96, 0, 131079, 96, 0, 131080, 96, 0, 131081, 96, 0, 196615, 96, 0, 196617, 96, 0, 262151, 96, 0, 262153, 96, 0, 327687, 96, 0, 327689, 96, 0, 393223, 96, 0, 393225, 96, 0, 458759, 96, 0, 458761, 96, 0, 524295, 96, 0, 524296, 96, 0, 524297, 96, 0 )
+
+[node name="@@162" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 7, 0, 131074, 2, 0, 131075, 40, 0, 131079, 140, 0, 524296, 3, 0 )
+
+[node name="@@163" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131076, 29, 0, 131079, 32, 0, 524295, 32, 0 )
+
+[node name="@@164" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 1, 0, 524295, 124, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "sudden drop and a crash"
+level_author = "Meo"
+level_replay = "phaseboard phasetrough$mturn=1$dzcca"
+heavy_max_moves = 5.0
+light_max_moves = 0.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.317647, 0.286275, 1 )
+target_track = 0.0

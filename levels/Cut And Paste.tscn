@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 10, 8, 0, 65536, 67, 0, 65537, 67, 0, 65538, 67, 0, 65539, 67, 0, 65540, 67, 0, 65541, 67, 0, 65542, 67, 0, 65543, 67, 0, 65544, 67, 0, 65545, 14, 524290, 65546, 14, 196614, 65547, 14, 196614, 65548, 14, 196614, 65549, 14, 524292, 131072, 67, 0, 131073, 67, 0, 131074, 67, 0, 131075, 67, 0, 131076, 67, 0, 131077, 67, 0, 131078, 67, 0, 131079, 67, 0, 131080, 14, 196613, 131081, 14, 655364, 131084, 54, 0, 131085, 14, 262145, 196608, 67, 0, 196609, 67, 0, 196610, 67, 0, 196611, 67, 0, 196612, 67, 0, 196613, 67, 0, 196614, 14, 196613, 196615, 14, 196615, 196616, 48, 0, 196617, 48, 0, 196619, 2, 0, 196620, 53, 0, 196621, 14, 262145, 262144, 67, 0, 262145, 67, 0, 262146, 67, 0, 262147, 67, 0, 262148, 67, 0, 262149, 14, 262148, 262150, 48, 0, 262151, 48, 0, 262152, 48, 0, 262153, 14, 196613, 262154, 14, 524291, 262155, 14, 196614, 262156, 14, 196614, 262157, 14, 655364, 327680, 67, 0, 327681, 67, 0, 327682, 67, 0, 327683, 14, 196613, 327684, 14, 196615, 327685, 48, 0, 327686, 48, 0, 327687, 14, 196613, 327688, 14, 196615, 327689, 67, 0, 327690, 14, 262145, 393216, 67, 0, 393217, 67, 0, 393218, 14, 262148, 393219, 48, 0, 393220, 48, 0, 393221, 48, 0, 393222, 14, 262148, 393223, 67, 0, 393224, 67, 0, 393225, 67, 0, 393226, 14, 262145, 458752, 67, 0, 458753, 14, 262148, 458754, 48, 0, 458755, 48, 0, 458756, 14, 196613, 458757, 14, 196615, 458758, 67, 0, 458759, 67, 0, 458760, 67, 0, 458761, 67, 0, 458762, 14, 262145, 524288, 14, 196609, 524289, 1, 0, 524290, 48, 0, 524291, 14, 262148, 524292, 67, 0, 524293, 67, 0, 524294, 67, 0, 524295, 67, 0, 524296, 67, 0, 524297, 67, 0, 524298, 14, 262145, 589824, 14, 655362, 589825, 14, 196614, 589826, 14, 196615, 589827, 67, 0, 589828, 67, 0, 589829, 67, 0, 589830, 67, 0, 589831, 67, 0, 589832, 67, 0, 589833, 67, 0, 589834, 14, 327681 )
+
+[node name="@@343" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 10, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Cut And Paste"
+level_author = "Green"
+level_replay = "Cut And Paste$mturn=9$wdcdzcczccawdwdzccdzccczzczzcccdcwdzczczzzcdcccccccdwdzcczdwdczwdzcczdczdczwdczzwdczzcccccccccccccccccwdzczczczczzccccddwczdwczcccwcdcdzccwdczccdcwcdcdzcdcdzccdzccdcdzccdcdcdzcdzccdzccdcdcdcdwcdcwdccdcwdwdcwdcwzcdczcccwcwzccwcwdczccdcwdccdzccdcdcdcdcdcdcawcdwwdcwzwdczwdczwdczwdzccdzccdzccdzcccccccccccwccccwcwccwcdcdzccdzccdcdzccdzccdzccdzccdcdzccdzccdcdzccdcdcdcdzccdcdzccdcdcdcdcdzccdzccdzccdcdcsdwczczcdcwdccdcwdwdcdczczcdddzcwdwzwdzdwzccccccccdwczdwccccwdcdcdcdzczzzzzzczzzzzzczcccczcccccccccccwzccwcwwdccdzczczccdzzczaccczzccaczccdcadwdzccdcdcdcdczdczzzcccccccdczczcdcdczzccdcdzdczcccdzcczcdzdcccdczdzccdzcdcdczcdczdcdcdzccdzcdcdczcdzccszccdcdzzcccdczcdczzcdczdzcdczcdczcddzccadwdzccdczdczcczdcdzccdczdwdzccdzdczdccccczzccczzcccczcdzcczzzccccccdcdzccdzczccczcsdcwdczwadwdzdccdczdzdcccdczdccdczdczcdzczzcccczcczdzccccccdcdzcccwdzzcczzzcccccwdczwdzccdczdcdzcccdczcdzccdcdczzzccccczdcdwzczcccdzccdcwdczcdzccdczzzcccccdczdcdcwdzzcccdczdzccccwdcdzczzccccccccwdzzcccdczwsdwccwdzzzzzccccccccccwdcdcdzz"
+heavy_max_moves = 7.0
+light_max_moves = 0.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0

@@ -1797,6 +1797,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Spacetime Launch")
 	level_filenames.push_back("Spacetime Launch-")
 	level_filenames.push_back("Flamepatch")
+	level_filenames.push_back("Fragile Victory")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1916,6 +1917,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Heavy Fuzzing Service")
 	level_filenames.push_back("Foot Wiggle [VAR5]")
+	level_filenames.push_back("Fragile Victory [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1932,6 +1934,21 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Green's World");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Cascade [VAR1]")
+	level_filenames.push_back("Zipper")
+	level_filenames.push_back("One at a Time [VAR1]")
+	level_filenames.push_back("True Micro Puzzle")
+	level_filenames.push_back("True Micro Puzzle 2")
+	level_filenames.push_back("Cut and Paste")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
 	chapter_names.push_back("Limits of the Game");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
@@ -1943,6 +1960,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("SO LONG GAY HOLE")
 	level_filenames.push_back("The Wall (alpha build)")
 	level_filenames.push_back("Cannon")
+	level_filenames.push_back("phaseboard phasetrough")
+	level_filenames.push_back("sudden drop and a crash")
 	level_filenames.push_back("Violent pushback")
 	level_filenames.push_back("time crash")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -6903,11 +6922,17 @@ func do_one_replay_turn() -> void:
 						gain_insight();
 					else:
 						load_level(1);
+						if (level_name == "Cut And Paste"):
+							#hell puzzle with a 1000 turn solution that causes errors in underlying code
+							load_level(1);
 			else:
 				if (has_insight_level and !in_insight_level):
 					gain_insight();
 				else:
 					load_level(1);
+					if (level_name == "Cut And Paste"):
+						#hell puzzle with a 1000 turn solution that causes errors in underlying code
+						load_level(1);
 			replay_turn = 0;
 			level_replay = authors_replay;
 			next_replay = replay_timer + replay_interval();
