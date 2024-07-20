@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,11 +17,10 @@ tile_data = PoolIntArray( 196614, 33, 0, 262151, 82, 0, 262152, 82, 0, 262153, 8
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Surge Surfer V2"
+level_name = "Surge Surfer"
 level_author = "Sandra53"
-level_replay = "Surge Surfer V2$mturn=69$xwxdxzdswxdxzzzassxaxwxaxzxdxzzzdwddsxzxdxdxzzxaxzwaxzazazzzzzzdadxzzwaxdaxzaxzzdxzzzzddddxaa"
+level_replay = "Surge Surfer$mturn=69$xwxdxzdswxdxzzzassxaxwxaxzxdxzzzdwddsxzxdxdxzzxaxzwaxzazazzzzzzdadxzzwaxdaxzaxzzdxzzzzddddxaa"
 heavy_max_moves = 6.0
 light_max_moves = 6.0
-clock_turns = ""
 target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
 target_track = 5.0
