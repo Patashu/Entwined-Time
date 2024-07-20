@@ -5534,7 +5534,7 @@ func adjust_meta_turn(amount: int, chrono: int) -> void:
 	#if (debug_prints):
 	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	update_ghosts();
-	if (amount >= 0 or voidlike_puzzle):
+	if (won or amount >= 0 or voidlike_puzzle):
 		check_won(chrono);
 	
 func check_won(chrono: int) -> void:
