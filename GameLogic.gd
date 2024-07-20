@@ -3800,7 +3800,7 @@ boost_pad_reentrance: bool = false) -> int:
 				
 		# boulder momentum
 		if (actor.actorname == Actor.Name.Boulder and chrono < Chrono.TIMELESS and !is_retro and !actor.broken):
-			if dir.y == 0:
+			if dir.x != 0:
 				actor.boulder_moved_horizontally_this_turn = true;
 				if (actor.momentum != dir):
 					set_actor_var(actor, "momentum", dir, chrono);
