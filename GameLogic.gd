@@ -1643,8 +1643,8 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(3);
 	level_filenames.push_back("Rushing Rivers")
 	level_filenames.push_back("Sinkhole")
-	level_filenames.push_back("Gutter")
 	level_filenames.push_back("The Nudge Pit")
+	level_filenames.push_back("Gutter")
 	level_filenames.push_back("Downwards Momentum")
 	level_filenames.push_back("Conveyor")
 	level_filenames.push_back("Constant Pushback")
