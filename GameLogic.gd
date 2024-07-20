@@ -6090,7 +6090,7 @@ func how_many_standard_puzzles_are_solved_in_chapter(chapter: int) -> Array:
 		y = 8;
 	return [x, y];
 	
-func trying_to_load_locked_level() -> bool:
+func trying_to_load_locked_level(level_number: int, is_custom: bool) -> bool:
 	if (is_custom):
 		return false;
 	if save_file.has("unlock_everything") and save_file["unlock_everything"]:
@@ -6222,7 +6222,7 @@ func load_level(impulse: int, ignore_locked: bool = false) -> void:
 		level_number = posmod(int(level_number), level_list.size());
 	
 	# we might try to F1/F2 onto a level we don't have access to. if so, back up then show level select.
-	if impulse != 0 and !ignore_locked and trying_to_load_locked_level():
+	if impulse != 0 and !ignore_locked and trying_to_load_locked_level(level_number, is_custom):
 		impulse *= -1;
 		if (impulse == 0):
 			impulse = -1;
@@ -6230,7 +6230,7 @@ func load_level(impulse: int, ignore_locked: bool = false) -> void:
 			level_number += impulse;
 			level_number = posmod(int(level_number), level_list.size());
 			setup_chapter_etc();
-			if !trying_to_load_locked_level():
+			if !trying_to_load_locked_level(level_number, is_custom):
 				break;
 		# buggy if the game just loaded, for some reason, but I didn't want it anyway
 		if (ready_done):
@@ -7933,6 +7933,7 @@ var virtual_button_held_dict = {"meta_undo": false, "meta_redo": false, "previou
 "replay_back1": false, "replay_fwd1": false, "speedup_replay": false, "slowdown_replay": false};
 var key_repeat_this_frame_dict = {};
 var covered_cooldown_timer = 0.0;
+var no_mute_pwease = false;
 	
 func pressed_or_key_repeated(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
@@ -8076,7 +8077,7 @@ func _process(delta: float) -> void:
 			Static.modulate = Color(1, 1, 1, 1);
 		
 	# allow mute to happen even when in menus
-	if (Input.is_action_just_pressed("mute")):
+	if (Input.is_action_just_pressed("mute") and !no_mute_pwease):
 		# hack: no muting in LevelInfoEdit where the player might type M
 		if (ui_stack.size() == 0 or ui_stack[ui_stack.size() -1].name != "LevelInfoEdit"):
 			toggle_mute();

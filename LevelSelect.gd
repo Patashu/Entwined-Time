@@ -10,7 +10,8 @@ onready var leveleditorbutton : Button = get_node("Holder/LevelEditorButton");
 onready var communitylevelsbutton : Button = get_node("Holder/CommunityLevelsButton");
 onready var closebutton : Button = get_node("Holder/CloseButton");
 onready var pointer : Sprite = get_node("Holder/Pointer");
-onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, communitylevelsbutton, closebutton, pointer];
+onready var searchbox : LineEdit = get_node("Holder/SearchBox");
+onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, communitylevelsbutton, closebutton, pointer, searchbox];
 var buttons_by_xy = {};
 var cutscene_button = null;
 var in_community_puzzles = false;
@@ -27,6 +28,10 @@ func _ready() -> void:
 	leveleditorbutton.connect("pressed", self, "_leveleditorbutton_pressed");
 	communitylevelsbutton.connect("pressed", self, "_communitylevelsbutton_pressed");
 	closebutton.connect("pressed", self, "destroy");
+	searchbox.connect("focus_entered", self, "_searchbox_focus_entered");
+	searchbox.connect("focus_exited", self, "_searchbox_focus_exited");
+	searchbox.connect("text_changed", self, "_searchbox_text_changed");
+	searchbox.connect("text_entered", self, "_searchbox_text_entered");
 	
 	if (gamelogic.chapter >= gamelogic.custom_past_here):
 		in_community_puzzles = true;
@@ -45,8 +50,35 @@ func _ready() -> void:
 			communitylevelsbutton.disabled = true;
 			communitylevelsbutton.text = "???";
 	
+	searchbox.visible = in_community_puzzles;
+	
 	nextbutton.text = "Next Chapter (" + gamelogic.human_readable_input("next_level", 1) + ")";
 	prevbutton.text = "Prev. Chapter (" + gamelogic.human_readable_input("previous_level", 1) + ")";
+	
+func _searchbox_focus_entered() -> void:
+	searchbox.text = "";
+	searchbox.editable = true;
+	gamelogic.no_mute_pwease = true;
+	
+func _searchbox_focus_exited() -> void:
+	searchbox.text = "Search...";
+	searchbox.editable = false;
+	gamelogic.no_mute_pwease = false;
+	
+func _searchbox_text_changed(new_text: String) -> void:
+	
+	var indexes = [];
+	for i in range(gamelogic.level_names.size()):
+		var name = gamelogic.level_names[i];
+		if searchbox.text.to_lower() in name.to_lower():
+			if (!gamelogic.trying_to_load_locked_level(i, false)):
+				indexes.append(i);
+		if indexes.size() >= 24:
+			break;
+	prepare_search_chapter(indexes);
+	
+func _searchbox_text_entered(new_text: String) -> void:
+	pass
 	
 func _prevbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -88,6 +120,7 @@ func _communitylevelsbutton_pressed() -> void:
 	
 	var stylebox = preload("res://heavy_styleboxtexture.tres")
 	in_community_puzzles = !in_community_puzzles;
+	searchbox.visible = in_community_puzzles;
 	if (in_community_puzzles):
 		chapter = gamelogic.custom_past_here;
 		prepare_chapter();
@@ -182,13 +215,62 @@ func update_focus_neighbors() -> void:
 	communitylevelsbutton.focus_neighbour_top = nextbutton.focus_neighbour_top;
 	communitylevelsbutton.focus_neighbour_bottom = nextbutton.focus_neighbour_bottom;
 
-func prepare_chapter() -> void:
+func cleanup_chapter() -> void:
 	buttons_by_xy.clear();
 	
 	for child in holder.get_children():
 		if !specialbuttons.has(child):
 			child.queue_free();
 			
+	holder.finish_animations();
+
+func prepare_search_chapter(indexes: Array) -> void:
+	cleanup_chapter();
+	
+	var yy = 16;
+	var yyy = 16;
+	var xx = 19;
+	var xxx = int(floor(holder.rect_size.x / 2))-2;
+	var x = 0;
+	var y = 0;
+	var y_max = 12;
+	
+	for i in indexes:
+		var button = preload("res://LevelButton.tscn").instance();
+		buttons_by_xy[Vector2(x, y)] = button;
+		holder.add_child(button);
+		button.rect_position.x = round(xx + xxx*x);
+		button.rect_position.y = round(yy + yyy*y);
+		button.level_number = i;
+		var level_name = gamelogic.level_names[button.level_number];
+		var level_string = "";
+		button.text = level_name;
+		button.theme = holder.theme;
+		button.levelselect = self;
+		
+		var stylebox = preload("res://default_styleboxtexture.tres");
+		if (i > gamelogic.custom_past_here_level_count):
+			stylebox = preload("res://light_styleboxtexture.tres");
+		elif (gamelogic.level_extraness[i]):
+			stylebox = preload("res://dark_styleboxtexture.tres");
+		button.add_stylebox_override("hover", stylebox);
+		button.add_stylebox_override("pressed", stylebox);
+		button.add_stylebox_override("focus", stylebox);
+		button.add_stylebox_override("disabled", stylebox);
+		button.add_stylebox_override("normal", stylebox);
+		
+		# if we beat it, add a star :3
+		if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
+			star(button, level_name)
+		
+		y += 1;
+		if (y == y_max):
+			y = 0;
+			x += 1;
+
+func prepare_chapter() -> void:
+	cleanup_chapter();
+	
 	var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];
 	var requires_advanced_levels = (chapter == 2);
 	if (requires_advanced_levels):
@@ -199,7 +281,7 @@ func prepare_chapter() -> void:
 	if gamelogic.chapter_replacements.has(chapter):
 		chapter_string = gamelogic.chapter_replacements[chapter];
 	
-	holder.finish_animations();
+	
 	var all_standard_stars = true;
 	var all_advanced_stars = true;
 	var ending_part_1 = false;
@@ -513,6 +595,7 @@ func _outro_cutscene_pressed() -> void:
 	gamelogic.ending_cutscene_1();
 
 func destroy() -> void:
+	gamelogic.no_mute_pwease = false;
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
 
@@ -521,16 +604,17 @@ func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	if (Input.is_action_just_pressed("escape")):
-		destroy();
-	if (Input.is_action_just_pressed("ui_cancel")):
-		destroy();
-	if (Input.is_action_just_pressed("level_select")):
-		destroy();
-	if (Input.is_action_just_pressed("previous_level")):
-		_prevbutton_pressed();
-	if (Input.is_action_just_pressed("next_level")):
-		_nextbutton_pressed();
+	if (!searchbox.editable):
+		if (Input.is_action_just_pressed("escape")):
+			destroy();
+		if (Input.is_action_just_pressed("ui_cancel")):
+			destroy();
+		if (Input.is_action_just_pressed("level_select")):
+			destroy();
+		if (Input.is_action_just_pressed("previous_level")):
+			_prevbutton_pressed();
+		if (Input.is_action_just_pressed("next_level")):
+			_nextbutton_pressed();
 		
 	var focus = holder.get_focus_owner();
 	if (focus == null):
