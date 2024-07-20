@@ -1651,7 +1651,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Boulder Tutorial")
 	level_filenames.push_back("Newton's Cradle")
 	level_filenames.push_back("when boulders fly")
-	level_filenames.push_back("Surge Surfer V2")
+	level_filenames.push_back("Surge Surfer")
 	level_filenames.push_back("Centrism")
 	level_filenames.push_back("Chain Reaction")
 	
