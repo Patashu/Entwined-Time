@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 393219, 3, 14, 3, 4, 14, 4, 65536, 14, 262145, 65537, 1, 0, 65538, 14, 131074, 65539, 14, 917512, 65540, 14, 65540, 131072, 14, 262145, 131073, 7, 0, 131075, 14, 131074, 131076, 14, 589829, 196608, 14, 589824, 196609, 14, 4, 196610, 27, 0, 196612, 14, 262145, 262144, 14, 589825, 262145, 14, 131076, 262148, 14, 262145, 327680, 14, 262145, 327682, 26, 0, 327683, 14, 2, 327684, 14, 589830, 393216, 14, 262145, 393219, 14, 65538, 393220, 14, 65540, 458752, 14, 262145, 458753, 2, 0, 458754, 8, 0, 458755, 14, 65538, 458756, 14, 65540, 524288, 14, 655362, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 720899, 524292, 14, 131076 )
+
+[node name="@@722" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 77, 0, 196610, 77, 0, 196611, 77, 0, 262146, 77, 0, 262147, 77, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Waterslide (Waterslide Shortage)"
+level_author = "Green"
+level_replay = "Waterslide (Waterslide Shortage)$mturn=132$wxaxzdwxzxzaxwaxzsxzzxzaxdxzsxzxzxdxzsxaxzdxaxwxzzxzaxwxzsxzwaxzdxzzaxaxzswxzxzzsaxaxzxwxwxzxzaxzxzzdxaxzdxwxaxzzaxzwaxzsxzzxzaxdxwxzxzdxwxzsxzwdxzaxzzdxzxzxaxdsxzxzxwxzxzxaxdxzaxzwxdxzaxzxzwxwxzwxzxzzxaxzzxzzzz"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

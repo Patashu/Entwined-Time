@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524291, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65541, 14, 327681, 65546, 14, 262145, 131072, 14, 262145, 131074, 7, 0, 131075, 2, 0, 131077, 105, 0, 131079, 8, 0, 131080, 1, 0, 131082, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 524292, 196614, 14, 524290, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 655364, 262148, 14, 262145, 262150, 14, 262145, 327684, 14, 262145, 327686, 14, 262145, 393220, 14, 262145, 393221, 104, 0, 393222, 14, 262145, 458756, 14, 655362, 458757, 14, 196614, 458758, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Nudge Pit"
+level_author = "Sandra53"
+level_replay = "The Nudge Pit$mturn=24$ddxaxzzsxzaxzdwxaxzdxzzxdxdxzxzaaaxd"
+heavy_max_moves = 5.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

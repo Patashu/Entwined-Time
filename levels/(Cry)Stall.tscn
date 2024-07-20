@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 524291, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 8, 0, 65538, 14, 262145, 65539, 67, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 77, 0, 131074, 14, 589826, 131075, 14, 196614, 131076, 14, 589828, 196608, 14, 262145, 196609, 77, 0, 196610, 14, 262145, 196611, 56, 0, 196612, 14, 262145, 262144, 14, 262145, 262145, 77, 0, 262146, 14, 589826, 262147, 14, 196614, 262148, 14, 589828, 327680, 14, 262145, 327681, 77, 0, 327682, 14, 262145, 327683, 55, 0, 327684, 14, 262145, 393216, 14, 262145, 393217, 77, 0, 393218, 14, 589826, 393219, 14, 196614, 393220, 14, 589828, 458752, 14, 262145, 458753, 77, 0, 458754, 14, 262145, 458755, 5, 0, 458756, 14, 262145, 524288, 14, 262145, 524289, 77, 0, 524290, 14, 262145, 524291, 5, 0, 524292, 14, 262145, 589824, 14, 262145, 589825, 77, 0, 589826, 14, 262145, 589827, 54, 0, 589828, 14, 262145, 655360, 14, 262145, 655361, 7, 0, 655362, 14, 262145, 655363, 53, 0, 655364, 14, 262145, 720896, 14, 655362, 720897, 14, 196614, 720898, 14, 655363, 720899, 14, 196614, 720900, 14, 655364 )
+
+[node name="@@1660" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 81, 0, 196609, 81, 0, 196611, 55, 0, 262145, 81, 0, 327681, 81, 0, 327683, 39, 0, 393217, 81, 0, 458753, 81, 0, 458755, 2, 0, 524289, 81, 0, 524291, 1, 0, 589825, 81, 0 )
+
+[node name="@@1661" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 136, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "(Cry)Stall"
+level_author = "Green"
+level_replay = "(Cry)Stall$mturn=12$swsszccsczzzzzzzzzzcccccccccwscscccccscsscwsszccsczzzzzzzzcccccccccczcsczcscsscsczcwcszcczzcczcszzzzzzzzzzscccccccccccczzccszzcccszzzzzzzzzzscccccccccccczzcsszzzzzzzzscccccccccccccscswscssczzzscccczzcccczcscszsccszzcccssczscscscsczzzzzzzzzssccccccccccczzczzczzczczczzczzczzczzczzczsccscccccccccszzczzczzczzczzczzczzczzzcscczscczcscsczccccccccccsczzzzzzsczzzcsczssccccccccccccszzcczczczzczzzzzzzzs"
+heavy_max_moves = 5.0
+light_max_moves = 0.0
+clock_turns = "1,13"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0

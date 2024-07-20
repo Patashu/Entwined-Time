@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 66, 0, 1, 14, 196613, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196615, 7, 66, 0, 65536, 14, 196609, 131072, 14, 262145, 196608, 14, 262145, 196610, 100, 0, 196611, 2, 0, 196612, 100, 0, 262144, 14, 327681, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262153, 66, 0, 327680, 66, 0, 327681, 14, 196613, 327682, 14, 196614, 327683, 14, 393219, 327684, 14, 3, 327685, 14, 4, 327686, 66, 0, 327689, 14, 196609, 393218, 66, 0, 393219, 14, 131074, 393220, 14, 786440, 393221, 14, 786435, 393222, 14, 524292, 393223, 66, 0, 393225, 14, 262145, 458755, 66, 0, 458756, 14, 262145, 458757, 7, 0, 458758, 14, 589824, 458759, 14, 4, 458761, 14, 262145, 524292, 14, 655362, 524293, 14, 196614, 524294, 14, 720901, 524295, 14, 131076, 524297, 14, 262145, 589829, 66, 0, 589830, 14, 327681, 589831, 66, 0, 589833, 14, 262145, 655369, 14, 262145, 720905, 14, 262145, 786441, 14, 262145, 851977, 14, 262145, 917506, 1, 0, 917513, 14, 262145, 983042, 14, 262148, 983049, 14, 262145, 1048585, 14, 262145, 1114121, 14, 327681 )
+
+[node name="@@1885" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 39, 0, 458757, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Rock Glider"
+level_author = "Green"
+level_replay = "Rock Glider$mturn=191$dzawaaddzzsddwzaswawaszwazzzdsdwzazsdddzwzazazdzwasdsazazzzazwddzwaadzzzdzzsddzzzwaazzdzdzzwszzwszszwwwazzdzazdzasaawdzdzawaadzdzsddzwzazzsazwwwdsasdzzwwwdwzzdddwszzwszzzzzzwsszzwszzzzaaaaawa"
+heavy_max_moves = 8.0
+light_max_moves = 0.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 7.0

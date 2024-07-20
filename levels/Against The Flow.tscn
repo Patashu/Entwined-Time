@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65537, 8, 0, 65539, 106, 0, 65541, 110, 0, 65542, 106, 0, 65544, 110, 0, 65545, 7, 0, 65546, 14, 262145, 131072, 14, 262145, 131073, 2, 0, 131075, 106, 0, 131077, 110, 0, 131078, 106, 0, 131080, 110, 0, 131081, 1, 0, 131082, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Against The Flow"
+level_author = "Slabdrill"
+level_replay = "Against The Flow$mturn=96$xdxdxzsxzxzxaxdxdxzsxzxzxaxdxdxzsxzxzxaxdxdxzsxzzzaxzxaxdxdxzsxzxzxzxswxaxzdxdxzsxzxzxzxzxzzaaxwxaxzdxdxzsxzxzxzxwxaxdxdxzsxzxzxzxzxaxwxaxzdsxzzzaxzzsxzaxaxzaxzzxzz"
+heavy_max_moves = 4.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0

@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196609, 65536, 14, 262145, 131072, 14, 262145, 131074, 3, 0, 131077, 100, 0, 131080, 100, 0, 131083, 100, 0, 196608, 14, 262145, 196609, 6, 0, 196610, 6, 0, 196611, 6, 0, 196612, 6, 0, 196613, 6, 0, 196614, 6, 0, 196615, 6, 0, 196616, 6, 0, 196617, 6, 0, 196618, 6, 0, 196619, 6, 0, 196620, 6, 0, 196621, 6, 0, 196622, 6, 0, 262144, 14, 262145, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 14, 196613, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 196614, 262155, 14, 196614, 262156, 14, 196614, 262157, 14, 196614, 262158, 14, 524292, 327680, 14, 262145, 327681, 6, 0, 327682, 6, 0, 327683, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 29, 0, 327688, 32, 0, 327690, 32, 0, 327693, 32, 0, 327694, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 196614, 393227, 14, 196614, 393228, 14, 196614, 393229, 14, 196614, 393230, 14, 655364 )
+
+[node name="@@1120" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 1, 0, 262148, 7, 0, 327686, 30, 0 )
+
+[node name="@@1121" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327686, 57, 0, 327687, 57, 0, 327688, 57, 0, 327689, 57, 0, 327690, 57, 0, 327691, 57, 0, 327692, 57, 0, 327693, 57, 0 )
+
+[node name="@@1122" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131076, 2, 0, 131078, 8, 0, 327686, 32, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Chain Reaction"
+level_author = "Slabdrill"
+level_replay = "Chain Reaction$mturn=146$xwasssxsssdxzzzzzxzzzzxawaaaxawxzxwxzaxzzxzzxwxzwxwxzzsssxzzsddzzzzxzzddwddxwxzxwxzzzzxaadxzwasssxzzzzwxzzzxzxzzaxsxddxdxdzzzzxzzdxdwxzxwxdxzzzxddddxddwxzzzzzwaxzzzwxzzzxwasssxsdazdxzzzxzzzaxss"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0

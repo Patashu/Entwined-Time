@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 14, 2, 5, 14, 3, 6, 14, 3, 7, 14, 458755, 8, 14, 196615, 65540, 14, 65538, 65541, 14, 65539, 65542, 14, 65539, 65543, 14, 65540, 65544, 29, 0, 65546, 14, 262148, 65547, 32, 0, 131076, 14, 131074, 131077, 14, 917512, 131078, 14, 65539, 131079, 14, 917510, 131080, 14, 4, 196609, 32, 0, 196610, 14, 262148, 196612, 30, 0, 196613, 14, 65538, 196614, 14, 65539, 196615, 14, 65539, 196616, 14, 65540, 262148, 14, 196613, 262149, 14, 720899, 262150, 14, 131075, 262151, 14, 131075, 262152, 14, 131076 )
+
+[node name="@@566" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 14, 524290, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196615, 65540, 14, 262145, 65541, 88, 0, 65542, 88, 0, 65543, 88, 0, 65546, 89, 0, 131076, 14, 327681, 131077, 88, 0, 131078, 88, 0, 131079, 88, 0, 131080, 14, 196609, 196610, 89, 0, 196613, 88, 0, 196614, 88, 0, 196615, 88, 0, 196616, 14, 262145, 262148, 14, 196613, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 655364 )
+
+[node name="@@567" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 14, 524290, 3, 14, 196615, 65538, 14, 327681, 65543, 1, 0, 196613, 7, 0, 196618, 14, 196609, 262153, 14, 196613, 262154, 14, 655364 )
+
+[node name="@@568" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 9, 14, 196613, 10, 14, 196614, 11, 14, 196614, 12, 14, 524292, 65543, 2, 0, 65545, 3, 0, 65548, 14, 262145, 131072, 14, 524290, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196615, 131081, 14, 196613, 131082, 14, 196614, 131083, 14, 196614, 131084, 14, 655364, 196608, 14, 262145, 196611, 3, 0, 196613, 8, 0, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Cement Pit [VAR2]"
+level_author = "Green"
+level_replay = "Cement Pit [VAR2]$mturn=56$xwxawxwxwxzzwxzxwdxdxzzzdxzzxddzzzasdxzxzsxaxzxazzxzzssxaaazzzxzaxdxzzxdzzwwwxa"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.211765, 0.235294, 0.247059, 1 )
+target_track = 7.0

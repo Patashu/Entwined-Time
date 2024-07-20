@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65536, 14, 262145, 65537, 7, 0, 65538, 48, 0, 65539, 78, 0, 65543, 14, 262145, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 524291, 131075, 14, 196615, 131077, 100, 0, 131079, 14, 262145, 196610, 14, 262145, 196611, 1, 0, 196612, 8, 0, 196613, 100, 0, 196614, 2, 0, 196615, 14, 262145, 262146, 14, 655362, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Rock Slider"
+level_author = "Green"
+level_replay = "Rock Slider$mturn=128$xaxadxzwxawxzxzxwdxzzzxdzxaxzzwxdwxzwwxzzxzzdsxzxzxdxzsxzxzxdadxdsaxaxzxzzxzzxdxdxwxdxzzzxzaxaxwxadxzasxzzzaxzwxzxzxaxzxwdxzzxzzwxdxzzxzaxdxzwdaxwxzzzdxzzzszsxwxdxzasxwdxzzxzzxwxzxzxwxaxzzxzzxdwaa"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 7.0

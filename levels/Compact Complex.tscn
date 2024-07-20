@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 65536, 14, 262145, 65537, 7, 0, 65538, 21, 0, 65539, 14, 655362, 65540, 14, 524292, 131072, 14, 262145, 131073, 8, 0, 131075, 22, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 2, 0, 196610, 20, 0, 196612, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655364 )
+
+[node name="@@1435" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 27, 0, 196610, 25, 0 )
+
+[node name="@@1436" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 22, 0, 196610, 28, 0 )
+
+[node name="@@1437" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196610, 1, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Compact Complex"
+level_author = "Sandra53"
+level_replay = "Compact Complex$mturn=83$xdadxwxzzzsxzxzsxwdxzxazaxwaxzxzzxaxdxzxasxzzxzzzdxdwaxzswzwxzsxzzxzzzwaxdwxzaxwzzzwazxwzxzwsxzxzxaxzwaxzxzzaxaxdxzzxzza"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0

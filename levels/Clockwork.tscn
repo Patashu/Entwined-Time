@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65538, 7, 0, 65540, 14, 262145, 131072, 14, 262145, 131074, 14, 262148, 131076, 14, 262145, 196608, 14, 262145, 196609, 2, 0, 196610, 8, 0, 196612, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Clockwork"
+level_author = "Sandra53"
+level_replay = "Clockwork$mturn=90$wxaxzwdxzxzzswxaxzzddxzxzxdxdxzxzzwzxadxaxzxzxzxwxaxzaxwxaxzzxzzxaxaxdxazxzsxzxzxdxzxwzxwaxaxzzsxzzxaxdxzxzwxaxzwdxzxzzswxaxzzdxzxzsxdxdxzzwaxzz"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0

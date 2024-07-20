@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 100, 0, 11, 32, 0, 65544, 32, 0, 65547, 100, 0, 131079, 14, 196613, 131080, 14, 196615, 131081, 46, 0, 131082, 46, 0, 131083, 14, 262148, 131086, 14, 524290, 131087, 14, 196614, 131088, 14, 196614, 131089, 14, 196614, 131090, 14, 524292, 196622, 14, 262145, 196624, 53, 0, 196626, 14, 262145, 262144, 14, 524290, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 524292, 262158, 14, 262145, 262160, 54, 0, 262162, 14, 262145, 327680, 14, 262145, 327682, 2, 0, 327684, 14, 262145, 327694, 14, 262145, 327696, 8, 0, 327697, 7, 0, 327698, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 655364, 393230, 14, 655362, 393231, 14, 196614, 393232, 14, 196614, 393233, 14, 196614, 393234, 14, 655364 )
+
+[node name="@@1495" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65543, 23, 0, 65544, 23, 0, 65547, 23, 0, 262159, 23, 0, 262160, 23, 0, 262161, 23, 0, 327682, 1, 0, 327695, 23, 0, 327696, 23, 0, 327697, 23, 0 )
+
+[node name="@@1496" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 103, 0, 65543, 103, 0, 65547, 106, 0 )
+
+[node name="@@1497" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 35, 0, 65547, 36, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "when boulders fly"
+level_author = "Meo"
+level_replay = "when boulders fly$mturn=15$dxadadwzxaxzxdaxwzzd"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

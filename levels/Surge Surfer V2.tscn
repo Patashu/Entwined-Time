@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65537, 14, 262145, 65543, 14, 262145, 131072, 14, 524290, 131073, 14, 655364, 131077, 100, 0, 131079, 14, 262145, 196608, 14, 262145, 196612, 14, 2, 196613, 14, 4, 196614, 29, 0, 196615, 14, 655362, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 196614, 196619, 14, 524291, 196620, 14, 196615, 262144, 14, 262145, 262148, 14, 131074, 262149, 14, 131076, 262154, 7, 0, 262155, 14, 262145, 327680, 14, 262145, 327681, 2, 0, 327682, 8, 0, 327684, 29, 0, 327691, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196615, 393221, 66, 0, 393222, 66, 0, 393223, 66, 0, 393224, 66, 0, 393225, 66, 0, 393226, 66, 0, 393227, 14, 327681 )
+
+[node name="@@1015" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196614, 33, 0, 262151, 82, 0, 262152, 82, 0, 262153, 82, 0, 262154, 82, 0, 327681, 1, 0, 327684, 30, 0, 327690, 32, 0, 393221, 33, 0, 393222, 33, 0, 393223, 33, 0, 393224, 33, 0, 393225, 33, 0, 393226, 33, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Surge Surfer V2"
+level_author = "Sandra53"
+level_replay = "Surge Surfer V2$mturn=69$xwxdxzdswxdxzzzassxaxwxaxzxdxzzzdwddsxzxdxdxzzxaxzwaxzazazzzzzzdadxzzwaxdaxzaxzzdxzzzzddddxaa"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0

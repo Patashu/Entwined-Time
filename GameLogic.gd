@@ -1635,6 +1635,37 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Steel Crate Pit")
 	level_filenames.push_back("Low Ceiling")
 	
+	chapter_names.push_back("Rocky Nudges");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(176);
+	chapter_replacements[chapter_names.size() - 1] = "D";
+	chapter_skies.push_back(Color("#324351"));
+	chapter_tracks.push_back(3);
+	level_filenames.push_back("Rushing Rivers")
+	level_filenames.push_back("Sinkhole")
+	level_filenames.push_back("Gutter")
+	level_filenames.push_back("The Nudge Pit")
+	level_filenames.push_back("Downwards Momentum")
+	level_filenames.push_back("Conveyor")
+	level_filenames.push_back("Constant Pushback")
+	level_filenames.push_back("Boulder Tutorial")
+	level_filenames.push_back("Newton's Cradle")
+	level_filenames.push_back("when boulders fly")
+	level_filenames.push_back("Surge Surfer V2")
+	level_filenames.push_back("Centrism")
+	level_filenames.push_back("Chain Reaction")
+	
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(8);
+	level_filenames.push_back("Springlock System")
+	level_filenames.push_back("Costly Rewinds") #or banish to community
+	level_filenames.push_back("Lead the way")
+	level_filenames.push_back("Constant Pushback [VAR1]")
+	level_filenames.push_back("Against The Flow")
+	level_filenames.push_back("Sudden Stop")
+	level_filenames.push_back("Vertical Catalyst")
+	level_filenames.push_back("Help Yourself II")
+	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(256, level_filenames.size()));
@@ -1710,7 +1741,6 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Hot Soup")
-	level_filenames.push_back("Rushing Rivers")
 	level_filenames.push_back("Rise As One")
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Green Sokoban")
@@ -1748,8 +1778,6 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Floor Change")
 	level_filenames.push_back("[SPEEDRUN] - Shattered Sky")
-	level_filenames.push_back("Sinkhole")
-	level_filenames.push_back("Sinkhole [VAR1]")
 	level_filenames.push_back("Limitations of Love.")
 	level_filenames.push_back("Window of Oppertunity")
 	level_filenames.push_back("Grate Expectations")
@@ -1798,6 +1826,21 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Spacetime Launch-")
 	level_filenames.push_back("Flamepatch")
 	level_filenames.push_back("Fragile Victory")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Formless Exploration (Page 3)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Remote Controlled Cobblestone")
+	level_filenames.push_back("Spitroast")
+	level_filenames.push_back("Compact Complex")
+	level_filenames.push_back("Microstatic")
+	level_filenames.push_back("Clockwork")
+	level_filenames.push_back("Blast Furnace")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1861,7 +1904,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
 	level_filenames.push_back("Crate Sorting Facility")
 	level_filenames.push_back("Spelunking-- [VAR2]")
-	level_filenames.push_back("Repeat Customer")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
@@ -1913,11 +1955,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Yellow Pit")
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Meet Heavy (Loop 2)")
-	level_filenames.push_back("Noclip")
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Heavy Fuzzing Service")
 	level_filenames.push_back("Foot Wiggle [VAR5]")
 	level_filenames.push_back("Fragile Victory [VAR1]")
+	level_filenames.push_back("Graduation [VAR3]")
+	level_filenames.push_back("Inverse Nudge Chain")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1945,7 +1988,38 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("One at a Time [VAR1]")
 	level_filenames.push_back("True Micro Puzzle")
 	level_filenames.push_back("True Micro Puzzle 2")
+	level_filenames.push_back("Light Trolling")
+	level_filenames.push_back("Graduation [VAR2]")
+	level_filenames.push_back("[SPEEDRUN] Collaborative Motion")
+	level_filenames.push_back("Light Trolling [VAR1]")
+	level_filenames.push_back("Light Trolling [VAR2]")
+	level_filenames.push_back("Limited Rewind [VAR1]")
+	level_filenames.push_back("Skip [VAR1]")
+	level_filenames.push_back("Wither [VAR1]")
+	level_filenames.push_back("As The World Turns [VAR1]")
+	level_filenames.push_back("Waterslide (Waterslide Shortage)")
+	level_filenames.push_back("Bunker Door [VAR1]")
+	level_filenames.push_back("Cement Pit [VAR2]")
+	level_filenames.push_back("Woodskip [VAR2]")
+	level_filenames.push_back("Angry Chomper")
+	level_filenames.push_back("Rock Glider")
+	level_filenames.push_back("Rock Slider")
+	level_filenames.push_back("Wooden Gate [VAR1]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Bug Gallery");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Noclip")
+	level_filenames.push_back("Repeat Customer")
 	level_filenames.push_back("Cut And Paste")
+	level_filenames.push_back("(Cry)Stall")
+	level_filenames.push_back("Crystal Stack")
+	level_filenames.push_back("Negativity")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2199,6 +2273,26 @@ func ready_map() -> void:
 			has_repair_stations = true;
 		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
 			has_repair_stations = true;
+			
+		if (any_layer_has_this_tile(Tiles.Boulder)):
+			has_boulders = true;
+			
+		if (any_layer_has_this_tile(Tiles.NudgeEast)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeNorth)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeSouth)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeWest)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeEastGreen)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeNorthGreen)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeSouthGreen)):
+			has_nudges = true;
+		elif (any_layer_has_this_tile(Tiles.NudgeWestGreen)):
+			has_nudges = true;
 	
 	if (is_custom):
 		if (any_layer_has_this_tile(Tiles.Checkpoint)):
@@ -2231,26 +2325,6 @@ func ready_map() -> void:
 			has_slopes = true;
 		elif (any_layer_has_this_tile(Tiles.SlopeSW)):
 			has_slopes = true;
-			
-		if (any_layer_has_this_tile(Tiles.Boulder)):
-			has_boulders = true;
-			
-		if (any_layer_has_this_tile(Tiles.NudgeEast)):
-			has_nudges = true;
-		elif (any_layer_has_this_tile(Tiles.NudgeNorth)):
-			has_nudges = true;
-		elif (any_layer_has_this_tile(Tiles.NudgeSouth)):
-			has_nudges = true;
-		elif (any_layer_has_this_tile(Tiles.NudgeWest)):
-			has_nudges = true;
-		elif (any_layer_has_this_tile(Tiles.NudgeEastGreen)):
-			has_nudges = true;
-		elif (any_layer_has_this_tile(Tiles.NudgeNorthGreen)):
-			has_nudges = true;
-		elif (any_layer_has_this_tile(Tiles.NudgeSouthGreen)):
-			has_nudges = true;
-		elif (any_layer_has_this_tile(Tiles.NudgeWestGreen)):
-			has_nudges = true;
 			
 		if (any_layer_has_this_tile(Tiles.Eclipse)):
 			has_eclipses = true;
