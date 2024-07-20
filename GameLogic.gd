@@ -2045,7 +2045,7 @@ func initialize_level_list() -> void:
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 
-	OS.set_clipboard(str(level_filenames));
+	#OS.set_clipboard(str(level_filenames));
 
 	var current_standard_index = 0;
 	var current_advanced_index = 0;
