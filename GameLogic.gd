@@ -1844,7 +1844,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Slabdrill's World");
+	chapter_names.push_back("Slabdrill's World (Page 1 - easiest)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1853,27 +1853,24 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Fuzzy Parkour [VAR1]")
 	level_filenames.push_back("Collaborative Motion")
 	level_filenames.push_back("Light Bridge")
+	level_filenames.push_back("Quantum Entanglement [VAR1]")
 	level_filenames.push_back("The White Pit")
+	level_filenames.push_back("Rise As One [VAR1]")
 	level_filenames.push_back("Hopscorch [VAR2]")
+	level_filenames.push_back("Timeless Bridge [VAR2]")
 	level_filenames.push_back("Slippery Glass [VAR2]")
+	level_filenames.push_back("Meet Heavy (Loop 2)")
 	level_filenames.push_back("Crate Moving Service")
 	level_filenames.push_back("Rapid Ascent")
 	level_filenames.push_back("Tile Selector")
 	level_filenames.push_back("Parity Drive")
-	level_filenames.push_back("Campfrost [VAR2]")
 	level_filenames.push_back("The Checkpoint Pit")
+	level_filenames.push_back("The Greenish Pit")
+	level_filenames.push_back("The Voidish Pit")
+	level_filenames.push_back("The Joke Pit")
+	level_filenames.push_back("The Yellow Pit")
+	level_filenames.push_back("Campfrost [VAR2]")
 	level_filenames.push_back("Graduation [VAR1]")
-	level_filenames.push_back("Tile Selector [VAR1]")
-	level_filenames.push_back("Nomadic [VAR1]")
-	level_filenames.push_back("Heaven [REV1]")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
-	level_filenames.push_back("Side Shuffle")
-	level_filenames.push_back("Heavy Vertical")
-	level_filenames.push_back("Elevator Pitch")
-	level_filenames.push_back("Fire In The Sky [REV1]")
-	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
-	level_filenames.push_back("Jet Engine [VAR1]")
-	level_filenames.push_back("Delay Circuit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1883,28 +1880,27 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
-	level_filenames.push_back("One-Way Bridge")
-	level_filenames.push_back("Durability-")
-	level_filenames.push_back("Firemaze")
-	level_filenames.push_back("Firemaze [VAR1]")
-	level_filenames.push_back("Separated Escape")
-	level_filenames.push_back("Jenga-")
+	level_filenames.push_back("Limitations of Love. [VAR1]")
+	level_filenames.push_back("The Crate Pit-")
+	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
+	level_filenames.push_back("Tile Selector [VAR1]")
+	level_filenames.push_back("Nomadic [VAR1]")
+	level_filenames.push_back("Heaven [REV1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
+	level_filenames.push_back("Island of Stability [VAR1]")
+	level_filenames.push_back("Side Shuffle")
+	level_filenames.push_back("Heavy Vertical")
+	level_filenames.push_back("Phantom Push")
+	level_filenames.push_back("Elevator Pitch")
+	level_filenames.push_back("Fire In The Sky [REV1]")
+	level_filenames.push_back("Undying Army (Type C)")
+	level_filenames.push_back("Anonymous Delivery [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Woodskip [VAR1]")
-	level_filenames.push_back("Compact Transport")
-	level_filenames.push_back("Compact Transport [VAR1]")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
-	level_filenames.push_back("The Green Fire Pit")
-	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
-	level_filenames.push_back("Foot Wiggle [VAR3]")
-	level_filenames.push_back("Void Recovery")
-	level_filenames.push_back("Elevator Pitch [VAR1]")
-	level_filenames.push_back("[SPEEDRUN] A Way In-")
-	level_filenames.push_back("The Half-Magenta Pit")
-	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
-	level_filenames.push_back("Crate Sorting Facility")
-	level_filenames.push_back("Spelunking-- [VAR2]")
-	
+	level_filenames.push_back("The Crate Pit- [VAR1]")
+	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
+	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("Delay Circuit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1914,53 +1910,56 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Combination Lock")
-	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
-	level_filenames.push_back("Limitations of Love. [VAR1]")
-	level_filenames.push_back("The Crate Pit-")
-	level_filenames.push_back("The Crate Pit- [VAR1]")
-	level_filenames.push_back("Stack Split")
-	level_filenames.push_back("The Greenish Pit")
-	level_filenames.push_back("The Voidish Pit")
-	level_filenames.push_back("Engine Room [VAR2]")
-	level_filenames.push_back("Light's Way In")
-	level_filenames.push_back("Foot Wiggle [VAR4]")
-	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
-	level_filenames.push_back("Phantom Push")
-	level_filenames.push_back("Phantom Push [VAR1]")
-	level_filenames.push_back("Anonymous Delivery [VAR1]")
 	level_filenames.push_back("Ankh [VAR1]")
-	level_filenames.push_back("Quantum Entanglement [VAR1]")
+	level_filenames.push_back("Fragile Victory [VAR1]")
+	level_filenames.push_back("Stack Split")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
+	level_filenames.push_back("One-Way Bridge")
+	level_filenames.push_back("Phantom Push [VAR1]")
+	level_filenames.push_back("Durability-")
+	level_filenames.push_back("Combination Lock")
+	level_filenames.push_back("Firemaze")
+	level_filenames.push_back("Separated Escape")
+	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
+	level_filenames.push_back("Light's Way In")
+	level_filenames.push_back("Acrobatics (Loop 2)")
+	level_filenames.push_back("Orbital Drop [VAR1]")
+	level_filenames.push_back("Orbital Drop [VAR2]")
+	level_filenames.push_back("Jenga-")
+	level_filenames.push_back("Crate Tunneling")
 	level_filenames.push_back("Quantum Entanglement [VAR2]")
-	level_filenames.push_back("Island of Stability [VAR1]")
+	level_filenames.push_back("Compact Transport")
+	level_filenames.push_back("Compact Transport [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Slabdrill's World (Page 4)");
+	chapter_names.push_back("Slabdrill's World (Page 4 - hardest)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("The Magenta Pit [VAR4]")
-	level_filenames.push_back("Acrobatics (Loop 2)")
-	level_filenames.push_back("Timeless Bridge [VAR2]")
-	level_filenames.push_back("Bunnyhop [VAR1]")
-	level_filenames.push_back("Orbital Drop [VAR1]")
-	level_filenames.push_back("Orbital Drop [VAR2]")
-	level_filenames.push_back("Rise As One [VAR1]")
-	level_filenames.push_back("Crate Tunneling")
-	level_filenames.push_back("Undying Army (Type C)")
-	level_filenames.push_back("The Joke Pit")
-	level_filenames.push_back("The Yellow Pit")
-	level_filenames.push_back("Friendship Paradox [VAR2]")
-	level_filenames.push_back("Meet Heavy (Loop 2)")
-	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Heavy Fuzzing Service")
+	level_filenames.push_back("Bunnyhop [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("The Green Fire Pit")
+	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
+	level_filenames.push_back("Foot Wiggle [VAR3]")
+	level_filenames.push_back("Foot Wiggle [VAR4]")
 	level_filenames.push_back("Foot Wiggle [VAR5]")
-	level_filenames.push_back("Fragile Victory [VAR1]")
+	level_filenames.push_back("Engine Room [VAR2]")
+	level_filenames.push_back("The Half-Magenta Pit")
+	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
+	level_filenames.push_back("The Magenta Pit [VAR4]")
 	level_filenames.push_back("Graduation [VAR3]")
+	level_filenames.push_back("Friendship Paradox [VAR2]")
+	level_filenames.push_back("Void Recovery")
+	level_filenames.push_back("Elevator Pitch [VAR1]")
 	level_filenames.push_back("Inverse Nudge Chain")
+	level_filenames.push_back("Crate Sorting Facility")
+	level_filenames.push_back("Spelunking-- [VAR2]")
+	level_filenames.push_back("[SPEEDRUN] A Way In-")
+	level_filenames.push_back("Entropy Extractor")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

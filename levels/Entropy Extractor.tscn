@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196615, 4, 66, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 9, 26, 0, 10, 26, 0, 11, 26, 0, 12, 26, 0, 13, 26, 0, 14, 26, 0, 15, 26, 0, 16, 26, 0, 17, 26, 0, 18, 26, 0, 19, 26, 0, 20, 26, 0, 65536, 27, 0, 65537, 27, 0, 65538, 7, 0, 65540, 66, 0, 65544, 100, 0, 65545, 100, 0, 65546, 100, 0, 131073, 27, 0, 131074, 27, 0, 131075, 104, 0, 131076, 66, 0, 131078, 3, 0, 131079, 3, 0, 131080, 3, 0, 131081, 3, 0, 131082, 3, 0, 131083, 3, 0, 131084, 3, 0, 131086, 104, 0, 131088, 104, 0, 196608, 27, 0, 196609, 27, 0, 196611, 104, 0, 196612, 66, 0, 196616, 13, 0, 196617, 3, 0, 196618, 13, 0, 262145, 27, 0, 262146, 27, 0, 262147, 104, 0, 262148, 66, 0, 262149, 103, 0, 262151, 104, 0, 262154, 104, 0, 262161, 104, 0, 262163, 106, 0, 327680, 27, 0, 327681, 27, 0, 327683, 104, 0, 327684, 66, 0, 327694, 103, 0, 327698, 104, 0, 393217, 27, 0, 393218, 27, 0, 393219, 104, 0, 393220, 66, 0, 393221, 103, 0, 393224, 104, 0, 393225, 104, 0, 393226, 106, 0, 393231, 106, 0, 393233, 104, 0, 393234, 66, 0, 393235, 14, 196613, 393236, 14, 524292, 458752, 27, 0, 458753, 27, 0, 458755, 104, 0, 458756, 66, 0, 458763, 106, 0, 458764, 104, 0, 458768, 104, 0, 458770, 56, 0, 458771, 32, 0, 458772, 14, 262145, 524289, 27, 0, 524290, 27, 0, 524291, 104, 0, 524292, 66, 0, 524293, 114, 0, 524294, 114, 0, 524295, 104, 0, 524301, 103, 0, 524303, 104, 0, 524306, 66, 0, 524307, 14, 196613, 524308, 14, 655364, 589826, 33, 0, 589827, 15, 0, 589828, 66, 0, 589842, 66, 0, 655360, 14, 196613, 655361, 14, 196614, 655362, 14, 196614, 655363, 14, 196614, 655364, 14, 196614, 655365, 14, 196614, 655366, 14, 196614, 655367, 14, 196614, 655368, 14, 196614, 655369, 14, 196614, 655370, 14, 196614, 655371, 14, 196614, 655372, 14, 196614, 655373, 14, 196614, 655374, 14, 196614, 655375, 14, 196614, 655376, 14, 196614, 655377, 14, 196614, 655378, 14, 196615 )
+
+[node name="@@121" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 20, 25, 0, 65536, 28, 0, 65538, 25, 0, 65539, 80, 0, 65544, 39, 0, 65545, 39, 0, 65546, 39, 0, 65556, 25, 0, 131072, 28, 0, 131074, 25, 0, 131075, 80, 0, 131078, 39, 0, 131079, 39, 0, 131080, 39, 0, 131081, 39, 0, 131082, 39, 0, 131083, 39, 0, 131084, 39, 0, 131092, 25, 0, 196608, 28, 0, 196610, 25, 0, 196611, 80, 0, 196616, 39, 0, 196617, 39, 0, 196618, 39, 0, 196628, 25, 0, 262144, 28, 0, 262146, 25, 0, 262147, 80, 0, 262149, 94, 0, 262153, 94, 0, 262154, 94, 0, 262161, 94, 0, 262164, 25, 0, 327680, 28, 0, 327682, 25, 0, 327683, 80, 0, 327688, 94, 0, 327691, 94, 0, 327700, 25, 0, 393216, 28, 0, 393218, 25, 0, 393219, 80, 0, 393225, 94, 0, 393228, 94, 0, 393229, 94, 0, 458752, 28, 0, 458754, 25, 0, 458755, 80, 0, 458766, 94, 0, 458770, 55, 0, 524288, 28, 0, 524290, 25, 0, 524291, 32, 0, 524295, 94, 0, 524298, 94, 0, 589824, 28, 0, 589827, 26, 0, 589828, 89, 0, 589829, 39, 0, 589830, 39, 0 )
+
+[node name="@@122" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65536, 1, 0, 65542, 114, 0, 65543, 114, 0, 65544, 114, 0, 65545, 114, 0, 65546, 114, 0, 65547, 114, 0, 65548, 114, 0, 131080, 114, 0, 131081, 114, 0, 131082, 114, 0, 458770, 39, 0, 589827, 39, 0, 589829, 2, 0, 589830, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Entropy Extractor"
+level_author = "Slabdrill"
+level_replay = "Entropy Extractor$mturn=811$wdwwdddddwwaxwwdddwdxdssxddawxaaxaxwadwxsaxwwaxawaxsxddxsxsdxwddddssdxaxaawaasasaxaxdxaxdsddwawadsddwwddaawaaddaasdwdswddddsaaaaaawaasssaxddsasdwdsssdsswaassdddddwwwdwaawasssdsswwawaawwwddssdsaaaxdxdwsaawassdsawdaassxssadwdssxwwsaassddxdwswsxdxwxdxssswaxdwaxsawdxwxssxsawaassxssaaxaassssdxwxdxwwaxwawwdssasddsdxddwdxwxdsxdsxdawxwaaxwxaaaaxawwwaaaaassssdssadxassxawwwwxdxsdasssssxasssssxsxsaxwxdwdssxsdxawwwxawwwwwwddssxwwdddsssaawxwxwxsswwawasssssssxaasssssdxdaxssaxwwwswwwwwddwxdxwdddxdddssssdssxddddsssxsaxaasssdxwaxddddddddddaaxwaaadsxdsxasxsxwsassdxaxwwwwdwxwwwwawasssssaxwdadadaadsaaawasssaawsssxsdaxsxdsaxdxdxaswswswsxaaxaaawddwxaxadadadaxaxdadadadxaxadadadaxaxadadadaxwxdadadadxdxadadadaxdxwddwaawdadaddadxwxadadadaxaxadaddadxaxadadadaxwxdadadadxdxadadadaxdxassdadaxwxddadadaxaxdwswswsxaxwadadadxwxadaadadxdxawswswsxdxwdadadaxwxddadadaxaxdwswswsxaxwadadadxwxaadadadxdxawswswsxdxwdadadaxwxddadadaxaxdwswswsxaxwadadadadadadadadadadadadadadadadadadadadadadad"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = "2"
+target_sky = Color( 0.196078, 0.262745, 0.317647, 1 )
+target_track = 3.0
