@@ -1660,7 +1660,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Springlock System")
 	level_filenames.push_back("Costly Rewinds") #or banish to community
 	level_filenames.push_back("Lead the way")
-	level_filenames.push_back("Constant Pushback [VAR1]")
 	level_filenames.push_back("Against The Flow")
 	level_filenames.push_back("Sudden Stop")
 	level_filenames.push_back("Vertical Catalyst")
@@ -1841,6 +1840,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Microstatic")
 	level_filenames.push_back("Clockwork")
 	level_filenames.push_back("Blast Furnace")
+	level_filenames.push_back("Roofing Services")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
