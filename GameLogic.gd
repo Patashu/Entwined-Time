@@ -1,7 +1,7 @@
 extends Node
 class_name GameLogic
 
-var debug_prints = false;
+var debug_prints : bool = false;
 
 onready var levelscene : Node2D = get_node("/root/LevelScene"); #this one runs before SupercCaling so it's safe!
 onready var underterrainfolder : Node2D = levelscene.get_node("UnderTerrainFolder");
@@ -35,8 +35,8 @@ onready var replayturnlabel : Label = levelscene.get_node("ReplayButtons/ReplayT
 onready var replayturnslider : HSlider = levelscene.get_node("ReplayButtons/ReplayTurn/ReplayTurnSlider");
 onready var replayspeedlabel : Label = levelscene.get_node("ReplayButtons/ReplaySpeed/ReplaySpeedLabel");
 onready var replayspeedslider : HSlider = levelscene.get_node("ReplayButtons/ReplaySpeed/ReplaySpeedSlider");
-var replayturnsliderset = false;
-var replayspeedsliderset = false;
+var replayturnsliderset : bool = false;
+var replayspeedsliderset : bool = false;
 onready var metaredobutton : Button = virtualbuttons.get_node("Verbs/MetaRedoButton");
 onready var metaredobuttonlabel : Label = metaredobutton.get_node("MetaRedoLabel");
 
@@ -340,163 +340,163 @@ enum Tiles {
 	OnewaySouthGray, #152
 	OnewayWestGray, #153
 }
-var voidlike_tiles = [];
+var voidlike_tiles : Array = [];
 
 # information about the level
-var is_custom = false;
-var is_community_level = false;
-var test_mode = false;
-var custom_string = "";
-var chapter = 0;
-var level_in_chapter = 0;
-var level_is_extra = false;
-var in_insight_level = false;
-var has_insight_level = false;
+var is_custom : bool = false;
+var is_community_level : bool = false;
+var test_mode : bool = false;
+var custom_string : String = "";
+var chapter : int = 0;
+var level_in_chapter : int = 0;
+var level_is_extra : bool = false;
+var in_insight_level : bool = false;
+var has_insight_level : bool = false;
 var insight_level_scene = null;
-var level_number = 0
-var level_name = "Blah Blah Blah";
-var level_replay = "";
-var annotated_authors_replay = "";
-var authors_replay = "";
-var level_author = "";
-var heavy_max_moves = -1;
-var light_max_moves = -1;
+var level_number : int = 0
+var level_name : String = "Blah Blah Blah";
+var level_replay : String = "";
+var annotated_authors_replay : String = "";
+var authors_replay : String = "";
+var level_author : String = "";
+var heavy_max_moves : int = -1;
+var light_max_moves : int = -1;
 var clock_turns : String = "";
 var map_x_max : int = 0;
 var map_y_max : int = 0;
 var map_x_max_max : int = 21;
 var map_y_max_max : int = 10; #TODO: screen scrolling/zoom
-var terrain_layers = []
-var voidlike_puzzle = false;
+var terrain_layers : Array = []
+var voidlike_puzzle : bool = false;
 
 # information about the actors and their state
 var heavy_actor : Actor = null
 var light_actor : Actor = null
-var heavy_mimics = []
-var light_mimics = []
-var actors = []
-var goals = []
-var heavy_turn = 0;
+var heavy_mimics : Array = []
+var light_mimics : Array = []
+var actors : Array = []
+var goals : Array = []
+var heavy_turn : int = 0;
 var heavy_undo_buffer : Array = [];
-var heavy_filling_locked_turn_index = -1;
-var heavy_filling_turn_actual = -1;
+var heavy_filling_locked_turn_index : int = -1;
+var heavy_filling_turn_actual : int = -1;
 var heavy_locked_turns : Array = [];
-var light_turn = 0;
+var light_turn : int = 0;
 var light_undo_buffer : Array = [];
-var light_filling_locked_turn_index = -1;
-var light_filling_turn_actual = -1;
+var light_filling_locked_turn_index : int = -1;
+var light_filling_turn_actual : int = -1;
 var light_locked_turns : Array = [];
-var meta_turn = 0;
+var meta_turn : int = 0;
 var meta_undo_buffer : Array = [];
-var heavy_selected = true;
+var heavy_selected : bool = true;
 
 # for undo trail ghosts
-var ghosts = []
+var ghosts : Array = []
 
 # for afterimages
-var afterimage_server = {}
+var afterimage_server : Dictionary = {}
 
 # save file, ooo!
-var save_file = {}
-var puzzles_completed = 0;
-var advanced_puzzles_completed = 0;
-var specific_puzzles_completed = [];
+var save_file : Dictionary = {}
+var puzzles_completed : int = 0;
+var advanced_puzzles_completed : int = 0;
+var specific_puzzles_completed : Array = [];
 
 # song-and-dance state
-var sounds = {}
-var music_tracks = [];
-var music_info = [];
-var music_db = [];
+var sounds : Dictionary = {}
+var music_tracks : Array = [];
+var music_info : Array = [];
+var music_db : Array = [];
 var now_playing = null;
 var nag_timer = null;
-var speakers = [];
-var target_track = -1;
-var current_track = -1;
-var jukebox_track = -1;
-var fadeout_timer = 0;
-var fadeout_timer_max = 0;
-var fanfare_duck_db = 0;
-var music_discount = -10;
+var speakers : Array = [];
+var target_track : int = -1;
+var current_track : int = -1;
+var jukebox_track : int = -1;
+var fadeout_timer : float = 0.0;
+var fadeout_timer_max : float = 0.0;
+var fanfare_duck_db : float = 0.0;
+var music_discount : float = -10.0;
 var music_speaker = null;
 var lost_speaker = null;
 var lost_speaker_volume_tween;
 var won_speaker = null;
-var sounds_played_this_frame = {};
-var muted = false;
-var won = false;
-var nonstandard_won = false;
-var won_cooldown = 0;
-var lost = false;
-var lost_void = false;
-var won_fade_started = false;
-var joke_portals_present = false;
-var cell_size = 24;
-var undo_effect_strength = 0;
-var undo_effect_per_second = 0;
-var undo_effect_color = Color(0, 0, 0, 0);
-var heavy_color = Color(1.0, 0, 0, 1);
-var light_color = Color(0, 0.58, 1.0, 1);
-var meta_color = Color(0.5, 0.5, 0.5, 1);
-var fuzz_timer = 0;
-var fuzz_timer_max = 0;
-var ui_stack = [];
-var ready_done = false;
-var using_controller = false;
+var sounds_played_this_frame : Dictionary = {};
+var muted : bool = false;
+var won : bool = false;
+var nonstandard_won : bool = false;
+var won_cooldown : float = 0.0;
+var lost : bool = false;
+var lost_void : bool = false;
+var won_fade_started : bool = false;
+var joke_portals_present : bool = false;
+var cell_size : int = 24;
+var undo_effect_strength : float = 0;
+var undo_effect_per_second : float = 0;
+var undo_effect_color : Color = Color(0, 0, 0, 0);
+var heavy_color : Color = Color(1.0, 0, 0, 1);
+var light_color : Color = Color(0, 0.58, 1.0, 1);
+var meta_color : Color = Color(0.5, 0.5, 0.5, 1);
+var fuzz_timer : float = 0;
+var fuzz_timer_max : float = 0;
+var ui_stack : Array = [];
+var ready_done : bool = false;
+var using_controller : bool = false;
 
 #UI defaults
-var HeavyInfoLabel_default_position = Vector2(0, 1);
-var HeavyTimeline_default_position = Vector2(6, 26);
-var LightInfoLabel_default_position = Vector2(478, 1);
-var LightTimeline_default_position = Vector2(482, 26);
-var win_label_default_y = 113;
-var pixel_width = ProjectSettings.get("display/window/size/width"); #512
-var pixel_height = ProjectSettings.get("display/window/size/height"); #300
+var HeavyInfoLabel_default_position : Vector2 = Vector2(0, 1);
+var HeavyTimeline_default_position : Vector2 = Vector2(6, 26);
+var LightInfoLabel_default_position : Vector2 = Vector2(478, 1);
+var LightTimeline_default_position : Vector2 = Vector2(482, 26);
+var win_label_default_y : float = 113.0;
+var pixel_width : int = ProjectSettings.get("display/window/size/width"); #512
+var pixel_height : int = ProjectSettings.get("display/window/size/height"); #300
 
 # animation server
-var animation_server = []
-var animation_substep = 0;
-var animation_nonce_fountain = 0;
+var animation_server : Array = []
+var animation_substep : int = 0;
+var animation_nonce_fountain : int = 0;
 
 #replay system
-var replay_timer = 0;
-var user_replay = "";
-var user_replay_before_restarts = [];
-var meta_redo_inputs = "";
-var preserving_meta_redo_inputs = false;
-var doing_replay = false;
-var replay_paused = false;
-var replay_turn = 0;
-var replay_interval = 0.5;
-var next_replay = -1;
-var unit_test_mode = false;
-var meta_undo_a_restart_mode = false;
+var replay_timer : float = 0.0;
+var user_replay : String  = "";
+var user_replay_before_restarts : Array = [];
+var meta_redo_inputs : String = "";
+var preserving_meta_redo_inputs : bool = false;
+var doing_replay : bool = false;
+var replay_paused : bool = false;
+var replay_turn : int = 0;
+var replay_interval : float = 0.5;
+var next_replay : float = -1.0;
+var unit_test_mode : bool = false;
+var meta_undo_a_restart_mode : bool = false;
 
 # list of levels in the game
-var level_list = [];
-var level_filenames = [];
-var level_names = [];
-var level_extraness = [];
-var has_remix = {};
-var insight_level_names = {};
-var chapter_names = [];
-var chapter_skies = [];
-var chapter_tracks = [];
-var chapter_replacements = {};
-var level_replacements = {};
-var target_sky = Color("#223C52");
-var old_sky = Color("#223C52");
-var current_sky = Color("#223C52");
-var sky_timer = 0;
-var sky_timer_max = 0;
-var chapter_standard_starting_levels = [];
-var chapter_advanced_starting_levels = [];
-var chapter_standard_unlock_requirements = [];
-var chapter_advanced_unlock_requirements = [];
-var custom_past_here = -1;
-var custom_past_here_level_count = -1;
-var save_file_string = "user://entwinedtime.sav";
+var level_list : Array = [];
+var level_filenames : Array = [];
+var level_names : Array = [];
+var level_extraness : Array = [];
+var has_remix : Dictionary = {};
+var insight_level_names : Dictionary = {};
+var chapter_names : Array = [];
+var chapter_skies : Array = [];
+var chapter_tracks : Array = [];
+var chapter_replacements : Dictionary = {};
+var level_replacements : Dictionary = {};
+var target_sky : Color = Color("#223C52");
+var old_sky : Color = Color("#223C52");
+var current_sky : Color = Color("#223C52");
+var sky_timer : float = 0.0;
+var sky_timer_max : float = 0.0;
+var chapter_standard_starting_levels : Array = [];
+var chapter_advanced_starting_levels : Array = [];
+var chapter_standard_unlock_requirements : Array = [];
+var chapter_advanced_unlock_requirements : Array = [];
+var custom_past_here : int = -1;
+var custom_past_here_level_count : int = -1;
+var save_file_string : String = "user://entwinedtime.sav";
 
-var is_web = false;
+var is_web : bool = false;
 
 func save_game():
 	var file = File.new()

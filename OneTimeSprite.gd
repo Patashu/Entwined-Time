@@ -1,10 +1,10 @@
 extends Sprite
 class_name OneTimeSprite
 
-var frame_timer = 0;
-var frame_timer_max = 0.1;
-var frame_max = 0;
-var velocity = Vector2.ZERO;
+var frame_timer : float = 0.0;
+var frame_timer_max : float = 0.1;
+var frame_max : int = 0;
+var velocity : Vector2 = Vector2.ZERO;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

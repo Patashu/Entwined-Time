@@ -1,11 +1,11 @@
 extends Sprite
 class_name GoalParticle
 
-var fadeout_timer = 0;
-var fadeout_timer_max = 1.0;
-var rotate_magnitude = 0;
-var velocity = Vector2.ZERO;
-var alpha_max = 1;
+var fadeout_timer : float = 0.0;
+var fadeout_timer_max : float = 1.0;
+var rotate_magnitude : float = 0.0;
+var velocity : Vector2 = Vector2.ZERO;
+var alpha_max : float = 1.0;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

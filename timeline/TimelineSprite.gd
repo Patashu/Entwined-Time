@@ -1,17 +1,17 @@
 extends Sprite
 class_name TimelineSprite
 
-var animation_nonce = -1;
-var previous_modulate = Color(1, 1, 1, 0);
-var destination_colour = Color(1, 1, 1, 1);
-var next_modulates = [];
-var flash_timer = 0;
-var flash_timer_max = 0.1;
+var animation_nonce : int = -1;
+var previous_modulate : Color = Color(1, 1, 1, 0);
+var destination_colour : Color = Color(1, 1, 1, 1);
+var next_modulates : Array = [];
+var flash_timer : float = 0.0;
+var flash_timer_max : float = 0.1;
 var viewer = null;
-var fading = false;
-var flashed_to_enter = false;
-var flashed_while_fading = false;
-var is_broken = false;
+var fading: float = false;
+var flashed_to_enter : float = false;
+var flashed_while_fading : float = false;
+var is_broken : float = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

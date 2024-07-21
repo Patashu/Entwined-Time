@@ -5,7 +5,7 @@ class_name TimelineDivider
 # var a: int = 2
 # var b: String = "text"
 var timer = 0;
-var is_active = false;
+var is_active : bool = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

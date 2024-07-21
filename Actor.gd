@@ -2,72 +2,72 @@ extends ActorBase
 class_name Actor
 
 var gamelogic = null
-var actorname = -1
-var stored_position = Vector2.ZERO
-var pos = Vector2.ZERO
+var actorname : int = -1
+var stored_position : Vector2 = Vector2.ZERO
+var pos : Vector2 = Vector2.ZERO
 #var state = {}
-var broken = false
-var powered = false
-var dinged = false;
+var broken : bool = false
+var powered : bool = false
+var dinged : bool = false;
 # -1 for grounded, 0 for falling, 1+ for turns of coyote time left
-var airborne = -1
-var strength = 0
-var heaviness = 0
-var durability = 0
-var fall_speed = -1
-var floats = false
-var climbs = false
-var is_character = false
-var time_colour = 0
+var airborne : int = -1
+var strength : int = 0
+var heaviness : int = 0
+var durability : int = 0
+var fall_speed : int = -1
+var floats : bool = false
+var climbs : bool = false
+var is_character : bool = false
+var time_colour : int = 0
 var time_bubble = null
-var momentum = Vector2.ZERO;
-var boulder_moved_horizontally_this_turn = false;
+var momentum : Vector2 = Vector2.ZERO;
+var boulder_moved_horizontally_this_turn : bool = false;
 # undo trails logic
-var is_ghost = false
+var is_ghost : bool = false
 var next_ghost = null;
 var previous_ghost = null;
-var ghost_index = 0;
-var ghost_dir = Vector2.ZERO;
-var ghost_timer = 0;
-var ghost_timer_max = 2;
-var color = Color(1, 1, 1, 1);
-var ghost_alpha = 1.0;
+var ghost_index : int = 0;
+var ghost_dir : Vector2 = Vector2.ZERO;
+var ghost_timer : float = 0.0;
+var ghost_timer_max : float = 2.0;
+var color : Color = Color(1, 1, 1, 1);
+var ghost_alpha : float = 1.0;
 # animation system logic
-var animation_timer = 0;
-var animation_timer_max = 0.05;
-var animations = [];
-var facing_left = false;
+var animation_timer : float = 0.0;
+var animation_timer_max : float = 0.05;
+var animations : Array = [];
+var facing_left : bool = false;
 # animated sprites logic
-var frame_timer = 0;
-var frame_timer_max = 0.1;
-var post_mortem = -1;
+var frame_timer : float = 0.0;
+var frame_timer_max : float = 0.1;
+var post_mortem : int = -1;
 # light fluster logic
-var fluster_timer = 0;
-var fluster_timer_max = 0;
+var fluster_timer : float = 0.0;
+var fluster_timer_max : float = 0.0;
 # ding
 var ding = null;
 # crystal effects
-var is_crystal = false;
-var crystal_timer = 0;
-var crystal_timer_max = 1.6;
+var is_crystal : float = false;
+var crystal_timer : float = 0.0;
+var crystal_timer_max : float = 1.6;
 # cuckoo clock
-var ticks = 1000;
+var ticks : int = 1000;
 var thought_bubble = null;
 var ripple = null;
-var ripple_timer = 0;
-var ripple_timer_max = 1;
+var ripple_timer : float = 0.0;
+var ripple_timer_max : float = 1.0;
 # night and stars
-var in_night = false;
-var in_stars = false;
+var in_night : bool = false;
+var in_stars : bool = false;
 # transient multi-push/multi-fall state:
 # basically, things that move become non-colliding until the end of the multi-push/fall tick they're
 # a part of, so other things that shared their tile can move with them
-var just_moved = false;
+var just_moved : bool = false;
 # joke goals logic
 var joke_goal = null;
 # action lines!
-var action_lines_timer = 0;
-var action_lines_timer_max = 0.25;
+var action_lines_timer : float = 0.0;
+var action_lines_timer_max : float = 0.25;
 var propellor = null;
 var fade_tween = null;
 
