@@ -5003,6 +5003,12 @@ func lose(reason: String, suspect: Actor) -> void:
 func end_lose() -> void:
 	lost = false;
 	lost_speaker.stop();
+	winlabel.visible = false;
+	Shade.on = false;
+	if won_fade_started:
+		won_fade_started = false;
+		heavy_actor.modulate.a = 1;
+		light_actor.modulate.a = 1;
 
 func set_actor_var(actor: ActorBase, prop: String, value, chrono: int,
 animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> void:
@@ -5535,7 +5541,7 @@ func adjust_meta_turn(amount: int, chrono: int) -> void:
 	#if (debug_prints):
 	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	update_ghosts();
-	if (won or amount >= 0 or voidlike_puzzle):
+	if (won or lost or amount >= 0 or voidlike_puzzle):
 		check_won(chrono);
 	
 func check_won(chrono: int) -> void:
@@ -7415,7 +7421,7 @@ func update_animation_server(skip_globals: bool = false) -> void:
 		if actor.animations.size() > 0:
 			return;
 	
-	# look for new animations to play
+	# look for new animations to playwon_fade_started
 	while animation_server.size() > 0 and animation_server[0].size() == 0:
 		animation_server.pop_front();
 	if animation_server.size() == 0:
