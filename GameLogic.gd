@@ -3913,7 +3913,7 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move:
 				heavytimeline.add_turn(heavy_locked_turns[heavy_filling_locked_turn_index]);
 			elif heavy_filling_turn_actual > -1:
 				heavytimeline.add_turn(heavy_undo_buffer[heavy_filling_turn_actual]);
-			else:
+			elif heavy_turn > -1:
 				heavytimeline.add_turn(heavy_undo_buffer[heavy_turn]);
 		else:
 			var color = heavy_color;
@@ -3952,7 +3952,7 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move:
 				lighttimeline.add_turn(light_locked_turns[light_filling_locked_turn_index]);
 			elif light_filling_turn_actual > -1:
 				lighttimeline.add_turn(light_undo_buffer[light_filling_turn_actual]);
-			else:
+			elif light_turn > -1:
 				lighttimeline.add_turn(light_undo_buffer[light_turn]);
 		else:
 			var color = light_color;
@@ -4993,7 +4993,7 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: in
 
 func lose(reason: String, suspect: Actor) -> void:
 	lost = true;
-	if (suspect != null and suspect.time_colour == TimeColour.Void):
+	if (suspect != null and suspect.time_colour == TimeColour.Void or lost_void):
 		lost_void = true;
 		winlabel.change_text(reason + "\n\nRestart to continue.")
 	else:
@@ -5757,11 +5757,20 @@ func undo_one_event(event: Array, chrono : int) -> void:
 				light_undo_buffer.append([]);
 			light_locked_turns[event[1]].pop_front();
 		Undo.heavy_undo_event_remove:
+			# 'Negativity' crash prevention
+			if (event[1] < 0):
+				lost_void = true;
+				lose("What have you DONE", null);
+				return;
 			# meta undo an undo creates a char undo event but not a meta undo event, it's special!
 			while (heavy_undo_buffer.size() <= event[1]):
 				heavy_undo_buffer.append([]);
 			heavy_undo_buffer[event[1]].push_front(event[2]);
 		Undo.light_undo_event_remove:
+			if (event[1] < 0):
+				lost_void = true;
+				lose("What have you DONE", null);
+				return;
 			while (light_undo_buffer.size() <= event[1]):
 				light_undo_buffer.append([]);
 			light_undo_buffer[event[1]].push_front(event[2]);
@@ -5893,6 +5902,7 @@ func meta_undo(is_silent: bool = false) -> bool:
 				play_sound("bump");
 		preserving_meta_redo_inputs = false;
 		return false;
+	
 	end_lose();
 	finish_animations(Chrono.MOVE);
 	nonstandard_won = false;
