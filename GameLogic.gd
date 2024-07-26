@@ -1661,6 +1661,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Costly Rewinds") #or banish to community
 	level_filenames.push_back("Lead the way")
 	level_filenames.push_back("Against The Flow")
+	level_filenames.push_back("Conveyor [VAR1]")
 	level_filenames.push_back("Sudden Stop")
 	level_filenames.push_back("Vertical Catalyst")
 	level_filenames.push_back("Help Yourself II")
@@ -1841,6 +1842,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Clockwork")
 	level_filenames.push_back("Blast Furnace")
 	level_filenames.push_back("Roofing Services")
+	level_filenames.push_back("Mini Geode")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1880,6 +1882,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Downwards Momentum [VAR1]")
 	level_filenames.push_back("Limitations of Love. [VAR1]")
 	level_filenames.push_back("The Crate Pit-")
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
@@ -1887,6 +1890,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
+	level_filenames.push_back("Ankh [VAR1]")
 	level_filenames.push_back("Island of Stability [VAR1]")
 	level_filenames.push_back("Side Shuffle")
 	level_filenames.push_back("Heavy Vertical")
@@ -1951,6 +1955,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Half-Magenta Pit")
 	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
 	level_filenames.push_back("The Magenta Pit [VAR4]")
+	level_filenames.push_back("The Eclipse Pit")
 	level_filenames.push_back("Graduation [VAR3]")
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Void Recovery")
@@ -1997,10 +2002,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bunker Door [VAR1]")
 	level_filenames.push_back("Cement Pit [VAR2]")
 	level_filenames.push_back("Woodskip [VAR2]")
-	
 	level_filenames.push_back("Rock Glider")
 	level_filenames.push_back("Rock Slider")
 	level_filenames.push_back("Wooden Gate [VAR1]")
+	level_filenames.push_back("Skipping Stone")
+	level_filenames.push_back("Spring Boots")
+	level_filenames.push_back("Springlock System [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

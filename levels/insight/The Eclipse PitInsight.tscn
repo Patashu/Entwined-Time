@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 131, 0, 65536, 131, 0, 65537, 7, 0, 65538, 2, 0, 65540, 27, 0, 65542, 8, 0, 65543, 1, 0, 65544, 131, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 524292, 131077, 14, 524290, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196615, 196611, 14, 262145, 196613, 14, 262145, 262147, 14, 655362, 262148, 14, 196614, 262149, 14, 655364 )
+
+[node name="@@420" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 38, 0, 65542, 38, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Eclipse Pit (Insight)"
+level_author = "Slabdrill"
+level_replay = "The Eclipse Pit (Insight)$mturn=101$xwdaaaawxdxzaxwzxzzzzzxzdxdxzdxdxzdxdxwxdxzaxzxwxwxwxwxwxwxwxwxzzzzwxwxwxwxwxwxwxwxwxwxzzzzzzzaxaxzaxaxzaxaxzaxaxzaxaxzxzzzzzxdxzzzzzzzzzxdxzzzzxdxaaaxdd"
+heavy_max_moves = 8.0
+light_max_moves = 22.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
