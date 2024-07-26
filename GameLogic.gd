@@ -1890,7 +1890,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
-	level_filenames.push_back("Ankh [VAR1]")
+	level_filenames.push_back("Ankh [VAR2]")
 	level_filenames.push_back("Island of Stability [VAR1]")
 	level_filenames.push_back("Side Shuffle")
 	level_filenames.push_back("Heavy Vertical")
