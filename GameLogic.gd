@@ -8255,3 +8255,11 @@ func _process(delta: float) -> void:
 		
 	update_targeter();
 	update_animation_server();
+
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_WM_FOCUS_OUT:
+			if (save_file.has("mute_in_background") and save_file["mute_in_background"]):
+				AudioServer.set_bus_mute(0, true) # 0 = master bus, probably
+		NOTIFICATION_WM_FOCUS_IN:
+			AudioServer.set_bus_mute(0, false)

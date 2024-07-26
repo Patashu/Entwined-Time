@@ -212,6 +212,13 @@ margin_bottom = 69.0
 min_value = -30.0
 max_value = 10.0
 
+[node name="MuteInBackground" type="CheckBox" parent="Holder/TabContainer/Audio"]
+margin_left = 3.0
+margin_top = 96.0
+margin_right = 22.0
+margin_bottom = 115.0
+text = "Mute In Background"
+
 [node name="Gameplay" type="Tabs" parent="Holder/TabContainer"]
 visible = false
 margin_left = 4.0
