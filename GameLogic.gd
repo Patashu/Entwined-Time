@@ -5002,6 +5002,7 @@ func lose(reason: String, suspect: Actor) -> void:
 	
 func end_lose() -> void:
 	lost = false;
+	lost_void = false;
 	lost_speaker.stop();
 	winlabel.visible = false;
 	Shade.on = false;
