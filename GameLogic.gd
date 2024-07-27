@@ -1679,9 +1679,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("DownhillL2")
 	level_filenames.push_back("RoommatesL2")
 	level_filenames.push_back("RoommatesL2Ex")
-	level_filenames.push_back("CarryingItL2")
 	level_filenames.push_back("KnotRemixL2")
 	level_filenames.push_back("KnotL2")
+	level_filenames.push_back("CarryingItL2")
 	level_filenames.push_back("CallACabL2")
 	level_filenames.push_back("PachinkoL2")
 	level_filenames.push_back("PachinkoL2Ex")
@@ -1843,6 +1843,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Blast Furnace")
 	level_filenames.push_back("Roofing Services")
 	level_filenames.push_back("Mini Geode")
+	level_filenames.push_back("Inexorable Destruction")
+	level_filenames.push_back("Survival Section")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
