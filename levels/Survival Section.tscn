@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -37,9 +37,8 @@ tile_data = PoolIntArray( 131073, 46, 0, 196609, 46, 0, 262145, 46, 0, 327681, 4
 script = ExtResource( 2 )
 level_name = "Survival Section"
 level_author = "Sandra53"
-level_replay = "Survival Section$mturn=41$assdxaaasxzzzzxzzzzxdssdxassazzzddszzzxzzzddszz"
+level_replay = "Survival Section$mturn=42$assdxaaasxzzzzxzzzzxdssdxassazzzddszzzxzzzddszzd"
 heavy_max_moves = 4.0
 light_max_moves = 4.0
-clock_turns = ""
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0
