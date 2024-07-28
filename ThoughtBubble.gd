@@ -70,6 +70,10 @@ func hide() -> void:
 	#label.modulate.a = 1;
 	state = State.Hide;
 
+func update_time_colour(time_colour: int) -> void:
+	self.time_colour = time_colour;
+	label.add_color_override("font_color", time_colours[time_colour]);
+
 func initialize(time_colour: int, ticks: int) -> void:
 	self.time_colour = time_colour;
 	self.ticks = ticks;

@@ -3833,6 +3833,10 @@ boost_pad_reentrance: bool = false) -> int:
 							var greenness = Greenness.Green;
 							if (time_colour == TimeColour.Void):
 								greenness = Greenness.Void;
+								if (level_name.find("Noclip") >= 0):
+									floating_text("(Skipping void banish in 'Noclip')");
+								else:
+									void_banish(actor);
 							maybe_change_terrain(actor, actor.pos, i, false, greenness, chrono, -1);
 						break;
 			if (loose_modifiers):
@@ -3914,7 +3918,17 @@ boost_pad_reentrance: bool = false) -> int:
 							break;
 	
 	return success;
-		
+
+func void_banish(actor: Actor) -> void:
+	#https://discord.com/channels/1196234174005260328/1196234898751627415/1266547709486301269
+	var blacklist = {Undo.move: true, Undo.set_actor_var: true, Undo.sprite: true, Undo.time_bubble: true, Undo.tick: true};
+	for j in range(meta_undo_buffer.size()):
+		var buffer = meta_undo_buffer[j];
+		for i in range(buffer.size() - 1, -1, -1):
+			var event = buffer[i];
+			if blacklist.has(event[0]) and event[1] == actor:
+				buffer.pop_at(i);
+
 func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move: bool) -> void:
 	if (is_heavy):
 		if (amount > 0):
@@ -5925,11 +5939,11 @@ func meta_undo(is_silent: bool = false) -> bool:
 	var events = meta_undo_buffer.pop_back();
 	for event in events:
 		undo_one_event(event, Chrono.META_UNDO);
-	adjust_meta_turn(-1, Chrono.META_UNDO);
 	if (!is_silent):
 		cut_sound();
 		play_sound("metaundo");
 	just_did_meta();
+	adjust_meta_turn(-1, Chrono.META_UNDO);
 	var result = meta_undo_replay();
 	preserving_meta_redo_inputs = false;
 	return result;
@@ -7113,6 +7127,9 @@ func replay_advance_turn(amount: int) -> void:
 			undo_effect_strength = 0.04;
 			undo_effect_per_second = undo_effect_strength*(1/0.4);
 			play_sound("voidundo");
+			for child in levelscene.get_children():
+				if child is FloatingText:
+					child.queue_free();
 		else:
 			var iterations = replay_turn - target_turn;
 			for _i in range(iterations):

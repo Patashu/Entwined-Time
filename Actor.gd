@@ -351,6 +351,8 @@ func update_time_bubble():
 			self.add_child(time_bubble);
 		time_bubble.time_colour = time_colour;
 		time_bubble.time_bubble_colour()
+	if (thought_bubble != null):
+		thought_bubble.update_time_colour(time_colour);
 		
 func setup_colourblind_mode(value: bool) -> void:
 	if time_bubble != null:
