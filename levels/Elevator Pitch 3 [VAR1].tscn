@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 1, 0, 458754, 2, 0, 524296, 7, 0, 589832, 26, 0, 786434, 95, 0, 786440, 8, 0, 851976, 26, 0, 917504, 27, 0, 917505, 27, 0, 917506, 27, 0, 917507, 27, 0, 917508, 27, 0, 917509, 27, 0, 917510, 27, 0, 917511, 27, 0, 917512, 27, 0, 917513, 27, 0, 917514, 27, 0, 983042, 27, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Elevator Pitch 3 [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Elevator Pitch 3 [VAR1]$mturn=157$sszsxwxzzsszszsxwxzzsszszsszszzxzzxzwxwdxsxzzwsxzxzzsxszszzszszsxwxzszszsxwxzszszsszszsszszzxzzxzwxwdxsxzzwsxzxzzsxszszzszszsszszzwxwxsxzzzwxzzszszsxzwxzszszsxwxzszszsxwxzszszsszszsszszzzwxzzz"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0

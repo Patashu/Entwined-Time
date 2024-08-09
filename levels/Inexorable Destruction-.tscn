@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 524292, 65539, 14, 262145, 65540, 3, 0, 65541, 14, 262145, 131072, 14, 524290, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 655364, 131077, 14, 655362, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 524292, 196608, 14, 262145, 196612, 0, 0, 196616, 14, 262145, 262144, 14, 262145, 262148, 0, 0, 262152, 14, 262145, 327680, 14, 262145, 327684, 0, 0, 327686, 32, 0, 327688, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 655364 )
+
+[node name="@@1111" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65540, 35, 0, 131076, 38, 0, 327681, 2, 0, 327683, 8, 0, 327685, 1, 0, 327687, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Inexorable Destruction?"
+level_author = "Sandra53"
+level_replay = "Inexorable Destruction?$mturn=124$xaxdxwxdxzaaxzxzdxadxzaxzxzdxadxzaxzzzaxzxwsxzzxzzwxdxzzdxzxzaxwddxzzaxzzzdxzaaxzawxdxzxaxasxzzzxzxwzzddxzxzzaxzxzxwzxadxwaasxzxzzzsxadxzaasxzxzzzzxadxwaasxzxzzzzxaxwaxzxzdxzzzxddxwz"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_track = 5.0

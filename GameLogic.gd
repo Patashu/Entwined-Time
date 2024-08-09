@@ -555,6 +555,11 @@ func load_game():
 	default_save_file();
 	
 	react_to_save_file_update();
+	
+	#14.5 savefix
+	if (save_file.has("levels") and save_file["levels"].has("Help Yourself II")):
+		save_file["levels"]["Boulder Moving Service"] = save_file["levels"]["Help Yourself II"];
+		save_file["levels"].erase("Help Yourself II");
 
 func _ready() -> void:
 	var os_name = OS.get_name();
@@ -1333,6 +1338,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("LevelNotFoundEx2")
 	level_filenames.push_back("Freedom")
 	level_filenames.push_back("LevelNotFoundEx")
+	level_filenames.push_back("Freedom [VAR1]")
 	level_filenames.push_back("BlueAndRedEx")
 	level_filenames.push_back("TheMagentaPitEx")
 	level_filenames.push_back("TheGrayPitEx")
@@ -1664,7 +1670,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Conveyor [VAR1]")
 	level_filenames.push_back("Sudden Stop")
 	level_filenames.push_back("Vertical Catalyst")
-	level_filenames.push_back("Help Yourself II")
+	level_filenames.push_back("Boulder Moving Service")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1844,7 +1850,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Roofing Services")
 	level_filenames.push_back("Mini Geode")
 	level_filenames.push_back("Inexorable Destruction")
+	level_filenames.push_back("Inexorable Destruction-")
 	level_filenames.push_back("Survival Section")
+	level_filenames.push_back("Crate Expectations-")
+	level_filenames.push_back("Flow Control-")
+	level_filenames.push_back("No(Thing) Left")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1863,6 +1873,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hopscorch [VAR2]")
 	level_filenames.push_back("Timeless Bridge [VAR2]")
 	level_filenames.push_back("Slippery Glass [VAR2]")
+	level_filenames.push_back("Death's Door")
 	level_filenames.push_back("Meet Heavy (Loop 2)")
 	level_filenames.push_back("Crate Moving Service")
 	level_filenames.push_back("Rapid Ascent")
@@ -1873,6 +1884,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Voidish Pit")
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Yellow Pit")
+	level_filenames.push_back("Rocket Engine-")
 	level_filenames.push_back("Campfrost [VAR2]")
 	level_filenames.push_back("Graduation [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -1891,6 +1903,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Tile Selector [VAR1]")
 	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
+	level_filenames.push_back("Jungle Gym")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
 	level_filenames.push_back("Ankh [VAR2]")
 	level_filenames.push_back("Island of Stability [VAR1]")
@@ -1898,15 +1911,15 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Heavy Vertical")
 	level_filenames.push_back("Phantom Push")
 	level_filenames.push_back("Elevator Pitch")
+	level_filenames.push_back("Elevator Pitch 2")
 	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Undying Army (Type C)")
 	level_filenames.push_back("Anonymous Delivery [VAR1]")
+	level_filenames.push_back("Bonfire (Insight) [VAr1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Woodskip [VAR1]")
 	level_filenames.push_back("The Crate Pit- [VAR1]")
 	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
-	level_filenames.push_back("Jet Engine [VAR1]")
-	level_filenames.push_back("Delay Circuit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1916,16 +1929,22 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("Delay Circuit")
 	level_filenames.push_back("Ankh [VAR1]")
 	level_filenames.push_back("Fragile Victory [VAR1]")
 	level_filenames.push_back("Stack Split")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
+	level_filenames.push_back("Death's Door [VAR1]")
 	level_filenames.push_back("One-Way Bridge")
 	level_filenames.push_back("Phantom Push [VAR1]")
 	level_filenames.push_back("Durability-")
 	level_filenames.push_back("Combination Lock")
 	level_filenames.push_back("Firemaze")
 	level_filenames.push_back("Separated Escape")
+	level_filenames.push_back("Acrobat's Escape [VAR3]")
+	level_filenames.push_back("Elevator Pitch 3")
+	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
 	level_filenames.push_back("Light's Way In")
 	level_filenames.push_back("Acrobatics (Loop 2)")
@@ -1934,8 +1953,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Jenga-")
 	level_filenames.push_back("Crate Tunneling")
 	level_filenames.push_back("Quantum Entanglement [VAR2]")
-	level_filenames.push_back("Compact Transport")
-	level_filenames.push_back("Compact Transport [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1945,6 +1962,8 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Compact Transport")
+	level_filenames.push_back("Compact Transport [VAR1]")
 	level_filenames.push_back("Heavy Fuzzing Service")
 	level_filenames.push_back("Bunnyhop [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
@@ -1957,6 +1976,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Half-Magenta Pit")
 	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
 	level_filenames.push_back("The Magenta Pit [VAR4]")
+	level_filenames.push_back("The Twin Pit")
 	level_filenames.push_back("The Eclipse Pit")
 	level_filenames.push_back("Graduation [VAR3]")
 	level_filenames.push_back("Friendship Paradox [VAR2]")

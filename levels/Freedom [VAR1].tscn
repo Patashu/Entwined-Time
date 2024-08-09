@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 524291, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65538, 14, 262145, 65539, 7, 0, 65540, 14, 262145, 131072, 14, 262145, 131074, 14, 262145, 131076, 14, 262145, 196608, 14, 262145, 196610, 14, 262145, 196612, 14, 262145, 262144, 14, 262145, 262146, 14, 262145, 262148, 14, 262145, 327680, 14, 262145, 327681, 2, 0, 327682, 14, 262145, 327683, 8, 0, 327684, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 655363, 393219, 14, 196614, 393220, 14, 655364 )
+
+[node name="@@995" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327681, 37, 0, 327683, 37, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Freedom [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Freedom$mturn=46$wxwxzxzxswxwxzxzxzswxwxzxzxswxwxzxzwxwxzxzxswxwxzzxzzzssxwxwxzxzxswxwxzzxzzz"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0

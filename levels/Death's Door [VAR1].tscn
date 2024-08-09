@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 196613, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524291, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196615, 65541, 14, 262145, 131077, 14, 262145, 196610, 8, 0, 196611, 2, 0, 196613, 14, 262145, 196615, 7, 0, 196616, 1, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 655363, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196615 )
+
+[node name="@@803" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65541, 137, 0, 131077, 137, 0, 196613, 137, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Death's Door [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Death's Door [VAR1]$mturn=89$xwxaxzdxzxzxdxaxzaxaxaxzxdxdxzxzxzzxzsxdddxzasxzxzzxzzaaxdxwxdxzaxzzddxzzsxzzddxzzdxzzdxdxzwxdxzaxzxzsxzxzxwzxadxdxzdxdxzzdxzxsxzzddxzzxwxaa"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0

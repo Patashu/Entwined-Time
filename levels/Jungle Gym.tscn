@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 142, 0, 5, 142, 0, 6, 142, 0, 65537, 142, 0, 65538, 142, 0, 65539, 142, 0, 65540, 142, 0, 65541, 7, 0, 65542, 142, 0, 65543, 142, 0, 65544, 142, 0, 65545, 142, 0, 131076, 142, 0, 131077, 142, 0, 131078, 142, 0 )
+
+[node name="@@891" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 2, 0, 65541, 8, 0, 65544, 1, 0, 196608, 27, 0, 196609, 27, 0, 196610, 27, 0, 196611, 27, 0, 196612, 27, 0, 196613, 27, 0, 196614, 27, 0, 196615, 27, 0, 196616, 27, 0, 196617, 27, 0, 196618, 27, 0, 262149, 27, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Jungle Gym"
+level_author = "Slabdrill"
+level_replay = "Jungle Gym$mturn=36$wxdxdddxzxzzxwxddxzaxzzzzxzxdddwxaxzzzdxzxwxwxzwazdd"
+heavy_max_moves = 5.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
