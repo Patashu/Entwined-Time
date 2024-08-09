@@ -557,7 +557,7 @@ func load_game():
 	react_to_save_file_update();
 	
 	#14.5 savefix
-	if (save_file.has("levels") and save_file["levels"].has("Help Yourself II")):
+	if (save_file.has("levels") and save_file["levels"].has("Help Yourself II") and !save_file["levels"].has("Boulder Moving Service")):
 		save_file["levels"]["Boulder Moving Service"] = save_file["levels"]["Help Yourself II"];
 		save_file["levels"].erase("Help Yourself II");
 
