@@ -339,6 +339,8 @@ enum Tiles {
 	OnewayNorthGray, #151
 	OnewaySouthGray, #152
 	OnewayWestGray, #153
+	PinkJelly, #154
+	CyanJelly, #155
 }
 var voidlike_tiles : Array = [];
 
@@ -4583,6 +4585,34 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					flash_colour = oneway_flash;
 			Tiles.NoLeftGreen:
 				result = no_if_true_yes_if_false(actor.is_character and actor.facing_left);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.PinkJelly:
+				while animation_server.size() <= animation_substep:
+					animation_server.push_back([]);
+				result = Success.No;
+				for a in range (animation_substep):
+					for anim in animation_server[a]:
+						if anim[0] == actor and anim[1][0] == Animation.move:
+							result = Success.Yes;
+							break;
+					if (result == Success.Yes):
+						break;
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.CyanJelly:
+				while animation_server.size() <= animation_substep:
+					animation_server.push_back([]);
+				result = Success.No;
+				for a in range (animation_substep):
+					for anim in animation_server[a]:
+						if anim[0] == actor and (anim[1][0] == Animation.move or anim[1][0] == Animation.bump):
+							result = Success.Yes;
+							break;
+					if (result == Success.Yes):
+						break;
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_flash;

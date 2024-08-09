@@ -157,6 +157,8 @@ enum Tiles {
 	OnewayNorthGray, #151
 	OnewaySouthGray, #152
 	OnewayWestGray, #153
+	PinkJelly, #154
+	CyanJelly, #155
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -370,6 +372,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.OnewayNorthGray)
 		picker_array.append(Tiles.OnewaySouthGray)
 		picker_array.append(Tiles.OnewayWestGray)
+		picker_array.append(Tiles.PinkJelly)
+		picker_array.append(Tiles.CyanJelly)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -990,6 +994,10 @@ func picker_tooltip() -> void:
 			text = "Gray One Way: Solid to non-retro moves entering its tile."
 		Tiles.OnewayWestGray:
 			text = "Gray One Way: Solid to non-retro moves entering its tile."
+		Tiles.PinkJelly:
+			text = "Pink Jelly: Solid unless this actor has already moved 1 or more times this turn."
+		Tiles.CyanJelly:
+			text = "Cyan Jelly: Solid unless this actor has already moved and/or bumped 1 or more times this turn."
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	
