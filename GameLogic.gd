@@ -1917,7 +1917,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Undying Army (Type C)")
 	level_filenames.push_back("Anonymous Delivery [VAR1]")
-	level_filenames.push_back("Bonfire (Insight) [VAr1]")
+	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Woodskip [VAR1]")
 	level_filenames.push_back("The Crate Pit- [VAR1]")
