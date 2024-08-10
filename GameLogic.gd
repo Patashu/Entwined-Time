@@ -4324,7 +4324,7 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 				if (!is_retro):
 					while animation_server.size() <= animation_substep:
 						animation_server.push_back([]);
-					for i in range (animation_substep):
+					for i in range (animation_substep+1):
 						for anim in animation_server[i]:
 							if anim[0] == actor and anim[1][0] == Animation.move and !anim[1][2]:
 								flash_terrain = id;
@@ -4333,7 +4333,7 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 			Tiles.SpiderWebGreen:
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
-				for i in range (animation_substep):
+				for i in range (animation_substep+1):
 					for anim in animation_server[i]:
 						if anim[0] == actor and anim[1][0] == Animation.move:
 							flash_terrain = id;
@@ -4592,7 +4592,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
 				result = Success.No;
-				for a in range (animation_substep):
+				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
 						if anim[0] == actor and anim[1][0] == Animation.move:
 							result = Success.Yes;
@@ -4606,7 +4606,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
 				result = Success.No;
-				for a in range (animation_substep):
+				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
 						if anim[0] == actor and (anim[1][0] == Animation.move or anim[1][0] == Animation.bump):
 							result = Success.Yes;
