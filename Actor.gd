@@ -519,7 +519,8 @@ func _process(delta: float) -> void:
 		fluster_timer += delta;
 		if fluster_timer > fluster_timer_max:
 			fluster_timer_max = 0;
-			update_graphics();
+			if (fade_tween == null):
+				update_graphics();
 	
 	#animated sprites
 	if hframes <= 1:
