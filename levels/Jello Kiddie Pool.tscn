@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 131072, 14, 262145, 131073, 2, 0, 131074, 1, 0, 131075, 8, 0, 131076, 14, 262145, 196608, 14, 589824, 196609, 14, 4, 196610, 7, 0, 196611, 14, 2, 196612, 14, 589830, 262144, 14, 131074, 262145, 14, 786435, 262146, 14, 196614, 262147, 14, 720899, 262148, 14, 131076 )
+
+[node name="@@126" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196610, 155, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Jello Kiddie Pool"
+level_author = "Patashu"
+level_replay = "Jello Kiddie Pool$mturn=8$xaxwzxwsxwdxz"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

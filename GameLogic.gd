@@ -1742,7 +1742,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("The Cutting Room Floor");
+	chapter_names.push_back("The Cutting Room Floor (Unused Puzzles)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1753,24 +1753,35 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
-	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Soft Landing")
 	level_filenames.push_back("Yet Another Crate Pit")
 	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
-	level_filenames.push_back("Coyote Time")
-	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Consecutive Normal Pits")
-	level_filenames.push_back("Booster Seat [VAR1]")
+	level_filenames.push_back("Jello Kiddie Pool")
+	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
 	level_filenames.push_back("The Glass Pit- [VAR1]")
 	level_filenames.push_back("The Glass Pit- [VAR2]")
-	level_filenames.push_back("Firewall (Loop 2)")
 	level_filenames.push_back("Hot Soup [VAR1]")
+	level_filenames.push_back("Hot Soup [VAR2]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("The Cutting Room Floor (Variants and Buffs)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Pushing It")
+	level_filenames.push_back("Coyote Time")
+	level_filenames.push_back("TimelessBridgeEx")
+	level_filenames.push_back("Booster Seat [VAR1]")
+	level_filenames.push_back("Firewall (Loop 2)")
 	level_filenames.push_back("Heavy Moving Service [VAR1]")
 	level_filenames.push_back("Heavy Moving Service [VAR2]")
 	level_filenames.push_back("Heavy Moving Service [VAR3]")
 	level_filenames.push_back("Light Moving Service [VAR1]")
 	level_filenames.push_back("Light Moving Service [VAR2]")
-	level_filenames.push_back("Hot Soup [VAR2]")
 	level_filenames.push_back("Engine Room [VAR1]")
 	level_filenames.push_back("Integrity Checker [VAR2]")
 	level_filenames.push_back("Collectathon [VAR1]")
@@ -1857,6 +1868,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Crate Expectations-")
 	level_filenames.push_back("Flow Control-")
 	level_filenames.push_back("No(Thing) Left")
+	level_filenames.push_back("Sacrificial Ditch")
+	level_filenames.push_back("Osmosis")
+	level_filenames.push_back("Clock Storage Solutions.")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
