@@ -2155,23 +2155,24 @@ func refresh_puzzles_completed() -> void:
 		else:
 			specific_puzzles_completed.push_back(false);
 
-var has_crate_goals = false;
-var has_phase_walls = false;
-var has_phase_lightning = false;
-var has_checkpoints = false;
-var has_green_fog = false;
-var has_floorboards = false;
-var has_phaseboards = false;
-var has_holes = false;
-var has_boost_pads = false;
-var has_slopes = false;
-var has_boulders = false;
-var has_nudges = false;
-var has_limited_undo = false;
-var has_repair_stations = false;
-var has_eclipses = false;
-var has_night_or_stars = false;
-var has_ghost_fog = false;
+var falling_bug : bool = false;
+var has_crate_goals : bool = false;
+var has_phase_walls : bool = false;
+var has_phase_lightning : bool = false;
+var has_checkpoints : bool = false;
+var has_green_fog : bool = false;
+var has_floorboards : bool = false;
+var has_phaseboards : bool = false;
+var has_holes : bool = false;
+var has_boost_pads : bool = false;
+var has_slopes : bool = false;
+var has_boulders : bool = false;
+var has_nudges : bool = false;
+var has_limited_undo : bool = false;
+var has_repair_stations : bool = false;
+var has_eclipses : bool = false;
+var has_night_or_stars : bool = false;
+var has_ghost_fog : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2249,6 +2250,12 @@ func ready_map() -> void:
 		is_community_level = true;
 	else:
 		is_community_level = false;
+		
+	#compat flags
+	falling_bug = false;
+	if (level_name.find("Light Trolling") != 0 or level_name.find("Crystal Stack") != 0 or level_name.find("(Cry)Stall") != 0):
+		floating_text("Compat flag: Falling bug enabled.");
+		falling_bug = true;
 	
 	# if any of these become non-custom, then I can always check them or remove the boolean
 	has_crate_goals = false;
@@ -3872,7 +3879,7 @@ boost_pad_reentrance: bool = false) -> int:
 							if (time_colour == TimeColour.Void):
 								greenness = Greenness.Void;
 								if (level_name.find("Noclip") >= 0):
-									floating_text("(Skipping void banish in 'Noclip')");
+									floating_text("Compat flag: Void bug enabled.");
 								else:
 									void_banish(actor);
 							maybe_change_terrain(actor, actor.pos, i, false, greenness, chrono, -1);
@@ -6846,8 +6853,9 @@ func time_passes(chrono: int) -> void:
 					actor.just_moved = false;
 					set_actor_var(actor, "airborne", -1, chrono);
 					# to make blue jelly consistent
-					something_happened = true;
-					has_fallen[actor] += 1;
+					if (!falling_bug):
+						something_happened = true;
+						has_fallen[actor] += 1;
 			
 			if clear_just_moveds:
 				clear_just_moveds = false;
