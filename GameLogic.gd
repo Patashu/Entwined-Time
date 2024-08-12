@@ -1775,6 +1775,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Trust Fall [VAR2]")
 	level_filenames.push_back("Coyote Time")
+	level_filenames.push_back("Hell [VAR2]")
 	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Booster Seat [VAR1]")
 	level_filenames.push_back("Firewall (Loop 2)")
