@@ -1773,6 +1773,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Pushing It")
+	level_filenames.push_back("Trust Fall [VAR2]")
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Booster Seat [VAR1]")
