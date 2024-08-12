@@ -6843,6 +6843,9 @@ func time_passes(chrono: int) -> void:
 				if (did_fall != Success.Yes):
 					actor.just_moved = false;
 					set_actor_var(actor, "airborne", -1, chrono);
+					# to make blue jelly consistent
+					something_happened = true;
+					has_fallen[actor] += 1;
 			
 			if clear_just_moveds:
 				clear_just_moveds = false;
