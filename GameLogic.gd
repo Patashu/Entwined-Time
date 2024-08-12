@@ -2253,7 +2253,7 @@ func ready_map() -> void:
 		
 	#compat flags
 	falling_bug = false;
-	if (level_name.find("Light Trolling") != 0 or level_name.find("Crystal Stack") != 0 or level_name.find("(Cry)Stall") != 0):
+	if (level_name.find("Light Trolling") >= 0 or level_name.find("Crystal Stack") >= 0 or level_name.find("(Cry)Stall") >= 0):
 		floating_text("Compat flag: Falling bug enabled.");
 		falling_bug = true;
 	
@@ -7636,6 +7636,8 @@ func maybe_pulse_phase_blocks(chrono: int) -> void:
 			overactorsparticles.add_child(sprite);
 
 func floating_text(text: String) -> void:
+	if (!ready_done):
+		return
 	var label = preload("res://FloatingText.tscn").instance();
 	levelscene.add_child(label);
 	label.rect_position.x = 0;
