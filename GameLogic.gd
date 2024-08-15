@@ -341,6 +341,7 @@ enum Tiles {
 	OnewayWestGray, #153
 	PinkJelly, #154
 	CyanJelly, #155
+	PurpleFog, #156
 }
 var voidlike_tiles : Array = [];
 
@@ -2424,6 +2425,8 @@ func ready_map() -> void:
 			phaseboards_rotation();
 			
 		if (any_layer_has_this_tile(Tiles.GhostFog)):
+			has_ghost_fog = true;
+		elif (any_layer_has_this_tile(Tiles.PurpleFog)):
 			has_ghost_fog = true;
 	
 	calculate_map_size();
@@ -4701,7 +4704,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	
 	# handle pushing
 	var actors_there = actors_in_tile(dest);
-	if (has_ghost_fog and is_retro and terrain_in_tile(dest).has(Tiles.GhostFog)):
+	if (has_ghost_fog and is_retro and terrain_in_tile(dest).has(Tiles.PurpleFog)):
 		actors_there = [];
 	var pushables_there = [];
 	#var tiny_pushables_there = [];
@@ -4782,7 +4785,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				continue;
 			var actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
 			if actor_there_result == Success.No:
-				if (actor.phases_into_actors() or (!is_gravity and terrain_in_tile(dest, actor, chrono).has(Tiles.GhostFog))):
+				if (actor.phases_into_actors() or (has_ghost_fog and !is_gravity and terrain_in_tile(dest, actor, chrono).has(Tiles.GhostFog))):
 					pushables_there.clear();
 					result = Success.Yes;
 					break;

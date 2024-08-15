@@ -159,6 +159,7 @@ enum Tiles {
 	OnewayWestGray, #153
 	PinkJelly, #154
 	CyanJelly, #155
+	PurpleFog, #156
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -349,6 +350,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.HeavyMimic)
 		picker_array.append(Tiles.LightMimic)
 		picker_array.append(Tiles.GhostFog)
+		picker_array.append(Tiles.PurpleFog)
 		picker_array.append(Tiles.Eclipse)
 		picker_array.append(Tiles.PhaseBoardRed)
 		picker_array.append(Tiles.PhaseBoardBlue)
@@ -947,7 +949,7 @@ func picker_tooltip() -> void:
 		Tiles.LightMimic:
 			text = "Light Mimic: After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.GhostFog:
-			text = "Ghost Fog: If an actor retro moves into this tile, they phase into any actors on that tile."
+			text = "Ghost Fog: If an Actor fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
 		Tiles.Eclipse:
 			text = "Eclipse: If you make a move or rewind from this tile, time does not pass."
 		Tiles.PhaseBoardRed:
@@ -998,6 +1000,8 @@ func picker_tooltip() -> void:
 			text = "Pink Jelly: Solid unless this actor has already moved 1 or more times this turn."
 		Tiles.CyanJelly:
 			text = "Cyan Jelly: Solid unless this actor has already moved and/or bumped 1 or more times this turn."
+		Tiles.PurpleFog:
+			text = "Purple Fog: If an actor retro moves into this tile, they phase into any actors on that tile."
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	
