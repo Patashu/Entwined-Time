@@ -605,6 +605,9 @@ func _process(delta: float) -> void:
 		return;
 	
 	if (!searchbox.editable):
+		if (Input.is_action_just_pressed("start_search")):
+			searchbox.visible = true;
+			searchbox.grab_focus();
 		if (Input.is_action_just_pressed("escape")):
 			destroy();
 		if (Input.is_action_just_pressed("ui_cancel")):
@@ -615,6 +618,9 @@ func _process(delta: float) -> void:
 			_prevbutton_pressed();
 		if (Input.is_action_just_pressed("next_level")):
 			_nextbutton_pressed();
+	else:
+		if (Input.is_action_just_pressed("start_search") or Input.is_action_just_pressed("end_search")):
+			nextbutton.grab_focus();
 		
 	var focus = holder.get_focus_owner();
 	if (focus == null):
