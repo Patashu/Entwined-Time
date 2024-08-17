@@ -5470,6 +5470,8 @@ func character_undo(is_silent: bool = false) -> bool:
 						break;
 				if found:
 					break;
+			#and we need a synthetic timeline add_turn too
+			heavytimeline.add_turn(heavy_undo_buffer[heavy_undo_buffer.size()-1]);
 			
 		adjust_meta_turn(1, chrono);
 		
