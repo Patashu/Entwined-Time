@@ -1007,9 +1007,9 @@ func picker_tooltip() -> void:
 		Tiles.PurpleFog:
 			text = "Purple Fog: If an actor retro moves into this tile, they phase into any actors on that tile."
 		Tiles.Continuum:
-			text = "Contnuum: If you make a move from this tile, you don't start a new turn but still record all rewind events made. Then, the Continuum is consumed greenly."
+			text = "Continuum: If you make a move from this tile, you don't start a new turn but still record all rewind events made. Then, the Continuum is consumed greenly."
 		Tiles.Spotlight:
-			text = "Continuum: If you rewind from this tile, the rewind happens as though it were a move (including recording all rewind events made). Then, the Spotlight is consumed greenly."
+			text = "Spotlight: If you rewind from this tile, the rewind happens as though it were a move (including recording all rewind events made). Then, the Spotlight is consumed greenly."
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	
