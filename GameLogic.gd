@@ -4863,7 +4863,7 @@ func can_eat(eater: Actor, eatee: Actor) -> bool:
 	# (I need to decide how sticky topping broken actors works later, but I don't have to right now <w<)
 	if eatee.broken:
 		return false;
-	if (!eater.is_character):
+	if (!eater.is_main_character()):
 		# new: cuckoo clocks can eat time crystals :9
 		# but only if they have a time
 		if eater.actorname == Actor.Name.CuckooClock and !eater.broken and eater.ticks != 1000:
