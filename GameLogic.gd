@@ -5389,6 +5389,7 @@ func meta_undo_replay() -> bool:
 var fuzzed: bool = false;
 func character_undo(is_silent: bool = false) -> bool:
 	var eclipsed: bool = false;
+	var chrono = Chrono.CHAR_UNDO;
 	if (won or lost): return false;
 	if (heavy_selected):
 		
@@ -5403,10 +5404,21 @@ func character_undo(is_silent: bool = false) -> bool:
 				play_sound("rewindstopped");
 			add_to_animation_server(heavy_actor, [Animation.afterimage_at, preload("res://assets/undo_eye_final.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 1, 1, 1)]);
 			return false;
+		if (has_spotlights and terrain.has(Tiles.Spotlight)):
+			if !is_silent:
+				play_sound("spotlight");
+			chrono = Chrono.MOVE;
+			var events = heavy_undo_buffer[heavy_turn-1];
+			for event in events:
+				if (event[0] == Undo.heavy_turn):
+					events.erase(event);
+			heavytimeline.current_move -= 1;
+			heavy_turn -= 1;
+			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.Spotlight), false, true, Chrono.CHAR_UNDO, -1);
 		
 		# before undo effects
 		finish_animations(Chrono.CHAR_UNDO);
-		maybe_pulse_phase_blocks(Chrono.CHAR_UNDO);
+		maybe_pulse_phase_blocks(chrono);
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
 		
@@ -5428,20 +5440,39 @@ func character_undo(is_silent: bool = false) -> bool:
 					continue
 				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
 					continue
-				undo_one_event(event, Chrono.CHAR_UNDO);
+				undo_one_event(event, chrono);
 		else:
 			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 			for event in events:
-				undo_one_event(event, Chrono.CHAR_UNDO);
+				undo_one_event(event, chrono);
 				add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
 			
 		if (fuzzed):
 			time_passes(Chrono.TIMELESS);
 		else:
-			time_passes(Chrono.CHAR_UNDO);
+			time_passes(chrono);
 		
 		append_replay("z");
-		adjust_meta_turn(1, Chrono.CHAR_UNDO);
+		
+		if (chrono == Chrono.MOVE):
+			#have to add our own synthetic Undo.heavy_turn to the end
+			add_undo_event([Undo.heavy_turn, 1, true], chrono);
+			# NOW the turn is over \o/
+			heavy_turn += 1;
+			# also have to erase the most recent heavy_turn meta-event
+			var found = false;
+			for j in range (meta_undo_buffer.size() - 1, -1, -1):
+				var mevents = meta_undo_buffer[j];
+				for event in mevents:
+					if (event[0] == Undo.heavy_turn):
+						mevents.erase(event);
+						found = true;
+						break;
+				if found:
+					break;
+			
+		adjust_meta_turn(1, chrono);
+		
 		if (!is_silent):
 			if (!fuzzed or eclipsed):
 				play_sound("undostrong");
@@ -5472,7 +5503,7 @@ func character_undo(is_silent: bool = false) -> bool:
 			
 		# before undo effects
 		finish_animations(Chrono.CHAR_UNDO);
-		maybe_pulse_phase_blocks(Chrono.CHAR_UNDO);
+		maybe_pulse_phase_blocks(chrono);
 		if (terrain.has(Tiles.OneUndo)):
 			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.OneUndo), false, true, Chrono.CHAR_UNDO, Tiles.NoUndo);
 		
@@ -5493,20 +5524,20 @@ func character_undo(is_silent: bool = false) -> bool:
 					continue
 				if (event[0] == Undo.set_actor_var and event[2] == "powered"):
 					continue
-				undo_one_event(event, Chrono.CHAR_UNDO);
+				undo_one_event(event, chrono);
 		else:
 			var events = light_undo_buffer.pop_at(light_turn - 1);
 			for event in events:
-				undo_one_event(event, Chrono.CHAR_UNDO);
+				undo_one_event(event, chrono);
 				add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
 		
 		if (fuzzed):
 			time_passes(Chrono.TIMELESS);
 		else:
-			time_passes(Chrono.CHAR_UNDO);
+			time_passes(chrono);
 			
 		append_replay("z");
-		adjust_meta_turn(1, Chrono.CHAR_UNDO);
+		adjust_meta_turn(1, chrono);
 		if (!is_silent):
 			if (!fuzzed or eclipsed):
 				play_sound("undostrong");
