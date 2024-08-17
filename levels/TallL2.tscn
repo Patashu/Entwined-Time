@@ -1,17 +1,21 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65546, 14, 262145, 131072, 14, 262145, 131082, 14, 262145, 196608, 14, 262145, 196613, 14, 196609, 196618, 14, 262145, 262144, 14, 262145, 262149, 14, 262145, 262154, 14, 262145, 327680, 14, 262145, 327681, 7, 0, 327685, 14, 262145, 327687, 8, 0, 327688, 2, 0, 327689, 1, 0, 327690, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 655363, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196615, 65536, 14, 262145, 65546, 66, 0, 131072, 14, 262145, 131082, 66, 0, 196608, 14, 262145, 196613, 14, 196609, 196618, 66, 0, 262144, 14, 262145, 262145, 7, 0, 262149, 14, 262145, 262153, 1, 0, 262154, 66, 0, 327680, 14, 262145, 327685, 14, 262145, 327687, 2, 0, 327688, 8, 0, 327690, 66, 0, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 655363, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 196615 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Tall (Loop 2)"
-level_replay = "Tall (Loop 2)$mturn=100$xwxaxzdxwzxzxzxwxdxzaxaxzsxzxzaxdxzaxaxzsxzzxzaxddxzaxzzxzwxzxzdxwzxzxwxaxzdxzxwxdxzzsxzwxdxzaxwzxzwxzxzxzwaxaxaxzaxzzzswxzxzzawxaxzzsxzaxaxzaxzzddxzaxzzddd"
-heavy_max_moves = 3
-light_max_moves = 1
+level_author = "Slabdrill"
+level_replay = "Tall (Loop 2)$mturn=109$wxaxzdxzaxzxzxawxaxzdxzxwxdxzaxzxzzswxaxzzaxzxzsxwxdxzaxzzaaxzxzxaxzzxzaxazazxzaxwzwxzxzawxaxzzswxzxzzdxaxzadxzaxzadxzaxzzaxzwxaxzdxzxzsxzzddxzsxzzwadxzsxzzzddxzxw"
+heavy_max_moves = 3.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0

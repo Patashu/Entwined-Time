@@ -1682,6 +1682,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "-1";
 	level_filenames.push_back("CliffsL2")
+	level_filenames.push_back("CliffsL2Ex")
 	level_filenames.push_back("RoommatesExL2")
 	level_filenames.push_back("SpelunkingL2")
 	level_filenames.push_back("UphillL2")
@@ -1690,7 +1691,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("RoommatesL2Ex")
 	level_filenames.push_back("KnotL2")
 	level_filenames.push_back("CarryingItL2")
-	level_filenames.push_back("CallACabL2")
 	level_filenames.push_back("PachinkoL2")
 	level_filenames.push_back("PachinkoL2Ex")
 	level_filenames.push_back("TheFirstPitL2")
