@@ -92,6 +92,9 @@ func broadcast_remove_sprite(sprite: TimelineSprite) -> void:
 	nonce_to_sprite_dictionary.erase(sprite.animation_nonce);
 	
 func broadcast_sprite(sprite: TimelineSprite) -> void:
+	#for continuum
+	if (nonce_to_sprite_dictionary.has(sprite.animation_nonce)):
+		sprite.finish_animations();
 	nonce_to_sprite_dictionary[sprite.animation_nonce] = sprite;
 
 func finish_slot_animations() -> void:
@@ -202,12 +205,12 @@ func undo_unlock_turn(turn: int) -> void:
 	var slot_to_move = lock_turn(turn, false);
 	slot_to_move.undo_remember_animation();
 
-func add_turn(buffer: Array) -> void:
+func add_turn(buffer: Array, continuum: bool = false) -> void:
 	if current_move >= (max_moves):
 		return
 	if (current_move > 0):
 		timelineslots.get_child(current_move-1).fuzz_off();
-	timelineslots.get_child(current_move).fill(buffer);
+	timelineslots.get_child(current_move).fill(buffer, continuum);
 	current_move += 1;
 	finish_divider_position();
 	

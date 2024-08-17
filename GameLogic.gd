@@ -2187,6 +2187,8 @@ var has_repair_stations : bool = false;
 var has_eclipses : bool = false;
 var has_night_or_stars : bool = false;
 var has_ghost_fog : bool = false;
+var has_spotlights : bool = false;
+var has_continuums : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2288,6 +2290,8 @@ func ready_map() -> void:
 	has_repair_stations = false;
 	has_night_or_stars = false;
 	has_ghost_fog = false;
+	has_spotlights = false;
+	has_continuums = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2436,6 +2440,12 @@ func ready_map() -> void:
 			has_ghost_fog = true;
 		elif (any_layer_has_this_tile(Tiles.PurpleFog)):
 			has_ghost_fog = true;
+			
+		if (any_layer_has_this_tile(Tiles.Spotlight)):
+			has_spotlights = true;
+			
+		if (any_layer_has_this_tile(Tiles.Continuum)):
+			has_continuums = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -3992,15 +4002,15 @@ func void_banish(actor: Actor) -> void:
 			if blacklist.has(event[0]) and event[1] == actor:
 				buffer.pop_at(i);
 
-func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move: bool) -> void:
+func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move: bool, continuum: bool = false) -> void:
 	if (is_heavy):
 		if (amount > 0):
 			if heavy_filling_locked_turn_index > -1:
-				heavytimeline.add_turn(heavy_locked_turns[heavy_filling_locked_turn_index]);
+				heavytimeline.add_turn(heavy_locked_turns[heavy_filling_locked_turn_index], continuum);
 			elif heavy_filling_turn_actual > -1:
-				heavytimeline.add_turn(heavy_undo_buffer[heavy_filling_turn_actual]);
+				heavytimeline.add_turn(heavy_undo_buffer[heavy_filling_turn_actual], continuum);
 			elif heavy_turn > -1:
-				heavytimeline.add_turn(heavy_undo_buffer[heavy_turn]);
+				heavytimeline.add_turn(heavy_undo_buffer[heavy_turn], continuum);
 		else:
 			var color = heavy_color;
 			if (chrono >= Chrono.META_UNDO):
@@ -4035,11 +4045,11 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move:
 	else:
 		if (amount > 0):
 			if light_filling_locked_turn_index > -1:
-				lighttimeline.add_turn(light_locked_turns[light_filling_locked_turn_index]);
+				lighttimeline.add_turn(light_locked_turns[light_filling_locked_turn_index], continuum);
 			elif light_filling_turn_actual > -1:
-				lighttimeline.add_turn(light_undo_buffer[light_filling_turn_actual]);
+				lighttimeline.add_turn(light_undo_buffer[light_filling_turn_actual], continuum);
 			elif light_turn > -1:
-				lighttimeline.add_turn(light_undo_buffer[light_turn]);
+				lighttimeline.add_turn(light_undo_buffer[light_turn], continuum);
 		else:
 			var color = light_color;
 			if (chrono >= Chrono.META_UNDO):
@@ -4289,6 +4299,8 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				play_sound("rewindnoticed");
 			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne)):
 				pass;
+			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
+				pass
 			else:
 				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			
@@ -6449,6 +6461,7 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 func character_move(dir: Vector2) -> bool:
 	if (won or lost): return false;
 	var chr = "";
+	var continuum = false;
 	match dir:
 		Vector2.UP:
 			chr = "w";
@@ -6466,14 +6479,30 @@ func character_move(dir: Vector2) -> bool:
 			return false;
 		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);
+		if (has_continuums and heavy_turn > 0 and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Continuum)):
+			heavy_turn -= 1;
+			heavytimeline.current_move -= 1;
+			continuum = true;
 		if (!valid_voluntary_airborne_move(heavy_actor, dir)):
 			result = Success.Surprise;
 		else:
 			result = move_actor_relative(heavy_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
-		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
-			fuzzed = true;
-			play_sound("eclipse");
+		if (continuum):
+			if (result != Success.No):
+				var events = heavy_undo_buffer[heavy_turn]; # already adjusted by -1
+				for event in events:
+					if (event[0] == Undo.heavy_turn):
+						events.erase(event);
+				play_sound("continuum");
+				maybe_change_terrain(heavy_actor, pos, terrain_in_tile(pos, heavy_actor, Chrono.MOVE).find(Tiles.Continuum), false, true, Chrono.CHAR_UNDO, -1);
+			else:
+				heavy_turn += 1;
+				heavytimeline.current_move += 1;
+		if (result != Success.No):
+			if (has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
+				fuzzed = true;
+				play_sound("eclipse");
 	else:
 		var pos = light_actor.pos;
 		if ((light_actor.broken and !terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
@@ -6481,14 +6510,30 @@ func character_move(dir: Vector2) -> bool:
 			return false;
 		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);
+		if (has_continuums and light_turn > 0 and terrain_in_tile(pos, light_actor, Chrono.MOVE).has(Tiles.Continuum)):
+			light_turn -= 1;
+			lighttimeline.current_move -= 1;
+			continuum = true;
 		if (!valid_voluntary_airborne_move(light_actor, dir)):
 			result = Success.Surprise;
 		else:
 			result = move_actor_relative(light_actor, dir, Chrono.MOVE,
 			false, false, false, [], false, false, null, -1, true);
-		if (result != Success.No and has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
-			fuzzed = true;
-			play_sound("eclipse");
+		if (continuum):
+			if (result != Success.No):
+				var events = light_undo_buffer[light_turn]; # already adjusted by -1
+				for event in events:
+					if (event[0] == Undo.light_turn):
+						events.erase(event);
+				play_sound("continuum");
+				maybe_change_terrain(light_actor, pos, terrain_in_tile(pos, light_actor, Chrono.MOVE).find(Tiles.Continuum), false, true, Chrono.CHAR_UNDO, -1);
+			else:
+				light_turn += 1;
+				lighttimeline.current_move += 1;
+		if (result != Success.No):
+			if (has_eclipses and terrain_in_tile(pos, light_actor, Chrono.MOVE).has(Tiles.Eclipse)):
+				fuzzed = true;
+				play_sound("eclipse");
 	if (result == Success.Yes):
 		if (!heavy_selected):
 			play_sound("lightstep")
@@ -6522,10 +6567,24 @@ func character_move(dir: Vector2) -> bool:
 		if anything_happened_meta():
 			if heavy_selected:
 				if anything_happened_char():
-					adjust_turn(true, 1, Chrono.MOVE, true);
+					adjust_turn(true, 1, Chrono.MOVE, true, continuum);
+					if (continuum):
+						#now eliminate oldest turn change since it's not real
+						var events = meta_undo_buffer[meta_undo_buffer.size() - 1];
+						for event in events:
+							if (event[0] == Undo.heavy_turn):
+								events.erase(event);
+								break;
 			else:
 				if anything_happened_char():
-					adjust_turn(false, 1, Chrono.MOVE, true);
+					adjust_turn(false, 1, Chrono.MOVE, true, continuum);
+					if (continuum):
+						#now eliminate oldest turn change since it's not real
+						var events = meta_undo_buffer[meta_undo_buffer.size() - 1];
+						for event in events:
+							if (event[0] == Undo.light_turn):
+								events.erase(event);
+								break;
 		else:
 			result = Success.No;
 	if (result != Success.No or nonstandard_won or voidlike_puzzle):

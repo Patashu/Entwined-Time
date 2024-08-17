@@ -84,13 +84,15 @@ func undo_remember_animation() -> void:
 	lock_animation();
 	finish_animations();
 
-func fill(buffer: Array) -> void:
+func fill(buffer: Array, continuum: bool = false) -> void:
 	for sprite in timelinesymbols.get_children():
-		parent.broadcast_remove_sprite(sprite);
+		if (!continuum):
+			parent.broadcast_remove_sprite(sprite);
 		sprite.queue_free();
 		timelinesymbols.remove_child(sprite);
 	
 	var relevant_buffer = [];
+	
 	for event in buffer:
 		if event[0] == GameLogic.Undo.move or event[0] == GameLogic.Undo.set_actor_var or event[0] == GameLogic.Undo.change_terrain or event[0] == GameLogic.Undo.tick: # move or set_actor_var or change_terrain or tick
 			# whitelist: for set_actor_var, only consider airborne 1 or less and broken
