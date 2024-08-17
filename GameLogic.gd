@@ -93,13 +93,13 @@ enum Success {
 enum Undo {
 	move, #0
 	set_actor_var, #1
-	heavy_turn,
-	light_turn,
-	heavy_undo_event_add,
-	light_undo_event_add,
-	heavy_undo_event_remove,
-	light_undo_event_remove,
-	animation_substep,
+	heavy_turn, #2
+	light_turn, #3
+	heavy_undo_event_add, #4
+	light_undo_event_add, #5
+	heavy_undo_event_remove, #6
+	light_undo_event_remove, #7
+	animation_substep, #8
 	change_terrain, #9
 	# crystal undos
 	heavy_undo_event_add_locked,
@@ -5392,7 +5392,6 @@ func character_undo(is_silent: bool = false) -> bool:
 	var chrono = Chrono.CHAR_UNDO;
 	if (won or lost): return false;
 	if (heavy_selected):
-		
 		# check if we can undo
 		if (heavy_turn <= 0):
 			if !is_silent:
@@ -5413,7 +5412,6 @@ func character_undo(is_silent: bool = false) -> bool:
 				if (event[0] == Undo.heavy_turn):
 					events.erase(event);
 			heavytimeline.current_move -= 1;
-			heavy_turn -= 1;
 			maybe_change_terrain(heavy_actor, heavy_actor.pos, terrain.find(Tiles.Spotlight), false, true, Chrono.CHAR_UNDO, -1);
 		
 		# before undo effects
@@ -5457,19 +5455,28 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (chrono == Chrono.MOVE):
 			#have to add our own synthetic Undo.heavy_turn to the end
 			add_undo_event([Undo.heavy_turn, 1, true], chrono);
-			# NOW the turn is over \o/
-			heavy_turn += 1;
+			# delete the now empty buffer to shuffle everything around.
+			heavy_undo_buffer.pop_at(heavy_turn-1);
+			# now have to patch meta events so they refer to the correct turn
 			# also have to erase the most recent heavy_turn meta-event
-			var found = false;
-			for j in range (meta_undo_buffer.size() - 1, -1, -1):
-				var mevents = meta_undo_buffer[j];
-				for event in mevents:
-					if (event[0] == Undo.heavy_turn):
-						mevents.erase(event);
-						found = true;
-						break;
-				if found:
-					break;
+			var mevents = meta_undo_buffer[meta_undo_buffer.size() - 1];
+			for event in mevents:
+				if (event[0] == Undo.heavy_turn):
+					mevents.erase(event);
+					break; #need to do two loops since we're iterating something we deleted from
+			for event in mevents:
+				if (event[0] == Undo.heavy_undo_event_remove):
+					event[1] -= 1;
+				elif (event[0] == Undo.heavy_undo_event_add):
+					event[1] -= 1;
+			#need to also move all adds to the start ...
+			for j in range(mevents.size() -1):
+				var event = mevents[j];
+				if (event[0] == Undo.heavy_undo_event_add):
+					# can't use erase because all the events look identical
+					mevents.pop_at(j);
+					mevents.push_front(event);
+				
 			#and we need a synthetic timeline add_turn too
 			heavytimeline.add_turn(heavy_undo_buffer[heavy_undo_buffer.size()-1]);
 			
@@ -5502,6 +5509,16 @@ func character_undo(is_silent: bool = false) -> bool:
 				play_sound("rewindstopped");
 			add_to_animation_server(light_actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.NoUndo), terrainmap.map_to_world(light_actor.pos), Color(0, 0, 0, 1)]);
 			return false;
+		if (has_spotlights and terrain.has(Tiles.Spotlight)):
+			if !is_silent:
+				play_sound("spotlight");
+			chrono = Chrono.MOVE;
+			var events = light_undo_buffer[light_turn-1];
+			for event in events:
+				if (event[0] == Undo.light_turn):
+					events.erase(event);
+			lighttimeline.current_move -= 1;
+			maybe_change_terrain(light_actor, light_actor.pos, terrain.find(Tiles.Spotlight), false, true, Chrono.CHAR_UNDO, -1);
 			
 		# before undo effects
 		finish_animations(Chrono.CHAR_UNDO);
@@ -5539,6 +5556,35 @@ func character_undo(is_silent: bool = false) -> bool:
 			time_passes(chrono);
 			
 		append_replay("z");
+		
+		if (chrono == Chrono.MOVE):
+			#have to add our own synthetic Undo.light_turn to the end
+			add_undo_event([Undo.light_turn, 1, true], chrono);
+			# delete the now empty buffer to shuffle everything around.
+			light_undo_buffer.pop_at(light_turn-1);
+			# now have to patch meta events so they refer to the correct turn
+			# also have to erase the most recent light_turn meta-event
+			var mevents = meta_undo_buffer[meta_undo_buffer.size() - 1];
+			for event in mevents:
+				if (event[0] == Undo.light_turn):
+					mevents.erase(event);
+					break; #need to do two loops since we're iterating something we deleted from
+			for event in mevents:
+				if (event[0] == Undo.light_undo_event_remove):
+					event[1] -= 1;
+				elif (event[0] == Undo.light_undo_event_add):
+					event[1] -= 1;
+			#need to also move all adds to the start ...
+			for j in range(mevents.size() -1):
+				var event = mevents[j];
+				if (event[0] == Undo.light_undo_event_add):
+					# can't use erase because all the events look identical
+					mevents.pop_at(j);
+					mevents.push_front(event);
+				
+			#and we need a synthetic timeline add_turn too
+			lighttimeline.add_turn(light_undo_buffer[light_undo_buffer.size()-1]);
+		
 		adjust_meta_turn(1, chrono);
 		if (!is_silent):
 			if (!fuzzed or eclipsed):
