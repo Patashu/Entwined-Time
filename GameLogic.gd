@@ -342,6 +342,8 @@ enum Tiles {
 	PinkJelly, #154
 	CyanJelly, #155
 	PurpleFog, #156
+	Spotlight, #157
+	Continuum, #158
 }
 var voidlike_tiles : Array = [];
 
@@ -1776,6 +1778,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Trust Fall [VAR2]")
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Hell [VAR2]")
+	level_filenames.push_back("Light Moooving Service [VAR1]")
 	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Booster Seat [VAR1]")
 	level_filenames.push_back("Firewall (Loop 2)")
@@ -1873,6 +1876,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Sacrificial Ditch")
 	level_filenames.push_back("Osmosis")
 	level_filenames.push_back("Clock Storage Solutions.")
+	level_filenames.push_back("Revenge of an Old Future")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -3348,6 +3352,7 @@ func prepare_audio() -> void:
 	sounds["bootup"] = preload("res://sfx/bootup.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
 	sounds["bump"] = preload("res://sfx/bump.ogg");
+	sounds["continuum"] = preload("res://sfx/continuum.ogg");
 	sounds["eclipse"] = preload("res://sfx/eclipse.ogg");
 	sounds["fall"] = preload("res://sfx/fall.ogg");
 	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
@@ -3379,6 +3384,7 @@ func prepare_audio() -> void:
 	sounds["restart"] = preload("res://sfx/restart.ogg");	
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["shroud"] = preload("res://sfx/shroud.ogg");
+	sounds["spotlight"] = preload("res://sfx/spotlight.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
 	sounds["thejourneybegins"] = preload("res://sfx/thejourneybegins.ogg");
 	sounds["tick"] = preload("res://sfx/tick.ogg");

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=411 format=2]
+[gd_resource type="TileSet" load_steps=418 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -380,6 +380,12 @@
 [ext_resource path="res://assets/pinkjelly.png" type="Texture" id=378]
 [ext_resource path="res://assets/cyanjelly.png" type="Texture" id=379]
 [ext_resource path="res://assets/purple_fog.png" type="Texture" id=380]
+[ext_resource path="res://assets/spotlight.png" type="Texture" id=381]
+[ext_resource path="res://assets/continuum1.png" type="Texture" id=382]
+[ext_resource path="res://assets/continuum2.png" type="Texture" id=383]
+[ext_resource path="res://assets/continuum5.png" type="Texture" id=384]
+[ext_resource path="res://assets/continuum3.png" type="Texture" id=385]
+[ext_resource path="res://assets/continuum4.png" type="Texture" id=386]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -423,6 +429,18 @@ frame_3/delay_sec = 0.0
 [sub_resource type="AtlasTexture" id=31]
 atlas = ExtResource( 352 )
 region = Rect2( 0, 0, 24, 24 )
+
+[sub_resource type="AnimatedTexture" id=32]
+frames = 5
+frame_0/texture = ExtResource( 382 )
+frame_1/texture = ExtResource( 383 )
+frame_1/delay_sec = 0.0
+frame_2/texture = ExtResource( 385 )
+frame_2/delay_sec = 0.0
+frame_3/texture = ExtResource( 386 )
+frame_3/delay_sec = 0.0
+frame_4/texture = ExtResource( 384 )
+frame_4/delay_sec = 0.0
 
 [sub_resource type="AnimatedTexture" id=9]
 frames = 8
@@ -3199,3 +3217,31 @@ frame_7/delay_sec = 0.0
 156/shape_one_way_margin = 0.0
 156/shapes = [  ]
 156/z_index = 0
+157/name = "Spotlight"
+157/texture = ExtResource( 381 )
+157/tex_offset = Vector2( 0, 0 )
+157/modulate = Color( 1, 1, 1, 1 )
+157/region = Rect2( 0, 0, 24, 24 )
+157/tile_mode = 0
+157/occluder_offset = Vector2( 12, 12 )
+157/navigation_offset = Vector2( 12, 12 )
+157/shape_offset = Vector2( 0, 0 )
+157/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+157/shape_one_way = false
+157/shape_one_way_margin = 0.0
+157/shapes = [  ]
+157/z_index = 0
+158/name = "Continuum"
+158/texture = SubResource( 32 )
+158/tex_offset = Vector2( 0, 0 )
+158/modulate = Color( 1, 1, 1, 1 )
+158/region = Rect2( 0, 0, 24, 24 )
+158/tile_mode = 0
+158/occluder_offset = Vector2( 12, 12 )
+158/navigation_offset = Vector2( 12, 12 )
+158/shape_offset = Vector2( 0, 0 )
+158/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+158/shape_one_way = false
+158/shape_one_way_margin = 0.0
+158/shapes = [  ]
+158/z_index = 0

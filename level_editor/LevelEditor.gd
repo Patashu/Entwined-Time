@@ -160,6 +160,8 @@ enum Tiles {
 	PinkJelly, #154
 	CyanJelly, #155
 	PurpleFog, #156
+	Spotlight, #157
+	Continuum, #158
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -376,6 +378,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.OnewayWestGray)
 		picker_array.append(Tiles.PinkJelly)
 		picker_array.append(Tiles.CyanJelly)
+		#picker_array.append(Tiles.Spotlight)
+		#picker_array.append(Tiles.Continuum)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1002,6 +1006,10 @@ func picker_tooltip() -> void:
 			text = "Cyan Jelly: Solid unless this actor has already moved and/or bumped 1 or more times this turn."
 		Tiles.PurpleFog:
 			text = "Purple Fog: If an actor retro moves into this tile, they phase into any actors on that tile."
+		Tiles.Continuum:
+			text = "Contnuum: If you make a move from this tile, you don't start a new turn but still record all rewind events made. Then, the Continuum is consumed greenly."
+		Tiles.Spotlight:
+			text = "Continuum: If you rewind from this tile, the rewind happens as though it were a move (including recording all rewind events made). Then, the Spotlight is consumed greenly."
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	
