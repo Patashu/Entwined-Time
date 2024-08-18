@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 12, 0, 10, 12, 0, 196610, 7, 0, 196611, 2, 0, 196615, 8, 0, 196616, 1, 0, 262145, 14, 196613, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 524292, 262150, 14, 524290, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196615, 327684, 14, 262145, 327686, 14, 262145, 393220, 14, 327681, 393221, 12, 0, 393222, 14, 327681 )
+
+[node name="@@1084" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 38, 0, 196615, 38, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Magenta Pit [VAR5] (Insight)"
+level_author = "Slabdrill"
+level_replay = "The Magenta Pit [VAR5] (Insight)$mturn=70$ddxaaxwzxzzxzxaaxwzzxzzaxadxzxwxdxzdaawxdxzaxzzwxdxzaxzxzdaxzdxzxzwaxzxzxaxzzzzzzddwdddxzddxzdxzzaa"
+heavy_max_moves = 7.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0

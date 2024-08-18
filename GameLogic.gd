@@ -1877,6 +1877,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Osmosis")
 	level_filenames.push_back("Clock Storage Solutions.")
 	level_filenames.push_back("Revenge of an Old Future")
+	level_filenames.push_back("Circle Dance-")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1902,6 +1903,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Half-Magenta Pit")
 	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
 	level_filenames.push_back("The Magenta Pit [VAR4]")
+	level_filenames.push_back("The Magenta Pit [VAR5]")
 	level_filenames.push_back("The Twin Pit")
 	level_filenames.push_back("The Eclipse Pit")
 	level_filenames.push_back("Consecutive Normal Pits [VAR2]")
