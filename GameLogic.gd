@@ -1880,6 +1880,34 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Slabdrill's World (Only Pits)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("The White Pit")
+	level_filenames.push_back("The Checkpoint Pit")
+	level_filenames.push_back("The Greenish Pit")
+	level_filenames.push_back("The Voidish Pit")
+	level_filenames.push_back("The Joke Pit")
+	level_filenames.push_back("The Yellow Pit")
+	level_filenames.push_back("The Crate Pit-")
+	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
+	level_filenames.push_back("The Crate Pit- [VAR1]")
+	level_filenames.push_back("The Solo Pit")
+	level_filenames.push_back("The Withering Pit")
+	level_filenames.push_back("The Green Fire Pit")
+	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
+	level_filenames.push_back("The Half-Magenta Pit")
+	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
+	level_filenames.push_back("The Magenta Pit [VAR4]")
+	level_filenames.push_back("The Twin Pit")
+	level_filenames.push_back("The Eclipse Pit")
+	level_filenames.push_back("Consecutive Normal Pits [VAR2]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
 	chapter_names.push_back("Slabdrill's World (Page 1 - easiest)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
@@ -1890,7 +1918,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Collaborative Motion")
 	level_filenames.push_back("Light Bridge")
 	level_filenames.push_back("Quantum Entanglement [VAR1]")
-	level_filenames.push_back("The White Pit")
 	level_filenames.push_back("Rise As One [VAR1]")
 	level_filenames.push_back("Hopscorch [VAR2]")
 	level_filenames.push_back("Timeless Bridge [VAR2]")
@@ -1901,11 +1928,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Rapid Ascent")
 	level_filenames.push_back("Tile Selector")
 	level_filenames.push_back("Parity Drive")
-	level_filenames.push_back("The Checkpoint Pit")
-	level_filenames.push_back("The Greenish Pit")
-	level_filenames.push_back("The Voidish Pit")
-	level_filenames.push_back("The Joke Pit")
-	level_filenames.push_back("The Yellow Pit")
 	level_filenames.push_back("Rocket Engine-")
 	level_filenames.push_back("Campfrost [VAR2]")
 	level_filenames.push_back("Graduation [VAR1]")
@@ -1920,8 +1942,6 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Downwards Momentum [VAR1]")
 	level_filenames.push_back("Limitations of Love. [VAR1]")
-	level_filenames.push_back("The Crate Pit-")
-	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Tile Selector [VAR1]")
 	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
@@ -1940,7 +1960,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Woodskip [VAR1]")
-	level_filenames.push_back("The Crate Pit- [VAR1]")
 	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
@@ -1966,7 +1985,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Jello Partition")
 	level_filenames.push_back("Separated Escape")
 	level_filenames.push_back("Acrobat's Escape [VAR3]")
-	level_filenames.push_back("The Solo Pit")
 	level_filenames.push_back("Elevator Pitch 3")
 	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
@@ -1974,7 +1992,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Downfall")
 	level_filenames.push_back("Light's Way In")
 	level_filenames.push_back("Acrobatics (Loop 2)")
-	level_filenames.push_back("The Withering Pit")
 	level_filenames.push_back("Orbital Drop [VAR1]")
 	level_filenames.push_back("Orbital Drop [VAR2]")
 	level_filenames.push_back("Jenga-")
@@ -1994,18 +2011,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Heavy Fuzzing Service")
 	level_filenames.push_back("Bunnyhop [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
-	level_filenames.push_back("The Green Fire Pit")
-	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
 	level_filenames.push_back("Foot Wiggle [VAR3]")
 	level_filenames.push_back("Foot Wiggle [VAR4]")
 	level_filenames.push_back("Foot Wiggle [VAR5]")
 	level_filenames.push_back("Engine Room [VAR2]")
-	level_filenames.push_back("The Half-Magenta Pit")
-	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
-	level_filenames.push_back("The Magenta Pit [VAR4]")
-	level_filenames.push_back("The Twin Pit")
-	level_filenames.push_back("The Eclipse Pit")
-	level_filenames.push_back("Consecutive Normal Pits [VAR2]")
 	level_filenames.push_back("Graduation [VAR3]")
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Pittance [VAR1]")
