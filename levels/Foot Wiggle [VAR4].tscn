@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,10 +18,9 @@ tile_data = PoolIntArray( 393220, 8, 0, 458753, 1, 0, 458756, 2, 0, 458759, 29, 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Foot Wiggle [VAR4]"
-level_author = "Slabdrill"
+level_author = "Slabdrill & Patashu"
 level_replay = "Foot Wiggle [VAR4]$mturn=115$xdxdwaxzsdxzzxzxwaxsdxzdxzzzxzxsxzdxaaxwxzxzwxzxzzwaxsxzdzzzxzzxdxsxdxaaxwxzxzwxzxzzwaxsxzdxzzssaxzzxzxdxaxwxzxzzwaxsxzdxzzsxzzxzzsxdzxaaxwaxzzsdxzzxzxwaxsxzdzzzxzzzwaxaaa"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
-clock_turns = ""
 target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
 target_track = 3.0

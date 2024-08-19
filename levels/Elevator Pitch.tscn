@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -12,10 +12,9 @@ tile_data = PoolIntArray( 0, 1, 0, 65536, 26, 0, 65542, 7, 0, 131078, 26, 0, 393
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Elevator Pitch"
-level_author = "Slabdrill"
+level_author = "Slabdrill & dead0ne"
 level_replay = "Elevator Pitch$mturn=61$xasdwzzzzswxwxzwxwxzasdxzxzzzswxwxzzzsasdxzxzzzzwxzxzxwzswzzswzzswzwxwxzwzzwxz"
 heavy_max_moves = 2.0
 light_max_moves = 4.0
-clock_turns = ""
 target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
 target_track = 3.0
