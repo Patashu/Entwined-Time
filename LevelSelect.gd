@@ -393,21 +393,25 @@ func prepare_chapter() -> void:
 		yy = 13;
 		yyy = 14;
 		
-	var standard_label = Label.new();
-	holder.add_child(standard_label);
-	standard_label.rect_position.x = round(xx + xxx*x);
-	standard_label.rect_position.y = round(yy + yyy*y + 2);
-	standard_label.text = "Standard:"
-	standard_label.theme = holder.theme;
-	if (y == -1):
-		standard_label.rect_position.y += 2;
-	if (chapter == 0 and !in_community_puzzles):
-		standard_label.rect_position.x += 52;
-	
-	y += 1;
-	if (y == y_max):
+	var standard_label = null;
+	if (advanced_end - advanced_start > 0):
+		standard_label = Label.new();
+		holder.add_child(standard_label);
+		standard_label.rect_position.x = round(xx + xxx*x);
+		standard_label.rect_position.y = round(yy + yyy*y + 2);
+		standard_label.text = "Standard:"
+		standard_label.theme = holder.theme;
+		if (y == -1):
+			standard_label.rect_position.y += 2;
+		if (chapter == 0 and !in_community_puzzles):
+			standard_label.rect_position.x += 52;
+		
+		y += 1;
+		if (y == y_max):
+			y = 0;
+			x += 1;
+	else:
 		y = 0;
-		x += 1;
 	
 	for i in range(advanced_start - normal_start):
 		var button = preload("res://LevelButton.tscn").instance();
@@ -560,8 +564,9 @@ func prepare_chapter() -> void:
 		
 	# gold label flashes for completionists
 	if (all_standard_stars):
-		standard_label.set_script(preload("res://GoldLabel.gd"));
-		standard_label.flash();
+		if (standard_label != null):
+			standard_label.set_script(preload("res://GoldLabel.gd"));
+			standard_label.flash();
 		if (all_advanced_stars):
 			holder.flash();
 	if (all_advanced_stars and advanced_label != null):
