@@ -274,10 +274,17 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 						elif size == 12:
 							return preload("res://timeline/timeline-momentum-down-12.png");
 		GameLogic.Undo.change_terrain:
-			if size == 8:
-				return preload("res://timeline/timeline-terrain-8.png");
-			elif size == 12:
-				return preload("res://timeline/timeline-terrain-12.png");
+			var old_value = event[4];
+			if (old_value == -1):
+				if size == 8:
+					return preload("res://timeline/timeline-unterrain-8.png");
+				elif size == 12:
+					return preload("res://timeline/timeline-unterrain-12.png");
+			else:
+				if size == 8:
+					return preload("res://timeline/timeline-terrain-8.png");
+				elif size == 12:
+					return preload("res://timeline/timeline-terrain-12.png");
 		GameLogic.Undo.tick:
 			if size == 8:
 				return preload("res://timeline/timeline-tick-8.png");

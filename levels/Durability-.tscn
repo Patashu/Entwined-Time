@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,10 +18,9 @@ tile_data = PoolIntArray( 131079, 8, 0, 131081, 2, 0 )
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Durability?"
-level_author = "Slabdrill"
+level_author = "Slabdrill & Neonesque"
 level_replay = "Durability?$mturn=95$sxddaxwxzxsxdaxzxzxzxdaxzxzxsxsxzaxdwxzxzzxdssadwwxdxzzzxzxzzzzxddxaddxzzxsaaxzxzzzzzsddaawxzzzxzzzzzxzxzzdwdddwxdaxzzzzzxzzxdddddd"
 heavy_max_moves = 7.0
 light_max_moves = 7.0
-clock_turns = ""
 target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
 target_track = 8.0
