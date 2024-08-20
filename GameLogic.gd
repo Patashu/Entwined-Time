@@ -1991,9 +1991,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Acrobatics (Loop 2)")
 	level_filenames.push_back("Orbital Drop [VAR1]")
 	level_filenames.push_back("Orbital Drop [VAR2]")
-	level_filenames.push_back("Jenga-")
-	level_filenames.push_back("Crate Tunneling")
-	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2003,6 +2000,9 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Jenga-")
+	level_filenames.push_back("Crate Tunneling")
+	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
 	level_filenames.push_back("Heavy Fuzzing Service")
