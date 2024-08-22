@@ -6989,10 +6989,11 @@ func time_passes(chrono: int) -> void:
 		var size = time_actors.size();
 		for i in range(size):
 			var actor = time_actors[i];
+			var skip = false;
 			if (actor.fall_speed() >= 0 and has_fallen[actor] >= actor.fall_speed()):
-				continue;
-			if (actor.in_night):
-				continue;
+				skip = true;
+			elif (actor.in_night):
+				skip = true;
 			
 			# multi-falling stack check
 			if (i < (size - 1)):
@@ -7005,7 +7006,7 @@ func time_passes(chrono: int) -> void:
 			else:
 				clear_just_moveds = true;
 			
-			if actor.airborne == -1 and !is_suspended(actor, chrono):
+			if !skip and actor.airborne == -1 and !is_suspended(actor, chrono):
 				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or has_fallen[actor] <= 0)):
@@ -7015,7 +7016,7 @@ func time_passes(chrono: int) -> void:
 						set_actor_var(actor, "airborne", 0, chrono);
 					something_happened = true;
 			
-			if actor.airborne == 0:
+			if !skip and actor.airborne == 0:
 				var did_fall = Success.No;
 				if (is_suspended(actor, chrono)):
 					did_fall = Success.No;
