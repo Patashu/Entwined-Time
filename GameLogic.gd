@@ -4263,7 +4263,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		if new_tile != -1:
 			var ghost = make_ghost_here_with_texture(pos, terrainmap.tile_set.tile_get_texture(new_tile));
 		else:
-			var ghost = make_ghost_here_with_texture(pos, preload("res://timeline/timeline-broken-12.png"));
+			var ghost = make_ghost_here_with_texture(pos, preload("res://timeline/timeline-unterrain-12.png"));
 			ghost.position -= Vector2(cell_size/2, cell_size/2);
 			ghost.scale = Vector2(2, 2);
 		return Success.Surprise;
