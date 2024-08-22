@@ -2488,6 +2488,11 @@ func ready_map() -> void:
 		bg.position = Vector2(-underterrainfolder.position.x, -underterrainfolder.position.y);
 		underterrainfolder.add_child(bg);
 	
+	initialize_timeline_viewers(); # has to be before setup_replay
+	
+	if (level_info.setup_replay != ""):
+		setup_replay(level_info.setup_replay);
+	
 	finish_animations(Chrono.TIMELESS);
 	update_info_labels();
 	check_won(Chrono.TIMELESS);
@@ -2495,7 +2500,6 @@ func ready_map() -> void:
 	for goal in goals:
 		goal.instantly_reach_scalify();
 	
-	initialize_timeline_viewers();
 	ready_tutorial();
 	update_level_label();
 	maybe_update_phaseboards(Chrono.MOVE);
@@ -6192,6 +6196,37 @@ func meta_redo() -> bool:
 	metaredobuttonlabel.visible = false;
 	return true;
 	
+func gray_wait() -> void:
+	var continuum = false;
+	time_passes(Chrono.MOVE);
+	if anything_happened_meta():
+			if heavy_selected:
+				if anything_happened_char():
+					adjust_turn(true, 1, Chrono.MOVE, true, continuum);
+			else:
+				if anything_happened_char():
+					adjust_turn(false, 1, Chrono.MOVE, true, continuum);
+	adjust_meta_turn(1, Chrono.MOVE);
+	
+func purple_wait() -> void:
+	time_passes(Chrono.CHAR_UNDO);
+	adjust_meta_turn(1, Chrono.CHAR_UNDO);
+
+func void_wait() -> void:
+	time_passes(Chrono.META_UNDO);
+	adjust_meta_turn(1, Chrono.META_UNDO);
+	
+func do_one_setup_letter(replay_char: String) -> void:
+	match replay_char:
+		"q":
+			gray_wait();
+		"e":
+			purple_wait();
+		"v":
+			void_wait();
+		_:
+			do_one_letter(replay_char);
+	
 func do_one_letter(replay_char: String) -> void:
 	match replay_char:
 		"w":
@@ -7408,6 +7443,25 @@ func replay_advance_turn(amount: int) -> void:
 	replay_paused = true;
 	update_info_labels();
 			
+func setup_replay(replay: String) -> void:
+	# should be silent
+	var old_muted = muted;
+	muted = true;
+	# strip annotation if any
+	var annotated = replay.find_last("$");
+	if (annotated >= 0):
+		replay = replay.get_slice("$", 2); # it's got more performance!
+	for chr in replay:
+		do_one_setup_letter(chr);
+		finish_animations(Chrono.TIMELESS); #doesn't help?
+		calm_down_timelines(); #doesn't help?
+	muted = old_muted;
+	user_replay = "";
+	meta_turn = 0;
+	meta_undo_buffer = [];
+	update_info_labels();
+	calm_down_timelines(); #doesn't help?
+			
 func calm_down_timelines() -> void:
 	heavytimeline.calm_down();
 	lighttimeline.calm_down();
@@ -8027,6 +8081,7 @@ func serialize_current_level() -> String:
 		
 	var level_info = level.get_node("LevelInfo");
 	level_metadata["level_replay"] = level_info.level_replay;
+	level_metadata["setup_replay"] = level_info.setup_replay;
 	level_metadata["heavy_max_moves"] = int(level_info.heavy_max_moves);
 	level_metadata["light_max_moves"] = int(level_info.light_max_moves);
 		
@@ -8100,11 +8155,13 @@ func deserialize_custom_level(custom: String) -> Node:
 		return null;
 	
 	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
-	"clock_turns", "map_x_max", "map_y_max", "target_sky", "layers", "target_track"];
+	"clock_turns", "map_x_max", "map_y_max", "target_sky", "layers", "target_track", "setup_replay"];
 	
-	#datafix: old custom levels without target_track
+	#datafix: old custom levels with missing fields
 	if (!result.has("target_track")):
 		result["target_track"] = target_track;
+	if (!result.has("setup_replay")):
+		result["setup_replay"] = "";
 	
 	for metadata in metadatas:
 		if (!result.has(metadata)):

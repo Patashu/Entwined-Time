@@ -463,7 +463,7 @@ func serialize_current_level() -> String:
 	var result = "EntwinedTimePuzzleStart: " + level_info.level_name + " by " + level_info.level_author + "\n";
 	var level_metadata = {};
 	var metadatas = ["level_name", "level_author", "level_replay", "heavy_max_moves", "light_max_moves",
-	"clock_turns", "map_x_max", "map_y_max", "target_track" #"target_sky"
+	"clock_turns", "map_x_max", "map_y_max", "target_track", "setup_replay" #"target_sky"
 	];
 	for metadata in metadatas:
 		level_metadata[metadata] = level_info.get(metadata);

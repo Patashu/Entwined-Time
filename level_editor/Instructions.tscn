@@ -26,7 +26,8 @@ text = "Level Editor Instructions:
 * F1 / Menu > Test Level to playtest. A win will become the official replay.
 * Save often to not lose progress: 'Copy Level' (Ctrl+C)
 * The level can be played in-game by anyone using 'Paste Level' (Ctrl+V).
-* You can toggle between 1x and 1/2x zoom with - key."
+* You can toggle between 1x and 1/2x zoom with - key.
+* 'Setup Replay' is a replay that will happen before the player gains control. Then the Turn will be set to 0 and the puzzle begins. It accepts three more keys than regular replays: 'q' waits mundanely (passing a turn as the current robot), 'e' waits greenly, 'v' waits voidly."
 align = 1
 autowrap = true
 

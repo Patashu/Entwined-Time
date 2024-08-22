@@ -12,3 +12,4 @@ var map_y_max = -1;
 export var target_sky : Color = Color(0.5, 0.5, 0.5, 1);
 var layers = -1;
 export var target_track = -1;
+export var setup_replay = "";
