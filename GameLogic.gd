@@ -122,6 +122,7 @@ enum Undo {
 	tick, #26
 	time_bubble, #27
 	sprite, #28
+	spotlight_fix, #29
 }
 
 # and same for animations
@@ -1985,7 +1986,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elevator Pitch 3")
 	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
-	level_filenames.push_back("Jello Kiddie Pool [VAR2]")
 	level_filenames.push_back("Downfall")
 	level_filenames.push_back("Light's Way In")
 	level_filenames.push_back("Acrobatics (Loop 2)")
@@ -5413,6 +5413,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (has_spotlights and terrain.has(Tiles.Spotlight)):
 			if !is_silent:
 				play_sound("spotlight");
+			add_undo_event([Undo.spotlight_fix], Chrono.CHAR_UNDO);
 			chrono = Chrono.MOVE;
 			var events = heavy_undo_buffer[heavy_turn-1];
 			for event in events:
@@ -5519,6 +5520,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (has_spotlights and terrain.has(Tiles.Spotlight)):
 			if !is_silent:
 				play_sound("spotlight");
+			add_undo_event([Undo.spotlight_fix], Chrono.CHAR_UNDO);
 			chrono = Chrono.MOVE;
 			var events = light_undo_buffer[light_turn-1];
 			for event in events:
@@ -6071,6 +6073,13 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var sprite = event[2];
 			sprite.get_parent().remove_child(sprite);
 			sprite.queue_free();
+		Undo.spotlight_fix:
+			if (heavy_selected):
+				heavytimeline.current_move -= 1;
+				heavytimeline.add_turn(heavy_undo_buffer[heavy_turn-1], true);
+			else:
+				lighttimeline.current_move -= 1;
+				lighttimeline.add_turn(light_undo_buffer[light_turn-1], true);
 
 func meta_undo_a_restart() -> bool:
 	var meta_undo_a_restart_type = 2;

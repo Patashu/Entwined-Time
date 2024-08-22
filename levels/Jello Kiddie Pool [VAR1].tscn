@@ -9,11 +9,11 @@ cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 393219, 4, 14, 4, 65536, 14, 262145, 65539, 14, 131074, 65540, 14, 589829, 131072, 14, 262145, 131073, 8, 0, 131074, 2, 0, 131075, 1, 0, 131076, 14, 262145, 196608, 14, 589824, 196609, 14, 3, 196610, 14, 4, 196611, 7, 0, 196612, 14, 262145, 262144, 14, 131074, 262145, 14, 131075, 262146, 14, 786435, 262147, 14, 196614, 262148, 14, 655364 )
 
-[node name="@@141" type="TileMap" parent="."]
+[node name="@@924" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 196611, 155, 0 )
+tile_data = PoolIntArray( 131073, 38, 0, 196611, 155, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
