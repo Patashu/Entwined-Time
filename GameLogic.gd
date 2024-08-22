@@ -1439,6 +1439,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("UnfathomableGlass")
 	level_filenames.push_back("PushingItFurtherEx")
 	level_filenames.push_back("KingCrimsonEx")
+	level_filenames.push_back("Heavy Fuzzing Service")
 	
 	chapter_names.push_back("Time Crystals");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2008,7 +2009,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
-	level_filenames.push_back("Heavy Fuzzing Service")
 	level_filenames.push_back("Bunnyhop [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
 	level_filenames.push_back("Foot Wiggle [VAR3]")
@@ -2103,8 +2103,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Light Trolling")
 	level_filenames.push_back("Light Trolling [VAR1]")
 	level_filenames.push_back("Light Trolling [VAR2]")
+	level_filenames.push_back("Light Trolln't")
+	level_filenames.push_back("Light Trolln't [VAR1]")
 	level_filenames.push_back("Angry Chomper")
 	level_filenames.push_back("Crystal Stack")
+	level_filenames.push_back("Crystals Tack")
 	level_filenames.push_back("(Cry)Stall")
 	level_filenames.push_back("Negativity")
 	level_filenames.push_back("Cut And Paste")
@@ -7816,10 +7819,14 @@ func floating_text(text: String) -> void:
 	if (!ready_done):
 		return
 	var label = preload("res://FloatingText.tscn").instance();
+	var existing_labels = 0;
+	for i in levelscene.get_children():
+		if i is FloatingText:
+			existing_labels += 1;
 	levelscene.add_child(label);
 	label.rect_position.x = 0;
 	label.rect_size.x = pixel_width;
-	label.rect_position.y = pixel_height/2-16;
+	label.rect_position.y = pixel_height/2-16 + 8*existing_labels;
 	label.text = text;
 
 func is_valid_replay(replay: String) -> bool:

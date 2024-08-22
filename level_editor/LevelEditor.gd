@@ -648,10 +648,14 @@ func destroy() -> void:
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
+	var existing_labels = 0;
+	for i in self.get_children():
+		if i is FloatingText:
+			existing_labels += 1;
 	self.add_child(label);
 	label.rect_position.x = 0;
 	label.rect_size.x = gamelogic.pixel_width;
-	label.rect_position.y = gamelogic.pixel_height/2-16;
+	label.rect_position.y = gamelogic.pixel_height/2-16 + 8*existing_labels;
 	label.text = text;
 	
 func generate_layer() -> void:
