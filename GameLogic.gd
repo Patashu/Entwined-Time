@@ -2086,7 +2086,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("SO LONG GAY HOLE")
 	level_filenames.push_back("The Wall (alpha build)")
 	level_filenames.push_back("Cannon")
-	level_filenames.push_back("phaseboard phasetrough")
 	level_filenames.push_back("sudden drop and a crash")
 	level_filenames.push_back("The begging of the dark")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2111,6 +2110,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("(Cry)Stall")
 	level_filenames.push_back("Negativity")
 	level_filenames.push_back("Cut And Paste")
+	level_filenames.push_back("phaseboard phasetrough")
 	level_filenames.push_back("Violent pushback")
 	level_filenames.push_back("time crash")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2184,6 +2184,7 @@ func refresh_puzzles_completed() -> void:
 			specific_puzzles_completed.push_back(false);
 
 var falling_bug : bool = false;
+var falling_bug_2 : bool = false;
 var has_crate_goals : bool = false;
 var has_phase_walls : bool = false;
 var has_phase_lightning : bool = false;
@@ -2284,8 +2285,13 @@ func ready_map() -> void:
 	#compat flags
 	falling_bug = false;
 	if (level_name.find("Light Trolling") >= 0 or level_name.find("Crystal Stack") >= 0 or level_name.find("(Cry)Stall") >= 0):
-		floating_text("Compat flag: Falling bug enabled.");
+		floating_text("Compat flag: Early gravity end bug enabled.");
 		falling_bug = true;
+		
+	falling_bug_2 = false;
+	if (level_name.find("phaseboard phasetrough") >= 0 or level_name.find("Light Trolling") >= 0 or level_name.find("Light Trolln't") >= 0 or level_name.find("Crystal Stack") >= 0 or level_name.find("Crystals Tack") >= 0):
+		floating_text("Compat flag: Falling into stack bug enabled.");
+		falling_bug_2 = true;
 	
 	# if any of these become non-custom, then I can always check them or remove the boolean
 	has_crate_goals = false;
@@ -6994,6 +7000,8 @@ func time_passes(chrono: int) -> void:
 				skip = true;
 			elif (actor.in_night):
 				skip = true;
+			if (skip and falling_bug_2):
+				continue;
 			
 			# multi-falling stack check
 			if (i < (size - 1)):
