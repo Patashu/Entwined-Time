@@ -1752,6 +1752,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Soft Landing")
+	level_filenames.push_back("Tiny Roast")
 	level_filenames.push_back("Yet Another Crate Pit")
 	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
 	level_filenames.push_back("Consecutive Normal Pits")
@@ -1874,6 +1875,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Clock Storage Solutions.")
 	level_filenames.push_back("Revenge of an Old Future")
 	level_filenames.push_back("Circle Dance-")
+	level_filenames.push_back("Roast-")
+	level_filenames.push_back("The Split")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2067,6 +2070,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Springlock System [VAR1]")
 	level_filenames.push_back("Not Enough Nothing")
 	level_filenames.push_back("Yesclip")
+	level_filenames.push_back("Orientation (Loop 2) [VAR1] [VAR1]")
+	level_filenames.push_back("Revenge of an Old Future [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

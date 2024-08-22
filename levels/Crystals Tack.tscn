@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 3, 0, 65538, 54, 0, 131074, 54, 0, 196610, 54, 0, 262146, 54, 0, 327682, 54, 0, 393218, 54, 0, 458754, 54, 0, 524290, 54, 0, 589826, 54, 0, 655360, 2, 0, 655362, 54, 0, 655364, 8, 0, 720896, 14, 196613, 720897, 14, 196614, 720898, 14, 196614, 720899, 14, 196614, 720900, 14, 196615 )
+
+[node name="@@1544" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 655362, 1, 0 )
+
+[node name="@@1545" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 655362, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Crystals Tack"
+level_author = "Green"
+level_replay = "Crystals Tack$mturn=6$xaaxdxwxwd"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.164706, 0.121569, 0.509804, 1 )
+target_track = 2.0

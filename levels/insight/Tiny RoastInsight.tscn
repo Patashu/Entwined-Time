@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65539, 7, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 0, 0, 131074, 0, 0, 131075, 0, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 2, 0, 196611, 8, 0, 196612, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655364 )
+
+[node name="@@1921" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 21, 0, 65539, 21, 0, 131073, 20, 0, 131075, 20, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Tiny Roast (Insight)"
+level_author = "Patashu"
+level_replay = "Tiny Roast (Insight)$mturn=34$xaxdxzxzwxaxzdxzwxzsxzwxaxzdxzaxzdxzxzwxdxzaxzwxzxzzwa"
+heavy_max_moves = 2.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0

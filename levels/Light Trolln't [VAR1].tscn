@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 3, 0, 65536, 1, 0, 65538, 48, 0, 65540, 3, 0, 131072, 14, 524290, 131073, 14, 196614, 131074, 14, 524292, 131076, 3, 0, 196608, 14, 262145, 196609, 8, 0, 196610, 14, 262145, 196612, 3, 0, 196618, 15, 0, 262144, 14, 262145, 262145, 3, 0, 262146, 14, 262145, 262147, 2, 0, 262154, 14, 2, 262155, 14, 4, 327680, 14, 262145, 327681, 7, 0, 327682, 14, 589824, 327683, 14, 3, 327684, 14, 3, 327685, 14, 4, 327690, 14, 65538, 327691, 14, 65540, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 720899, 393219, 14, 131075, 393220, 14, 131075, 393221, 14, 786435, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 720899, 393227, 14, 131076 )
+
+[node name="@@1614" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 138, 0, 131074, 138, 0, 196609, 39, 0, 196610, 138, 0, 262145, 54, 0, 262147, 39, 0, 327681, 33, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Light Trolln't [VAR1]"
+level_author = "Green"
+level_replay = "Light Trolln't [VAR1]$mturn=113$wdzdzzazwszdzzwdzazazazwdzazzwdzdzzazdzdzazazwdzzdzwazzwazazdzdwdzazdzwdzazdzazzwdwdzazdwdzwdwzdaaaaaaaawawazwaws"
+heavy_max_moves = 2.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
