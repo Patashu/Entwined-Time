@@ -1749,6 +1749,8 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Rise As One")
+	level_filenames.push_back("Jello Kiddie Pool")
+	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
@@ -1757,8 +1759,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Yet Another Crate Pit")
 	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
 	level_filenames.push_back("Consecutive Normal Pits")
-	level_filenames.push_back("Jello Kiddie Pool")
-	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
 	level_filenames.push_back("The Glass Pit- [VAR1]")
 	level_filenames.push_back("The Glass Pit- [VAR2]")
 	level_filenames.push_back("Hot Soup [VAR1]")
@@ -1878,6 +1878,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Circle Dance-")
 	level_filenames.push_back("Roast-")
 	level_filenames.push_back("The Split")
+	level_filenames.push_back("Mini Way In-")
+	level_filenames.push_back("Minidane")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2009,6 +2011,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
+	level_filenames.push_back("Heavy Fuzzing Service [VAR1]")
+	level_filenames.push_back("Heavy Fuzzing Service [VAR2]")
 	level_filenames.push_back("Bunnyhop [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
 	level_filenames.push_back("Foot Wiggle [VAR3]")
