@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 47, 0, 65538, 14, 262148, 65539, 55, 0, 65540, 14, 196609, 131073, 14, 262148, 131074, 33, 0, 131075, 33, 0, 131076, 14, 262145, 196608, 47, 0, 196609, 55, 0, 196612, 14, 327681, 262145, 14, 196609, 262146, 27, 0, 262147, 27, 0, 262148, 55, 0, 262149, 47, 0, 327681, 14, 327681, 327682, 23, 0, 327683, 23, 0, 327684, 14, 262148, 393216, 14, 262148, 393217, 7, 0, 393218, 28, 0, 393219, 25, 0, 393220, 1, 0, 393221, 14, 262148, 458753, 14, 196613, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196615 )
+
+[node name="@@211" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 2, 0, 262147, 8, 0, 327682, 25, 0, 327683, 28, 0, 393218, 25, 0, 393219, 28, 0 )
+
+[node name="@@212" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262147, 21, 0, 327682, 27, 0, 327683, 27, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Mini Cascade"
+level_author = "Sandra53"
+level_replay = "Mini Cascade$mturn=27$xdzwxdxzaxzdxzxzxazaxdxzsxzxzxszdzxszsza"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = "3,3,1"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""

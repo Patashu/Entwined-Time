@@ -1772,6 +1772,8 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("World's Tiniest Pit")
+	level_filenames.push_back("World's Tiniest Pit [VAR1]")
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Trust Fall [VAR2]")
 	level_filenames.push_back("Coyote Time")
@@ -1880,6 +1882,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Split")
 	level_filenames.push_back("Mini Way In-")
 	level_filenames.push_back("Minidane")
+	level_filenames.push_back("Mini Cascade")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
