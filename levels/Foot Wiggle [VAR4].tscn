@@ -3,13 +3,13 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TileMap" type="TileMap"]
+[node name="" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 5, 14, 524290, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65541, 14, 262145, 65542, 7, 0, 65544, 14, 262145, 131077, 14, 655362, 131078, 14, 524292, 131080, 14, 262145, 196614, 14, 262145, 196616, 14, 262145, 262144, 14, 524290, 262145, 14, 196614, 262146, 14, 524291, 262147, 14, 196614, 262148, 14, 524291, 262149, 14, 196614, 262150, 14, 589828, 262151, 84, 0, 262152, 14, 262145, 327680, 14, 262145, 327682, 14, 327681, 327684, 14, 327681, 327686, 14, 327681, 327688, 14, 262145, 393216, 14, 262145, 393222, 70, 0, 393224, 14, 262145, 458752, 14, 262145, 458753, 30, 0, 458754, 30, 0, 458755, 30, 0, 458756, 30, 0, 458757, 30, 0, 458758, 30, 0, 458759, 30, 0, 458760, 14, 262145, 524288, 14, 655362, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196614, 524293, 14, 196614, 524294, 14, 196614, 524295, 14, 196614, 524296, 14, 655364 )
+tile_data = PoolIntArray( 5, 14, 524290, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65541, 14, 262145, 65542, 7, 0, 65544, 14, 262145, 131077, 14, 655362, 131078, 14, 524292, 131080, 14, 262145, 196614, 14, 262145, 196616, 14, 262145, 262144, 14, 524290, 262145, 14, 196614, 262146, 14, 524291, 262147, 14, 196614, 262148, 14, 524291, 262149, 14, 196614, 262150, 14, 589828, 262151, 84, 0, 262152, 14, 262145, 327680, 14, 262145, 327682, 14, 327681, 327684, 14, 327681, 327686, 14, 327681, 327688, 14, 262145, 393216, 14, 262145, 393224, 14, 262145, 458752, 14, 262145, 458753, 30, 0, 458754, 30, 0, 458755, 30, 0, 458756, 30, 0, 458757, 30, 0, 458758, 30, 0, 458759, 30, 0, 458760, 14, 262145, 524288, 14, 655362, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196614, 524293, 14, 196614, 524294, 14, 196614, 524295, 14, 196614, 524296, 14, 655364 )
 
-[node name="@@345" type="TileMap" parent="."]
+[node name="@@127" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,8 +19,10 @@ tile_data = PoolIntArray( 393220, 8, 0, 458753, 1, 0, 458756, 2, 0, 458759, 29, 
 script = ExtResource( 2 )
 level_name = "Foot Wiggle [VAR4]"
 level_author = "Slabdrill & Patashu"
-level_replay = "Foot Wiggle [VAR4]$mturn=115$xdxdwaxzsdxzzxzxwaxsdxzdxzzzxzxsxzdxaaxwxzxzwxzxzzwaxsxzdzzzxzzxdxsxdxaaxwxzxzwxzxzzwaxsxzdxzzssaxzzxzxdxaxwxzxzzwaxsxzdxzzsxzzxzzsxdzxaaxwaxzzsdxzzxzxwaxsxzdzzzxzzzwaxaaa"
+level_replay = "Foot Wiggle [VAR4]$mturn=129$xdxwxzxzdwaxsdxzzxzxwaxsdxzzwxzxzwdxzzxzxsxzdxaaxwxzxzwxzxzzwaxsxzzxdxdwxzxzzzxzzxdxsxdxaaxwxzxzwxzxzzwaxsxzdxzzssxzzdxaxwxzxzzwaxsxzdxzzsxzzxzzsxdzxaaxwxzxzwxzxzwaxsdxzxzxzxaxwsxzdxzxzsxzzxzzzwaxaaa"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
+clock_turns = ""
 target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
 target_track = 3.0
+setup_replay = ""
