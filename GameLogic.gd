@@ -1754,6 +1754,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
+	level_filenames.push_back("Clockwork-")
 	level_filenames.push_back("Soft Landing")
 	level_filenames.push_back("Tiny Roast")
 	level_filenames.push_back("Yet Another Crate Pit")
