@@ -1927,6 +1927,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Light Bridge")
 	level_filenames.push_back("Quantum Entanglement [VAR1]")
 	level_filenames.push_back("Rise As One [VAR1]")
+	level_filenames.push_back("Magenta Flight")
 	level_filenames.push_back("Hopscorch [VAR2]")
 	level_filenames.push_back("Timeless Bridge [VAR2]")
 	level_filenames.push_back("Slippery Glass [VAR2]")
