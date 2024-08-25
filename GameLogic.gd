@@ -2008,6 +2008,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
 	level_filenames.push_back("Downfall")
+	level_filenames.push_back("Downfall 2")
 	level_filenames.push_back("Light's Way In")
 	level_filenames.push_back("Acrobatics (Loop 2)")
 	level_filenames.push_back("Orbital Drop [VAR1]")
