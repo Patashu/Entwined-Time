@@ -25,8 +25,9 @@ var actions = ["ui_accept", "ui_cancel", "escape", "ui_left", "ui_right", "ui_up
 "gain_insight", "level_select",
 "toggle_replay", "start_replay", "start_saved_replay",
 "speedup_replay", "slowdown_replay", "replay_pause", "replay_back1", "replay_fwd1", 
-"Ctrl+C: Copy Replay", "Ctrl+V: Paste Replay", "Shift+Replay Speed+: Max Replay Speed",
-"Shift+Replay Speed-: Default Replay Speed", "Shift+Your Replay: Force Save Replay"
+"Ctrl+C/V: Copy/Paste Replay", "Shift+Replay Speed+: Max Replay Speed",
+"Shift+Replay Speed-: Default Replay Speed", "Shift+Your Replay: Force Save Replay",
+"Ctrl+Your Replay: Unwin"
 ]
 
 var hrn_actions = ["Accept", "Cancel", "Menu", "Left", "Right", "Up", "Down",

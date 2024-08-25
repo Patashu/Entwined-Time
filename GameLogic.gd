@@ -8009,7 +8009,7 @@ func last_level_of_section() -> bool:
 	return false;
 		
 func unwin() -> void:
-	floating_text("Shift+F11: Unwin");
+	floating_text("Ctrl+F11: Unwin");
 	if (save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]):
 		puzzles_completed -= 1;
 	if (save_file["levels"].has(level_name)):
@@ -8558,6 +8558,8 @@ func _process(delta: float) -> void:
 					save_file["levels"][level_name]["replay"] = annotate_replay(user_replay);
 					save_game();
 					floating_text("Shift+F11: Replay force saved!");
+			elif (Input.is_action_pressed("ctrl")):
+				unwin();
 			else:
 				# must be kept in sync with Menu
 				start_saved_replay();
