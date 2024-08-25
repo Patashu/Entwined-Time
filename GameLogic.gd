@@ -8013,7 +8013,7 @@ func unwin() -> void:
 	if (save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]):
 		puzzles_completed -= 1;
 	if (save_file["levels"].has(level_name)):
-		save_file["levels"][level_name].clear();
+		save_file["levels"][level_name]["won"] = false;
 	save_game();
 	update_level_label();
 	
