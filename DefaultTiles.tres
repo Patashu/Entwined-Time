@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=418 format=2]
+[gd_resource type="TileSet" load_steps=420 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -386,6 +386,8 @@
 [ext_resource path="res://assets/continuum5.png" type="Texture" id=384]
 [ext_resource path="res://assets/continuum3.png" type="Texture" id=385]
 [ext_resource path="res://assets/continuum4.png" type="Texture" id=386]
+[ext_resource path="res://timeline/voidgateofeternity.png" type="Texture" id=387]
+[ext_resource path="res://timeline/voidgateofdemise.png" type="Texture" id=388]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3245,3 +3247,31 @@ frame_7/delay_sec = 0.0
 158/shape_one_way_margin = 0.0
 158/shapes = [  ]
 158/z_index = 0
+159/name = "VoidGateOfEternity"
+159/texture = ExtResource( 387 )
+159/tex_offset = Vector2( 0, 0 )
+159/modulate = Color( 1, 1, 1, 1 )
+159/region = Rect2( 0, 0, 24, 24 )
+159/tile_mode = 0
+159/occluder_offset = Vector2( 12, 12 )
+159/navigation_offset = Vector2( 12, 12 )
+159/shape_offset = Vector2( 0, 0 )
+159/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+159/shape_one_way = false
+159/shape_one_way_margin = 0.0
+159/shapes = [  ]
+159/z_index = 0
+160/name = "VoidGateOfDemise"
+160/texture = ExtResource( 388 )
+160/tex_offset = Vector2( 0, 0 )
+160/modulate = Color( 1, 1, 1, 1 )
+160/region = Rect2( 0, 0, 24, 24 )
+160/tile_mode = 0
+160/occluder_offset = Vector2( 12, 12 )
+160/navigation_offset = Vector2( 12, 12 )
+160/shape_offset = Vector2( 0, 0 )
+160/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+160/shape_one_way = false
+160/shape_one_way_margin = 0.0
+160/shapes = [  ]
+160/z_index = 0

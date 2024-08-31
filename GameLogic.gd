@@ -345,6 +345,8 @@ enum Tiles {
 	PurpleFog, #156
 	Spotlight, #157
 	Continuum, #158
+	VoidGateOfEternity, #159
+	VoidGateOfDemise, #160
 }
 var voidlike_tiles : Array = [];
 
@@ -2231,6 +2233,7 @@ var has_night_or_stars : bool = false;
 var has_ghost_fog : bool = false;
 var has_spotlights : bool = false;
 var has_continuums : bool = false;
+var has_void_gates : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2339,6 +2342,7 @@ func ready_map() -> void:
 	has_ghost_fog = false;
 	has_spotlights = false;
 	has_continuums = false;
+	has_void_gates = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2493,6 +2497,11 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.Continuum)):
 			has_continuums = true;
+			
+		if (any_layer_has_this_tile(Tiles.VoidGateOfDemise)):
+			has_void_gates = true;
+		elif (any_layer_has_this_tile(Tiles.VoidGateOfEternity)):
+			has_void_gates = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -4478,6 +4487,10 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 		match id:
 			Tiles.Wall:
 				result = Success.No;
+			Tiles.VoidGateOfEternity:
+				result = Success.No;
+			Tiles.VoidGateOfDemise:
+				result = Success.No;
 			Tiles.LockClosed:
 				result = Success.No;
 			Tiles.Spikeball:
@@ -5171,6 +5184,34 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: in
 	add_undo_event([Undo.tick, actor, amount, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
 	add_to_animation_server(actor, [Animation.tick, amount, actor.ticks, newly_lost, animation_nonce]);
 
+func open_doors(id: int) -> void:
+	var found = false;
+	var layers_tiles = get_used_cells_by_id_all_layers(id);
+	for layer in range(layers_tiles.size()):
+		var tiles = layers_tiles[layer];
+		for tile in tiles:
+			found = true;
+			terrain_layers[layer].set_cellv(tile, -1);
+			# make dust
+			for i in range(18):
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://FadingSprite.gd"));
+				sprite.texture = preload("res://assets/dust.png")
+				sprite.position = tile*Vector2(cell_size, cell_size)+Vector2(cell_size/2, cell_size*rng.randf_range(0.1, 0.9));
+				sprite.fadeout_timer_max = 3;
+				sprite.velocity = Vector2(rng.randf_range(48, 128), rng.randf_range(-16, 16))/6;
+				if (i % 2 == 1):
+					sprite.velocity.x *= -1;
+				sprite.hframes = 7;
+				sprite.frame = rng.randi_range(0, 6);
+				sprite.centered = true;
+				sprite.scale = Vector2(1, 1);
+				var mod = rng.randf_range(0, 0.2);
+				sprite.modulate = Color(mod, mod, mod);
+				overactorsparticles.add_child(sprite);
+	if (found):
+		play_sound("onemillionyears");
+
 func lose(reason: String, suspect: Actor) -> void:
 	lost = true;
 	if (suspect != null and suspect.time_colour == TimeColour.Void or lost_void):
@@ -5179,6 +5220,8 @@ func lose(reason: String, suspect: Actor) -> void:
 	else:
 		lost_void = false;
 		winlabel.change_text(reason + "\n\nUndo or Restart to continue.")
+	if (has_void_gates):
+		open_doors(Tiles.VoidGateOfEternity);
 	
 func end_lose() -> void:
 	lost = false;
