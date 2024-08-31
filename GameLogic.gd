@@ -6066,6 +6066,8 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var is_retro = true;
 			if (chrono < Chrono.META_UNDO and actor.in_stars):
 				add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
+				if (event[2] == "broken"):
+					check_abyss_chimes();
 			else:
 				#[Undo.set_actor_var, actor, prop, old_value, value, animation_nonce]
 				
