@@ -347,6 +347,7 @@ enum Tiles {
 	Continuum, #158
 	VoidGateOfEternity, #159
 	VoidGateOfDemise, #160
+	VoidSingularity, #161
 }
 var voidlike_tiles : Array = [];
 
@@ -1972,6 +1973,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Tile Selector [VAR1]")
 	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
+	level_filenames.push_back("Inexorable Destruction- [VAR1]")
 	level_filenames.push_back("Jungle Gym")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
 	level_filenames.push_back("Ankh [VAR2]")
@@ -2234,6 +2236,7 @@ var has_ghost_fog : bool = false;
 var has_spotlights : bool = false;
 var has_continuums : bool = false;
 var has_void_gates : bool = false;
+var has_singularities : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2343,6 +2346,7 @@ func ready_map() -> void:
 	has_spotlights = false;
 	has_continuums = false;
 	has_void_gates = false;
+	has_singularities = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2502,6 +2506,9 @@ func ready_map() -> void:
 			has_void_gates = true;
 		elif (any_layer_has_this_tile(Tiles.VoidGateOfEternity)):
 			has_void_gates = true;
+			
+		if (any_layer_has_this_tile(Tiles.VoidSingularity)):
+			has_singularities = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -4054,7 +4061,8 @@ boost_pad_reentrance: bool = false) -> int:
 	
 	return success;
 
-func void_banish(actor: Actor) -> void:
+func void_banish(actor: Actor) -> bool:
+	var result = false;
 	#https://discord.com/channels/1196234174005260328/1196234898751627415/1266547709486301269
 	var blacklist = {Undo.move: true, Undo.set_actor_var: true, Undo.sprite: true, Undo.time_bubble: true, Undo.tick: true};
 	for j in range(meta_undo_buffer.size()):
@@ -4063,6 +4071,8 @@ func void_banish(actor: Actor) -> void:
 			var event = buffer[i];
 			if blacklist.has(event[0]) and event[1] == actor:
 				buffer.pop_at(i);
+				result = true;
+	return result;
 
 func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move: bool, continuum: bool = false) -> void:
 	if (is_heavy):
@@ -5080,7 +5090,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		else: #cuckoo clock
 			clock_ticks(eater, 1, Chrono.CHAR_UNDO);
 			add_to_animation_server(eatee, [Animation.sfx, "greentimecrystal"])
-			add_to_animation_server(eater, [Animation.generic_green_time_crystal, eatee]);
+			add_to_animation_server(eater, [Animation.generic_green_time_crystal, eatee.color]);
 	else: # magenta time crystal
 		add_to_animation_server(eatee, [Animation.sfx, "magentatimecrystal"])
 		var just_locked = false;
@@ -5184,7 +5194,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
 		else: #cuckoo clock
 			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
-			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee]);
+			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee.color]);
 
 func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: int = -1) -> void:
 	if (animation_nonce == -1):
@@ -7378,6 +7388,17 @@ func time_passes(chrono: int) -> void:
 						set_actor_var(actor, "broken", false, max(Chrono.CHAR_UNDO, chrono));
 						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGreen), false, true, chrono, -1);
 						check_abyss_chimes();
+						
+	#Luckara lastara - Void Singularity void banish.
+	if (has_singularities):
+		for actor in time_actors:
+			if (actor.in_night):
+				continue;
+			var terrain = terrain_in_tile(actor.pos, actor, chrono);
+			if (terrain.has(Tiles.VoidSingularity)):
+				if (void_banish(actor)):
+					add_to_animation_server(actor, [Animation.sfx, "singularity"]);
+					add_to_animation_server(actor, [Animation.generic_magenta_time_crystal, Color(0.1, 0.1, 0.1)])
 	
 	#Luckiest lastest - a final crystal banish.
 	banish_time_crystals();

@@ -164,6 +164,7 @@ enum Tiles {
 	Continuum, #158
 	VoidGateOfEternity, #159
 	VoidGateOfDemise, #160
+	VoidSingularity, #161
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -384,6 +385,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.Continuum)
 		picker_array.append(Tiles.VoidGateOfEternity)
 		picker_array.append(Tiles.VoidGateOfDemise)
+		picker_array.append(Tiles.VoidSingularity)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1019,9 +1021,11 @@ func picker_tooltip() -> void:
 		Tiles.Spotlight:
 			text = "Spotlight: If you rewind from this tile, the rewind happens as though it were a move (including recording all rewind events made). Then, the Spotlight is consumed greenly."
 		Tiles.VoidGateOfEternity:
-			text = "Void Gate of Eternity: Solid. A million years in the future, after all hope is lost, the gate will open (voidly).  (Puzzles containing 'Void' will record undos in their replays.)";
+			text = "Void Gate of Eternity: Solid. A million years in the future, after all hope is lost, the gate will open (voidly). (Puzzles containing 'Void' will record undos in their replays.)";
 		Tiles.VoidGateOfDemise:
-			text = "Void Gate of Demise: Solid. After a tragic sacrifice, the gate will open (voidly).  (Puzzles containing 'Void' will record undos in their replays.)";
+			text = "Void Gate of Demise: Solid. After a tragic sacrifice, the gate will open (voidly). (Puzzles containing 'Void' will record undos in their replays.)";
+		Tiles.VoidSingularity:
+			text = "Void Singularity: When time passes, after repair stations, actors experiencing time here experience a void banish (see Void colour for more details). (Puzzles containing 'Void' will record undos in their replays.)"
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	

@@ -845,7 +845,7 @@ func _process(delta: float) -> void:
 					var new_value = current_animation[1];
 					update_grayscale(new_value);
 				21: #generic_green_time_crystal
-					var color = current_animation[1].color;
+					var color = current_animation[1];
 					gamelogic.undo_effect_strength = 0.4;
 					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
 					gamelogic.undo_effect_color = color;
@@ -854,7 +854,7 @@ func _process(delta: float) -> void:
 					sparklespawner.color = color;
 					self.add_child(sparklespawner);
 				22: #generic_magenta_time_crystal;
-					var color = current_animation[1].color;
+					var color = current_animation[1];
 					gamelogic.undo_effect_strength = 0.4;
 					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
 					gamelogic.undo_effect_color = color;

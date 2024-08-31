@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=420 format=2]
+[gd_resource type="TileSet" load_steps=421 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -388,6 +388,7 @@
 [ext_resource path="res://assets/continuum4.png" type="Texture" id=386]
 [ext_resource path="res://timeline/voidgateofeternity.png" type="Texture" id=387]
 [ext_resource path="res://timeline/voidgateofdemise.png" type="Texture" id=388]
+[ext_resource path="res://timeline/voidsingularity.png" type="Texture" id=389]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3275,3 +3276,17 @@ frame_7/delay_sec = 0.0
 160/shape_one_way_margin = 0.0
 160/shapes = [  ]
 160/z_index = 0
+161/name = "VoidSingularity"
+161/texture = ExtResource( 389 )
+161/tex_offset = Vector2( 0, 0 )
+161/modulate = Color( 1, 1, 1, 1 )
+161/region = Rect2( 0, 0, 24, 24 )
+161/tile_mode = 0
+161/occluder_offset = Vector2( 12, 12 )
+161/navigation_offset = Vector2( 12, 12 )
+161/shape_offset = Vector2( 0, 0 )
+161/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+161/shape_one_way = false
+161/shape_one_way_margin = 0.0
+161/shapes = [  ]
+161/z_index = 0
