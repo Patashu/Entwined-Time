@@ -5321,6 +5321,8 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 				if value:
 					if (!actor_has_broken_event_anywhere(actor)):
 						add_to_animation_server(actor, [Animation.lose]);
+						if (has_void_gates):
+							open_doors(Tiles.VoidGateOfDemise);
 				else:
 					if actor.actorname == Actor.Name.Heavy:
 						heavytimeline.end_fade();
