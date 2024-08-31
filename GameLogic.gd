@@ -4151,6 +4151,13 @@ func check_checkpoints(chrono: int) -> void:
 				for event in events:
 					if (event[0] == Undo.heavy_turn):
 						undo_one_event(event, Chrono.CHAR_UNDO);
+					elif (event[0] == Undo.change_terrain):
+						var old_tile = event[4];
+						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
+							check_abyss_chimes();
+					elif (event[0] == Undo.set_actor_var):
+						if event[2] == "broken":
+							check_abyss_chimes();
 					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
 				# failsafe
 				if (old_heavy_turn == heavy_turn):
@@ -4167,6 +4174,13 @@ func check_checkpoints(chrono: int) -> void:
 				for event in events:
 					if (event[0] == Undo.light_turn):
 						undo_one_event(event, Chrono.CHAR_UNDO);
+					elif (event[0] == Undo.change_terrain):
+						var old_tile = event[4];
+						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
+							check_abyss_chimes();
+					elif (event[0] == Undo.set_actor_var):
+						if event[2] == "broken":
+							check_abyss_chimes();
 					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
 				# failsafe
 				if (old_light_turn == light_turn):
