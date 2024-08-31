@@ -923,7 +923,6 @@ func _process(delta: float) -> void:
 					else:
 						is_done = false;
 				30: #dust
-					var frame = gamelogic.rng.randi_range(0, 6);
 					match current_animation[1]:
 						0: #rising
 							for i in range(6):
@@ -934,7 +933,7 @@ func _process(delta: float) -> void:
 								sprite.fadeout_timer_max = 0.25;
 								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(48, 96));
 								sprite.hframes = 7;
-								sprite.frame = frame;
+								sprite.frame = gamelogic.rng.randi_range(0, 6);
 								sprite.centered = true;
 								sprite.scale = Vector2(1, 1);
 								gamelogic.overactorsparticles.add_child(sprite);
@@ -947,7 +946,7 @@ func _process(delta: float) -> void:
 								sprite.fadeout_timer_max = 0.25;
 								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(-48, -96));
 								sprite.hframes = 7;
-								sprite.frame = frame;
+								sprite.frame = gamelogic.rng.randi_range(0, 6);
 								sprite.centered = true;
 								sprite.scale = Vector2(1, 1);
 								gamelogic.overactorsparticles.add_child(sprite);
@@ -962,7 +961,7 @@ func _process(delta: float) -> void:
 								if (i % 2 == 1):
 									sprite.velocity.x *= -1;
 								sprite.hframes = 7;
-								sprite.frame = frame;
+								sprite.frame = gamelogic.rng.randi_range(0, 6);
 								sprite.centered = true;
 								sprite.scale = Vector2(1, 1);
 								gamelogic.overactorsparticles.add_child(sprite);
@@ -975,7 +974,7 @@ func _process(delta: float) -> void:
 								sprite.fadeout_timer_max = 0.25;
 								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(48, 96));
 								sprite.hframes = 7;
-								sprite.frame = frame;
+								sprite.frame = gamelogic.rng.randi_range(0, 6);
 								sprite.centered = true;
 								sprite.scale = Vector2(1, 1);
 								gamelogic.overactorsparticles.add_child(sprite);
@@ -991,7 +990,7 @@ func _process(delta: float) -> void:
 								sprite.fadeout_timer_max = 0.25;
 								sprite.velocity = Vector2(gamelogic.rng.randf_range(-24, 24), gamelogic.rng.randf_range(-48, -96));
 								sprite.hframes = 7;
-								sprite.frame = frame;
+								sprite.frame = gamelogic.rng.randi_range(0, 6);
 								sprite.centered = true;
 								sprite.scale = Vector2(1, 1);
 								gamelogic.overactorsparticles.add_child(sprite);
@@ -1009,7 +1008,7 @@ func _process(delta: float) -> void:
 								if (i % 2 == 1):
 									sprite.velocity.x *= -1;
 								sprite.hframes = 7;
-								sprite.frame = frame;
+								sprite.frame = gamelogic.rng.randi_range(0, 6);
 								sprite.centered = true;
 								sprite.scale = Vector2(1, 1);
 								gamelogic.overactorsparticles.add_child(sprite);
