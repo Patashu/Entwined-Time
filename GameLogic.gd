@@ -5401,9 +5401,35 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 
 var banished_time_crystals = {};
 
+func check_abyss_chimes(actor: Actor = null) -> void:
+	if (actor == null):
+		if (heavy_actor.broken):
+			check_abyss_chimes(heavy_actor);
+		if (light_actor.broken):
+			check_abyss_chimes(light_actor);
+		return;
+	if (!actor_has_broken_event_anywhere(actor)):
+		add_to_animation_server(actor, [Animation.lose]);
+		if (has_void_gates):
+			open_doors(Tiles.VoidGateOfDemise);
+
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	if (has_repair_stations):
-		return true;
+		# if any repair station exists, or any Undo.change_terrain will creare a repair station, there's still hope
+		if (any_layer_has_this_tile(Tiles.RepairStation)):
+			return true;
+		if (any_layer_has_this_tile(Tiles.RepairStationGreen)):
+			return true;
+		if (any_layer_has_this_tile(Tiles.RepairStationGray)):
+			return true;
+		var buffers = [heavy_undo_buffer, light_undo_buffer, heavy_locked_turns, light_locked_turns];
+		for buffer in buffers:
+			for turn in buffer:
+				for event in turn:
+					if event[0] == Undo.change_terrain:
+						var old_tile = event[4];
+						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
+							return true;
 	# not edge cases: chrono, actor colour (since we always check)
 	# yes edge cases: could be a locked turn or a fuzz doubled turn
 	#this code looks HILARIOUS but I swear it is legitimately the best way to write it
@@ -7308,6 +7334,7 @@ func time_passes(chrono: int) -> void:
 				if (terrain.has(Tiles.RepairStation)):
 					set_actor_var(actor, "broken", false, chrono);
 					maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStation), false, false, chrono, -1);
+					check_abyss_chimes();
 		if (chrono == Chrono.MOVE):
 			for actor in actors:
 				if (actor.broken):
@@ -7315,6 +7342,7 @@ func time_passes(chrono: int) -> void:
 					if (terrain.has(Tiles.RepairStationGray)):
 						set_actor_var(actor, "broken", false, chrono);
 						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGray), false, false, chrono, -1);
+						check_abyss_chimes();
 		if chrono < Chrono.META_UNDO:
 			for actor in actors:
 				if (actor.broken):
@@ -7322,6 +7350,7 @@ func time_passes(chrono: int) -> void:
 					if (terrain.has(Tiles.RepairStationGreen)):
 						set_actor_var(actor, "broken", false, max(Chrono.CHAR_UNDO, chrono));
 						maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationGreen), false, true, chrono, -1);
+						check_abyss_chimes();
 	
 	#Luckiest lastest - a final crystal banish.
 	banish_time_crystals();
