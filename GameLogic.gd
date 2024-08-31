@@ -7583,7 +7583,7 @@ func setup_replay(replay: String) -> void:
 		replay = replay.get_slice("$", 2); # it's got more performance!
 	for chr in replay:
 		do_one_setup_letter(chr);
-		finish_animations(Chrono.TIMELESS); #doesn't help?
+		finish_animations(Chrono.MOVE); #doesn't help?
 		calm_down_timelines(); #doesn't help?
 	muted = old_muted;
 	user_replay = "";
