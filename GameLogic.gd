@@ -1692,6 +1692,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("CarryingItL2")
 	level_filenames.push_back("PachinkoL2")
 	level_filenames.push_back("PachinkoL2Ex")
+	level_filenames.push_back("PachinkoL2Ex2")
 	level_filenames.push_back("TheFirstPitL2")
 	level_filenames.push_back("TheFirstPitL2Ex")
 	level_filenames.push_back("TheFirstPitL2Ex2")
@@ -1756,6 +1757,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Clockwork-")
 	level_filenames.push_back("Soft Landing")
+	level_filenames.push_back("Skippity")
+	level_filenames.push_back("Skippity [VAR1]")
 	level_filenames.push_back("Tiny Roast")
 	level_filenames.push_back("Yet Another Crate Pit")
 	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
@@ -1894,6 +1897,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Super Basic Sokoban")
+	level_filenames.push_back("Paper Planes [VAR1]  But Sandra Made Mistakes")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1910,6 +1914,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Yellow Pit")
 	level_filenames.push_back("The Crate Pit-")
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
+	level_filenames.push_back("Look It's Another Pit")
+	level_filenames.push_back("The Last Pit [VAR3]")
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Solo Pit")
 	level_filenames.push_back("The Withering Pit")
@@ -1993,6 +1999,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Delay Circuit")
 	level_filenames.push_back("Ankh [VAR1]")
 	level_filenames.push_back("Fragile Victory [VAR1]")
+	level_filenames.push_back("Light Boots")
 	level_filenames.push_back("Stack Split")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
 	level_filenames.push_back("Death's Door [VAR1]")
