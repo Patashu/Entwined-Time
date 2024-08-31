@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/onemillionyears.ogg-949f40c4db24c74c9fc9f741887df345.oggstr"
+
+[deps]
+
+source_file="res://sfx/onemillionyears.ogg"
+dest_files=[ "res://.import/onemillionyears.ogg-949f40c4db24c74c9fc9f741887df345.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

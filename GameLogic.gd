@@ -3430,6 +3430,7 @@ func prepare_audio() -> void:
 	sounds["metaredo"] = preload("res://sfx/metaredo.ogg");
 	sounds["metarestart"] = preload("res://sfx/metarestart.ogg");
 	sounds["metaundo"] = preload("res://sfx/metaundo.ogg");
+	sounds["onemillionyears"] = preload("res://sfx/onemillionyears.ogg");
 	sounds["push"] = preload("res://sfx/push.ogg");
 	sounds["redfire"] = preload("res://sfx/redfire.ogg");
 	sounds["rewindnoticed"] = preload("res://sfx/rewindnoticed.ogg");
@@ -3438,6 +3439,7 @@ func prepare_audio() -> void:
 	sounds["restart"] = preload("res://sfx/restart.ogg");	
 	sounds["shatter"] = preload("res://sfx/shatter.ogg");
 	sounds["shroud"] = preload("res://sfx/shroud.ogg");
+	sounds["singularity"] = preload("res://sfx/singularity.ogg");
 	sounds["spotlight"] = preload("res://sfx/spotlight.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
 	sounds["thejourneybegins"] = preload("res://sfx/thejourneybegins.ogg");

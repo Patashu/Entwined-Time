@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/singularity.ogg-69e420e3219524cd4bf77ba9af98d9d5.oggstr"
+
+[deps]
+
+source_file="res://sfx/singularity.ogg"
+dest_files=[ "res://.import/singularity.ogg-69e420e3219524cd4bf77ba9af98d9d5.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
