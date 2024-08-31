@@ -5331,7 +5331,8 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		# (I'll write that logic separately just so it's not a giant mess, the performance hit is miniscule.)
 		if prop == "broken":
 			if actor.is_main_character():
-				maybe_update_phaseboards(chrono);
+				#need to immediately update life/death phaseboards
+				maybe_update_phaseboards(chrono, true);
 				if value:
 					if (!actor_has_broken_event_anywhere(actor)):
 						add_to_animation_server(actor, [Animation.lose]);
@@ -7068,6 +7069,8 @@ func time_passes(chrono: int) -> void:
 		# Nudges activate
 		var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
 		for actor in time_actors:
+			if (actor.in_night):
+				continue;
 			var terrain = terrain_in_tile(actor.pos, actor, chrono);
 			for id in terrain:
 				if id >= Tiles.NudgeEast and id <= Tiles.NudgeEast + 3:
@@ -7098,6 +7101,8 @@ func time_passes(chrono: int) -> void:
 	# Boulders ride their momentum.
 	if (has_boulders):
 		for actor in time_actors:
+			if (actor.in_night):
+				continue;
 			if actor.actorname == Actor.Name.Boulder and actor.momentum != Vector2.ZERO:
 				if (actor.broken):
 					set_actor_var(actor, "momentum", Vector2.ZERO, chrono);
@@ -7275,6 +7280,9 @@ func time_passes(chrono: int) -> void:
 			time_colour = TimeColour.Red;
 		add_to_animation_server(null, [Animation.fire_roars, time_colour])
 	for actor in time_actors:
+		# Now that it's possible for Night to be conditional (boards), actors not experiencing time due to Night are now fire immune.
+		if (actor.in_night):
+			continue;
 		var terrain = terrain_in_tile(actor.pos, actor, chrono);
 		if !actor.broken and terrain.has(Tiles.Fire) and actor.durability <= Durability.FIRE:
 			actor.post_mortem = Durability.FIRE;
@@ -7345,6 +7353,9 @@ func time_passes(chrono: int) -> void:
 	#Luckier laster - repair stations repair.
 	if (has_repair_stations):
 		for actor in time_actors:
+			# same 'night is now conditional' point as for fires
+			if (actor.in_night):
+				continue;
 			if (actor.broken):
 				var terrain = terrain_in_tile(actor.pos, actor, chrono);
 				if (terrain.has(Tiles.RepairStation)):
@@ -7911,38 +7922,47 @@ func update_animation_server(skip_globals: bool = false) -> void:
 		else:
 			animation[0].animations.push_back(animation[1]);
 
-func maybe_update_phaseboards(chrono: int) -> void:
+func maybe_update_phaseboards(chrono: int, life_death_only: bool = false) -> void:
 	if (!has_phaseboards):
 		return
-	if (has_night_or_stars):
-		for actor in actors:
-			update_night_and_stars(actor, terrain_in_tile(actor.pos, actor, chrono));
-	if (heavy_selected):
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardRed, preload("res://assets/phase_board_red.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardBlue, preload("res://assets/phase_board_blue_unpowered.png"));
-	else:
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardRed, preload("res://assets/phase_board_red_unpowered.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardBlue, preload("res://assets/phase_board_blue.png"));
 		
-	if (chrono == Chrono.CHAR_UNDO):
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray_unpowered.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void_unpowered.png"));
-	elif (chrono == Chrono.META_UNDO):
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray_unpowered.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple_unpowered.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void.png"));
-	else: #MOVE or TIMELESS
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple_unpowered.png"));
-		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void_unpowered.png"));
-		
+	if (!life_death_only):
+		if (heavy_selected):
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardRed, preload("res://assets/phase_board_red.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardBlue, preload("res://assets/phase_board_blue_unpowered.png"));
+		else:
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardRed, preload("res://assets/phase_board_red_unpowered.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardBlue, preload("res://assets/phase_board_blue.png"));
+			
+		if (chrono == Chrono.CHAR_UNDO):
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray_unpowered.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void_unpowered.png"));
+		elif (chrono == Chrono.META_UNDO):
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray_unpowered.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple_unpowered.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void.png"));
+		else: #MOVE or TIMELESS
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardGray, preload("res://assets/phase_board_gray.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardPurple, preload("res://assets/phase_board_purple_unpowered.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void_unpowered.png"));
+			
 	if (heavy_actor.broken or light_actor.broken):
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life_unpowered.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardDeath, preload("res://assets/phase_board_death.png"));
 	else:
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardDeath, preload("res://assets/phase_board_death_unpowered.png"));
+
+	if (has_night_or_stars):
+		for actor in actors:
+			# hack fix: if an actor breaks, then we don't know the original chrono
+			# (without modifying every caller)
+			# so while this won't work properly for cases of a night/stars + life/death phaseboard + other phaseboard,
+			# let's just leave that as a future me problem
+			var terrain = terrain_in_tile(actor.pos, actor, chrono);
+			if (!life_death_only or terrain.has(Tiles.PhaseBoardLife) or terrain.has(Tiles.PhaseBoardDeath)):
+				update_night_and_stars(actor, terrain);
 
 func maybe_pulse_phase_blocks(chrono: int) -> void:
 	maybe_update_phaseboards(chrono);
