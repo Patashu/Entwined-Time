@@ -175,6 +175,7 @@ onready var pickerbackground : ColorRect = get_node("PickerBackground");
 onready var picker : TileMap = get_node("Picker");
 onready var pickertooltip : Node2D = get_node("PickerTooltip");
 onready var layerlabel : Label = get_node("LayerLabel");
+onready var searchbox : LineEdit = get_node("Picker/SearchBox");
 var custom_string = "";
 var level_info : LevelInfo = null;
 var pen_tile = Tiles.Wall;
@@ -185,10 +186,17 @@ var picker_mode = false;
 var picker_array = [];
 var just_picked = false;
 var show_tooltips = false;
+var searchbox_has_mouse = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	menubutton.connect("pressed", self, "_menubutton_pressed");
+	searchbox.connect("focus_entered", self, "_searchbox_focus_entered");
+	searchbox.connect("focus_exited", self, "_searchbox_focus_exited");
+	searchbox.connect("text_changed", self, "_searchbox_text_changed");
+	searchbox.connect("text_entered", self, "_searchbox_text_entered");
+	searchbox.connect("mouse_entered", self, "_searchbox_mouse_entered");
+	searchbox.connect("mouse_exited", self, "_searchbox_mouse_exited");
 	
 	gamelogic.tile_changes(true);
 	
@@ -207,6 +215,45 @@ func _ready() -> void:
 	
 	initialize_picker_array();
 	pickertooltip.squish_mode();
+	
+func _searchbox_focus_entered() -> void:
+	searchbox.text = "";
+	searchbox.editable = true;
+	gamelogic.no_mute_pwease = true;
+	search_picker("");
+	
+func _searchbox_focus_exited() -> void:
+	searchbox.text = "Search...";
+	searchbox.editable = false;
+	gamelogic.no_mute_pwease = false;
+	search_picker("");
+	
+func _searchbox_text_changed(new_text: String) -> void:
+	if (searchbox.editable):
+		search_picker(searchbox.text);
+	else:
+		search_picker("");
+	
+func search_picker(text: String) -> void:
+	text = text.to_lower();
+	for i in range(picker_array.size()):
+		var x = i % 21;
+		var y = i / 21;
+		var tile = picker_array[i];
+		if ((text == "") or text in tooltip_for_tile(tile).to_lower()):
+			picker.set_cellv(Vector2(x, y), tile);
+		else:
+			picker.set_cellv(Vector2(x, y), -1);
+	picker.update_bitmask_region();
+	
+func _searchbox_text_entered(new_text: String) -> void:
+	pass
+	
+func _searchbox_mouse_entered() -> void:
+	searchbox_has_mouse = true;
+
+func _searchbox_mouse_exited() -> void:
+	searchbox_has_mouse = false;
 	
 func initialize_picker_array() -> void:
 	# always true now
@@ -609,6 +656,9 @@ func change_pen_tile() -> void:
 		pen.region_enabled = false;
 
 func picker_click() -> void:
+	if searchbox_has_mouse:
+		return;
+	
 	pen_tile = picker.get_cellv(pen_xy);
 	change_pen_tile();
 	toggle_picker_mode();
@@ -648,6 +698,7 @@ func _menubutton_pressed() -> void:
 	gamelogic.add_to_ui_stack(a, self);
 
 func destroy() -> void:
+	gamelogic.no_mute_pwease = false;
 	gamelogic.tile_changes(false);
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
@@ -688,6 +739,7 @@ func toggle_picker_mode() -> void:
 		pickerbackground.visible = true;
 		picker.visible = true;
 		pickertooltip.visible = show_tooltips;
+		searchbox.grab_focus();
 	else:
 		picker_mode = false;
 		pickerbackground.visible = false;
@@ -706,8 +758,7 @@ func picker_cycle(impulse: int) -> void:
 	pen_tile = picker_array[current_index];
 	change_pen_tile();
 	
-func picker_tooltip() -> void:
-	var tile = picker.get_cellv(pen_xy);
+func tooltip_for_tile(tile: int) -> String:
 	var text = "";
 	match tile:
 		-1:
@@ -1026,6 +1077,11 @@ func picker_tooltip() -> void:
 			text = "Void Gate of Demise: Solid. After a tragic sacrifice, the gate will open (voidly). (Puzzles containing 'Void' will record undos in their replays.)";
 		Tiles.VoidSingularity:
 			text = "Void Singularity: When time passes, after repair stations, actors experiencing time here experience a void banish (see Void colour for more details). (Puzzles containing 'Void' will record undos in their replays.)"
+	return text;
+	
+func picker_tooltip() -> void:
+	var tile = picker.get_cellv(pen_xy);
+	var text = tooltip_for_tile(tile);
 	pickertooltip.set_rect_size(Vector2(200, 0));
 	pickertooltip.change_text(text);
 	
@@ -1062,7 +1118,10 @@ func _process(delta: float) -> void:
 		return;
 	
 	if (Input.is_action_just_pressed("escape")):
-		_menubutton_pressed();
+		if (picker_mode and searchbox.editable):
+			menubutton.grab_focus();
+		else:
+			_menubutton_pressed();
 		
 	var mouse_position = gamelogic.adjusted_mouse_position();
 	if (picker_mode):
@@ -1075,8 +1134,18 @@ func _process(delta: float) -> void:
 	pen.position = mouse_position;
 	pen_xy = Vector2(round(mouse_position.x/float(cell_size)), round(mouse_position.y/float(cell_size)));
 	
+	if (picker_mode and searchbox_has_mouse):
+		pen.visible = false;
+	else:
+		pen.visible = true;
+	
 	if (picker_mode and show_tooltips):
 		picker_tooltip();
+		
+	if (picker_mode and !searchbox.editable):
+		if (Input.is_action_just_pressed("start_search")):
+			searchbox.visible = true;
+			searchbox.grab_focus();
 	
 	var over_menu_button = false;
 	var draw_mode = menubutton.get_draw_mode();
@@ -1093,54 +1162,57 @@ func _process(delta: float) -> void:
 	if (Input.is_action_just_released("mouse_wheel_up")):
 		picker_cycle(-1);
 	if (Input.is_action_just_released("mouse_wheel_down")):
-		picker_cycle(1);	
-	if (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
-		copy_level();
-	if (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
-		paste_level();
-	if (Input.is_action_just_pressed("test_level")):
-		test_level();
-	if (Input.is_action_just_pressed("ui_left")):
-		if (Input.is_action_pressed("shift")):
-			shift_layer(terrain_layers[layer_index()], Vector2.LEFT);
-		else:
-			shift_all_layers(Vector2.LEFT);
-	if (Input.is_action_just_pressed("ui_right")):
-		if (Input.is_action_pressed("shift")):
-			shift_layer(terrain_layers[layer_index()], Vector2.RIGHT);
-		else:
-			shift_all_layers(Vector2.RIGHT);
-	if (Input.is_action_just_pressed("ui_up")):
-		if (Input.is_action_pressed("shift")):
-			shift_layer(terrain_layers[layer_index()], Vector2.UP);
-		else:
-			shift_all_layers(Vector2.UP);
-	if (Input.is_action_just_pressed("ui_down")):
-		if (Input.is_action_pressed("shift")):
-			shift_layer(terrain_layers[layer_index()], Vector2.DOWN);
-		else:
-			shift_all_layers(Vector2.DOWN);
+		picker_cycle(1);
+		
 	if (Input.is_action_just_pressed("tab") and !Input.is_mouse_button_pressed(1) and !Input.is_mouse_button_pressed(2)):
 		toggle_picker_mode();
-	if (Input.is_action_just_pressed("0")):
-		change_layer(9);
-	if (Input.is_action_just_pressed("1")):
-		change_layer(0);
-	if (Input.is_action_just_pressed("2")):
-		change_layer(1);
-	if (Input.is_action_just_pressed("3")):
-		change_layer(2);
-	if (Input.is_action_just_pressed("4")):
-		change_layer(3);
-	if (Input.is_action_just_pressed("5")):
-		change_layer(4);
-	if (Input.is_action_just_pressed("6")):
-		change_layer(5);
-	if (Input.is_action_just_pressed("7")):
-		change_layer(6);
-	if (Input.is_action_just_pressed("8")):
-		change_layer(7);
-	if (Input.is_action_just_pressed("9")):
-		change_layer(8);
-	if (Input.is_action_just_pressed("zoom")):
-		toggle_zoom();
+		
+	if (!picker_mode):
+		if (Input.is_action_just_pressed("copy") and Input.is_action_pressed("ctrl")):
+			copy_level();
+		if (Input.is_action_just_pressed("paste") and Input.is_action_pressed("ctrl")):
+			paste_level();
+		if (Input.is_action_just_pressed("test_level")):
+			test_level();
+		if (Input.is_action_just_pressed("ui_left")):
+			if (Input.is_action_pressed("shift")):
+				shift_layer(terrain_layers[layer_index()], Vector2.LEFT);
+			else:
+				shift_all_layers(Vector2.LEFT);
+		if (Input.is_action_just_pressed("ui_right")):
+			if (Input.is_action_pressed("shift")):
+				shift_layer(terrain_layers[layer_index()], Vector2.RIGHT);
+			else:
+				shift_all_layers(Vector2.RIGHT);
+		if (Input.is_action_just_pressed("ui_up")):
+			if (Input.is_action_pressed("shift")):
+				shift_layer(terrain_layers[layer_index()], Vector2.UP);
+			else:
+				shift_all_layers(Vector2.UP);
+		if (Input.is_action_just_pressed("ui_down")):
+			if (Input.is_action_pressed("shift")):
+				shift_layer(terrain_layers[layer_index()], Vector2.DOWN);
+			else:
+				shift_all_layers(Vector2.DOWN);
+		if (Input.is_action_just_pressed("0")):
+			change_layer(9);
+		if (Input.is_action_just_pressed("1")):
+			change_layer(0);
+		if (Input.is_action_just_pressed("2")):
+			change_layer(1);
+		if (Input.is_action_just_pressed("3")):
+			change_layer(2);
+		if (Input.is_action_just_pressed("4")):
+			change_layer(3);
+		if (Input.is_action_just_pressed("5")):
+			change_layer(4);
+		if (Input.is_action_just_pressed("6")):
+			change_layer(5);
+		if (Input.is_action_just_pressed("7")):
+			change_layer(6);
+		if (Input.is_action_just_pressed("8")):
+			change_layer(7);
+		if (Input.is_action_just_pressed("9")):
+			change_layer(8);
+		if (Input.is_action_just_pressed("zoom")):
+			toggle_zoom();

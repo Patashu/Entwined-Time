@@ -35,6 +35,15 @@ tile_set = ExtResource( 3 )
 cell_size = Vector2( 24, 24 )
 format = 1
 
+[node name="SearchBox" type="LineEdit" parent="Picker"]
+margin_left = 414.0
+margin_top = 276.0
+margin_right = 509.0
+margin_bottom = 297.0
+theme = ExtResource( 2 )
+text = "Search..."
+editable = false
+
 [node name="Pen" type="Sprite" parent="."]
 modulate = Color( 2, 2, 2, 0.5 )
 centered = false
