@@ -6766,6 +6766,7 @@ func character_move(dir: Vector2) -> bool:
 	if (won or lost): return false;
 	var chr = "";
 	var continuum = false;
+	var seemingly_nothing_happened = false;
 	match dir:
 		Vector2.UP:
 			chr = "w";
@@ -6890,11 +6891,15 @@ func character_move(dir: Vector2) -> bool:
 								events.erase(event);
 								break;
 		else:
+			seemingly_nothing_happened = true;
 			result = Success.No;
 	if (result != Success.No or nonstandard_won or voidlike_puzzle):
 		append_replay(chr);
 	if (result != Success.Yes):
-		play_sound("bump")
+		if (voidlike_puzzle and seemingly_nothing_happened):
+			pass
+		else:
+			play_sound("bump")
 	if (result != Success.No or nonstandard_won):
 		adjust_meta_turn(1, Chrono.MOVE);
 	elif (voidlike_puzzle):
