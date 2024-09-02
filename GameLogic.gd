@@ -2247,6 +2247,8 @@ var has_void_gates : bool = false;
 var has_singularities : bool = false;
 var has_void_fires : bool = false;
 var has_void_walls : bool = false;
+var has_void_fog : bool = false;
+var has_void_stars : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2359,6 +2361,8 @@ func ready_map() -> void:
 	has_singularities = false;
 	has_void_fires = false;
 	has_void_walls = false;
+	has_void_fog = false;
+	has_void_stars = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2527,6 +2531,12 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.VoidWall)):
 			has_void_walls = true;
+			
+		if (any_layer_has_this_tile(Tiles.VoidFog)):
+			has_void_fog = true;
+			
+		if (any_layer_has_this_tile(Tiles.VoidStars)):
+			has_void_stars = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -5514,6 +5524,7 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 	#if (debug_prints and chrono < Chrono.META_UNDO):
 	#	print("add_undo_event", " ", event, " ", chrono);
+	
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
 			while (heavy_undo_buffer.size() <= heavy_turn):
@@ -5541,6 +5552,12 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 				add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
 	
 	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
+		if (has_void_fog and event[0] in void_banish_dict):
+			var actor = event[1];
+			if terrain_in_tile(actor.pos, actor, chrono).has(Tiles.VoidFog):
+				call_deferred("play_sound", "greenfire");
+				return;
+		
 		while (meta_undo_buffer.size() <= meta_turn):
 			meta_undo_buffer.append([]);
 		meta_undo_buffer[meta_turn].push_front(event);
@@ -6094,6 +6111,14 @@ func adjust_winlabel() -> void:
 func undo_one_event(event: Array, chrono : int) -> void:
 	#if (debug_prints):
 	#	print("undo_one_event", " ", event, " ", chrono);
+		
+	if (has_void_stars and chrono == Chrono.META_UNDO and event[0] in void_banish_dict):
+		var actor = event[1];
+		if terrain_in_tile(actor.pos, actor, chrono).has(Tiles.VoidStars):
+			call_deferred("add_to_animation_server", actor, [Animation.undo_immunity, -1]);
+			#add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
+			#call_deferred("play_sound", "shroud");
+			return;
 		
 	# undo events that should create undo trails
 	

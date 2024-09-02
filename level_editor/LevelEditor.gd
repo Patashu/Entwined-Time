@@ -1095,9 +1095,9 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.VoidFire:
 			text = "Void Fire: Green Fire, but it breaks voidly, and also activates when time passes following an undo. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidStars:
-			text = "Void Stars: (NOT IMPLEMENTED) Actors in this tile are immune to banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Stars: Actors in this tile are immune to banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidFog:
-			text = "Void Fog: (NOT IMPLEMENTED) Actors in this tile don't create banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Fog: Actors in this tile don't create banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
 	return text;
 	
 func picker_tooltip() -> void:
