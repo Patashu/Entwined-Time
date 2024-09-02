@@ -862,7 +862,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.PowerCrate:
 			text = "Power Crate: Actor. Heaviness: Wooden. Strength: Steel. Durability: Spikes. Fall speed: Infinite. Native Time Colour: Gray."
 		Tiles.ColourVoid:
-			text = "Void: Colour. (Void coloured actors can't lose their colour even through undos and can't be given other colours.) Always experiences time, INCLUDING after undos. Immune to rewind events AND undo events. (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void: Colour. (Void coloured actors can't be given other colours.) (Turning Void causes the actor to experience a 'void banish'. See Void Singularity tooltip for more information.) Always experiences time, INCLUDING after undos. Void actors don't create rewind events OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.ColourCyan:
 			text = "Cyan: Colour. Experiences time when Light moves or rewinds."
 		Tiles.ColourOrange:
@@ -1076,7 +1076,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.GateOfDemise:
 			text = "Gate of Demise: Solid. When a robot is permanently broken (no broken rewind events for that robot or repair stations exist in the puzzle or in any timeline): Gates of Demise become Void and open voidly. (Puzzles containing 'Void' will record undos in their replays.)";
 		Tiles.VoidSingularity:
-			text = "Void Singularity: When time passes, after repair stations, actors experiencing time here experience a void banish (see Void colour for more details). (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Singularity: When time passes, after repair stations, actors experiencing time here experience a void banish (all undo events for this actor about position, state changes, clock ticking, time colour changes and stat modifiers are erased. Notably, all other kinds of undo events, rewind events, timeline modifications, and changes to tiles caused by this actor are NOT erased.) (Puzzles containing 'Void' will record undos in their replays.)"
 	return text;
 	
 func picker_tooltip() -> void:
