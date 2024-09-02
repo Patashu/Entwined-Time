@@ -2242,6 +2242,7 @@ var has_spotlights : bool = false;
 var has_continuums : bool = false;
 var has_void_gates : bool = false;
 var has_singularities : bool = false;
+var has_void_fires : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2352,6 +2353,7 @@ func ready_map() -> void:
 	has_continuums = false;
 	has_void_gates = false;
 	has_singularities = false;
+	has_void_fires = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2514,6 +2516,9 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.VoidSingularity)):
 			has_singularities = true;
+			
+		if (any_layer_has_this_tile(Tiles.VoidFire)):
+			has_void_fires = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -4066,15 +4071,16 @@ boost_pad_reentrance: bool = false) -> int:
 	
 	return success;
 
+var void_banish_dict : Dictionary = {Undo.move: true, Undo.set_actor_var: true, Undo.sprite: true, Undo.time_bubble: true, Undo.tick: true};
+
 func void_banish(actor: Actor) -> bool:
 	var result = false;
 	#https://discord.com/channels/1196234174005260328/1196234898751627415/1266547709486301269
-	var blacklist = {Undo.move: true, Undo.set_actor_var: true, Undo.sprite: true, Undo.time_bubble: true, Undo.tick: true};
 	for j in range(meta_undo_buffer.size()):
 		var buffer = meta_undo_buffer[j];
 		for i in range(buffer.size() - 1, -1, -1):
 			var event = buffer[i];
-			if blacklist.has(event[0]) and event[1] == actor:
+			if void_banish_dict.has(event[0]) and event[1] == actor:
 				buffer.pop_at(i);
 				result = true;
 	return result;
@@ -7309,8 +7315,10 @@ func time_passes(chrono: int) -> void:
 	# Things in fire break.
 	# TODO: once colours exist this gets more complicated
 	# might be sufficient to just check which of Heavy/Light are in time_actors, since that's really what matters
-	if chrono <= Chrono.CHAR_UNDO:
+	if chrono <= Chrono.CHAR_UNDO or (has_void_fires and chrono <= Chrono.META_UNDO):
 		var time_colour = TimeColour.Magenta;
+		if (chrono == Chrono.META_UNDO):
+			time_colour = TimeColour.Void;
 		if (heavy_selected and chrono == Chrono.CHAR_UNDO):
 			time_colour = TimeColour.Blue;
 		elif (!heavy_selected and chrono == Chrono.CHAR_UNDO):
@@ -7338,6 +7346,14 @@ func time_passes(chrono: int) -> void:
 			if !actor.broken and terrain.has(Tiles.GreenFire) and actor.durability <= Durability.FIRE:
 				actor.post_mortem = Durability.FIRE;
 				set_actor_var(actor, "broken", true, Chrono.CHAR_UNDO);
+				
+	# Then finally... Void fire
+	if has_void_fires and chrono <= Chrono.META_UNDO:
+		for actor in actors:
+			var terrain = terrain_in_tile(actor.pos, actor, chrono);
+			if !actor.broken and terrain.has(Tiles.VoidFire) and actor.durability <= Durability.FIRE:
+				actor.post_mortem = Durability.FIRE;
+				set_actor_var(actor, "broken", true, Chrono.META_UNDO);
 				
 	# slope cleanup step:
 	# at the end of time_passes, ALL actors still in slopes attempt to be ejected
@@ -7818,7 +7834,23 @@ func handle_global_animation(animation: Array) -> void:
 	var redfire = false;
 	var bluefire = false;
 	var greenfire = false;
+	var voidfire = false;
 	if animation[0] == Animation.fire_roars:
+		#void fire even firster :D
+		if (has_void_fires):
+			var void_fires = get_used_cells_by_id_one_array(Tiles.VoidFire);
+			for fire in void_fires:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://OneTimeSprite.gd"));
+				sprite.texture = preload("res://assets/void_fire_spritesheet.png");
+				sprite.position = terrainmap.map_to_world(fire);
+				sprite.vframes = 1;
+				sprite.hframes = 8;
+				sprite.frame = 0;
+				sprite.centered = false;
+				sprite.frame_max = sprite.frame + 8;
+				underactorsparticles.add_child(sprite);
+				voidfire = true;
 		#have green fires animate first so if someone puts green and non-green fires in the same tile they layer correctly
 		var green_fires = get_used_cells_by_id_one_array(Tiles.GreenFire);
 		for fire in green_fires:
@@ -7887,7 +7919,7 @@ func handle_global_animation(animation: Array) -> void:
 		play_sound("redfire");
 	if (bluefire):
 		play_sound("bluefire");
-	if (greenfire):
+	if (greenfire or voidfire):
 		play_sound("greenfire");
 		
 	if (animation[0] == Animation.lightning_strikes):

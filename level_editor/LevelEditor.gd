@@ -1093,7 +1093,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.VoidWall:
 			text = "Void Wall: (NOT IMPLEMENTED) Solid to undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidFire:
-			text = "Void Fire: (NOT IMPLEMENTED) Green Fire, but it breaks voidly, and also activates when time passes following an undo. (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Fire: Green Fire, but it breaks voidly, and also activates when time passes following an undo. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidStars:
 			text = "Void Stars: (NOT IMPLEMENTED) Actors in this tile are immune to banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidFog:
