@@ -899,7 +899,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.VoidPowerSocket:
 			text = "Void Power Socket: A Power Socket that does not create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.GlassBlockCracked:
-			text = "Cracked Glass Block: A Glass Block without the weight requirement."
+			text = "Cracked Glass Block: A Glass Block without the weight requirement. Additionally, actors can break out of a Cracked Glass Block by attempting a non-gravity move."
 		Tiles.PhaseWallBlue:
 			text = "Phase Wall Blue: Solid during Light moves and rewinds."
 		Tiles.PhaseWallRed:

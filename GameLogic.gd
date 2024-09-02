@@ -4401,9 +4401,9 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		
 	return Success.Surprise;
 
-func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_retro: bool, chrono: int) -> bool:
+func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool, chrono: int, hypothetical: bool) -> bool:
 	var terrain = terrain_in_tile(actor.pos, actor, chrono);
-	var blocked = false;
+	var blocked = Success.Yes;
 	flash_terrain = -1;
 	
 	# hole check
@@ -4411,76 +4411,76 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, _is_gravity: bool, is_ret
 		var actors_there = actors_in_tile(actor.pos);
 		for actor_there in actors_there:
 			if (actor_there.actorname == Actor.Name.Hole or actor_there.actorname == Actor.Name.GreenHole or actor_there.actorname == Actor.Name.VoidHole):
-				return true;
+				return Success.No;
 	
 	# when moving retrograde, it would have been valid to come out of a oneway, but not to have gone THROUGH one.
 	# so check that.
 	# besides that, glass blocks prevent exit.
-	for id in terrain:
+	for i in range(terrain.size()):
+		var id = terrain[i];
 		match id:
 			Tiles.OnewayEast:
-				blocked = is_retro and dir == Vector2.RIGHT;
-				if (blocked):
+				blocked = no_if_true_yes_if_false(is_retro and dir == Vector2.RIGHT);
+				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_flash;
 			Tiles.OnewayWest:
-				blocked = is_retro and dir == Vector2.LEFT;
-				if (blocked):
+				blocked  = no_if_true_yes_if_false(is_retro and dir == Vector2.LEFT);
+				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_flash;
 			Tiles.OnewayNorth:
-				blocked = is_retro and dir == Vector2.UP;
-				if (blocked):
+				blocked = no_if_true_yes_if_false(is_retro and dir == Vector2.UP);
+				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_flash;
 			Tiles.OnewaySouth:
-				blocked = is_retro and dir == Vector2.DOWN;
-				if (blocked):
+				blocked  = no_if_true_yes_if_false(is_retro and dir == Vector2.DOWN);
+				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_flash;
 			Tiles.GlassBlock:
-				blocked = true;
-				if (blocked):
+				blocked = Success.No;
+				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
 			Tiles.GlassBlockCracked:
-				# it'd be cool to let actors break out of cracked glass blocks under their own power.
-				blocked = true;
-				if (blocked):
-					flash_terrain = id;
-					flash_colour = no_foo_flash;
+				if (is_gravity):
+					return Success.No;
+				else:
+					blocked = maybe_change_terrain(actor, actor.pos, i, hypothetical, Greenness.Mundane, chrono, -1);
 			Tiles.GreenGlassBlock:
-				blocked = true;
-				if (blocked):
+				blocked = Success.No;
+				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
 			Tiles.VoidGlassBlock:
-				blocked = true;
-				if (blocked):
+				blocked = Success.No;
+				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
 			Tiles.SpiderWeb:
 				if (!is_retro):
 					while animation_server.size() <= animation_substep:
 						animation_server.push_back([]);
-					for i in range (animation_substep+1):
-						for anim in animation_server[i]:
+					for a in range (animation_substep+1):
+						for anim in animation_server[a]:
 							if anim[0] == actor and anim[1][0] == Animation.move and !anim[1][2]:
 								flash_terrain = id;
 								flash_colour = no_foo_flash;
-								return true;
+								return Success.No;
 			Tiles.SpiderWebGreen:
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
-				for i in range (animation_substep+1):
-					for anim in animation_server[i]:
+				for a in range (animation_substep+1):
+					for anim in animation_server[a]:
 						if anim[0] == actor and anim[1][0] == Animation.move:
 							flash_terrain = id;
 							flash_colour = no_foo_flash;
-							return true;
-		if blocked:
-			return true;
-	return false;
+							return Success.No;
+		if blocked != Success.Yes:
+			return blocked;
+	return Success.Yes;
 
 func no_if_true_yes_if_false(input: bool) -> int:
 	if (input):
@@ -4804,10 +4804,14 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	
 	# handle solidity in our tile, solidity in the tile over, hazards/surprises in the tile over
 	if (!actor.phases_into_terrain()):
-		if (current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono)):
+		var leave_attempt = current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono, true)
+		if (leave_attempt == Success.No):
 			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
 				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
 			return Success.No;
+		elif (leave_attempt == Success.Surprise):
+			current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono, false);
+			return Success.Surprise;
 		var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono, pushers_list, was_push);
 		if (solidity_check != Success.Yes):
 			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
