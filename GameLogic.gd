@@ -123,6 +123,8 @@ enum Undo {
 	time_bubble, #27
 	sprite, #28
 	spotlight_fix, #29
+	heavy_surprise_abyss_chimed, #30
+	light_surprise_abyss_chimed, #31
 }
 
 # and same for animations
@@ -5430,17 +5432,30 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 
 var banished_time_crystals = {};
 
-func check_abyss_chimes(actor: Actor = null) -> void:
+func check_abyss_chimes(actor: Actor = null) -> bool:
 	if (actor == null):
+		var result_h = false;
+		var result_l = false;
 		if (heavy_actor.broken):
-			check_abyss_chimes(heavy_actor);
+			result_h = check_abyss_chimes(heavy_actor);
+			if (result_h):
+				# note: this logic doesn't run for breaking an actor directly,
+				# because an actor can be broken voidly, and 'the actor unbreaks'
+				# is already sufficient to end the condition.
+				# need to revisit this idea later if there ever becomes a void way
+				# to forget an rewind event or delete a repair station.
+				add_undo_event([Undo.heavy_surprise_abyss_chimed], Chrono.CHAR_UNDO);
 		if (light_actor.broken):
-			check_abyss_chimes(light_actor);
-		return;
+			result_l = check_abyss_chimes(light_actor);
+			if (result_l):
+				add_undo_event([Undo.light_surprise_abyss_chimed], Chrono.CHAR_UNDO);
+		return result_h || result_l;
 	if (!actor_has_broken_event_anywhere(actor)):
 		add_to_animation_server(actor, [Animation.lose]);
 		if (has_void_gates):
 			open_doors(Tiles.GateOfDemise);
+		return true;
+	return false;
 
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	if (has_repair_stations):
@@ -6229,6 +6244,10 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			else:
 				lighttimeline.current_move -= 1;
 				lighttimeline.add_turn(light_undo_buffer[light_turn-1], true);
+		Undo.heavy_surprise_abyss_chimed:
+			heavytimeline.end_fade();
+		Undo.light_surprise_abyss_chimed:
+			lighttimeline.end_fade();
 
 func meta_undo_a_restart() -> bool:
 	var meta_undo_a_restart_type = 2;
