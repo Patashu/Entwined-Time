@@ -1660,11 +1660,11 @@ texture = ExtResource( 381 )
 position = Vector2( 380, 24 )
 texture = SubResource( 32 )
 
-[node name="VoidGateOfEternity" type="Sprite" parent="."]
+[node name="GateOfEternity" type="Sprite" parent="."]
 position = Vector2( 415, 16 )
 texture = ExtResource( 387 )
 
-[node name="VoidGateOfDemise" type="Sprite" parent="."]
+[node name="GateOfDemise" type="Sprite" parent="."]
 position = Vector2( 441, 16 )
 texture = ExtResource( 388 )
 

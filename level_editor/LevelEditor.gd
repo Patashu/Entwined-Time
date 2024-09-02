@@ -162,8 +162,8 @@ enum Tiles {
 	PurpleFog, #156
 	Spotlight, #157
 	Continuum, #158
-	VoidGateOfEternity, #159
-	VoidGateOfDemise, #160
+	GateOfEternity, #159
+	GateOfDemise, #160
 	VoidSingularity, #161
 }
 
@@ -430,8 +430,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.CyanJelly)
 		picker_array.append(Tiles.Spotlight)
 		picker_array.append(Tiles.Continuum)
-		picker_array.append(Tiles.VoidGateOfEternity)
-		picker_array.append(Tiles.VoidGateOfDemise)
+		picker_array.append(Tiles.GateOfEternity)
+		picker_array.append(Tiles.GateOfDemise)
 		picker_array.append(Tiles.VoidSingularity)
 	
 	for i in range(picker_array.size()):
@@ -1071,10 +1071,10 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Continuum: If you make a move from this tile at turn 1 or greater, you don't start a new turn but still record all rewind events made. Then, the Continuum is consumed greenly."
 		Tiles.Spotlight:
 			text = "Spotlight: If you rewind from this tile, the rewind happens as though it were a move (including recording all rewind events made). Then, the Spotlight is consumed greenly."
-		Tiles.VoidGateOfEternity:
-			text = "Void Gate of Eternity: Solid. A million years in the future, after all hope is lost, the gate will open (voidly). (Puzzles containing 'Void' will record undos in their replays.)";
-		Tiles.VoidGateOfDemise:
-			text = "Void Gate of Demise: Solid. After a tragic sacrifice, the gate will open (voidly). (Puzzles containing 'Void' will record undos in their replays.)";
+		Tiles.GateOfEternity:
+			text = "Gate of Eternity: Solid. If the game is lost (for example, a Cuckoo Clock chimes): Gates of Eternity become Void and open voidly. (Puzzles containing 'Void' will record undos in their replays.)";
+		Tiles.GateOfDemise:
+			text = "Gate of Demise: Solid. When a robot is permanently broken (no broken rewind events for that robot or repair stations exist in the puzzle or in any timeline): Gates of Demise become Void and open voidly. (Puzzles containing 'Void' will record undos in their replays.)";
 		Tiles.VoidSingularity:
 			text = "Void Singularity: When time passes, after repair stations, actors experiencing time here experience a void banish (see Void colour for more details). (Puzzles containing 'Void' will record undos in their replays.)"
 	return text;

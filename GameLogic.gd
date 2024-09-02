@@ -345,8 +345,8 @@ enum Tiles {
 	PurpleFog, #156
 	Spotlight, #157
 	Continuum, #158
-	VoidGateOfEternity, #159
-	VoidGateOfDemise, #160
+	GateOfEternity, #159
+	GateOfDemise, #160
 	VoidSingularity, #161
 }
 var voidlike_tiles : Array = [];
@@ -2501,9 +2501,9 @@ func ready_map() -> void:
 		if (any_layer_has_this_tile(Tiles.Continuum)):
 			has_continuums = true;
 			
-		if (any_layer_has_this_tile(Tiles.VoidGateOfDemise)):
+		if (any_layer_has_this_tile(Tiles.GateOfDemise)):
 			has_void_gates = true;
-		elif (any_layer_has_this_tile(Tiles.VoidGateOfEternity)):
+		elif (any_layer_has_this_tile(Tiles.GateOfEternity)):
 			has_void_gates = true;
 			
 		if (any_layer_has_this_tile(Tiles.VoidSingularity)):
@@ -4510,9 +4510,9 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 		match id:
 			Tiles.Wall:
 				result = Success.No;
-			Tiles.VoidGateOfEternity:
+			Tiles.GateOfEternity:
 				result = Success.No;
-			Tiles.VoidGateOfDemise:
+			Tiles.GateOfDemise:
 				result = Success.No;
 			Tiles.LockClosed:
 				result = Success.No;
@@ -5233,6 +5233,7 @@ func open_doors(id: int) -> void:
 				sprite.modulate = Color(mod, mod, mod);
 				overactorsparticles.add_child(sprite);
 	if (found):
+		voidlike_puzzle = true;
 		play_sound("onemillionyears");
 
 func lose(reason: String, suspect: Actor) -> void:
@@ -5244,7 +5245,7 @@ func lose(reason: String, suspect: Actor) -> void:
 		lost_void = false;
 		winlabel.change_text(reason + "\n\nUndo or Restart to continue.")
 	if (has_void_gates):
-		open_doors(Tiles.VoidGateOfEternity);
+		open_doors(Tiles.GateOfEternity);
 	
 func end_lose() -> void:
 	lost = false;
@@ -5346,7 +5347,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 					if (!actor_has_broken_event_anywhere(actor)):
 						add_to_animation_server(actor, [Animation.lose]);
 						if (has_void_gates):
-							open_doors(Tiles.VoidGateOfDemise);
+							open_doors(Tiles.GateOfDemise);
 				else:
 					if actor.actorname == Actor.Name.Heavy:
 						heavytimeline.end_fade();
@@ -5435,7 +5436,7 @@ func check_abyss_chimes(actor: Actor = null) -> void:
 	if (!actor_has_broken_event_anywhere(actor)):
 		add_to_animation_server(actor, [Animation.lose]);
 		if (has_void_gates):
-			open_doors(Tiles.VoidGateOfDemise);
+			open_doors(Tiles.GateOfDemise);
 
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	if (has_repair_stations):
