@@ -48,10 +48,6 @@ editable = false
 modulate = Color( 2, 2, 2, 0.5 )
 centered = false
 
-[node name="PickerTooltip" type="Node2D" parent="."]
-visible = false
-script = ExtResource( 4 )
-
 [node name="MenuButton" type="Button" parent="."]
 margin_left = 226.0
 margin_top = 284.0
@@ -59,3 +55,7 @@ margin_right = 286.0
 margin_bottom = 299.0
 theme = ExtResource( 2 )
 text = "Menu (Esc)"
+
+[node name="PickerTooltip" type="Node2D" parent="."]
+visible = false
+script = ExtResource( 4 )
