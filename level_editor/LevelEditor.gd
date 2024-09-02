@@ -165,6 +165,10 @@ enum Tiles {
 	GateOfEternity, #159
 	GateOfDemise, #160
 	VoidSingularity, #161
+	VoidWall, #162
+	VoidFire, #163
+	VoidStars, #164
+	VoidFog, #165
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -438,6 +442,10 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.GateOfEternity)
 		picker_array.append(Tiles.GateOfDemise)
 		picker_array.append(Tiles.VoidSingularity)
+		picker_array.append(Tiles.VoidWall)
+		picker_array.append(Tiles.VoidFire)
+		picker_array.append(Tiles.VoidStars)
+		picker_array.append(Tiles.VoidFog)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1081,7 +1089,15 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.GateOfDemise:
 			text = "Gate of Demise: Solid. When a robot is permanently broken (no broken rewind events for that robot or repair stations exist in the puzzle or in any timeline): Gates of Demise become Void and open voidly. (Puzzles containing 'Void' will record undos in their replays.)";
 		Tiles.VoidSingularity:
-			text = "Void Singularity: When time passes, after repair stations, actors experiencing time here experience a void banish (all undo events for this actor about position, state changes, clock ticking, time colour changes and stat modifiers are erased. Notably, all other kinds of undo events, rewind events, timeline modifications, and changes to tiles caused by this actor are NOT erased.) (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Singularity: When time pases, after repair stations, actors experiencing time here experience a void banish (all undo events for this actor about position, state changes, clock ticking, time colour changes and stat modifiers are erased. Notably, all other kinds of undo events, rewind events, timeline modifications, and changes to tiles caused by this actor are NOT erased.) (Puzzles containing 'Void' will record undos in their replays.)"
+		Tiles.VoidWall:
+			text = "Void Wall: (NOT IMPLEMENTED) Solid to undo events. (Puzzles containing 'Void' will record undos in their replays.)"
+		Tiles.VoidFire:
+			text = "Void Fire: (NOT IMPLEMENTED) Green Fire, but it breaks voidly, and also activates when time passes following an undo. (Puzzles containing 'Void' will record undos in their replays.)"
+		Tiles.VoidStars:
+			text = "Void Stars: (NOT IMPLEMENTED) Actors in this tile are immune to banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
+		Tiles.VoidFog:
+			text = "Void Fog: (NOT IMPLEMENTED) Actors in this tile don't create banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
 	return text;
 	
 func picker_tooltip() -> void:

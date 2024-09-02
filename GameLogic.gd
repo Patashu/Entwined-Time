@@ -350,6 +350,10 @@ enum Tiles {
 	GateOfEternity, #159
 	GateOfDemise, #160
 	VoidSingularity, #161
+	VoidWall, #162
+	VoidFire, #163
+	VoidStars, #164
+	VoidFog, #165
 }
 var voidlike_tiles : Array = [];
 
