@@ -1091,7 +1091,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.VoidSingularity:
 			text = "Void Singularity: When time pases, after repair stations, actors experiencing time here experience a void banish (all undo events for this actor about position, state changes, clock ticking, time colour changes and stat modifiers are erased. Notably, all other kinds of undo events, rewind events, timeline modifications, and changes to tiles caused by this actor are NOT erased.) (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidWall:
-			text = "Void Wall: (NOT IMPLEMENTED) Solid to undo events. (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Wall: Solid to undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidFire:
 			text = "Void Fire: Green Fire, but it breaks voidly, and also activates when time passes following an undo. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidStars:

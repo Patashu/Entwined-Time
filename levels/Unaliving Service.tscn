@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65536, 14, 262145, 65537, 127, 0, 65538, 127, 0, 65539, 127, 0, 65540, 127, 0, 65541, 127, 0, 65542, 127, 0, 65543, 14, 262145, 131072, 14, 262145, 131073, 127, 0, 131074, 127, 0, 131075, 127, 0, 131076, 127, 0, 131077, 127, 0, 131078, 127, 0, 131079, 14, 327681, 196608, 14, 262145, 196609, 127, 0, 196610, 127, 0, 196611, 127, 0, 196612, 127, 0, 196613, 127, 0, 196614, 127, 0, 196615, 160, 0, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196615 )
+
+[node name="@@118" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 1, 0, 196610, 81, 0, 196611, 2, 0, 196612, 8, 0, 196613, 157, 0, 196615, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Unaliving Service"
+level_author = "Slabdrill"
+level_replay = "Unaliving Service$mturn=32$wxaxdxzadxzzadxzxzaxdxzdxzxzzsdxzzcxzzdaxaxzxzdxzw"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""

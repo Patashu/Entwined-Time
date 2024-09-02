@@ -1906,6 +1906,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Super Basic Sokoban")
+	level_filenames.push_back("Sandra Embraces The Void")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1961,6 +1962,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Rapid Ascent")
 	level_filenames.push_back("Tile Selector")
 	level_filenames.push_back("Parity Drive")
+	level_filenames.push_back("Unaliving Service")
 	level_filenames.push_back("Rocket Engine-")
 	level_filenames.push_back("Campfrost [VAR2]")
 	level_filenames.push_back("Graduation [VAR1]")
@@ -1990,6 +1992,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elevator Pitch 2")
 	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Undying Army (Type C)")
+	level_filenames.push_back("Unaliving Service [VAR1]")
 	level_filenames.push_back("Anonymous Delivery [VAR1]")
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
@@ -2243,6 +2246,7 @@ var has_continuums : bool = false;
 var has_void_gates : bool = false;
 var has_singularities : bool = false;
 var has_void_fires : bool = false;
+var has_void_walls : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2354,6 +2358,7 @@ func ready_map() -> void:
 	has_void_gates = false;
 	has_singularities = false;
 	has_void_fires = false;
+	has_void_walls = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2519,6 +2524,9 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.VoidFire)):
 			has_void_fires = true;
+			
+		if (any_layer_has_this_tile(Tiles.VoidWall)):
+			has_void_walls = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -4812,7 +4820,10 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		return Success.Yes;
 	if (chrono >= Chrono.META_UNDO and is_retro):
 		# assuming no bugs, if it was overlapping in the meta-past, then it must have been valid to reach then
-		return Success.Yes;
+		if (has_void_walls and chrono == Chrono.META_UNDO):
+			return no_if_true_yes_if_false(terrain_in_tile(dest, actor, chrono).has(Tiles.VoidWall));
+		else:
+			return Success.Yes;
 	
 	# handle solidity in our tile, solidity in the tile over, hazards/surprises in the tile over
 	if (!actor.phases_into_terrain()):
