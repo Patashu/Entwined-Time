@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196615, 2, 12, 0, 3, 14, 196613, 4, 14, 524292, 65536, 14, 262145, 65537, 25, 0, 65538, 55, 0, 65539, 28, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 52, 0, 131074, 158, 0, 131075, 157, 0, 131076, 14, 262145, 196608, 14, 262145, 196612, 14, 262145, 262144, 14, 327681, 262145, 159, 0, 262146, 159, 0, 262147, 159, 0, 262148, 14, 327681 )
+
+[node name="@@5161" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 26, 0, 196609, 8, 0, 196611, 2, 0, 262145, 1, 0, 262147, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Doomsday Clock"
+level_author = "Patashu"
+level_replay = "Doomsday Clock$mturn=16$xdwxaxdaxwxzzxaxzzxzzawxwscccxwxs"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = "10"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""

@@ -1762,6 +1762,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Jello Kiddie Pool")
 	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
 	level_filenames.push_back("Noisemaker")
+	level_filenames.push_back("Doomsday Clock")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Clockwork-")
@@ -6115,7 +6116,8 @@ func undo_one_event(event: Array, chrono : int) -> void:
 	if (has_void_stars and chrono == Chrono.META_UNDO and event[0] in void_banish_dict):
 		var actor = event[1];
 		if terrain_in_tile(actor.pos, actor, chrono).has(Tiles.VoidStars):
-			call_deferred("add_to_animation_server", actor, [Animation.undo_immunity, -1]);
+			if (!currently_fast_replay()):
+				call_deferred("add_to_animation_server", actor, [Animation.undo_immunity, -1]);
 			#add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
 			#call_deferred("play_sound", "shroud");
 			return;
@@ -7652,12 +7654,15 @@ func replay_advance_turn(amount: int) -> void:
 			user_replay = ""; #to not pollute meta undo a restart buffer
 			var old_muted = muted;
 			muted = true;
+			var old_replay_interval = replay_interval;
+			replay_interval = 0.001;
 			load_level(0);
 			start_specific_replay(replay);
 			for _i in range(target_turn):
 				do_one_replay_turn();
 			finish_animations(Chrono.TIMELESS);
 			calm_down_timelines();
+			replay_interval = old_replay_interval;
 			muted = old_muted;
 			# weaker and slower than meta-undo
 			undo_effect_strength = 0.04;
