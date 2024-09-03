@@ -169,6 +169,9 @@ enum Tiles {
 	VoidFire, #163
 	VoidStars, #164
 	VoidFog, #165
+	NoRising, #166
+	NoFalling, #167
+	NoGrounded, #168
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -446,6 +449,9 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.VoidFire)
 		picker_array.append(Tiles.VoidStars)
 		picker_array.append(Tiles.VoidFog)
+		picker_array.append(Tiles.NoRising)
+		picker_array.append(Tiles.NoFalling)
+		picker_array.append(Tiles.NoGrounded)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1098,6 +1104,12 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Void Stars: Actors in this tile are immune to banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidFog:
 			text = "Void Fog: Actors in this tile don't create banishable undo events (see Void Singularity tooltip). (Puzzles containing 'Void' will record undos in their replays.)"
+		Tiles.NoRising:
+			text = "No Rising: Solid to actors in the rising state."
+		Tiles.NoFalling:
+			text = "No Falling: Solid to actors in the falling state."
+		Tiles.NoGrounded:
+			text = "No Grounded: Solid to actors in the grounded state."
 	return text;
 	
 func picker_tooltip() -> void:

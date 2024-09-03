@@ -354,6 +354,9 @@ enum Tiles {
 	VoidFire, #163
 	VoidStars, #164
 	VoidFog, #165
+	NoRising, #166
+	NoFalling, #167
+	NoGrounded, #168
 }
 var voidlike_tiles : Array = [];
 
@@ -4791,6 +4794,21 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = oneway_flash;
+			Tiles.NoRising:
+				result = no_if_true_yes_if_false(actor.airborne >= 1);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.NoFalling:
+				result = no_if_true_yes_if_false(actor.airborne == 0);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
+			Tiles.NoGrounded:
+				result = no_if_true_yes_if_false(actor.airborne == -1);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = oneway_flash;
 		if result != Success.Yes:
 			return result;
 	return result;
@@ -5557,7 +5575,8 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 		if (has_void_fog and event[0] in void_banish_dict):
 			var actor = event[1];
 			if terrain_in_tile(actor.pos, actor, chrono).has(Tiles.VoidFog):
-				call_deferred("play_sound", "greenfire");
+				if (!currently_fast_replay()):
+					call_deferred("play_sound", "greenfire");
 				return;
 		
 		while (meta_undo_buffer.size() <= meta_turn):

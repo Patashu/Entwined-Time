@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=447 format=2]
+[gd_resource type="TileSet" load_steps=450 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -412,6 +412,9 @@
 [ext_resource path="res://assets/void_stars_4.png" type="Texture" id=410]
 [ext_resource path="res://assets/void_stars_5.png" type="Texture" id=411]
 [ext_resource path="res://assets/void_stars_6.png" type="Texture" id=412]
+[ext_resource path="res://assets/no_grounded.png" type="Texture" id=413]
+[ext_resource path="res://assets/no_rising.png" type="Texture" id=414]
+[ext_resource path="res://assets/no_falling.png" type="Texture" id=415]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3420,3 +3423,45 @@ frame_7/delay_sec = 0.0
 165/shape_one_way_margin = 0.0
 165/shapes = [  ]
 165/z_index = 0
+166/name = "NoRising"
+166/texture = ExtResource( 414 )
+166/tex_offset = Vector2( 0, 0 )
+166/modulate = Color( 1, 1, 1, 1 )
+166/region = Rect2( 0, 0, 24, 24 )
+166/tile_mode = 0
+166/occluder_offset = Vector2( 12, 12 )
+166/navigation_offset = Vector2( 12, 12 )
+166/shape_offset = Vector2( 0, 0 )
+166/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+166/shape_one_way = false
+166/shape_one_way_margin = 0.0
+166/shapes = [  ]
+166/z_index = 0
+167/name = "NoFalling"
+167/texture = ExtResource( 415 )
+167/tex_offset = Vector2( 0, 0 )
+167/modulate = Color( 1, 1, 1, 1 )
+167/region = Rect2( 0, 0, 24, 24 )
+167/tile_mode = 0
+167/occluder_offset = Vector2( 12, 12 )
+167/navigation_offset = Vector2( 12, 12 )
+167/shape_offset = Vector2( 0, 0 )
+167/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+167/shape_one_way = false
+167/shape_one_way_margin = 0.0
+167/shapes = [  ]
+167/z_index = 0
+168/name = "NoGrounded"
+168/texture = ExtResource( 413 )
+168/tex_offset = Vector2( 0, 0 )
+168/modulate = Color( 1, 1, 1, 1 )
+168/region = Rect2( 0, 0, 24, 24 )
+168/tile_mode = 0
+168/occluder_offset = Vector2( 12, 12 )
+168/navigation_offset = Vector2( 12, 12 )
+168/shape_offset = Vector2( 0, 0 )
+168/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+168/shape_one_way = false
+168/shape_one_way_margin = 0.0
+168/shapes = [  ]
+168/z_index = 0
