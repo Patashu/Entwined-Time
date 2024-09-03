@@ -1926,10 +1926,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Voidish Pit")
 	level_filenames.push_back("The Yellow Pit")
 	level_filenames.push_back("The Crate Pit-")
+	level_filenames.push_back("The Falling Pit")
+	level_filenames.push_back("The Grounded Pit")
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Look It's Another Pit")
 	level_filenames.push_back("The Last Pit [VAR3]")
 	level_filenames.push_back("The Joke Pit")
+	level_filenames.push_back("The Left Pit")
 	level_filenames.push_back("The Solo Pit")
 	level_filenames.push_back("The Withering Pit")
 	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
@@ -2001,6 +2004,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Anonymous Delivery [VAR1]")
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
+	level_filenames.push_back("Underflow")
 	level_filenames.push_back("Woodskip [VAR1]")
 	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2031,6 +2035,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elevator Pitch 3")
 	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
+	level_filenames.push_back("Underflow [VAR1]")
 	level_filenames.push_back("Downfall")
 	level_filenames.push_back("Downfall 2")
 	level_filenames.push_back("Light's Way In")
@@ -3985,7 +3990,7 @@ boost_pad_reentrance: bool = false) -> int:
 				
 		# boulder momentum
 		if (actor.actorname == Actor.Name.Boulder and chrono < Chrono.TIMELESS and !is_retro and !actor.broken):
-			if dir.x != 0:
+			if dir.x != 0 or actor.fall_speed() == 0:
 				actor.boulder_moved_horizontally_this_turn = true;
 				if (actor.momentum != dir):
 					set_actor_var(actor, "momentum", dir, chrono);
