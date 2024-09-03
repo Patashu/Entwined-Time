@@ -1949,6 +1949,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Fuzzy Parkour [VAR1]")
+	level_filenames.push_back("Invisible Void Bridge")
 	level_filenames.push_back("Collaborative Motion")
 	level_filenames.push_back("Light Bridge")
 	level_filenames.push_back("Quantum Entanglement [VAR1]")

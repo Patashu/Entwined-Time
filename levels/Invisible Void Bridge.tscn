@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 165, 0, 2, 8, 0, 7, 7, 0, 8, 1, 0, 13, 2, 0, 14, 164, 0, 65536, 14, 2, 65537, 14, 3, 65538, 14, 4, 65539, 27, 0, 65540, 27, 0, 65541, 27, 0, 65542, 27, 0, 65543, 14, 2, 65544, 14, 4, 65545, 27, 0, 65546, 27, 0, 65547, 27, 0, 65548, 27, 0, 65549, 14, 2, 65550, 14, 3, 65551, 14, 4, 131072, 14, 131074, 131073, 14, 131075, 131074, 14, 131076, 131079, 14, 131074, 131080, 14, 131076, 131085, 14, 131074, 131086, 14, 131075, 131087, 14, 131076 )
+
+[node name="@@132" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 38, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Invisible Void Bridge"
+level_author = "Slabdrill"
+level_replay = "Invisible Void Bridge$mturn=13$xacadcadcadcadcccccddxddacdacdacdaczzzzza"
+heavy_max_moves = 6.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0
+setup_replay = ""
