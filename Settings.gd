@@ -31,6 +31,7 @@ onready var fps : OptionButton = get_node("Holder/TabContainer/Graphics/FPS");
 onready var jukebox : SpinBox = get_node("Holder/TabContainer/Audio/Jukebox");
 onready var fullscreenbutton: Button = get_node("Holder/TabContainer/Graphics/FullScreenButton");
 onready var muteinbackground : CheckBox = get_node("Holder/TabContainer/Audio/MuteInBackground");
+onready var retrotimeline : CheckBox = get_node("Holder/TabContainer/Gameplay/RetroTimeline");
 
 func floating_text(text: String) -> void:
 	var label = preload("res://FloatingText.tscn").instance();
@@ -118,6 +119,7 @@ func _ready() -> void:
 		virtualbuttons.value = gamelogic.save_file["virtual_buttons"];
 	if (gamelogic.save_file.has("mute_in_background")):
 		muteinbackground.pressed = gamelogic.save_file["mute_in_background"];
+	retrotimeline.pressed = gamelogic.save_file["retro_timeline"];
 	
 	undotrailslider.value = gamelogic.save_file["undo_trails"];
 	updatelabelundotrail(undotrailslider.value);
@@ -148,6 +150,7 @@ func _ready() -> void:
 	jukebox.connect("value_changed", self, "_jukebox_value_changed");
 	fullscreenbutton.connect("pressed", self, "_fullscreenbutton_pressed");
 	muteinbackground.connect("pressed", self, "_muteinbackground_pressed");
+	retrotimeline.connect("pressed", self, "_retrotimeline_pressed");
 	
 	if (is_fixed_size):
 		resolution.queue_free();
@@ -240,6 +243,13 @@ func _puzzlecheckerboard_pressed() -> void:
 	
 	gamelogic.save_file["puzzle_checkerboard"] = puzzlecheckerboard.pressed;
 	gamelogic.checkerboard.visible = puzzlecheckerboard.pressed;
+	
+func _retrotimeline_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	gamelogic.save_file["retro_timeline"] = retrotimeline.pressed;
+	
 	
 func _colourblindmode_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):

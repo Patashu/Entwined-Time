@@ -33,6 +33,7 @@ margin_right = 408.0
 margin_bottom = 219.0
 
 [node name="Graphics" type="Tabs" parent="Holder/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -220,7 +221,6 @@ margin_bottom = 115.0
 text = "Mute In Background"
 
 [node name="Gameplay" type="Tabs" parent="Holder/TabContainer"]
-visible = false
 margin_left = 4.0
 margin_top = 32.0
 margin_right = 44.0
@@ -233,41 +233,48 @@ margin_bottom = 17.0
 focus_neighbour_top = NodePath("../../../OkButton")
 text = "Unlock everything (while this checkbox is ticked)"
 
+[node name="RetroTimeline" type="CheckBox" parent="Holder/TabContainer/Gameplay"]
+margin_top = 19.0
+margin_right = 214.0
+margin_bottom = 39.0
+focus_neighbour_top = NodePath("../../../OkButton")
+text = "Timeline Symbols Show Previous State"
+
 [node name="VirtualButtons" type="SpinBox" parent="Holder/TabContainer/Gameplay"]
-margin_top = 41.0
+margin_top = 61.0
 margin_right = 74.0
-margin_bottom = 65.0
+margin_bottom = 85.0
 max_value = 6.0
 
 [node name="LabelVirtualButtons" type="Label" parent="Holder/TabContainer/Gameplay"]
 margin_left = 78.0
-margin_top = 47.0
+margin_top = 67.0
 margin_right = 377.0
-margin_bottom = 58.0
+margin_bottom = 78.0
 text = "Virtual Buttons Layout (displays clickable buttons on-screen)"
 
 [node name="NewSaveFile" type="Button" parent="Holder/TabContainer/Gameplay"]
-margin_top = 101.0
+margin_top = 121.0
 margin_right = 87.0
-margin_bottom = 116.0
+margin_bottom = 136.0
 text = "Reset Progress"
 
 [node name="PasteSaveFile" type="Button" parent="Holder/TabContainer/Gameplay"]
-margin_top = 84.0
+margin_top = 104.0
 margin_right = 87.0
-margin_bottom = 99.0
+margin_bottom = 119.0
 text = "Paste Save File"
 
 [node name="CopySaveFile" type="Button" parent="Holder/TabContainer/Gameplay"]
-margin_top = 67.0
+margin_top = 87.0
 margin_right = 87.0
-margin_bottom = 82.0
+margin_bottom = 102.0
 text = "Copy Save File"
 
 [node name="MetaUndoARestart" type="OptionButton" parent="Holder/TabContainer/Gameplay"]
-margin_top = 21.0
+margin_top = 41.0
 margin_right = 97.0
-margin_bottom = 37.0
+margin_bottom = 57.0
 text = "Undo a Restart?:"
 
 [node name="Pointer" type="Sprite" parent="Holder"]

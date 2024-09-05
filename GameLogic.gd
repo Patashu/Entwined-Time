@@ -551,6 +551,8 @@ func default_save_file() -> void:
 		save_file.erase("pixel_scale");
 	if (!save_file.has("fps")):
 		save_file["fps"] = 60;
+	if (!save_file.has("retro_timeline")):
+		save_file["retro_timeline"] = false;
 
 func load_game():
 	var file = File.new()

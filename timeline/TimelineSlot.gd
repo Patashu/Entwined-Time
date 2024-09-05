@@ -217,11 +217,11 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 		GameLogic.Undo.set_actor_var:
 			var prop = event[2];
 			var new_value = event[4];
+			if (parent.gamelogic.save_file["retro_timeline"]):
+				new_value = event[3];
 			match prop:
 				"airborne":
-					if new_value == 2:
-						pass
-					elif new_value == 1:
+					if new_value == 1:
 						if size == 8:
 							return preload("res://timeline/timeline-airborne-1-8.png");
 						elif size == 12:
