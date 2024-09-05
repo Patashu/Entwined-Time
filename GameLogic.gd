@@ -5333,6 +5333,9 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 	if animation_nonce == -1:
 		animation_nonce = animation_nonce_fountain_dispense();
 	if (chrono < Chrono.GHOSTS):
+		# sanity check: prevent, for example, spotlight from making a broken->broken event
+		if (old_value == value):
+			return
 		actor.set(prop, value);
 		
 		# going to try this to fix a dinged bug - don't make undo events for dinged, since it's purely visual
