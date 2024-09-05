@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 1, 0, 8, 7, 0, 65542, 168, 0, 65543, 168, 0, 65544, 168, 0, 131076, 168, 0, 131077, 168, 0, 131078, 168, 0, 131079, 168, 0, 131080, 168, 0, 196608, 8, 0, 196609, 2, 0, 196610, 168, 0, 196611, 168, 0, 196612, 168, 0, 196613, 168, 0, 196614, 168, 0, 196615, 168, 0, 196616, 168, 0, 262144, 168, 0, 262145, 168, 0, 262146, 168, 0, 262147, 168, 0, 262148, 168, 0, 262149, 168, 0, 262150, 168, 0, 262151, 168, 0, 262152, 168, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Grounded Uphill"
+level_author = "Patashu"
+level_replay = "Grounded Uphill$mturn=64$wxdxzasxaxzzdxzxzddxadaxwxzxdxaxzzxzzzxwxdxzasxaadxzzdxzzzdxdxaxwzxzxwxdxzddzzdxaxzssxzxzzddxds"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""
