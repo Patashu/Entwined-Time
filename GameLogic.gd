@@ -7349,6 +7349,11 @@ func time_passes(chrono: int) -> void:
 			var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true,
 			false, [], false, false, null, -1, false,
 			false) # can_push
+			# Remove the vanity bump if we hypothetically hit a surprise.
+			# (It actually looks pretty good as long as no one else is simultaneously falling,
+			# but if someone IS, it looks awful, so that's reason enough to remove it)
+			if (could_fall == Success.Surprise):
+				remove_one_from_animation_server(actor, Animation.bump);
 			if (could_fall == Success.No):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
