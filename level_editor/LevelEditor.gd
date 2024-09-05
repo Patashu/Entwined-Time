@@ -172,6 +172,10 @@ enum Tiles {
 	NoRising, #166
 	NoFalling, #167
 	NoGrounded, #168
+	PhaseBoardEast, #169
+	PhaseBoardNorth, #170
+	PhaseBoardSouth, #171
+	PhaseBoardWest, #172
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -452,6 +456,10 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.NoRising)
 		picker_array.append(Tiles.NoFalling)
 		picker_array.append(Tiles.NoGrounded)
+		picker_array.append(Tiles.PhaseBoardEast)
+		picker_array.append(Tiles.PhaseBoardNorth)
+		picker_array.append(Tiles.PhaseBoardSouth)
+		picker_array.append(Tiles.PhaseBoardWest)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1110,6 +1118,14 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "No Falling: Solid to actors in the falling state."
 		Tiles.NoGrounded:
 			text = "No Grounded: Solid to actors in the grounded state."
+		Tiles.PhaseBoardEast:
+			text = "Phase Board One Way: A non-destroyable floorboard that exists when an actor is attempting to leave or enter this tile by this direction."
+		Tiles.PhaseBoardNorth:
+			text = "Phase Board One Way: A non-destroyable floorboard that exists when an actor is attempting to leave or enter this tile by this direction."
+		Tiles.PhaseBoardSouth:
+			text = "Phase Board One Way: A non-destroyable floorboard that exists when an actor is attempting to leave or enter this tile by this direction."
+		Tiles.PhaseBoardWest:
+			text = "Phase Board One Way: A non-destroyable floorboard that exists when an actor is attempting to leave or enter this tile by this direction."
 	return text;
 	
 func picker_tooltip() -> void:

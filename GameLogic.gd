@@ -357,6 +357,10 @@ enum Tiles {
 	NoRising, #166
 	NoFalling, #167
 	NoGrounded, #168
+	PhaseBoardEast, #169
+	PhaseBoardNorth, #170
+	PhaseBoardSouth, #171
+	PhaseBoardWest, #172
 }
 var voidlike_tiles : Array = [];
 
@@ -2518,6 +2522,18 @@ func ready_map() -> void:
 		elif (any_layer_has_this_tile(Tiles.PhaseBoardVoid)):
 			has_floorboards = true;
 			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardEast)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardNorth)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardSouth)):
+			has_floorboards = true;
+			has_phaseboards = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseBoardWest)):
+			has_floorboards = true;
+			has_phaseboards = true;
 			
 		if (has_phaseboards):
 			phaseboards_rotation();
@@ -4270,6 +4286,14 @@ func phaseboard_active(pos: Vector2, actor: Actor, chrono: int, id: int) -> bool
 			return actor == light_actor;
 		Tiles.PhaseBoardCrate:
 			return actor != heavy_actor and actor != light_actor;
+		Tiles.PhaseBoardEast:
+			return actor != null and actor.pos.x > pos.x;
+		Tiles.PhaseBoardWest:
+			return actor != null and actor.pos.x < pos.x;
+		Tiles.PhaseBoardNorth:
+			return actor != null and actor.pos.y < pos.y;
+		Tiles.PhaseBoardSouth:
+			return actor != null and actor.pos.y > pos.y;
 	return false;
 
 func terrain_in_tile(pos: Vector2, actor: Actor = null, chrono: int = Chrono.TIMELESS, xray: bool = false) -> Array:
@@ -4328,8 +4352,8 @@ func all_rotation(candidates: Array) -> void:
 
 var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
 var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true};
-var phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardVoid, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife, Tiles.PhaseBoardHeavy, Tiles.PhaseBoardLight, Tiles.PhaseBoardCrate];
-var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardVoid: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true};
+var phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardVoid, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife, Tiles.PhaseBoardHeavy, Tiles.PhaseBoardLight, Tiles.PhaseBoardCrate, Tiles.PhaseBoardEast, Tiles.PhaseBoardNorth, Tiles.PhaseBoardSouth, Tiles.PhaseBoardWest];
+var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardVoid: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true, Tiles.PhaseBoardEast: true, Tiles.PhaseBoardNorth: true, Tiles.PhaseBoardSouth: true, Tiles.PhaseBoardWest: true};
 
 func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 	if id in floorboards_ids:
@@ -4447,7 +4471,11 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 	return Success.Surprise;
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool, chrono: int, hypothetical: bool) -> bool:
-	var terrain = terrain_in_tile(actor.pos, actor, chrono);
+	# This is a hack for directional phaseboards.
+	var old_pos = actor.pos;
+	actor.pos += dir;
+	var terrain = terrain_in_tile(old_pos, actor, chrono);
+	actor.pos = old_pos;
 	var blocked = Success.Yes;
 	flash_terrain = -1;
 	

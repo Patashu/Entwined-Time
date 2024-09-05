@@ -1,4 +1,4 @@
-[gd_scene load_steps=450 format=2]
+[gd_scene load_steps=454 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -415,6 +415,10 @@
 [ext_resource path="res://assets/no_grounded.png" type="Texture" id=413]
 [ext_resource path="res://assets/no_rising.png" type="Texture" id=414]
 [ext_resource path="res://assets/no_falling.png" type="Texture" id=415]
+[ext_resource path="res://assets/phase_board_south.png" type="Texture" id=416]
+[ext_resource path="res://assets/phase_board_east.png" type="Texture" id=417]
+[ext_resource path="res://assets/phase_board_north.png" type="Texture" id=418]
+[ext_resource path="res://assets/phase_board_west.png" type="Texture" id=419]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1776,3 +1780,19 @@ texture = ExtResource( 415 )
 [node name="NoGrounded" type="Sprite" parent="."]
 position = Vector2( 353, 118 )
 texture = ExtResource( 413 )
+
+[node name="PhaseBoardEast" type="Sprite" parent="."]
+position = Vector2( 321, 144 )
+texture = ExtResource( 417 )
+
+[node name="PhaseBoardNorth" type="Sprite" parent="."]
+position = Vector2( 327, 149 )
+texture = ExtResource( 418 )
+
+[node name="PhaseBoardSouth" type="Sprite" parent="."]
+position = Vector2( 327, 140 )
+texture = ExtResource( 416 )
+
+[node name="PhaseBoardWest" type="Sprite" parent="."]
+position = Vector2( 332, 144 )
+texture = ExtResource( 419 )
