@@ -4050,7 +4050,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# (update: grounded robot or any other actor)
 		if (slope_next_dir != Vector2.ZERO):
 			if (infinite_loop_check >= 100):
-				lose("Infinite loop.", null);
+				lose("Infinite loop.", null, true);
 				return Success.No;
 			if (lost):
 				return Success.No;
@@ -5301,7 +5301,7 @@ func open_doors(id: int) -> void:
 		voidlike_puzzle = true;
 		play_sound("onemillionyears");
 
-func lose(reason: String, suspect: Actor) -> void:
+func lose(reason: String, suspect: Actor, lose_instantly: bool = false) -> void:
 	lost = true;
 	if (suspect != null and suspect.time_colour == TimeColour.Void or lost_void):
 		lost_void = true;
@@ -5311,6 +5311,8 @@ func lose(reason: String, suspect: Actor) -> void:
 		winlabel.change_text(reason + "\n\nUndo or Restart to continue.")
 	if (has_void_gates):
 		open_doors(Tiles.GateOfEternity);
+	if (lose_instantly):
+		fade_in_lost();
 	
 func end_lose() -> void:
 	lost = false;
@@ -7327,7 +7329,7 @@ func time_passes(chrono: int) -> void:
 		a.just_moved = false;
 		
 	if (tries == 0):
-		lose("Infinite loop.", null);
+		lose("Infinite loop.", null, true);
 		banish_time_crystals();
 		return;
 	
@@ -7444,7 +7446,7 @@ func time_passes(chrono: int) -> void:
 			something_happened = false;
 			c += 1;
 			if (c >= 99):
-				lose("Infinite loop.", null);
+				lose("Infinite loop.", null, true);
 				banish_time_crystals();
 				return;
 			for actor in actors:
