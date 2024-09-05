@@ -5363,6 +5363,8 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 	if (chrono < Chrono.GHOSTS):
 		# sanity check: prevent, for example, spotlight from making a broken->broken event
 		if (old_value == value):
+			# but first, a copy of this because it's what flickers timeline symbols out of existence :B
+			add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
 			return
 		actor.set(prop, value);
 		
