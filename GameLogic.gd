@@ -3499,6 +3499,7 @@ func prepare_audio() -> void:
 	sounds["heavystep"] = preload("res://sfx/heavystep.ogg");
 	sounds["heavyuncoyote"] = preload("res://sfx/heavyuncoyote.ogg");
 	sounds["heavyunland"] = preload("res://sfx/heavyunland.ogg");
+	sounds["infloop"] = preload("res://sfx/infloop.ogg");
 	sounds["involuntarybump"] = preload("res://sfx/involuntarybump.ogg");
 	sounds["involuntarybumplight"] = preload("res://sfx/involuntarybumplight.ogg");
 	sounds["involuntarybumpother"] = preload("res://sfx/involuntarybumpother.ogg");
@@ -3622,6 +3623,8 @@ func prepare_audio() -> void:
 	self.add_child(music_speaker);
 
 func fade_in_lost():
+	if (Shade.on):
+		return;
 	winlabel.visible = true;
 	call_deferred("adjust_winlabel");
 	Shade.on = true;
@@ -5342,7 +5345,10 @@ func lose(reason: String, suspect: Actor, lose_instantly: bool = false) -> void:
 	if (has_void_gates):
 		open_doors(Tiles.GateOfEternity);
 	if (lose_instantly):
+		lost_speaker.stream = sounds["infloop"];
 		fade_in_lost();
+	else:
+		lost_speaker.stream = sounds["lose"];
 	
 func end_lose() -> void:
 	lost = false;
