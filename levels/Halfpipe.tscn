@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 7, 0, 1, 2, 0, 10, 8, 0, 11, 1, 0, 65536, 14, 2, 65537, 14, 4, 65538, 99, 0, 65545, 98, 0, 65546, 14, 2, 65547, 14, 4, 131072, 14, 65538, 131073, 14, 917510, 131074, 14, 4, 131075, 99, 0, 131080, 98, 0, 131081, 14, 2, 131082, 14, 917509, 131083, 14, 65540, 196608, 14, 65538, 196609, 14, 65539, 196610, 14, 917510, 196611, 14, 4, 196612, 99, 0, 196615, 98, 0, 196616, 14, 2, 196617, 14, 917509, 196618, 14, 65539, 196619, 14, 65540, 262144, 14, 131074, 262145, 14, 131075, 262146, 14, 131075, 262147, 14, 786435, 262148, 14, 196615, 262149, 99, 0, 262150, 98, 0, 262151, 14, 196613, 262152, 14, 720899, 262153, 14, 131075, 262154, 14, 131075, 262155, 14, 131076 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Halfpipe"
+level_author = "Onatron"
+level_replay = "Halfpipe$mturn=71$wddxaaxdzxzzxdzdzdxaaxzzdxzaxzdxzaxzzxaaxwzxzzzzxzwxdxzawxzxzddxwxzzawxdxzaxwaxzzaxzzxdxwxzxzzdxzzddd"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
+setup_replay = ""

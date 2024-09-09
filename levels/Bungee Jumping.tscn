@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 2, 0, 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 196615, 65537, 8, 0, 65539, 14, 262145, 131072, 14, 196613, 131073, 14, 524292, 131075, 14, 262145, 196609, 14, 327681, 196611, 14, 327681, 327684, 1, 0, 327685, 7, 0, 393220, 14, 196613, 393221, 14, 196615, 655362, 14, 196613, 655363, 14, 196615 )
+
+[node name="@@314" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 38, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Bungee Jumping"
+level_author = "Onatron & Green"
+level_replay = "Bungee Jumping$mturn=85$wxaxwxdxzzaxzxzwxwxzawxaxzdwxzxzaxwxzxzxdxzxzzzxzxwdxwdxdxzzwdxwxzzdaxzxsxzxzzzsxdzxwdxdxzzdaxzxzzwdxdwxzzxzxsxzxsxdxzzzwdwxzxzdxwz"
+heavy_max_moves = 4.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
+setup_replay = ""

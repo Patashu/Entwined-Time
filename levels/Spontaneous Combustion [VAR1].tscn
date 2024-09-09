@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 524290, 65537, 14, 655364, 65542, 14, 655362, 65543, 14, 524292, 131072, 14, 262145, 131073, 7, 0, 131075, 2, 0, 131076, 8, 0, 131078, 1, 0, 131079, 14, 262145, 196608, 14, 655362, 196609, 14, 524292, 196614, 14, 524290, 196615, 14, 655364, 262145, 14, 655362, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 655364 )
+
+[node name="@@263" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 0, 0, 65540, 0, 0, 131075, 0, 0, 131076, 0, 0, 196611, 0, 0, 196612, 0, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Spontaneous Combustion [VAR1]"
+level_author = "Onatron"
+level_replay = "Spontaneous Combustion [VAR1]$mturn=35$dxdxzaxwdxzaxzzzsxzdxzaxzdxzxzdxwaxzadxzzxzzdwdxwa"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
+setup_replay = ""
