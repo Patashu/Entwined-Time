@@ -7,19 +7,13 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 7, 0, 2, 1, 0, 65536, 14, 262148, 65538, 14, 262148, 196609, 14, 262148 )
-
-[node name="@@129" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 0, 2, 0, 2, 8, 0 )
+tile_data = PoolIntArray( 0, 7, 0, 2, 1, 0, 65536, 2, 0, 65538, 8, 0, 131072, 14, 262148, 131074, 14, 262148, 262145, 14, 262148 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "World's Tiniest Pit"
 level_author = "Patashu"
-level_replay = "World's Tiniest Pit$mturn=12$xaxwzxzsxdwdxzwxzd"
+level_replay = "World's Tiniest Pit$mturn=27$xaxwzxzsxdwdxzwxzxzxzzswxdxzwxzsxzzwdxzxw"
 heavy_max_moves = 3.0
 light_max_moves = 1.0
 clock_turns = ""

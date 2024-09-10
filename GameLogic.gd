@@ -1705,7 +1705,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("UphillL2")
 	level_filenames.push_back("DownhillL2")
 	level_filenames.push_back("RoommatesL2")
-	level_filenames.push_back("RoommatesL2Ex")
 	level_filenames.push_back("KnotL2")
 	level_filenames.push_back("CarryingItL2")
 	level_filenames.push_back("PachinkoL2")
@@ -1797,12 +1796,12 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("World's Tiniest Pit")
-	level_filenames.push_back("World's Tiniest Pit [VAR1]")
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Trust Fall [VAR2]")
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Hell [VAR2]")
+	level_filenames.push_back("Pachinko (Insight) (Remix)")
+	level_filenames.push_back("World's Tiniest Pit")
 	level_filenames.push_back("Light Moooving Service [VAR1]")
 	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Booster Seat [VAR1]")
