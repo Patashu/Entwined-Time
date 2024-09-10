@@ -5045,10 +5045,11 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					# When making a non-gravity move, if the push fails, unbroken Heavy can break a solo Wooden Crate, unbroken Light can push a Wooden Crate upwards.
 					# since wooden crate did a bump, robot needs to do a bump too to sync up animations
 					# should be OK to have the nonce be -1 since the real thing will still happen?
-					add_to_animation_server(actor, [Animation.bump, dir, -1]);
-					if actor.actorname == Actor.Name.Heavy:
+					if actor.actorname == Actor.Name.Heavy and actor_there.durability <= Durability.SPIKES:
+						add_to_animation_server(actor, [Animation.bump, dir, -1]);
 						set_actor_var(actor_there, "broken", true, chrono);
 					elif actor.actorname == Actor.Name.Light:
+						add_to_animation_server(actor, [Animation.bump, dir, -1]);
 						dir = Vector2.UP;
 						# check again if we can push it up
 						actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
@@ -5058,6 +5059,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 						elif(actor_there_result == Success.Surprise):
 							result = Success.Surprise;
 							surprises.append(actor_there);
+					else:
+						pushers_list.pop_front();
+						return Success.No;
 				elif (!actor.broken and pushables_there.size() == 1 and actor.actorname == Actor.Name.SteelCrate and !actor_there.broken and (actor_there.actorname == Actor.Name.Light or actor_there.actorname == Actor.Name.CuckooClock)):
 					# 'Steel Crates special moves'
 					# If an unbroken steel crate tries to move into a solo unbroken Light or Cuckoo Clock for any reason, the target first breaks.

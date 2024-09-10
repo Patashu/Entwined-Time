@@ -857,7 +857,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.ColourMagenta:
 			text = "Magenta: Colour. (Attaches to the first actor to enter or start in its tile it can modify.) Always experiences time."
 		Tiles.WoodenCrate:
-			text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead."
+			text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead (failing if the Wooden Crate has Durability of Spikes or higher)."
 		Tiles.GlassBlock:
 			text = "Glass Block: Solid to moves entering or exiting its tile. Surprise: If the actor is Iron weight or greater, the Glass Block breaks. When a Glass Block unbreaks, it breaks any actors that don't have Unbreakable durability."
 		Tiles.ColourGreen:
