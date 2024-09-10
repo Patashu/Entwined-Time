@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -12,10 +12,8 @@ tile_data = PoolIntArray( 0, 1, 0, 1, 7, 0, 65536, 14, 2, 65537, 14, 3, 65538, 1
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Cliffs (Loop 2)"
-level_author = "Patashu"
-level_replay = "Cliffs (Loop 2)$mturn=78$dddsxwaxzzxzzxaxadxzzddsxzxzzxaxaaxzxzwxaxzdxzxzzzzxazaxwddxzxwxzxzzzzaxaxwxaxzwaxzxzzswxaxzzaxzxdxwxdxzaxzzzaaaxzs"
+level_replay = "Cliffs (Loop 2)$mturn=50$dddsxwaxzzxzzxdsxaxzzxaxaxzxwxaxzdxzwxzxzxzzzxzxaxdxwxaxzdwxzxzzsxzwaxzaaaxzz"
 heavy_max_moves = 4.0
 light_max_moves = 2.0
-clock_turns = ""
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0
