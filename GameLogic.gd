@@ -4843,12 +4843,16 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.PinkJelly:
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
+				var found: int = 0;
+				var required: int = terrain.count(Tiles.PinkJelly);
 				result = Success.No;
 				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
 						if anim[0] == actor and anim[1][0] == Animation.move:
-							result = Success.Yes;
-							break;
+							found += 1;
+							if (found >= required):
+								result = Success.Yes;
+								break;
 					if (result == Success.Yes):
 						break;
 				if (result == Success.No):
@@ -4857,12 +4861,16 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.CyanJelly:
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
+				var found: int = 0;
+				var required: int = terrain.count(Tiles.CyanJelly);
 				result = Success.No;
 				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
 						if anim[0] == actor and (anim[1][0] == Animation.move or anim[1][0] == Animation.bump):
-							result = Success.Yes;
-							break;
+							found += 1;
+							if (found >= required):
+								result = Success.Yes;
+								break;
 					if (result == Success.Yes):
 						break;
 				if (result == Success.No):
