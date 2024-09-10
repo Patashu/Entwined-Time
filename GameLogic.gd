@@ -4565,31 +4565,31 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 					flash_colour = no_foo_flash;
 			Tiles.SpiderWeb:
 				if (!is_retro):
-					if terrain.count(Tiles.SpiderWeb) >= 2 or terrain.count(Tiles.SpiderWebGreen) >= 1:
-						flash_terrain = id;
-						flash_colour = no_foo_flash;
-						return Success.No;
+					var found: int = 0;
+					var required: int = terrain.count(Tiles.SpiderWeb);
 					while animation_server.size() <= animation_substep:
 						animation_server.push_back([]);
 					for a in range (animation_substep+1):
 						for anim in animation_server[a]:
 							if anim[0] == actor and anim[1][0] == Animation.move and !anim[1][2]:
-								flash_terrain = id;
-								flash_colour = no_foo_flash;
-								return Success.No;
+								found += 1;
+								if (found >= required):
+									flash_terrain = id;
+									flash_colour = no_foo_flash;
+									return Success.No;
 			Tiles.SpiderWebGreen:
-				if terrain.count(Tiles.SpiderWebGreen) >= 2:
-					flash_terrain = id;
-					flash_colour = no_foo_flash;
-					return Success.No;
+				var found: int = 0;
+				var required: int = terrain.count(Tiles.SpiderWebGreen);
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
 				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
 						if anim[0] == actor and anim[1][0] == Animation.move:
-							flash_terrain = id;
-							flash_colour = no_foo_flash;
-							return Success.No;
+							found += 1;
+							if (found >= required):
+								flash_terrain = id;
+								flash_colour = no_foo_flash;
+								return Success.No;
 		if blocked != Success.Yes:
 			return blocked;
 	return Success.Yes;
