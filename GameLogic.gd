@@ -3508,6 +3508,7 @@ func prepare_audio() -> void:
 	sounds["bump"] = preload("res://sfx/bump.ogg");
 	sounds["continuum"] = preload("res://sfx/continuum.ogg");
 	sounds["eclipse"] = preload("res://sfx/eclipse.ogg");
+	sounds["exception"] = preload("res://sfx/exception.ogg");
 	sounds["fall"] = preload("res://sfx/fall.ogg");
 	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
 	sounds["greenfire"] = preload("res://sfx/greenfire.ogg");
@@ -3625,6 +3626,12 @@ func prepare_audio() -> void:
 	music_tracks.append(preload("res://sfx/lose.ogg"));
 	music_info.append("Patashu - Abyss of the Lost");
 	music_db.append(-3.0);
+	music_tracks.append(preload("res://sfx/infloop.ogg"));
+	music_info.append("Patashu - Memories Fade To Dreams");
+	music_db.append(-3.0);
+	music_tracks.append(preload("res://sfx/exception.ogg"));
+	music_info.append("Patashu - Exception Handler");
+	music_db.append(0.0);
 	
 	for i in range (8):
 		var speaker = AudioStreamPlayer.new();
@@ -4089,7 +4096,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# (update: grounded robot or any other actor)
 		if (slope_next_dir != Vector2.ZERO):
 			if (infinite_loop_check >= 100):
-				lose("Infinite loop.", null, true);
+				lose("Infinite loop.", null, true, "infloop");
 				return Success.No;
 			if (lost):
 				return Success.No;
@@ -5352,7 +5359,7 @@ func open_doors(id: int) -> void:
 		voidlike_puzzle = true;
 		play_sound("onemillionyears");
 
-func lose(reason: String, suspect: Actor, lose_instantly: bool = false) -> void:
+func lose(reason: String, suspect: Actor, lose_instantly: bool = false, music: String = "lose") -> void:
 	lost = true;
 	if (suspect != null and suspect.time_colour == TimeColour.Void or lost_void):
 		lost_void = true;
@@ -5362,11 +5369,9 @@ func lose(reason: String, suspect: Actor, lose_instantly: bool = false) -> void:
 		winlabel.change_text(reason + "\n\nUndo or Restart to continue.")
 	if (has_void_gates):
 		open_doors(Tiles.GateOfEternity);
+	lost_speaker.stream = sounds[music];
 	if (lose_instantly):
-		lost_speaker.stream = sounds["infloop"];
 		fade_in_lost();
-	else:
-		lost_speaker.stream = sounds["lose"];
 	
 func end_lose() -> void:
 	lost = false;
@@ -6282,7 +6287,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			# 'Negativity' crash prevention
 			if (event[1] < 0):
 				lost_void = true;
-				lose("What have you DONE", null);
+				lose("What have you DONE", null, false, "exception");
 				return;
 			# meta undo an undo creates a char undo event but not a meta undo event, it's special!
 			while (heavy_undo_buffer.size() <= event[1]):
@@ -6291,7 +6296,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		Undo.light_undo_event_remove:
 			if (event[1] < 0):
 				lost_void = true;
-				lose("What have you DONE", null);
+				lose("What have you DONE", null, false, "exception");
 				return;
 			while (light_undo_buffer.size() <= event[1]):
 				light_undo_buffer.append([]);
@@ -7388,7 +7393,7 @@ func time_passes(chrono: int) -> void:
 		a.just_moved = false;
 		
 	if (tries == 0):
-		lose("Infinite loop.", null, true);
+		lose("Infinite loop.", null, true, "infloop");
 		banish_time_crystals();
 		return;
 	
@@ -7432,7 +7437,7 @@ func time_passes(chrono: int) -> void:
 						var diff = actor.pos - actor2.pos;
 						if (abs(diff.x) <= 1 and abs(diff.y) <= 1):
 							if (diff.x == 0 and diff.y == 0):
-								lose("What have you DONE", actor);
+								lose("What have you DONE", actor, false, "exception");
 							else:
 								add_to_animation_server(actor, [Animation.sfx, "fall"]);
 								move_actor_relative(actor, diff, chrono, false, false);
@@ -7443,7 +7448,7 @@ func time_passes(chrono: int) -> void:
 						var diff = actor.pos - actor2.pos;
 						if (abs(diff.x) <= 1 and abs(diff.y) <= 1):
 							if (diff.x == 0 and diff.y == 0):
-								lose("What have you DONE", actor);
+								lose("What have you DONE", actor, false, "exception");
 							else:
 								add_to_animation_server(actor, [Animation.sfx, "fall"]);
 								move_actor_relative(actor, diff, chrono, false, false);
@@ -7505,7 +7510,7 @@ func time_passes(chrono: int) -> void:
 			something_happened = false;
 			c += 1;
 			if (c >= 99):
-				lose("Infinite loop.", null, true);
+				lose("Infinite loop.", null, true, "infloop");
 				banish_time_crystals();
 				return;
 			for actor in actors:

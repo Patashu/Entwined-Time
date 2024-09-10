@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/exception.ogg-72ef38e45137bf65577b4f73d817a7ba.oggstr"
+
+[deps]
+
+source_file="res://sfx/exception.ogg"
+dest_files=[ "res://.import/exception.ogg-72ef38e45137bf65577b4f73d817a7ba.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
