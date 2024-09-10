@@ -1,17 +1,22 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 3, 14, 196613, 4, 14, 393219, 5, 14, 3, 6, 14, 3, 7, 14, 3, 8, 14, 3, 9, 14, 3, 10, 14, 3, 11, 14, 3, 12, 14, 3, 13, 14, 4, 65540, 14, 131074, 65541, 14, 917512, 65542, 14, 65539, 65543, 14, 65539, 65544, 14, 65539, 65545, 14, 65539, 65546, 14, 65539, 65547, 14, 65539, 65548, 14, 65539, 65549, 14, 65540, 131077, 14, 131074, 131078, 14, 917512, 131079, 14, 65539, 131080, 14, 65539, 131081, 14, 65539, 131082, 14, 65539, 131083, 14, 65539, 131084, 14, 65539, 131085, 14, 65540, 196614, 14, 131074, 196615, 14, 917512, 196616, 14, 65539, 196617, 14, 65539, 196618, 14, 65539, 196619, 14, 65539, 196620, 14, 65539, 196621, 14, 65540, 262144, 8, 0, 262151, 14, 131074, 262152, 14, 917512, 262153, 14, 65539, 262154, 14, 65539, 262155, 14, 917511, 262156, 14, 131075, 262157, 14, 589829, 327680, 2, 0, 327688, 14, 131074, 327689, 14, 131075, 327690, 14, 786440, 327691, 14, 131076, 327692, 1, 0, 327693, 14, 262145, 393216, 14, 196613, 393217, 14, 196614, 393218, 14, 196615, 393226, 14, 327681, 393229, 14, 262145, 458755, 14, 196613, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196615, 458762, 7, 0, 458764, 14, 2, 458765, 14, 589830, 524296, 14, 196613, 524297, 14, 196614, 524298, 14, 196614, 524299, 14, 196614, 524300, 14, 720899, 524301, 14, 131076 )
+tile_data = PoolIntArray( 4, 14, 196613, 5, 14, 393219, 6, 14, 3, 7, 14, 3, 8, 14, 3, 9, 14, 3, 10, 14, 3, 11, 14, 3, 12, 14, 3, 13, 14, 3, 14, 14, 4, 65541, 14, 131074, 65542, 14, 917512, 65543, 14, 65539, 65544, 14, 65539, 65545, 14, 65539, 65546, 14, 65539, 65547, 14, 65539, 65548, 14, 65539, 65549, 14, 65539, 65550, 14, 65540, 131078, 14, 131074, 131079, 14, 917512, 131080, 14, 65539, 131081, 14, 65539, 131082, 14, 65539, 131083, 14, 65539, 131084, 14, 65539, 131085, 14, 65539, 131086, 14, 65540, 196615, 14, 131074, 196616, 14, 917512, 196617, 14, 65539, 196618, 14, 65539, 196619, 14, 65539, 196620, 14, 65539, 196621, 14, 65539, 196622, 14, 65540, 262144, 8, 0, 262152, 14, 131074, 262153, 14, 917512, 262154, 14, 65539, 262155, 14, 65539, 262156, 14, 65539, 262157, 14, 65539, 262158, 14, 65540, 327680, 2, 0, 327689, 14, 131074, 327690, 14, 131075, 327691, 14, 786440, 327692, 14, 131075, 327693, 14, 131075, 327694, 14, 589829, 393216, 14, 196613, 393217, 14, 196614, 393218, 14, 196615, 393227, 14, 327681, 393228, 7, 0, 393229, 1, 0, 393230, 14, 262145, 458755, 14, 196613, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196614, 458760, 14, 196615, 458761, 30, 0, 458765, 14, 2, 458766, 14, 589830, 524297, 14, 196613, 524298, 14, 196614, 524299, 14, 196614, 524300, 14, 196614, 524301, 14, 720899, 524302, 14, 131076 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Spelunking (Loop 2)"
-level_replay = "Spelunking (Loop 2)$mturn=164$xdxwzxzdxdxzdxdxzxdxdxzzzxcccccxdxdxzzzwddxzxzzzaxdxdxzxzzdxaxzxzxaxwxdxzaxwzzxzxzxwzxaxwxaxzxdcxdxdxzsxzzcxzxaxdxzxzdxdxzxzwxdxzaxzxzzxdxaxzxzxdcxaxdxdxzxzzzaxdxdxzxzzxdxdxzxdxdxzzxzxaxdxzsxzxzcxwzxzxwzwxdxzaxwzxzxzxwxadxzaxwzxzxzxwxadxzaxcxzawxzzxzaxadxzsxzzzxzaxaaaxzdxzxxzzxzxaawxdxzaxzxzxdxzwccxaxzxzxzwdwcxdxzcw"
-heavy_max_moves = 3
-light_max_moves = 1
+level_author = "Patashu"
+level_replay = "Spelunking (Loop 2)$mturn=99$xdxwzxzdxdxzdxdxzxdxdxzzzxzxaxdxzsxzxzxwxdxzaxwzxzxzxwxaxzdxzadxzsxzxzdxadxzsxzxzdxzzxzxaxdxwzzxzdxdxzwxddxzdxzzzdddzzzxzwxaxzxddzzzxdxaxzxdxdxaxzxzxaxzzwxzxdxw"
+heavy_max_moves = 3.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""
