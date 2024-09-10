@@ -1,17 +1,28 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 3, 1, 0, 65539, 2, 0, 131075, 14, 262148, 262146, 14, 262148, 262148, 14, 262148, 327680, 8, 0, 327686, 7, 0, 393216, 14, 196613, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196615 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 131072, 14, 262145, 131074, 14, 262148, 131075, 1, 0, 131076, 14, 262145, 196608, 14, 262145, 196611, 7, 0, 196612, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655364 )
+
+[node name="@@206" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 2, 0, 196609, 8, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Pachinko (Insight)"
-level_replay = "Pachinko (Insight)$mturn=17$xddxaaxzzddxzdxzzddxzzw"
-heavy_max_moves = 2
-light_max_moves = 2
+level_author = "Patashu"
+level_replay = "Pachinko (Insight)$mturn=6$xdxaxzdxzd"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""
