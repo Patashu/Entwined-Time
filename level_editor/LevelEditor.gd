@@ -1063,9 +1063,9 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.PhaseBoardCrate:
 			text = "Phase Board Crate: A non-destroyable floorboard that exists whenever any actor besides the real Heavy/Light is asking."
 		Tiles.SpiderWeb:
-			text = "Spider Web: Solid to non-retro moves exiting this tile if the actor has already non-retro moved 1 or more times this turn."
+			text = "Spider Web: Solid to non-retro moves exiting this tile if the actor has already non-retro moved 1 or more times this turn. (A second web or green web changes this to: Solid to non-retro moves exiting this tile.)"
 		Tiles.SpiderWebGreen:
-			text = "Green Spider Web: Solid to moves exiting this tile if the actor has already moved 1 or more times this turn."
+			text = "Green Spider Web: Solid to moves exiting this tile if the actor has already moved 1 or more times this turn. (A second green web changes this to: Solid to moves exiting this tile.)"
 		Tiles.NoPush:
 			text = "No Push: Solid to non-retro pushes."
 		Tiles.NoPushGreen:

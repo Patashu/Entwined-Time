@@ -4562,6 +4562,10 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 					flash_colour = no_foo_flash;
 			Tiles.SpiderWeb:
 				if (!is_retro):
+					if terrain.count(Tiles.SpiderWeb) >= 2 or terrain.count(Tiles.SpiderWebGreen) >= 1:
+						flash_terrain = id;
+						flash_colour = no_foo_flash;
+						return Success.No;
 					while animation_server.size() <= animation_substep:
 						animation_server.push_back([]);
 					for a in range (animation_substep+1):
@@ -4571,6 +4575,10 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 								flash_colour = no_foo_flash;
 								return Success.No;
 			Tiles.SpiderWebGreen:
+				if terrain.count(Tiles.SpiderWebGreen) >= 2:
+					flash_terrain = id;
+					flash_colour = no_foo_flash;
+					return Success.No;
 				while animation_server.size() <= animation_substep:
 					animation_server.push_back([]);
 				for a in range (animation_substep+1):
