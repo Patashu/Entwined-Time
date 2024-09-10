@@ -13,7 +13,7 @@ tile_data = PoolIntArray( 8, 2, 0, 9, 8, 0, 65544, 14, 2, 65545, 14, 3, 65546, 1
 script = ExtResource( 2 )
 level_name = "Downhill (Loop 2)"
 level_author = "Patashu"
-level_replay = "Downhill (Loop 2)$mturn=58$wxaxzdxzaxzxzxaxaxzaxzaxzaxzaxzaxzaxzaxzaxzaxzdxzwxzxzdxaxzsxzazxzxwzwzwxaxzdxzaxzsxzdxzw"
+level_replay = "Downhill (Loop 2)$mturn=52$wxaxzdxzaxzxzxaxaxzaxzaxzaxzaxzaxzaxzaxzaxzaxzdxzwxzxzdxaxzsxzxzxwxaxzdxzaxzsxzdxzw"
 heavy_max_moves = 1.0
 light_max_moves = 1.0
 clock_turns = ""
