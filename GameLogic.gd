@@ -2013,6 +2013,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Anonymous Delivery [VAR1]")
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Falling Uphill")
+	level_filenames.push_back("Grounded Uphill [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Underflow")
 	level_filenames.push_back("Woodskip [VAR1]")
