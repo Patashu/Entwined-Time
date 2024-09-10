@@ -1,4 +1,4 @@
-[gd_scene load_steps=454 format=2]
+[gd_scene load_steps=455 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -419,6 +419,7 @@
 [ext_resource path="res://assets/phase_board_east.png" type="Texture" id=417]
 [ext_resource path="res://assets/phase_board_north.png" type="Texture" id=418]
 [ext_resource path="res://assets/phase_board_west.png" type="Texture" id=419]
+[ext_resource path="res://assets/repair_station_bumper.png" type="Texture" id=420]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1796,3 +1797,7 @@ texture = ExtResource( 416 )
 [node name="PhaseBoardWest" type="Sprite" parent="."]
 position = Vector2( 332, 144 )
 texture = ExtResource( 419 )
+
+[node name="RepairStationBumper" type="Sprite" parent="."]
+position = Vector2( 401, 123 )
+texture = ExtResource( 420 )

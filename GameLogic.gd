@@ -361,6 +361,7 @@ enum Tiles {
 	PhaseBoardNorth, #170
 	PhaseBoardSouth, #171
 	PhaseBoardWest, #172
+	RepairStationBumper, #173
 }
 var voidlike_tiles : Array = [];
 
@@ -2453,6 +2454,8 @@ func ready_map() -> void:
 		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
 			has_repair_stations = true;
 		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationBumper)):
 			has_repair_stations = true;
 			
 		if (any_layer_has_this_tile(Tiles.Boulder)):
@@ -4637,6 +4640,13 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Green, chrono);
 			Tiles.VoidPowerSocket:
 				result = maybe_break_actor(actor, Durability.PITS, hypothetical, Greenness.Void, chrono);
+			Tiles.RepairStationBumper:
+				if actor.broken:
+					if (!hypothetical):
+						set_actor_var(actor, "broken", false, chrono);
+					return Success.Surprise;
+				else:
+					return Success.No;
 			Tiles.NoHeavy:
 				result = no_if_true_yes_if_false(actor.actorname == Actor.Name.Heavy);
 				if (result == Success.No):
@@ -5610,6 +5620,8 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 		if (any_layer_has_this_tile(Tiles.RepairStationGreen)):
 			return true;
 		if (any_layer_has_this_tile(Tiles.RepairStationGray)):
+			return true;
+		if (any_layer_has_this_tile(Tiles.RepairStationBumper)):
 			return true;
 		var buffers = [heavy_undo_buffer, light_undo_buffer, heavy_locked_turns, light_locked_turns];
 		for buffer in buffers:

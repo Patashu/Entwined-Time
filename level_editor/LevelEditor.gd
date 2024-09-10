@@ -176,6 +176,7 @@ enum Tiles {
 	PhaseBoardNorth, #170
 	PhaseBoardSouth, #171
 	PhaseBoardWest, #172
+	RepairStationBumper, #173
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -460,6 +461,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.PhaseBoardNorth)
 		picker_array.append(Tiles.PhaseBoardSouth)
 		picker_array.append(Tiles.PhaseBoardWest)
+		picker_array.append(Tiles.RepairStationBumper)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1126,6 +1128,8 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Phase Board One Way: A non-destroyable floorboard that exists when an actor is attempting to leave or enter this tile by this direction."
 		Tiles.PhaseBoardWest:
 			text = "Phase Board One Way: A non-destroyable floorboard that exists when an actor is attempting to leave or enter this tile by this direction."
+		Tiles.RepairStationBumper:
+			text = "Repair Station Bumper: Solid. Surprise: If the actor is broken, repair it."
 	return text;
 	
 func picker_tooltip() -> void:
