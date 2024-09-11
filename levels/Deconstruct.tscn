@@ -3,33 +3,38 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
+[node name="" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 19, 0, 65538, 7, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 19, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 19, 0, 196612, 14, 262145, 262144, 14, 262145, 262145, 19, 0, 262148, 14, 262145, 327680, 14, 262145, 327681, 19, 0, 327684, 14, 262145, 393216, 14, 262145, 393217, 2, 0, 393219, 8, 0, 393220, 14, 262145, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 19, 0, 65538, 7, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 19, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 19, 0, 196612, 14, 262145, 262144, 14, 262145, 262145, 19, 0, 262148, 14, 262145, 327680, 14, 262145, 327681, 19, 0, 327684, 14, 262145, 393216, 14, 262145, 393217, 2, 0, 393219, 8, 0, 393220, 14, 262145, 458752, 14, 327681, 458753, 45, 0, 458754, 14, 196613, 458755, 14, 196614, 458756, 14, 655364 )
 
-[node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 2 )
-level_name = "Deconstruct"
-level_replay = "Deconstruct$mturn=49$wdsdxadawxzxzsxzzwdsdxzwxzxzxxsxzzwdsdxzwxzxzzzzxzzwdxwwwawxzzzzz"
-heavy_max_moves = 6
-light_max_moves = 6
-
-[node name="TileMap" type="TileMap" parent="."]
+[node name="@@141" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65538, 22, 0, 131073, 5, 0, 131074, 22, 0, 196609, 5, 0, 196610, 22, 0, 262145, 5, 0, 262146, 22, 0, 327681, 5, 0, 327682, 22, 0, 393217, 1, 0, 393218, 22, 0 )
+tile_data = PoolIntArray( 65538, 22, 0, 131074, 22, 0, 196609, 5, 0, 196610, 22, 0, 262145, 5, 0, 262146, 22, 0, 327681, 5, 0, 327682, 22, 0, 393217, 1, 0, 393218, 22, 0 )
 
-[node name="TileMap2" type="TileMap" parent="."]
+[node name="@@142" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131074, 45, 0, 131075, 45, 0, 196610, 45, 0, 196611, 45, 0, 262146, 45, 0, 262147, 45, 0, 327682, 45, 0, 327683, 45, 0, 393217, 19, 0 )
+tile_data = PoolIntArray( 65538, 45, 0, 65539, 45, 0, 131074, 45, 0, 131075, 45, 0, 196610, 45, 0, 196611, 45, 0, 262146, 45, 0, 262147, 45, 0, 327682, 45, 0, 327683, 45, 0, 393217, 19, 0 )
 
-[node name="TileMap3" type="TileMap" parent="."]
+[node name="@@143" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 393218, 45, 0, 393219, 36, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Deconstruct"
+level_author = "Patashu"
+level_replay = "Deconstruct$mturn=74$wdsdxadawxzzxzsxzwdsdxzwxzxzsxzzwdwxsxzdxzzwxzxzsxzwxsxzzzzxzxwwwddxzwxzxzzzzxzxsxsxzxzwdxwwwadxzxzaxzzz"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
+target_track = 7.0
+setup_replay = ""

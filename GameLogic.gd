@@ -1392,13 +1392,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("DoubleGlazedEx")
 	level_filenames.push_back("HeavyMovingServiceGlass")
 	level_filenames.push_back("IcyHot")
-	level_filenames.push_back("Deconstruct")
 	level_filenames.push_back("TheGlassPitEx")
-	level_filenames.push_back("TheRace")
 	level_filenames.push_back("Campfrost")
 	level_filenames.push_back("Campfrost-")
 	level_filenames.push_back("SpelunkingGlassEx")
+	level_filenames.push_back("TheRace")
 	level_filenames.push_back("LadderWorldGlassEx")
+	level_filenames.push_back("Deconstruct")
 	
 	chapter_names.push_back("Permanence");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
