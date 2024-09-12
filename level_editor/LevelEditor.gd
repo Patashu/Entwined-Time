@@ -177,6 +177,11 @@ enum Tiles {
 	PhaseBoardSouth, #171
 	PhaseBoardWest, #172
 	RepairStationBumper, #173
+	Fence, #174
+	Fan, #175
+	Bumper, #176
+	Passage, #177
+	GreenPassage, #178
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -462,6 +467,11 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.PhaseBoardSouth)
 		picker_array.append(Tiles.PhaseBoardWest)
 		picker_array.append(Tiles.RepairStationBumper)
+		picker_array.append(Tiles.Fence)
+		picker_array.append(Tiles.Fan)
+		picker_array.append(Tiles.Bumper)
+		picker_array.append(Tiles.Passage)
+		picker_array.append(Tiles.GreenPassage)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1130,6 +1140,16 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Phase Board One Way: A non-destroyable floorboard that exists when an actor is attempting to leave or enter this tile by this direction."
 		Tiles.RepairStationBumper:
 			text = "Repair Station Bumper: Solid. Surprise: If the actor is broken, repair it."
+		Tiles.Fence:
+			text = "Fence: Solid. Surprise: If the actor isn't grounded, it becomes grounded."
+		Tiles.Fan:
+			text = "Fan: Solid. Surprise: The actor becomes rising."
+		Tiles.Bumper:
+			text = "Bumper: Solid. Surprise: If the actor can move away from this, it does."
+		Tiles.Passage:
+			text = "Passage: Solid. Surprise: If the actor can move two past this, it does (creating a rewind event)."
+		Tiles.GreenPassage:
+			text = "Green Passage: Solid. Surprise: If the actor can move two past this, it does (greenly)."
 	return text;
 	
 func picker_tooltip() -> void:

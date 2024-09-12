@@ -1,4 +1,4 @@
-[gd_scene load_steps=455 format=2]
+[gd_scene load_steps=460 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -420,6 +420,11 @@
 [ext_resource path="res://assets/phase_board_north.png" type="Texture" id=418]
 [ext_resource path="res://assets/phase_board_west.png" type="Texture" id=419]
 [ext_resource path="res://assets/repair_station_bumper.png" type="Texture" id=420]
+[ext_resource path="res://assets/green_passage.png" type="Texture" id=421]
+[ext_resource path="res://assets/bumper.png" type="Texture" id=422]
+[ext_resource path="res://assets/fan.png" type="Texture" id=423]
+[ext_resource path="res://assets/fence.png" type="Texture" id=424]
+[ext_resource path="res://assets/passage.png" type="Texture" id=425]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1801,3 +1806,23 @@ texture = ExtResource( 419 )
 [node name="RepairStationBumper" type="Sprite" parent="."]
 position = Vector2( 401, 123 )
 texture = ExtResource( 420 )
+
+[node name="Fence" type="Sprite" parent="."]
+position = Vector2( 402, 208 )
+texture = ExtResource( 424 )
+
+[node name="Fan" type="Sprite" parent="."]
+position = Vector2( 404, 211 )
+texture = ExtResource( 423 )
+
+[node name="Bumper" type="Sprite" parent="."]
+position = Vector2( 409, 215 )
+texture = ExtResource( 422 )
+
+[node name="Passage" type="Sprite" parent="."]
+position = Vector2( 415, 217 )
+texture = ExtResource( 425 )
+
+[node name="GreenPassage" type="Sprite" parent="."]
+position = Vector2( 423, 219 )
+texture = ExtResource( 421 )

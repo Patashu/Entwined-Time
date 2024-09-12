@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=455 format=2]
+[gd_resource type="TileSet" load_steps=460 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -420,6 +420,11 @@
 [ext_resource path="res://assets/phase_board_west.png" type="Texture" id=418]
 [ext_resource path="res://assets/phase_board_south.png" type="Texture" id=419]
 [ext_resource path="res://assets/repair_station_bumper.png" type="Texture" id=420]
+[ext_resource path="res://assets/green_passage.png" type="Texture" id=421]
+[ext_resource path="res://assets/bumper.png" type="Texture" id=422]
+[ext_resource path="res://assets/fan.png" type="Texture" id=423]
+[ext_resource path="res://assets/fence.png" type="Texture" id=424]
+[ext_resource path="res://assets/passage.png" type="Texture" id=425]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3540,3 +3545,73 @@ frame_7/delay_sec = 0.0
 173/shape_one_way_margin = 0.0
 173/shapes = [  ]
 173/z_index = 0
+174/name = "Fence"
+174/texture = ExtResource( 424 )
+174/tex_offset = Vector2( 0, 0 )
+174/modulate = Color( 1, 1, 1, 1 )
+174/region = Rect2( 0, 0, 24, 24 )
+174/tile_mode = 0
+174/occluder_offset = Vector2( 12, 12 )
+174/navigation_offset = Vector2( 12, 12 )
+174/shape_offset = Vector2( 0, 0 )
+174/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+174/shape_one_way = false
+174/shape_one_way_margin = 0.0
+174/shapes = [  ]
+174/z_index = 0
+175/name = "Fan"
+175/texture = ExtResource( 423 )
+175/tex_offset = Vector2( 0, 0 )
+175/modulate = Color( 1, 1, 1, 1 )
+175/region = Rect2( 0, 0, 24, 24 )
+175/tile_mode = 0
+175/occluder_offset = Vector2( 12, 12 )
+175/navigation_offset = Vector2( 12, 12 )
+175/shape_offset = Vector2( 0, 0 )
+175/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+175/shape_one_way = false
+175/shape_one_way_margin = 0.0
+175/shapes = [  ]
+175/z_index = 0
+176/name = "Bumper"
+176/texture = ExtResource( 422 )
+176/tex_offset = Vector2( 0, 0 )
+176/modulate = Color( 1, 1, 1, 1 )
+176/region = Rect2( 0, 0, 24, 24 )
+176/tile_mode = 0
+176/occluder_offset = Vector2( 12, 12 )
+176/navigation_offset = Vector2( 12, 12 )
+176/shape_offset = Vector2( 0, 0 )
+176/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+176/shape_one_way = false
+176/shape_one_way_margin = 0.0
+176/shapes = [  ]
+176/z_index = 0
+177/name = "Passage"
+177/texture = ExtResource( 425 )
+177/tex_offset = Vector2( 0, 0 )
+177/modulate = Color( 1, 1, 1, 1 )
+177/region = Rect2( 0, 0, 24, 24 )
+177/tile_mode = 0
+177/occluder_offset = Vector2( 12, 12 )
+177/navigation_offset = Vector2( 12, 12 )
+177/shape_offset = Vector2( 0, 0 )
+177/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+177/shape_one_way = false
+177/shape_one_way_margin = 0.0
+177/shapes = [  ]
+177/z_index = 0
+178/name = "GreenPassage"
+178/texture = ExtResource( 421 )
+178/tex_offset = Vector2( 0, 0 )
+178/modulate = Color( 1, 1, 1, 1 )
+178/region = Rect2( 0, 0, 24, 24 )
+178/tile_mode = 0
+178/occluder_offset = Vector2( 12, 12 )
+178/navigation_offset = Vector2( 12, 12 )
+178/shape_offset = Vector2( 0, 0 )
+178/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+178/shape_one_way = false
+178/shape_one_way_margin = 0.0
+178/shapes = [  ]
+178/z_index = 0

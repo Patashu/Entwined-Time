@@ -362,6 +362,11 @@ enum Tiles {
 	PhaseBoardSouth, #171
 	PhaseBoardWest, #172
 	RepairStationBumper, #173
+	Fence, #174
+	Fan, #175
+	Bumper, #176
+	Passage, #177
+	GreenPassage, #178
 }
 var voidlike_tiles : Array = [];
 
@@ -3511,10 +3516,12 @@ func prepare_audio() -> void:
 	sounds["bootup"] = preload("res://sfx/bootup.ogg");
 	sounds["broken"] = preload("res://sfx/broken.ogg");
 	sounds["bump"] = preload("res://sfx/bump.ogg");
+	sounds["bumper"] = preload("res://sfx/bumper.ogg");
 	sounds["continuum"] = preload("res://sfx/continuum.ogg");
 	sounds["eclipse"] = preload("res://sfx/eclipse.ogg");
 	sounds["exception"] = preload("res://sfx/exception.ogg");
 	sounds["fall"] = preload("res://sfx/fall.ogg");
+	sounds["fence"] = preload("res://sfx/fence.ogg");
 	sounds["fuzz"] = preload("res://sfx/fuzz.ogg");
 	sounds["greenfire"] = preload("res://sfx/greenfire.ogg");
 	sounds["greentimecrystal"] = preload("res://sfx/greentimecrystal.ogg");
@@ -3555,6 +3562,7 @@ func prepare_audio() -> void:
 	sounds["unbroken"] = preload("res://sfx/unbroken.ogg");
 	sounds["undostrong"] = preload("res://sfx/undostrong.ogg");
 	sounds["unfall"] = preload("res://sfx/unfall.ogg");
+	sounds["unlock"] = preload("res://sfx/unlock.ogg");
 	sounds["unpush"] = preload("res://sfx/unpush.ogg");
 	sounds["unshatter"] = preload("res://sfx/unshatter.ogg");
 	sounds["untick"] = preload("res://sfx/untick.ogg");
@@ -4108,8 +4116,7 @@ boost_pad_reentrance: bool = false) -> int:
 			infinite_loop_check += 1;
 			move_actor_to(actor, actor.pos + slope_next_dir, chrono, hypothetical, false, false);
 			infinite_loop_check -= 1;
-			if (slope_next_dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
-				set_actor_var(actor, "airborne", 2, chrono);
+			maybe_rise(actor, chrono, slope_next_dir);
 				
 		# boost pad check
 		if (has_boost_pads and chrono < Chrono.META_UNDO and success == Success.Yes and !boost_pad_reentrance):
@@ -4503,6 +4510,10 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		
 	return Success.Surprise;
 
+func maybe_rise(actor: Actor, chrono: int, dir: Vector2, care_about_falling : bool = true):
+	if (dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (!care_about_falling or actor.airborne == -1 or !actor.is_character)):
+		set_actor_var(actor, "airborne", 2, chrono);
+
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool, chrono: int, hypothetical: bool) -> bool:
 	# This is a hack for directional phaseboards.
 	var old_pos = actor.pos;
@@ -4646,6 +4657,44 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				if actor.broken:
 					if (!hypothetical):
 						set_actor_var(actor, "broken", false, chrono);
+					return Success.Surprise;
+				else:
+					return Success.No;
+			Tiles.Fence:
+				if (actor.airborne != -1):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Animation.sfx, "fence"]);
+						set_actor_var(actor, "airborne", -1, chrono);
+					return Success.Surprise;
+				else:
+					return Success.No;
+			Tiles.Fan:
+				if (!hypothetical):
+					if (actor.airborne < 1):
+						set_actor_var(actor, "airborne", 2, chrono);
+				return Success.Surprise;
+			Tiles.Bumper:
+				if (move_actor_relative(actor, -dir, chrono, true, false) == Success.Yes):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Animation.sfx, "bumper"]);
+						move_actor_relative(actor, -dir, chrono, false, false);
+						maybe_rise(actor, chrono, -dir, false);
+					return Success.Surprise;
+				else:
+					return Success.No;
+			Tiles.Passage:
+				if (move_actor_relative(actor, dir*2, chrono, true, false) == Success.Yes):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
+						move_actor_relative(actor, dir*2, chrono, false, false)
+					return Success.Surprise;
+				else:
+					return Success.No;
+			Tiles.GreenPassage:
+				if (move_actor_relative(actor, dir*2, max(Chrono.CHAR_UNDO, chrono), true, false) == Success.Yes):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
+						move_actor_relative(actor, dir*2, max(Chrono.CHAR_UNDO, chrono), false, false)
 					return Success.Surprise;
 				else:
 					return Success.No;
@@ -7293,8 +7342,7 @@ func time_passes(chrono: int) -> void:
 					var attempt = move_actor_relative(actor, dir, chrono, false, false);
 					if (attempt == Success.Yes):
 						# nudge up now sets airborne like slopes do
-						if (dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
-							set_actor_var(actor, "airborne", 2, chrono);
+						maybe_rise(actor, chrono, dir);
 						break;
 		
 		# Green nudges activate
@@ -7308,8 +7356,7 @@ func time_passes(chrono: int) -> void:
 						var attempt = move_actor_relative(actor, dir, chrono, false, false);
 						if (attempt == Success.Yes):
 							# nudge up now sets airborne like slopes do
-							if (dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (actor.airborne == -1 or !actor.is_character)):
-								set_actor_var(actor, "airborne", 2, chrono);
+							maybe_rise(actor, chrono, dir);
 							break;
 	
 	# Boulders ride their momentum.
@@ -7410,7 +7457,9 @@ func time_passes(chrono: int) -> void:
 						has_fallen[actor] += 1;
 				if (did_fall != Success.Yes):
 					actor.just_moved = false;
-					set_actor_var(actor, "airborne", -1, chrono);
+					# fan check
+					if (actor.airborne == 0):
+						set_actor_var(actor, "airborne", -1, chrono);
 					# to make blue jelly consistent
 					if (!falling_bug):
 						something_happened = true;
@@ -7567,10 +7616,10 @@ func time_passes(chrono: int) -> void:
 					set_actor_var(actor, "broken", true, chrono);
 					something_happened = true;
 		
-		# another airborne 2->1 since riding a slope might have changed airborneness
-		for actor in actors:
-			if actor.airborne >= 2:
-				set_actor_var(actor, "airborne", 1, chrono);
+	# another airborne 2->1 since slope, bumper and fan can change airborneness
+	for actor in actors:
+		if actor.airborne >= 2:
+			set_actor_var(actor, "airborne", 1, chrono);
 	
 	# Lucky last - clocks tick.
 	for actor in time_actors:
