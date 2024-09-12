@@ -1,17 +1,28 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 524292, 65536, 14, 262145, 65547, 14, 262145, 131072, 14, 262145, 131083, 14, 262145, 196608, 14, 262145, 196619, 14, 262145, 262144, 14, 262145, 262145, 8, 0, 262146, 7, 0, 262147, 3, 0, 262149, 32, 0, 262150, 32, 0, 262152, 3, 0, 262153, 1, 0, 262154, 2, 0, 262155, 14, 262145, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 196614, 327687, 14, 196614, 327688, 14, 196614, 327689, 14, 196614, 327690, 14, 196614, 327691, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 393219, 4, 14, 3, 5, 14, 3, 6, 14, 3, 7, 14, 3, 8, 14, 4, 65536, 14, 262145, 65537, 7, 0, 65539, 14, 589825, 65540, 14, 131075, 65541, 14, 131075, 65542, 14, 131075, 65543, 14, 131075, 65544, 14, 589829, 131072, 14, 589824, 131073, 14, 4, 131075, 14, 327681, 131079, 1, 0, 131080, 14, 262145, 196608, 14, 65538, 196609, 14, 65540, 196611, 32, 0, 196613, 14, 196609, 196614, 32, 0, 196615, 14, 2, 196616, 14, 589830, 262144, 14, 131074, 262145, 14, 786435, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 655363, 262150, 14, 196614, 262151, 14, 720899, 262152, 14, 131076 )
+
+[node name="@@2452" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131077, 3, 0, 196610, 8, 0, 196611, 3, 0, 196612, 2, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Iron Crates"
-level_replay = "aaaddxdddaa"
-heavy_max_moves = 5
-light_max_moves = 5
+level_author = "Patashu"
+level_replay = "Iron Crates$mturn=15$wxdxzdxzxaxwxaxzwaxzzdd"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_track = 5.0
+setup_replay = ""

@@ -591,7 +591,7 @@ func save_as_tscn() -> void:
 		var result = scene.pack(deserialized)
 		
 		if result == OK:
-			var path = "res://levels/custom/" + level_info.level_name.replace("?", "-") + ".tscn";
+			var path = "res://levels/custom/" + level_info.level_name.replace("?", "-").replace(":", "-") + ".tscn";
 			var error = ResourceSaver.save(path, scene);
 			if error != OK:
 				floating_text("An error occurred while saving the scene to disk.")

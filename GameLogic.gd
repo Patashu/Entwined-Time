@@ -1236,7 +1236,6 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#1C3D19"));
 	level_filenames.push_back("OneWays")
 	level_filenames.push_back("PeekaBoo")
-	level_filenames.push_back("CoyoteTime")
 	level_filenames.push_back("SecurityDoor")
 	level_filenames.push_back("Upstream")
 	level_filenames.push_back("Downstream")
@@ -1276,9 +1275,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Mole")
 	level_filenames.push_back("PurpleOneWays")
 	level_filenames.push_back("TheUnderworld")
-	level_filenames.push_back("LadderDither")
 	level_filenames.push_back("Dive")
-	level_filenames.push_back("SecretPassage")
+	level_filenames.push_back("LadderDither")
 	level_filenames.push_back("TrophyCabinet")
 	level_filenames.push_back("DoubleJump")
 	level_filenames.push_back("FirefightersNew")
@@ -1286,6 +1284,7 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(32);
+	level_filenames.push_back("SecretPassage")
 	level_filenames.push_back("CheekyPurpleTricks")
 	level_filenames.push_back("TrophyCabinetEx")
 	level_filenames.push_back("Bonfire")

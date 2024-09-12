@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,11 +17,9 @@ tile_data = PoolIntArray( 65537, 2, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Coyote Time (Insight)"
-level_author = "Patashu"
-level_replay = "Coyote Time (Insight)$mturn=7$xdaxdxzddxz"
+level_name = "Remote Voyage (Insight)"
+level_replay = "Remote Voyage (Insight)$mturn=7$xdaxdxzddxz"
 heavy_max_moves = 1.0
 light_max_moves = 3.0
-clock_turns = ""
 target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
 target_track = 3.0
