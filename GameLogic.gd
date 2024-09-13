@@ -1807,10 +1807,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Trust Fall [VAR2]")
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Hell [VAR2]")
+	level_filenames.push_back("Daredevils [VAR1]")
+	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("World's Tiniest Pit")
 	level_filenames.push_back("Light Moooving Service [VAR1]")
-	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Booster Seat [VAR1]")
+	level_filenames.push_back("Down [VAR1]")
 	level_filenames.push_back("Firewall (Loop 2)")
 	level_filenames.push_back("Heavy Moving Service [VAR1]")
 	level_filenames.push_back("Heavy Moving Service [VAR2]")
@@ -1926,6 +1928,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Super Basic Sokoban")
 	level_filenames.push_back("Sandra Embraces The Void")
 	level_filenames.push_back("Selfie")
+	level_filenames.push_back("Give me a Break")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2004,6 +2007,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("Inexorable Destruction- [VAR1]")
+	level_filenames.push_back("Snake Chute [VAR1]")
 	level_filenames.push_back("Jungle Gym")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
 	level_filenames.push_back("Ankh [VAR2]")
@@ -2036,6 +2040,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Jet Engine [VAR1]")
 	level_filenames.push_back("Delay Circuit")
 	level_filenames.push_back("Ankh [VAR1]")
+	level_filenames.push_back("Down [VAR2]")
 	level_filenames.push_back("Fragile Victory [VAR1]")
 	level_filenames.push_back("Light Boots")
 	level_filenames.push_back("Stack Split")
@@ -2052,6 +2057,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elevator Pitch 3")
 	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
+	level_filenames.push_back("Remote Voyage [VAR1]")
 	level_filenames.push_back("Underflow [VAR1]")
 	level_filenames.push_back("Downfall")
 	level_filenames.push_back("Downfall 2")
@@ -2139,6 +2145,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Yesclip")
 	level_filenames.push_back("Orientation (Loop 2) [VAR1] [VAR1]")
 	level_filenames.push_back("Revenge of an Old Future [VAR1]")
+	level_filenames.push_back("Remote Voyage [VAR2]")
+	level_filenames.push_back("The Grounded Pit [VAR1]")
+	level_filenames.push_back("The Rising Pit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

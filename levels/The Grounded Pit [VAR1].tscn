@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 7, 0, 65538, 2, 0, 65542, 8, 0, 65543, 1, 0, 131072, 168, 0, 131073, 168, 0, 131074, 168, 0, 131075, 168, 0, 131077, 168, 0, 131078, 168, 0, 131079, 168, 0, 131080, 168, 0, 196611, 168, 0, 196613, 168, 0, 262147, 168, 0, 262148, 168, 0, 262149, 168, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Grounded Pit [VAR1]"
+level_author = "Green"
+level_replay = "The Grounded Pit [VAR1]$mturn=62$dwxaxzzwzadwxzaxzzwzzsxzxzdxwxdxzaxzxzxdxaxdzxzxdxdxzxzaxzzaxzaxaxzaxaxzxzzzaaxaxaxzxzzzdddxw"
+heavy_max_moves = 3.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_track = 5.0
+setup_replay = ""

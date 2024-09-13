@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 1, 0, 65536, 7, 0, 65538, 2, 0, 65542, 8, 0, 131072, 166, 0, 131073, 166, 0, 131074, 166, 0, 131075, 166, 0, 131077, 166, 0, 131078, 166, 0, 131079, 166, 0, 131080, 166, 0, 196611, 166, 0, 196613, 166, 0, 262147, 166, 0, 262148, 166, 0, 262149, 166, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Rising Pit"
+level_author = "Green"
+level_replay = "The Rising Pit$mturn=397$ssxaaaxzzddxzzzaaxzsxzzxzsxdssxzddxzzxzxdxaxzzwaxzsxzsaxzzsxzzdxzdxzxzsxzdaxzaxdxzsxzxzdxzsaxzdxzzxzxdxaxzdxzdaxzzsxzdxzwdxzsxzzassxzdxzdxzaxzsxzdxzzxzxdxdxzzwdxzsxzzxzzdxasaxzdxzzxzxdxdxzsxzadxzzwdxzsxzzdssxzzdxzaxzsxzsxzadxzzxzxdxaxzzwaxzsxzzxzzsxdxzzssxzxzzdsxaxzxdxdxzsxzsxzzsxzdxzdaxzsxzzazwdsxzzadxzzdxzsxzzxzzdsxddxzzssxzxzzssxaxzzssxzasxzzasxzzsxzzssxzdsxzzaaxzzdsxzsxzzwaxzzssxzzdxzzssxzaxzzasxzwdxzzssxzzdxzsxdxzzsszzasxzxzzssxdxzzadxzsxzaaxzzwaxzaxzzdxzzsxdxzzasxzdzxzszxdxdxzaxzaxzsxzsxzdxzadxzzsxzaxzwdxzaxzzdxzzsxdxzsxzzaazzsazzdazzzxzzw"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_track = 5.0
+setup_replay = ""
