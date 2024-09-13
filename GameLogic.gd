@@ -4619,6 +4619,8 @@ var oneway_flash = Color(1, 0, 0, 1);
 var oneway_green_flash = Color(1, 0, 0, 1);
 var oneway_purple_flash = Color(1, 1, 1, 1);
 var no_foo_flash = Color(1, 1, 1, 1);
+# infinite loop variable
+var bumper_counter: int = 0;
 
 func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: bool, is_gravity: bool, is_retro: bool, chrono: int, pushers_list: Array, was_push: bool) -> int:
 	var result = Success.Yes;
@@ -4674,13 +4676,23 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 						set_actor_var(actor, "airborne", 2, chrono);
 				return Success.Surprise;
 			Tiles.Bumper:
+				bumper_counter += 1;
+				if (bumper_counter == 99):
+					if (hypothetical):
+						pass;
+					else:
+						lose("Infinite loop.", null, true, "infloop");
+					bumper_counter -= 1;
+					return Success.Surprise;
 				if (move_actor_relative(actor, -dir, chrono, true, false) == Success.Yes):
 					if (!hypothetical):
 						add_to_animation_server(actor, [Animation.sfx, "bumper"]);
 						move_actor_relative(actor, -dir, chrono, false, false);
 						maybe_rise(actor, chrono, -dir, false);
+					bumper_counter -= 1;
 					return Success.Surprise;
 				else:
+					bumper_counter -= 1;
 					return Success.No;
 			Tiles.Passage:
 				if (move_actor_relative(actor, dir*2, chrono, true, false) == Success.Yes):
