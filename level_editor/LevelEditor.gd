@@ -1147,9 +1147,9 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.Bumper:
 			text = "Bumper: Solid. Surprise: If the actor can move away from this, it does."
 		Tiles.Passage:
-			text = "Passage: Solid. Surprise: If the actor can move two past this, it does (creating a rewind event)."
+			text = "Passage: Solid. Surprise: If the actor can move one past this (and any subsequent Passages), it does (creating a rewind event of the entire movement)."
 		Tiles.GreenPassage:
-			text = "Green Passage: Solid. Surprise: If the actor can move two past this, it does (greenly)."
+			text = "Green Passage: Solid. Surprise: If the actor can mmove one past this (and any subsequent Green Passages), it does (greenly)."
 	return text;
 	
 func picker_tooltip() -> void:

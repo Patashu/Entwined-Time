@@ -4695,20 +4695,26 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					bumper_counter -= 1;
 					return Success.No;
 			Tiles.Passage:
-				if (move_actor_relative(actor, dir*2, chrono, true, false) == Success.Yes):
+				var factor = 2;
+				while Tiles.Passage in terrain_in_tile(actor.pos + dir*factor, actor, chrono):
+					factor += 1;
+				if (move_actor_relative(actor, dir*factor, chrono, true, false) == Success.Yes):
 					if (!hypothetical):
 						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
-						move_actor_relative(actor, dir*2, chrono, false, false)
-						maybe_rise(actor, chrono, dir*2, false);
+						move_actor_relative(actor, dir*factor, chrono, false, false)
+						maybe_rise(actor, chrono, dir*factor, false);
 					return Success.Surprise;
 				else:
 					return Success.No;
 			Tiles.GreenPassage:
-				if (move_actor_relative(actor, dir*2, max(Chrono.CHAR_UNDO, chrono), true, false) == Success.Yes):
+				var factor = 2;
+				while Tiles.GreenPassage in terrain_in_tile(actor.pos + dir*factor, actor, chrono):
+					factor += 1;
+				if (move_actor_relative(actor, dir*factor, max(Chrono.CHAR_UNDO, chrono), true, false) == Success.Yes):
 					if (!hypothetical):
 						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
-						move_actor_relative(actor, dir*2, max(Chrono.CHAR_UNDO, chrono), false, false)
-						maybe_rise(actor, chrono, dir*2, false);
+						move_actor_relative(actor, dir*factor, max(Chrono.CHAR_UNDO, chrono), false, false)
+						maybe_rise(actor, chrono, dir*factor, false);
 					return Success.Surprise;
 				else:
 					return Success.No;
