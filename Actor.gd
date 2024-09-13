@@ -443,22 +443,22 @@ func action_line(dir: Vector2) -> void:
 	else:
 		sprite.texture = preload("res://assets/action_line_other.png");
 	sprite.position = self.position;
-	if (dir == Vector2.DOWN):
+	if (dir.y > 0):
 		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
 		sprite.velocity = Vector2(0, -24);
-	elif (dir == Vector2.UP):
+	elif (dir.y < 0):
 		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
 		sprite.velocity = Vector2(0, 24);
 		sprite.position.y += gamelogic.cell_size/2;
-	elif (dir == Vector2.LEFT):
+	elif (dir.x < 0):
 		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
 		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.velocity = Vector2(24, 0);
 		sprite.position.x += gamelogic.cell_size/2;
 		sprite.rotation_degrees = 90;
-	elif (dir == Vector2.RIGHT):
+	elif (dir.x > 0):
 		sprite.position.x += gamelogic.rng.randf_range(0, gamelogic.cell_size/2);
 		sprite.position.y += gamelogic.rng.randf_range(0, gamelogic.cell_size);
 		sprite.velocity = Vector2(-24, 0);

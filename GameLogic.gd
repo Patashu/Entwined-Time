@@ -4511,7 +4511,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 	return Success.Surprise;
 
 func maybe_rise(actor: Actor, chrono: int, dir: Vector2, care_about_falling : bool = true):
-	if (dir == Vector2.UP and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (!care_about_falling or actor.airborne == -1 or !actor.is_character)):
+	if (dir.y < 0 and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (!care_about_falling or actor.airborne == -1 or !actor.is_character)):
 		set_actor_var(actor, "airborne", 2, chrono);
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool, chrono: int, hypothetical: bool) -> bool:
@@ -4699,6 +4699,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					if (!hypothetical):
 						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
 						move_actor_relative(actor, dir*2, chrono, false, false)
+						maybe_rise(actor, chrono, dir*2, false);
 					return Success.Surprise;
 				else:
 					return Success.No;
@@ -4707,6 +4708,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					if (!hypothetical):
 						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
 						move_actor_relative(actor, dir*2, max(Chrono.CHAR_UNDO, chrono), false, false)
+						maybe_rise(actor, chrono, dir*2, false);
 					return Success.Surprise;
 				else:
 					return Success.No;
@@ -7380,8 +7382,10 @@ func time_passes(chrono: int) -> void:
 				if (actor.broken):
 					set_actor_var(actor, "momentum", Vector2.ZERO, chrono);
 				elif (!actor.boulder_moved_horizontally_this_turn):
+					var old_pos = actor.pos;
 					var rollin = move_actor_relative(actor, actor.momentum, chrono, false, false);
-					if (rollin != Success.Yes):
+					# check for bumper/passages - if we moved then maintain the new surprise momentum
+					if (rollin != Success.Yes and old_pos == actor.pos):
 						set_actor_var(actor, "momentum", Vector2.ZERO, chrono);
 	
 	# Decrement airborne by one (min zero).
@@ -7454,6 +7458,7 @@ func time_passes(chrono: int) -> void:
 					something_happened = true;
 			
 			if !skip and actor.airborne == 0:
+				var old_pos = actor.pos;
 				var did_fall = Success.No;
 				if (is_suspended(actor, chrono)):
 					did_fall = Success.No;
@@ -7463,11 +7468,11 @@ func time_passes(chrono: int) -> void:
 				if (did_fall != Success.No):
 					something_happened = true;
 					# so Heavy can break a glass block and not fall further, surprises break your fall immediately
-					if (did_fall == Success.Surprise):
+					if (did_fall == Success.Surprise and old_pos == actor.pos):
 						has_fallen[actor] += 999;
 					else:
 						has_fallen[actor] += 1;
-				if (did_fall != Success.Yes):
+				if (did_fall != Success.Yes and old_pos == actor.pos):
 					actor.just_moved = false;
 					# fan check
 					if (actor.airborne == 0):
