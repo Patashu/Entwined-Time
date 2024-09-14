@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 458755, 2, 14, 196614, 3, 14, 393219, 4, 14, 4, 65536, 14, 65538, 65537, 14, 65540, 65538, 7, 0, 65539, 14, 65538, 65540, 14, 65540, 131072, 14, 65538, 131073, 14, 65540, 131074, 0, 0, 131075, 14, 65538, 131076, 14, 65540, 196608, 14, 65538, 196609, 14, 65540, 196610, 0, 0, 196611, 14, 65538, 196612, 14, 65540, 262144, 14, 589825, 262145, 14, 131076, 262146, 64, 0, 262147, 14, 131074, 262148, 14, 589829, 327680, 14, 262145, 327681, 2, 0, 327682, 1, 0, 327683, 8, 0, 327684, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 655364 )
+
+[node name="@@134" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 20, 0, 196610, 20, 0, 262146, 20, 0, 327682, 20, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Eruption"
+level_author = "Patashu"
+level_replay = "Eruption$mturn=13$xawxdxzwxwxzwxwxzwxzz"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""

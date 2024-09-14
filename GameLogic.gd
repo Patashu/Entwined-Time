@@ -1241,6 +1241,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#1C3D19"));
 	level_filenames.push_back("OneWays")
 	level_filenames.push_back("PeekaBoo")
+	level_filenames.push_back("Eruption")
 	level_filenames.push_back("SecurityDoor")
 	level_filenames.push_back("Upstream")
 	level_filenames.push_back("Downstream")
