@@ -1257,11 +1257,11 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(24);
 	level_filenames.push_back("SolidPuzzle")
+	level_filenames.push_back("JailEx")
 	level_filenames.push_back("RemoteVoyage")
 	level_filenames.push_back("SecurityDoorEx")
-	level_filenames.push_back("JailEx")
-	level_filenames.push_back("HawkingRadiation")
 	level_filenames.push_back("TheOneWayPitEx")
+	level_filenames.push_back("HawkingRadiation")
 	level_filenames.push_back("TheSpikePitEx2")
 	level_filenames.push_back("TheSpikePitEx3")
 	level_filenames.push_back("Heaven")
