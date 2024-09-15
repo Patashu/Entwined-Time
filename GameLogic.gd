@@ -3566,6 +3566,7 @@ func prepare_audio() -> void:
 	sounds["singularity"] = preload("res://sfx/singularity.ogg");
 	sounds["spotlight"] = preload("res://sfx/spotlight.ogg");
 	sounds["switch"] = preload("res://sfx/switch.ogg");
+	sounds["switch2"] = preload("res://sfx/switch2.ogg");
 	sounds["thejourneybegins"] = preload("res://sfx/thejourneybegins.ogg");
 	sounds["tick"] = preload("res://sfx/tick.ogg");
 	sounds["timesup"] = preload("res://sfx/timesup.ogg");
@@ -6692,7 +6693,10 @@ func character_switch() -> void:
 	heavy_selected = !heavy_selected;
 	timeline_activation_change();
 	update_ghosts();
-	play_sound("switch")
+	if (heavy_selected):
+		play_sound("switch2")
+	else:
+		play_sound("switch")
 	if (!currently_fast_replay()):
 		#targeter.scale = Vector2(2, 2);
 		var tween = targeter.get_node("Tween");
