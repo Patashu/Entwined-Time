@@ -3075,6 +3075,7 @@ func make_actors() -> void:
 	
 	# find heavy and light and turn them into actors
 	# as a you-fucked-up backup, put them in 0,0 if there seems to be none
+	heavy_actor = null;
 	var layers_tiles = get_used_cells_by_id_all_layers(Tiles.HeavyIdle);
 	var found_one = false;
 	var count = 0;
@@ -3110,6 +3111,7 @@ func make_actors() -> void:
 			heavy_actor.update_graphics();
 			count += 1;
 	
+	light_actor = null;
 	layers_tiles = get_used_cells_by_id_all_layers(Tiles.LightIdle);
 	found_one = false;
 	count = 0;
