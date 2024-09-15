@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 7, 0, 393217, 72, 0, 393218, 72, 0, 393219, 72, 0, 458753, 72, 0, 458754, 72, 0, 458755, 27, 0, 458756, 14, 524290, 458757, 14, 196615, 524289, 29, 0, 524290, 29, 0, 524292, 14, 262145, 589825, 2, 0, 589826, 1, 0, 589828, 14, 262145, 655361, 14, 2, 655362, 14, 4, 655363, 0, 0, 655364, 14, 262145, 720897, 14, 131074, 720898, 14, 786435, 720899, 14, 196614, 720900, 14, 655364 )
+
+[node name="@@8816" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 524289, 8, 0, 589825, 35, 0 )
+
+[node name="@@8817" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 524289, 36, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Leap of Faith [Space Program]"
+level_replay = "Leap of Faith [Space Program]$mturn=59$dxdssxdaxzxzzzsxzzaxzsxzxzxaxsxzssxzxaxsxzssxzxaxsxzssxzwxzzzzzzddddssxzddxzzzzzzw"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
