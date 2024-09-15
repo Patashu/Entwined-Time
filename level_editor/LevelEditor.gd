@@ -1049,9 +1049,9 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.ZombieTile:
 			text = "Zombie Tile: Broken robots can make moves from this tile."
 		Tiles.HeavyMimic:
-			text = "Heavy Mimic: After Heavy moves, all Heavy Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
+			text = "Heavy Mimic:  Hat. (Attaches to an actor entering or starting in the tile below.) After Heavy moves, all Heavy Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.LightMimic:
-			text = "Light Mimic: After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
+			text = "Light Mimic:  Hat. (Attaches to an actor entering or starting in the tile below.) After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.GhostFog:
 			text = "Ghost Fog: If an Actor fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
 		Tiles.Eclipse:

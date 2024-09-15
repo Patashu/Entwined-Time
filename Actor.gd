@@ -69,6 +69,8 @@ var joke_goal = null;
 var action_lines_timer : float = 0.0;
 var action_lines_timer_max : float = 0.25;
 var propellor = null;
+var heavy_mimic = null;
+var light_mimic = null;
 var fade_tween = null;
 
 # faster than string comparisons
@@ -152,7 +154,7 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 				if !powered:
 					return preload("res://assets/heavy_unpowered.png");
 				else:
-					if (!is_ghost and gamelogic.heavy_actor != self and !gamelogic.heavy_mimics.has(self)):
+					if (!is_ghost and gamelogic.heavy_actor != self and heavy_mimic == null and light_mimic == null):
 						return preload("res://assets/heavy_unpowered.png");
 					else:
 						return preload("res://assets/heavy_idle.png");
@@ -168,7 +170,7 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 				if !powered:
 					return preload("res://assets/light_unpowered.png");
 				else:
-					if (!is_ghost and gamelogic.light_actor != self and !gamelogic.light_mimics.has(self)):
+					if (!is_ghost and gamelogic.light_actor != self and heavy_mimic == null and light_mimic == null):
 						return preload("res://assets/light_unpowered.png");
 					return preload("res://assets/light_idle_animation.png");
 		

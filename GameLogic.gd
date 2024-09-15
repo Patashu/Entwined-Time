@@ -400,8 +400,6 @@ var voidlike_puzzle : bool = false;
 # information about the actors and their state
 var heavy_actor : Actor = null
 var light_actor : Actor = null
-var heavy_mimics : Array = []
-var light_mimics : Array = []
 var actors : Array = []
 var goals : Array = []
 var heavy_turn : int = 0;
@@ -2306,6 +2304,7 @@ var has_void_fires : bool = false;
 var has_void_walls : bool = false;
 var has_void_fog : bool = false;
 var has_void_stars : bool = false;
+var has_mimics : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2317,8 +2316,6 @@ func ready_map() -> void:
 	for actor in actors:
 		actor.queue_free();
 	actors.clear();
-	heavy_mimics.clear();
-	light_mimics.clear();
 	for goal in goals:
 		goal.queue_free();
 	goals.clear();
@@ -2420,6 +2417,7 @@ func ready_map() -> void:
 	has_void_walls = false;
 	has_void_fog = false;
 	has_void_stars = false;
+	has_mimics = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2608,6 +2606,11 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.VoidStars)):
 			has_void_stars = true;
+			
+		if (any_layer_has_this_tile(Tiles.HeavyMimic)):
+			has_mimics = true;
+		elif (any_layer_has_this_tile(Tiles.LightMimic)):
+			has_mimics = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -3085,6 +3088,7 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for heavy_tile in tiles:
 			terrain_layers[i].set_cellv(heavy_tile, -1);
+			var old_heavy_actor = heavy_actor;
 			heavy_actor = make_actor(Actor.Name.Heavy, Vector2(-99, -99), true, i);
 			where_are_actors[heavy_actor] = heavy_tile;
 			heavy_actor.heaviness = Heaviness.STEEL;
@@ -3097,32 +3101,13 @@ func make_actors() -> void:
 			heavy_actor.powered = heavy_max_moves != 0;
 			if (heavy_tile.x > (map_x_max / 2)):
 				heavy_actor.facing_left = true;
+			if (has_mimics and old_heavy_actor != null):
+				var terrain = terrain_in_tile(heavy_tile + Vector2.UP);
+				if (terrain.has(Tiles.HeavyMimic) or terrain.has(Tiles.LightMimic)):
+					var mimic = heavy_actor;
+					heavy_actor = old_heavy_actor;
+					mimic.update_graphics();
 			heavy_actor.update_graphics();
-			count += 1;
-			
-	#heavy mimics (TODO: refactor)
-	layers_tiles = get_used_cells_by_id_all_layers(Tiles.HeavyMimic);
-	for i in range(layers_tiles.size()):
-		var tiles = layers_tiles[i];
-		for heavy_tile in tiles:
-			terrain_layers[i].set_cellv(heavy_tile, -1);
-			var actor = make_actor(Actor.Name.Heavy, heavy_tile, true, i);
-			heavy_mimics.append(actor);
-			var sprite = Sprite.new();
-			sprite.texture = preload("res://assets/broadcast_heavy.png");
-			actor.add_child(sprite);
-			sprite.position = Vector2(12, -6);
-			actor.heaviness = Heaviness.STEEL;
-			actor.strength = Strength.HEAVY;
-			actor.durability = Durability.FIRE;
-			actor.fall_speed = 2;
-			actor.climbs = true;
-			actor.powered = true;
-			actor.color = heavy_color;
-			tint_actor(actor, count);
-			if (actor.pos.x > (map_x_max / 2)):
-				actor.facing_left = true;
-			actor.update_graphics();
 			count += 1;
 	
 	layers_tiles = get_used_cells_by_id_all_layers(Tiles.LightIdle);
@@ -3138,6 +3123,7 @@ func make_actors() -> void:
 		var tiles = layers_tiles[i];
 		for light_tile in tiles:
 			terrain_layers[i].set_cellv(light_tile, -1);
+			var old_light_actor = light_actor;
 			light_actor = make_actor(Actor.Name.Light, Vector2(-99, -99), true, i);
 			where_are_actors[light_actor] = light_tile;
 			light_actor.heaviness = Heaviness.IRON;
@@ -3151,33 +3137,13 @@ func make_actors() -> void:
 			light_actor.powered = light_max_moves != 0;
 			if (light_tile.x > (map_x_max / 2)):
 				light_actor.facing_left = true;
+			if (has_mimics and old_light_actor != null):
+				var terrain = terrain_in_tile(light_tile + Vector2.UP);
+				if (terrain.has(Tiles.HeavyMimic) or terrain.has(Tiles.LightMimic)):
+					var mimic = light_actor;
+					light_actor = old_light_actor;
+					mimic.update_graphics();
 			light_actor.update_graphics();
-			count += 1;
-			
-	#light mimics (TODO: refactor)
-	layers_tiles = get_used_cells_by_id_all_layers(Tiles.LightMimic);
-	for i in range(layers_tiles.size()):
-		var tiles = layers_tiles[i];
-		for light_tile in tiles:
-			terrain_layers[i].set_cellv(light_tile, -1);
-			var actor = make_actor(Actor.Name.Light, light_tile, true, i);
-			light_mimics.append(actor);
-			var sprite = Sprite.new();
-			sprite.texture = preload("res://assets/broadcast_light.png");
-			actor.add_child(sprite);
-			sprite.position = Vector2(12, -6);
-			actor.heaviness = Heaviness.IRON;
-			actor.strength = Strength.LIGHT;
-			actor.durability = Durability.SPIKES;
-			actor.fall_speed = 1;
-			actor.climbs = true;
-			actor.floats = true;
-			actor.color = light_color;
-			tint_actor(actor, count);
-			actor.powered = true;
-			if (actor.pos.x > (map_x_max / 2)):
-				actor.facing_left = true;
-			actor.update_graphics();
 			count += 1;
 	
 	# HACK: move actors to where they are, so now that is_main_character and so on is determined,
@@ -3405,6 +3371,8 @@ func find_modifiers() -> void:
 	if (is_custom):
 		for id in range(Tiles.Propellor, Tiles.FallOne + 1):
 			find_modifier(id);
+		find_modifier(Tiles.HeavyMimic);
+		find_modifier(Tiles.LightMimic);
 
 func find_modifier(id: int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -3414,7 +3382,7 @@ func find_modifier(id: int) -> void:
 			var found = false;
 			for actor in actors:
 				var condition = false;
-				if (id == Tiles.Propellor):
+				if (id == Tiles.Propellor or id == Tiles.HeavyMimic or id == Tiles.LightMimic):
 					condition = (actor.pos == tile + Vector2.DOWN) and actor.propellor == null;
 				else:
 					condition = actor.pos == tile;
@@ -3436,6 +3404,12 @@ func attach_modifier(actor, i, tile, id, chrono):
 			sprite.position += Vector2(0, -cell_size);
 			if (actor.airborne != -1):
 				set_actor_var(actor, "airborne", -1, chrono);
+		Tiles.HeavyMimic:
+			set_actor_var(actor, "heavy_mimic", sprite, chrono);
+			sprite.position += Vector2(0, -cell_size);
+		Tiles.LightMimic:
+			set_actor_var(actor, "light_mimic", sprite, chrono);
+			sprite.position += Vector2(0, -cell_size);
 		Tiles.DurPlus:
 			set_actor_var(actor, "durability", actor.durability + 1, chrono);
 		Tiles.DurMinus:
@@ -4104,14 +4078,24 @@ boost_pad_reentrance: bool = false) -> int:
 						var sprite = attach_modifier(actor, i, actor.pos, id, chrono_to_use);
 						add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
 						break;
-				if (actor.propellor == null):
-					var terrain_above = terrain_in_tile(actor.pos + Vector2.UP, actor, chrono);
-					for i in range(terrain_above.size()):
-						var id = terrain_above[i];
-						if (id == Tiles.Propellor):
-							var sprite = attach_modifier(actor, i, actor.pos + Vector2.UP, id, chrono_to_use);
-							add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
-							break;
+				var terrain_above = terrain_in_tile(actor.pos + Vector2.UP, actor, chrono);
+				for i in range(terrain_above.size()):
+					var id = terrain_above[i];
+					var attach = false;
+					match (id):
+						Tiles.Propellor:
+							if (actor.propellor == null):
+								attach = true;
+						Tiles.HeavyMimic:
+							if (actor.heavy_mimic == null):
+								attach = true;
+						Tiles.LightMimic:
+							if (actor.light_mimic == null):
+								attach = true;
+					if (attach):
+						var sprite = attach_modifier(actor, i, actor.pos + Vector2.UP, id, chrono_to_use);
+						add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
+						break;
 		
 		# slopes 2) then after the !is_retro first move succeeds and commits,
 		# again we try to do the second moves in order, and take the first one that succeeds.
@@ -4505,7 +4489,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				play_sound("fuzz");
 			elif (old_tile == Tiles.OneUndo):
 				play_sound("rewindnoticed");
-			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne)):
+			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne) or (old_tile == Tiles.HeavyMimic or old_tile == Tiles.LightMimic)):
 				pass;
 			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
 				pass
@@ -7109,11 +7093,13 @@ func character_move(dir: Vector2) -> bool:
 			
 		#mimics mimic
 		if heavy_selected:
-			for mimic in heavy_mimics:
-				try_move_mimic(mimic, dir);
+			for mimic in actors:
+				if (mimic.heavy_mimic != null):
+					try_move_mimic(mimic, dir);
 		else:
-			for mimic in light_mimics:
-				try_move_mimic(mimic, dir);
+			for mimic in actors:
+				if (mimic.light_mimic != null):
+					try_move_mimic(mimic, dir);
 	if (result != Success.No or nonstandard_won):
 		if (!nonstandard_won):
 			if (fuzzed):
