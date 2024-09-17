@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65540, 7, 0, 65541, 14, 262145, 131072, 14, 589826, 131073, 14, 196615, 131074, 65, 0, 131075, 65, 0, 131076, 14, 196613, 131077, 14, 589828, 196608, 14, 262145, 196610, 65, 0, 196611, 65, 0, 196613, 14, 262145, 262144, 14, 262145, 262146, 2, 0, 262147, 8, 0, 262149, 14, 262145, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 655364 )
+
+[node name="@@642" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65540, 75, 0, 131074, 136, 0, 131075, 136, 0, 196610, 136, 0, 196611, 136, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Ceiling Sockets"
+level_author = "Onatron"
+level_replay = "Ceiling Sockets$mturn=69$xwxwaxzawxzzdaxzwdxwaxzzzxzzwxwaaxzxzzzwxaxzdxdxzasxzxzxzxzwxwdxzdwxzzawaxzzwxzzzsxzxwxwdxzxwxzzzaxz"
+heavy_max_moves = 5.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""

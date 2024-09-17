@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 8, 14, 2, 9, 14, 458755, 10, 14, 196614, 11, 14, 196615, 65537, 14, 2, 65538, 14, 4, 65540, 14, 196609, 65541, 30, 0, 65542, 30, 0, 65543, 30, 0, 65544, 14, 65538, 65545, 14, 65540, 65547, 29, 0, 131072, 14, 2, 131073, 14, 851974, 131074, 14, 131076, 131076, 14, 262145, 131080, 14, 65538, 131081, 14, 65540, 131082, 2, 0, 131083, 29, 0, 196608, 14, 65538, 196609, 14, 65540, 196610, 30, 0, 196611, 8, 0, 196612, 14, 262145, 196614, 177, 0, 196616, 14, 65538, 196617, 14, 917510, 196618, 14, 4, 196619, 29, 0, 262144, 14, 65538, 262145, 14, 917510, 262146, 14, 3, 262147, 14, 458755, 262148, 14, 655364, 262149, 61, 0, 262152, 14, 131074, 262153, 14, 917512, 262154, 14, 917510, 262155, 14, 4, 327680, 14, 131074, 327681, 14, 131075, 327682, 14, 131075, 327683, 14, 131076, 327684, 60, 0, 327685, 14, 196613, 327686, 14, 196614, 327687, 14, 196615, 327688, 60, 0, 327689, 14, 131074, 327690, 14, 131075, 327691, 14, 786435, 327692, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Chrono Engine"
+level_author = "Onatron"
+level_replay = "Chrono Engine$mturn=32$xwsxwswswxzzxzxsxzxzaxzxzdxwxwswxwxzzzzaaxzzzz"
+heavy_max_moves = 5.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.27451, 0.113725, 0.0705882, 1 )
+target_track = 4.0
+setup_replay = ""

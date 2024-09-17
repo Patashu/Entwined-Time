@@ -1930,6 +1930,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Selfie")
 	level_filenames.push_back("Give me a Break")
 	level_filenames.push_back("Another Light-")
+	level_filenames.push_back("Soulcrates")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2092,6 +2093,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Pittance [VAR1]")
 	level_filenames.push_back("Void Recovery")
+	level_filenames.push_back("Leap of Faith [Space Program] [VAR1]")
 	level_filenames.push_back("Elevator Pitch [VAR1]")
 	level_filenames.push_back("Inverse Nudge Chain")
 	level_filenames.push_back("Crate Sorting Facility")
@@ -2115,7 +2117,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Green's World");
+	chapter_names.push_back("Green's World (Page 1)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -2146,9 +2148,22 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Yesclip")
 	level_filenames.push_back("Orientation (Loop 2) [VAR1] [VAR1]")
 	level_filenames.push_back("Revenge of an Old Future [VAR1]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Green's World (Page 2)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Remote Voyage [VAR2]")
 	level_filenames.push_back("The Grounded Pit [VAR1]")
 	level_filenames.push_back("The Rising Pit")
+	level_filenames.push_back("Down [VAR3]")
+	level_filenames.push_back("Magic Hat")
+	level_filenames.push_back("Shared Brain Cells")
+	level_filenames.push_back("The Imaginary Pit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2166,6 +2181,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Roast- [VAR2]")
 	level_filenames.push_back("Bungee Jumping")
 	level_filenames.push_back("Fickle Flooring")
+	level_filenames.push_back("Hopscorch [VAR3]")
+	level_filenames.push_back("Ceiling Sockets")
+	level_filenames.push_back("Ceiling Sockets [VAR1]")
+	level_filenames.push_back("Chrono Engine")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

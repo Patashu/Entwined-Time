@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 162, 0, 9, 162, 0, 131073, 7, 0, 131075, 2, 0, 131081, 1, 0, 131082, 8, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 393219, 196613, 14, 3, 196614, 14, 458755, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 196615, 262148, 14, 65538, 262149, 14, 65539, 262150, 14, 65540, 327684, 14, 131074, 327685, 14, 131075, 327686, 14, 131076 )
+
+[node name="@@229" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196608, 162, 0, 196609, 162, 0, 196610, 162, 0, 196611, 162, 0, 196612, 162, 0, 196614, 162, 0, 196615, 162, 0, 196616, 162, 0, 196617, 162, 0, 196618, 162, 0, 262148, 162, 0, 262150, 162, 0, 327684, 162, 0, 327685, 162, 0, 327686, 162, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Imaginary Pit"
+level_author = "Green"
+level_replay = "The Imaginary Pit$mturn=49$xwdxaxzzwdxdxzzdaxzxzaxzxzzaaccdzcdzcccwxdzdzxzaxdwxaxzdxzzxzwxdxzwxdxzdzzaazzddxzxzzaxaxzddxzaxzzdxzwxzxzwxaxzaxwzxzwxaxzzdxzxzcdzccccccccccccccccccxzaxwxaxzzdxzxzccccccccccccccccccccxadxaxzsxzxzxwxaxzzdxzxzcccccccccccccxaxzcccccccccczxzzdd"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""
