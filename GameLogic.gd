@@ -8514,6 +8514,22 @@ func adjusted_mouse_position() -> Vector2:
 		result.x *= 2*pixel_width/OS.get_window_size().x;
 		result.y *= 2*pixel_height/OS.get_window_size().y;
 	return result;
+
+func any_ui_element_hovered(mouse_position: Vector2) -> bool:
+	return any_ui_element_hovered_core(menubutton, mouse_position) or any_ui_element_hovered_core(replaybuttons, mouse_position) or any_ui_element_hovered_core(virtualbuttons, mouse_position);
+
+func any_ui_element_hovered_core(node, mouse_position: Vector2) -> bool:
+	if !node.visible:
+		return false;
+	if node is BaseButton or node is Range:
+		var rect = Rect2(node.rect_global_position, node.rect_size);
+		if rect.has_point(mouse_position):
+			return true;
+	for child in node.get_children():
+		var result = any_ui_element_hovered_core(child, mouse_position);
+		if (result):
+			return true;
+	return false;
 	
 func _input(event: InputEvent) -> void:
 	if (ui_stack.size() > 0):
@@ -8529,13 +8545,15 @@ func _input(event: InputEvent) -> void:
 		heavy_rect.position += heavy_actor.global_position;
 		light_rect.position += light_actor.global_position;
 		if !heavy_selected and heavy_rect.has_point(mouse_position):
-			end_replay();
-			character_switch();
-			update_info_labels();
+			if (!any_ui_element_hovered(mouse_position)):
+				end_replay();
+				character_switch();
+				update_info_labels();
 		elif heavy_selected and light_rect.has_point(mouse_position):
-			end_replay();
-			character_switch();
-			update_info_labels();
+			if (!any_ui_element_hovered(mouse_position)):
+				end_replay();
+				character_switch();
+				update_info_labels();
 	elif event is InputEventKey:
 		if (!is_web and event.alt and event.scancode == KEY_ENTER):
 			if (!save_file.has("fullscreen") or !save_file["fullscreen"]):
