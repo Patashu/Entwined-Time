@@ -1934,6 +1934,37 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Slabdrill's World (Best Of)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Light Bridge")
+	level_filenames.push_back("Death's Door")
+	level_filenames.push_back("Meet Heavy (Loop 2)")
+	level_filenames.push_back("Limitations of Love. [VAR1]")
+	level_filenames.push_back("Nomadic [VAR1]")
+	level_filenames.push_back("Jungle Gym")
+	level_filenames.push_back("Side Shuffle")
+	level_filenames.push_back("Fire In The Sky [REV1]")
+	level_filenames.push_back("Death's Door [VAR1]")
+	level_filenames.push_back("Phantom Push [VAR1]")
+	level_filenames.push_back("The Withering Pit")
+	level_filenames.push_back("Downfall")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Quantum Entanglement [VAR2]")
+	level_filenames.push_back("Acrobat's Escape [VAR3]")
+	level_filenames.push_back("Heavy Fuzzing Service [VAR1]")
+	level_filenames.push_back("Void Recovery")
+	level_filenames.push_back("Heavy Fuzzing Service [VAR2]")
+	level_filenames.push_back("Foot Wiggle [VAR3]")
+	level_filenames.push_back("Foot Wiggle [VAR4]")
+	level_filenames.push_back("Graduation [VAR3]")
+	level_filenames.push_back("Spelunking-- [VAR2]")
+	level_filenames.push_back("Pittance [VAR1]")
+	
 	chapter_names.push_back("Slabdrill's World (Only Pits)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
@@ -1954,7 +1985,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Left Pit")
 	level_filenames.push_back("The Solo Pit")
-	level_filenames.push_back("The Withering Pit")
 	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
 	level_filenames.push_back("The Green Fire Pit")
 	level_filenames.push_back("The Half-Magenta Pit")
@@ -1977,15 +2007,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Fuzzy Parkour [VAR1]")
 	level_filenames.push_back("Invisible Void Bridge")
 	level_filenames.push_back("Collaborative Motion")
-	level_filenames.push_back("Light Bridge")
 	level_filenames.push_back("Quantum Entanglement [VAR1]")
 	level_filenames.push_back("Rise As One [VAR1]")
 	level_filenames.push_back("Magenta Flight")
 	level_filenames.push_back("Hopscorch [VAR2]")
 	level_filenames.push_back("Timeless Bridge [VAR2]")
 	level_filenames.push_back("Slippery Glass [VAR2]")
-	level_filenames.push_back("Death's Door")
-	level_filenames.push_back("Meet Heavy (Loop 2)")
 	level_filenames.push_back("Crate Moving Service")
 	level_filenames.push_back("Rapid Ascent")
 	level_filenames.push_back("Tile Selector")
@@ -2004,22 +2031,17 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Downwards Momentum [VAR1]")
-	level_filenames.push_back("Limitations of Love. [VAR1]")
 	level_filenames.push_back("Tile Selector [VAR1]")
-	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("Inexorable Destruction- [VAR1]")
 	level_filenames.push_back("Snake Chute [VAR1]")
-	level_filenames.push_back("Jungle Gym")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
 	level_filenames.push_back("Ankh [VAR2]")
 	level_filenames.push_back("Island of Stability [VAR1]")
-	level_filenames.push_back("Side Shuffle")
 	level_filenames.push_back("Heavy Vertical")
 	level_filenames.push_back("Phantom Push")
 	level_filenames.push_back("Elevator Pitch")
 	level_filenames.push_back("Elevator Pitch 2")
-	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Undying Army (Type C)")
 	level_filenames.push_back("Unaliving Service [VAR1]")
 	level_filenames.push_back("Anonymous Delivery [VAR1]")
@@ -2047,21 +2069,17 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Light Boots")
 	level_filenames.push_back("Stack Split")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
-	level_filenames.push_back("Death's Door [VAR1]")
 	level_filenames.push_back("One-Way Bridge")
-	level_filenames.push_back("Phantom Push [VAR1]")
 	level_filenames.push_back("Durability-")
 	level_filenames.push_back("Combination Lock")
 	level_filenames.push_back("Firemaze")
 	level_filenames.push_back("Jello Partition")
 	level_filenames.push_back("Separated Escape")
-	level_filenames.push_back("Acrobat's Escape [VAR3]")
 	level_filenames.push_back("Elevator Pitch 3")
 	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
 	level_filenames.push_back("Collaborative Motion (Floor Shortage)")
 	level_filenames.push_back("Remote Voyage [VAR1]")
 	level_filenames.push_back("Underflow [VAR1]")
-	level_filenames.push_back("Downfall")
 	level_filenames.push_back("Downfall 2")
 	level_filenames.push_back("Light's Way In")
 	level_filenames.push_back("Acrobatics (Loop 2)")
@@ -2078,27 +2096,18 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Jenga-")
 	level_filenames.push_back("Crate Tunneling")
-	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
-	level_filenames.push_back("Heavy Fuzzing Service [VAR1]")
-	level_filenames.push_back("Heavy Fuzzing Service [VAR2]")
 	level_filenames.push_back("Bunnyhop [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
-	level_filenames.push_back("Foot Wiggle [VAR3]")
-	level_filenames.push_back("Foot Wiggle [VAR4]")
 	level_filenames.push_back("Foot Wiggle [VAR5]")
 	level_filenames.push_back("Engine Room [VAR2]")
-	level_filenames.push_back("Graduation [VAR3]")
 	level_filenames.push_back("Friendship Paradox [VAR2]")
-	level_filenames.push_back("Pittance [VAR1]")
-	level_filenames.push_back("Void Recovery")
 	level_filenames.push_back("Leap of Faith [Space Program] [VAR1]")
 	level_filenames.push_back("Elevator Pitch [VAR1]")
 	level_filenames.push_back("Inverse Nudge Chain")
 	level_filenames.push_back("Crate Sorting Facility")
 	level_filenames.push_back("Joke-")
-	level_filenames.push_back("Spelunking-- [VAR2]")
 	level_filenames.push_back("[SPEEDRUN] A Way In-")
 	level_filenames.push_back("Entropy Extractor")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -6781,7 +6790,7 @@ func level_select() -> void:
 	add_to_ui_stack(a);
 	
 func how_many_standard_puzzles_are_solved_in_chapter(chapter: int) -> Array:
-	if chapter >= chapter_standard_starting_levels.size():
+	if chapter >= custom_past_here:
 		return [0, 0];
 	var x = 0;
 	var y = -1;
