@@ -1827,7 +1827,27 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
-	chapter_names.push_back("Formless Exploration");
+	chapter_names.push_back("Formless Exploration (Best Of)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Clockwork")
+	level_filenames.push_back("Microstatic")
+	level_filenames.push_back("Tiny Outpost")
+	level_filenames.push_back("Firewalkers")
+	level_filenames.push_back("Inexorable Destruction-")
+	level_filenames.push_back("In Defiance of Time")
+	level_filenames.push_back("Sandra's Magic Trick")
+	level_filenames.push_back("Osmosis")
+	level_filenames.push_back("Soulcrates")
+	level_filenames.push_back("Circle Dance-")
+	level_filenames.push_back("Unpacking")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Formless Exploration (Page 1)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
@@ -1845,15 +1865,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("[Troll] - Light Instantly Dies.")
 	level_filenames.push_back("Liquidation")
 	level_filenames.push_back("Sandra's Idea")
-	level_filenames.push_back("Unpacking")
 	level_filenames.push_back("Smooth Sailing")
 	level_filenames.push_back("Combination Lockdown")
 	level_filenames.push_back("King Crimson-")
 	level_filenames.push_back("Airstall")
-	level_filenames.push_back("Sandra's Magic Trick")
 	level_filenames.push_back("Logging Out")
 	level_filenames.push_back("Logging Out [VAR1]")
-	level_filenames.push_back("In Defiance of Time")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1874,8 +1891,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Erase [VAR1]")
 	level_filenames.push_back("Curveball")
 	level_filenames.push_back("Superpush")
-	level_filenames.push_back("Tiny Outpost")
-	level_filenames.push_back("Firewalkers")
 	level_filenames.push_back("Fuzzy Patch")
 	level_filenames.push_back("Portal Repairing Crew (Insight)")
 	level_filenames.push_back("Circle Dance")
@@ -1895,22 +1910,17 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Remote Controlled Cobblestone")
 	level_filenames.push_back("Spitroast")
 	level_filenames.push_back("Compact Complex")
-	level_filenames.push_back("Microstatic")
-	level_filenames.push_back("Clockwork")
 	level_filenames.push_back("Blast Furnace")
 	level_filenames.push_back("Roofing Services")
 	level_filenames.push_back("Mini Geode")
 	level_filenames.push_back("Inexorable Destruction")
-	level_filenames.push_back("Inexorable Destruction-")
 	level_filenames.push_back("Survival Section")
 	level_filenames.push_back("Crate Expectations-")
 	level_filenames.push_back("Flow Control-")
 	level_filenames.push_back("No(Thing) Left")
 	level_filenames.push_back("Sacrificial Ditch")
-	level_filenames.push_back("Osmosis")
 	level_filenames.push_back("Clock Storage Solutions.")
 	level_filenames.push_back("Revenge of an Old Future")
-	level_filenames.push_back("Circle Dance-")
 	level_filenames.push_back("Roast-")
 	level_filenames.push_back("The Split")
 	level_filenames.push_back("Mini Way In-")
@@ -1930,7 +1940,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Selfie")
 	level_filenames.push_back("Give me a Break")
 	level_filenames.push_back("Another Light-")
-	level_filenames.push_back("Soulcrates")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
