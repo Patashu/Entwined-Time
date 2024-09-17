@@ -1838,10 +1838,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Tiny Outpost")
 	level_filenames.push_back("Firewalkers")
 	level_filenames.push_back("Inexorable Destruction-")
-	level_filenames.push_back("In Defiance of Time")
 	level_filenames.push_back("Sandra's Magic Trick")
 	level_filenames.push_back("Osmosis")
 	level_filenames.push_back("Soulcrates")
+	level_filenames.push_back("In Defiance of Time [VAR1]")
+	level_filenames.push_back("In Defiance of Time-")
 	level_filenames.push_back("Circle Dance-")
 	level_filenames.push_back("Unpacking")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -1871,6 +1872,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Airstall")
 	level_filenames.push_back("Logging Out")
 	level_filenames.push_back("Logging Out [VAR1]")
+	level_filenames.push_back("In Defiance of Time")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65541, 7, 0, 65542, 14, 262145, 131072, 14, 262145, 131073, 6, 0, 131075, 55, 0, 131077, 6, 0, 131078, 14, 262145, 196608, 14, 262145, 196609, 5, 0, 196611, 14, 262148, 196613, 5, 0, 196614, 14, 262145, 262144, 14, 262145, 262145, 5, 0, 262149, 5, 0, 262150, 14, 262145, 327680, 14, 262145, 327681, 2, 0, 327685, 8, 0, 327686, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "In Defiance of Time [VAR1]"
+level_author = "Sandra53"
+level_replay = "In Defiance of Time [VAR1]$mturn=108$dwxaxzzxzxdwxaxzzxzxdwxaxzzxzxdxaxaxzxzzdxaxzwxzxzdxaxzxzwwzaxdxzzazazxwxaxzxdxzxzsxdxzxaxzaxzzdzxwxdxzdxzxzzsxdwxzsxzxzadxzxzzsxdxzaaxzxzzsxdwzxzxwxwxzzdaxzxzwxwxzzxzww"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = "4"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""
