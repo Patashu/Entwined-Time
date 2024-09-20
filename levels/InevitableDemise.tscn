@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,11 +18,8 @@ tile_data = PoolIntArray( 262145, 32, 0, 262146, 19, 0 )
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Inevitable Demise"
-level_author = "Patashu"
-level_replay = ""
+level_replay = "Inevitable Demise$mturn=89$wxadxzxaxwxzxzaxwxzdaxzwxzzxzawaxddxzzaxaxzswxzxzaaxaxzzswxzxzzzzxazxsxaxzxwzxadxwzxzdxzxzzwxdxzwwxddxzzxaxzaxzxaxzdxzdxzzzzdxdxzzxzzxa"
 heavy_max_moves = 6.0
 light_max_moves = 6.0
-clock_turns = ""
 target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
 target_track = 5.0
-setup_replay = ""
