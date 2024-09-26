@@ -108,6 +108,7 @@ func _ready() -> void:
 		updatelabeldebounce(debounceslider.value);
 	
 	debounceslider.connect("value_changed", self, "_debounceslider_value_changed");
+	deadzoneslider.connect("value_changed", self, "_deadzoneslider_value_changed");
 	
 	setup_rebinding_stuff();
 
