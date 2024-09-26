@@ -328,7 +328,7 @@ func _virtualbuttons_value_changed(value: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	gamelogic.save_file["virtual_buttons"] = value;
+	gamelogic.save_file["virtual_buttons"] = int(value);
 	gamelogic.setup_virtual_buttons();
 	
 func _jukebox_value_changed(value: float) -> void:

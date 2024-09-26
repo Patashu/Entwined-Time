@@ -900,7 +900,7 @@ func serialize_bindings() -> void:
 func setup_virtual_buttons() -> void:
 	var value = 0;
 	if (save_file.has("virtual_buttons")):
-		value = save_file["virtual_buttons"];
+		value = int(save_file["virtual_buttons"]);
 	if (value > 0):
 		for folder in virtualbuttons.get_children():
 			for button in folder.get_children():
