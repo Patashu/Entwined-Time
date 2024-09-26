@@ -175,6 +175,7 @@ func _resolution_item_whatever(index: int) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
+	resolution.text = resolution.get_item_text(index);
 	gamelogic.save_file["resolution"] = resolution.get_item_text(index).split(" ")[0];
 	gamelogic.setup_resolution();
 	
@@ -182,6 +183,7 @@ func _fps_item_whatever(index: int) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
+	fps.text = fps.get_item_text(index);
 	gamelogic.save_file["fps"] = int(fps.get_item_text(index).split(" ")[0]);
 	Engine.target_fps = int(gamelogic.save_file["fps"]);
 
@@ -391,13 +393,11 @@ func _process(delta: float) -> void:
 	elif parent is OptionButton:
 		focus = parent;
 	
-	if (Input.is_action_just_released("escape")):
+	if (Input.is_action_just_released("escape") or Input.is_action_just_pressed("ui_cancel")):
 		if (focus is OptionButton and is_instance_valid(focus.get_popup()) and focus.get_popup().visible):
 			focus.get_popup().visible = false;
 		else:
 			destroy();
-	if (Input.is_action_just_pressed("ui_cancel")):
-		destroy();
 
 	if (focus == okbutton):
 		if (Input.is_action_just_pressed("ui_left")):
