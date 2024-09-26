@@ -355,7 +355,8 @@ func update_time_bubble():
 		time_bubble.time_bubble_colour()
 	if (thought_bubble != null):
 		thought_bubble.update_time_colour(time_colour);
-		
+	setup_colourblind_mode(gamelogic.save_file["colourblind_mode"]);
+	
 func setup_colourblind_mode(value: bool) -> void:
 	if time_bubble != null:
 		time_bubble.setup_colourblind_mode(value);

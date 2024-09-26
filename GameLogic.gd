@@ -561,6 +561,8 @@ func default_save_file() -> void:
 		save_file["fps"] = 60;
 	if (!save_file.has("retro_timeline")):
 		save_file["retro_timeline"] = false;
+	if (!save_file.has("colourblind_mode")):
+		save_file["colourblind_mode"] = false;
 
 func load_game():
 	var file = File.new()
@@ -1061,33 +1063,32 @@ func setup_animation_speed() -> void:
 		Engine.time_scale = value;
 		
 func setup_colourblind_mode() -> void:
-	if (save_file.has("colourblind_mode")):
-		var value = save_file["colourblind_mode"];
-		#reset all textures to frame 0 to fix any possible drift
-		for i in range (Tiles.keys().size()):
-			if (i == 9):
-				continue;
-			var tex = terrainmap.tile_set.tile_get_texture(i);
-			if tex is AnimatedTexture:
-				tex.current_frame = 0;
-		
-		# halve the speed of green textures (except green glass cuz no animation but it's darker even under grayscale)
-		if (value):
-			terrainmap.tile_set.tile_get_texture(Tiles.GreenFire).fps = 2.5;
-			terrainmap.tile_set.tile_get_texture(Tiles.GreenSpikeball).fps = 2.5;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewayEastGreen).fps = 5;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewayWestGreen).fps = 5;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewayNorthGreen).fps = 5;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewaySouthGreen).fps = 5;
-		else:
-			terrainmap.tile_set.tile_get_texture(Tiles.GreenFire).fps = 5;
-			terrainmap.tile_set.tile_get_texture(Tiles.GreenSpikeball).fps = 5;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewayEastGreen).fps = 10;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewayWestGreen).fps = 10;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewayNorthGreen).fps = 10;
-			terrainmap.tile_set.tile_get_texture(Tiles.OnewaySouthGreen).fps = 10;
-		for actor in actors:
-			actor.setup_colourblind_mode(value);
+	var value = save_file["colourblind_mode"];
+	#reset all textures to frame 0 to fix any possible drift
+	for i in range (Tiles.keys().size()):
+		if (i == 9):
+			continue;
+		var tex = terrainmap.tile_set.tile_get_texture(i);
+		if tex is AnimatedTexture:
+			tex.current_frame = 0;
+	
+	# halve the speed of green textures (except green glass cuz no animation but it's darker even under grayscale)
+	if (value):
+		terrainmap.tile_set.tile_get_texture(Tiles.GreenFire).fps = 2.5;
+		terrainmap.tile_set.tile_get_texture(Tiles.GreenSpikeball).fps = 2.5;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewayEastGreen).fps = 5;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewayWestGreen).fps = 5;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewayNorthGreen).fps = 5;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewaySouthGreen).fps = 5;
+	else:
+		terrainmap.tile_set.tile_get_texture(Tiles.GreenFire).fps = 5;
+		terrainmap.tile_set.tile_get_texture(Tiles.GreenSpikeball).fps = 5;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewayEastGreen).fps = 10;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewayWestGreen).fps = 10;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewayNorthGreen).fps = 10;
+		terrainmap.tile_set.tile_get_texture(Tiles.OnewaySouthGreen).fps = 10;
+	for actor in actors:
+		actor.setup_colourblind_mode(value);
 		
 func initialize_shaders() -> void:
 	#each thing that uses a shader has to compile the first time it's used, so... use it now!
@@ -3406,9 +3407,6 @@ func find_colour(id: int, time_colour : int) -> void:
 				if actor.pos == tile and actor.is_native_colour():
 					actor.time_colour = time_colour;
 					actor.update_time_bubble();
-					if (save_file.has("colourblind_mode")):
-						var value = save_file["colourblind_mode"];
-						actor.setup_colourblind_mode(value);
 					terrain_layers[i].set_cellv(tile, -1);
 					break;
 				if (!found):
