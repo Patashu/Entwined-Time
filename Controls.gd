@@ -141,6 +141,8 @@ func _resetbutton_pressed() -> void:
 	#seems OK to reset both keyboard and controller simultaneously
 	InputMap.load_from_globals();
 	setup_rebinding_stuff();
+	deadzoneslider.value = 0.75;
+	debounceslider.value = 40;
 	
 func remap_dance(button: BindingButton, new_event: InputEvent) -> void:
 	# sanitize modifiers off of the event
