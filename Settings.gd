@@ -178,6 +178,8 @@ func _resolution_item_whatever(index: int) -> void:
 	resolution.text = resolution.get_item_text(index);
 	gamelogic.save_file["resolution"] = resolution.get_item_text(index).split(" ")[0];
 	gamelogic.setup_resolution();
+	for i in range(resolution.get_popup().get_item_count()):
+		resolution.get_popup().set_item_checked(i, i == index);
 	
 func _fps_item_whatever(index: int) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -186,6 +188,8 @@ func _fps_item_whatever(index: int) -> void:
 	fps.text = fps.get_item_text(index);
 	gamelogic.save_file["fps"] = int(fps.get_item_text(index).split(" ")[0]);
 	Engine.target_fps = int(gamelogic.save_file["fps"]);
+	for i in range(fps.get_popup().get_item_count()):
+		fps.get_popup().set_item_checked(i, i == index);
 
 func _masterslider_value_changed(value: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -376,10 +380,15 @@ func destroy() -> void:
 	self.queue_free();
 	gamelogic.ui_stack.erase(self);
 
+var covered_cooldown_timer: int = 2
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
+	
+	if (covered_cooldown_timer > 0):
+		covered_cooldown_timer -= 1;
 	
 	var focus = holder.get_focus_owner();
 	if (focus == null):
@@ -392,9 +401,11 @@ func _process(delta: float) -> void:
 		focus = parent;
 	elif parent is OptionButton:
 		focus = parent;
+		if (is_instance_valid(focus.get_popup()) and focus.get_popup().visible):
+			covered_cooldown_timer = 2;
 	
 	if (Input.is_action_just_released("escape") or Input.is_action_just_pressed("ui_cancel")):
-		if (focus is OptionButton and is_instance_valid(focus.get_popup()) and focus.get_popup().visible):
+		if (focus is OptionButton and is_instance_valid(focus.get_popup()) and covered_cooldown_timer > 0):
 			focus.get_popup().visible = false;
 		else:
 			destroy();
