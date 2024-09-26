@@ -379,11 +379,6 @@ func _process(delta: float) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	
-	if (Input.is_action_just_released("escape")):
-		destroy();
-	if (Input.is_action_just_pressed("ui_cancel")):
-		destroy();
-		
 	var focus = holder.get_focus_owner();
 	if (focus == null):
 		okbutton.grab_focus();
@@ -395,6 +390,14 @@ func _process(delta: float) -> void:
 		focus = parent;
 	elif parent is OptionButton:
 		focus = parent;
+	
+	if (Input.is_action_just_released("escape")):
+		if (focus is OptionButton and is_instance_valid(focus.get_popup()) and focus.get_popup().visible):
+			focus.get_popup().visible = false;
+		else:
+			destroy();
+	if (Input.is_action_just_pressed("ui_cancel")):
+		destroy();
 
 	if (focus == okbutton):
 		if (Input.is_action_just_pressed("ui_left")):
