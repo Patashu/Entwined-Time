@@ -64,6 +64,10 @@ func _searchbox_focus_exited() -> void:
 	searchbox.text = "Search...";
 	searchbox.editable = false;
 	gamelogic.no_mute_pwease = false;
+	if (buttons_by_xy.size() == 1):
+		buttons_by_xy[Vector2.ZERO]._pressed();
+	elif (buttons_by_xy.size() == 0):
+		prepare_chapter();
 	
 func _searchbox_text_changed(new_text: String) -> void:
 	
@@ -625,7 +629,10 @@ func _process(delta: float) -> void:
 			_nextbutton_pressed();
 	else:
 		if (Input.is_action_just_pressed("start_search") or Input.is_action_just_pressed("end_search")):
-			nextbutton.grab_focus();
+			if (buttons_by_xy.has(Vector2.ZERO)):
+				buttons_by_xy[Vector2.ZERO].grab_focus();
+			else:
+				nextbutton.grab_focus();
 		
 	var focus = holder.get_focus_owner();
 	if (focus == null):
