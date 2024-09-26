@@ -265,7 +265,7 @@ func _retrotimeline_pressed() -> void:
 		return;
 	
 	gamelogic.save_file["retro_timeline"] = retrotimeline.pressed;
-	
+	gamelogic.update_retro_timeline();
 	
 func _colourblindmode_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):

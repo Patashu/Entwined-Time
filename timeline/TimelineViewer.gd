@@ -107,6 +107,11 @@ func finish_animations() -> void:
 	for sprite in nonce_to_sprite_dictionary.values():
 		if is_instance_valid(sprite):
 			sprite.finish_animations();
+		
+func update_retro_timeline() -> void:
+	for sprite in nonce_to_sprite_dictionary.values():
+		if is_instance_valid(sprite):
+			sprite.update_texture();
 
 func add_max_turn() -> void:
 	max_moves += 1;

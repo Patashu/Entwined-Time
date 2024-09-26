@@ -3113,6 +3113,10 @@ func broadcast_animation_nonce(animation_nonce: int) -> void:
 	heavytimeline.broadcast_animation_nonce(animation_nonce);
 	lighttimeline.broadcast_animation_nonce(animation_nonce);
 
+func update_retro_timeline() -> void:
+	heavytimeline.update_retro_timeline();
+	lighttimeline.update_retro_timeline();
+
 func get_used_cells_by_id_all_layers(id: int) -> Array:
 	var results = []
 	for layer in terrain_layers:

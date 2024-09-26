@@ -138,6 +138,9 @@ func fill(buffer: Array, continuum: bool = false) -> void:
 		var event = relevant_buffer[i];
 		var sprite = Sprite.new();
 		sprite.set_script(preload("res://timeline/TimelineSprite.gd"));
+		sprite.gamelogic = parent.gamelogic;
+		sprite.event = event;
+		sprite.size = size;
 		timelinesymbols.add_child(sprite);
 		sprite.offset = Vector2(size/2, size/2);
 		sprite.position.x = 0 + (i%(24/size))*size;
@@ -145,7 +148,7 @@ func fill(buffer: Array, continuum: bool = false) -> void:
 		sprite.scale = Vector2(scale, scale);
 		sprite.destination_colour = event[1].color;
 		sprite.modulate = Color(1, 1, 1, 0);
-		sprite.texture = get_texture_for_event(event, size);
+		sprite.update_texture();
 		sprite.animation_nonce = get_animation_nonce_for_event(event);
 		if (event[0] == GameLogic.Undo.set_actor_var and event[2] == "broken"):
 			sprite.is_broken = true;
@@ -162,146 +165,6 @@ func get_animation_nonce_for_event(event) -> int:
 	elif event[0] == GameLogic.Undo.tick:
 		return event[3];
 	return -1;
-
-func get_texture_for_event(event: Array, size: int) -> Texture:
-	#add_undo_event([Undo.move, actor, dir], chrono);
-	#add_undo_event([Undo.set_actor_var, actor, prop, old_value], chrono);
-	match (event[0]):
-		GameLogic.Undo.move:
-			var dir = event[2];
-			if dir == Vector2.LEFT:
-				if (event[5].size() > 0):
-					if size == 8:
-						return preload("res://timeline/timeline-left-phase-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-left-phase-12.png");
-				else:
-					if size == 8:
-						return preload("res://timeline/timeline-left-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-left-12.png");
-			elif dir == Vector2.RIGHT:
-				if (event[5].size() > 0):
-					if size == 8:
-						return preload("res://timeline/timeline-right-phase-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-right-phase-12.png");
-				else:
-					if size == 8:
-						return preload("res://timeline/timeline-right-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-right-12.png");
-			elif dir == Vector2.UP:
-				if (event[5].size() > 0):
-					if size == 8:
-						return preload("res://timeline/timeline-up-phase-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-up-phase-12.png");
-				else:
-					if size == 8:
-						return preload("res://timeline/timeline-up-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-up-12.png");
-			elif dir == Vector2.DOWN:
-				if (event[5].size() > 0):
-					if size == 8:
-						return preload("res://timeline/timeline-down-phase-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-down-phase-12.png");
-				else:
-					if size == 8:
-						return preload("res://timeline/timeline-down-8.png");
-					elif size == 12:
-						return preload("res://timeline/timeline-down-12.png");
-			pass
-		GameLogic.Undo.set_actor_var:
-			var prop = event[2];
-			var new_value = event[4];
-			if (parent.gamelogic.save_file["retro_timeline"]):
-				new_value = event[3];
-			match prop:
-				"airborne":
-					if new_value == 1:
-						if size == 8:
-							return preload("res://timeline/timeline-airborne-1-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-airborne-1-12.png");
-					elif new_value == 0:
-						if size == 8:
-							return preload("res://timeline/timeline-airborne-0-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-airborne-0-12.png");
-					elif new_value == -1:
-						if size == 8:
-							return preload("res://timeline/timeline-grounded-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-grounded-12.png");
-				"broken":
-					if new_value == true:
-						if size == 8:
-							return preload("res://timeline/timeline-broken-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-broken-12.png");
-					else:
-						if size == 8:
-							return preload("res://timeline/timeline-unbroken-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-unbroken-12.png");
-				"momentum":
-					if (new_value == Vector2.ZERO):
-						if size == 8:
-							return preload("res://timeline/timeline-momentum-zero-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-momentum-zero-12.png");
-					elif (new_value == Vector2.LEFT):
-						if size == 8:
-							return preload("res://timeline/timeline-momentum-left-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-momentum-left-12.png");
-					elif (new_value == Vector2.RIGHT):
-						if size == 8:
-							return preload("res://timeline/timeline-momentum-right-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-momentum-right-12.png");
-					elif (new_value == Vector2.UP):
-						if size == 8:
-							return preload("res://timeline/timeline-momentum-up-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-momentum-up-12.png");
-					elif (new_value == Vector2.DOWN):
-						if size == 8:
-							return preload("res://timeline/timeline-momentum-down-8.png");
-						elif size == 12:
-							return preload("res://timeline/timeline-momentum-down-12.png");
-		GameLogic.Undo.change_terrain:
-			var old_value = event[4];
-			if (old_value == -1):
-				if size == 8:
-					return preload("res://timeline/timeline-unterrain-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-unterrain-12.png");
-			else:
-				if size == 8:
-					return preload("res://timeline/timeline-terrain-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-terrain-12.png");
-		GameLogic.Undo.tick:
-			var amount = event[2];
-			if (amount < 0):
-				if size == 8:
-					return preload("res://timeline/timeline-tick-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-tick-12.png");
-			elif (amount > 0):
-				if size == 8:
-					return preload("res://timeline/timeline-untick-8.png");
-				elif size == 12:
-					return preload("res://timeline/timeline-untick-12.png");
-			
-	if size == 8:
-		return preload("res://timeline/timeline-what-8.png");
-	else:
-		return preload("res://timeline/timeline-what-12.png");
 
 func fuzz_on() -> void:
 	if (!showing_fuzz):
