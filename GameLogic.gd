@@ -3430,8 +3430,12 @@ func find_modifier(id: int) -> void:
 			var found = false;
 			for actor in actors:
 				var condition = false;
-				if (id == Tiles.Propellor or id == Tiles.HeavyMimic or id == Tiles.LightMimic):
+				if (id == Tiles.Propellor):
 					condition = (actor.pos == tile + Vector2.DOWN) and actor.propellor == null;
+				elif (id == Tiles.HeavyMimic):
+					condition = (actor.pos == tile + Vector2.DOWN) and actor.heavy_mimic == null;
+				elif (id == Tiles.LightMimic):
+					condition = (actor.pos == tile + Vector2.DOWN) and actor.light_mimic == null;
 				else:
 					condition = actor.pos == tile;
 				if condition:
@@ -4125,7 +4129,6 @@ boost_pad_reentrance: bool = false) -> int:
 					if id >= Tiles.DurPlus and id <= Tiles.FallOne:
 						var sprite = attach_modifier(actor, i, actor.pos, id, chrono_to_use);
 						add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
-						break;
 				var terrain_above = terrain_in_tile(actor.pos + Vector2.UP, actor, chrono);
 				for i in range(terrain_above.size()):
 					var id = terrain_above[i];
@@ -4143,7 +4146,6 @@ boost_pad_reentrance: bool = false) -> int:
 					if (attach):
 						var sprite = attach_modifier(actor, i, actor.pos + Vector2.UP, id, chrono_to_use);
 						add_undo_event([Undo.sprite, actor, sprite], chrono_for_maybe_green_actor(actor, chrono_to_use));
-						break;
 		
 		# slopes 2) then after the !is_retro first move succeeds and commits,
 		# again we try to do the second moves in order, and take the first one that succeeds.
