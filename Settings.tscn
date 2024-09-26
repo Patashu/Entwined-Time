@@ -33,7 +33,6 @@ margin_right = 408.0
 margin_bottom = 219.0
 
 [node name="Graphics" type="Tabs" parent="Holder/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -221,6 +220,7 @@ margin_bottom = 115.0
 text = "Mute In Background"
 
 [node name="Gameplay" type="Tabs" parent="Holder/TabContainer"]
+visible = false
 margin_left = 4.0
 margin_top = 32.0
 margin_right = 44.0

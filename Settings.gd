@@ -393,6 +393,8 @@ func _process(delta: float) -> void:
 	var parent = focus.get_parent();
 	if parent is SpinBox:
 		focus = parent;
+	elif parent is OptionButton:
+		focus = parent;
 
 	if (focus == okbutton):
 		if (Input.is_action_just_pressed("ui_left")):
