@@ -413,7 +413,7 @@ func _process(delta: float) -> void:
 		else:
 			destroy();
 
-	if (focus == okbutton):
+	if (!(focus is HSlider or focus is SpinBox)):
 		if (Input.is_action_just_pressed("ui_left")):
 			var next_tab = $Holder/TabContainer.current_tab - 1;
 			if (next_tab < 0):
