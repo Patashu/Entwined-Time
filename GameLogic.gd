@@ -1064,6 +1064,9 @@ func setup_animation_speed() -> void:
 		
 func setup_colourblind_mode() -> void:
 	var value = save_file["colourblind_mode"];
+	if (!ready_done and !value):
+		# just booted up and we're not in colourblind mode - everything is already correct
+		return;
 	#reset all textures to frame 0 to fix any possible drift
 	for i in range (Tiles.keys().size()):
 		if (i == 9):
@@ -1080,6 +1083,18 @@ func setup_colourblind_mode() -> void:
 		terrainmap.tile_set.tile_get_texture(Tiles.OnewayWestGreen).fps = 5;
 		terrainmap.tile_set.tile_get_texture(Tiles.OnewayNorthGreen).fps = 5;
 		terrainmap.tile_set.tile_get_texture(Tiles.OnewaySouthGreen).fps = 5;
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourRed, preload("res://assets/colour_red_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourBlue, preload("res://assets/colour_blue_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourGray, preload("res://assets/colour_gray_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourGreen, preload("res://assets/colour_green_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourMagenta, preload("res://assets/colour_magenta_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourVoid, preload("res://assets/colour_void_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourPurple, preload("res://assets/colour_purple_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourBlurple, preload("res://assets/colour_blurple_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourCyan, preload("res://assets/colour_cyan_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourOrange, preload("res://assets/colour_orange_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourYellow, preload("res://assets/colour_yellow_colourblind.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourWhite, preload("res://assets/colour_white_colourblind.png"))
 	else:
 		terrainmap.tile_set.tile_get_texture(Tiles.GreenFire).fps = 5;
 		terrainmap.tile_set.tile_get_texture(Tiles.GreenSpikeball).fps = 5;
@@ -1087,6 +1102,18 @@ func setup_colourblind_mode() -> void:
 		terrainmap.tile_set.tile_get_texture(Tiles.OnewayWestGreen).fps = 10;
 		terrainmap.tile_set.tile_get_texture(Tiles.OnewayNorthGreen).fps = 10;
 		terrainmap.tile_set.tile_get_texture(Tiles.OnewaySouthGreen).fps = 10;
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourRed, preload("res://assets/colour_red.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourBlue, preload("res://assets/colour_blue.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourGray, preload("res://assets/colour_gray.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourGreen, preload("res://assets/colour_green.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourMagenta, preload("res://assets/colour_magenta.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourVoid, preload("res://assets/colour_void.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourPurple, preload("res://assets/colour_purple.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourBlurple, preload("res://assets/colour_blurple.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourCyan, preload("res://assets/colour_cyan.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourOrange, preload("res://assets/colour_orange.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourYellow, preload("res://assets/colour_yellow.png"))
+		terrainmap.tile_set.tile_set_texture(Tiles.ColourWhite, preload("res://assets/colour_white.png"))
 	for actor in actors:
 		actor.setup_colourblind_mode(value);
 		
