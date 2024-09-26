@@ -159,11 +159,16 @@ func update_focus_neighbors() -> void:
 			closebutton.focus_neighbour_right = closebutton.get_path_to(button);
 			prevbutton.focus_neighbour_bottom = prevbutton.get_path_to(button);
 		
-		if (pos.x == 0 and pos.y == 1 and cutscene_button != null):
+		if (pos.x == 0 and pos.y == 0 and cutscene_button != null):
 			button.focus_neighbour_top = button.get_path_to(cutscene_button);
 			prevbutton.focus_neighbour_bottom = prevbutton.get_path_to(cutscene_button);
+			cutscene_button.focus_neighbour_bottom = cutscene_button.get_path_to(button);
 		elif (buttons_by_xy.has(pos + Vector2.UP)):
 			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.UP]);
+		elif (pos.x == 0 and pos.y == 1 and cutscene_button != null):
+			button.focus_neighbour_top = button.get_path_to(cutscene_button);
+			prevbutton.focus_neighbour_bottom = prevbutton.get_path_to(cutscene_button);
+			cutscene_button.focus_neighbour_bottom = cutscene_button.get_path_to(button);
 		elif (buttons_by_xy.has(pos + Vector2.UP + Vector2.UP)):
 			button.focus_neighbour_top = button.get_path_to(buttons_by_xy[pos + Vector2.UP + Vector2.UP]);
 		elif (buttons_by_xy.has(pos + Vector2.LEFT + Vector2.UP)):
