@@ -171,6 +171,16 @@ func _vsync_pressed() -> void:
 	gamelogic.save_file["vsync_enabled"] = vsync.pressed;
 	OS.vsync_enabled = vsync.pressed;
 
+func _metaundoarestart_item_whatever(index: int) -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	metaundoarestart.text = metaundoarestart.get_item_text(index);
+	gamelogic.save_file["meta_undo_a_restart"] = index;
+	gamelogic.update_info_labels();
+	for i in range(metaundoarestart.get_popup().get_item_count()):
+		metaundoarestart.get_popup().set_item_checked(i, i == index);
+
 func _resolution_item_whatever(index: int) -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
@@ -320,13 +330,6 @@ func _virtualbuttons_value_changed(value: float) -> void:
 	
 	gamelogic.save_file["virtual_buttons"] = value;
 	gamelogic.setup_virtual_buttons();
-	
-func _metaundoarestart_item_whatever(index: int) -> void:
-	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
-		return;
-	
-	gamelogic.save_file["meta_undo_a_restart"] = index;
-	gamelogic.update_info_labels();
 	
 func _jukebox_value_changed(value: float) -> void:
 	if (value < -1):
