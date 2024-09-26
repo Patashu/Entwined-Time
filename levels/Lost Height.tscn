@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65541, 33, 0, 65544, 158, 0, 65546, 14, 262145, 131072, 14, 262145, 131077, 33, 0, 131082, 14, 262145, 196608, 14, 262145, 196609, 7, 0, 196610, 32, 0, 196611, 1, 0, 196613, 33, 0, 196615, 2, 0, 196616, 15, 0, 196617, 8, 0, 196618, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 524292, 262148, 87, 0, 262149, 14, 196609, 262150, 87, 0, 262151, 14, 524290, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 655364, 327683, 14, 262145, 327684, 87, 0, 327685, 14, 327681, 327686, 87, 0, 327687, 14, 262145, 393219, 14, 262145, 393220, 87, 0, 393221, 87, 0, 393222, 87, 0, 393223, 14, 262145, 458755, 14, 655362, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 655364 )
+
+[node name="@@644" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262148, 29, 0, 262150, 29, 0, 327684, 82, 0 )
+
+[node name="@@645" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262148, 30, 0, 262150, 30, 0 )
+
+[node name="@@646" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262148, 82, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Lost Height"
+level_author = "Sandra53"
+level_replay = "Lost Height$mturn=152$xaxdxzwsxzxzzdaxdxzwsxzxzxdxzdxdxzswxzxzzdaaaxdxzxzwxzaxwaxzxzdzxzxdxaxaxzxzxdxzzzdxzxadxddxzxzzdxdzxzxdxddxzzzdaxwdxwxzxzzxzxaxwzzzdxzzxzdxdxdaxzaxzxzdxdaxzaxzxzxazzxzxzzxaddxddddzxawxdxzaxzwzzzzwaxzxdxdxzxzzxzzxdzzxwxzxzzaaaxaaa"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_track = 5.0
+setup_replay = ""

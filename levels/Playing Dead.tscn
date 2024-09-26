@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 12, 0, 5, 124, 0, 65537, 8, 0, 65541, 2, 0, 131072, 14, 196609, 131073, 160, 0, 131074, 14, 524290, 131075, 14, 196614, 131076, 14, 524292, 131077, 160, 0, 131078, 14, 196609, 196608, 14, 262145, 196609, 7, 0, 196610, 14, 262145, 196611, 56, 0, 196612, 14, 262145, 196613, 1, 0, 196614, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 655363, 262147, 14, 196614, 262148, 14, 655363, 262149, 14, 196614, 262150, 14, 655364 )
+
+[node name="@@350" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 55, 0 )
+
+[node name="@@351" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 40, 0 )
+
+[node name="@@352" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 149, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Playing Dead"
+level_author = "Green"
+level_replay = "Playing Dead$mturn=40$xdwxaaxzwxaxzdxaxzzxzxddxaxzzaxzzzzxaxdzxzaxaxzaxaxzaxaxzzxzzd"
+heavy_max_moves = 4.0
+light_max_moves = 2.0
+clock_turns = "1"
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""
