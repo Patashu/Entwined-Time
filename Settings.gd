@@ -408,11 +408,14 @@ func _process(delta: float) -> void:
 				next_tab = 0;
 			$Holder/TabContainer.current_tab = next_tab;
 			
+		okbutton.focus_neighbour_top = NodePath();
 		if ($Holder/TabContainer.current_tab == 0):
 			if is_instance_valid(resolution):
 				okbutton.focus_neighbour_bottom = okbutton.get_path_to(resolution);
 			else:
 				okbutton.focus_neighbour_bottom = okbutton.get_path_to(animationslider);
+			if (is_instance_valid(fps)):
+				okbutton.focus_neighbour_top = okbutton.get_path_to(fps);
 		elif ($Holder/TabContainer.current_tab == 1):
 			okbutton.focus_neighbour_bottom = okbutton.get_path_to(masterslider);
 		elif ($Holder/TabContainer.current_tab == 2):
