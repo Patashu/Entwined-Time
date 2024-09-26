@@ -454,7 +454,7 @@ func prepare_chapter() -> void:
 		else:
 			all_standard_stars = false;
 		
-		if (x == 0 and y == 1): # the first button
+		if (buttons_by_xy.size() == 1): # the first button
 			button.grab_focus();
 		if (button.level_number == gamelogic.level_number): # button corresponding to the current level
 			button.grab_focus();
