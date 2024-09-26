@@ -4416,7 +4416,7 @@ func floorboards_rotation() -> void:
 	all_rotation(floorboards_ids);
 	
 func phaseboards_rotation() -> void:
-	all_rotation(phaseboards_ids);	
+	all_rotation(rotateable_phaseboards_ids);	
 
 func fuzz_rotation() -> void:
 	all_rotation([Tiles.Fuzz]);
@@ -4437,7 +4437,7 @@ func all_rotation(candidates: Array) -> void:
 
 var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
 var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true};
-var phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardVoid, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife, Tiles.PhaseBoardHeavy, Tiles.PhaseBoardLight, Tiles.PhaseBoardCrate, Tiles.PhaseBoardEast, Tiles.PhaseBoardNorth, Tiles.PhaseBoardSouth, Tiles.PhaseBoardWest];
+var rotateable_phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardVoid, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife];
 var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardVoid: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true, Tiles.PhaseBoardEast: true, Tiles.PhaseBoardNorth: true, Tiles.PhaseBoardSouth: true, Tiles.PhaseBoardWest: true};
 
 func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
