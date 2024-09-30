@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 5, 23, 0, 6, 14, 524290, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 65541, 23, 0, 65542, 14, 262145, 65546, 14, 262145, 131072, 14, 262145, 131073, 177, 0, 131076, 14, 262145, 131077, 23, 0, 131078, 14, 262145, 131081, 177, 0, 131082, 14, 262145, 196608, 14, 262145, 196609, 1, 0, 196610, 177, 0, 196612, 14, 262145, 196613, 23, 0, 196614, 14, 262145, 196616, 177, 0, 196617, 7, 0, 196618, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655363, 262149, 14, 196614, 262150, 14, 655363, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 655364 )
+
+[node name="@@297" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 0, 0, 65541, 0, 0, 131077, 0, 0, 196609, 8, 0, 196613, 0, 0, 196617, 2, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Passing Through Matter"
+level_author = "Sandra53"
+level_replay = "Passing Through Matter$mturn=110$xdxwxwxwxzxwxwxzaaaasxzxzzzzzzaaaaazwxwxzzzxzxzaadwxwxzzzzwxzxadzaxzwxaxwxzaxwxaxzzdsxzzzzzzxzdxdaaxzzddxdawxaxzzzzzxzxdawxaxzzxzxzzxzzxdzdzdddxzxzzzzxdxa"
+heavy_max_moves = 7.0
+light_max_moves = 7.0
+clock_turns = ""
+target_sky = Color( 0.184314, 0.168627, 0.337255, 1 )
+target_track = 6.0
+setup_replay = ""
