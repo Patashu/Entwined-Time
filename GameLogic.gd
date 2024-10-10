@@ -370,6 +370,41 @@ enum Tiles {
 }
 var voidlike_tiles : Array = [];
 
+enum Achievements {
+	NonStandardGameOver,
+	What,
+	AlreadyFixed,
+	AlreadyBroken,
+	Phantasmal,
+	SpaceProgram,
+	FarLands,
+	VoidDiver,
+	BuriedAlive,
+	ExceptionHandler,
+	InfiniteLoop,
+	Paradox,
+	#Hyperwiggle,
+	#ThatsALotOfPuzzles,
+	#CommunityChampion,
+	#RepairsComplete
+}
+
+var achievements_unlocked : Dictionary = {};
+var achievement_names : Array = [
+	"Non-Standard Game Over",
+	"What",
+	"Already Fixed",
+	"Already Broken",
+	"Phantasmal",
+	"Space Program",
+	"Far Lands",
+	"Void Diver",
+	"Buried Alive",
+	"Exception Handler",
+	"Infinite Loop",
+	"Paradox"
+]
+
 # information about the level
 var is_custom : bool = false;
 var is_community_level : bool = false;
@@ -1164,6 +1199,14 @@ func assert_tile_enum() -> void:
 			print(expected_tile_name, ", ", expected_tile_id, ", ", actual_tile_name, ", ", actual_tile_id);
 		elif (actual_tile_id != expected_tile_id):
 			print(expected_tile_name, ", ", expected_tile_id, ", ", actual_tile_name, ", ", actual_tile_id);
+	
+func achievement_get(id: int, custom_achievement: bool = false) -> void:
+	if (achievements_unlocked.has(id)):
+		return
+	if (is_custom and !custom_achievement):
+		return
+	achievements_unlocked[id] = true;
+	floating_text("Achievement: " + achievement_names[id]);
 	
 func initialize_level_list() -> void:
 	
@@ -3964,6 +4007,15 @@ boost_pad_reentrance: bool = false) -> int:
 			was_push = pushers_list.size() > 0;
 			was_fall = is_gravity;
 		actor.pos = pos;
+		if (chrono < Chrono.TIMELESS and !actor.is_crystal):
+			if (actor.is_character and dir.length() > 1 and chrono == Chrono.MOVE):
+				achievement_get(Achievements.What);
+			if (pos.x <= -10 or pos.x >= map_x_max + 9):
+				achievement_get(Achievements.FarLands);
+			if (pos.y <= -6):
+				achievement_get(Achievements.SpaceProgram);
+			if (pos.y >= map_y_max + 2):
+				achievement_get(Achievements.VoidDiver, true);
 		
 		# joke portal update
 		if (actor.joke_goal != null):
@@ -4637,6 +4689,8 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 					flash_colour = oneway_flash;
 			Tiles.GlassBlock:
 				blocked = Success.No;
+				if (!is_gravity and chrono == Chrono.MOVE and actor.is_character):
+					achievement_get(Achievements.BuriedAlive);
 				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
@@ -5121,6 +5175,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	#var tiny_pushables_there = [];
 	for actor_there in actors_there:
 		if (phased_out_of != null and phased_out_of.has(actor_there)):
+			achievement_get(Achievements.Phantasmal);
 			continue
 		#if actor_there.tiny_pushable():
 		#	tiny_pushables_there.push_back(actor_there);
@@ -5402,6 +5457,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			if (heavy_max_moves <= 0):
 				add_to_animation_server(eater, [Animation.heavy_magenta_time_crystal, eatee, -99]);
 				lose("Paradox: A character can't have less than 0 moves.", heavy_actor)
+				achievement_get(Achievements.Paradox);
 				return;
 			# accessible timeline is now one move shorter.
 			heavy_max_moves -= 1;
@@ -5451,6 +5507,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 			if (light_max_moves <= 0):
 				add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, -99]);
 				lose("Paradox: A character can't have less than 0 moves.", light_actor)
+				achievement_get(Achievements.Paradox);
 				return;
 			# accessible timeline is now one move shorter.
 			light_max_moves -= 1;
@@ -5549,6 +5606,10 @@ func lose(reason: String, suspect: Actor, lose_instantly: bool = false, music: S
 		winlabel.change_text(reason + "\n\nUndo or Restart to continue.")
 	if (has_void_gates):
 		open_doors(Tiles.GateOfEternity);
+	if (music == "exception"):
+		achievement_get(Achievements.ExceptionHandler, true);
+	elif (music == "infloop"):
+		achievement_get(Achievements.InfiniteLoop, true);
 	lost_speaker.stream = sounds[music];
 	if (lose_instantly):
 		fade_in_lost();
@@ -5572,6 +5633,11 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 	if (chrono < Chrono.GHOSTS):
 		# sanity check: prevent, for example, spotlight from making a broken->broken event
 		if (old_value == value):
+			if (chrono == Chrono.CHAR_UNDO and prop == "broken"):
+				if value == true:
+					achievement_get(Achievements.AlreadyBroken)
+				else:
+					achievement_get(Achievements.AlreadyFixed)
 			# but first, a copy of this because it's what flickers timeline symbols out of existence :B
 			add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
 			return
@@ -5656,9 +5722,18 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 				maybe_update_phaseboards(chrono, true);
 				if value:
 					if (!actor_has_broken_event_anywhere(actor)):
+						if (!is_custom and chapter == 0):
+							while animation_server.size() <= animation_substep:
+								animation_server.push_back([]);
+							for j in range(animation_substep+1):
+								for i in range(animation_server[j].size()):
+									var thing = animation_server[j][i];
+									if thing[1][0] == Animation.lose:
+										achievement_get(Achievements.NonStandardGameOver);
+						
 						add_to_animation_server(actor, [Animation.lose]);
 						if (has_void_gates):
-							open_doors(Tiles.GateOfDemise);
+							open_doors(Tiles.GateOfDemise);		
 				else:
 					if actor.actorname == Actor.Name.Heavy:
 						heavytimeline.end_fade();
