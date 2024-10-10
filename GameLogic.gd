@@ -1668,29 +1668,30 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Wooden Crates Tutorial")
 	level_filenames.push_back("TimelessBridge")
 	level_filenames.push_back("Wooden Gate")
-	level_filenames.push_back("Cramped Roommates")
+	level_filenames.push_back("Drop Stop")
 	level_filenames.push_back("Spare Door.")
-	level_filenames.push_back("Hokey Pokey")
-	level_filenames.push_back("Pry")
+	level_filenames.push_back("Forklift Certified")
 	level_filenames.push_back("Power Crates Tutorial")
 	level_filenames.push_back("Pushing It Power")
 	level_filenames.push_back("PezDispenser")
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
 	level_filenames.push_back("Steel Crates Tutorial")
-	level_filenames.push_back("Crunch Time")
+	level_filenames.push_back("Clocksmasher")
+	level_filenames.push_back("Simple Hierarchy")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("TheoryOfEverythingA")
 	level_filenames.push_back("TheoryOfEverythingB")
-	level_filenames.push_back("Wooden Glass")
-	level_filenames.push_back("Unstacking Station")
-	level_filenames.push_back("Simple Hierarchy")
 	level_filenames.push_back("Woodskip")
+	level_filenames.push_back("Unstacking Station")
+	level_filenames.push_back("Wooden Glass")
 	level_filenames.push_back("Donk [VAR2]")
-	level_filenames.push_back("The Steel Crate Pit")
+	level_filenames.push_back("Bunker Door [VAR1]")
+	level_filenames.push_back("One at a Time [VAR1]")
 	level_filenames.push_back("Low Ceiling")
+	level_filenames.push_back("Woodskip [VAR2]")
 	
 	chapter_names.push_back("Rocky Nudges");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2029,6 +2030,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Left Pit")
 	level_filenames.push_back("The Solo Pit")
+	level_filenames.push_back("The Steel Crate Pit")
 	level_filenames.push_back("The One-Way Pit [VAR2] [VAR1]")
 	level_filenames.push_back("The Green Fire Pit")
 	level_filenames.push_back("The Half-Magenta Pit")
@@ -2180,7 +2182,6 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Cascade [VAR1]")
 	level_filenames.push_back("Zipper")
-	level_filenames.push_back("One at a Time [VAR1]")
 	level_filenames.push_back("True Micro Puzzle")
 	level_filenames.push_back("True Micro Puzzle 2")
 	level_filenames.push_back("Graduation [VAR2]")
@@ -2190,9 +2191,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Wither [VAR1]")
 	level_filenames.push_back("As The World Turns [VAR1]")
 	level_filenames.push_back("Waterslide (Waterslide Shortage)")
-	level_filenames.push_back("Bunker Door [VAR1]")
 	level_filenames.push_back("Cement Pit [VAR2]")
-	level_filenames.push_back("Woodskip [VAR2]")
 	level_filenames.push_back("Rock Glider")
 	level_filenames.push_back("Rock Slider")
 	level_filenames.push_back("Wooden Gate [VAR1]")
@@ -2221,6 +2220,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Shared Brain Cells")
 	level_filenames.push_back("The Imaginary Pit")
 	level_filenames.push_back("Graduation [VAR4]")
+	level_filenames.push_back("Invisible Void Bridge [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

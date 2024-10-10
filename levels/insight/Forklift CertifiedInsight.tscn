@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,11 +17,10 @@ tile_data = PoolIntArray( 65538, 30, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Pry"
+level_name = "Forklift Certified (Insight)"
 level_author = "Sandra53"
-level_replay = "Pry$mturn=23$wxaxzxawxaxzddxdxzxaxwxzaxwxzzxdxddwd"
+level_replay = "Forklift Certified (Insight)$mturn=23$wxaxzxawxaxzddxdxzxaxwxzaxwxzzxdxddwd"
 heavy_max_moves = 6.0
 light_max_moves = 6.0
-clock_turns = ""
 target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
 target_track = 1.0

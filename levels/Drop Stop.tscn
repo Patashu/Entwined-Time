@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196615, 6, 14, 196613, 7, 14, 524292, 65536, 14, 262145, 65537, 15, 0, 65538, 22, 0, 65539, 1, 0, 65540, 7, 0, 65542, 15, 0, 65543, 14, 262145, 131072, 14, 262145, 131073, 24, 0, 131074, 14, 262148, 131075, 23, 0, 131076, 23, 0, 131077, 14, 196609, 131078, 24, 0, 131079, 14, 262145, 196608, 14, 262145, 196609, 32, 0, 196613, 14, 262145, 196614, 32, 0, 196615, 14, 262145, 262144, 14, 655362, 262145, 14, 196615, 262149, 14, 655362, 262150, 14, 196614, 262151, 14, 655364 )
+
+[node name="@@146" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65539, 2, 0, 65540, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Drop Stop"
+level_author = "Slabdrill"
+level_replay = "Drop Stop$mturn=50$xwaxwddxzzaxwzxzsaasxzzzaaxzzzzwxzwxaxdxwxzzzxzzxddxddaxawxzdxzzzzxza"
+heavy_max_moves = 4.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0
+setup_replay = ""

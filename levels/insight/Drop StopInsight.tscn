@@ -23,9 +23,9 @@ tile_data = PoolIntArray( 65537, 21, 0, 131074, 28, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Cramped Roommates"
+level_name = "Drop Stop (Insight)"
 level_author = "Sandra53"
-level_replay = "Cramped Roommates$mturn=12$waxaxzzwaxzdxzzd"
+level_replay = "Drop Stop (Insight)$mturn=12$waxaxzzwaxzdxzzd"
 heavy_max_moves = 2.0
 light_max_moves = 1.0
 target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )

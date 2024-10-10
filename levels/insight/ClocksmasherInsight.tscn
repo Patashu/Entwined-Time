@@ -29,9 +29,9 @@ tile_data = PoolIntArray( 262145, 38, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Crunch Time"
+level_name = "Clocksmasher (Insight)"
 level_author = "Sandra53"
-level_replay = "Crunch Time$mturn=32$sdxsxzdxddxzxzxdxdxwzzxzzzaxwxaxzwxdxzddxzzaxzzz"
+level_replay = "Clocksmasher (Insight)$mturn=32$sdxsxzdxddxzxzxdxdxwzzxzzzaxwxaxzwxdxzddxzzaxzzz"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
 clock_turns = "2"
