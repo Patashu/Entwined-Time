@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 131072, 14, 262145, 131074, 45, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 8, 0, 196610, 2, 0, 196611, 1, 0, 196612, 14, 262145, 262144, 14, 262145, 262145, 24, 0, 262146, 14, 524290, 262147, 14, 196614, 262148, 14, 655364, 327680, 14, 262145, 327681, 7, 0, 327682, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 655364 )
+
+[node name="@@136" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327681, 124, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Permafrost (Insight)"
+level_author = "Slabdrill"
+level_replay = "Permafrost (Insight)$mturn=10$wdxdwxzzwxzzxd"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""

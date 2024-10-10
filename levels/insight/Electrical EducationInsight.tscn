@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 3, 2, 14, 3, 3, 14, 3, 4, 14, 3, 5, 14, 3, 6, 14, 3, 7, 14, 3, 8, 14, 4, 65536, 14, 131074, 65537, 14, 131075, 65538, 14, 131075, 65539, 14, 131075, 65540, 14, 131075, 65541, 14, 131075, 65542, 14, 131075, 65543, 14, 131075, 65544, 14, 131076, 262144, 2, 0, 262145, 8, 0, 262151, 1, 0, 262152, 7, 0, 327680, 14, 2, 327681, 14, 4, 327682, 65, 0, 327683, 65, 0, 327684, 65, 0, 327685, 65, 0, 327686, 65, 0, 327687, 14, 2, 327688, 14, 4, 393216, 14, 131074, 393217, 14, 786435, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 720899, 393224, 14, 131076 )
+
+[node name="@@174" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131072, 28, 0, 131080, 25, 0, 196608, 28, 0, 196616, 25, 0, 262144, 28, 0, 262152, 25, 0, 327682, 30, 0, 327683, 30, 0, 327684, 30, 0, 327685, 30, 0, 327686, 30, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Electrical Education (Insight)"
+level_author = "Slabdrill"
+level_replay = "Electrical Education (Insight)$mturn=25$xdxdwdaxdxzdaxdxzdaxdxzdaxdxzdaxddxzd"
+heavy_max_moves = 9.0
+light_max_moves = 9.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""

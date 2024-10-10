@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 655364, 65540, 6, 0, 65541, 6, 0, 65542, 14, 262145, 131072, 14, 262145, 131073, 6, 0, 131074, 6, 0, 131075, 6, 0, 131076, 6, 0, 131077, 6, 0, 131078, 14, 262145, 196608, 14, 262145, 196609, 6, 0, 196610, 6, 0, 196611, 6, 0, 196612, 6, 0, 196613, 6, 0, 196614, 14, 262145, 262144, 14, 262145, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 14, 524290, 262150, 14, 655364, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 524292, 327683, 6, 0, 327684, 6, 0, 327685, 14, 262145, 393218, 14, 655362, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 655364 )
+
+[node name="@@211" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65540, 127, 0, 131074, 127, 0, 131075, 127, 0, 131076, 127, 0, 131077, 127, 0, 196610, 127, 0, 196611, 1, 0, 196613, 127, 0, 262145, 8, 0, 262146, 127, 0, 262147, 127, 0, 262148, 127, 0, 327683, 127, 0, 327684, 127, 0 )
+
+[node name="@@212" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131073, 7, 0, 131075, 24, 0, 196609, 124, 0, 196610, 0, 0, 196611, 2, 0, 196613, 32, 0, 262145, 39, 0, 262148, 3, 0, 327684, 24, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Undying Army (Type A) (Insight)"
+level_author = "Slabdrill"
+level_replay = "Undying Army (Type A) (Insight)$mturn=50$xdwsdsdwzaawazsdddwzsaawwddzaasazsdddwwwdszassaaaww"
+heavy_max_moves = 0.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""
