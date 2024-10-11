@@ -2285,6 +2285,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Ceiling Sockets")
 	level_filenames.push_back("Ceiling Sockets [VAR1]")
 	level_filenames.push_back("Chrono Engine")
+	level_filenames.push_back("Halfpipe [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
