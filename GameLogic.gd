@@ -4012,7 +4012,7 @@ boost_pad_reentrance: bool = false) -> int:
 		if (chrono < Chrono.TIMELESS and !actor.is_crystal):
 			if (actor.is_character and dir.length() > 1 and chrono == Chrono.MOVE):
 				achievement_get(Achievements.What);
-			if (pos.x <= -10 or pos.x >= map_x_max + 9):
+			if (pos.x <= -9 or pos.x >= map_x_max + 9):
 				achievement_get(Achievements.FarLands);
 			if (pos.y <= -6):
 				achievement_get(Achievements.SpaceProgram);
