@@ -1876,6 +1876,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Trust Fall [VAR2]")
 	level_filenames.push_back("Coyote Time")
+	level_filenames.push_back("Acrobatics but it's forced")
 	level_filenames.push_back("Hell [VAR2]")
 	level_filenames.push_back("Daredevils [VAR1]")
 	level_filenames.push_back("Broken Bridge [VAR1]")
@@ -2152,6 +2153,7 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Jet Engine [VAR1]")
 	level_filenames.push_back("Delay Circuit")
+	level_filenames.push_back("Acrobatics but it's forced [VAR1]")
 	level_filenames.push_back("Voidly Moving Service")
 	level_filenames.push_back("Ankh [VAR1]")
 	level_filenames.push_back("Down [VAR2]")
