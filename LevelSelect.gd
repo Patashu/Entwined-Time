@@ -84,6 +84,26 @@ func _searchbox_text_changed(new_text: String) -> void:
 func _searchbox_text_entered(new_text: String) -> void:
 	pass
 	
+func achievement_get(is_advanced: bool) -> void:
+	if (in_community_puzzles):
+		gamelogic.achievement_get("CommunityChampion");
+	else:
+		var chapter_string = str(chapter);
+		if gamelogic.chapter_replacements.has(chapter):
+			chapter_string = gamelogic.chapter_replacements[chapter];
+		match (chapter_string):
+			"2?":
+				chapter_string = "2";
+			"Ω":
+				chapter_string = "Omega";
+			"[-]":
+				chapter_string = "Phase";
+		if is_advanced:
+			gamelogic.achievement_get(chapter_string + "Advanced");
+		else:
+			gamelogic.achievement_get(chapter_string + "Standard");
+			
+	
 func _prevbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
@@ -576,11 +596,13 @@ func prepare_chapter() -> void:
 		if (standard_label != null):
 			standard_label.set_script(preload("res://GoldLabel.gd"));
 			standard_label.flash();
+			achievement_get(false);
 		if (all_advanced_stars):
 			holder.flash();
 	if (all_advanced_stars and advanced_label != null):
 		advanced_label.set_script(preload("res://GoldLabel.gd"));
 		advanced_label.flash();
+		achievement_get(true);
 
 func star(button: Button, level_name: String) -> void:
 	var star = Sprite.new();

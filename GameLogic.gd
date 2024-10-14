@@ -128,7 +128,7 @@ enum Undo {
 }
 
 # and same for animations
-enum Animation {
+enum Anim {
 	move,
 	bump,
 	set_next_texture,
@@ -370,40 +370,27 @@ enum Tiles {
 }
 var voidlike_tiles : Array = [];
 
-enum Achievements {
-	NonStandardGameOver,
-	What,
-	AlreadyFixed,
-	AlreadyBroken,
-	Phantasmal,
-	SpaceProgram,
-	FarLands,
-	VoidDiver,
-	BuriedAlive,
-	ExceptionHandler,
-	InfiniteLoop,
-	Paradox,
-	#Hyperwiggle,
-	#ThatsALotOfPuzzles,
-	#CommunityChampion,
-	#RepairsComplete
-}
+var achievements : Dictionary = {
+	"NonStandardGameOver": "Non-Standard Game Over",
+	"What": "What",
+	"AlreadyFixed": "Already Fixed",
+	"AlreadyBroken": "Already Broken",
+	"Phantasmal": "Phantasmal",
+	"SpaceProgram": "Space Program",
+	"FarLands": "Far Lands",
+	"VoidDiver": "Void Diver",
+	"BuriedAlive": "Buried Alive",
+	"ExceptionHandler": "Exception Handler",
+	"InfiniteLoop": "Infinite Loop",
+	"Paradox": "Paradox",
+	"RepairsComplete": "Repairs Complete",
+	"CommunityChampion": "Community Champion",
+	# not going to add 0Standard etc until they're visible in-game
+};
 
 var achievements_unlocked : Dictionary = {};
-var achievement_names : Array = [
-	"Non-Standard Game Over",
-	"What",
-	"Already Fixed",
-	"Already Broken",
-	"Phantasmal",
-	"Space Program",
-	"Far Lands",
-	"Void Diver",
-	"Buried Alive",
-	"Exception Handler",
-	"Infinite Loop",
-	"Paradox"
-]
+
+var steam : Node = null;
 
 # information about the level
 var is_custom : bool = false;
@@ -641,6 +628,11 @@ func _ready() -> void:
 	if (OS.is_debug_build()):
 		assert_tile_enum();
 	prepare_voidlike_tiles();
+	
+	if (Engine.has_singleton("Steam") and ResourceLoader.exists("res://GodotSteam.gd")):
+		steam = Node.new();
+		steam.set_script(load("res://GodotSteam.gd"));
+		self.add_child(steam);
 	
 	# Load the first map.
 	load_level(0);
@@ -1200,13 +1192,20 @@ func assert_tile_enum() -> void:
 		elif (actual_tile_id != expected_tile_id):
 			print(expected_tile_name, ", ", expected_tile_id, ", ", actual_tile_name, ", ", actual_tile_id);
 	
-func achievement_get(id: int, custom_achievement: bool = false) -> void:
-	if (achievements_unlocked.has(id)):
-		return
+func achievement_get(id: String, custom_achievement: bool = false) -> void:
 	if (is_custom and !custom_achievement):
 		return
+	if (achievements_unlocked.has(id) and achievements_unlocked[id]):
+		return
+	if (steam != null and steam.check_achievement(id)):
+		achievements_unlocked[id] = true;
+		return
 	achievements_unlocked[id] = true;
-	floating_text("Achievement: " + achievement_names[id]);
+	print("Achievement: " + id);
+	if (achievements.has(id)):
+		floating_text("Achievement: " + achievements[id]);
+	if (steam != null):
+		steam.set_achievement(id);
 	
 func initialize_level_list() -> void:
 	
@@ -2826,15 +2825,15 @@ func intro_hop() -> void:
 		return;
 	var dur = 0.5;
 	heavy_actor.modulate.a = 0.0;
-	add_to_animation_server(heavy_actor, [Animation.fade, 0.0, 1.0, dur]);
+	add_to_animation_server(heavy_actor, [Anim.fade, 0.0, 1.0, dur]);
 	if (heavy_max_moves > 0):
-		add_to_animation_server(heavy_actor, [Animation.stall, dur/2]);
-		add_to_animation_server(heavy_actor, [Animation.intro_hop]);
+		add_to_animation_server(heavy_actor, [Anim.stall, dur/2]);
+		add_to_animation_server(heavy_actor, [Anim.intro_hop]);
 	light_actor.modulate.a = 0.0;
-	add_to_animation_server(light_actor, [Animation.fade, 0.0, 1.0, dur]);
+	add_to_animation_server(light_actor, [Anim.fade, 0.0, 1.0, dur]);
 	if (light_max_moves > 0):
-		add_to_animation_server(light_actor, [Animation.stall, dur/2]);
-		add_to_animation_server(light_actor, [Animation.intro_hop]);
+		add_to_animation_server(light_actor, [Anim.stall, dur/2]);
+		add_to_animation_server(light_actor, [Anim.intro_hop]);
 	#heavy warp
 	var sprite = Sprite.new();
 	sprite.set_script(preload("res://GoalParticle.gd"));
@@ -3946,11 +3945,11 @@ func update_night_and_stars(actor: Actor, terrain: Array) -> void:
 	if terrain.has(Tiles.TheNight):
 		actor.in_night = true;
 		if (!actor_was_in_night):
-			add_to_animation_server(actor, [Animation.grayscale, true]);
+			add_to_animation_server(actor, [Anim.grayscale, true]);
 	if terrain.has(Tiles.TheStars):
 		actor.in_stars = true;
 	if (actor_was_in_night and !actor.in_night):
-		add_to_animation_server(actor, [Animation.grayscale, false]);
+		add_to_animation_server(actor, [Anim.grayscale, false]);
 	
 func move_actor_to(actor: Actor, pos: Vector2, chrono: int, hypothetical: bool, is_gravity: bool,
 is_retro: bool = false, pushers_list: Array = [], was_fall: bool = false, was_push: bool = false,
@@ -4013,13 +4012,13 @@ boost_pad_reentrance: bool = false) -> int:
 		actor.pos = pos;
 		if (chrono < Chrono.TIMELESS and !actor.is_crystal):
 			if (actor.is_character and dir.length() > 1 and chrono == Chrono.MOVE):
-				achievement_get(Achievements.What);
+				achievement_get("What");
 			if (pos.x <= -9 or pos.x >= map_x_max + 9):
-				achievement_get(Achievements.FarLands);
+				achievement_get("FarLands");
 			if (pos.y <= -6):
-				achievement_get(Achievements.SpaceProgram);
+				achievement_get("SpaceProgram");
 			if (pos.y >= map_y_max + 2):
-				achievement_get(Achievements.VoidDiver, true);
+				achievement_get("VoidDiver", true);
 		
 		# joke portal update
 		if (actor.joke_goal != null):
@@ -4106,15 +4105,15 @@ boost_pad_reentrance: bool = false) -> int:
 		
 		#do sound effects for special moves and their undoes
 		if (was_push and is_retro):
-			add_to_animation_server(actor, [Animation.sfx, "unpush"]);
+			add_to_animation_server(actor, [Anim.sfx, "unpush"]);
 		if (was_push and !is_retro):
-			add_to_animation_server(actor, [Animation.sfx, "push"]);
+			add_to_animation_server(actor, [Anim.sfx, "push"]);
 		if (was_fall and is_retro):
-			add_to_animation_server(actor, [Animation.sfx, "unfall"]);
+			add_to_animation_server(actor, [Anim.sfx, "unfall"]);
 		if (was_fall and !is_retro):
-			add_to_animation_server(actor, [Animation.sfx, "fall"]);
+			add_to_animation_server(actor, [Anim.sfx, "fall"]);
 		
-		add_to_animation_server(actor, [Animation.move, dir, is_retro, animation_nonce]);
+		add_to_animation_server(actor, [Anim.move, dir, is_retro, animation_nonce]);
 		
 		#ding logic
 		if (!actor.broken):
@@ -4173,7 +4172,7 @@ boost_pad_reentrance: bool = false) -> int:
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
 					# hack fix for 'heavy steps right, starts falling and pulls something down with it'
 					# specifically, heavy would be stalled due to falling but the thing being pulled would not
-					copy_one_from_animation_server(actor, Animation.stall, sticky_actor);
+					copy_one_from_animation_server(actor, Anim.stall, sticky_actor);
 			for sticky_actor in sticky_actors:
 				sticky_actor.just_moved = false;
 				
@@ -4198,7 +4197,7 @@ boost_pad_reentrance: bool = false) -> int:
 							actor.time_colour = time_colour;
 							add_undo_event([Undo.time_bubble, actor, old_time_colour],
 								chrono_for_maybe_green_actor(actor, Chrono.CHAR_UNDO));
-							add_to_animation_server(actor, [Animation.time_bubble, time_colour]);
+							add_to_animation_server(actor, [Anim.time_bubble, time_colour]);
 							var greenness = Greenness.Green;
 							if (time_colour == TimeColour.Void):
 								greenness = Greenness.Void;
@@ -4258,7 +4257,7 @@ boost_pad_reentrance: bool = false) -> int:
 			var old_terrain = terrain_in_tile(actor.pos - dir, actor, chrono);
 			if ((!is_retro and old_terrain.has(Tiles.BoostPad)) or old_terrain.has(Tiles.GreenBoostPad)):
 				animation_substep(chrono);
-				add_to_animation_server(actor, [Animation.sfx, "redfire"]);
+				add_to_animation_server(actor, [Anim.sfx, "redfire"]);
 				move_actor_to(actor, actor.pos + dir, chrono, hypothetical, false, false,
 				[], false, false, null, -1, false, true,
 				true);
@@ -4268,29 +4267,29 @@ boost_pad_reentrance: bool = false) -> int:
 	elif (success != Success.Yes):
 		# vanity bump goes here, even if it's hypothetical, muahaha
 		if pushers_list.size() > 0 and actor.actorname == Actor.Name.Light:
-			add_to_animation_server(actor, [Animation.fluster]);
+			add_to_animation_server(actor, [Anim.fluster]);
 		if (!hypothetical):
 			# involuntary bump sfx
 			if (pushers_list.size() > 0 or is_retro):
 				if (actor.actorname == Actor.Name.Light):
-					add_to_animation_server(actor, [Animation.sfx, "involuntarybumplight"], true);
+					add_to_animation_server(actor, [Anim.sfx, "involuntarybumplight"], true);
 				elif (actor.actorname == Actor.Name.Heavy):
-					add_to_animation_server(actor, [Animation.sfx, "involuntarybump"], true);
+					add_to_animation_server(actor, [Anim.sfx, "involuntarybump"], true);
 				else:
-					add_to_animation_server(actor, [Animation.sfx, "involuntarybumpother"], true);
+					add_to_animation_server(actor, [Anim.sfx, "involuntarybumpother"], true);
 		# bump animation always happens, I think?
 		# ah, not if it's a 'null' gravity move (everything in the stack was already grounded)
 		# and bumps are getting a bit ridiculous for slopes so let's tamp down on that
 		if (infinite_loop_check == 0 and slope_positions.size() == 0):
 			if (!is_gravity):
-				add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
+				add_to_animation_server(actor, [Anim.bump, dir, animation_nonce], true);
 			else:
 				if (actor.airborne == 0):
-					add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
+					add_to_animation_server(actor, [Anim.bump, dir, animation_nonce], true);
 				else:
 					for pusher in pushers_list:
 						if pusher.airborne == 0:
-							add_to_animation_server(actor, [Animation.bump, dir, animation_nonce], true);
+							add_to_animation_server(actor, [Anim.bump, dir, animation_nonce], true);
 							break;
 	
 	return success;
@@ -4389,7 +4388,7 @@ func check_checkpoints(chrono: int) -> void:
 	if (heavy_turn > 0):
 		var terrain = terrain_in_tile(heavy_actor.pos, heavy_actor, chrono);
 		if (terrain.has(Tiles.Checkpoint) or terrain.has(Tiles.CheckpointRed)):
-			add_to_animation_server(heavy_actor, [Animation.sfx, "undo"]);
+			add_to_animation_server(heavy_actor, [Anim.sfx, "undo"]);
 			while (heavy_turn > 0):
 				var old_heavy_turn = heavy_turn;
 				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
@@ -4407,12 +4406,12 @@ func check_checkpoints(chrono: int) -> void:
 				# failsafe
 				if (old_heavy_turn == heavy_turn):
 					heavy_turn -= 1;
-			add_to_animation_server(heavy_actor, [Animation.heavy_timeline_finish_animations]);
+			add_to_animation_server(heavy_actor, [Anim.heavy_timeline_finish_animations]);
 	
 	if (light_turn > 0):
 		var terrain = terrain_in_tile(light_actor.pos, light_actor, chrono);
 		if (terrain.has(Tiles.Checkpoint) or terrain.has(Tiles.CheckpointBlue)):
-			add_to_animation_server(light_actor, [Animation.sfx, "undo"]);
+			add_to_animation_server(light_actor, [Anim.sfx, "undo"]);
 			while (light_turn > 0):
 				var old_light_turn = light_turn;
 				var events = light_undo_buffer.pop_at(light_turn - 1);
@@ -4430,7 +4429,7 @@ func check_checkpoints(chrono: int) -> void:
 				# failsafe
 				if (old_light_turn == light_turn):
 					light_turn -= 1;
-			add_to_animation_server(heavy_actor, [Animation.light_timeline_finish_animations]);
+			add_to_animation_server(heavy_actor, [Anim.light_timeline_finish_animations]);
 		
 func actors_in_tile(pos: Vector2) -> Array:
 	var result = [];
@@ -4498,7 +4497,7 @@ func chrono_for_maybe_green_actor(actor: Actor, chrono: int) -> int:
 	if (has_green_fog):
 		var terrain = terrain_in_tile(actor.pos, actor, chrono);
 		if (terrain.has(Tiles.GreenFog)):
-			add_to_animation_server(actor, [Animation.sfx, "greenfire"]);
+			add_to_animation_server(actor, [Anim.sfx, "greenfire"]);
 			return Chrono.CHAR_UNDO;
 	return chrono;
 	
@@ -4613,7 +4612,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
 		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked:
-			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+			add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			if (chrono < Chrono.META_UNDO):
 				for actor in actors:
 					# time crystal/glass chronofrag interaction: it isn't. that's my decision for now.
@@ -4621,7 +4620,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 						actor.post_mortem = Durability.PITS;
 						set_actor_var(actor, "broken", true, chrono);
 		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards or new_tile == Tiles.RepairStation or new_tile == Tiles.RepairStationGray:
-			add_to_animation_server(actor, [Animation.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+			add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 		else:
 			if (old_tile == Tiles.Fuzz):
 				play_sound("fuzz");
@@ -4632,7 +4631,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
 				pass
 			else:
-				add_to_animation_server(actor, [Animation.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+				add_to_animation_server(actor, [Anim.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			
 			if (old_tile == Tiles.OneUndo or new_tile == Tiles.OneUndo):
 				update_limited_undo_sprite(pos);
@@ -4694,7 +4693,7 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 			Tiles.GlassBlock:
 				blocked = Success.No;
 				if (!is_gravity and chrono == Chrono.MOVE and actor.is_character):
-					achievement_get(Achievements.BuriedAlive);
+					achievement_get("BuriedAlive");
 				if (blocked == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
@@ -4721,7 +4720,7 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 						animation_server.push_back([]);
 					for a in range (animation_substep+1):
 						for anim in animation_server[a]:
-							if anim[0] == actor and anim[1][0] == Animation.move and !anim[1][2]:
+							if anim[0] == actor and anim[1][0] == Anim.move and !anim[1][2]:
 								found += 1;
 								if (found >= required):
 									flash_terrain = id;
@@ -4734,7 +4733,7 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 					animation_server.push_back([]);
 				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
-						if anim[0] == actor and anim[1][0] == Animation.move:
+						if anim[0] == actor and anim[1][0] == Anim.move:
 							found += 1;
 							if (found >= required):
 								flash_terrain = id;
@@ -4802,7 +4801,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 			Tiles.Fence:
 				if (actor.airborne != -1):
 					if (!hypothetical):
-						add_to_animation_server(actor, [Animation.sfx, "fence"]);
+						add_to_animation_server(actor, [Anim.sfx, "fence"]);
 						set_actor_var(actor, "airborne", -1, chrono);
 					return Success.Surprise;
 				else:
@@ -4823,7 +4822,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					return Success.Surprise;
 				if (move_actor_relative(actor, -dir, chrono, true, false) == Success.Yes):
 					if (!hypothetical):
-						add_to_animation_server(actor, [Animation.sfx, "bumper"]);
+						add_to_animation_server(actor, [Anim.sfx, "bumper"]);
 						move_actor_relative(actor, -dir, chrono, false, false);
 						maybe_rise(actor, chrono, -dir, false);
 					bumper_counter -= 1;
@@ -4837,7 +4836,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					factor += 1;
 				if (move_actor_relative(actor, dir*factor, chrono, true, false) == Success.Yes):
 					if (!hypothetical):
-						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
+						add_to_animation_server(actor, [Anim.sfx, "unlock"]);
 						move_actor_relative(actor, dir*factor, chrono, false, false)
 						maybe_rise(actor, chrono, dir*factor, false);
 					return Success.Surprise;
@@ -4849,7 +4848,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					factor += 1;
 				if (move_actor_relative(actor, dir*factor, max(Chrono.CHAR_UNDO, chrono), true, false) == Success.Yes):
 					if (!hypothetical):
-						add_to_animation_server(actor, [Animation.sfx, "unlock"]);
+						add_to_animation_server(actor, [Anim.sfx, "unlock"]);
 						move_actor_relative(actor, dir*factor, max(Chrono.CHAR_UNDO, chrono), false, false)
 						maybe_rise(actor, chrono, dir*factor, false);
 					return Success.Surprise;
@@ -5066,7 +5065,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = Success.No;
 				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
-						if anim[0] == actor and anim[1][0] == Animation.move:
+						if anim[0] == actor and anim[1][0] == Anim.move:
 							found += 1;
 							if (found >= required):
 								result = Success.Yes;
@@ -5084,7 +5083,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				result = Success.No;
 				for a in range (animation_substep+1):
 					for anim in animation_server[a]:
-						if anim[0] == actor and (anim[1][0] == Animation.move or anim[1][0] == Animation.bump):
+						if anim[0] == actor and (anim[1][0] == Anim.move or anim[1][0] == Anim.bump):
 							found += 1;
 							if (found >= required):
 								result = Success.Yes;
@@ -5160,7 +5159,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		var leave_attempt = current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono, true)
 		if (leave_attempt == Success.No):
 			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
-				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
+				add_to_animation_server(actor, [Anim.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
 			return Success.No;
 		elif (leave_attempt == Success.Surprise):
 			current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono, false);
@@ -5168,7 +5167,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono, pushers_list, was_push);
 		if (solidity_check != Success.Yes):
 			if (flash_terrain > -1 and (!hypothetical or !is_gravity)):
-				add_to_animation_server(actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), flash_colour]);
+				add_to_animation_server(actor, [Anim.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(dest), flash_colour]);
 			return solidity_check;
 	
 	# handle pushing
@@ -5179,7 +5178,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	#var tiny_pushables_there = [];
 	for actor_there in actors_there:
 		if (phased_out_of != null and phased_out_of.has(actor_there)):
-			achievement_get(Achievements.Phantasmal);
+			achievement_get("Phantasmal");
 			continue
 		#if actor_there.tiny_pushable():
 		#	tiny_pushables_there.push_back(actor_there);
@@ -5206,20 +5205,20 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				if actor.actorname == Actor.Name.ChronoHelixBlue:
 					nonstandard_won = true;
 					check_won(chrono);
-					add_to_animation_server(actor_there, [Animation.bump, -dir, -1]);
-					add_to_animation_server(actor, [Animation.move, dir/2, false, -1]);
-					add_to_animation_server(actor_there, [Animation.move, -dir/2, false, -1]);
-					add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
-					add_to_animation_server(actor_there, [Animation.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
+					add_to_animation_server(actor_there, [Anim.bump, -dir, -1]);
+					add_to_animation_server(actor, [Anim.move, dir/2, false, -1]);
+					add_to_animation_server(actor_there, [Anim.move, -dir/2, false, -1]);
+					add_to_animation_server(actor, [Anim.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
+					add_to_animation_server(actor_there, [Anim.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
 					return Success.No;
 			elif (actor_there.actorname == Actor.Name.ChronoHelixBlue):
 				if actor.actorname == Actor.Name.ChronoHelixRed:
 					nonstandard_won = true;
-					add_to_animation_server(actor_there, [Animation.bump, -dir, -1]);
-					add_to_animation_server(actor, [Animation.move, dir/2, false, -1]);
-					add_to_animation_server(actor_there, [Animation.move, -dir/2, false, -1]);
-					add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
-					add_to_animation_server(actor_there, [Animation.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
+					add_to_animation_server(actor_there, [Anim.bump, -dir, -1]);
+					add_to_animation_server(actor, [Anim.move, dir/2, false, -1]);
+					add_to_animation_server(actor_there, [Anim.move, -dir/2, false, -1]);
+					add_to_animation_server(actor, [Anim.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
+					add_to_animation_server(actor_there, [Anim.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
 					check_won(chrono);
 					return Success.No;
 			
@@ -5265,10 +5264,10 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					# since wooden crate did a bump, robot needs to do a bump too to sync up animations
 					# should be OK to have the nonce be -1 since the real thing will still happen?
 					if actor.actorname == Actor.Name.Heavy and actor_there.durability <= Durability.SPIKES:
-						add_to_animation_server(actor, [Animation.bump, dir, -1]);
+						add_to_animation_server(actor, [Anim.bump, dir, -1]);
 						set_actor_var(actor_there, "broken", true, chrono);
 					elif actor.actorname == Actor.Name.Light:
-						add_to_animation_server(actor, [Animation.bump, dir, -1]);
+						add_to_animation_server(actor, [Anim.bump, dir, -1]);
 						dir = Vector2.UP;
 						# check again if we can push it up
 						actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
@@ -5286,7 +5285,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					# If an unbroken steel crate tries to move into a solo unbroken Light or Cuckoo Clock for any reason, the target first breaks.
 					# this also cancels the pusher's move which is janky but fuck it, I don't feel like fixing the jank for a non main campaign edge case
 					result = Success.Surprise;
-					add_to_animation_server(actor, [Animation.bump, dir, -1]);
+					add_to_animation_server(actor, [Anim.bump, dir, -1]);
 					set_actor_var(actor_there, "broken", true, chrono);
 				else:
 					pushers_list.pop_front();
@@ -5360,14 +5359,14 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 		if heavy_actor == eater:
 			heavy_max_moves += 1;
 			if (heavy_locked_turns.size() == 0):
-				add_to_animation_server(eatee, [Animation.sfx, "greentimecrystal"])
+				add_to_animation_server(eatee, [Anim.sfx, "greentimecrystal"])
 				# raw: just add a turn to the end
 				if (!heavy_actor.powered):
 					set_actor_var(heavy_actor, "powered", true, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.heavy_green_time_crystal_raw], Chrono.CHAR_UNDO);
-				add_to_animation_server(eater, [Animation.heavy_green_time_crystal_raw, eatee]);
+				add_to_animation_server(eater, [Anim.heavy_green_time_crystal_raw, eatee]);
 			else:
-				add_to_animation_server(eatee, [Animation.sfx, "remembertimecrystal"])
+				add_to_animation_server(eatee, [Anim.sfx, "remembertimecrystal"])
 				# unlock the most recently locked move.
 				var unlocked_move = heavy_locked_turns.pop_back();
 				var unlocked_move_being_filled_this_turn = false;
@@ -5386,7 +5385,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				# did we just pop an empty locked move?
 				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
 					add_undo_event([Undo.heavy_turn_unlocked, -1, heavy_locked_turns.size()], Chrono.CHAR_UNDO);
-					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, -1]);
+					add_to_animation_server(eater, [Anim.heavy_green_time_crystal_unlock, eatee, -1]);
 					set_actor_var(eater, "powered", true, Chrono.CHAR_UNDO);
 				# or a locked move with contents?
 				else:
@@ -5402,17 +5401,17 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 					if (!filling_turn_actual_set):
 						heavy_turn += 1;
 						add_undo_event([Undo.heavy_turn_direct, 1], Chrono.CHAR_UNDO);
-					add_to_animation_server(eater, [Animation.heavy_green_time_crystal_unlock, eatee, heavy_turn]);
+					add_to_animation_server(eater, [Anim.heavy_green_time_crystal_unlock, eatee, heavy_turn]);
 		elif light_actor == eater:
 			light_max_moves += 1;
 			if (light_locked_turns.size() == 0):
-				add_to_animation_server(eatee, [Animation.sfx, "greentimecrystal"])
+				add_to_animation_server(eatee, [Anim.sfx, "greentimecrystal"])
 				if (!light_actor.powered):
 					set_actor_var(light_actor, "powered", true, Chrono.CHAR_UNDO);
 				add_undo_event([Undo.light_green_time_crystal_raw], Chrono.CHAR_UNDO);
-				add_to_animation_server(eater, [Animation.light_green_time_crystal_raw, eatee]);
+				add_to_animation_server(eater, [Anim.light_green_time_crystal_raw, eatee]);
 			else:
-				add_to_animation_server(eatee, [Animation.sfx, "remembertimecrystal"])
+				add_to_animation_server(eatee, [Anim.sfx, "remembertimecrystal"])
 				# unlock the most recently locked move.
 				var unlocked_move = light_locked_turns.pop_back();
 				var unlocked_move_being_filled_this_turn = false;
@@ -5431,7 +5430,7 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				# did we just pop an empty locked move?
 				if (unlocked_move.size() == 0 and !unlocked_move_being_filled_this_turn):
 					add_undo_event([Undo.light_turn_unlocked, -1, light_locked_turns.size()], Chrono.CHAR_UNDO);
-					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, -1]);
+					add_to_animation_server(eater, [Anim.light_green_time_crystal_unlock, eatee, -1]);
 					set_actor_var(eater, "powered", true, Chrono.CHAR_UNDO);
 				# or a locked move with contents?
 				else:
@@ -5447,21 +5446,21 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 					if (!filling_turn_actual_set):
 						light_turn += 1;
 						add_undo_event([Undo.light_turn_direct, 1], Chrono.CHAR_UNDO);
-					add_to_animation_server(eater, [Animation.light_green_time_crystal_unlock, eatee, light_turn]);
+					add_to_animation_server(eater, [Anim.light_green_time_crystal_unlock, eatee, light_turn]);
 		else: #cuckoo clock
 			clock_ticks(eater, 1, Chrono.CHAR_UNDO);
-			add_to_animation_server(eatee, [Animation.sfx, "greentimecrystal"])
-			add_to_animation_server(eater, [Animation.generic_green_time_crystal, eatee.color]);
+			add_to_animation_server(eatee, [Anim.sfx, "greentimecrystal"])
+			add_to_animation_server(eater, [Anim.generic_green_time_crystal, eatee.color]);
 	else: # magenta time crystal
-		add_to_animation_server(eatee, [Animation.sfx, "magentatimecrystal"])
+		add_to_animation_server(eatee, [Anim.sfx, "magentatimecrystal"])
 		var just_locked = false;
 		var turn_moved = -1;
 		if (heavy_actor == eater):
 			# Lose (Paradox)
 			if (heavy_max_moves <= 0):
-				add_to_animation_server(eater, [Animation.heavy_magenta_time_crystal, eatee, -99]);
+				add_to_animation_server(eater, [Anim.heavy_magenta_time_crystal, eatee, -99]);
 				lose("Paradox: A character can't have less than 0 moves.", heavy_actor)
-				achievement_get(Achievements.Paradox);
+				achievement_get("Paradox");
 				return;
 			# accessible timeline is now one move shorter.
 			heavy_max_moves -= 1;
@@ -5504,14 +5503,14 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				set_actor_var(heavy_actor, "powered", false, Chrono.CHAR_UNDO);
 			
 			# animation
-			add_to_animation_server(eater, [Animation.heavy_magenta_time_crystal, eatee, turn_moved]);
+			add_to_animation_server(eater, [Anim.heavy_magenta_time_crystal, eatee, turn_moved]);
 			
 		elif (light_actor == eater):
 			# Lose (Paradox)
 			if (light_max_moves <= 0):
-				add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, -99]);
+				add_to_animation_server(eater, [Anim.light_magenta_time_crystal, eatee, -99]);
 				lose("Paradox: A character can't have less than 0 moves.", light_actor)
-				achievement_get(Achievements.Paradox);
+				achievement_get("Paradox");
 				return;
 			# accessible timeline is now one move shorter.
 			light_max_moves -= 1;
@@ -5554,10 +5553,10 @@ func eat_crystal(eater: Actor, eatee: Actor, chrono: int) -> void:
 				set_actor_var(light_actor, "powered", false, Chrono.CHAR_UNDO);
 			
 			# animation
-			add_to_animation_server(eater, [Animation.light_magenta_time_crystal, eatee, turn_moved]);
+			add_to_animation_server(eater, [Anim.light_magenta_time_crystal, eatee, turn_moved]);
 		else: #cuckoo clock
 			clock_ticks(eater, -1, Chrono.CHAR_UNDO);
-			add_to_animation_server(eater, [Animation.generic_magenta_time_crystal, eatee.color]);
+			add_to_animation_server(eater, [Anim.generic_magenta_time_crystal, eatee.color]);
 
 func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: int = -1) -> void:
 	if (animation_nonce == -1):
@@ -5569,7 +5568,7 @@ func clock_ticks(actor: ActorBase, amount: int, chrono: int, animation_nonce: in
 			newly_lost = true;
 			lose("You didn't make it back to the Chrono Lab Reactor in time.", actor);
 	add_undo_event([Undo.tick, actor, amount, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
-	add_to_animation_server(actor, [Animation.tick, amount, actor.ticks, newly_lost, animation_nonce]);
+	add_to_animation_server(actor, [Anim.tick, amount, actor.ticks, newly_lost, animation_nonce]);
 
 func open_doors(id: int) -> void:
 	var found = false;
@@ -5611,9 +5610,9 @@ func lose(reason: String, suspect: Actor, lose_instantly: bool = false, music: S
 	if (has_void_gates):
 		open_doors(Tiles.GateOfEternity);
 	if (music == "exception"):
-		achievement_get(Achievements.ExceptionHandler, true);
+		achievement_get("ExceptionHandler", true);
 	elif (music == "infloop"):
-		achievement_get(Achievements.InfiniteLoop, true);
+		achievement_get("InfiniteLoop", true);
 	lost_speaker.stream = sounds[music];
 	if (lose_instantly):
 		fade_in_lost();
@@ -5639,11 +5638,11 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		if (old_value == value):
 			if (chrono == Chrono.CHAR_UNDO and prop == "broken"):
 				if value == true:
-					achievement_get(Achievements.AlreadyBroken)
+					achievement_get("AlreadyBroken")
 				else:
-					achievement_get(Achievements.AlreadyFixed)
+					achievement_get("AlreadyFixed")
 			# but first, a copy of this because it's what flickers timeline symbols out of existence :B
-			add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
+			add_to_animation_server(actor, [Anim.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
 			return
 		actor.set(prop, value);
 		
@@ -5673,49 +5672,49 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 			if actor.actorname == Actor.Name.Heavy:
 				if is_retro:
 					if old_value >= 1 and value <= 0:
-						add_to_animation_server(actor, [Animation.sfx, "heavyuncoyote"]);
-						add_to_animation_server(actor, [Animation.dust, 3]);
+						add_to_animation_server(actor, [Anim.sfx, "heavyuncoyote"]);
+						add_to_animation_server(actor, [Anim.dust, 3]);
 					elif old_value == -1 and value != -1:
-						add_to_animation_server(actor, [Animation.sfx, "heavyunland"]);
-						add_to_animation_server(actor, [Animation.dust, 5]);
+						add_to_animation_server(actor, [Anim.sfx, "heavyunland"]);
+						add_to_animation_server(actor, [Anim.dust, 5]);
 				else:
 					if value >= 1 and old_value <= 0:
-						add_to_animation_server(actor, [Animation.sfx, "heavycoyote"]);
-						add_to_animation_server(actor, [Animation.dust, 0]);
+						add_to_animation_server(actor, [Anim.sfx, "heavycoyote"]);
+						add_to_animation_server(actor, [Anim.dust, 0]);
 					elif value == -1 and old_value != -1:
-						add_to_animation_server(actor, [Animation.sfx, "heavyland"]);
-						add_to_animation_server(actor, [Animation.dust, 2]);
+						add_to_animation_server(actor, [Anim.sfx, "heavyland"]);
+						add_to_animation_server(actor, [Anim.dust, 2]);
 			elif actor.actorname == Actor.Name.Light:
 				if is_retro:
 					if old_value >= 1 and value <= 0:
-						add_to_animation_server(actor, [Animation.sfx, "lightuncoyote"]);
-						add_to_animation_server(actor, [Animation.dust, 3]);
+						add_to_animation_server(actor, [Anim.sfx, "lightuncoyote"]);
+						add_to_animation_server(actor, [Anim.dust, 3]);
 					elif old_value == -1 and value != -1:
-						add_to_animation_server(actor, [Animation.sfx, "lightunland"]);
-						add_to_animation_server(actor, [Animation.dust, 5]);
+						add_to_animation_server(actor, [Anim.sfx, "lightunland"]);
+						add_to_animation_server(actor, [Anim.dust, 5]);
 				else:
 					if value >= 1 and old_value <= 0:
-						add_to_animation_server(actor, [Animation.sfx, "lightcoyote"]);
-						add_to_animation_server(actor, [Animation.dust, 0]);
+						add_to_animation_server(actor, [Anim.sfx, "lightcoyote"]);
+						add_to_animation_server(actor, [Anim.dust, 0]);
 					elif value == -1 and old_value != -1:
-						add_to_animation_server(actor, [Animation.sfx, "lightland"]);
-						add_to_animation_server(actor, [Animation.dust, 2]);
+						add_to_animation_server(actor, [Anim.sfx, "lightland"]);
+						add_to_animation_server(actor, [Anim.dust, 2]);
 			else:
 				#everyone gets landing dust
 				if is_retro:
 					if old_value == -1 and value != -1:
-						add_to_animation_server(actor, [Animation.dust, 5]);
+						add_to_animation_server(actor, [Anim.dust, 5]);
 				else:
 					if value == -1 and old_value != -1:
-						add_to_animation_server(actor, [Animation.dust, 2]);
+						add_to_animation_server(actor, [Anim.dust, 2]);
 					
 			#everyone gets falling dust
 			if is_retro:
 				if (old_value == 0 and value != 0):
-					add_to_animation_server(actor, [Animation.dust, 4]);
+					add_to_animation_server(actor, [Anim.dust, 4]);
 			else:
 				if value == 0 and old_value != 0:
-					add_to_animation_server(actor, [Animation.dust, 1]);
+					add_to_animation_server(actor, [Anim.dust, 1]);
 		
 		# special case - if we break or unbreak, we can ding or unding too
 		# We also need to handle abysschime and meta-undoing it.
@@ -5732,10 +5731,10 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 							for j in range(animation_substep+1):
 								for i in range(animation_server[j].size()):
 									var thing = animation_server[j][i];
-									if thing[1][0] == Animation.lose:
-										achievement_get(Achievements.NonStandardGameOver);
+									if thing[1][0] == Anim.lose:
+										achievement_get("NonStandardGameOver");
 						
-						add_to_animation_server(actor, [Animation.lose]);
+						add_to_animation_server(actor, [Anim.lose]);
 						if (has_void_gates):
 							open_doors(Tiles.GateOfDemise);		
 				else:
@@ -5752,13 +5751,13 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 			if value == true:
 				if (actor.actorname == Actor.Name.TimeCrystalGreen):
 					pass #done in eat_crystal now
-					#add_to_animation_server(actor, [Animation.sfx, "greentimecrystal"])
+					#add_to_animation_server(actor, [Anim.sfx, "greentimecrystal"])
 				elif (actor.actorname == Actor.Name.TimeCrystalMagenta):
 					pass #done in eat_crystal now
-					#add_to_animation_server(actor, [Animation.sfx, "magentatimecrystal"])
+					#add_to_animation_server(actor, [Anim.sfx, "magentatimecrystal"])
 				else:
-					add_to_animation_server(actor, [Animation.sfx, "broken"])
-					add_to_animation_server(actor, [Animation.explode, true])
+					add_to_animation_server(actor, [Anim.sfx, "broken"])
+					add_to_animation_server(actor, [Anim.explode, true])
 				if actor.is_character:
 					if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos, terrain):
 						for goal in goals:
@@ -5772,8 +5771,8 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 					if actor.dinged:
 						set_actor_var(actor, "dinged", false, chrono);
 			else:
-				add_to_animation_server(actor, [Animation.sfx, "unbroken"])
-				add_to_animation_server(actor, [Animation.explode, false])
+				add_to_animation_server(actor, [Anim.sfx, "unbroken"])
+				add_to_animation_server(actor, [Anim.explode, false])
 				if actor.is_character:
 					if actor.actorname == Actor.Name.Heavy and heavy_goal_here(actor.pos, terrain):
 						for goal in goals:
@@ -5788,7 +5787,7 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 						if !actor.dinged:
 							set_actor_var(actor, "dinged", true, chrono);
 		
-		add_to_animation_server(actor, [Animation.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
+		add_to_animation_server(actor, [Anim.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
 	elif actor is Actor:
 		var ghost = null;
 		if (prop == "facing_left"):
@@ -5806,9 +5805,9 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		if (value > 0 and old_value > 0):
 			pass
 		else:
-			add_to_animation_server(actor, [Animation.stall, 0.07]);
+			add_to_animation_server(actor, [Anim.stall, 0.07]);
 	elif (prop == "broken"):
-		add_to_animation_server(actor, [Animation.stall, 0.14]);
+		add_to_animation_server(actor, [Anim.stall, 0.14]);
 		
 	#in custom puzzles, banish broken crystals to -9, -9 so they get out of the way
 	if (is_custom and actor.is_crystal and !is_retro and actor.broken and prop == "broken" and !old_value and value):
@@ -5835,7 +5834,7 @@ func check_abyss_chimes(actor: Actor = null) -> bool:
 				add_undo_event([Undo.light_surprise_abyss_chimed], Chrono.CHAR_UNDO);
 		return result_h || result_l;
 	if (!actor_has_broken_event_anywhere(actor)):
-		add_to_animation_server(actor, [Animation.lose]);
+		add_to_animation_server(actor, [Anim.lose]);
 		if (has_void_gates):
 			open_doors(Tiles.GateOfDemise);
 		return true;
@@ -5964,7 +5963,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("rewindstopped");
-			add_to_animation_server(heavy_actor, [Animation.afterimage_at, preload("res://assets/undo_eye_final.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 1, 1, 1)]);
+			add_to_animation_server(heavy_actor, [Anim.afterimage_at, preload("res://assets/undo_eye_final.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 1, 1, 1)]);
 			return false;
 		if (has_spotlights and terrain.has(Tiles.Spotlight)):
 			if !is_silent:
@@ -6071,7 +6070,7 @@ func character_undo(is_silent: bool = false) -> bool:
 		if (terrain.has(Tiles.NoUndo) and !terrain.has(Tiles.OneUndo)):
 			if !is_silent:
 				play_sound("rewindstopped");
-			add_to_animation_server(light_actor, [Animation.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.NoUndo), terrainmap.map_to_world(light_actor.pos), Color(0, 0, 0, 1)]);
+			add_to_animation_server(light_actor, [Anim.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.NoUndo), terrainmap.map_to_world(light_actor.pos), Color(0, 0, 0, 1)]);
 			return false;
 		if (has_spotlights and terrain.has(Tiles.Spotlight)):
 			if !is_silent:
@@ -6472,8 +6471,8 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		var actor = event[1];
 		if terrain_in_tile(actor.pos, actor, chrono).has(Tiles.VoidStars):
 			if (!currently_fast_replay()):
-				call_deferred("add_to_animation_server", actor, [Animation.undo_immunity, -1]);
-			#add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
+				call_deferred("add_to_animation_server", actor, [Anim.undo_immunity, -1]);
+			#add_to_animation_server(actor, [Anim.undo_immunity, event[6]]);
 			#call_deferred("play_sound", "shroud");
 			return;
 		
@@ -6488,7 +6487,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var actor = event[1];
 			var animation_nonce = event[6];
 			if (chrono < Chrono.META_UNDO and actor.in_stars):
-				add_to_animation_server(actor, [Animation.undo_immunity, event[6]]);
+				add_to_animation_server(actor, [Anim.undo_immunity, event[6]]);
 			else:
 				move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5],
 				animation_nonce);
@@ -6498,7 +6497,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var animation_nonce = event[5];
 			var is_retro = true;
 			if (chrono < Chrono.META_UNDO and actor.in_stars):
-				add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
+				add_to_animation_server(actor, [Anim.undo_immunity, animation_nonce]);
 				if (event[2] == "broken"):
 					check_abyss_chimes();
 			else:
@@ -6627,7 +6626,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var amount = event[2];
 			var animation_nonce = event[3];
 			if (chrono < Chrono.META_UNDO and actor.in_stars):
-				add_to_animation_server(actor, [Animation.undo_immunity, animation_nonce]);
+				add_to_animation_server(actor, [Anim.undo_immunity, animation_nonce]);
 			else:
 				clock_ticks(actor, -amount, chrono, animation_nonce);
 		Undo.time_bubble:
@@ -7481,7 +7480,7 @@ func time_passes(chrono: int) -> void:
 	
 	# Flash time bubbles (Can add other effects here if I think of any).
 	for actor in time_actors:
-		add_to_animation_server(actor, [Animation.time_passes]);
+		add_to_animation_server(actor, [Anim.time_passes]);
 	
 	#Phase lightning strikes before gravity.
 	if (has_phase_lightning and chrono < Chrono.META_UNDO):
@@ -7489,7 +7488,7 @@ func time_passes(chrono: int) -> void:
 		var blue = !heavy_selected;
 		var gray = chrono == Chrono.MOVE;
 		var purple = chrono == Chrono.CHAR_UNDO;
-		add_to_animation_server(null, [Animation.lightning_strikes, red, blue, gray, purple]);
+		add_to_animation_server(null, [Anim.lightning_strikes, red, blue, gray, purple]);
 		for actor in actors:
 			if (actor.broken):
 				continue;
@@ -7520,7 +7519,7 @@ func time_passes(chrono: int) -> void:
 			var terrain = terrain_in_tile(actor.pos, actor, chrono);
 			for id in terrain:
 				if id >= Tiles.NudgeEast and id <= Tiles.NudgeEast + 3:
-					add_to_animation_server(actor, [Animation.sfx, "step"]);
+					add_to_animation_server(actor, [Anim.sfx, "step"]);
 					var dir = directions[id - Tiles.NudgeEast];
 					var attempt = move_actor_relative(actor, dir, chrono, false, false);
 					if (attempt == Success.Yes):
@@ -7534,7 +7533,7 @@ func time_passes(chrono: int) -> void:
 				var terrain = terrain_in_tile(actor.pos, actor, chrono);
 				for id in terrain:
 					if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
-						add_to_animation_server(actor, [Animation.sfx, "step"]);
+						add_to_animation_server(actor, [Anim.sfx, "step"]);
 						var dir = directions[id - Tiles.NudgeEastGreen];
 						var attempt = move_actor_relative(actor, dir, chrono, false, false);
 						if (attempt == Success.Yes):
@@ -7567,8 +7566,8 @@ func time_passes(chrono: int) -> void:
 			if (new_value == 0):
 				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
 				if (could_fall != Success.Yes):
-					remove_one_from_animation_server(actor, Animation.bump);
-					add_to_animation_server(actor, [Animation.sfx, "fall"]);
+					remove_one_from_animation_server(actor, Anim.bump);
+					add_to_animation_server(actor, [Anim.sfx, "fall"]);
 			set_actor_var(actor, "airborne", new_value, chrono);
 			
 	# AD09: ALL actors go from airborne 2 to 1. (blue/red levels are kind of fucky without this)
@@ -7688,7 +7687,7 @@ func time_passes(chrono: int) -> void:
 			# (It actually looks pretty good as long as no one else is simultaneously falling,
 			# but if someone IS, it looks awful, so that's reason enough to remove it)
 			if (could_fall == Success.Surprise):
-				remove_one_from_animation_server(actor, Animation.bump);
+				remove_one_from_animation_server(actor, Anim.bump);
 			if (could_fall == Success.No):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
@@ -7708,7 +7707,7 @@ func time_passes(chrono: int) -> void:
 							if (diff.x == 0 and diff.y == 0):
 								lose("What have you DONE", actor, false, "exception");
 							else:
-								add_to_animation_server(actor, [Animation.sfx, "fall"]);
+								add_to_animation_server(actor, [Anim.sfx, "fall"]);
 								move_actor_relative(actor, diff, chrono, false, false);
 								move_actor_relative(actor2, -diff, chrono, false, false);
 			elif actor.actorname == Actor.Name.ChronoHelixBlue:
@@ -7719,7 +7718,7 @@ func time_passes(chrono: int) -> void:
 							if (diff.x == 0 and diff.y == 0):
 								lose("What have you DONE", actor, false, "exception");
 							else:
-								add_to_animation_server(actor, [Animation.sfx, "fall"]);
+								add_to_animation_server(actor, [Anim.sfx, "fall"]);
 								move_actor_relative(actor, diff, chrono, false, false);
 								move_actor_relative(actor2, -diff, chrono, false, false);
 	
@@ -7734,7 +7733,7 @@ func time_passes(chrono: int) -> void:
 			time_colour = TimeColour.Blue;
 		elif (!heavy_selected and chrono == Chrono.CHAR_UNDO):
 			time_colour = TimeColour.Red;
-		add_to_animation_server(null, [Animation.fire_roars, time_colour])
+		add_to_animation_server(null, [Anim.fire_roars, time_colour])
 	for actor in time_actors:
 		# Now that it's possible for Night to be conditional (boards), actors not experiencing time due to Night are now fire immune.
 		if (actor.in_night):
@@ -7851,8 +7850,8 @@ func time_passes(chrono: int) -> void:
 			var terrain = terrain_in_tile(actor.pos, actor, chrono);
 			if (terrain.has(Tiles.VoidSingularity)):
 				if (void_banish(actor)):
-					add_to_animation_server(actor, [Animation.sfx, "singularity"]);
-					add_to_animation_server(actor, [Animation.generic_magenta_time_crystal, Color(0.1, 0.1, 0.1)])
+					add_to_animation_server(actor, [Anim.sfx, "singularity"]);
+					add_to_animation_server(actor, [Anim.generic_magenta_time_crystal, Color(0.1, 0.1, 0.1)])
 	
 	#Luckiest lastest - a final crystal banish.
 	banish_time_crystals();
@@ -8249,7 +8248,7 @@ func handle_global_animation(animation: Array) -> void:
 	var bluefire = false;
 	var greenfire = false;
 	var voidfire = false;
-	if animation[0] == Animation.fire_roars:
+	if animation[0] == Anim.fire_roars:
 		#void fire even firster :D
 		if (has_void_fires):
 			var void_fires = get_used_cells_by_id_one_array(Tiles.VoidFire);
@@ -8336,7 +8335,7 @@ func handle_global_animation(animation: Array) -> void:
 	if (greenfire or voidfire):
 		play_sound("greenfire");
 		
-	if (animation[0] == Animation.lightning_strikes):
+	if (animation[0] == Anim.lightning_strikes):
 		var red = animation[1];
 		var blue = animation[2];
 		var gray = animation[3];
@@ -8401,10 +8400,10 @@ func update_animation_server(skip_globals: bool = false) -> void:
 			won_fade_started = true;
 			if (lost):
 				fade_in_lost();
-			add_to_animation_server(heavy_actor, [Animation.fade, 1.0, 0.0, 3.0]);
-			add_to_animation_server(light_actor, [Animation.fade, 1.0, 0.0, 3.0]);
-			add_to_animation_server(heavy_actor, [Animation.intro_hop]);
-			add_to_animation_server(light_actor, [Animation.intro_hop]);
+			add_to_animation_server(heavy_actor, [Anim.fade, 1.0, 0.0, 3.0]);
+			add_to_animation_server(light_actor, [Anim.fade, 1.0, 0.0, 3.0]);
+			add_to_animation_server(heavy_actor, [Anim.intro_hop]);
+			add_to_animation_server(light_actor, [Anim.intro_hop]);
 		return;
 	
 	# we found new animations - give them to everyone at once

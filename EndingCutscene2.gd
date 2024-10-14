@@ -208,6 +208,7 @@ func reset_skip_cutscene_label() -> void:
 func play_sound(sound: String) -> void:
 	gamelogic.play_sound(sound);
 	if sound == "usegreenality":
+		gamelogic.achievement_get("RepairsComplete");
 		sparkles_remaining = 0.75;
 		if $CutsceneHolder/Panel2.visible:
 			clone_players[clones_active].play("Animate");
