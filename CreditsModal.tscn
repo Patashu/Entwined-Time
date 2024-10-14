@@ -47,7 +47,7 @@ custom_colors/default_color = Color( 0.662745, 0.941176, 0.372549, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
-bbcode_text = "[center][url=\"https://godotengine.org/license/\"]Made with Godot 3.5, free and open source software released under the MIT license.[/url][/center]"
-text = "Made with Godot 3.5, free and open source software released under the MIT license."
+bbcode_text = "[center][url=\"https://godotengine.org/license/\"]Made with Godot 3.6, free and open source software released under the MIT license.[/url][/center]"
+text = "Made with Godot 3.6, free and open source software released under the MIT license."
 
 [node name="Pointer" type="Sprite" parent="Holder"]
