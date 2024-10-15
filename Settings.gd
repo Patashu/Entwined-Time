@@ -60,6 +60,7 @@ func setup_resolution() -> void:
 		resolution.add_item(result, i);
 		i += 1;
 		mult += 1;
+		size = Vector2(gamelogic.pixel_width*mult, gamelogic.pixel_height*mult);
 		if (result.split(" ")[0] == current):
 			resolution.selected = i;
 	

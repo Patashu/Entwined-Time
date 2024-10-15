@@ -1307,7 +1307,6 @@ frame_7/delay_sec = 0.0
 14/autotile/navpoly_map = [  ]
 14/autotile/priority_map = [  ]
 14/autotile/z_index_map = [  ]
-14/autotile/fallback_mode = 0
 14/occluder_offset = Vector2( 108, 180 )
 14/navigation_offset = Vector2( 108, 180 )
 14/shape_offset = Vector2( 0, 0 )
