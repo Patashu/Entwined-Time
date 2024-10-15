@@ -1,6 +1,6 @@
 # Entwined Time
 
-A two time manipulation puzzle game made in Godot 3.x.
+A two time manipulation puzzle game made in Godot 3.53.
 
 Play here: https://patashu.itch.io/entwined-time
 
