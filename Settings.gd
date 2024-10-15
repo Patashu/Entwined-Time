@@ -77,6 +77,8 @@ func _ready() -> void:
 	var is_fixed_size = false;
 	if (os_name == "HTML5" or os_name == "Android" or os_name == "iOS"):
 		is_fixed_size = true;
+	elif gamelogic.is_steam_deck:
+		is_fixed_size = true;
 	
 	metaundoarestart.add_item("Yes", 0);
 	metaundoarestart.add_item("Replay (Instant)", 1);

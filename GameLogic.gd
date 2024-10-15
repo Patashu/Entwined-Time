@@ -973,7 +973,24 @@ func setup_virtual_buttons() -> void:
 		virtualbuttons.visible = false;
 	if (heavy_actor != null):
 		update_info_labels();
-	
+
+var is_steam_deck: bool = false;
+func steam_deck_check() -> bool:
+	if is_steam_deck:
+		return true;
+	if OS.get_name() == "X11":
+		if get_largest_monitor().x == 1280:
+			is_steam_deck = true;
+			save_file["resolution"] = "1280x800";
+			save_file["fullscreen"] = true;
+			#setup_resolution(); #will be called by startup
+			controller_hrns[0] = "A";
+			controller_hrns[1] = "B";
+			controller_hrns[2] = "X";
+			controller_hrns[3] = "Y";
+			return true;
+	return false;
+
 func get_largest_monitor() -> Vector2:
 	var result = Vector2(-1, -1);
 	var monitors = OS.get_screen_count();
@@ -1044,6 +1061,8 @@ func filter_all_sprites(yes: bool) -> void:
 	load("res://standardfont.tres").use_filter = yes; #still need to filter this or it looks gross lol
 	
 func setup_resolution() -> void:
+	steam_deck_check();
+	
 	Engine.target_fps = int(save_file["fps"]);
 	if (is_web):
 		return;
