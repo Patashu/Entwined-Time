@@ -599,6 +599,8 @@ func prepare_chapter() -> void:
 			achievement_get(false);
 		if (all_advanced_stars):
 			holder.flash();
+			if (in_community_puzzles):
+				achievement_get(true);
 	if (all_advanced_stars and advanced_label != null):
 		advanced_label.set_script(preload("res://GoldLabel.gd"));
 		advanced_label.flash();
