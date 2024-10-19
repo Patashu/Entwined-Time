@@ -7777,7 +7777,7 @@ func time_passes(chrono: int) -> void:
 		var time_colour = TimeColour.Magenta;
 		if (chrono == Chrono.META_UNDO):
 			time_colour = TimeColour.Void;
-		if (heavy_selected and chrono == Chrono.CHAR_UNDO):
+		elif (heavy_selected and chrono == Chrono.CHAR_UNDO):
 			time_colour = TimeColour.Blue;
 		elif (!heavy_selected and chrono == Chrono.CHAR_UNDO):
 			time_colour = TimeColour.Red;
@@ -8312,43 +8312,22 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.frame_max = sprite.frame + 8;
 				underactorsparticles.add_child(sprite);
 				voidfire = true;
-		#have green fires animate first so if someone puts green and non-green fires in the same tile they layer correctly
-		var green_fires = get_used_cells_by_id_one_array(Tiles.GreenFire);
-		for fire in green_fires:
-			var sprite = Sprite.new();
-			sprite.set_script(preload("res://OneTimeSprite.gd"));
-			sprite.texture = preload("res://assets/green_fire_spritesheet.png");
-			sprite.position = terrainmap.map_to_world(fire);
-			sprite.vframes = 1;
-			sprite.hframes = 8;
-			sprite.frame = 0;
-			sprite.centered = false;
-			sprite.frame_max = sprite.frame + 8;
-			underactorsparticles.add_child(sprite);
-			greenfire = true;
-		var fires = get_used_cells_by_id_one_array(Tiles.Fire);
-		for fire in fires:
-			var sprite = Sprite.new();
-			sprite.set_script(preload("res://OneTimeSprite.gd"));
-			sprite.texture = preload("res://assets/fire_spritesheet.png");
-			sprite.position = terrainmap.map_to_world(fire);
-			sprite.vframes = 3;
-			sprite.hframes = 8;
-			sprite.frame = 0;
-			sprite.centered = false;
-			if animation[1] == TimeColour.Blue:
-				bluefire = true;
-				sprite.frame = 8;
-			elif animation[1] == TimeColour.Magenta:
-				redfire = true;
-				bluefire = true;
-				sprite.frame = 16;
-			else:
-				redfire = true;
-			sprite.frame_max = sprite.frame + 8;
-			underactorsparticles.add_child(sprite);
-		if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Red):
-			fires = get_used_cells_by_id_one_array(Tiles.HeavyFire);
+		if (animation[1] != TimeColour.Void):
+			#have green fires animate first so if someone puts green and non-green fires in the same tile they layer correctly
+			var green_fires = get_used_cells_by_id_one_array(Tiles.GreenFire);
+			for fire in green_fires:
+				var sprite = Sprite.new();
+				sprite.set_script(preload("res://OneTimeSprite.gd"));
+				sprite.texture = preload("res://assets/green_fire_spritesheet.png");
+				sprite.position = terrainmap.map_to_world(fire);
+				sprite.vframes = 1;
+				sprite.hframes = 8;
+				sprite.frame = 0;
+				sprite.centered = false;
+				sprite.frame_max = sprite.frame + 8;
+				underactorsparticles.add_child(sprite);
+				greenfire = true;
+			var fires = get_used_cells_by_id_one_array(Tiles.Fire);
 			for fire in fires:
 				var sprite = Sprite.new();
 				sprite.set_script(preload("res://OneTimeSprite.gd"));
@@ -8358,23 +8337,45 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.hframes = 8;
 				sprite.frame = 0;
 				sprite.centered = false;
+				if animation[1] == TimeColour.Blue:
+					bluefire = true;
+					sprite.frame = 8;
+				elif animation[1] == TimeColour.Magenta:
+					redfire = true;
+					bluefire = true;
+					sprite.frame = 16;
+				else:
+					redfire = true;
 				sprite.frame_max = sprite.frame + 8;
 				underactorsparticles.add_child(sprite);
-				redfire = true;
-		if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Blue):
-			fires = get_used_cells_by_id_one_array(Tiles.LightFire);
-			for fire in fires:
-				var sprite = Sprite.new();
-				sprite.set_script(preload("res://OneTimeSprite.gd"));
-				sprite.texture = preload("res://assets/fire_spritesheet.png");
-				sprite.position = terrainmap.map_to_world(fire);
-				sprite.vframes = 3;
-				sprite.hframes = 8;
-				sprite.frame = 8;
-				sprite.centered = false;
-				sprite.frame_max = sprite.frame + 8;
-				underactorsparticles.add_child(sprite);
-				bluefire = true;
+			if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Red):
+				fires = get_used_cells_by_id_one_array(Tiles.HeavyFire);
+				for fire in fires:
+					var sprite = Sprite.new();
+					sprite.set_script(preload("res://OneTimeSprite.gd"));
+					sprite.texture = preload("res://assets/fire_spritesheet.png");
+					sprite.position = terrainmap.map_to_world(fire);
+					sprite.vframes = 3;
+					sprite.hframes = 8;
+					sprite.frame = 0;
+					sprite.centered = false;
+					sprite.frame_max = sprite.frame + 8;
+					underactorsparticles.add_child(sprite);
+					redfire = true;
+			if (animation[1] == TimeColour.Magenta or animation[1] == TimeColour.Blue):
+				fires = get_used_cells_by_id_one_array(Tiles.LightFire);
+				for fire in fires:
+					var sprite = Sprite.new();
+					sprite.set_script(preload("res://OneTimeSprite.gd"));
+					sprite.texture = preload("res://assets/fire_spritesheet.png");
+					sprite.position = terrainmap.map_to_world(fire);
+					sprite.vframes = 3;
+					sprite.hframes = 8;
+					sprite.frame = 8;
+					sprite.centered = false;
+					sprite.frame_max = sprite.frame + 8;
+					underactorsparticles.add_child(sprite);
+					bluefire = true;
 	# we can immediately play sounds since the animation just started
 	if (redfire):
 		play_sound("redfire");
