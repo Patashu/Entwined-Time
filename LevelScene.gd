@@ -9,6 +9,18 @@ func _process(delta: float) -> void:
 	update();
 
 func _draw():
+	if gamelogic.SuperScaling != null:
+		draw_rect(Rect2(0, 0, gamelogic.pixel_width, gamelogic.pixel_height), gamelogic.current_sky, true);
+	
+	if (gamelogic.undo_effect_strength > 0):
+		var color = Color(gamelogic.undo_effect_color);
+		color.a = gamelogic.undo_effect_strength;
+		draw_rect(Rect2(0, 0, gamelogic.pixel_width, gamelogic.pixel_height), color, true);
+	gamelogic.undo_effect_strength -= gamelogic.undo_effect_per_second*last_delta;
+	
+	if (gamelogic.currently_fast_replay()):
+		return;
+	
 	var color_l = Color(1, 0, 0);
 	var color_d = Color(1, 0, 0);
 	var color_u = Color(1, 0, 0);
@@ -27,17 +39,6 @@ func _draw():
 	draw_rect(Rect2(0, 48, Input.get_action_raw_strength("ui_up")*100, 24), color_u);
 	draw_rect(Rect2(0, 72, Input.get_action_raw_strength("ui_down")*100, 24), color_d);
 	
-	if gamelogic.SuperScaling != null:
-		draw_rect(Rect2(0, 0, gamelogic.pixel_width, gamelogic.pixel_height), gamelogic.current_sky, true);
-	
-	if (gamelogic.undo_effect_strength > 0):
-		var color = Color(gamelogic.undo_effect_color);
-		color.a = gamelogic.undo_effect_strength;
-		draw_rect(Rect2(0, 0, gamelogic.pixel_width, gamelogic.pixel_height), color, true);
-	gamelogic.undo_effect_strength -= gamelogic.undo_effect_per_second*last_delta;
-	
-	if (gamelogic.currently_fast_replay()):
-		return;
 	
 	# draw background gradients based on character turns elapsed
 	var light_intensity = 0.0;
