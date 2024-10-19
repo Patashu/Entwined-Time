@@ -3147,6 +3147,8 @@ func human_readable_input(action: String, entries: int = 3) -> String:
 					result += event.as_text();
 		if (entry >= entries):
 			return result;
+	if (result == ""):
+		result = "[UNBOUND]";
 	return result;
 	
 func initialize_timeline_viewers() -> void:
