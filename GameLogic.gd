@@ -1890,6 +1890,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Doomsday Clock")
+	level_filenames.push_back("Time Travel")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Clockwork-")
@@ -2313,6 +2314,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("[SPEEDRUN] Erase")
 	level_filenames.push_back("[SPEEDRUN] Lego Tower")
 	level_filenames.push_back("[SPEEDRUN] One at a Time [VAR1]")
+	level_filenames.push_back("Reflections [VAR1]")
+	level_filenames.push_back("[SPEEDRUN] Pathology")
+	level_filenames.push_back("[SPEEDRUN] Midnight Parkour")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

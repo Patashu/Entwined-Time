@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 2, 0, 65536, 14, 196609, 65537, 54, 0, 65538, 26, 0, 65539, 26, 0, 65541, 26, 0, 65542, 14, 196609, 131072, 14, 262145, 131073, 26, 0, 131075, 26, 0, 131076, 26, 0, 131077, 26, 0, 131078, 14, 262145, 196608, 14, 262145, 196610, 26, 0, 196611, 26, 0, 196612, 26, 0, 196613, 54, 0, 196614, 14, 262145, 262144, 14, 262145, 262147, 26, 0, 262148, 26, 0, 262149, 26, 0, 262150, 14, 262145, 327680, 14, 262145, 327681, 26, 0, 327682, 26, 0, 327683, 26, 0, 327684, 26, 0, 327685, 54, 0, 327686, 14, 262145, 393216, 14, 262145, 393218, 26, 0, 393219, 26, 0, 393220, 26, 0, 393221, 26, 0, 393222, 14, 262145, 458752, 14, 589826, 458753, 14, 196614, 458754, 14, 196615, 458755, 5, 0, 458756, 14, 524290, 458757, 14, 196614, 458758, 14, 589828, 524288, 14, 262145, 524289, 7, 0, 524290, 1, 0, 524291, 3, 0, 524292, 14, 262145, 524293, 55, 0, 524294, 14, 262145, 589824, 14, 655362, 589825, 14, 196614, 589826, 14, 196615, 589827, 23, 0, 589828, 14, 655362, 589829, 14, 196614, 589830, 14, 655364 )
+
+[node name="@@181" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 524289, 8, 0, 524291, 39, 0, 524293, 39, 0, 589827, 48, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "[SPEEDRUN] Pathology"
+level_author = "Green"
+level_replay = "[SPEEDRUN] Pathology$mturn=35$ddaaadddzzzzzzzwaazzaddddzzzaddwxdxza"
+heavy_max_moves = 8.0
+light_max_moves = 22.0
+clock_turns = "36"
+target_sky = Color( 0.164706, 0.121569, 0.509804, 1 )
+target_track = 2.0
+setup_replay = ""
