@@ -9074,7 +9074,7 @@ func _process(delta: float) -> void:
 			if Input.is_action_just_pressed(dir):
 				if ((current_time - debounce_ms) < last_dir_release_times[i]):
 					get_debounced = true;
-					floating_text("get debounced " + str(int(current_time - last_dir_release_times[i])) + "ms");
+					#floating_text("get debounced " + str(int(current_time - last_dir_release_times[i])) + "ms");
 			elif Input.is_action_just_released(dir):
 				last_dir_release_times[i] = current_time;
 				

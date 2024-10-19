@@ -21,23 +21,23 @@ func _draw():
 	if (gamelogic.currently_fast_replay()):
 		return;
 	
-	var color_l = Color(1, 0, 0);
-	var color_d = Color(1, 0, 0);
-	var color_u = Color(1, 0, 0);
-	var color_r = Color(1, 0, 0);
-	if (Input.get_action_strength("ui_left") > 0.0):
-		color_l = Color(0, 1, 0);
-	if (Input.get_action_strength("ui_right") > 0.0):
-		color_r = Color(0, 1, 0);
-	if (Input.get_action_strength("ui_up") > 0.0):
-		color_u = Color(0, 1, 0);
-	if (Input.get_action_strength("ui_down") > 0.0):
-		color_d = Color(0, 1, 0);
-	
-	draw_rect(Rect2(0, 0, Input.get_action_raw_strength("ui_left")*100, 24), color_l);
-	draw_rect(Rect2(0, 24, Input.get_action_raw_strength("ui_right")*100, 24), color_r);
-	draw_rect(Rect2(0, 48, Input.get_action_raw_strength("ui_up")*100, 24), color_u);
-	draw_rect(Rect2(0, 72, Input.get_action_raw_strength("ui_down")*100, 24), color_d);
+#	var color_l = Color(1, 0, 0);
+#	var color_d = Color(1, 0, 0);
+#	var color_u = Color(1, 0, 0);
+#	var color_r = Color(1, 0, 0);
+#	if (Input.get_action_strength("ui_left") > 0.0):
+#		color_l = Color(0, 1, 0);
+#	if (Input.get_action_strength("ui_right") > 0.0):
+#		color_r = Color(0, 1, 0);
+#	if (Input.get_action_strength("ui_up") > 0.0):
+#		color_u = Color(0, 1, 0);
+#	if (Input.get_action_strength("ui_down") > 0.0):
+#		color_d = Color(0, 1, 0);
+#
+#	draw_rect(Rect2(0, 0, Input.get_action_raw_strength("ui_left")*100, 24), color_l);
+#	draw_rect(Rect2(0, 24, Input.get_action_raw_strength("ui_right")*100, 24), color_r);
+#	draw_rect(Rect2(0, 48, Input.get_action_raw_strength("ui_up")*100, 24), color_u);
+#	draw_rect(Rect2(0, 72, Input.get_action_raw_strength("ui_down")*100, 24), color_d);
 	
 	
 	# draw background gradients based on character turns elapsed
