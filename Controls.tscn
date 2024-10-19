@@ -68,6 +68,7 @@ margin_left = 387.0
 margin_top = 231.0
 margin_right = 487.0
 margin_bottom = 247.0
+max_value = 200.0
 step = 5.0
 value = 40.0
 

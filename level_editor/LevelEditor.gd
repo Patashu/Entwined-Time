@@ -1247,22 +1247,22 @@ func _process(delta: float) -> void:
 			paste_level();
 		if (Input.is_action_just_pressed("test_level")):
 			test_level();
-		if (Input.is_action_just_pressed("ui_left")):
+		if (Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("nonaxis_left")):
 			if (Input.is_action_pressed("shift")):
 				shift_layer(terrain_layers[layer_index()], Vector2.LEFT);
 			else:
 				shift_all_layers(Vector2.LEFT);
-		if (Input.is_action_just_pressed("ui_right")):
+		if (Input.is_action_just_pressed("ui_right") or Input.is_action_just_pressed("nonaxis_right")):
 			if (Input.is_action_pressed("shift")):
 				shift_layer(terrain_layers[layer_index()], Vector2.RIGHT);
 			else:
 				shift_all_layers(Vector2.RIGHT);
-		if (Input.is_action_just_pressed("ui_up")):
+		if (Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("nonaxis_up")):
 			if (Input.is_action_pressed("shift")):
 				shift_layer(terrain_layers[layer_index()], Vector2.UP);
 			else:
 				shift_all_layers(Vector2.UP);
-		if (Input.is_action_just_pressed("ui_down")):
+		if (Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("nonaxis_down")):
 			if (Input.is_action_pressed("shift")):
 				shift_layer(terrain_layers[layer_index()], Vector2.DOWN);
 			else:

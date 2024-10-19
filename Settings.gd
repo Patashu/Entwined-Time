@@ -417,12 +417,12 @@ func _process(delta: float) -> void:
 			destroy();
 
 	if (!(focus is HSlider or focus is SpinBox)):
-		if (Input.is_action_just_pressed("ui_left")):
+		if (Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("nonaxis_left")):
 			var next_tab = $Holder/TabContainer.current_tab - 1;
 			if (next_tab < 0):
 				next_tab = $Holder/TabContainer.get_tab_count() - 1;
 			$Holder/TabContainer.current_tab = next_tab;
-		elif  (Input.is_action_just_pressed("ui_right")):
+		elif  (Input.is_action_just_pressed("ui_right") or Input.is_action_just_pressed("nonaxis_right")):
 			var next_tab = $Holder/TabContainer.current_tab + 1;
 			if (next_tab >= $Holder/TabContainer.get_tab_count()):
 				next_tab = 0;

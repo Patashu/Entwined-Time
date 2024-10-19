@@ -903,6 +903,8 @@ func deserialize_bindings() -> void:
 					var new_event = InputEventJoypadButton.new();
 					new_event.button_index = new_event_int;
 					InputMap.action_add_event(action, new_event);
+					
+	setup_udlr();
 
 func serialize_bindings() -> void:
 	if !save_file.has("keyboard_bindings"):
@@ -915,6 +917,8 @@ func serialize_bindings() -> void:
 		save_file["controller_bindings"].clear();
 	
 	for action in actions:
+		if (action.find("nonaxis") >= 0):
+			pass
 		var events = InputMap.get_action_list(action);
 		save_file["keyboard_bindings"][action] = [];
 		save_file["controller_bindings"][action] = [];
@@ -923,6 +927,28 @@ func serialize_bindings() -> void:
 				save_file["keyboard_bindings"][action].append(str(event.scancode) + "," +str(event.physical_scancode));
 			elif (event is InputEventJoypadButton):
 				save_file["controller_bindings"][action].append(event.button_index);
+				
+	setup_udlr();
+	
+func setup_udlr() -> void:
+	var a = ["ui_left", "ui_right", "ui_up", "ui_down"];
+	var b = ["nonaxis_left", "nonaxis_right", "nonaxis_up", "nonaxis_down"];
+	for i in range(4):
+		var ia = a[i];
+		var ib = b[i];
+		var events = InputMap.get_action_list(ib);
+		for event in events:
+			InputMap.action_erase_event(ib, event);
+		for new_event_str in save_file["keyboard_bindings"][ia]:
+			var parts = new_event_str.split(",");
+			var new_event = InputEventKey.new();
+			new_event.scancode = int(parts[0]);
+			new_event.physical_scancode = int(parts[1]);
+			InputMap.action_add_event(ib, new_event);
+		for new_event_int in save_file["controller_bindings"][ia]:
+			var new_event = InputEventJoypadButton.new();
+			new_event.button_index = new_event_int;
+			InputMap.action_add_event(ib, new_event);
 	
 func setup_virtual_buttons() -> void:
 	var value = 0;
@@ -9046,7 +9072,7 @@ func _process(delta: float) -> void:
 			if Input.is_action_just_pressed(dir):
 				if ((current_time - debounce_ms) < last_dir_release_times[i]):
 					get_debounced = true;
-					#floating_text("get debounced");
+					floating_text("get debounced " + str(int(current_time - last_dir_release_times[i])) + "ms");
 			elif Input.is_action_just_released(dir):
 				last_dir_release_times[i] = current_time;
 				
@@ -9269,13 +9295,13 @@ func _process(delta: float) -> void:
 		elif (!get_debounced):
 			# and !replayspeedslider.has_focus() and !replayturnslider.has_focus()
 			# (not necessary right now as they auto-unfocus in _input)
-			if (Input.is_action_just_pressed("ui_left")):
+			if (Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("nonaxis_left")):
 				dir = Vector2.LEFT;
-			if (Input.is_action_just_pressed("ui_right")):
+			if (Input.is_action_just_pressed("ui_right") or Input.is_action_just_pressed("nonaxis_right")):
 				dir = Vector2.RIGHT;
-			if (Input.is_action_just_pressed("ui_up")):
+			if (Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("nonaxis_up")):
 				dir = Vector2.UP;
-			if (Input.is_action_just_pressed("ui_down")):
+			if (Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("nonaxis_down")):
 				dir = Vector2.DOWN;
 				
 			if dir != Vector2.ZERO:
