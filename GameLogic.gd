@@ -9011,6 +9011,7 @@ func pressed_or_key_repeated(action: String) -> bool:
 	return Input.is_action_just_pressed(action) or (key_repeat_this_frame_dict.has(action) and key_repeat_this_frame_dict[action]);
 	
 func _process(delta: float) -> void:
+	#levellabel.text = "%3.2f,%3.2f,%3.2f,%3.2f" % [Input.get_action_raw_strength("ui_left"), Input.get_action_raw_strength("ui_right"), Input.get_action_raw_strength("ui_up"), Input.get_action_raw_strength("ui_down")]
 	shade_virtual_buttons();
 	
 	# key repeat
