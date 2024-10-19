@@ -1891,6 +1891,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Doomsday Clock")
 	level_filenames.push_back("Time Travel")
+	level_filenames.push_back("Void Fire")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Clockwork-")
