@@ -8158,11 +8158,15 @@ func update_level_label() -> void:
 		levellabel.text += " (By " + level_author + ")"
 	if (doing_replay):
 		levellabel.text += " (REPLAY)"
-		if (heavy_max_moves < 11 and light_max_moves < 11):
-			if (using_controller):
-				levellabel.text += " (L2/R2 ADJUST SPEED)";
-			else:
-				pass #there are now virtual buttons for kb+m players
+		if using_controller:
+			var info = "";
+			for i in ["replay_fwd1", "replay_back1", "replay_pause", "speedup_replay", "slowdown_replay"]:
+				var next_info = human_readable_input(i, 1);
+				if (next_info != "[UNBOUND]"):
+					if (info != ""):
+						info += "|";
+					info += next_info;
+			levellabel.text += " (" + info + ")";
 	if save_file["levels"].has(level_name) and save_file["levels"][level_name].has("won") and save_file["levels"][level_name]["won"]:
 		if (levelstar.next_modulates.size() > 0):
 			# in the middle of a flash from just having won
