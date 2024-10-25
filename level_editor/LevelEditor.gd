@@ -1103,7 +1103,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.PinkJelly:
 			text = "Pink Jelly: Solid unless this actor has already moved 1 or more times this turn. (+1 for each other Pink Jelly in this tile.)"
 		Tiles.CyanJelly:
-			text = "Cyan Jelly: Solid unless this actor has already moved and/or bumped 1 or more times this turn. (+1 for each other Pink Jelly in this tile.)"
+			text = "Cyan Jelly: Solid unless this actor has already moved and/or bumped 1 or more times this turn. (+1 for each other Cyan Jelly in this tile.)"
 		Tiles.PurpleFog:
 			text = "Purple Fog: If an actor retro moves into this tile, they phase into any actors on that tile."
 		Tiles.Continuum:
