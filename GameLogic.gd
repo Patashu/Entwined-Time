@@ -6747,12 +6747,14 @@ func meta_undo(is_silent: bool = false) -> bool:
 		preserving_meta_redo_inputs = false;
 		return false;
 	if (meta_turn <= 0):
-		if !key_repeat_this_frame_dict["meta_undo"]:
-			if (!doing_replay):
-				if (meta_undo_a_restart()):
-					return true;
-			if !is_silent:
-				play_sound("bump");
+		if (user_replay == ""):
+			if !key_repeat_this_frame_dict["meta_undo"]:
+				if (!doing_replay):
+					if (meta_undo_a_restart()):
+						#preserving_meta_redo_inputs = false; #done in ready_map()
+						return true;
+		if !is_silent:
+			play_sound("bump");
 		preserving_meta_redo_inputs = false;
 		return false;
 	
@@ -8189,7 +8191,7 @@ func update_info_labels() -> void:
 		var meta_undo_a_restart_type = 2;
 		if (save_file.has("meta_undo_a_restart")):
 			meta_undo_a_restart_type = save_file["meta_undo_a_restart"];
-		if (meta_turn == 0 and (user_replay_before_restarts.size() == 0 or meta_undo_a_restart_type >= 4)):
+		if (meta_turn == 0 and (user_replay != "" or user_replay_before_restarts.size() == 0 or meta_undo_a_restart_type >= 4)):
 			meta_undo_button.modulate = Color(0.5, 0.5, 0.5, 1);
 		else:
 			meta_undo_button.modulate = Color(1, 1, 1, 1);
