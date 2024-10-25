@@ -1891,7 +1891,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Doomsday Clock")
 	level_filenames.push_back("Time Travel")
-	level_filenames.push_back("Void Fire")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
 	level_filenames.push_back("Clockwork-")
@@ -2066,6 +2065,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bounce Castle")
 	level_filenames.push_back("Passing Through Matter")
 	level_filenames.push_back("Lego Tower")
+	level_filenames.push_back("Monochrome")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2244,6 +2244,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Leap of Faith [Space Program] [VAR1]")
 	level_filenames.push_back("Elevator Pitch [VAR1]")
+	level_filenames.push_back("Void Harness")
+	level_filenames.push_back("Void Harness [VAR1]")
+	level_filenames.push_back("Void Harness [VAR2]")
 	level_filenames.push_back("Inverse Nudge Chain")
 	level_filenames.push_back("Crate Sorting Facility")
 	level_filenames.push_back("Joke-")
@@ -2318,6 +2321,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Reflections [VAR1]")
 	level_filenames.push_back("[SPEEDRUN] Pathology")
 	level_filenames.push_back("[SPEEDRUN] Midnight Parkour")
+	level_filenames.push_back("Void Fire (Void Fire Shortage)")
+	level_filenames.push_back("Void Harness [VAR3]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
