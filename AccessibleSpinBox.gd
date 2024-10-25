@@ -13,4 +13,7 @@ func _input(event):
 		self.value += 1;
 		get_viewport().set_input_as_handled();
 	else:
+		if event is InputEventKey:
+			if event.scancode >= 58 and event.scancode <= 126: #most of the keys, none of the numbers nor -
+				get_viewport().set_input_as_handled();
 		pass
