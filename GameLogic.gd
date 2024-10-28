@@ -2241,6 +2241,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
 	level_filenames.push_back("Bunnyhop [VAR1]")
+	level_filenames.push_back("Rough Terrain [VAR3]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
 	level_filenames.push_back("Foot Wiggle [VAR5]")
 	level_filenames.push_back("Engine Room [VAR2]")
