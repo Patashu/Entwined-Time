@@ -7,13 +7,13 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 7, 0, 65538, 14, 196613, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 196614, 65546, 14, 196615, 131072, 14, 196609, 131083, 1, 0, 196608, 14, 655362, 196609, 14, 524292, 196619, 14, 196609, 262145, 14, 655362, 262146, 14, 524292, 262148, 14, 196609, 262149, 8, 0, 262152, 14, 196609, 262154, 14, 524290, 262155, 14, 655364, 327682, 14, 655362, 327683, 14, 196614, 327684, 14, 655363, 327685, 14, 524292, 327686, 2, 0, 327687, 14, 524290, 327688, 14, 655363, 327689, 14, 196614, 327690, 14, 655364, 393221, 14, 327681, 393223, 14, 327681 )
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 196615, 65536, 7, 0, 65549, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 524292, 131085, 14, 196609, 196611, 14, 655362, 196612, 14, 524292, 196614, 14, 196609, 196615, 8, 0, 196618, 14, 196609, 196620, 14, 524290, 196621, 14, 655364, 262148, 14, 655362, 262149, 14, 196614, 262150, 14, 655363, 262151, 14, 524292, 262152, 2, 0, 262153, 14, 524290, 262154, 14, 655363, 262155, 14, 196614, 262156, 14, 655364, 327687, 14, 327681, 327689, 14, 327681 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Rough Terrain [VAR2]"
 level_author = "Slabdrill"
-level_replay = "Rough Terrain [VAR2]$mturn=204$wdxwdxwxzzwsxzxzzddxwxzzasxzxzzxwxadxzxdxwzwzxzzzxdxaaxzzzdxzzawdxwxzzxzxzawdxwxzzxzxzxwxaxzxdxwzxzzxdxaaxzsxzzaxzdxwdxwxzzwsxzxzzzxwxaxzzasxdxzsxzxzzsxddxzdxzzxwzdxzxzzzxaxwdxzsxzzdxzwxzdxzaxwxzxzaxwdxzsxzzdwsxzdxzzxwxzaaxzaxzzxzxaaxaxzzaxzxzdaaxaxzzzdaaxzxzzzawdxaxzzxzxaaxwzxzzzxwzxwxzxzwxzdxzxwdxwaw"
+level_replay = "Rough Terrain [VAR2]$mturn=204$wdxwdxwxzzwsxzxzzddxwxzzasxzxzzxwxadxzxdxwzwzxzzzxdxaaxzzzdxzzawdxwxzzxzxzawdxwxzzxzxzxwxaxzxdxwzxzzxdxaaxzsxzzaxzdxwdxwxzzwsxzxzzzxwxaxzzasxdxzsxzxzzsxddxzdxzzxwzdxzxzzzxaxwdxzsxzzdxzwxzdxzaxwxzxzaxwdxzsxzzdwsxzdxzzxwxzaaxzaxzzxzxaaxaxzzaxzxzdaaxaxzzzdaaxzxzzzawdxaxzzxzxaaxwzxzzzxwzxwxzxzwxzdxzxwdxaaa"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
 clock_turns = ""
