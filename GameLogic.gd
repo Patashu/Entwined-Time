@@ -1920,6 +1920,7 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Pushing It")
 	level_filenames.push_back("Trust Fall [VAR2]")
+	level_filenames.push_back("The Boundless Sky (Already Falling)")
 	level_filenames.push_back("Coyote Time")
 	level_filenames.push_back("Acrobatics but it's forced")
 	level_filenames.push_back("Hell [VAR2]")
@@ -2091,6 +2092,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(0);
 	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	level_filenames.push_back("Acrobat's Escape [VAR3]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
 	level_filenames.push_back("Heavy Fuzzing Service [VAR1]")
 	level_filenames.push_back("Void Recovery")
 	level_filenames.push_back("Heavy Fuzzing Service [VAR2]")
@@ -2206,7 +2208,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Fragile Victory [VAR1]")
 	level_filenames.push_back("Light Boots")
 	level_filenames.push_back("Stack Split")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
 	level_filenames.push_back("One-Way Bridge")
 	level_filenames.push_back("Durability-")
 	level_filenames.push_back("Combination Lock")
