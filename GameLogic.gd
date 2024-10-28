@@ -2171,6 +2171,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Downwards Momentum [VAR1]")
 	level_filenames.push_back("Tile Selector [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
+	level_filenames.push_back("Rough Terrain [VAR1]")
+	level_filenames.push_back("Rough Terrain [VAR2]")
 	level_filenames.push_back("Inexorable Destruction- [VAR1]")
 	level_filenames.push_back("Snake Chute [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
