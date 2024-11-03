@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,10 +19,9 @@ tile_data = PoolIntArray( 65536, 35, 0, 65537, 36, 0, 393220, 39, 0 )
 script = ExtResource( 2 )
 level_name = "LEVEL_NOT_FOUND [VAR3] (Remix)"
 level_author = "Slabdrill"
-level_replay = "LEVEL_NOT_FOUND [VAR3] (Insight)$mturn=6$xsaxssxzz"
+level_replay = "LEVEL_NOT_FOUND [VAR3] (Remix)$mturn=5$xsxdswa"
 heavy_max_moves = 4.0
 light_max_moves = 3.0
 clock_turns = "6"
 target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
 target_track = 9.0
-setup_replay = ""
