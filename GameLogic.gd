@@ -931,6 +931,9 @@ func serialize_bindings() -> void:
 	setup_udlr();
 	
 func setup_udlr() -> void:
+	if !save_file.has("keyboard_bindings") or  !save_file.has("controller_bindings"):
+		serialize_bindings();
+	
 	var a = ["ui_left", "ui_right", "ui_up", "ui_down"];
 	var b = ["nonaxis_left", "nonaxis_right", "nonaxis_up", "nonaxis_down"];
 	for i in range(4):
