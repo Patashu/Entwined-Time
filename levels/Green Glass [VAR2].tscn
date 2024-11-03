@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 7, 0, 1, 8, 0, 6, 3, 0, 9, 13, 0, 14, 2, 0, 15, 1, 0, 65536, 14, 524290, 65537, 14, 196615, 65538, 27, 0, 65539, 27, 0, 65540, 27, 0, 65541, 14, 196613, 65542, 14, 524291, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 524291, 65546, 14, 196615, 65547, 27, 0, 65548, 27, 0, 65549, 27, 0, 65550, 14, 196613, 65551, 14, 524292, 131072, 14, 262145, 131078, 14, 262145, 131081, 14, 262145, 131087, 14, 262145, 196608, 14, 327681, 196614, 14, 327681, 196617, 14, 327681, 196623, 14, 327681 )
+
+[node name="@@1352" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 32, 0, 14, 32, 0, 65539, 46, 0, 65547, 46, 0, 65548, 46, 0, 65549, 46, 0 )
+
+[node name="@@1353" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 36, 0, 14, 35, 0 )
+
+[node name="@@1354" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 48, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Green Glass [VAR2]"
+level_author = "Slabdrill"
+level_replay = "Green Glass [VAR2]$mturn=297$xddddxaaaawaaxwdddxaxzzzzdwxzxzdddxwxzzzzzzxzaxzsxzxzddxzsaxzzsxzzxzzdxzzaxzsxzzzzzxzaaxaxaaadxaxzzxzzxzzwddsaaxdwddaaxzzzzzzzzdsxzzxzzaasxzdxzxaxzzsxzxzaaxdxzsxzxzxaxaxdxzsxzxzzxzzzzzxaxdxzsxzxzaxadxzsxzxzaxaddxzdddxaxzsxzxzdxdaxzsxzxzdxdaxzsxzxzdxdaxzsxzzzzzzzzdddxzxdxddsxwxaaaxzzzzzwxzzzzzzzzdsaaaxzddxzzxzzxaaxaaddxzzxzzxaxadxzxzxaaxaawxzzzzzxzzxaxwxzsxaxzxzzxaaaxaaaxzzzxdxdxzdxdxzdxdxzzzzzzzzwddxzzzwaas"
+heavy_max_moves = 8.0
+light_max_moves = 8.0
+clock_turns = ""
+target_sky = Color( 0.0784314, 0.286275, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""

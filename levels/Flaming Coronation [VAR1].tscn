@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 458755, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 393219, 8, 14, 4, 65536, 14, 589825, 65537, 14, 131076, 65541, 7, 0, 65543, 14, 131074, 65544, 14, 589829, 131072, 14, 262145, 131073, 0, 0, 131075, 2, 0, 131076, 3, 0, 131077, 8, 0, 131079, 0, 0, 131080, 14, 262145, 196608, 14, 262145, 196609, 0, 0, 196610, 14, 2, 196611, 14, 458755, 196612, 14, 196614, 196613, 14, 393219, 196614, 14, 4, 196615, 0, 0, 196616, 14, 262145, 262144, 14, 262145, 262145, 0, 0, 262146, 14, 589825, 262147, 14, 131076, 262148, 0, 0, 262149, 14, 131074, 262150, 14, 589829, 262151, 0, 0, 262152, 14, 262145, 327680, 14, 262145, 327681, 0, 0, 327682, 14, 327681, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 14, 327681, 327687, 0, 0, 327688, 14, 262145, 393216, 14, 262145, 393217, 0, 0, 393218, 0, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 14, 262145, 458752, 14, 327681, 458753, 0, 0, 458754, 14, 196613, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196615, 458759, 0, 0, 458760, 14, 327681 )
+
+[node name="@@956" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131075, 1, 0, 393220, 32, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Flaming Coronation [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Flaming Coronation [VAR1]$mturn=84$xwxdxzaaxzdxzdxazaxzxzxzxdxwxdxzaxzxzswxdxzaxzxzswxdxzaxzxzswxdxzaxzxzswxdxzxaxaxwzxzxzaxdxdzzxzsxzxzsxzxzzzzzwxzdxzxdxawxdxzdsxzxzzxz"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_track = 5.0
+setup_replay = ""
