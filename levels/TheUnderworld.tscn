@@ -3,21 +3,26 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TileMap" type="TileMap"]
+[node name="" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 655364, 65542, 5, 0, 65544, 14, 655362, 65545, 14, 196614, 65546, 14, 196614, 65547, 14, 524292, 131072, 14, 262145, 131073, 1, 0, 131075, 72, 0, 131077, 0, 0, 131078, 0, 0, 131080, 73, 0, 131082, 73, 0, 131083, 14, 262145, 196608, 14, 655362, 196609, 14, 524292, 196610, 30, 0, 196611, 30, 0, 196612, 14, 196613, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196615, 196617, 30, 0, 196618, 30, 0, 196619, 14, 262145, 262145, 14, 262145, 262147, 29, 0, 262148, 8, 0, 262149, 72, 0, 262153, 29, 0, 262154, 2, 0, 262155, 14, 262145, 327681, 14, 655362, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 524292, 327685, 72, 0, 327686, 14, 196609, 327687, 71, 0, 327688, 14, 524290, 327689, 14, 196614, 327690, 14, 196614, 327691, 14, 655364, 393220, 14, 262145, 393221, 7, 0, 393222, 14, 262145, 393223, 71, 0, 393224, 14, 262145, 458756, 14, 655362, 458757, 14, 196614, 458758, 14, 655363, 458759, 14, 196614, 458760, 14, 655364 )
 
-[node name="@@10747" type="TileMap" parent="."]
+[node name="@@122" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65542, 72, 0, 131078, 73, 0, 131080, 70, 0, 262149, 73, 0, 327685, 0, 0 )
+tile_data = PoolIntArray( 65542, 72, 0, 131078, 73, 0, 131080, 70, 0, 262148, 73, 0, 327685, 0, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "The Underworld"
-level_replay = "The Underworld$mturn=57$xdddxwxzzzwzddxwxdxzzwazaazzzwaszazzzaaxzzzaaszzzwazaaxzzawaxzzdzz"
+level_author = "Patashu"
+level_replay = "The Underworld$mturn=60$xdddxwxzzzwzddxwxdxzzwazaazzzwaszazzzaaxzzzaaszzzwaazzzaxzzawaxzddszs"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.231373, 0.247059, 0.101961, 1 )
+target_track = 4.0
+setup_replay = ""
