@@ -8940,6 +8940,7 @@ func load_custom_level(custom: String) -> void:
 	if level == null:
 		return;
 	
+	in_insight_level = false;
 	is_custom = true;
 	is_community_level = false;
 	custom_string = custom;
