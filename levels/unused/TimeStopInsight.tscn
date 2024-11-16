@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+
+[node name="TerrainMap" type="TileMap"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65544, 14, 524290, 65545, 14, 196614, 65546, 14, 524292, 131080, 14, 262145, 131081, 3, 0, 131082, 14, 262145, 196616, 14, 262145, 196617, 46, 0, 196618, 14, 262145, 262145, 8, 0, 262152, 14, 327681, 262153, 46, 0, 262154, 14, 327681, 327681, 2, 0, 327686, 1, 0, 327687, 7, 0, 327689, 46, 0, 327690, 32, 0, 393216, 14, 196613, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196615, 393225, 46, 0, 393226, 14, 262148 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 1 )
+level_name = "Time Stop (Remix)"
+level_replay = "Time Stop (Remix)$mturn=13$azzzzzzxdsxdxdzxz"
+heavy_max_moves = 3
+light_max_moves = 3
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131081, 39, 0, 327680, 52, 0, 327681, 52, 0, 327682, 52, 0, 327683, 52, 0, 327684, 52, 0, 327685, 52, 0, 327686, 52, 0, 327687, 52, 0, 327688, 52, 0, 327689, 52, 0, 327690, 52, 0 )
+
+[node name="TileMap2" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 24, 24 )
+format = 1
