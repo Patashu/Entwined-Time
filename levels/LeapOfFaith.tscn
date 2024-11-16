@@ -1,29 +1,34 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 196608, 72, 0, 196609, 72, 0, 196610, 72, 0, 196612, 7, 0, 262144, 72, 0, 262145, 72, 0, 262146, 27, 0, 262147, 14, 524290, 262148, 14, 196615, 327680, 29, 0, 327681, 29, 0, 327683, 14, 262145, 393216, 2, 0, 393217, 1, 0, 393219, 14, 262145, 458752, 14, 2, 458753, 14, 4, 458754, 0, 0, 458755, 14, 262145, 524288, 14, 131074, 524289, 14, 786435, 524290, 14, 196614, 524291, 14, 655364 )
+tile_data = PoolIntArray( 5, 7, 0, 65536, 72, 0, 65537, 72, 0, 65538, 72, 0, 65539, 72, 0, 131072, 72, 0, 131073, 72, 0, 131074, 72, 0, 131075, 27, 0, 131076, 14, 524290, 131077, 14, 196615, 196609, 29, 0, 196610, 29, 0, 196612, 14, 262145, 262145, 2, 0, 262146, 1, 0, 262148, 14, 262145, 327681, 14, 2, 327682, 14, 4, 327683, 0, 0, 327684, 14, 262145, 393217, 14, 131074, 393218, 14, 786435, 393219, 14, 196614, 393220, 14, 655364 )
+
+[node name="@@796" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196609, 8, 0, 262145, 35, 0 )
+
+[node name="@@797" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196609, 36, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Leap of Faith"
-level_replay = "Leap of Faith$mturn=20$dxdxaxzsdsxzdwxzzzwdwddxzz"
-heavy_max_moves = 6
-light_max_moves = 6
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 327680, 8, 0, 393216, 35, 0 )
-
-[node name="TileMap2" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 327680, 36, 0 )
+level_author = "Patashu"
+level_replay = "Leap of Faith$mturn=21$dxdxaxzsdsxzdwxzzzwdwddwxzz"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
+setup_replay = ""
