@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 45, 0, 4, 45, 0, 5, 45, 0, 6, 45, 0, 7, 45, 0, 8, 45, 0, 9, 45, 0, 10, 45, 0, 11, 45, 0, 65540, 45, 0, 65541, 45, 0, 65542, 45, 0, 65543, 45, 0, 65544, 45, 0, 65545, 45, 0, 65546, 45, 0, 65547, 45, 0, 131077, 45, 0, 131078, 45, 0, 131079, 45, 0, 131080, 45, 0, 131081, 45, 0, 131082, 45, 0, 131083, 45, 0, 196614, 45, 0, 196615, 45, 0, 196616, 45, 0, 196617, 45, 0, 196618, 45, 0, 196619, 45, 0, 262151, 45, 0, 262152, 45, 0, 262153, 45, 0, 262154, 45, 0, 262155, 45, 0, 327680, 8, 0, 327681, 2, 0, 327688, 45, 0, 327689, 45, 0, 327690, 45, 0, 327691, 45, 0, 393226, 45, 0, 393227, 45, 0, 458762, 7, 0, 458763, 1, 0 )
+
+[node name="@@122" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 393216, 20, 0, 393217, 20, 0, 393218, 20, 0, 458755, 20, 0, 458756, 20, 0, 458757, 20, 0, 458758, 20, 0, 458759, 20, 0, 524296, 20, 0, 524297, 20, 0, 524298, 20, 0, 524299, 20, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Spelunking?? [VAR3]"
+level_author = "Slabdrill"
+level_replay = "Spelunking?? [VAR3]$mturn=194$dxdxwxdxzaxzzdsxzswaxzzxzzdxaxzswxzxzdxaxzzzswxzxzdxaxzswxzxzdxaxzzswxzxzzzdddxadxzzzssxzzxzzzaswxaxzzzsswxzxzzzddddxadxzxaxzxdxzzsxzzzzdxwxdxzdxzxzswxdxzdxaxzswxzxzzzzssdxzxzzswxdxzzzssdxzxzzswxdxzdxzxzswxdxzaxzzxzzzzddddxadxzxazxzxaxzxdxzxzdzzzzxwaxddxwxdxaxzzzxzzzzdddxddd"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
+target_track = 7.0
+setup_replay = ""

@@ -2072,6 +2072,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Monochrome")
 	level_filenames.push_back("Clockwork 3- Metallic Boogaloo")
 	level_filenames.push_back("Ventriloquy")
+	level_filenames.push_back("Brutalist Absurdism")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2119,16 +2120,19 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Voidish Pit")
 	level_filenames.push_back("The Yellow Pit")
 	level_filenames.push_back("The Crate Pit-")
+	level_filenames.push_back("Bad Widget Pit")
 	level_filenames.push_back("The Falling Pit")
 	level_filenames.push_back("The Grounded Pit")
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Look It's Another Pit")
+	level_filenames.push_back("The RGB Pit")
 	level_filenames.push_back("The Last Pit [VAR3]")
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Left Pit")
 	level_filenames.push_back("The Solo Pit")
 	level_filenames.push_back("The Steel Crate Pit")
 	level_filenames.push_back("The Green Fire Pit")
+	level_filenames.push_back("The Glass Pit [VAR2]")
 	level_filenames.push_back("The Half-Magenta Pit")
 	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
 	level_filenames.push_back("The Crate Pit- [VAR1]")
@@ -2158,6 +2162,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Slippery Glass [VAR2]")
 	level_filenames.push_back("Crate Moving Service")
 	level_filenames.push_back("Over-Destination [VAR1]")
+	level_filenames.push_back("Spelunking-- [VAR3]")
 	level_filenames.push_back("Rapid Ascent")
 	level_filenames.push_back("Tile Selector")
 	level_filenames.push_back("Heavy Vertical")
@@ -2187,10 +2192,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Snake Chute [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
 	level_filenames.push_back("Ankh [VAR2]")
+	level_filenames.push_back("Crystalformer")
+	level_filenames.push_back("Elementary [VAR1]")
 	level_filenames.push_back("Island of Stability [VAR1]")
 	level_filenames.push_back("Flaming Coronation [VAR1]")
 	level_filenames.push_back("Phantom Push")
 	level_filenames.push_back("Light Boots")
+	level_filenames.push_back("Spontaneous Combustion- [VAR1]")
 	level_filenames.push_back("Elevator Pitch 2")
 	level_filenames.push_back("Elevator Pitch 3")
 	level_filenames.push_back("Elevator Pitch 3 [VAR1]")
@@ -2215,6 +2223,8 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("Impostor Syndrome")
+	level_filenames.push_back("Lunar Gravity [VAR1]")
 	level_filenames.push_back("Delay Circuit")
 	level_filenames.push_back("Acrobatics but it's forced [VAR1]")
 	level_filenames.push_back("Voidly Moving Service")
@@ -2338,6 +2348,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Void Fire (Void Fire Shortage)")
 	level_filenames.push_back("Void Harness [VAR3]")
 	level_filenames.push_back("Graduation [VAR5]")
+	level_filenames.push_back("Proxy Timeline-")
+	level_filenames.push_back("Newton's Cradle [VAR1]")
+	level_filenames.push_back("Switcheroo [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

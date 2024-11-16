@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 66, 0, 1, 66, 0, 2, 66, 0, 3, 66, 0, 4, 66, 0, 65536, 66, 0, 65538, 5, 0, 65540, 66, 0, 65542, 129, 0, 131072, 66, 0, 131073, 5, 0, 131074, 7, 0, 131075, 5, 0, 131076, 66, 0, 131077, 2, 0, 131078, 2, 0, 131083, 1, 0, 131085, 32, 0, 196608, 66, 0, 196610, 5, 0, 196612, 66, 0, 196613, 26, 0, 196614, 26, 0, 196615, 26, 0, 196619, 14, 2, 196620, 14, 3, 196621, 14, 4, 262144, 66, 0, 262145, 66, 0, 262146, 66, 0, 262147, 66, 0, 262148, 66, 0, 262155, 14, 131074, 262156, 14, 131075, 262157, 14, 131076 )
+
+[node name="@@177" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 109, 0, 131073, 107, 0, 131074, 5, 0, 131075, 110, 0, 131078, 74, 0, 196610, 108, 0, 196613, 27, 0, 196614, 27, 0, 196615, 27, 0, 196616, 27, 0, 196617, 27, 0, 196618, 27, 0 )
+
+[node name="@@178" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 8, 0 )
+
+[node name="@@179" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 39, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Impostor Syndrome"
+level_author = "Slabdrill"
+level_replay = "Hassle$mturn=77$xdxdaxzxzwxaxzdxaxaxzaxaxzxzzzzaaxwxzxzxaxaxzxwxzaxzaxdxzxwzxaxaxzaxzzaxzazwxaxzdxaxaxzxzzaaxzxzzaaxaxzaxaxzxzzzzxzzzddd"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65540, 14, 589826, 65541, 14, 196614, 65542, 14, 524292, 131072, 14, 262145, 131073, 23, 0, 131076, 14, 262145, 131077, 7, 0, 131078, 14, 262145, 196608, 14, 262145, 196609, 23, 0, 196612, 14, 327681, 196613, 21, 0, 196614, 14, 262145, 262144, 14, 262145, 262146, 8, 0, 262150, 14, 262145, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 524292, 327684, 2, 0, 327686, 14, 262145, 393218, 14, 655362, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 655364 )
+
+[node name="@@124" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 162, 0, 1, 162, 0, 2, 162, 0, 3, 162, 0, 4, 162, 0, 65536, 162, 0, 65540, 162, 0, 65541, 162, 0, 65542, 162, 0, 131072, 162, 0, 131076, 162, 0, 131078, 162, 0, 196608, 162, 0, 196612, 162, 0, 196614, 162, 0, 262144, 162, 0, 262146, 35, 0, 262150, 162, 0, 327680, 162, 0, 327681, 162, 0, 327682, 162, 0, 327684, 40, 0, 327686, 162, 0, 393218, 162, 0, 393219, 162, 0, 393220, 162, 0, 393221, 162, 0, 393222, 162, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Proxy Timeline?"
+level_author = "Green"
+level_replay = "Proxy Timeline?$mturn=7$awacadzdcwswzzdzzwszzwawzzwawzadzdzwdacwczzdzwawzzwawawcccccccccccccccccccccwccccccccczz"
+heavy_max_moves = 3.0
+light_max_moves = 0.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
+setup_replay = ""

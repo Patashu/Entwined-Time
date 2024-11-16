@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 14, 524290, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65540, 14, 262145, 65541, 32, 0, 65543, 7, 0, 65544, 14, 262145, 131076, 14, 589824, 131077, 14, 3, 131078, 14, 4, 131080, 14, 262145, 196609, 14, 524290, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 720899, 196613, 14, 131075, 196614, 14, 131076, 196615, 29, 0, 196616, 14, 655362, 196617, 14, 196615, 262145, 14, 262145, 262148, 25, 0, 262153, 47, 0, 327681, 14, 262145, 327684, 25, 0, 327689, 47, 0, 393217, 14, 262145, 393218, 2, 0, 393220, 25, 0, 393225, 47, 0, 458753, 14, 655362, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196615, 458760, 45, 0, 458761, 14, 196609, 524288, 1, 0, 524297, 14, 262145, 589824, 14, 196613, 589825, 14, 196614, 589826, 14, 196614, 589827, 14, 196614, 589828, 14, 196614, 589829, 14, 196614, 589830, 14, 196614, 589831, 14, 196614, 589832, 14, 196614, 589833, 14, 655364 )
+
+[node name="@@116" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65542, 3, 0, 65543, 5, 0, 131079, 5, 0, 196615, 5, 0, 262146, 5, 0, 262147, 5, 0, 262148, 5, 0, 327682, 5, 0, 327683, 5, 0, 327684, 5, 0, 393220, 8, 0, 458760, 30, 0 )
+
+[node name="@@117" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 53, 0, 262148, 53, 0, 327682, 53, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Elementary [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Elementary [VAR1]$mturn=95$wwzzdwxaxzdwzsxzxzzzsxwxdxzaxwxzsxzzxzxaxdxdxzsxzxzxaxdxzaxzxzxdxwxzxzzzxazxdxdxwzxzwxdxzaxzxzwxdxzwxdxzxwxdxzaxzdxzxzdxaxzwxzxzwxzddxzwxzzzzaaaaxzd"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.164706, 0.121569, 0.509804, 1 )
+target_track = 2.0
+setup_replay = ""
