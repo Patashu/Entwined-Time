@@ -41,6 +41,12 @@ func floating_text(text: String) -> void:
 	label.rect_position.y = holder.rect_size.y/2-16;
 	label.text = text;
 
+func setup_tab_instructions() -> void:
+	if (gamelogic.SuperScaling != null):
+		$Holder/TabInstructions.text = "(While focusing Ok, Left/Right                                       will change between tabs.)";
+	else:
+		$Holder/TabInstructions.text = "(While focusing Ok, Left/Right                                           will change between tabs.)";
+
 func setup_resolution() -> void:
 	var current = gamelogic.save_file["resolution"];
 	var defaults = ["512x300 (x1)", "1024x600 (x2)", "1280x720 (720p)", "1536x900 (x3)", 
@@ -91,6 +97,7 @@ func _ready() -> void:
 		metaundoarestart.selected = 2;
 	metaundoarestart.text = "Undo a Restart?:"
 	
+	setup_tab_instructions()
 	setup_resolution();
 	setup_fps();
 	
@@ -191,6 +198,7 @@ func _resolution_item_whatever(index: int) -> void:
 	resolution.text = resolution.get_item_text(index);
 	gamelogic.save_file["resolution"] = resolution.get_item_text(index).split(" ")[0];
 	gamelogic.setup_resolution();
+	call_deferred("setup_tab_instructions")
 	for i in range(resolution.get_popup().get_item_count()):
 		resolution.get_popup().set_item_checked(i, i == index);
 	
@@ -350,6 +358,7 @@ func _fullscreenbutton_pressed() -> void:
 	else:
 		gamelogic.save_file["fullscreen"] = false;
 	gamelogic.setup_resolution();
+	call_deferred("setup_tab_instructions")
 	
 func updatelabelmaster(value: int) -> void:
 	if (value <= -30):
