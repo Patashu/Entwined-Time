@@ -1,23 +1,28 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 196609, 9, 14, 196609, 65536, 14, 262145, 65545, 14, 262145, 131072, 14, 589826, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 524292, 131081, 14, 262145, 196608, 14, 262145, 196609, 7, 0, 196611, 14, 327681, 196617, 14, 262145, 262144, 14, 589824, 262145, 14, 4, 262146, 48, 0, 262149, 2, 0, 262150, 8, 0, 262152, 1, 0, 262153, 14, 262145, 327680, 14, 131074, 327681, 14, 786435, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 196614, 327687, 14, 196614, 327688, 14, 196614, 327689, 14, 655364 )
+tile_data = PoolIntArray( 3, 14, 524290, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 589828, 65545, 14, 262145, 131072, 14, 262145, 131073, 7, 0, 131075, 14, 327681, 131081, 14, 262145, 196608, 14, 589824, 196609, 14, 4, 196610, 48, 0, 196613, 2, 0, 196614, 8, 0, 196616, 1, 0, 196617, 14, 262145, 262144, 14, 131074, 262145, 14, 786435, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 655364 )
+
+[node name="@@997" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131078, 52, 0, 196613, 6, 0, 196614, 6, 0, 196615, 6, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "King Crimson"
+level_author = "Patashu"
 level_replay = "King Crimson$mturn=14$xwxwdxsaaaaxzxwaxddd"
-heavy_max_moves = 10
-light_max_moves = 10
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 196614, 52, 0, 262149, 6, 0, 262150, 6, 0, 262151, 6, 0 )
+heavy_max_moves = 10.0
+light_max_moves = 10.0
+clock_turns = ""
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0
+setup_replay = ""
