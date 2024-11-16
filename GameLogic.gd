@@ -6386,8 +6386,7 @@ func adjust_meta_turn(amount: int, chrono: int) -> void:
 	#if (debug_prints):
 	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	update_ghosts();
-	if (won or lost or amount >= 0 or voidlike_puzzle):
-		check_won(chrono);
+	check_won(chrono);
 	
 func check_won(chrono: int) -> void:
 	won = false;
@@ -6431,6 +6430,11 @@ func check_won(chrono: int) -> void:
 			locked = true;
 			won = false;
 			break;
+	
+	# don't win the game during a undo unless this is a voidlike puzzle
+	# (but we did want to get this far to update visual effects)
+	if (chrono == Chrono.META_UNDO and !voidlike_puzzle):
+		return;
 	
 	if (!locked and !light_actor.broken and !heavy_actor.broken
 	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos, heavy_actor, chrono))
