@@ -5309,10 +5309,10 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 						boulder_cats_cradle_move = true;
 						strength_modifier += 1;
 						if !strength_check(actor.strength + strength_modifier, actor_there.heaviness):
-							pushers_list.pop_front();
+							pushers_list.pop_back();
 							return Success.No;
 					else:
-						pushers_list.pop_front();
+						pushers_list.pop_back();
 						return Success.No;
 		var result = Success.Yes;
 		
@@ -5347,13 +5347,13 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 						# check again if we can push it up
 						actor_there_result = move_actor_relative(actor_there, dir, chrono, true, is_gravity, false, pushers_list);
 						if (actor_there_result == Success.No):
-							pushers_list.pop_front();
+							pushers_list.pop_back();
 							return Success.No;
 						elif(actor_there_result == Success.Surprise):
 							result = Success.Surprise;
 							surprises.append(actor_there);
 					else:
-						pushers_list.pop_front();
+						pushers_list.pop_back();
 						return Success.No;
 				elif (!actor.broken and pushables_there.size() == 1 and actor.actorname == Actor.Name.SteelCrate and !actor_there.broken and (actor_there.actorname == Actor.Name.Light or actor_there.actorname == Actor.Name.CuckooClock)):
 					# 'Steel Crates special moves'
@@ -5363,7 +5363,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					add_to_animation_server(actor, [Anim.bump, dir, -1]);
 					set_actor_var(actor_there, "broken", true, chrono);
 				else:
-					pushers_list.pop_front();
+					pushers_list.pop_back();
 					return Success.No;
 			if actor_there_result == Success.Surprise:
 				result = Success.Surprise;
@@ -5393,7 +5393,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				for actor_there in pushables_there:
 					actor_there.just_moved = false;
 		
-		pushers_list.pop_front();
+		pushers_list.pop_back();
 		if (boulder_cats_cradle_move and result == Success.Yes):
 			result = Success.Surprise;
 		return result;
