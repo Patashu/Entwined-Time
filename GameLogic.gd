@@ -2351,6 +2351,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Proxy Timeline-")
 	level_filenames.push_back("Newton's Cradle [VAR1]")
 	level_filenames.push_back("Switcheroo [VAR1]")
+	level_filenames.push_back("[SPEEDIERRUN] A Way In-")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
