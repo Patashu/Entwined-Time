@@ -1,23 +1,26 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 45, 0, 10, 45, 0, 65537, 7, 0, 131075, 2, 0, 131079, 8, 0, 131080, 1, 0, 196609, 14, 196613, 196610, 14, 196614, 196611, 14, 196615, 196612, 12, 0, 196614, 12, 0, 196615, 14, 196613, 196616, 14, 196614, 196617, 14, 196615, 262148, 14, 196609, 262150, 14, 196609, 327684, 14, 262145, 327685, 45, 0, 327686, 14, 262145, 393220, 14, 327681, 393221, 45, 0, 393222, 14, 327681 )
+tile_data = PoolIntArray( 0, 7, 0, 65538, 2, 0, 65542, 8, 0, 65543, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196615, 131075, 12, 0, 131077, 12, 0, 131078, 14, 196613, 131079, 14, 196614, 131080, 14, 196615, 196611, 14, 196609, 196613, 14, 196609, 262147, 14, 262145, 262148, 45, 0, 262149, 14, 262145, 327683, 14, 327681, 327685, 14, 327681 )
+
+[node name="@@5328" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 35, 0, 65542, 35, 0, 131075, 23, 0, 131077, 23, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "The Glass Pit [VAR1]"
-level_replay = "The Glass Pit [VAR1]$mturn=25$ddxaasxzxzsssxdwdxzzzzzaaaaxddxw"
-heavy_max_moves = 6
-light_max_moves = 5
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 131075, 35, 0, 131079, 35, 0, 196612, 23, 0, 196614, 23, 0 )
+level_author = "Patashu & Slabdrill"
+level_replay = "The Glass Pit [VAR1]$mturn=40$xaaaxwxaxzdxzzxzaxwxdxzzzdsxzzdxzzsssxdwdxzzzxzdddxaaaw"
+heavy_max_moves = 6.0
+light_max_moves = 4.0
+target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
+target_track = 7.0
