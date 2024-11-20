@@ -1701,15 +1701,15 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Green Adventure [VAR1]")
 	level_filenames.push_back("Board Ring A")
 	level_filenames.push_back("Gain Leverage")
-	level_filenames.push_back("Blackberry Bush")
 	level_filenames.push_back("Verdant Crossroads")
 	level_filenames.push_back("Cement Pit [VAR1]")
+	level_filenames.push_back("Blackberry Bush")
 	level_filenames.push_back("Triple Boarded")
 	level_filenames.push_back("Phantom Heist [Low Power]")
 	level_filenames.push_back("Slippery Glass [VAR1]")
 	level_filenames.push_back("Hidden Potential")
-	level_filenames.push_back("Bridge Building")
 	level_filenames.push_back("Duplication")
+	level_filenames.push_back("Bridge Building")
 	
 	chapter_names.push_back("Afterlife");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
