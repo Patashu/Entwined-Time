@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,10 +19,8 @@ tile_data = PoolIntArray( 196619, 39, 0, 327690, 22, 0, 327691, 22, 0, 393226, 2
 script = ExtResource( 2 )
 level_name = "Help Yourself [VAR1]"
 level_author = "Patashu & Slabdrill"
-level_replay = "Help Yourself [VAR1]$mturn=69$ddwddazzzzddawaadzzzadzzzzzzzzawaawaawaxwdwddxzaxzzzzzddaaaxzaxzzzzzaaaaaa"
+level_replay = "Help Yourself [VAR1]$mturn=65$ddwddazzzzddawaadzzzadzzzzzzzzawaawaaxwddxwxzzzddaaaaxzwaxzzzzzzaaaaaa"
 heavy_max_moves = 9.0
 light_max_moves = 6.0
-clock_turns = ""
 target_sky = Color( 0.0784314, 0.286275, 0.164706, 1 )
 target_track = 1.0
-setup_replay = ""
