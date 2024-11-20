@@ -1516,7 +1516,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Campfrost")
 	level_filenames.push_back("SpelunkingGlassEx")
 	level_filenames.push_back("TheRace")
-	level_filenames.push_back("LadderWorldGlassEx")
+	level_filenames.push_back("Glass Monolith")
 	level_filenames.push_back("Deconstruct")
 	
 	chapter_names.push_back("Permanence");
@@ -1940,6 +1940,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Heavy Moving Service [VAR3]")
 	level_filenames.push_back("Light Moving Service [VAR1]")
 	level_filenames.push_back("Light Moving Service [VAR2]")
+	level_filenames.push_back("Glass Monolith (glass shortage)")
 	level_filenames.push_back("Engine Room [VAR1]")
 	level_filenames.push_back("Integrity Checker [VAR2]")
 	level_filenames.push_back("Collectathon [VAR1]")
