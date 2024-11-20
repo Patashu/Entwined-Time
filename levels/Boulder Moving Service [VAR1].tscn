@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 196614, 13, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65539, 29, 0, 65549, 14, 262145, 131072, 14, 262145, 131073, 2, 0, 131074, 100, 0, 131075, 29, 0, 131077, 8, 0, 131084, 7, 0, 131085, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 196614, 196619, 14, 196614, 196620, 14, 196614, 196621, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Boulder Moving Service [VAR1]"
+level_author = "Mikan"
+level_replay = "Boulder Moving Service [VAR1]$mturn=95$daxaxdxzxzdwaxaxzxzaxzzzzxzxadaxaxzzzxzxadxaxzxzaxzxzxadaxaxzxzaxzzaxzxdadxaxzxzaxzzzadxzxadaxaxzxzaxzzzzadaxzxdadxaxzxzaxzzzzzadadxzaxaxzdxw"
+heavy_max_moves = 6.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.196078, 0.262745, 0.317647, 1 )
+target_track = 3.0
+setup_replay = ""
