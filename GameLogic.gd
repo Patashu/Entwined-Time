@@ -1681,10 +1681,10 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#363C3F"));
 	chapter_tracks.push_back(7);
 	level_filenames.push_back("Boarding School")
-	level_filenames.push_back("Hardtack")
 	level_filenames.push_back("Simple Diffusion")
 	level_filenames.push_back("Slippery Glass")
 	level_filenames.push_back("Double Dose")
+	level_filenames.push_back("Hardtack")
 	level_filenames.push_back("Pushing It Magenta")
 	level_filenames.push_back("Simultaneous Smuggle")
 	level_filenames.push_back("Bunker Door")

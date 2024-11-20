@@ -7,27 +7,22 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 4, 14, 2, 5, 14, 3, 6, 14, 458755, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65539, 7, 0, 65540, 14, 65538, 65541, 14, 65539, 65542, 14, 65540, 65543, 1, 0, 65544, 3, 0, 65545, 32, 0, 65546, 14, 262145, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 720899, 131077, 14, 131075, 131078, 14, 786435, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 196614, 131082, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 5, 7, 0, 6, 14, 2, 7, 14, 458755, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65539, 14, 262145, 65541, 23, 0, 65542, 14, 65538, 65543, 14, 65540, 65545, 3, 0, 65546, 32, 0, 65547, 14, 262145, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 655363, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 720899, 131079, 14, 786435, 131080, 14, 196614, 131081, 14, 196614, 131082, 14, 196614, 131083, 14, 655364 )
 
-[node name="@@1422" type="TileMap" parent="."]
+[node name="@@3643" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65538, 2, 0, 65540, 88, 0, 65541, 88, 0, 65542, 88, 0, 65543, 8, 0, 65544, 29, 0 )
-
-[node name="@@1423" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 65543, 19, 0 )
+tile_data = PoolIntArray( 65538, 2, 0, 65541, 8, 0, 65542, 88, 0, 65543, 88, 0, 65545, 73, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Hardtack"
 level_author = "Patashu"
-level_replay = "Hardtack$mturn=42$xaaaawxdxzzzzzxzaaxaaxdaxaxdddxzzzdxzzzzzxaxzzxwxdxzzxdddd"
-heavy_max_moves = 8.0
-light_max_moves = 8.0
+level_replay = "Hardtack$mturn=28$xawxaxzzxzxwdddaaaxazxaxaxzzzzdaaaaxza"
+heavy_max_moves = 1.0
+light_max_moves = 9.0
 clock_turns = ""
 target_sky = Color( 0.211765, 0.235294, 0.247059, 1 )
 target_track = 7.0
+setup_replay = ""
