@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 6, 0, 0, 7, 111, 0, 65536, 1, 0, 65537, 7, 0, 65541, 8, 0, 65542, 111, 0, 65543, 111, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196615 )
+
+[node name="@@890" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65542, 2, 0 )
+
+[node name="@@891" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65542, 36, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Integrity Checker [VAR1] (Insight)"
+level_replay = "Integrity Checker [VAR1] (Insight)$mturn=44$dawxdxzzzxzxddaxdxzzzxzwsdxdaxzxdxwxzzzxzzzxdxaxdsxzxzzzaaaxaaa"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
