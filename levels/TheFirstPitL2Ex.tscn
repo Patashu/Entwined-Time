@@ -3,19 +3,42 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 262148, 5, 79, 0, 10, 14, 262148, 65541, 79, 0, 131074, 7, 0, 131075, 2, 0, 131079, 8, 0, 131080, 1, 0, 196609, 14, 196613, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 524292, 196614, 14, 524290, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196615, 262148, 14, 262145, 262150, 14, 262145, 327684, 14, 327681, 327685, 12, 0, 327686, 14, 327681 )
+tile_data = PoolIntArray( 0, 14, 262148, 10, 14, 262148, 131074, 7, 0, 131079, 8, 0, 131080, 1, 0, 196609, 14, 196613, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 524292, 196614, 14, 524290, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196615, 262148, 14, 262145, 262149, 51, 0, 262150, 14, 262145, 327684, 14, 327681, 327685, 12, 0, 327686, 14, 327681 )
+
+[node name="@@217" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 2, 0, 262149, 51, 0 )
+
+[node name="@@218" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262149, 51, 0 )
+
+[node name="@@219" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262149, 51, 0 )
+
+[node name="@@220" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262149, 51, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "The Last Pit [VAR1]"
 level_author = "Slabdrill"
-level_replay = "The Last Pit [VAR1]$mturn=97$xaaxdzxzzwaxdxzzxzxawxdxzaxwzxzzxzwxaxzaxwxaxzdxwzwxzxzdxzxzsxwaxzdxzzxzdxaaxzzzxzzxwzxwxaxzdxwzzxzssxdwdxzzwxzzxzxzwawxdxzaxzwaxzzzdxzxzdddxzaa"
-heavy_max_moves = 3.0
+level_replay = "The Last Pit [VAR1]$mturn=172$xwxdxzaaxzdxzzxzxaxdwxaxzdxzzaaxzzsxzxzxzxazxaxwxdxzdxzxzadxzxzsxdzwaxzdxzzxzdxaaxzzxzzxwxdxzdxzxzswxdxzdxzxzzswxdxzdxzxzsxwdxzzsxzzxzwzxdxaxdxdxzxzzswxaxzaxzxzzsxdxdzxzxdzzxsxddxzzaxzzwaxzxzzdxaxzawxdxzzdxzzxwxaxzzaxzxzdwxaxzzaxzxaxwaxzsxzxzzwzwzxdxadxzzxzzddxaa"
+heavy_max_moves = 2.0
 light_max_moves = 2.0
-clock_turns = ""
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0

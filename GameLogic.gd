@@ -1833,7 +1833,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("PachinkoL2Ex2")
 	level_filenames.push_back("TheFirstPitL2")
 	level_filenames.push_back("TheFirstPitL2Ex")
-	level_filenames.push_back("TheFirstPitL2Ex2")
 	level_filenames.push_back("BraidL2")
 	level_filenames.push_back("TallL2")
 	level_filenames.push_back("TallL2Ex")
@@ -8809,6 +8808,7 @@ func gain_insight() -> void:
 			in_insight_level = false;
 		else:
 			in_insight_level = true;
+		end_replay();
 		level_replay = "";
 		load_level(0);
 		cut_sound();
@@ -9348,7 +9348,6 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("level_select")):
 			level_select();
 		elif (Input.is_action_just_pressed("gain_insight")):
-			end_replay();
 			gain_insight();
 		elif (Input.is_action_just_pressed("character_switch")):
 			end_replay();
