@@ -7,19 +7,19 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 131073, 7, 0, 131076, 34, 0, 131079, 1, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 524292, 196612, 77, 0, 196613, 14, 524290, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196615, 262147, 14, 262145, 262149, 14, 262145, 327683, 14, 655362, 327684, 14, 196614, 327685, 14, 655364 )
+tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 65537, 7, 0, 65540, 34, 0, 65543, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 524292, 131076, 77, 0, 131077, 14, 524290, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196615, 196611, 14, 262145, 196613, 14, 262145, 262147, 14, 655362, 262148, 14, 196614, 262149, 14, 655364 )
 
-[node name="@@15128" type="TileMap" parent="."]
+[node name="@@1706" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 28, 0, 8, 25, 0, 65536, 28, 0, 65544, 25, 0, 131072, 28, 0, 131073, 2, 0, 131079, 8, 0, 131080, 25, 0, 196612, 27, 0 )
+tile_data = PoolIntArray( 0, 28, 0, 8, 25, 0, 65536, 28, 0, 65537, 2, 0, 65543, 8, 0, 65544, 25, 0, 131076, 27, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "The Gray Phase Pit [VAR1]"
 level_author = "Patashu"
-level_replay = "The Gray Phase Pit [VAR1]$mturn=36$xaaaaaxwxaxzaxzxzsxzzxddwxaxzaxzxzdxzxzzzzwdddxaaaa"
+level_replay = "The Gray Phase Pit [VAR1]$mturn=24$ddxaaaxwxaxzadwxaxzaxdxzdxzxzzzddxa"
 heavy_max_moves = 5.0
 light_max_moves = 6.0
 clock_turns = ""
