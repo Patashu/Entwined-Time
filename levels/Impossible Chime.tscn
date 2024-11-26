@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196615, 65536, 14, 262145, 65537, 7, 0, 65538, 1, 0, 65539, 159, 0, 65541, 2, 0, 65542, 55, 0, 65543, 8, 0, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Impossible Chime"
+level_author = "Slabdrill"
+level_replay = "Impossible Chime$mturn=1305$axwaaxwzxzzzxddxdssxzzzxzzzaxdaxzxdxssxzzxzzawxaxzzaxzzadxdxdxzdssxzzzxzzzxdadxdssxzzxzzzwsxaxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzadssxzzxzzzxadaxdssxzzxzzzadxdxzzzaxcczxaaxwxaxdxzzzaxzzaa"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = "9"
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""

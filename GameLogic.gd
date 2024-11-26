@@ -2256,6 +2256,7 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Jenga-")
 	level_filenames.push_back("Crate Tunneling")
+	level_filenames.push_back("Truly Unbounded Skies [VAR2]")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")
 	level_filenames.push_back("Bunnyhop [VAR1]")
@@ -2271,6 +2272,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Void Harness [VAR2]")
 	level_filenames.push_back("Inverse Nudge Chain")
 	level_filenames.push_back("Crate Sorting Facility")
+	level_filenames.push_back("Impossible Chime")
 	level_filenames.push_back("Joke-")
 	level_filenames.push_back("[SPEEDRUN] A Way In-")
 	level_filenames.push_back("Entropy Extractor")
@@ -2385,6 +2387,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Boulder Moving Service [VAR1]")
 	level_filenames.push_back("Grate Catch. [VAR1]")
 	level_filenames.push_back("Quantum Entanglement [VAR2] [Low Power]")
+	level_filenames.push_back("[MORESPEEDIERRUN] A Way In-")
+	level_filenames.push_back("[SPEEDRUN] Third Roommate [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

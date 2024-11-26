@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 196616, 7, 0, 655360, 2, 0, 655368, 8, 0, 720896, 14, 262148, 720904, 14, 262148 )
+
+[node name="@@141" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 655360, 37, 0, 655368, 37, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Truly Unbounded Skies [VAR2]"
+level_author = "Slabdrill"
+level_replay = "Truly Unbounded Skies [VAR2]$mturn=153$xwxwxzwxwxzaxzzxzsaxwxzxsxaxzsxzsxzzwxzzdwxwxzzssxzzwxzzdwxsxzzssxzzwxzzdwxsxzzssxzzwxzzdwxsxzzssxzzwxzzdwxsxzzssxzzxzzadxdxzzsxzwxsxzdxzzsxzwxsxzdxzzsxzwxsxzdxzzsxzwxsxzdxzzsxzwxsxzdxzzsxzwxsxzdxzzsxzwxsxzdxzzsxzwxsxzxzzd"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""
