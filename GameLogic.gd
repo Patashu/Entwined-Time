@@ -2463,6 +2463,9 @@ func initialize_level_list() -> void:
 	for level_prototype in level_list:
 		var level = level_prototype.instance();
 		var level_name = level.get_node("LevelInfo").level_name;
+		if (OS.is_debug_build()):
+			if (level_names.has(level_name)):
+				print("DUPLICATE NAME: ", level_name);
 		level_names.push_back(level_name);
 		level.queue_free();
 		
@@ -2481,6 +2484,9 @@ func initialize_level_list() -> void:
 				has_remix[level_name] = true;
 				has_remix[insight_level_name] = true;
 			insight_level_names[level_name] = insight_level_name;
+			if (OS.is_debug_build()):
+				if (level_names.has(insight_level_name)):
+					print("DUPLICATE NAME: ", insight_level_name);
 			insight_level.queue_free();
 		
 	refresh_puzzles_completed();
