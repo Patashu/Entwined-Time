@@ -8818,7 +8818,8 @@ func gain_insight() -> void:
 			in_insight_level = false;
 		else:
 			in_insight_level = true;
-		end_replay();
+		if (!unit_test_mode):
+			end_replay();
 		level_replay = "";
 		load_level(0);
 		cut_sound();
