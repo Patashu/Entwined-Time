@@ -3,19 +3,19 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 1, 0, 4, 7, 0, 65537, 19, 0, 65538, 45, 0, 65539, 22, 0, 131073, 19, 0, 131074, 45, 0, 131075, 22, 0, 196609, 19, 0, 196610, 45, 0, 196611, 22, 0, 262144, 2, 0, 262145, 19, 0, 262146, 45, 0, 262147, 22, 0, 262148, 8, 0, 327680, 23, 0, 327681, 23, 0, 327682, 23, 0, 327683, 23, 0, 327684, 23, 0 )
+tile_data = PoolIntArray( 0, 1, 0, 4, 7, 0, 65538, 45, 0, 131074, 45, 0, 196610, 45, 0, 262144, 2, 0, 262146, 45, 0, 262148, 8, 0, 327680, 23, 0, 327681, 23, 0, 327682, 23, 0, 327683, 23, 0, 327684, 23, 0 )
 
-[node name="@@6230" type="TileMap" parent="."]
+[node name="@@113" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 65536, 26, 0, 65537, 26, 0, 65538, 26, 0, 65539, 26, 0, 65540, 26, 0, 262144, 27, 0, 262145, 27, 0, 262146, 27, 0, 262147, 27, 0, 262148, 27, 0 )
 
-[node name="@@6231" type="TileMap" parent="."]
+[node name="@@114" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -23,12 +23,9 @@ tile_data = PoolIntArray( 65536, 28, 0, 65540, 25, 0, 131072, 28, 0, 131076, 25,
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Glass Monolith"
-level_author = "Patashu"
-level_replay = "Glass Monolith$mturn=72$dwddxaawxdxzzsxzxzaswxdxzxwxzzssxzzxawxdxzzzzsssxzzzzxzaaxdwxzxsxzzaaxzwxzxsxzzwaaxzwxzxsxaxzwxzdxzzaa"
+level_name = "Glass Monolith (Insight)"
+level_replay = "Glass Monolith (Insight)$mturn=85$ddaxaaawxzzxzaxwzxzzzzwdddsdxdxzxwxzxaxzxaxzzxwzxwxzxzzwddaxwzxzxzwxzxaxzxaxzdxzxzswxaxzdxzxzswxaxzzzdddxzzwxzxsxdxzwzzxddxaa"
 heavy_max_moves = 6.0
 light_max_moves = 6.0
-clock_turns = ""
 target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
 target_track = 7.0
-setup_replay = ""
