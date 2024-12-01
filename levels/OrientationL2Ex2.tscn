@@ -1,23 +1,28 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 1, 7, 0, 4, 14, 196609, 7, 1, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 655363, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196615 )
+tile_data = PoolIntArray( 7, 14, 262148, 65537, 7, 0, 65540, 14, 196609, 65543, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 655363, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196615 )
+
+[node name="@@4247" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 2, 0, 65543, 8, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Orientation (Loop 2) [VAR2]"
-level_replay = "Orientation$mturn=33$ddwdddwxaxzdxzaxzsxzwxzxzwxzxzaxzzzzxzxdwdddd"
-heavy_max_moves = 7
-light_max_moves = 1
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 1, 2, 0, 7, 8, 0 )
+level_author = "Patashu"
+level_replay = "Orientation (Loop 2) [VAR2]$mturn=50$ddwdddwxaxzzzzzdxzxddwxaxzwdxzxzzswxaxzzdxzdxdxzxzxazxzzxwxzzzddddxza"
+heavy_max_moves = 7.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

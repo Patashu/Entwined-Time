@@ -7,19 +7,19 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 524292, 65536, 14, 262145, 65537, 82, 0, 65547, 7, 0, 65548, 14, 262145, 131072, 14, 262145, 131074, 14, 196613, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 524291, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 196614, 131082, 14, 196614, 131083, 14, 196614, 131084, 14, 655364, 196608, 14, 262145, 196612, 8, 0, 196613, 1, 0, 196614, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 655364 )
+tile_data = PoolIntArray( 7, 14, 196613, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196615, 65543, 21, 0, 65547, 7, 0, 65548, 14, 262145, 131072, 14, 262145, 131073, 82, 0, 131080, 14, 196613, 131081, 14, 196614, 131082, 14, 196614, 131083, 14, 196614, 131084, 14, 655364, 196608, 14, 262145, 196610, 14, 196613, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 524291, 196615, 14, 196615, 262144, 14, 262145, 262148, 8, 0, 262149, 1, 0, 262150, 14, 262145, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 655364 )
 
-[node name="@@5957" type="TileMap" parent="."]
+[node name="@@4503" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 196612, 38, 0, 196613, 2, 0 )
+tile_data = PoolIntArray( 262148, 38, 0, 262149, 2, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Pushing It (Loop 2) [VAR1] (Remix)"
 level_author = "Patashu"
-level_replay = "Pushing It (Loop 2) [VAR1] (Remix)$mturn=73$aaaxwxaxzwdxzzxzzxzaaaxaxwxaxzzzzzxdxaaaxzxzzzxdxaaaxzwxaxzxdxsxzzxzxazxdxaxzwxadxzxzzxdxaxzwxaxzzzxzzzzzzxddd"
+level_replay = "Pushing It (Loop 2) [VAR1] (Remix)$mturn=77$aaaxwxaxzwdxzzxzzxaawxaxzxwdxzzzxzzxaaawxaxzzzxdxaxzxzzxdxaaxzwxaxzxdxsxzzxzdxaxzwxaxzxdxsxzzxzdxaxzwxaxzzxzzzzzzxzddd"
 heavy_max_moves = 6.0
 light_max_moves = 3.0
 clock_turns = ""

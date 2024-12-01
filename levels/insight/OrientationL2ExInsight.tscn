@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 262148, 65537, 7, 0, 65540, 14, 196609, 65543, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 655363, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196615 )
+
+[node name="@@4432" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 2, 0, 65543, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Orientation (Loop 2) [VAR1] (Remix)"
+level_author = "Slabdrill"
+level_replay = "Orientation (Loop 2) [VAR1] (Remix)$mturn=55$xdwdxdxzzzaaxzxaaxdzxzzzzxdwxaxzzdxzwxzadxzwxzzaxwxaxzzddxzzxsxdxdxzxzxddxzzzsaa"
+heavy_max_moves = 2.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

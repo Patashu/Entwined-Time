@@ -2256,6 +2256,7 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Jenga-")
 	level_filenames.push_back("Crate Tunneling")
+	level_filenames.push_back("Layer Gore")
 	level_filenames.push_back("Truly Unbounded Skies [VAR2]")
 	level_filenames.push_back("Compact Transport")
 	level_filenames.push_back("Compact Transport [VAR1]")

@@ -1,17 +1,22 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 3, 8, 0, 4, 2, 0, 65539, 14, 2, 65540, 14, 4, 131072, 1, 0, 131073, 7, 0, 131074, 14, 2, 131075, 14, 917509, 131076, 14, 65540, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 720899, 196611, 14, 131075, 196612, 14, 131076 )
+tile_data = PoolIntArray( 3, 8, 0, 4, 2, 0, 65536, 1, 0, 65537, 7, 0, 65538, 14, 2, 65539, 14, 3, 65540, 14, 4, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 720899, 131075, 14, 131075, 131076, 14, 131076 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Downhill (Insight)"
-level_replay = "Downhill (Insight)$mturn=8$xasxaaxaxzaa"
-heavy_max_moves = 3
-light_max_moves = 3
+level_author = "Patashu"
+level_replay = "Downhill (Insight)$mturn=13$xaasxaaaxzaxzwxzxza"
+heavy_max_moves = 3.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""
