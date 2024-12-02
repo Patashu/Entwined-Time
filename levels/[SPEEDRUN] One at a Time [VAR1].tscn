@@ -9,13 +9,13 @@ cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 4, 55, 0, 65536, 14, 262145, 65537, 6, 0, 65538, 6, 0, 65539, 14, 655362, 65540, 14, 524292, 131072, 14, 262145, 131073, 6, 0, 131074, 6, 0, 131075, 6, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 6, 0, 196610, 6, 0, 196611, 6, 0, 196612, 14, 262145, 262144, 14, 262145, 262145, 6, 0, 262146, 6, 0, 262147, 6, 0, 262148, 14, 262145, 327680, 14, 262145, 327681, 6, 0, 327682, 6, 0, 327683, 6, 0, 327684, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 655364 )
 
-[node name="@@215" type="TileMap" parent="."]
+[node name="@@377" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 4, 39, 0, 65538, 7, 0, 131075, 1, 0, 196610, 32, 0, 262146, 32, 0, 327682, 32, 0 )
 
-[node name="@@216" type="TileMap" parent="."]
+[node name="@@378" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -25,10 +25,10 @@ tile_data = PoolIntArray( 65538, 2, 0, 131074, 13, 0, 131075, 8, 0, 196610, 13, 
 script = ExtResource( 2 )
 level_name = "[SPEEDRUN] One at a Time [VAR1]"
 level_author = "Green"
-level_replay = "[SPEEDRUN] One at a Time [VAR1]$mturn=74$assxssxdxzzxzxwsxdxzzaawxzsxzxzdxzzwwxzzxdxzzsxzxzxdxwsxzxzzdwxzzxadxwxzxzxzzsxddxwaxsxzzxzzxzzwwwdxzwwxzzdxd"
+level_replay = "[SPEEDRUN] One at a Time [VAR1]$mturn=64$assxssxdxzzxzxwsxdxzzaawxzsxzxzdxzzwwxzxzxzxdxzzsxzxzxdxwsxzxzzdwdsxzddxzxzxzzzwwwdxzwwxzzdxd"
 heavy_max_moves = 4.0
 light_max_moves = 3.0
-clock_turns = "75"
+clock_turns = "65"
 target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
 target_track = 5.0
 setup_replay = ""
