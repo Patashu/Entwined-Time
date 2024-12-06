@@ -7,27 +7,22 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 262148, 10, 14, 262148, 131075, 2, 0, 131079, 8, 0, 131080, 1, 0, 196609, 14, 196613, 196610, 14, 196614, 196611, 14, 524292, 196614, 14, 524290, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196615, 262147, 14, 262145, 262150, 14, 262145, 327683, 14, 655362, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 262148, 10, 14, 262148, 131074, 7, 0, 131075, 2, 0, 131079, 8, 0, 131080, 1, 0, 196609, 14, 196613, 196610, 14, 196614, 196611, 14, 524292, 196614, 14, 524290, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196615, 262147, 14, 262145, 262150, 14, 262145, 327683, 14, 655362, 327684, 14, 196614, 327685, 14, 196614, 327686, 14, 655364 )
 
-[node name="@@146" type="TileMap" parent="."]
+[node name="@@129" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 131075, 43, 0, 131079, 43, 0 )
 
-[node name="@@147" type="TileMap" parent="."]
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 131075, 7, 0 )
-
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "The Yellow Pit"
 level_author = "Slabdrill"
-level_replay = "The Yellow Pit$mturn=28$dddxwxdxzaxwxzxzxwxzxzxdxaxwzwzxzxdxdxzxzaxzdd"
+level_replay = "The Yellow Pit$mturn=34$dddwxaxzddxzxzxwxzxzdxwzwzdwxzaxzxzxdxdzdxzzxzaxdd"
 heavy_max_moves = 5.0
 light_max_moves = 1.0
 clock_turns = ""
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0
+setup_replay = ""
