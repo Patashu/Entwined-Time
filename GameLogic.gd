@@ -2081,6 +2081,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Clockwork 3- Metallic Boogaloo")
 	level_filenames.push_back("Ventriloquy")
 	level_filenames.push_back("Brutalist Absurdism")
+	level_filenames.push_back("Extremely Small Crate Puzzle")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 3, 0, 65536, 32, 0, 65537, 1, 0, 65538, 14, 262148, 131072, 14, 196613, 131073, 14, 196615 )
+
+[node name="@@1061" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 7, 0, 65536, 2, 0, 65537, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Extremely Small Crate Puzzle"
+level_author = "Sandra53"
+level_replay = "Extremely Small Crate Puzzle$mturn=39$wxaxzxzxazwxaxzdxzxzasxaxzzasxzdxzzxzaxdwxzdzsxzxzdxzdwxzd"
+heavy_max_moves = 2.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.164706, 0.121569, 0.509804, 1 )
+target_track = 2.0
+setup_replay = ""
