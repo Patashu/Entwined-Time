@@ -1447,7 +1447,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("FlamingCoronation")
 	level_filenames.push_back("PrecariousSituation")
 	level_filenames.push_back("PressEveryKey")
-	level_filenames.push_back("Cliffs-")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(40);
@@ -1896,6 +1895,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Hot Soup")
+	level_filenames.push_back("Cliffs-")
 	level_filenames.push_back("Rise As One")
 	level_filenames.push_back("Jello Kiddie Pool")
 	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
