@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524291, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 8, 0, 65539, 14, 262145, 65541, 22, 0, 65542, 14, 262145, 131072, 14, 655362, 131073, 14, 524292, 131075, 14, 262145, 131077, 14, 524290, 131078, 14, 655364, 196609, 14, 262145, 196611, 14, 327681, 196613, 14, 262145, 262145, 14, 262145, 262149, 14, 262145, 327681, 14, 262145, 327682, 2, 0, 327685, 14, 262145, 393217, 14, 655362, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 655364 )
+
+[node name="@@286" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65541, 7, 0, 327682, 1, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Carrying It [VAR1] (Loop 2) (Insight)"
+level_author = "Slabdrill"
+level_replay = "Carrying It [VAR1] (Loop 2) (Insight)$mturn=63$xdxdzdzdzxzdxdxzswxzxzdxdxzswxzxzdxwzxzxwxdxzdxzxzsxdxzdxzzzxzwxaxzxwxdxzasxzdxzzxzxdxwzxzwxdxzzxza"
+heavy_max_moves = 1.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

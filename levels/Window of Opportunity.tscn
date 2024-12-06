@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,9 +17,9 @@ tile_data = PoolIntArray( 262148, 43, 0, 393221, 7, 0, 458754, 1, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Window of Oppertunity"
+level_name = "Window of Opportunity"
 level_author = "Sandra53"
-level_replay = "Window of Oppertunity$mturn=18$xaaxwdaxzxaxzdxzxsxzxzsxzxzxzxz"
+level_replay = "Window of Opportunity$mturn=18$xaaxwdaxzxaxzdxzxsxzxzsxzxzxzxz"
 heavy_max_moves = 6.0
 light_max_moves = 6.0
 clock_turns = "6,10"

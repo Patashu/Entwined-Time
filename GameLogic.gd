@@ -607,6 +607,14 @@ func load_game():
 	default_save_file();
 	
 	react_to_save_file_update();
+	
+	#17.8
+	savefix("Window of Oppertunity", "Window of Opportunity")
+
+func savefix(before: String, after: String) -> void:
+	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
+		save_file["levels"][after] = save_file["levels"][before];
+		save_file["levels"].erase(before);
 
 func _ready() -> void:
 	var os_name = OS.get_name();
@@ -1426,19 +1434,20 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(5);
 	chapter_skies.push_back(Color("#424947"));
 	level_filenames.push_back("IronCrates")
-	level_filenames.push_back("CrateExpectations")
-	level_filenames.push_back("Bridge")
 	level_filenames.push_back("SteppingStool")
-	level_filenames.push_back("OverDestination")
+	level_filenames.push_back("Bridge")
+	level_filenames.push_back("CrateExpectations")
 	level_filenames.push_back("ThirdRoommate")
+	level_filenames.push_back("TheCratePit")
 	level_filenames.push_back("Sokoban")
 	level_filenames.push_back("OneAtATime")
 	level_filenames.push_back("PushingItCrate")
 	level_filenames.push_back("SnakeChute")
+	level_filenames.push_back("Baggage Carousel")
 	level_filenames.push_back("FlamingCoronation")
-	level_filenames.push_back("TheCratePit")
 	level_filenames.push_back("PrecariousSituation")
 	level_filenames.push_back("PressEveryKey")
+	level_filenames.push_back("Cliffs-")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(40);
@@ -1821,13 +1830,13 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "-1";
 	level_filenames.push_back("CliffsL2")
 	level_filenames.push_back("CliffsL2Ex")
+	level_filenames.push_back("CarryingItExL2")
 	level_filenames.push_back("RoommatesExL2")
 	level_filenames.push_back("SpelunkingL2")
 	level_filenames.push_back("UphillL2")
 	level_filenames.push_back("DownhillL2")
 	level_filenames.push_back("RoommatesL2")
 	level_filenames.push_back("KnotL2")
-	level_filenames.push_back("CarryingItExL2")
 	level_filenames.push_back("CarryingItL2")
 	level_filenames.push_back("PachinkoL2")
 	level_filenames.push_back("PachinkoL2Ex")
@@ -1978,7 +1987,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Floor Change")
 	level_filenames.push_back("[SPEEDRUN] - Shattered Sky")
 	level_filenames.push_back("Limitations of Love.")
-	level_filenames.push_back("Window of Oppertunity")
+	level_filenames.push_back("Window of Opportunity")
 	level_filenames.push_back("Grate Expectations")
 	level_filenames.push_back("Stepping Stone [Loop 2]")
 	level_filenames.push_back("Eau de Null")
@@ -3483,7 +3492,7 @@ func add_actor_or_goal_at_appropriate_layer(thing: ActorBase, i: int) -> void:
 	# and also the concept of 'adding to overactors/underactors particles'
 	# can be generalized to
 	# 'if it's a custom puzzle, put particles in the appropriate place amongst terrain layers too'
-	if ((is_custom or chapter >= 12) and i > 0):
+	if ((is_custom or chapter >= 12 or level_name == "Press Every Key") and i > 0):
 		terrain_layers[i].add_child(thing);
 		if (i == terrain_layers.size() - 1):
 			terrain_layers[i].move_child(thing, terrain_layers[i-1].get_index());
