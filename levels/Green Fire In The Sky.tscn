@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196615, 65538, 7, 0, 131073, 8, 0, 131074, 2, 0, 196609, 14, 262148, 196610, 47, 0, 196611, 48, 0, 327683, 48, 0, 327684, 48, 0, 327685, 48, 0, 393220, 48, 0, 458755, 48, 0, 458756, 1, 0, 524292, 47, 0, 524293, 14, 196609, 589827, 48, 0, 589829, 14, 262145, 655365, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Green Fire In The Sky"
+level_author = "Green"
+level_replay = "Green Fire In The Sky$mturn=171$xwxaxzdxzxzxwzxdxaxdxdxzzdwxzxzxzxaxwzxzxwxadxzxwxaxzdxwzxzwxzxzaxwzxzwxaxzdxzxzzxwxdxzwxadxzxwxaxzdxwzxzwxzxzaxwzxzwxaxzdxzxzzxwxdxzxwxaxzdxwxzxzaxwxzssssxzxzzzzwdxzxdxaxzzzaszszszszszssdxzzxzsxzxzdsxzxzzssxzxzzzzzxddxwzxzxzwdxzxzzdddddxdaaxdzdxzazzsxzzzxzd"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
+setup_replay = ""

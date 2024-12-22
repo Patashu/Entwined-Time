@@ -2083,6 +2083,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Ventriloquy")
 	level_filenames.push_back("Brutalist Absurdism")
 	level_filenames.push_back("Extremely Small Crate Puzzle")
+	level_filenames.push_back("Totem Pole")
+	level_filenames.push_back("Push-ups")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2151,6 +2153,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Magenta Pit [VAR5]")
 	level_filenames.push_back("The Twin Pit")
 	level_filenames.push_back("Consecutive Normal Pits [VAR2]")
+	level_filenames.push_back("Stuck in a Pit [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2183,6 +2186,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Top Security")
 	level_filenames.push_back("Rocket Engine-")
 	level_filenames.push_back("Campfrost [VAR2]")
+	level_filenames.push_back("Heavy Moving Service- [VAR1]")
 	level_filenames.push_back("Graduation [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
@@ -2241,6 +2245,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Ankh [VAR1]")
 	level_filenames.push_back("Down [VAR2]")
 	level_filenames.push_back("Fragile Victory [VAR1]")
+	level_filenames.push_back("Light Hurting Service (fixed) (final) [VAR1]")
 	level_filenames.push_back("Stack Split")
 	level_filenames.push_back("One-Way Bridge")
 	level_filenames.push_back("Rough Terrain [VAR2]")
@@ -2327,7 +2332,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Rock Slider")
 	level_filenames.push_back("Wooden Gate [VAR1]")
 	level_filenames.push_back("Skipping Stone")
-	level_filenames.push_back("Skipping Stone [VAR1]")
 	level_filenames.push_back("Spring Boots")
 	level_filenames.push_back("Springlock System [VAR1]")
 	level_filenames.push_back("Not Enough Nothing")
@@ -2365,6 +2369,21 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Newton's Cradle [VAR1]")
 	level_filenames.push_back("Switcheroo [VAR1]")
 	level_filenames.push_back("[SPEEDIERRUN] A Way In-")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Green's World (Page 3)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Extremely Small Steel Crate Puzzle")
+	level_filenames.push_back("Stepping Stone (Insight) (Loop 2)")
+	level_filenames.push_back("Stuck in a Pit")
+	level_filenames.push_back("Green Fire In The Sky")
+	level_filenames.push_back("Outlets!")
+	level_filenames.push_back("Totem Pole [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

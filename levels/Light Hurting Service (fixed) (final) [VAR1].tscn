@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 47, 0, 1, 47, 0, 2, 47, 0, 3, 12, 0, 4, 12, 0, 5, 12, 0, 6, 47, 0, 7, 47, 0, 8, 47, 0, 65536, 47, 0, 65540, 30, 0, 65544, 47, 0, 131072, 47, 0, 131073, 1, 0, 131076, 30, 0, 131079, 7, 0, 131080, 47, 0, 196608, 47, 0, 196612, 30, 0, 196613, 2, 0, 196614, 8, 0, 196616, 47, 0, 262144, 47, 0, 262145, 47, 0, 262146, 47, 0, 262147, 47, 0, 262148, 47, 0, 262149, 47, 0, 262150, 47, 0, 262151, 47, 0, 262152, 47, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Light Hurting Service (fixed) (final) [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Light Hurting Service (fixed) (final) [VAR1]$mturn=107$xwxdxzaxwzxzwxzxzdxdwxzsdxzxzxzaxzwxzwadxzasxwxwxzzzzaxzzzxddzdxaxzwxzsaxzxzxdxwxdzxaxzxdaxzxzzwxzwddaxzzzxzzzzxzxddxaxzwxzsazxdxaxzzwxzsaxzxzxdxaxzzaxzxaxzxaxzdxw"
+heavy_max_moves = 4.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.0784314, 0.286275, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""

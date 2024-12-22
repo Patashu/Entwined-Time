@@ -7,15 +7,16 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 7, 0, 65536, 8, 0, 65537, 2, 0, 131072, 14, 2, 131073, 14, 4, 196608, 14, 65538, 196609, 14, 65540, 196616, 1, 0, 262144, 14, 131074, 262145, 14, 131076, 262152, 14, 2, 262153, 14, 4, 327688, 14, 65538, 327689, 14, 65540, 393224, 14, 131074, 393225, 14, 131076 )
+tile_data = PoolIntArray( 6, 7, 0, 65537, 2, 0, 65541, 1, 0, 65542, 8, 0, 131072, 14, 2, 131073, 14, 4, 131077, 14, 2, 131078, 14, 4, 196608, 14, 65538, 196609, 14, 65540, 196613, 14, 65538, 196614, 14, 65540, 262144, 14, 65538, 262145, 14, 65540, 262149, 14, 65538, 262150, 14, 65540, 327680, 14, 131074, 327681, 14, 131076, 327685, 14, 131074, 327686, 14, 131076 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Invisible Bridge (for Heavy) [VAR1]"
 level_author = "Slabdrill"
-level_replay = "Invisible Bridge (for Heavy) [VAR1]$mturn=53$xwxaxzaxdxzxwxdxzdxzxzzwaxwxaxzaxdxzxwxdxzdxzxzzwaxwxaxzaxdxzxwxdxzdxzxzzzzzzzzzwdxw"
-heavy_max_moves = 9.0
+level_replay = "Invisible Bridge (for Heavy) [VAR1]$mturn=25$wxwxzawddxzxzzzwxwxzaddxzxzzzzwdxw"
+heavy_max_moves = 4.0
 light_max_moves = 1.0
 clock_turns = ""
 target_sky = Color( 0.0235294, 0.129412, 0.219608, 1 )
 target_track = 2.0
+setup_replay = ""

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 524292, 65536, 7, 0, 65538, 14, 262145, 131072, 14, 196609, 131074, 14, 262145, 196608, 14, 262145, 196610, 14, 327681, 262144, 14, 262145, 262145, 8, 0, 262146, 1, 0, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 196615 )
+
+[node name="@@91" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 2, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Stepping Stone (Insight) (Loop 2)"
+level_author = "Green"
+level_replay = "Stepping Stone (Insight) (Loop 2)$mturn=62$dxddxzxzzxdxaaxzdxzzdaxzxzzwxaxzadxzxzzssxdxzzwaxzxzzxdxaxzxzxdxaaxzdxzdxzxzzaxdxaxzxzwxaxzzwaxz"
+heavy_max_moves = 1.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

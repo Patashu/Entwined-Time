@@ -7,15 +7,15 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 1, 0, 1, 2, 0, 2, 14, 524290, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 655364, 65543, 14, 262145, 131072, 14, 262145, 131073, 7, 0, 131074, 48, 0, 131075, 28, 0, 131076, 100, 0, 131077, 8, 0, 131079, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524291, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 524292, 65536, 14, 262145, 65540, 14, 327681, 65545, 14, 262145, 131072, 14, 262145, 131073, 1, 0, 131075, 2, 0, 131076, 48, 0, 131077, 73, 0, 131078, 100, 0, 131079, 8, 0, 131080, 7, 0, 131081, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Skipping Stone"
 level_author = "Green"
-level_replay = "Skipping Stone$mturn=129$xwaaxaxzxzaxzzwxzxzdxaxzdxzaxzxzxdxaxwaaxzaxzzzwxzxzdxaxzdxzaxzxzaxawdxzxzzzdaxaxzaaxzaxzzzdwxzxzdxaxzxzaxzddxzxzzwxaxzdwxzxzdaxaxzzzxzaxddwxzxzzzxazxdxaxzdxzaxdwxzxzzsxaxzsdxzxzzddxaxzxzaxzzxzxzxa"
+level_replay = "Skipping Stone$mturn=320$xwaaxaxzxzaxzzwxzxzdxaxzdxzaxzaxzxwxaxzaxzxzdxaxzwddxzaxzxzaxzzwaaxzaxzdwaxzxzzzzxaxzdaxzxzzaaxaxzsdxzxzzdaxaxdxzaxzzwdaxzaxzzzxzxzzdwdaxaxzzzzdxzaxzddxzaxzwddxzxaxaxzwxzxzxaxzxzaxzzwxzxzzdxaxdxzxasdxaxzzzdsadxzaxzzzzaaxzxdaxaxzzzxzxzxaxdasxzxzxaxzwdaxzxzzzzxaxddwxzxzzzsxaxzsddxzxzzzxaxddxzaxzxzaxdwxzxzdxaxzxzaxzzxzaxddwxzxzzsxaxzddxzaxzzxzxdwxazaxzdaxzxzaxaxzzzxzaxddwxzxzzzsxaxzsddxzxzzzxaxddxzaxzxzaxdwxzxzzsxaxzddxzxzxaxzzxzxdxaxdxzxzzxwxzxzaxwazxzxzzwxdxzaxzxzxwxzxzwzxzdddxa"
 heavy_max_moves = 1.0
-light_max_moves = 4.0
+light_max_moves = 7.0
 clock_turns = ""
 target_sky = Color( 0.196078, 0.262745, 0.317647, 1 )
 target_track = 3.0
