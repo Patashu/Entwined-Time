@@ -1,23 +1,34 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TerrainMap" type="TileMap"]
-tile_set = ExtResource( 2 )
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 1, 29, 0, 9, 30, 0, 65537, 29, 0, 65540, 8, 0, 65542, 2, 0, 65545, 30, 0, 131073, 29, 0, 131076, 3, 0, 131078, 3, 0, 131079, 52, 0, 131081, 30, 0, 196609, 29, 0, 196610, 23, 0, 196611, 23, 0, 196612, 23, 0, 196613, 23, 0, 196614, 23, 0, 196615, 23, 0, 196616, 23, 0, 196617, 30, 0, 262144, 32, 0, 262145, 29, 0, 262146, 14, 196613, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615, 262153, 30, 0, 262154, 32, 0, 327680, 14, 262148, 327681, 29, 0, 327689, 30, 0, 327690, 14, 262148 )
+tile_data = PoolIntArray( 1, 29, 0, 4, 8, 0, 6, 2, 0, 9, 30, 0, 65537, 29, 0, 65540, 3, 0, 65542, 3, 0, 65543, 52, 0, 65545, 30, 0, 131073, 29, 0, 131074, 23, 0, 131075, 23, 0, 131076, 23, 0, 131077, 23, 0, 131078, 23, 0, 131079, 23, 0, 131080, 23, 0, 131081, 30, 0, 196608, 32, 0, 196609, 29, 0, 196610, 14, 196613, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196615, 196617, 30, 0, 196618, 32, 0, 262144, 14, 262148, 262145, 29, 0, 262153, 30, 0, 262154, 14, 262148 )
+
+[node name="@@1945" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 9, 26, 0, 65540, 39, 0, 65541, 52, 0, 65542, 39, 0, 131076, 7, 0, 131078, 1, 0, 196609, 27, 0, 196617, 27, 0 )
+
+[node name="@@1946" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 28, 0, 9, 25, 0, 65537, 28, 0, 65545, 25, 0, 131073, 28, 0, 131081, 25, 0, 196609, 28, 0, 196617, 25, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 level_name = "Don't Look Down"
+level_author = "Patashu"
 level_replay = "Don't Look Down$mturn=51$xdsdzxsddwadzzdzzzzzzxaazzxsaaxdxawxaxdxzzzzaaxzxazzssdxzzzzzsxd"
-heavy_max_moves = 6
-light_max_moves = 6
-
-[node name="TileMap" type="TileMap" parent="."]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 24, 24 )
-format = 1
-tile_data = PoolIntArray( 131076, 39, 0, 131077, 52, 0, 131078, 39, 0, 196612, 7, 0, 196614, 1, 0 )
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0
+setup_replay = ""
