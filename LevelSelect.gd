@@ -16,6 +16,8 @@ var buttons_by_xy = {};
 var cutscene_button = null;
 var in_community_puzzles = false;
 var star_tints = false;
+var search_page_cur: int = 0;
+var search_page_size: int = 24;
 
 func _ready() -> void:
 	if gamelogic.save_file["levels"].has("Joke") and gamelogic.save_file["levels"]["Joke"].has("won") and gamelogic.save_file["levels"]["Joke"]["won"]:
@@ -56,11 +58,13 @@ func _ready() -> void:
 	prevbutton.text = "Prev. Chapter (" + gamelogic.human_readable_input("previous_level", 1) + ")";
 	
 func _searchbox_focus_entered() -> void:
+	search_page_cur = 0;
 	searchbox.text = "";
 	searchbox.editable = true;
 	gamelogic.no_mute_pwease = true;
 	
 func _searchbox_focus_exited() -> void:
+	search_page_cur = 0;
 	searchbox.text = "Search...";
 	searchbox.editable = false;
 	gamelogic.no_mute_pwease = false;
@@ -70,15 +74,14 @@ func _searchbox_focus_exited() -> void:
 		prepare_chapter();
 	
 func _searchbox_text_changed(new_text: String) -> void:
-	
 	var indexes = [];
 	for i in range(gamelogic.level_names.size()):
 		var name = gamelogic.level_names[i];
 		if searchbox.text.to_lower() in name.to_lower():
 			if (!gamelogic.trying_to_load_locked_level(i, false)):
 				indexes.append(i);
-		if indexes.size() >= 24:
-			break;
+	if (search_page_cur >= ceil(indexes.size() / 24.0)):
+		search_page_cur = 0;
 	prepare_search_chapter(indexes);
 	
 func _searchbox_text_entered(new_text: String) -> void:
@@ -256,6 +259,10 @@ func cleanup_chapter() -> void:
 func prepare_search_chapter(indexes: Array) -> void:
 	cleanup_chapter();
 	
+	holder.text = "Search: " + searchbox.text;
+	if (indexes.size() > search_page_size):
+		holder.text += " (Page " + str(search_page_cur+1) + "/" + str(ceil(indexes.size() / 24.0)) + ") ([TAB] to change Page)";
+	
 	var yy = 16;
 	var yyy = 16;
 	var xx = 19;
@@ -264,7 +271,11 @@ func prepare_search_chapter(indexes: Array) -> void:
 	var y = 0;
 	var y_max = 12;
 	
-	for i in indexes:
+	for a in range(24):
+		var b = a + search_page_cur*search_page_size;
+		if (b >= indexes.size()):
+			break;
+		var i = indexes[b];
 		var button = preload("res://LevelButton.tscn").instance();
 		buttons_by_xy[Vector2(x, y)] = button;
 		holder.add_child(button);
@@ -662,6 +673,9 @@ func _process(delta: float) -> void:
 				buttons_by_xy[Vector2.ZERO].grab_focus();
 			else:
 				nextbutton.grab_focus();
+		if (Input.is_action_just_pressed("tab")):
+			search_page_cur += 1;
+			_searchbox_text_changed(searchbox.text);
 		
 	var focus = holder.get_focus_owner();
 	if (focus == null):
