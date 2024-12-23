@@ -1516,10 +1516,10 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(56);
-	level_filenames.push_back("LetMeInEx")
 	level_filenames.push_back("DoubleGlazedEx")
 	level_filenames.push_back("HeavyMovingServiceGlass")
 	level_filenames.push_back("IcyHot")
+	level_filenames.push_back("LetMeInEx")
 	level_filenames.push_back("TheGlassPitEx")
 	level_filenames.push_back("Campfrost")
 	level_filenames.push_back("SpelunkingGlassEx")
