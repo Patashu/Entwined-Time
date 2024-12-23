@@ -7,25 +7,37 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 65536, 7, 0, 65540, 45, 0, 65542, 22, 0, 65544, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196615, 131078, 29, 0, 131079, 14, 196613, 131080, 14, 196615 )
+tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 9, 26, 0, 10, 26, 0, 11, 26, 0, 12, 26, 0, 65536, 7, 0, 65542, 45, 0, 65544, 22, 0, 65548, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196615, 131080, 29, 0, 131081, 14, 196613, 131082, 14, 196614, 131083, 14, 196614, 131084, 14, 196615 )
 
-[node name="@@127" type="TileMap" parent="."]
+[node name="@@2012" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 28, 0, 8, 25, 0, 65536, 28, 0, 65537, 2, 0, 65540, 45, 0, 65542, 27, 0, 65543, 8, 0, 65544, 25, 0 )
+tile_data = PoolIntArray( 0, 28, 0, 12, 25, 0, 65536, 28, 0, 65539, 2, 0, 65542, 45, 0, 65544, 27, 0, 65545, 8, 0, 65548, 25, 0 )
 
-[node name="@@128" type="TileMap" parent="."]
+[node name="@@2013" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65540, 45, 0 )
+tile_data = PoolIntArray( 65542, 45, 0 )
+
+[node name="@@2014" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65542, 45, 0 )
+
+[node name="@@2015" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65542, 45, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Let Me In! [VAR1]"
 level_author = "Patashu"
-level_replay = "Let Me In! [VAR1]$mturn=59$xaawaxdzddzdxzzxdxaxwxaxzdxzzzzxzzxdxddxzxzzzzdxddxddxzzxzzzxdxddxzxzxdxwxdxzdddxzzaaa"
+level_replay = "Let Me In! [VAR1]$mturn=68$ddwdxaaxzzzzxwaxdzddzdxzzaxdwxaxzdxzwxzxzxdxzxzxdxzdxzzxzadxdxzzxzzxzzxdxadxzxzxdaxaxzzxzzddddxaaaa"
 heavy_max_moves = 4.0
 light_max_moves = 4.0
 clock_turns = ""
