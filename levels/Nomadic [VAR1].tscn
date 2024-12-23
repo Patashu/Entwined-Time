@@ -9,7 +9,7 @@ cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 13, 14, 524290, 14, 14, 196614, 15, 14, 196614, 16, 14, 196615, 18, 1, 0, 65536, 14, 524290, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 196614, 65546, 14, 196614, 65547, 14, 196614, 65548, 14, 196614, 65549, 14, 655364, 65554, 14, 196609, 131072, 14, 262145, 131078, 70, 0, 131079, 70, 0, 131081, 29, 0, 131086, 30, 0, 131090, 14, 262145, 196608, 14, 262145, 196609, 7, 0, 196613, 52, 0, 196614, 70, 0, 196615, 70, 0, 196617, 29, 0, 196618, 2, 0, 196619, 8, 0, 196621, 14, 196609, 196622, 52, 0, 196623, 14, 196609, 196625, 14, 2, 196626, 14, 589830, 262144, 14, 655362, 262145, 14, 196615, 262146, 47, 0, 262147, 47, 0, 262148, 14, 196613, 262149, 14, 196615, 262150, 47, 0, 262151, 47, 0, 262152, 47, 0, 262153, 14, 196613, 262154, 14, 196614, 262155, 14, 196614, 262156, 14, 196614, 262157, 14, 655363, 262158, 14, 393219, 262159, 14, 589830, 262160, 52, 0, 262161, 14, 65538, 262162, 14, 65540, 327694, 14, 131074, 327695, 14, 786435, 327696, 14, 196614, 327697, 14, 720899, 327698, 14, 131076 )
 
-[node name="@@1767" type="TileMap" parent="."]
+[node name="@@210" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,9 +19,9 @@ tile_data = PoolIntArray( 196618, 38, 0, 196619, 38, 0 )
 script = ExtResource( 2 )
 level_name = "Nomadic [VAR1]"
 level_author = "Slabdrill"
-level_replay = "Nomadic [VAR1]$mturn=82$xwxdxzdxdxaxwzxzxzxwxzxzdxdxdxdxaxwzzxzwxzxzdxdxdxdxaxwxzxzdaaaxwadxdxzxzzzzdwdxwxaxzzzzzzzzaxzxaaaxwzzxwzxwxdxwxzxdxwxaxzaxzxaaxz"
-heavy_max_moves = 10.0
-light_max_moves = 10.0
+level_replay = "Nomadic [VAR1]$mturn=81$xwxdxzdxdxaxwzxzxzxwxzxzdxdxdxdxaxwzzxzwxzxzdxdxdxdxaxwxzxzdaaaxwadxdxzxzzzzdwdxwxaxzzzzzzzzaxzxaaaxwzzzwxdxwxzxdxwxaxzzxzxaaxz"
+heavy_max_moves = 9.0
+light_max_moves = 8.0
 clock_turns = ""
 target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
 target_track = 8.0
