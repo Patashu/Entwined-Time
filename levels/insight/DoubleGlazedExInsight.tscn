@@ -9,7 +9,7 @@ cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 1, 8, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 196615, 65540, 45, 0, 65541, 45, 0, 65542, 45, 0, 65543, 45, 0, 65544, 45, 0, 65545, 14, 196613, 65546, 14, 196614, 65547, 14, 524292, 131083, 14, 262145, 131085, 2, 0, 196619, 14, 655362, 196620, 14, 196614, 196621, 14, 196615 )
 
-[node name="@@5477" type="TileMap" parent="."]
+[node name="@@2274" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,8 +19,8 @@ tile_data = PoolIntArray( 3, 1, 0, 65540, 45, 0, 65541, 45, 0, 65542, 45, 0, 655
 script = ExtResource( 2 )
 level_name = "Double Glazed [VAR1] (Remix)"
 level_author = "Patashu"
-level_replay = "Double Glazed [VAR1] (Remix)$mturn=111$xdddxadadaxzzzwdddddxzzzzzxdddsxwaxzxzxdxzawxzxzdxzzwdxzswxzxzzaxdxdxwxdxzzxzzxaaxwzxzzzwxaxzdxwzxzzzzzzzzxaxaxwxaxzdxassdxzaxdxzzzzzxzzzzxwxzzzddxaaaaaa"
-heavy_max_moves = 7.0
+level_replay = "Double Glazed [VAR1] (Remix)$mturn=112$xdddxadadaxzzzwdddddxzzzzzxdddsxwaxzxzxdxzawxzxzdxzzwdxzswxzxzzaxdxdxwxdxzzxzzxaaxwzxzzzwxaxzdxwzxzzzzzzzzxaxaxwxaxzdxassdxzaxdxzzzzzxzzzzzwdddddxaaaaaa"
+heavy_max_moves = 6.0
 light_max_moves = 10.0
 clock_turns = ""
 target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
