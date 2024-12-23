@@ -3169,6 +3169,11 @@ func ready_tutorial() -> void:
 		tutoriallabel.rect_position.y -= 48;
 		tutoriallabel.bbcode_text = "[center]Visualize your current attempt as a Replay:\n$TOGGLE-REPLAY: Toggle Replay\nAlso, you can make Checkpoints by doing:\nCtrl+C: Copy Replay\nCtrl+V: Paste Replay[/center]";
 		translate_tutorial_inputs();
+	elif (level_name == "Let Me In! [VAR1]"):
+		tutoriallabel.visible = true;
+		tutoriallabel.rect_position = Vector2(0, 69);
+		tutoriallabel.rect_position.y -= 48;
+		tutoriallabel.bbcode_text = "[center](Gray One-Ways are White One-Ways but without blocking rewinds in the other direction.)\n(This is the only one in the game. Sorry.)[/center]";
 		
 func translate_tutorial_inputs() -> void:
 	if (level_number >= 2 and level_number <= 5):
