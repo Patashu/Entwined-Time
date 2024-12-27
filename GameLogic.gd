@@ -611,6 +611,10 @@ func load_game():
 	#17.8
 	#savefix("Window of Oppertunity", "Window of Opportunity")
 	#18.1
+	savefix("Theory of Everything (Type A)", "Theory of Everything (Iron)")
+	savefix("Theory of Everything (Type B)", "Theory of Everything (Power)")
+	savefix("Theory of Everything (Type C)", "Theory of Everything (Steel)")
+	savefix("Theory of Everything (Type D)", "Theory of Everything (Clock)")
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
@@ -1460,6 +1464,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("InevitableDemise")
 	level_filenames.push_back("ShippingSolutions")
 	level_filenames.push_back("TheTower")
+	level_filenames.push_back("Crate Moving Service")
 	level_filenames.push_back("InvisibleBridgeCrate")
 	level_filenames.push_back("Jenga")
 	
@@ -1750,13 +1755,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Death Smiles")
 	level_filenames.push_back("Insurance Fraud")
 	level_filenames.push_back("Stable Loop")
+	level_filenames.push_back("Truly Unbounded Skies")
 	level_filenames.push_back("Integrity Checker [VAR1]")
 	level_filenames.push_back("Electrical Education [VAR1]")
 	level_filenames.push_back("Timelock")
-	level_filenames.push_back("Alternating Staircase")	
-	level_filenames.push_back("Grate Catch.")
-	level_filenames.push_back("Truly Unbounded Skies")
 	level_filenames.push_back("Truly Unbounded Skies [VAR1]")
+	level_filenames.push_back("Alternating Staircase")
+	level_filenames.push_back("Grate Catch.")
 	
 	chapter_names.push_back("Even More Crates");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -1776,13 +1781,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Donk")
 	level_filenames.push_back("DonkEx")
 	level_filenames.push_back("Steel Crates Tutorial")
-	level_filenames.push_back("Clocksmasher")
+	level_filenames.push_back("TheoryOfEverythingSteel")
 	level_filenames.push_back("Simple Hierarchy")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
-	level_filenames.push_back("TheoryOfEverythingA")
-	level_filenames.push_back("TheoryOfEverythingB")
+	level_filenames.push_back("Clocksmasher")
 	level_filenames.push_back("Woodskip")
 	level_filenames.push_back("Unstacking Station")
 	level_filenames.push_back("Wooden Glass")
@@ -1803,25 +1807,25 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Nudge Pit")
 	level_filenames.push_back("Gutter")
 	level_filenames.push_back("Downwards Momentum")
-	level_filenames.push_back("Conveyor")
 	level_filenames.push_back("Constant Pushback")
+	level_filenames.push_back("Conveyor")
 	level_filenames.push_back("Boulder Tutorial")
-	level_filenames.push_back("Newton's Cradle")
 	level_filenames.push_back("when boulders fly")
 	level_filenames.push_back("Surge Surfer")
 	level_filenames.push_back("Centrism")
+	level_filenames.push_back("Springlock System")
 	level_filenames.push_back("Chain Reaction")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
-	level_filenames.push_back("Springlock System")
-	level_filenames.push_back("Costly Rewinds") #or banish to community
+	level_filenames.push_back("Costly Rewinds")
 	level_filenames.push_back("Lead the way")
 	level_filenames.push_back("Against The Flow")
 	level_filenames.push_back("Conveyor [VAR1]")
 	level_filenames.push_back("Sudden Stop")
 	level_filenames.push_back("Vertical Catalyst")
 	level_filenames.push_back("Boulder Moving Service")
+	level_filenames.push_back("Rock Glider")
 	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2174,7 +2178,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Hopscorch [VAR2]")
 	level_filenames.push_back("Timeless Bridge [VAR2]")
 	level_filenames.push_back("Slippery Glass [VAR2]")
-	level_filenames.push_back("Crate Moving Service")
 	level_filenames.push_back("Over-Destination [VAR1]")
 	level_filenames.push_back("Spelunking-- [VAR3]")
 	level_filenames.push_back("Rapid Ascent")
@@ -2329,7 +2332,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("As The World Turns [VAR1]")
 	level_filenames.push_back("Waterslide (Waterslide Shortage)")
 	level_filenames.push_back("Cement Pit [VAR2]")
-	level_filenames.push_back("Rock Glider")
 	level_filenames.push_back("Rock Slider")
 	level_filenames.push_back("Wooden Gate [VAR1]")
 	level_filenames.push_back("Skipping Stone")
@@ -3715,7 +3717,7 @@ func calculate_map_size() -> void:
 				map_x_max = tile.x;
 			if tile.y > map_y_max:
 				map_y_max = tile.y;
-	if ((is_custom or (chapter == custom_past_here -1)) and (map_x_max > map_x_max_max or map_y_max > map_y_max_max+2)):
+	if ((is_custom or (chapter >= custom_past_here -2)) and (map_x_max > map_x_max_max or map_y_max > map_y_max_max+2)):
 		terrainmap.scale = Vector2(0.5, 0.5);
 	else:
 		terrainmap.scale = Vector2(1.0, 1.0);

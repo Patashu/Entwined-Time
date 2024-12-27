@@ -9,17 +9,17 @@ cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524291, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 65544, 14, 262145, 131072, 14, 262145, 131074, 1, 0, 131076, 14, 327681, 131080, 14, 655362, 131081, 14, 524292, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 524292, 196611, 104, 0, 196613, 108, 0, 196614, 14, 196609, 196615, 108, 0, 196616, 7, 0, 196617, 14, 262145, 262146, 14, 655362, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 655363, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 655364 )
 
-[node name="@@114" type="TileMap" parent="."]
+[node name="@@147" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131073, 2, 0, 131074, 8, 0, 196611, 23, 0, 196613, 23, 0, 196615, 23, 0, 196616, 77, 0 )
+tile_data = PoolIntArray( 131073, 2, 0, 131074, 8, 0, 196611, 23, 0, 196613, 23, 0, 196615, 23, 0, 196616, 78, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Constant Pushback"
 level_author = "Sandra53"
-level_replay = "Constant Pushback$mturn=76$xdwxdxzzdxdwxdzxzxzxzzddwxaxsxddxzxzxzzzwxdxzdxdxdwwxzzzdxzzzxzxazxdwxdzxzxzxzdwxdxzzdxdxdxwxdxaxzzzwwxzxzzzxzzzaa"
+level_replay = "Constant Pushback$mturn=48$xdwxdxzzwxzdxwxdxzasxwxzxzzzdaxaxwxzxzzxzzxzazxwxdxzdxdxdxdxdxwxdxzxzdxzzzaa"
 heavy_max_moves = 4.0
 light_max_moves = 4.0
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )

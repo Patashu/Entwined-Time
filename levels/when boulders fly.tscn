@@ -7,33 +7,34 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 7, 100, 0, 11, 32, 0, 65544, 32, 0, 65547, 100, 0, 131079, 14, 196613, 131080, 14, 196615, 131081, 46, 0, 131082, 46, 0, 131083, 14, 262148, 131086, 14, 524290, 131087, 14, 196614, 131088, 14, 196614, 131089, 14, 196614, 131090, 14, 524292, 196622, 14, 262145, 196624, 53, 0, 196626, 14, 262145, 262144, 14, 524290, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 524292, 262158, 14, 262145, 262160, 54, 0, 262162, 14, 262145, 327680, 14, 262145, 327682, 2, 0, 327684, 14, 262145, 327694, 14, 262145, 327696, 8, 0, 327697, 7, 0, 327698, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 655364, 393230, 14, 655362, 393231, 14, 196614, 393232, 14, 196614, 393233, 14, 196614, 393234, 14, 655364 )
+tile_data = PoolIntArray( 0, 66, 0, 1, 66, 0, 2, 66, 0, 3, 66, 0, 4, 66, 0, 5, 66, 0, 6, 66, 0, 65536, 66, 0, 65537, 100, 0, 65541, 32, 0, 65542, 66, 0, 131072, 66, 0, 131074, 32, 0, 131077, 100, 0, 131078, 66, 0, 196608, 66, 0, 196609, 14, 196613, 196610, 14, 196615, 196611, 46, 0, 196612, 46, 0, 196613, 14, 262148, 196614, 66, 0, 262144, 66, 0, 262145, 66, 0, 262146, 66, 0, 262147, 66, 0, 262148, 66, 0, 262149, 66, 0, 262150, 66, 0, 393218, 2, 0, 393220, 8, 0, 393221, 7, 0, 458753, 14, 196613, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196615 )
 
-[node name="@@1495" type="TileMap" parent="."]
+[node name="@@470" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 65543, 23, 0, 65544, 23, 0, 65547, 23, 0, 262159, 23, 0, 262160, 23, 0, 262161, 23, 0, 327682, 1, 0, 327695, 23, 0, 327696, 23, 0, 327697, 23, 0 )
+tile_data = PoolIntArray( 131073, 23, 0, 131074, 23, 0, 131077, 23, 0, 393217, 1, 0 )
 
-[node name="@@1496" type="TileMap" parent="."]
+[node name="@@471" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 7, 103, 0, 65543, 103, 0, 65547, 106, 0 )
+tile_data = PoolIntArray( 65537, 103, 0, 131073, 103, 0, 131077, 106, 0 )
 
-[node name="@@1497" type="TileMap" parent="."]
+[node name="@@472" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 7, 35, 0, 65547, 36, 0 )
+tile_data = PoolIntArray( 65537, 35, 0, 131077, 36, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "when boulders fly"
-level_author = "Meo"
-level_replay = "when boulders fly$mturn=15$dxadadwzxaxzxdaxwzzd"
+level_author = "Meo & Slabdrill"
+level_replay = "when boulders fly$mturn=11$wdxdaxzaxzxdaxad"
 heavy_max_moves = 5.0
 light_max_moves = 5.0
 clock_turns = ""
-target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
-target_track = 0.0
+target_sky = Color( 0.196078, 0.262745, 0.317647, 1 )
+target_track = 3.0
+setup_replay = ""

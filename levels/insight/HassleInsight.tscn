@@ -1,19 +1,18 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
-[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=1]
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=2]
 
-[node name="" type="TileMap"]
-tile_set = ExtResource( 1 )
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 2 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 2, 2, 0, 65538, 8, 0, 131074, 55, 0, 131082, 7, 0, 131083, 1, 0, 196608, 14, 196613, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196614, 196618, 14, 196614, 196619, 14, 196614, 196620, 14, 196615 )
 
 [node name="LevelInfo" type="Node" parent="."]
-script = ExtResource( 2 )
-level_name = "Theory of Everything (Type D)"
-level_author = "Patashu"
-level_replay = "Theory of Everything (Type D)$mturn=73$ddxaxzdxzxzzaaxdxzsxzxzzdddxdxzxzxzxwzxdxdxzdxdxzzaaxzzxzzddxdxzdxdxzzaaxzzxzzddxdxzdxdxzzaaxzzdxdxzxzzzxaxdxd"
+script = ExtResource( 1 )
+level_name = "Theory of Everything (Clock)"
+level_replay = "Theory of Everything (Clock)$mturn=73$ddxaxzdxzxzzaaxdxzsxzxzzdddxdxzxzxzxwzxdxdxzdxdxzzaaxzzxzzddxdxzdxdxzzaaxzzxzzddxdxzdxdxzzaaxzzdxdxzxzzzxaxdxd"
 heavy_max_moves = 3.0
 light_max_moves = 3.0
 clock_turns = "5"
