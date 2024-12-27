@@ -615,6 +615,8 @@ func load_game():
 	savefix("Theory of Everything (Type B)", "Theory of Everything (Power)")
 	savefix("Theory of Everything (Type C)", "Theory of Everything (Steel)")
 	savefix("Theory of Everything (Type D)", "Theory of Everything (Clock)")
+	savefix("Constant Pushback", "Constant Pushback (Remix)")
+	savefix("when boulders fly", "when boulders fly (Remix)")
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
@@ -2209,6 +2211,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Inexorable Destruction- [VAR1]")
 	level_filenames.push_back("Snake Chute [VAR1]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Light)- [VAR1]")
 	level_filenames.push_back("Ankh [VAR2]")
 	level_filenames.push_back("Crystalformer")
 	level_filenames.push_back("Elementary [VAR1]")
@@ -2227,10 +2230,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Falling Uphill")
 	level_filenames.push_back("Grounded Uphill [VAR1]")
-	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
 	level_filenames.push_back("Underflow")
 	level_filenames.push_back("Woodskip [VAR1]")
-	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
+	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2241,6 +2243,8 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Jet Engine [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
+	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
 	level_filenames.push_back("Impostor Syndrome")
 	level_filenames.push_back("Lunar Gravity [VAR1]")
 	level_filenames.push_back("Delay Circuit")
