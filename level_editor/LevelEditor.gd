@@ -805,7 +805,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.HeavyIdle:
 			text = "Heavy: Actor. Character. Heaviness: Steel. Strength: Steel. Durability: Spikes. Fall speed: 2.  Native Time Colour: Purple. Doesn't float (immediately starts falling when ungrounded or moving down onto a non-ladder, no air control when falling). Climbs. Sticky top: After making a forward move, anything that was in the tile above it mimics the move. (Only the first Heavy in layer-then-reading-order will be real. The rest will be inert. Inert robots don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.LightIdle:
-			text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs. Clumsy (loses one strength when indirectly pushed). (Only the first Heavy in layer-then-reading-order will be real. The rest will be inert. Inert robots don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
+			text = "Light: Actor. Character. Heaviness: Iron. Strength: Iron. Durability: Nothing. Fall speed: 1. Native Time Colour: Blurple. Floats (if grounded and could fall, enters rising state. When moving down, remains grounded. Has air control while falling.) Climbs. Clumsy (loses one strength when indirectly pushed). (Only the first Light in layer-then-reading-order will be real. The rest will be inert. Inert robots don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.HeavyGoal:
 			text = "Heavy Goal: At end of turn, if unbroken Heavy is on a Heavy Goal and unbroken Light is on a Light Goal, you win."
 		Tiles.LightGoal:
@@ -993,7 +993,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.SlopeSW:
 			text = "Slope: If a non-retro move enters a slope, then for the original move to succeed, it also has to be able to eject perpendicularly out of the slope. If that fails, it also tries to leave parallely. If that fails too, the move fails. (The second movement can't be the direction you came from.) If a slope makes a grounded robot or any other actor move up, it becomes rising.  When time passes, before clocks tick, the 'slope cleanup step' happens - ALL actors still in slope attempt to be ejected (first sideways, then vertically, then if all of that fails we break for infinite damage). This continues recursively until nothing changes. If we loop 100 times: Lose (infinite loop). (Btw, if multiple slopes are in a tile, they're checked in layer order.)"
 		Tiles.Boulder:
-			text = "Boulder: Actor. Heaviness: Iron. Strength: Wood. Durability: Spikes. Fall speed: 1. Native Time Colour: Gray. Boulders can fill holes. If a non-broken Boulder makes a non-retro move with a horizontal component: Its momentum becomes Left or Right. (This is a timeline event.) When time passes, after nudges and before gravity: A non-broken boulder with momentum will attempt to move in that direction, and its momentum will become Zero if the move fails. Boulders rolling under their own momentum can push with +1 strength, but will remain stationary (and thus lose their momentum). (Boulders with a Propellor can have vertical momentum.)"
+			text = "Boulder: Actor. Heaviness: Iron. Strength: Wood. Durability: Spikes. Fall speed: 1. Native Time Colour: Gray. Boulders can fill holes. If a non-broken Boulder makes a non-retro move with a horizontal component: Its momentum becomes Left or Right. (This is a timeline event.) When time passes, after nudges and before gravity: A non-broken boulder with momentum that didn't move horizontally this turn will attempt to move in that direction, and its momentum will become Zero if the move fails. Boulders moving in the direction of their momentum (not due to a push) can push with +1 strength, but will remain stationary (and thus lose their momentum). (Boulders with a Propellor can have vertical momentum.)"
 		Tiles.PhaseWallGreenEven:
 			text = "Phase Wall Green Even: Solid during even Turns. (Turn increments at the end of a turn.)"
 		Tiles.PhaseWallGreenOdd:
@@ -1160,10 +1160,13 @@ func picker_tooltip() -> void:
 	
 	pickertooltip.set_rect_position(gamelogic.adjusted_mouse_position() + Vector2(8, 8));
 	pickertooltip.set_rect_size(Vector2(200, pickertooltip.get_rect_size().y));
+	#if (pickertooltip.get_rect_position().x + 200 > 512):
+	#	pickertooltip.set_rect_size(Vector2(max(100, 512 - pickertooltip.get_rect_position().x), pickertooltip.get_rect_size().y));
+	#if (pickertooltip.get_rect_position().x + 100 > 512):
+	#	pickertooltip.set_rect_position(Vector2(512-100, pickertooltip.get_rect_position().y));
+	# new squish logic so boulder's massive tooltip always stays on-screen lmao
 	if (pickertooltip.get_rect_position().x + 200 > 512):
-		pickertooltip.set_rect_size(Vector2(max(100, 512 - pickertooltip.get_rect_position().x), pickertooltip.get_rect_size().y));
-	if (pickertooltip.get_rect_position().x + 100 > 512):
-		pickertooltip.set_rect_position(Vector2(512-100, pickertooltip.get_rect_position().y));
+		pickertooltip.set_rect_position(Vector2(512-200, pickertooltip.get_rect_position().y));
 	if (pickertooltip.get_rect_position().y + pickertooltip.get_rect_size().y > 300):
 		pickertooltip.set_rect_position(Vector2(pickertooltip.get_rect_position().x, 300-pickertooltip.get_rect_size().y));
 	
