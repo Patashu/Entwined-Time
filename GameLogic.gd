@@ -609,7 +609,8 @@ func load_game():
 	react_to_save_file_update();
 	
 	#17.8
-	savefix("Window of Oppertunity", "Window of Opportunity")
+	#savefix("Window of Oppertunity", "Window of Opportunity")
+	#18.1
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
@@ -1708,7 +1709,7 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("Green Adventure [VAR1]")
-	level_filenames.push_back("Board Ring A")
+	level_filenames.push_back("Fragile Victory")
 	level_filenames.push_back("Gain Leverage")
 	level_filenames.push_back("Verdant Crossroads")
 	level_filenames.push_back("Cement Pit [VAR1]")
@@ -2030,7 +2031,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Spacetime Launch")
 	level_filenames.push_back("Spacetime Launch-")
 	level_filenames.push_back("Flamepatch")
-	level_filenames.push_back("Fragile Victory")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2164,6 +2164,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Fuzzy Parkour [VAR1]")
+	level_filenames.push_back("Board Ring A")
 	level_filenames.push_back("Invisible Void Bridge")
 	level_filenames.push_back("Collaborative Motion")
 	level_filenames.push_back("Quantum Entanglement [VAR1]")
