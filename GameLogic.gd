@@ -1620,6 +1620,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elementary")
 	level_filenames.push_back("BlockageEx")
 	level_filenames.push_back("The Time Crystal Pits")
+	level_filenames.push_back("Imaginary Fulcrum")
 	level_filenames.push_back("Crystal Removing Service")
 	level_filenames.push_back("Smuggler")
 	level_filenames.push_back("Frangible")
@@ -1746,6 +1747,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Zombie Mode")
 	level_filenames.push_back("The Zombie Pit")
 	level_filenames.push_back("Island of Stability")
+	level_filenames.push_back("True Minimalism")
 	level_filenames.push_back("Undying Army (Type A)")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -1947,16 +1949,17 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Broken Bridge [VAR1]")
 	level_filenames.push_back("TimelessBridgeEx")
 	level_filenames.push_back("Light Moooving Service [VAR1]")
+	level_filenames.push_back("Leap of Faith [Space Program]")
 	level_filenames.push_back("Booster Seat [VAR1]")
 	level_filenames.push_back("Down [VAR1]")
 	level_filenames.push_back("World's Tiniest Pit")
 	level_filenames.push_back("Firewall (Loop 2)")
-	level_filenames.push_back("Leap of Faith [Space Program]")
 	level_filenames.push_back("Heavy Moving Service [VAR1]")
 	level_filenames.push_back("Heavy Moving Service [VAR2]")
 	level_filenames.push_back("Heavy Moving Service [VAR3]")
 	level_filenames.push_back("Light Moving Service [VAR1]")
 	level_filenames.push_back("Light Moving Service [VAR2]")
+	level_filenames.push_back("Constant Pushback [VAR1]")
 	level_filenames.push_back("Glass Monolith (glass shortage)")
 	level_filenames.push_back("Engine Room [VAR1]")
 	level_filenames.push_back("Collectathon [VAR1]")
@@ -2144,6 +2147,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Look It's Another Pit")
 	level_filenames.push_back("The RGB Pit")
+	level_filenames.push_back("The Spikiest Pit [VAR2]")
 	level_filenames.push_back("The Last Pit [VAR3]")
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Left Pit")
@@ -2252,6 +2256,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Voidly Moving Service")
 	level_filenames.push_back("Ankh [VAR1]")
 	level_filenames.push_back("Down [VAR2]")
+	level_filenames.push_back("Imaginary Fulcrum [VAR1]")
 	level_filenames.push_back("Fragile Victory [VAR1]")
 	level_filenames.push_back("Light Hurting Service (fixed) (final) [VAR1]")
 	level_filenames.push_back("Stack Split")
@@ -2391,6 +2396,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Green Fire In The Sky")
 	level_filenames.push_back("Outlets!")
 	level_filenames.push_back("Totem Pole [VAR1]")
+	level_filenames.push_back("Tiny Traffic Jam")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

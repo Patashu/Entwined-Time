@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 12, 0, 4, 12, 0, 5, 12, 0, 6, 12, 0, 7, 12, 0, 65537, 7, 0, 65538, 2, 0, 65542, 8, 0, 65543, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196615, 131075, 12, 0, 131077, 12, 0, 131078, 14, 196613, 131079, 14, 196615, 196611, 12, 0, 196613, 12, 0 )
+
+[node name="@@372" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 28, 0, 65536, 28, 0, 65543, 25, 0, 131075, 19, 0, 131077, 22, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "The Spikiest Pit [VAR2]"
+level_author = "Slabdrill & Sandra"
+level_replay = "The Spikiest Pit [VAR2]$mturn=55$wxadxzxzasxddwdxzzxzzzzxzaaxaxzzdxaxaxzaxaxzxzzdsxzxzzssxddwdxzzxzzxzxzzwdddxa"
+heavy_max_moves = 4.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""
