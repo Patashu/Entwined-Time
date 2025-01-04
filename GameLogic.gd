@@ -4800,7 +4800,6 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
 				pass
 			else:
-				print(new_tile, " ", old_tile)
 				if (new_tile == -1):
 					add_to_animation_server(actor, [Anim.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 				else:
