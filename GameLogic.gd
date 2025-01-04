@@ -1906,6 +1906,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Doormaster")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Cliffs-")
 	level_filenames.push_back("Rise As One")
@@ -4799,6 +4800,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
 				pass
 			else:
+				print(new_tile, " ", old_tile)
 				if (new_tile == -1):
 					add_to_animation_server(actor, [Anim.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 				else:

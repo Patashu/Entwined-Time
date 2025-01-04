@@ -732,7 +732,7 @@ func _process(delta: float) -> void:
 							14:
 								sprite.texture = preload("res://assets/wall.png");
 							_:
-								sprite.texture = gamelogic.terrainmap.tile_set.tile_get_texture(current_animation[2]);
+								sprite.texture = gamelogic.terrainmap.tile_set.tile_get_texture(current_animation[3]);
 						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
 						sprite.position.x += -6+(i%2)*12;
 						sprite.position.y += -6+floor(i/2)*12;
