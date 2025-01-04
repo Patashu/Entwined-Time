@@ -611,12 +611,12 @@ func load_game():
 	#17.8
 	#savefix("Window of Oppertunity", "Window of Opportunity")
 	#18.1
-	savefix("Theory of Everything (Type A)", "Theory of Everything (Iron)")
-	savefix("Theory of Everything (Type B)", "Theory of Everything (Power)")
-	savefix("Theory of Everything (Type C)", "Theory of Everything (Steel)")
-	savefix("Theory of Everything (Type D)", "Theory of Everything (Clock)")
-	savefix("Constant Pushback", "Constant Pushback (Remix)")
-	savefix("when boulders fly", "when boulders fly (Remix)")
+	#savefix("Theory of Everything (Type A)", "Theory of Everything (Iron)")
+	#savefix("Theory of Everything (Type B)", "Theory of Everything (Power)")
+	#savefix("Theory of Everything (Type C)", "Theory of Everything (Steel)")
+	#savefix("Theory of Everything (Type D)", "Theory of Everything (Clock)")
+	#savefix("Constant Pushback", "Constant Pushback (Remix)")
+	#savefix("when boulders fly", "when boulders fly (Remix)")
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
