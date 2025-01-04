@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=460 format=2]
+[gd_resource type="TileSet" load_steps=462 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -426,6 +426,8 @@
 [ext_resource path="res://assets/fence.png" type="Texture" id=424]
 [ext_resource path="res://assets/passage.png" type="Texture" id=425]
 [ext_resource path="res://assets/oneway_south_purple_5.png" type="Texture" id=426]
+[ext_resource path="res://assets/glass_screw.png" type="Texture" id=427]
+[ext_resource path="res://assets/bomb.png" type="Texture" id=428]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3612,3 +3614,31 @@ frame_7/delay_sec = 0.0
 178/shape_one_way_margin = 0.0
 178/shapes = [  ]
 178/z_index = 0
+179/name = "GlassScrew"
+179/texture = ExtResource( 427 )
+179/tex_offset = Vector2( 0, 0 )
+179/modulate = Color( 1, 1, 1, 1 )
+179/region = Rect2( 0, 0, 24, 24 )
+179/tile_mode = 0
+179/occluder_offset = Vector2( 12, 12 )
+179/navigation_offset = Vector2( 12, 12 )
+179/shape_offset = Vector2( 0, 0 )
+179/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+179/shape_one_way = false
+179/shape_one_way_margin = 0.0
+179/shapes = [  ]
+179/z_index = 0
+180/name = "Bomb"
+180/texture = ExtResource( 428 )
+180/tex_offset = Vector2( 0, 0 )
+180/modulate = Color( 1, 1, 1, 1 )
+180/region = Rect2( 0, 0, 24, 24 )
+180/tile_mode = 0
+180/occluder_offset = Vector2( 12, 12 )
+180/navigation_offset = Vector2( 12, 12 )
+180/shape_offset = Vector2( 0, 0 )
+180/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+180/shape_one_way = false
+180/shape_one_way_margin = 0.0
+180/shapes = [  ]
+180/z_index = 0

@@ -182,6 +182,8 @@ enum Tiles {
 	Bumper, #176
 	Passage, #177
 	GreenPassage, #178
+	GlassScrew, #179
+	Bomb, #180
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -472,6 +474,8 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.Bumper)
 		picker_array.append(Tiles.Passage)
 		picker_array.append(Tiles.GreenPassage)
+		picker_array.append(Tiles.GlassScrew)
+		picker_array.append(Tiles.Bomb)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1150,6 +1154,10 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Passage: Solid. Surprise: If the actor can move again past this (and any subsequent Passages), it does (creating a single rewind event)."
 		Tiles.GreenPassage:
 			text = "Green Passage: Solid. Surprise: If the actor can move again past this (and any subsequent Green Passages), it does (greenly)."
+		Tiles.GlassScrew:
+			text = "Glass Screw: When terrain is destroyed in this tile: Destroy one Glass Screw above it, then destroy the topmost tile. (The other destruction is done with the same grayly/greenly/voidly level.)"
+		Tiles.Bomb:
+			text = "Bomb: A Glass Screw, but it also triggers Bombs in orthogonally adjacent tiles."
 	return text;
 	
 func picker_tooltip() -> void:

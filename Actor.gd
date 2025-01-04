@@ -668,6 +668,8 @@ func _process(delta: float) -> void:
 						var sprite = Sprite.new();
 						sprite.set_script(preload("res://FadingSprite.gd"));
 						match (current_animation[2]):
+							45:
+								sprite.texture = preload("res://assets/glass_block.png")
 							46:
 								sprite.texture = preload("res://assets/green_glass_block.png")
 							51:
@@ -688,8 +690,11 @@ func _process(delta: float) -> void:
 								sprite.texture = preload("res://assets/repair_station_gray.png");
 							126:
 								sprite.texture = preload("res://assets/repair_station_green.png");
+							#TODO: all of the above might be redundant
+							14:
+								sprite.texture = preload("res://assets/wall.png");
 							_:
-								sprite.texture = preload("res://assets/glass_block.png")
+								sprite.texture = gamelogic.terrainmap.tile_set.tile_get_texture(current_animation[2]);
 						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
 						sprite.position.x += -6+(i%2)*12;
 						sprite.position.y += -6+floor(i/2)*12;
@@ -709,6 +714,8 @@ func _process(delta: float) -> void:
 						var sprite = Sprite.new();
 						sprite.set_script(preload("res://FadingSprite.gd"));
 						match (current_animation[3]):
+							45:
+								sprite.texture = preload("res://assets/glass_block.png")
 							69:
 								sprite.texture = preload("res://assets/glass_block_cracked.png")
 							88:
@@ -719,8 +726,13 @@ func _process(delta: float) -> void:
 								sprite.texture = preload("res://assets/repair_station.png");
 							125:
 								sprite.texture = preload("res://assets/repair_station_gray.png");
+							#TODO: all of the above might be redundant
+							-1:
+								sprite.texture = null;
+							14:
+								sprite.texture = preload("res://assets/wall.png");
 							_:
-								sprite.texture = preload("res://assets/glass_block.png")
+								sprite.texture = gamelogic.terrainmap.tile_set.tile_get_texture(current_animation[2]);
 						sprite.position = current_animation[1] + Vector2(gamelogic.cell_size/2, gamelogic.cell_size/2);
 						sprite.position.x += -6+(i%2)*12;
 						sprite.position.y += -6+floor(i/2)*12;

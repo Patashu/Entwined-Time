@@ -202,7 +202,7 @@ enum Tiles {
 	LockOpen,
 	Spikeball,
 	SteelCrate,
-	Wall,
+	Wall, #14
 	WoodenCrate,
 	Checkpoint,
 	CheckpointBlue,
@@ -367,6 +367,8 @@ enum Tiles {
 	Bumper, #176
 	Passage, #177
 	GreenPassage, #178
+	GlassScrew, #179
+	Bomb, #180
 }
 var voidlike_tiles : Array = [];
 
@@ -2580,6 +2582,7 @@ var has_void_walls : bool = false;
 var has_void_fog : bool = false;
 var has_void_stars : bool = false;
 var has_mimics : bool = false;
+var has_triggers : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2693,6 +2696,7 @@ func ready_map() -> void:
 	has_void_fog = false;
 	has_void_stars = false;
 	has_mimics = false;
+	has_triggers = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2886,6 +2890,11 @@ func ready_map() -> void:
 			has_mimics = true;
 		elif (any_layer_has_this_tile(Tiles.LightMimic)):
 			has_mimics = true;
+			
+		if (any_layer_has_this_tile(Tiles.GlassScrew)):
+			has_triggers = true;
+		elif (any_layer_has_this_tile(Tiles.Bomb)):
+			has_triggers = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -4232,7 +4241,7 @@ boost_pad_reentrance: bool = false) -> int:
 		# floorboards check - happens now so it goes 'move off, then floorboards break' so as an undo 'floorboards come back, move is undone'
 		if (has_floorboards and chrono < Chrono.TIMELESS):
 			var old_terrain = terrain_in_tile(old_pos, actor, chrono);
-			for i in range(old_terrain.size() - 1):
+			for i in range(old_terrain.size()):
 				var tile = old_terrain[i];
 				match tile:
 					Tiles.Floorboards:
@@ -4690,6 +4699,8 @@ func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 		set_cellv_rotation(id, tile, layer, [Tiles.Fuzz]);
 	else:
 		terrain_layers[layer].set_cellv(tile, id);
+		if (id == Tiles.Wall):
+			terrain_layers[layer].update_bitmask_area(tile);
 
 func set_cellv_rotation(id: int, tile: Vector2, layer: int, candidates: Array) -> void:
 	var terrain = terrain_in_tile(tile, null, Chrono.TIMELESS, true);
@@ -4737,7 +4748,10 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
 		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
 		if new_tile != -1:
-			var ghost = make_ghost_here_with_texture(pos, terrainmap.tile_set.tile_get_texture(new_tile));
+			if (new_tile == Tiles.Wall):
+				var ghost = make_ghost_here_with_texture(pos, preload("res://assets/wall.png"));
+			else:
+				var ghost = make_ghost_here_with_texture(pos, terrainmap.tile_set.tile_get_texture(new_tile));
 		else:
 			var ghost = make_ghost_here_with_texture(pos, preload("res://timeline/timeline-unterrain-12.png"));
 			ghost.position -= Vector2(cell_size/2, cell_size/2);
@@ -4785,7 +4799,10 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
 				pass
 			else:
-				add_to_animation_server(actor, [Anim.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+				if (new_tile == -1):
+					add_to_animation_server(actor, [Anim.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+				else:
+					add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			
 			if (old_tile == Tiles.OneUndo or new_tile == Tiles.OneUndo):
 				update_limited_undo_sprite(pos);
@@ -4796,7 +4813,38 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				if actor.pos == pos:
 					update_night_and_stars(actor, terrain_in_tile(pos, actor, chrono));
 		
+		if (has_triggers and (new_tile == -1 or new_tile == Tiles.NoUndo) and chrono < Chrono.META_UNDO and !hypothetical):
+			var terrain = terrain_in_tile(pos, actor, chrono);
+			for i in range(layer, -1, -1):
+				var tile_i = terrain[i];
+				if (tile_i == Tiles.GlassScrew or tile_i == Tiles.Bomb):
+					detonate_trigger(actor, pos, i, hypothetical, green_terrain, chrono, -1);
+					break
+		
 	return Success.Surprise;
+
+func detonate_trigger(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int,
+chrono: int, new_tile: int) -> void:
+	var terrain_layer = terrain_layers[layer];
+	var old_tile = terrain_layer.get_cellv(pos);
+	maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1);
+	# have to check terrain now because another trigger might have changed it in the above line
+	var terrain = terrain_in_tile(pos, actor, chrono);
+	for k in range(terrain.size()):
+		var tile_k = terrain[k];
+		if (tile_k != -1 and tile_k != Tiles.NoUndo and tile_k != Tiles.OneUndo):
+			maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1);
+			break;
+	if (old_tile == Tiles.Bomb):
+		#on all orthogonal four tiles, if they contain a bomb, blow up that bomb too
+		var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
+		for d in directions:
+			var terrain_d = terrain_in_tile(pos+d, actor, chrono);
+			for d1 in range(terrain_d.size()):
+				var tile_d1 = terrain_d[d1];
+				if (tile_d1 == Tiles.Bomb):
+					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1);
+					
 
 func maybe_rise(actor: Actor, chrono: int, dir: Vector2, care_about_falling : bool = true):
 	if (dir.y < 0 and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (!care_about_falling or actor.airborne == -1 or !actor.is_character)):
