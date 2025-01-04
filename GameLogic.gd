@@ -2525,7 +2525,7 @@ func initialize_level_list() -> void:
 			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
 			if (insight_level_name.find("(Insight)")) >= 0:
 				pass
-			elif insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or insight_level_name.find("Theory of Everything") >= 0 or insight_level_name.find("Board Ring B") >= 0:
+			elif insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or (insight_level_name.find("Theory of Everything") >= 0 and insight_level_name != "Theory of Everything (Iron)") or insight_level_name.find("Board Ring B") >= 0:
 				has_remix[level_name] = true;
 				has_remix[insight_level_name] = true;
 			insight_level_names[level_name] = insight_level_name;
