@@ -4768,6 +4768,9 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			terrain_layer = terrain_layers[layer];
 			# set old_tile again (I guess it'll always be -1 at this point but just to be explicit about it)
 			old_tile = terrain_layer.get_cellv(pos);
+		#sanity check that stops a double bomb glitch
+		if (old_tile == new_tile):
+			return Success.No;
 		set_cellv_maybe_rotation(new_tile, pos, layer);
 		if (green_terrain == Greenness.Green and chrono < Chrono.CHAR_UNDO):
 			chrono = Chrono.CHAR_UNDO;
