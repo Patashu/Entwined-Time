@@ -2896,6 +2896,9 @@ func ready_map() -> void:
 			has_triggers = true;
 		elif (any_layer_has_this_tile(Tiles.Bomb)):
 			has_triggers = true;
+			
+		if (has_triggers):
+			trigger_rotation();
 	
 	calculate_map_size();
 	make_actors();
@@ -4674,6 +4677,10 @@ func phaseboards_rotation() -> void:
 func fuzz_rotation() -> void:
 	all_rotation([Tiles.Fuzz]);
 	
+func trigger_rotation() -> void:
+	all_rotation([Tiles.GlassScrew]);
+	all_rotation([Tiles.Bomb]);
+	
 func all_rotation(candidates: Array) -> void:
 	var floorboard_counts = {};
 	for i in range(terrain_layers.size()-1, -1, -1):
@@ -4698,6 +4705,10 @@ func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 		set_cellv_rotation(id, tile, layer, floorboards_ids);
 	elif id == Tiles.Fuzz:
 		set_cellv_rotation(id, tile, layer, [Tiles.Fuzz]);
+	elif id == Tiles.Bomb:
+		set_cellv_rotation(id, tile, layer, [Tiles.Bomb]);
+	elif id == Tiles.GlassScrew:
+		set_cellv_rotation(id, tile, layer, [Tiles.GlassScrew]);
 	else:
 		terrain_layers[layer].set_cellv(tile, id);
 		if (id == Tiles.Wall):
