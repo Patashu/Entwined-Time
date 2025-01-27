@@ -4794,7 +4794,13 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards or new_tile == Tiles.RepairStation or new_tile == Tiles.RepairStationGray:
 			add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 		else:
-			if (old_tile == Tiles.Fuzz):
+			# ughh duplicated coooode
+			if (is_trigger):
+				if (new_tile == -1):
+					add_to_animation_server(actor, [Anim.shatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+				else:
+					add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
+			elif (old_tile == Tiles.Fuzz):
 				play_sound("fuzz");
 			elif (old_tile == Tiles.OneUndo):
 				play_sound("rewindnoticed");
