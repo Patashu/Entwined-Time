@@ -369,6 +369,7 @@ enum Tiles {
 	GreenPassage, #178
 	GlassScrew, #179
 	Bomb, #180
+	GoldFloorboards, #181
 }
 var voidlike_tiles : Array = [];
 
@@ -2724,6 +2725,8 @@ func ready_map() -> void:
 			has_floorboards = true;
 		elif (any_layer_has_this_tile(Tiles.MagentaFloorboards)):
 			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.GoldFloorboards)):
+			has_floorboards = true;
 			
 		if (has_floorboards):
 			floorboards_rotation();
@@ -4229,7 +4232,7 @@ boost_pad_reentrance: bool = false) -> int:
 		if (has_holes and chrono < Chrono.META_UNDO):
 			var actors = actors_in_tile(pos);
 			var terrain = terrain_in_tile(pos, actor, chrono);
-			if (terrain.has(Tiles.Floorboards) or terrain.has(Tiles.MagentaFloorboards) or terrain.has(Tiles.GreenFloorboards) or terrain.has(Tiles.VoidFloorboards)):
+			if (terrain.has(Tiles.Floorboards) or terrain.has(Tiles.MagentaFloorboards) or terrain.has(Tiles.GreenFloorboards) or terrain.has(Tiles.VoidFloorboards) or terrain.has(Tiles.GoldFloorboards)):
 				pass
 			else:
 				for actor_there in actors:
@@ -4695,8 +4698,8 @@ func all_rotation(candidates: Array) -> void:
 				else:
 					floorboard_counts[tile] = 0;
 
-var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards];
-var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true};
+var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards, Tiles.GoldFloorboards];
+var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true, Tiles.GoldFloorboards: true};
 var rotateable_phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardVoid, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife];
 var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardVoid: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true, Tiles.PhaseBoardEast: true, Tiles.PhaseBoardNorth: true, Tiles.PhaseBoardSouth: true, Tiles.PhaseBoardWest: true};
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=462 format=2]
+[gd_scene load_steps=463 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -428,6 +428,7 @@
 [ext_resource path="res://assets/oneway_south_purple_5.png" type="Texture" id=426]
 [ext_resource path="res://assets/glass_screw.png" type="Texture" id=427]
 [ext_resource path="res://assets/bomb.png" type="Texture" id=428]
+[ext_resource path="res://assets/floorboards_gold.png" type="Texture" id=429]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1833,3 +1834,7 @@ texture = ExtResource( 427 )
 [node name="Bomb" type="Sprite" parent="."]
 position = Vector2( 297, 14 )
 texture = ExtResource( 428 )
+
+[node name="GoldFloorboards" type="Sprite" parent="."]
+position = Vector2( 439, 65 )
+texture = ExtResource( 429 )

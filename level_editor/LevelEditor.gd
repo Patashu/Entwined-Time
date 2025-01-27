@@ -184,6 +184,7 @@ enum Tiles {
 	GreenPassage, #178
 	GlassScrew, #179
 	Bomb, #180
+	GoldFloorboards, #181bo
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -476,6 +477,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.GreenPassage)
 		picker_array.append(Tiles.GlassScrew)
 		picker_array.append(Tiles.Bomb)
+		picker_array.append(Tiles.GoldFloorboards)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1158,6 +1160,8 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Glass Screw: When terrain is destroyed in this tile: Destroy one Glass Screw above it, then destroy the topmost tile. (The other destruction is done with the same grayly/greenly/voidly level.)"
 		Tiles.Bomb:
 			text = "Bomb: A Glass Screw, but it also triggers Bombs in orthogonally adjacent tiles. Additionally, the Bomb starting a chain reaction does not destroy another tile."
+		Tiles.GoldFloorboards:
+			text = "Gold Floorboards: Floorboards that can only be destroyed by Glass Screw (etc)."
 	return text;
 	
 func picker_tooltip() -> void:
