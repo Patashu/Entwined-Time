@@ -34,6 +34,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://BindingButton.gd"
 }, {
+"base": "Button",
+"class": "ChapterButton",
+"language": "GDScript",
+"path": "res://ChapterButton.gd"
+}, {
 "base": "Node2D",
 "class": "Controls",
 "language": "GDScript",
@@ -245,6 +250,7 @@ _global_script_class_icons={
 "ActorBase": "",
 "AuthorsReplayModalPrompt": "",
 "BindingButton": "",
+"ChapterButton": "",
 "Controls": "",
 "CreditsModal": "",
 "EndingCutscene1": "",

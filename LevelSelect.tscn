@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://default_styleboxtexture.tres" type="StyleBox" id=1]
 [ext_resource path="res://DefaultTheme.tres" type="Theme" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://meta_styleboxtexture.tres" type="StyleBox" id=5]
 [ext_resource path="res://light_styleboxtexture.tres" type="StyleBox" id=6]
 [ext_resource path="res://TablessSearchBox.gd" type="Script" id=7]
+[ext_resource path="res://ChapterButton.gd" type="Script" id=8]
 
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource( 3 )
@@ -16,6 +17,7 @@ margin_left = 55.0
 margin_top = 30.0
 margin_right = 464.0
 margin_bottom = 273.0
+rect_pivot_offset = Vector2( 90, 76 )
 focus_neighbour_right = NodePath("PrevButton")
 focus_neighbour_bottom = NodePath("CloseButton")
 theme = ExtResource( 2 )
@@ -92,3 +94,95 @@ margin_bottom = 222.0
 text = "Search..."
 editable = false
 script = ExtResource( 7 )
+
+[node name="CommunityLevelsHolder" type="Label" parent="Holder"]
+margin_left = 118.0
+margin_top = 2.0
+margin_right = 295.0
+margin_bottom = 13.0
+
+[node name="Button" type="Button" parent="Holder/CommunityLevelsHolder"]
+margin_left = -111.0
+margin_top = 12.0
+margin_right = -106.0
+margin_bottom = 27.0
+text = "Voices from the Void"
+script = ExtResource( 8 )
+
+[node name="Label" type="Label" parent="Holder/CommunityLevelsHolder"]
+margin_left = -110.0
+margin_top = 28.0
+margin_right = 287.0
+margin_bottom = 53.0
+text = "The first custom chapter ever made, by Neonesque. Puzzles that feel like they
+arrived from an alien dimension with its own alternate timeline Entwined Time."
+
+[node name="Label5" type="Label" parent="Holder/CommunityLevelsHolder"]
+margin_left = -91.0
+margin_top = 203.0
+margin_right = 281.0
+margin_bottom = 215.0
+text = "Use Ctrl+F to search puzzles by name. Works anywhere."
+
+[node name="Button2" type="Button" parent="Holder/CommunityLevelsHolder"]
+margin_left = -111.0
+margin_top = 54.0
+margin_right = 99.0
+margin_bottom = 69.0
+text = "The Cutting Room Floor (Unused Puzzles)"
+script = ExtResource( 8 )
+
+[node name="Button3" type="Button" parent="Holder/CommunityLevelsHolder"]
+margin_left = 102.0
+margin_top = 54.0
+margin_right = 212.0
+margin_bottom = 69.0
+text = "(Variants and Buffs)"
+script = ExtResource( 8 )
+
+[node name="Label2" type="Label" parent="Holder/CommunityLevelsHolder"]
+margin_left = -110.0
+margin_top = 70.0
+margin_right = 287.0
+margin_bottom = 95.0
+text = "Patashu's puzzles that didn't make the cut or didn't fit well into the intended
+difficulty progression, but still have merit to them."
+
+[node name="Button4" type="Button" parent="Holder/CommunityLevelsHolder"]
+margin_left = -111.0
+margin_top = 96.0
+margin_right = 18.0
+margin_bottom = 111.0
+text = "Slabdrill's World (Best Of)"
+script = ExtResource( 8 )
+
+[node name="Button5" type="Button" parent="Holder/CommunityLevelsHolder"]
+margin_left = 21.0
+margin_top = 96.0
+margin_right = 98.0
+margin_bottom = 111.0
+text = "(Training Dojo)"
+script = ExtResource( 8 )
+
+[node name="Label3" type="Label" parent="Holder/CommunityLevelsHolder"]
+margin_left = -110.0
+margin_top = 112.0
+margin_right = 287.0
+margin_bottom = 123.0
+text = "Slabdrill makes tight puzzles focusing on specific executions and lynchpins."
+
+[node name="Button6" type="Button" parent="Holder/CommunityLevelsHolder"]
+margin_left = -111.0
+margin_top = 124.0
+margin_right = 46.0
+margin_bottom = 139.0
+text = "Formless Exploration (Best Of)"
+script = ExtResource( 8 )
+
+[node name="Label4" type="Label" parent="Holder/CommunityLevelsHolder"]
+margin_left = -110.0
+margin_top = 140.0
+margin_right = 287.0
+margin_bottom = 165.0
+text = "Sandra makes puzzles freely without any preconceptions - and when anything
+is possible, the solution may surprise and delight."

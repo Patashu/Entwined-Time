@@ -11,13 +11,16 @@ onready var communitylevelsbutton : Button = get_node("Holder/CommunityLevelsBut
 onready var closebutton : Button = get_node("Holder/CloseButton");
 onready var pointer : Sprite = get_node("Holder/Pointer");
 onready var searchbox : LineEdit = get_node("Holder/SearchBox");
-onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, communitylevelsbutton, closebutton, pointer, searchbox];
+onready var communitylevelsholder : Label = get_node("Holder/CommunityLevelsHolder");
+onready var specialbuttons = [prevbutton, nextbutton, leveleditorbutton, communitylevelsbutton, closebutton, pointer, searchbox, communitylevelsholder];
 var buttons_by_xy = {};
 var cutscene_button = null;
 var in_community_puzzles = false;
 var star_tints = false;
 var search_page_cur: int = 0;
 var search_page_size: int = 24;
+# -1 for showing one chapter, 0 for showing recommended, 1+ for showing directory (page 1, page 2, etc)
+var community_levels_landing_state = -1;
 
 func _ready() -> void:
 	if gamelogic.save_file["levels"].has("Joke") and gamelogic.save_file["levels"]["Joke"].has("won") and gamelogic.save_file["levels"]["Joke"]["won"]:
@@ -150,13 +153,19 @@ func _communitylevelsbutton_pressed() -> void:
 	searchbox.visible = in_community_puzzles;
 	if (in_community_puzzles):
 		chapter = gamelogic.custom_past_here;
-		prepare_chapter();
+		cleanup_chapter();
 		update_focus_neighbors();
+		holder.text = "Community Levels - Recommended";
 		communitylevelsbutton.text = "Campaign Levels";
-		if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
-			prevbutton.disabled = true;
-			nextbutton.disabled = true;
+		community_levels_landing_state = 0;
+		communitylevelsholder.visible = true;
+		#I think this was only necessary when there was one custom chapter?
+		#if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
+		#	prevbutton.disabled = true;
+		#	nextbutton.disabled = true;
 	else:
+		community_levels_landing_state = -1;
+		communitylevelsholder.visible = false;
 		chapter = 0;
 		prepare_chapter();
 		update_focus_neighbors();
@@ -258,6 +267,8 @@ func cleanup_chapter() -> void:
 
 func prepare_search_chapter(indexes: Array) -> void:
 	cleanup_chapter();
+	communitylevelsholder.visible = false;
+	community_levels_landing_state = -1;
 	
 	holder.text = "Search: " + searchbox.text;
 	if (indexes.size() > search_page_size):
@@ -310,6 +321,8 @@ func prepare_search_chapter(indexes: Array) -> void:
 
 func prepare_chapter() -> void:
 	cleanup_chapter();
+	communitylevelsholder.visible = false;
+	community_levels_landing_state = -1;
 	
 	var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];
 	var requires_advanced_levels = (chapter == 2);
