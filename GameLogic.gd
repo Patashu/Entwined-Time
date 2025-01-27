@@ -4828,6 +4828,29 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			if (old_tile == Tiles.OneUndo or new_tile == Tiles.OneUndo):
 				update_limited_undo_sprite(pos);
 				
+			# goal hiding/revealing
+			if (has_triggers):
+				if (old_tile == Tiles.HeavyGoal):
+					for goal in goals:
+						if goal.visible and goal.pos == pos and goal.actorname == Actor.Name.HeavyGoal:
+							goal.visible = false;
+							break;
+				elif (old_tile == Tiles.LightGoal):
+					for goal in goals:
+						if goal.visible and goal.pos == pos and goal.actorname == Actor.Name.LightGoal:
+							goal.visible = false;
+							break;
+				elif (new_tile == Tiles.HeavyGoal):
+					for goal in goals:
+						if !goal.visible and goal.pos == pos and goal.actorname == Actor.Name.HeavyGoal:
+							goal.visible = true;
+							break;
+				elif (new_tile == Tiles.LightGoal):
+					for goal in goals:
+						if !goal.visible and goal.pos == pos and goal.actorname == Actor.Name.LightGoal:
+							goal.visible = true;
+							break;
+				
 		# if floorboards were made or destroyed here, have to update night/stars state
 		if (has_night_or_stars):
 			for actor in actors:
