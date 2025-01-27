@@ -4744,7 +4744,7 @@ func find_or_create_layer_having_this_tile(pos: Vector2, assumed_old_tile: int) 
 	return terrain_layers.size() - 1;
 
 func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int,
-chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -1) -> int:
+chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -1, is_trigger: bool = false) -> int:
 	if (chrono == Chrono.GHOSTS):
 		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
 		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
@@ -4819,22 +4819,24 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			for i in range(layer, -1, -1):
 				var tile_i = terrain[i];
 				if (tile_i == Tiles.GlassScrew or tile_i == Tiles.Bomb):
-					detonate_trigger(actor, pos, i, hypothetical, green_terrain, chrono, -1);
+					detonate_trigger(actor, pos, i, hypothetical, green_terrain, chrono, -1, is_trigger);
 					break
 		
 	return Success.Surprise;
 
 func detonate_trigger(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int,
-chrono: int, new_tile: int) -> void:
+chrono: int, new_tile: int, is_trigger: bool = false) -> void:
 	var terrain_layer = terrain_layers[layer];
 	var old_tile = terrain_layer.get_cellv(pos);
-	maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1);
+	# Only non-bombs or chain reactions break an extra tile for the initial break.
+	if (is_trigger or old_tile != Tiles.Bomb):
+		maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1, -2, -1, true);
 	# have to check terrain now because another trigger might have changed it in the above line
 	var terrain = terrain_in_tile(pos, actor, chrono);
 	for k in range(terrain.size()):
 		var tile_k = terrain[k];
 		if (tile_k != -1 and tile_k != Tiles.NoUndo and tile_k != Tiles.OneUndo):
-			maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1);
+			maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1, -2, -1, true);
 			break;
 	if (old_tile == Tiles.Bomb):
 		#on all orthogonal four tiles, if they contain a bomb, blow up that bomb too
@@ -4844,7 +4846,7 @@ chrono: int, new_tile: int) -> void:
 			for d1 in range(terrain_d.size()):
 				var tile_d1 = terrain_d[d1];
 				if (tile_d1 == Tiles.Bomb):
-					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1);
+					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1, true);
 					
 
 func maybe_rise(actor: Actor, chrono: int, dir: Vector2, care_about_falling : bool = true):

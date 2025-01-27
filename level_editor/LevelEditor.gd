@@ -1157,7 +1157,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.GlassScrew:
 			text = "Glass Screw: When terrain is destroyed in this tile: Destroy one Glass Screw above it, then destroy the topmost tile. (The other destruction is done with the same grayly/greenly/voidly level.)"
 		Tiles.Bomb:
-			text = "Bomb: A Glass Screw, but it also triggers Bombs in orthogonally adjacent tiles."
+			text = "Bomb: A Glass Screw, but it also triggers Bombs in orthogonally adjacent tiles. Additionally, the Bomb starting a chain reaction does not destroy another tile."
 	return text;
 	
 func picker_tooltip() -> void:
