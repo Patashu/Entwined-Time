@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 52, 0, 10, 52, 0, 131074, 7, 0, 131075, 2, 0, 131079, 8, 0, 131080, 1, 0, 196609, 52, 0, 196610, 52, 0, 196611, 52, 0, 196612, 52, 0, 196614, 52, 0, 196615, 52, 0, 196616, 52, 0, 196617, 52, 0, 262148, 52, 0, 262150, 52, 0, 327684, 52, 0, 327685, 52, 0, 327686, 52, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Good Level Design 101"
+level_author = "Sandra53"
+level_replay = "Good Level Design 101$mturn=51$ssxazzdzzsdzzzzxzzwazxaxzxzaxzxaaxzxzxzaszzzaxzxzaxzxzzzwxaxzwxaxzxdzz"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

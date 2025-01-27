@@ -1916,7 +1916,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Perpetual Motion Machine")
 	level_filenames.push_back("Pachinko-")
 	level_filenames.push_back("Tractor Beam")
+	level_filenames.push_back("Upward Jetstream")
 	level_filenames.push_back("Inside The Box")
+	level_filenames.push_back("Self Destruct")	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -1934,6 +1936,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
 	level_filenames.push_back("Noisemaker")
 	level_filenames.push_back("Doomsday Clock")
+	level_filenames.push_back("Do A Barrel Roll")
 	level_filenames.push_back("Time Travel")
 	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Void Sokoban")
@@ -2118,6 +2121,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Totem Pole")
 	level_filenames.push_back("Push-ups")
 	level_filenames.push_back("Crate Smashing Service")
+	level_filenames.push_back("Green Moonrise")
+	level_filenames.push_back("Jetstream")
+	level_filenames.push_back("Good Level Design 101")
+	level_filenames.push_back("Manual Gravity")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2166,6 +2173,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Side Shuffle")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("Phantom Push")
+	level_filenames.push_back("Clockwork [VAR1]")
 	level_filenames.push_back("Light Boots")
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Acrobatics but it's forced [VAR1]")
@@ -2296,6 +2304,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Lunar Gravity [VAR1]")
 	level_filenames.push_back("Delay Circuit")
 	level_filenames.push_back("Ankh [VAR1]")
+	level_filenames.push_back("Just 3 Steps [VAR1]")
+	level_filenames.push_back("Just 3 Steps-")
 	level_filenames.push_back("Down [VAR2]")
 	level_filenames.push_back("Imaginary Fulcrum [VAR1]")
 	level_filenames.push_back("Fragile Victory [VAR1]")

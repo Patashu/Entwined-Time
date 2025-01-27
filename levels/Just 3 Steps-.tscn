@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196609, 1, 2, 0, 2, 8, 0, 6, 7, 0, 7, 1, 0, 8, 14, 196609, 65536, 14, 655362, 65537, 14, 196614, 65538, 14, 196615, 65539, 78, 0, 65540, 77, 0, 65541, 78, 0, 65542, 14, 196613, 65543, 14, 196614, 65544, 14, 655364 )
+
+[node name="@@1705" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Just 3 Steps?"
+level_author = "Slabdrill"
+level_replay = "Just 3 Steps?$mturn=70$ddxaaxzzdxzzddxzxzxaddxzaxzzzsxzddxzaxzzddxzxzzxdxssxddxzzaaxzxzzxdxdxzxsxzzxzdxaaxzzwxzzsxzaaxzddxzz"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.184314, 0.168627, 0.337255, 1 )
+target_track = 6.0
+setup_replay = ""

@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 14, 524290, 5, 14, 196614, 6, 14, 524292, 65540, 14, 262145, 65541, 32, 0, 65542, 14, 655362, 65543, 14, 196614, 65544, 14, 524292, 131073, 158, 0, 131074, 158, 0, 131076, 14, 327681, 131077, 3, 0, 131078, 3, 0, 131079, 32, 0, 131080, 14, 262145, 196608, 7, 0, 196609, 8, 0, 196610, 2, 0, 196611, 1, 0, 196614, 3, 0, 196615, 14, 524290, 196616, 14, 655364, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 524292, 262150, 32, 0, 262151, 14, 262145, 327685, 14, 655362, 327686, 14, 196614, 327687, 14, 655364 )
+
+[node name="@@1923" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131077, 48, 0, 131078, 48, 0, 196613, 23, 0, 196614, 48, 0 )
+
+[node name="@@1924" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131077, 140, 0, 131078, 140, 0, 196614, 140, 0 )
+
+[node name="@@1925" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131077, 23, 0, 196613, 23, 0, 196614, 23, 0, 262150, 23, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Do A Barrel Roll"
+level_author = "Patashu"
+level_replay = ""
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

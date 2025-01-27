@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 2, 0, 65538, 52, 0, 65539, 52, 0, 65540, 52, 0, 65541, 1, 0, 65542, 14, 262145, 131072, 14, 655362, 131073, 14, 393219, 131074, 14, 3, 131075, 14, 3, 131076, 14, 3, 131077, 14, 458755, 131078, 14, 655364, 196609, 14, 589825, 196610, 14, 131075, 196611, 14, 131075, 196612, 14, 131075, 196613, 14, 589829, 262145, 14, 262145, 262147, 7, 0, 262149, 14, 262145, 327681, 14, 262145, 327685, 14, 262145, 393217, 14, 262145, 393221, 14, 262145, 458753, 14, 262145, 458757, 14, 262145, 524289, 14, 262145, 524293, 14, 262145, 589825, 14, 262145, 589827, 8, 0, 589829, 14, 262145, 655361, 14, 262145, 655362, 33, 0, 655363, 3, 0, 655364, 33, 0, 655365, 14, 262145, 720897, 14, 655362, 720898, 14, 196614, 720899, 14, 196614, 720900, 14, 196614, 720901, 14, 655364 )
+
+[node name="@@1463" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 39, 0, 655363, 34, 0 )
+
+[node name="@@1464" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 25, 0, 655363, 35, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Green Moonrise"
+level_author = "Sandra53"
+level_replay = "Green Moonrise$mturn=69$xasxdxzzswxzxzzdssxzxzzzwdxdxawxzxzxzxzzzwdxaxasxzxzzzzsdsxdxzawxzxzzzzsdxdxsxzzxzzzssssxdxzzzzw"
+heavy_max_moves = 1.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""
