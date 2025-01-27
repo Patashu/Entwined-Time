@@ -4779,8 +4779,8 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		
 		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile, animation_nonce], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
-		# ~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
-		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked:
+		# ~~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
+		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked or new_tile == Tiles.GreenGlassBlock or new_tile == Tiles.VoidGlassBlock:
 			add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			if (chrono < Chrono.META_UNDO):
 				for actor in actors:
