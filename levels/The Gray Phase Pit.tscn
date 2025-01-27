@@ -3,23 +3,26 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="TileMap" type="TileMap"]
+[node name="" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 4, 77, 0, 196609, 7, 0, 196615, 1, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 524292, 262148, 77, 0, 262149, 14, 524290, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615, 327683, 14, 262145, 327684, 77, 0, 327685, 14, 262145, 393219, 14, 655362, 393220, 14, 196614, 393221, 14, 655364 )
+tile_data = PoolIntArray( 1, 7, 0, 7, 1, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196614, 65539, 14, 524292, 65540, 77, 0, 65541, 14, 524290, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196615, 131075, 14, 262145, 131076, 77, 0, 131077, 14, 262145, 196611, 14, 655362, 196612, 14, 196614, 196613, 14, 655364 )
 
-[node name="@@24016" type="TileMap" parent="."]
+[node name="@@3303" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 196609, 2, 0, 196615, 8, 0 )
+tile_data = PoolIntArray( 1, 2, 0, 7, 8, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "The Gray Phase Pit"
+level_author = "Patashu"
 level_replay = "The Gray Phase Pit$mturn=19$ddxaaaxwxaxzdxzxzzzwdddxaa"
 heavy_max_moves = 5.0
 light_max_moves = 6.0
-target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+clock_turns = ""
+target_sky = Color( 0.184314, 0.168627, 0.337255, 1 )
 target_track = 6.0
+setup_replay = ""
