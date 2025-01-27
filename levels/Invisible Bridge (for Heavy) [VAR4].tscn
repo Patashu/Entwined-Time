@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 1, 0, 6, 7, 0, 65541, 14, 2, 65542, 14, 4, 131077, 14, 65538, 131078, 14, 65540, 196613, 14, 65538, 196614, 14, 65540, 262149, 14, 65538, 262150, 14, 65540, 327685, 14, 65538, 327686, 14, 65540, 393221, 14, 65538, 393222, 14, 65540, 458752, 8, 0, 458753, 2, 0, 458757, 14, 65538, 458758, 14, 65540, 524288, 14, 196613, 524289, 14, 196615, 524293, 14, 131074, 524294, 14, 131076 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Invisible Bridge (for Heavy) [VAR4]"
+level_author = "Green"
+level_replay = "Invisible Bridge (for Heavy) [VAR4]$mturn=388$xwxaxzdxwzxzxaxaxzxwxzxzaxwxzxzawxaxzzswxzxzzaxaxzsxwxaxzzxzzsxzxzwxaxzawxaxzzsxzxwxdxzzaxzxzsxwxaxzdxzzsxzxzwxdxzxaassxaxzzzssxzxzzxwxdxzwxdxzaxzxzwxaxzxassxaxzzzssxzxzzxwxdxzwxdxzaxwaxzsxzzxzsxzxzwxsxzwxdxzaxzxzxaxwxadxzwxdxaxzxzxzxzwxdxzawxzxzzswxdxzzaxzxzswxdxzaxzwaxzsxzzxzzssxaxzzwxzsxzxaxwxdxzaxzwxdxzaxzzswzwxzdxzxzxzsdxzxzxzxzaxzsxzdxzwaxzsxaxzaaxzzzddsxzzsxzzzaxzaxzxwxadxzzsxzxzawxdxzzsxzxzawxdxzzssxzxzzaxassxaxzzzssxzxzzxwxdxzxadxwxdxzaxzxzxzxwzxwxaxzdxzxaxwzxzzxwxdxzwxdxzaxzxzzsszzadxdxzxzxazxdxazxzwxdxzaxzzaxzxzaxdxazxzwxzaxzxwxaxzzadxzxzxzxaxzxzdxzxzxzxdxzxzxzxzsaxzxzsxzxzaxzxzsxzzzxzzwdxds"
+heavy_max_moves = 2.0
+light_max_moves = 13.0
+clock_turns = ""
+target_sky = Color( 0.0235294, 0.129412, 0.219608, 1 )
+target_track = 2.0
+setup_replay = ""

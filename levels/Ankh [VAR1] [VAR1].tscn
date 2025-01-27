@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196615, 65537, 0, 0, 65541, 0, 0, 131073, 7, 0, 131074, 48, 0, 131076, 48, 0, 131077, 8, 0, 196609, 1, 0, 196611, 48, 0, 196613, 2, 0, 262145, 14, 196613, 262146, 14, 196614, 262147, 14, 524291, 262148, 14, 196614, 262149, 14, 196615, 327683, 14, 262145, 393219, 14, 262145, 458755, 14, 262145, 524291, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Ankh [VAR1] [VAR1]"
+level_author = "Green"
+level_replay = "Ankh [VAR1] [VAR1]$mturn=246$xdxwxzxzdsssxaxzzzzswxzxzzaxwdxzsxzdxdssxzzxzzzzddssxdxzzzsssxzxzzzaxdxwxzxzdsssxaxzzzzzsssxaxzzzaxzxwxzxzdsssxdxzzzzaxzxdzxdawxdxzzdxzzdsssxzxzzzzzdsssxdxzzzzaxzxdsszzzwxaaxzdssxzxzzzwxzxzxaxwxdxzaxzxzzaaxdxdxzxaxdxzzzdsssxzxzzzzzdssdxzxzsxzxzzzwzsssxaxzzzadssxzwdxzzzssxzzxzzwaxdxwxzaxzzaxzxzzzssssxddxzzzzzxzzxzazazaaaaaaxazazxzz"
+heavy_max_moves = 6.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
+setup_replay = ""

@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 524292, 65536, 14, 262145, 65538, 1, 0, 65539, 14, 262145, 131072, 14, 589826, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 589828, 196608, 14, 262145, 196609, 48, 0, 196610, 48, 0, 196611, 14, 262145, 262144, 14, 262145, 262145, 13, 0, 262146, 13, 0, 262147, 14, 655362, 262148, 14, 524292, 327680, 14, 262145, 327681, 56, 0, 327682, 56, 0, 327683, 7, 0, 327684, 14, 262145, 393216, 14, 262145, 393217, 56, 0, 393218, 56, 0, 393219, 14, 524290, 393220, 14, 655364, 458752, 14, 262145, 458753, 56, 0, 458754, 56, 0, 458755, 14, 262145, 524288, 14, 262145, 524289, 56, 0, 524290, 56, 0, 524291, 14, 262145, 589824, 14, 262145, 589825, 23, 0, 589826, 23, 0, 589827, 14, 262145, 655360, 14, 655362, 655361, 14, 196614, 655362, 14, 196614, 655363, 14, 655364 )
+
+[node name="@@825" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 2, 0, 262145, 35, 0, 262146, 36, 0, 327681, 88, 0, 327682, 88, 0, 393217, 88, 0, 393218, 88, 0, 458753, 88, 0, 458754, 88, 0, 524289, 88, 0, 524290, 88, 0, 589825, 48, 0, 589826, 48, 0 )
+
+[node name="@@826" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 524289, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Nightfall"
+level_author = "Sandra53"
+level_replay = "Nightfall$mturn=29$xdxdxzwxzxzawdxdxzxzdxzawdxzxzzswdxdxzzzwd"
+heavy_max_moves = 1.0
+light_max_moves = 5.0
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
+target_track = 5.0

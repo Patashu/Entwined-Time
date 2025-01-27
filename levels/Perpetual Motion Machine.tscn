@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 524290, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 524292, 65537, 14, 262145, 65538, 1, 0, 65539, 55, 0, 65540, 7, 0, 65541, 14, 262145, 131073, 14, 262145, 131074, 20, 0, 131075, 14, 196609, 131076, 20, 0, 131077, 14, 262145, 196609, 14, 262145, 196610, 20, 0, 196611, 14, 262145, 196612, 20, 0, 196613, 14, 262145, 262145, 14, 262145, 262146, 20, 0, 262147, 14, 262145, 262148, 20, 0, 262149, 14, 262145, 327681, 14, 262145, 327682, 20, 0, 327683, 14, 262145, 327684, 20, 0, 327685, 14, 262145, 393216, 14, 524290, 393217, 14, 655364, 393218, 20, 0, 393219, 14, 327681, 393220, 20, 0, 393221, 14, 655362, 393222, 14, 524292, 458752, 14, 262145, 458754, 20, 0, 458755, 88, 0, 458756, 20, 0, 458758, 14, 262145, 524288, 14, 655362, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196614, 524293, 14, 196614, 524294, 14, 655364 )
+
+[node name="@@150" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 393218, 30, 0, 393220, 29, 0, 458755, 52, 0 )
+
+[node name="@@151" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 458755, 179, 0 )
+
+[node name="@@152" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 458753, 2, 0, 458755, 52, 0, 458757, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Perpetual Motion Machine"
+level_author = "Slabdrill"
+level_replay = "Perpetual Motion Machine$mturn=82$xaaaxdxzzzzxzxaaxdxzzxzxaaxdxzzzzaxzxaxdxzzzxzxaaxdxzzzxzxaaxdxzzxzxaaxdxzzxzxaaxdxzzzzzxzdxdaaxwxaxzzxzzzzzwxwxwxwxwxwxwxwxwxwxw"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = "5"
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

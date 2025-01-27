@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 7, 8, 0, 8, 7, 0, 65536, 14, 524290, 65537, 14, 196615, 65538, 65, 0, 65539, 14, 196613, 65540, 14, 196614, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 524292, 131072, 14, 262145, 131073, 1, 0, 131074, 2, 0, 131075, 31, 0, 131076, 110, 0, 131077, 110, 0, 131078, 110, 0, 131079, 110, 0, 131080, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 524292, 196615, 32, 0, 196616, 14, 262145, 262150, 14, 655362, 262151, 14, 196614, 262152, 14, 655364 )
+
+[node name="@@5067" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131076, 132, 0, 131077, 133, 0, 131078, 136, 0, 131079, 137, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Road to the end"
+level_author = "Meo"
+level_replay = "Road to the end$mturn=31$daxaxzaxaxdzzaxaxzaxaxzaxzazaaxdxzzxdxzxzxzzxzxd"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""

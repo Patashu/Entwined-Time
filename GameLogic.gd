@@ -1901,6 +1901,25 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Chapter E - Terraforming (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Nightfall")
+	level_filenames.push_back("Phaseboards")
+	level_filenames.push_back("Dead or Alive")
+	level_filenames.push_back("Road to the end")
+	level_filenames.push_back("Dirt")
+	level_filenames.push_back("Necessary Lock")
+	level_filenames.push_back("Perpetual Motion Machine")
+	level_filenames.push_back("Pachinko-")
+	level_filenames.push_back("Tractor Beam")
+	level_filenames.push_back("Inside The Box")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
 	chapter_names.push_back("The Cutting Room Floor (Unused Puzzles)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
@@ -2098,6 +2117,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Extremely Small Crate Puzzle")
 	level_filenames.push_back("Totem Pole")
 	level_filenames.push_back("Push-ups")
+	level_filenames.push_back("Crate Smashing Service")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2155,6 +2175,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Last Pit [VAR3]")
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Left Pit")
+	level_filenames.push_back("The Flipped Pit")
 	level_filenames.push_back("The Solo Pit")
 	level_filenames.push_back("The Steel Crate Pit")
 	level_filenames.push_back("The Green Fire Pit")
@@ -2215,6 +2236,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Tile Selector [VAR1]")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("Rough Terrain [VAR1]")
+	level_filenames.push_back("Car Engine [VAR1]")
 	level_filenames.push_back("Acrobatics 3- Metallic Boogaloo")
 	level_filenames.push_back("Inexorable Destruction- [VAR1]")
 	level_filenames.push_back("Snake Chute [VAR1]")
@@ -2276,6 +2298,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Remote Voyage [VAR1]")
 	level_filenames.push_back("Underflow [VAR1]")
 	level_filenames.push_back("Light's Way In")
+	level_filenames.push_back("Right Way In")
 	level_filenames.push_back("Acrobatics (Loop 2)")
 	level_filenames.push_back("Orbital Drop [VAR1]")
 	level_filenames.push_back("Orbital Drop [VAR2]")
@@ -2400,6 +2423,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Outlets!")
 	level_filenames.push_back("Totem Pole [VAR1]")
 	level_filenames.push_back("Tiny Traffic Jam")
+	level_filenames.push_back("Ankh [VAR1] [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR4]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2529,7 +2554,7 @@ func initialize_level_list() -> void:
 			var insight_level_name = insight_level.get_node("LevelInfo").level_name;
 			if (insight_level_name.find("(Insight)")) >= 0:
 				pass
-			elif insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or (insight_level_name.find("Theory of Everything") >= 0 and insight_level_name != "Theory of Everything (Iron)") or insight_level_name.find("Board Ring B") >= 0:
+			elif insight_level_name.find("(Remix)") >= 0 or insight_level_name.find("World's Smallest Puzzle") >= 0 or insight_level_name.find("Theory of Everything (Power)") >= 0 or insight_level_name.find("Theory of Everything (Clock)") >= 0 or insight_level_name.find("Board Ring B") >= 0:
 				has_remix[level_name] = true;
 				has_remix[insight_level_name] = true;
 			insight_level_names[level_name] = insight_level_name;

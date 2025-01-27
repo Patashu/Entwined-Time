@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 7, 0, 2, 1, 0, 65536, 14, 196609, 65537, 45, 0, 65538, 45, 0, 65539, 14, 196609, 131072, 14, 262145, 131073, 26, 0, 131074, 26, 0, 131075, 14, 262145, 196608, 14, 262145, 196609, 26, 0, 196610, 26, 0, 196611, 14, 262145, 262144, 14, 262145, 262145, 26, 0, 262146, 26, 0, 262147, 14, 262145, 327680, 14, 262145, 327681, 26, 0, 327682, 26, 0, 327683, 14, 262145, 393216, 14, 262145, 393217, 26, 0, 393218, 26, 0, 393219, 14, 262145, 458752, 14, 262145, 458753, 26, 0, 458754, 26, 0, 458755, 14, 262145, 524288, 14, 262145, 524289, 26, 0, 524290, 26, 0, 524291, 14, 262145, 589824, 14, 262145, 589825, 26, 0, 589826, 26, 0, 589827, 14, 262145, 655360, 14, 262145, 655361, 26, 0, 655362, 26, 0, 655363, 14, 262145, 720896, 14, 655362, 720897, 14, 196614, 720898, 14, 196614, 720899, 14, 655364 )
+
+[node name="@@722" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 78, 0, 65538, 78, 0, 131073, 180, 0, 131074, 180, 0, 196609, 180, 0, 196610, 180, 0, 262145, 180, 0, 262146, 180, 0, 327681, 180, 0, 327682, 180, 0, 393217, 180, 0, 393218, 180, 0, 458753, 180, 0, 458754, 180, 0, 524289, 180, 0, 524290, 180, 0, 589825, 180, 0, 589826, 180, 0, 655361, 180, 0, 655362, 180, 0 )
+
+[node name="@@723" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 180, 0, 65538, 180, 0, 655360, 45, 0, 655361, 8, 0, 655362, 2, 0, 655363, 45, 0 )
+
+[node name="@@724" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65537, 179, 0, 65538, 179, 0, 655360, 180, 0, 655361, 38, 0, 655362, 38, 0, 655363, 180, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Tractor Beam"
+level_replay = "Tractor Beam$mturn=121$wzwzwzwzwzwzwzwzxaxsssxzwzwzwdxwzwzwzwzwzxzzxwzxwxzzzxdxsxzxszwzxzxwzwzwzwzwzwzxaxsssxzwzwzwzdxwzwzwzwzwzxzxwzxwxzzzxdxsxzzwzwzdxwzwzwzwzxzxwzxwxzzxzxdxsxz"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
