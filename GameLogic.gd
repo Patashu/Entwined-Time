@@ -2506,6 +2506,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Slope Jelly Bug")
 	level_filenames.push_back("Noclip")
 	level_filenames.push_back("Playing Dead")
 	level_filenames.push_back("Light Trolling")
