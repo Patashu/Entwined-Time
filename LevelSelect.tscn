@@ -186,3 +186,11 @@ margin_right = 287.0
 margin_bottom = 165.0
 text = "Sandra makes puzzles freely without any preconceptions - and when anything
 is possible, the solution may surprise and delight."
+
+[node name="Label6" type="Label" parent="Holder/CommunityLevelsHolder"]
+margin_left = -113.0
+margin_top = 179.0
+margin_right = 284.0
+margin_bottom = 190.0
+text = "(To see all Community Chapters, press Prev Chapter/Next Chapter.)"
+align = 1

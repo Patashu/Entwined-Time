@@ -115,7 +115,15 @@ func _prevbutton_pressed() -> void:
 		return;
 	
 	chapter -= 1;
-	if (in_community_puzzles):
+	if (community_levels_landing_state == 0):
+		community_levels_landing_state = 1;
+		setup_landing_page();
+		return;
+	elif (community_levels_landing_state == 1):
+		community_levels_landing_state = 0;
+		setup_landing_page();
+		return;
+	elif (in_community_puzzles):
 		chapter = posmod(int(chapter) - gamelogic.custom_past_here, gamelogic.chapter_names.size() - gamelogic.custom_past_here) + gamelogic.custom_past_here;
 	else:
 		chapter = posmod(int(chapter), gamelogic.custom_past_here);
@@ -128,7 +136,16 @@ func _nextbutton_pressed() -> void:
 		return;
 	
 	chapter += 1;
-	if (in_community_puzzles):
+	if (community_levels_landing_state == 0):
+		community_levels_landing_state = 1;
+		setup_landing_page();
+		return;
+	elif (community_levels_landing_state == 1):
+		community_levels_landing_state = 0;
+		setup_landing_page();
+		return;
+		
+	elif (in_community_puzzles):
 		chapter = posmod(int(chapter) - gamelogic.custom_past_here, gamelogic.chapter_names.size() - gamelogic.custom_past_here) + gamelogic.custom_past_here;
 	else:
 		chapter = posmod(int(chapter), gamelogic.custom_past_here);
@@ -144,6 +161,86 @@ func _leveleditorbutton_pressed() -> void:
 	gamelogic.add_to_ui_stack(a, get_parent());
 	destroy();
 
+func setup_landing_page() -> void:
+	cleanup_chapter();
+	if (community_levels_landing_state == 0):
+		holder.text = "Community Levels - Recommended Chapters";
+		communitylevelsholder.visible = true;
+		update_focus_neighbors();
+		return;
+	
+	communitylevelsholder.visible = false;
+	holder.text = "Community Levels - Chapter Directory";
+	var amount = gamelogic.chapter_names.size() - gamelogic.custom_past_here;
+	var beat_REALLY_all = true;
+	
+	var yy = 16;
+	var yyy = 16;
+	var xx = 19;
+	var xxx = int(floor(holder.rect_size.x / 2))-2;
+	var x = 0;
+	var y = 0;
+	var y_max = 12;
+	
+	# squish for very large chapters
+	# (need a hack for chapter 0 b/c it has the extra note it needs to render)
+	if amount > 22:
+		y_max = 13;
+		yy = 15;
+		yyy = 15;
+	
+	# and another squish...
+	if amount > 23:
+		y_max = 14;
+		yy = 13;
+		yyy = 15;
+		
+	# final squish
+	if amount > 26:
+		y = -1;
+		
+	# one more squish!!
+	if amount > 27:
+		y_max = 15;
+		yy = 13;
+		yyy = 14;
+	
+	for a in range(amount):
+		var a2 = gamelogic.custom_past_here + a;
+		var button = Button.new();
+		button.set_script(preload("res://ChapterButton.gd"));
+		buttons_by_xy[Vector2(x, y)] = button;
+		holder.add_child(button);
+		button.rect_position.x = round(xx + xxx*x);
+		button.rect_position.y = round(yy + yyy*y);
+		var chapter_name = gamelogic.chapter_names[a2];
+		var level_string = "";
+		button.text = chapter_name;
+		button.theme = holder.theme;
+		button.levelselect = self;
+		
+		# if we beat it, add a star :3
+		var beat_all = true;
+		for b in range(gamelogic.chapter_standard_starting_levels[a2], gamelogic.chapter_standard_starting_levels[a2+1]):
+			var level_name = gamelogic.level_names[b];
+			if gamelogic.save_file["levels"].has(level_name) and gamelogic.save_file["levels"][level_name].has("won") and gamelogic.save_file["levels"][level_name]["won"]:
+				continue
+			else:
+				beat_all = false;
+				beat_REALLY_all = false;
+				break;
+		if (beat_all):
+			star(button);
+		
+		y += 1;
+		if (y == y_max):
+			y = 0;
+			x += 1;
+		
+		# will anyone ever see this??
+		if (beat_REALLY_all):
+			holder.flash();
+
 func _communitylevelsbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
@@ -153,12 +250,9 @@ func _communitylevelsbutton_pressed() -> void:
 	searchbox.visible = in_community_puzzles;
 	if (in_community_puzzles):
 		chapter = gamelogic.custom_past_here;
-		cleanup_chapter();
-		update_focus_neighbors();
-		holder.text = "Community Levels - Recommended";
 		communitylevelsbutton.text = "Campaign Levels";
 		community_levels_landing_state = 0;
-		communitylevelsholder.visible = true;
+		setup_landing_page();
 		#I think this was only necessary when there was one custom chapter?
 		#if (gamelogic.chapter_names.size() -1 == gamelogic.custom_past_here):
 		#	prevbutton.disabled = true;
@@ -630,14 +724,14 @@ func prepare_chapter() -> void:
 		advanced_label.flash();
 		achievement_get(true);
 
-func star(button: Button, level_name: String) -> void:
+func star(button: Button, level_name: String = "") -> void:
 	var star = Sprite.new();
 	star.texture = preload("res://assets/star.png");
 	star.scale = Vector2(1.0/6.0, 1.0/6.0);
 	star.position = Vector2(button.rect_position.x-14, button.rect_position.y+2);
 	star.centered = false;
 	holder.add_child(star);
-	if (star_tints):
+	if (star_tints and level_name != ""):
 		var insight_path = "res://levels/insight/" + gamelogic.level_filenames[button.level_number] + "Insight.tscn";
 		if (ResourceLoader.exists(insight_path)):
 			var insight_level_name = gamelogic.insight_level_names[level_name];
