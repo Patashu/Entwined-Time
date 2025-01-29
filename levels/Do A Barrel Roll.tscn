@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -30,11 +30,8 @@ tile_data = PoolIntArray( 131077, 23, 0, 196613, 23, 0, 196614, 23, 0, 262150, 2
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Do A Barrel Roll"
-level_author = "Patashu"
-level_replay = ""
+level_replay = "Do A Barrel Roll$mturn=36$xwxaxzdxdxwaxdzwxzadxwxdxaxdddxzzddxzzzzzzxzxaxwxaaaa"
 heavy_max_moves = 6.0
 light_max_moves = 6.0
-clock_turns = ""
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0
-setup_replay = ""
