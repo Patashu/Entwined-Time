@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524291, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524291, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 65544, 14, 262145, 65548, 14, 262145, 131072, 14, 262145, 131076, 14, 262145, 131080, 14, 262145, 131084, 14, 262145, 196608, 14, 262145, 196612, 14, 262145, 196616, 14, 262145, 196620, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655363, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 655363, 262153, 14, 196614, 262154, 14, 196614, 262155, 14, 196614, 262156, 14, 655364 )
+
+[node name="@@819" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 524292, 65536, 14, 262145, 65540, 180, 0, 65544, 181, 0, 65548, 14, 262145, 131072, 14, 262145, 131076, 180, 0, 131080, 181, 0, 131084, 14, 262145, 196608, 14, 262145, 196612, 180, 0, 196616, 181, 0, 196620, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 196614, 262155, 14, 196614, 262156, 14, 655364 )
+
+[node name="@@820" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65544, 180, 0, 131080, 180, 0, 196609, 2, 0, 196611, 8, 0, 196616, 180, 0, 196617, 1, 0, 196619, 7, 0, 262146, 45, 0, 262147, 180, 0, 262148, 180, 0, 262149, 180, 0, 262150, 180, 0, 262151, 180, 0, 262152, 180, 0 )
+
+[node name="@@821" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 180, 0 )
+
+[node name="@@822" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262146, 30, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Explosive Airlock"
+level_author = "Sandra53"
+level_replay = "Explosive Airlock$mturn=54$xasxwxaxzdxwxzdxzzzzwdwxzaxzzdxdxzzddxzxzzddddxdxzzzzddxzzxaxdddxzxzzzdddd"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.317647, 0.286275, 1 )
+target_track = 0.0
+setup_replay = ""

@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65540, 14, 655362, 65541, 14, 196614, 65542, 14, 196614, 65543, 14, 196614, 65544, 14, 196614, 65545, 14, 196614, 65546, 14, 524292, 131072, 14, 262145, 131075, 19, 0, 131076, 19, 0, 131077, 19, 0, 131078, 19, 0, 131079, 19, 0, 131080, 19, 0, 131082, 14, 655362, 131083, 14, 524292, 196608, 14, 262145, 196611, 19, 0, 196612, 19, 0, 196613, 19, 0, 196614, 19, 0, 196615, 19, 0, 196616, 19, 0, 196617, 19, 0, 196619, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 524292, 262151, 69, 0, 262152, 14, 2, 262153, 14, 4, 262154, 32, 0, 262155, 14, 262145, 327684, 14, 327681, 327688, 14, 131074, 327689, 14, 786435, 327690, 14, 196614, 327691, 14, 655364 )
+
+[node name="@@1799" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131081, 7, 0, 196609, 8, 0, 196610, 55, 0, 196611, 2, 0, 196612, 3, 0, 196613, 27, 0, 196614, 27, 0, 196615, 27, 0, 196617, 1, 0, 196618, 32, 0, 262149, 69, 0, 262150, 69, 0, 262151, 69, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Double Glazed [VAR2]"
+level_author = "Slabdrill"
+level_replay = "Double Glazed [VAR2]$mturn=173$xwxaxzddxzxaaxwzxzzwxaxzddxzxaaxwzxzzwxaxzddxwzxwxzxzdxwaxzsxzzaxzwxzsxzaxzaxdzaxzaaddxwxaxzzzdxzzzxzxwzwzxdxzxzdxzxzddddxdxzzzzxzxdddxwdddddxzzzxwzxwxdxzzzzzzzxzzzzzzzxawxaxzzaxzwzwxdxzaxzxzxaaxaxzxzxzwxaxzdxwzxzdxzxzxdxzdddxzxdxdxzzzzdxwxddxzxdxddddxwxd"
+heavy_max_moves = 11.0
+light_max_moves = 11.0
+target_sky = Color( 0.266667, 0.396078, 0.439216, 1 )
+target_track = 7.0

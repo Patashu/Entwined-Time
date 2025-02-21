@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 65536, 23, 0, 65546, 7, 0, 131082, 23, 0, 458752, 23, 0, 458762, 8, 0, 524288, 2, 0, 524298, 23, 0, 589824, 23, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Elevator Pitch 4"
+level_author = "Slabdrill"
+level_replay = "Elevator Pitch 4$mturn=355$xwxwxwxwxzwxwzxsxzxsxzsxzsxzxwxwxwxwxzxwzwsxzzzxzsxzxzzxzxzxsxzxzwsswxwxwxwxzxwzwsxzzzxzxsxzxzzsxzxsxzxzswxwxwxwxzxwzwsxzzzxzxsxzxzssxzxsxzxzswxwxwxwxzxwzwsxzzzxzxsxzxzssxzxsxzxzswxwxwxwxzxwzwsxzzzxzxsxzxzssxzxsxzxzzzzzwxwxwxwxzxzwxwzxwxwxdxsxzzzzxzxwxzxwxwxwxsxzwxwzwxdxsxzzzzxzzxwxzszxzxzxwxwxwxsxzwxwzxwxwxdxsxzzzzxzxsxzxzxzsxssxzzxzzwxwxwxsxzwxwzxwxwxdxsxzzzzxzxwxzxzxzxsxzxzwdxzwxzxwxwxzxzwxwzxwxwxdxsxzzzzxzxwxzxwxwxwxsxzwxwzwxdxsxzzzzxzzxwxzxzxzxwxwxwxsxzwxwzxwxwxdxsxzzzzxzxwxzxzxzsxssxzzxzzwxwxwxsxzwxwzxwxwxdxsxzzzzxzxwxzxzxzszxwxsxwxwxwxsxzssxzsxzzssxzzxzzzssxzzxzzwxzw"
+heavy_max_moves = 4.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.231373, 0.247059, 0.101961, 1 )
+target_track = 4.0
+setup_replay = ""

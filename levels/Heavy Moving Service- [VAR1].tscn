@@ -7,13 +7,13 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196615, 65536, 45, 0, 65540, 30, 0, 65544, 45, 0, 131072, 45, 0, 131076, 30, 0, 131080, 45, 0, 196608, 45, 0, 196609, 1, 0, 196612, 30, 0, 196613, 7, 0, 196614, 8, 0, 196615, 2, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615 )
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196615, 65536, 45, 0, 65540, 30, 0, 65544, 45, 0, 131072, 45, 0, 131076, 30, 0, 131080, 45, 0, 196608, 45, 0, 196609, 1, 0, 196612, 30, 0, 196613, 7, 0, 196614, 8, 0, 196616, 2, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196615 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Heavy Moving Service? [VAR1]"
 level_author = "Slabdrill & Sandra"
-level_replay = "Heavy Moving Service? [VAR1]$mturn=219$xaxawxzxzzswxdxzzaxzwxdxzaxzxzwxzdaxzwxzzxzaxdwxaxzaxdzwaxzsxzzxzdxaxwzxzzzxdxdxzdxdxzdxdxzwxdxzaxzdxzsxzxzxwzwxdxzaxzxzswxdxzaxzxzzsxdxaxzxzsxdxzaxzxzsxaxzaxzxzzwxzzxzzzzaaaaaxdzdzxzzzzzxaaaxdsxzzaxzdsxzxzxzaxaxwxzxzdxzzsxaxzddxzxzwxzaxzzxdzdzxddxwzxzzdxdxzxzxaxwxaaxzxwxaxzdxzxzswxaxzdxzxzzssxdxzdxzxzzwxzzxzzzzdddddxaaxzzzzss"
+level_replay = "Heavy Moving Service? [VAR1]$mturn=247$awxdxzaxzdxzsxzxzwxwdssxzzdaaxzzzwxzxzaxwxzxzdxzadwxzxzxzxzzwxaxzxwxaxzzxzwxwxaxzdwxzxzaxzxzzzxaawaxddxaxwzxzzzzzdwxdxzaxzxaxwzxzzwxaxzdxzxzxdxdwxzxzdxwzxzwxdxzaxzxzswxdxzaxzxzswxdxzaxzxzsxdxzzzzzxzzzxaaaaaxaaaxzzzzzxzxsxaxdsxzxzzxzxzdxaxdsxzxzzzxzxdwxaxzxaxzxzxaxdzdxdxzxzwddxzaaxzzzzwxaxzdxzxdxwzxzzwxdxzaaxzxwxaxzdxzxzswxaxzdxzxzswxaxzdxzxzsxaxzzzzxzzzxzdddddxaaxzzzzss"
 heavy_max_moves = 3.0
 light_max_moves = 5.0
 clock_turns = ""

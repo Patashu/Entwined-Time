@@ -17,9 +17,9 @@ tile_data = PoolIntArray( 262163, 128, 0, 262164, 129, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Tile Selector [VAR1]"
+level_name = "Tile Selector (Remix)"
 level_author = "Slabdrill"
-level_replay = "Tile Selector [VAR1]$mturn=35$xwaxaxzzwawswswsxwsxzzzzzzzaawsssadszxdxzz"
+level_replay = "Tile Selector (Remix)$mturn=35$xwaxaxzzwawswswsxwsxzzzzzzzaawsssadszxdxzz"
 heavy_max_moves = 4.0
 light_max_moves = 10.0
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )

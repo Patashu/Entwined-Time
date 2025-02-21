@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 28, 0, 6, 25, 0, 65536, 14, 196613, 65537, 14, 196614, 65538, 14, 196615, 65540, 14, 196613, 65541, 14, 196614, 65542, 14, 196615, 196609, 2, 0, 196613, 8, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196615, 262148, 14, 196613, 262149, 14, 196614, 262150, 14, 196615 )
+
+[node name="@@502" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 26, 0, 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0 )
+
+[node name="@@503" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 7, 0, 4, 1, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Floor Change (Loop 2)"
+level_author = "Sandra53"
+level_replay = "Floor Change (Loop 2)$mturn=88$xaaxdxzzwdxdxzzxzxdxzxaxdxzxwxzaxzwxdxzzxzxdwxdxzxzxwxzsxzxzdxdxzxzzwxdxzaxzddxdxzzssxzzddxzzaxzwxdxzaxzxzsxzwsxzdxzzwaxzzwdxzaxzaxzxzdxa"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.419608, 0.443137, 0.294118, 1 )
+target_track = 0.0
+setup_replay = ""
