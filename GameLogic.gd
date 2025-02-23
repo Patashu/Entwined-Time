@@ -7530,7 +7530,8 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 			if !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 2, Chrono.MOVE);
 		elif (dir == gravity_dir):
-			if actor.actorname == Actor.Name.Heavy and !is_suspended(actor, Chrono.MOVE):
+			# should be 'if actor.actorname == Actor.Name.Heavy' but it desyncs Brutalist Absurdism
+			if heavy_selected and !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 0, Chrono.MOVE);
 	return result;
 
