@@ -6555,7 +6555,7 @@ func clone_actor_but_dont_add_it(actor : Actor) -> Actor:
 	return new;
 
 func finish_animations(chrono: int) -> void:
-	undo_effect_color = Color.transparent;
+	#undo_effect_color = Color.transparent;
 	
 	if (chrono >= Chrono.META_UNDO):
 		for actor in actors:
