@@ -7840,29 +7840,33 @@ func time_passes(chrono: int) -> void:
 			if (actor.in_night):
 				continue;
 			var terrain = terrain_in_tile(actor.pos, actor, chrono);
+			var dir = Vector2.ZERO;
 			for id in terrain:
 				if id >= Tiles.NudgeEast and id <= Tiles.NudgeEast + 3:
-					add_to_animation_server(actor, [Anim.sfx, "step"]);
-					var dir = directions[id - Tiles.NudgeEast];
-					var attempt = move_actor_relative(actor, dir, chrono, false, false);
-					if (attempt == Success.Yes):
-						# nudge up now sets airborne like slopes do
-						maybe_rise(actor, chrono, dir);
-						break;
+					dir += directions[id - Tiles.NudgeEast];
+			if (dir != Vector2.ZERO):
+				add_to_animation_server(actor, [Anim.sfx, "step"]);
+				var attempt = move_actor_relative(actor, dir, chrono, false, false);
+				if (attempt == Success.Yes):
+					# nudge up now sets airborne like slopes do
+					maybe_rise(actor, chrono, dir);
+					break;
 		
 		# Green nudges activate
 		if chrono < Chrono.META_UNDO:
 			for actor in actors:
 				var terrain = terrain_in_tile(actor.pos, actor, chrono);
+				var dir = Vector2.ZERO;
 				for id in terrain:
 					if id >= Tiles.NudgeEastGreen and id <= Tiles.NudgeEastGreen + 3:
-						add_to_animation_server(actor, [Anim.sfx, "step"]);
-						var dir = directions[id - Tiles.NudgeEastGreen];
-						var attempt = move_actor_relative(actor, dir, chrono, false, false);
-						if (attempt == Success.Yes):
-							# nudge up now sets airborne like slopes do
-							maybe_rise(actor, chrono, dir);
-							break;
+						dir += directions[id - Tiles.NudgeEastGreen];
+				if (dir != Vector2.ZERO):
+					add_to_animation_server(actor, [Anim.sfx, "step"]);
+					var attempt = move_actor_relative(actor, dir, chrono, false, false);
+					if (attempt == Success.Yes):
+						# nudge up now sets airborne like slopes do
+						maybe_rise(actor, chrono, dir);
+						break;
 	
 	# Boulders ride their momentum.
 	if (has_boulders):
