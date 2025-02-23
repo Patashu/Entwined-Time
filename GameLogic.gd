@@ -8073,7 +8073,7 @@ func time_passes(chrono: int) -> void:
 				continue;
 			var gravity_dir = calculate_gravity_for(actor, chrono, actor.pos);
 			if (gravity_dir != Vector2.ZERO):
-				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true,
+				var could_fall = move_actor_relative(actor, gravity_dir, chrono, true, true,
 				false, [], false, false, null, -1, false,
 				false) # can_push
 				# Remove the vanity bump if we hypothetically hit a surprise.
