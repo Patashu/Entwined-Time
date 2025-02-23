@@ -626,7 +626,7 @@ func load_game():
 	#savefix("Constant Pushback", "Constant Pushback (Remix)")
 	#savefix("when boulders fly", "when boulders fly (Remix)")
 	#18.4
-	savefix("Tile Selector [VAR1]", "Tile Selector (Remix)")
+	#savefix("Tile Selector [VAR1]", "Tile Selector (Remix)")
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
