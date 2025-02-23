@@ -7908,7 +7908,6 @@ func time_passes(chrono: int) -> void:
 				if (attempt == Success.Yes):
 					# nudge up now sets airborne like slopes do
 					maybe_rise(actor, chrono, dir);
-					break;
 		
 		# Green nudges activate
 		if chrono < Chrono.META_UNDO:
@@ -7924,7 +7923,6 @@ func time_passes(chrono: int) -> void:
 					if (attempt == Success.Yes):
 						# nudge up now sets airborne like slopes do
 						maybe_rise(actor, chrono, dir);
-						break;
 	
 	# Boulders ride their momentum.
 	if (has_boulders):
