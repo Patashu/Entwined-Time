@@ -545,7 +545,7 @@ var chapter_standard_unlock_requirements : Array = [];
 var chapter_advanced_unlock_requirements : Array = [];
 var custom_past_here : int = -1;
 var custom_past_here_level_count : int = -1;
-var save_file_string : String = "user://entwinedtimesdfsdg.sav";
+var save_file_string : String = "user://entwinedtime.sav";
 
 var is_web : bool = false;
 
