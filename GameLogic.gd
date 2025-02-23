@@ -3244,7 +3244,10 @@ func ready_tutorial() -> void:
 			5:
 				virtualbuttons.get_node("Verbs/MetaUndoButton").visible = false;
 				tutoriallabel.rect_position.y -= 24;
-				tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+				if (in_insight_level):
+					tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n$RESTART: Restart";
+				else:
+					tutoriallabel.bbcode_text = "$UNDO: Rewind [color=#FF7459]Heavy[/color]\n(Robots can Move and Rewind in any order you wish.)\n(All events recorded during that turn will be rewound.)";
 			6:
 				tutoriallabel.rect_position.y -= 48;
 				tutoriallabel.bbcode_text = "$META-UNDO: [color=#A9F05F]Undo[/color]\n$RESTART: Restart\n([color=#A9F05F]Undo[/color] undoes your last Move or Rewind.)";
