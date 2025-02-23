@@ -73,8 +73,17 @@ func _searchbox_focus_exited() -> void:
 	gamelogic.no_mute_pwease = false;
 	if (buttons_by_xy.size() == 1):
 		buttons_by_xy[Vector2.ZERO]._pressed();
+	elif (buttons_by_xy.size() > 1):
+		call_deferred("select_second_unless_first_is_selected");
 	elif (buttons_by_xy.size() == 0):
 		prepare_chapter();
+	
+func select_second_unless_first_is_selected() -> void:
+	if (buttons_by_xy.has(Vector2.ZERO)):
+		if buttons_by_xy[Vector2.ZERO].has_focus():
+			return
+		if buttons_by_xy.has(Vector2.DOWN):
+			buttons_by_xy[Vector2.DOWN].grab_focus();
 	
 func _searchbox_text_changed(new_text: String) -> void:
 	var indexes = [];
