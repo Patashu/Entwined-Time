@@ -545,7 +545,7 @@ var chapter_standard_unlock_requirements : Array = [];
 var chapter_advanced_unlock_requirements : Array = [];
 var custom_past_here : int = -1;
 var custom_past_here_level_count : int = -1;
-var save_file_string : String = "user://entwinedtime.sav";
+var save_file_string : String = "user://entwinedtimesdfsdg.sav";
 
 var is_web : bool = false;
 
@@ -8228,6 +8228,7 @@ func authors_replay() -> void:
 	level_replay = authors_replay;
 	if (level_replay.find("c") >= 0):
 		voidlike_puzzle = true;
+	update_info_labels();
 	
 func toggle_replay() -> void:
 	meta_undo_a_restart_mode = false;
@@ -9529,7 +9530,6 @@ func _process(delta: float) -> void:
 		elif (Input.is_action_just_pressed("start_replay")):
 			# must be kept in sync with Menu
 			authors_replay();
-			update_info_labels();
 		elif (Input.is_action_pressed("ctrl") and Input.is_action_just_pressed("copy")):
 			if (Input.is_action_pressed("shift")):
 				copy_level();

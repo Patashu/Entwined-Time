@@ -117,7 +117,6 @@ func _authorsreplaybutton_pressed() -> void:
 	# must be kept in sync with GameLogic
 	destroy();
 	gamelogic.authors_replay();
-	gamelogic.update_info_labels();
 	
 func _savereplaybutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
