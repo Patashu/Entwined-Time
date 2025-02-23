@@ -184,7 +184,12 @@ enum Tiles {
 	GreenPassage, #178
 	GlassScrew, #179
 	Bomb, #180
-	GoldFloorboards, #181bo
+	GoldFloorboards, #181
+	GravityEast, #182
+	GravityNorth, #183
+	GravitySouth, #184
+	GravityWest, #185
+	GravityHalo, #186
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -478,6 +483,11 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.GlassScrew)
 		picker_array.append(Tiles.Bomb)
 		picker_array.append(Tiles.GoldFloorboards)
+		picker_array.append(Tiles.GravityEast)
+		picker_array.append(Tiles.GravityNorth)
+		picker_array.append(Tiles.GravitySouth)
+		picker_array.append(Tiles.GravityWest)
+		picker_array.append(Tiles.GravityHalo)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1005,21 +1015,21 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.PhaseWallGreenOdd:
 			text = "Phase Wall Green Odd: Solid during odd Turns. (Turn increments at the end of a turn.)"
 		Tiles.NudgeEast:
-			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction. (Multiple Nudges stack.)"
 		Tiles.NudgeNorth:
-			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction. (Multiple Nudges stack.)"
 		Tiles.NudgeSouth:
-			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction. (Multiple Nudges stack.)"
 		Tiles.NudgeWest:
-			text = "Nudge: When time passes, before gravity, attempt to move in this direction."
+			text = "Nudge: When time passes, before gravity, attempt to move in this direction. (Multiple Nudges stack.)"
 		Tiles.NudgeEastGreen:
-			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction. (Multiple Green Nudges stack.)"
 		Tiles.NudgeNorthGreen:
-			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction. (Multiple Green Nudges stack.)"
 		Tiles.NudgeSouthGreen:
-			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction. (Multiple Green Nudges stack.)"
 		Tiles.NudgeWestGreen:
-			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction."
+			text = "Green Nudge: When time passes, before gravity, ALL actors on this tile attempt to move in this direction. (Multiple Green Nudges stack.)"
 		Tiles.Grate:
 			text = "Grate: Solid to unbroken actors."
 		Tiles.AntiGrate:
@@ -1162,6 +1172,16 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Bomb: A Glass Screw, but it also triggers Bombs in orthogonally adjacent tiles. Additionally, the Bomb starting a chain reaction does not destroy another tile."
 		Tiles.GoldFloorboards:
 			text = "Gold Floorboards: Floorboards that can only be destroyed by Glass Screw (etc)."
+		Tiles.GravityEast:
+			text = "Gravity: Gravity in this tile points in this direction. (Multiple Gravities stack.)"
+		Tiles.GravityNorth:
+			text = "Gravity: Gravity in this tile points in this direction. (Multiple Gravities stack.)"
+		Tiles.GravitySouth:
+			text = "Gravity: Gravity in this tile points in this direction. (Multiple Gravities stack.)"
+		Tiles.GravityWest:
+			text = "Gravity: Gravity in this tile points in this direction. (Multiple Gravities stack.)"
+		Tiles.GravityHalo:
+			text = "Gravity Halo: Hat. (Attaches to an actor entering or starting in the tile below.) That actor experiences reverse gravity."
 	return text;
 	
 func picker_tooltip() -> void:

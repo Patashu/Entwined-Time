@@ -370,6 +370,11 @@ enum Tiles {
 	GlassScrew, #179
 	Bomb, #180
 	GoldFloorboards, #181
+	GravityEast, #182
+	GravityNorth, #183
+	GravitySouth, #184
+	GravityWest, #185
+	GravityHalo, #186
 }
 var voidlike_tiles : Array = [];
 
@@ -2648,6 +2653,7 @@ var has_void_fog : bool = false;
 var has_void_stars : bool = false;
 var has_mimics : bool = false;
 var has_triggers : bool = false;
+var has_gravity : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2762,6 +2768,7 @@ func ready_map() -> void:
 	has_void_stars = false;
 	has_mimics = false;
 	has_triggers = false;
+	has_gravity = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
@@ -2965,6 +2972,17 @@ func ready_map() -> void:
 			
 		if (has_triggers):
 			trigger_rotation();
+			
+		if (any_layer_has_this_tile(Tiles.GravityEast)):
+			has_gravity = true;
+		elif (any_layer_has_this_tile(Tiles.GravityNorth)):
+			has_gravity = true;
+		elif (any_layer_has_this_tile(Tiles.GravitySouth)):
+			has_gravity = true;
+		elif (any_layer_has_this_tile(Tiles.GravityWest)):
+			has_gravity = true;
+		elif (any_layer_has_this_tile(Tiles.GravityHalo)):
+			has_gravity = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -3735,6 +3753,7 @@ func find_modifiers() -> void:
 			find_modifier(id);
 		find_modifier(Tiles.HeavyMimic);
 		find_modifier(Tiles.LightMimic);
+		find_modifier(Tiles.GravityHalo);
 
 func find_modifier(id: int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -3746,6 +3765,8 @@ func find_modifier(id: int) -> void:
 				var condition = false;
 				if (id == Tiles.Propellor):
 					condition = (actor.pos == tile + Vector2.DOWN) and actor.propellor == null;
+				elif (id == Tiles.GravityHalo):
+					condition = (actor.pos == tile + Vector2.DOWN) and actor.gravity_halo == null;
 				elif (id == Tiles.HeavyMimic):
 					condition = (actor.pos == tile + Vector2.DOWN) and actor.heavy_mimic == null;
 				elif (id == Tiles.LightMimic):
@@ -3770,6 +3791,9 @@ func attach_modifier(actor, i, tile, id, chrono):
 			sprite.position += Vector2(0, -cell_size);
 			if (actor.airborne != -1):
 				set_actor_var(actor, "airborne", -1, chrono);
+		Tiles.GravityHalo:
+			set_actor_var(actor, "gravity_halo", sprite, chrono);
+			sprite.position += Vector2(0, -cell_size);
 		Tiles.HeavyMimic:
 			set_actor_var(actor, "heavy_mimic", sprite, chrono);
 			sprite.position += Vector2(0, -cell_size);
@@ -4460,6 +4484,9 @@ boost_pad_reentrance: bool = false) -> int:
 						Tiles.Propellor:
 							if (actor.propellor == null):
 								attach = true;
+						Tiles.GravityHalo:
+							if (actor.gravity_halo == null):
+								attach = true;
 						Tiles.HeavyMimic:
 							if (actor.heavy_mimic == null):
 								attach = true;
@@ -4884,7 +4911,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				play_sound("fuzz");
 			elif (old_tile == Tiles.OneUndo):
 				play_sound("rewindnoticed");
-			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne) or (old_tile == Tiles.HeavyMimic or old_tile == Tiles.LightMimic)):
+			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne) or (old_tile == Tiles.HeavyMimic or old_tile == Tiles.LightMimic or old_tile == Tiles.GravityHalo)):
 				pass;
 			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
 				pass
@@ -4952,17 +4979,48 @@ chrono: int, new_tile: int, is_trigger: bool = false) -> void:
 			break;
 	if (old_tile == Tiles.Bomb):
 		#on all orthogonal four tiles, if they contain a bomb, blow up that bomb too
-		var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
 		for d in directions:
 			var terrain_d = terrain_in_tile(pos+d, actor, chrono);
 			for d1 in range(terrain_d.size()):
 				var tile_d1 = terrain_d[d1];
 				if (tile_d1 == Tiles.Bomb):
 					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1, true);
-					
+
+var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
+
+func calculate_gravity_for(actor: Actor, chrono: int, pos: Vector2) -> Vector2:
+	if (has_gravity):
+		var gravity_in_tile = Vector2.ZERO;
+		var gravity_found = false;
+		var terrain = terrain_in_tile(pos, actor, chrono);
+		for tile in terrain:
+			if tile >= Tiles.GravityEast and tile <= Tiles.GravityWest:
+				gravity_found = true;
+				gravity_in_tile += directions[tile - Tiles.GravityEast];
+		if (!gravity_found):
+			gravity_in_tile = Vector2.DOWN;
+		if (actor.gravity_halo != null):
+			gravity_in_tile.y *= -1;
+		return gravity_in_tile;
+	else:
+		return Vector2.DOWN;
 
 func maybe_rise(actor: Actor, chrono: int, dir: Vector2, care_about_falling : bool = true):
-	if (dir.y < 0 and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (!care_about_falling or actor.airborne == -1 or !actor.is_character)):
+	var dir_check = dir.y < 0;
+	if (has_gravity):
+		var gravity = calculate_gravity_for(actor, chrono, actor.pos);
+		if (gravity != Vector2.DOWN):
+			dir_check = true;
+			if (dir_check and gravity.y < 0):
+				dir_check = dir.y < 0;
+			if (dir_check and gravity.y > 0):
+				dir_check = dir.y > 0;
+			if (dir_check and gravity.x < 0):
+				dir_check = dir.x < 0;
+			if (dir_check and gravity.x > 0):
+				dir_check = dir.x > 0;
+	
+	if (dir_check and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (!care_about_falling or actor.airborne == -1 or !actor.is_character)):
 		set_actor_var(actor, "airborne", 2, chrono);
 
 func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retro: bool, chrono: int, hypothetical: bool) -> bool:
@@ -7435,24 +7493,21 @@ func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 		return true;
 	if (actor.airborne <= -1):
 		return true;
+	var gravity_dir = calculate_gravity_for(actor, Chrono.MOVE, actor.pos).normalized();
 	# rule change for fall speed 1 actors:
 	# if airborne 0+ you can only move left or right.
 	if (actor.fall_speed == 1):
-		if dir == Vector2.LEFT:
-			return true;
-		if dir == Vector2.RIGHT:
-			return true;
-		return false;
+		if dir == gravity_dir or dir == gravity_dir*-1:
+			return false;
+		return true;
 	# fall speed 2+ and -1 (infinite)
 	if actor.airborne == 0:
 		# no air control for fast falling actors
 		return false;
 	else: # airborne 1+ fall speed 2+ can only move left/right now
-		if dir == Vector2.LEFT:
-			return true;
-		if dir == Vector2.RIGHT:
-			return true;
-		return false;
+		if dir == gravity_dir or dir == gravity_dir*-1:
+			return false;
+		return true;
 
 func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 	animation_substep(Chrono.MOVE);
@@ -7470,13 +7525,12 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 			play_sound("lightstep")
 		else:
 			play_sound("heavystep")
-		if (dir == Vector2.UP):
-			if heavy_selected and !is_suspended(actor, Chrono.MOVE):
+		var gravity_dir = calculate_gravity_for(actor, Chrono.MOVE, actor.pos).normalized();
+		if (dir == gravity_dir*-1):
+			if !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 2, Chrono.MOVE);
-			elif !heavy_selected and !is_suspended(actor, Chrono.MOVE):
-				set_actor_var(actor, "airborne", 2, Chrono.MOVE);
-		elif (dir == Vector2.DOWN):
-			if heavy_selected and !is_suspended(actor, Chrono.MOVE):
+		elif (dir == gravity_dir):
+			if actor.actorname == Actor.Name.Heavy and !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 0, Chrono.MOVE);
 	return result;
 
@@ -7562,12 +7616,17 @@ func character_move(dir: Vector2) -> bool:
 			play_sound("lightstep")
 		else:
 			play_sound("heavystep")
-		if (dir == Vector2.UP):
+		var gravity_dir = Vector2.DOWN;
+		if (heavy_selected):
+			gravity_dir = calculate_gravity_for(heavy_actor, Chrono.MOVE, heavy_actor.pos).normalized();
+		else:
+			gravity_dir = calculate_gravity_for(light_actor, Chrono.MOVE, light_actor.pos).normalized();
+		if (dir == gravity_dir*-1):
 			if heavy_selected and !is_suspended(heavy_actor, Chrono.MOVE):
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
 			elif !heavy_selected and !is_suspended(light_actor, Chrono.MOVE):
 				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
-		elif (dir == Vector2.DOWN):
+		elif (dir == gravity_dir):
 			if heavy_selected and !is_suspended(heavy_actor, Chrono.MOVE):
 				set_actor_var(heavy_actor, "airborne", 0, Chrono.MOVE);
 			#AD10: Light floats gracefully downwards
@@ -7835,7 +7894,6 @@ func time_passes(chrono: int) -> void:
 	
 	if (has_nudges):
 		# Nudges activate
-		var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
 		for actor in time_actors:
 			if (actor.in_night):
 				continue;
@@ -7891,10 +7949,12 @@ func time_passes(chrono: int) -> void:
 		if !actor.in_night and actor.airborne > 0 and actor.fall_speed() != 0:
 			var new_value = actor.airborne - 1;
 			if (new_value == 0):
-				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
-				if (could_fall != Success.Yes):
-					remove_one_from_animation_server(actor, Anim.bump);
-					add_to_animation_server(actor, [Anim.sfx, "fall"]);
+				var gravity_dir = calculate_gravity_for(actor, chrono, actor.pos);
+				if (gravity_dir != Vector2.ZERO):
+					var could_fall = move_actor_relative(actor, gravity_dir, chrono, true, true);
+					if (could_fall != Success.Yes):
+						remove_one_from_animation_server(actor, Anim.bump);
+						add_to_animation_server(actor, [Anim.sfx, "fall"]);
 			set_actor_var(actor, "airborne", new_value, chrono);
 			
 	# AD09: ALL actors go from airborne 2 to 1. (blue/red levels are kind of fucky without this)
@@ -7942,8 +8002,12 @@ func time_passes(chrono: int) -> void:
 			else:
 				clear_just_moveds = true;
 			
+			var gravity_dir = calculate_gravity_for(actor, chrono, actor.pos);
+			if (gravity_dir == Vector2.ZERO):
+				skip = true;
+			
 			if !skip and actor.airborne == -1 and !is_suspended(actor, chrono):
-				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true);
+				var could_fall = move_actor_relative(actor, gravity_dir, chrono, true, true);
 				# we'll say that falling due to gravity onto spikes/a pressure plate makes you airborne so we try to do it, but only once
 				if (could_fall != Success.No and (could_fall == Success.Yes or has_fallen[actor] <= 0)):
 					if actor.floats():
@@ -7958,7 +8022,7 @@ func time_passes(chrono: int) -> void:
 				if (is_suspended(actor, chrono)):
 					did_fall = Success.No;
 				else:
-					did_fall = move_actor_relative(actor, Vector2.DOWN, chrono, false, true);
+					did_fall = move_actor_relative(actor, gravity_dir, chrono, false, true);
 				
 				if (did_fall != Success.No):
 					something_happened = true;
@@ -8007,17 +8071,19 @@ func time_passes(chrono: int) -> void:
 			if is_suspended(actor, chrono):
 				set_actor_var(actor, "airborne", -1, chrono);
 				continue;
-			var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true,
-			false, [], false, false, null, -1, false,
-			false) # can_push
-			# Remove the vanity bump if we hypothetically hit a surprise.
-			# (It actually looks pretty good as long as no one else is simultaneously falling,
-			# but if someone IS, it looks awful, so that's reason enough to remove it)
-			if (could_fall == Success.Surprise):
-				remove_one_from_animation_server(actor, Anim.bump);
-			if (could_fall == Success.No):
-				set_actor_var(actor, "airborne", -1, chrono);
-				continue;
+			var gravity_dir = calculate_gravity_for(actor, chrono, actor.pos);
+			if (gravity_dir != Vector2.ZERO):
+				var could_fall = move_actor_relative(actor, Vector2.DOWN, chrono, true, true,
+				false, [], false, false, null, -1, false,
+				false) # can_push
+				# Remove the vanity bump if we hypothetically hit a surprise.
+				# (It actually looks pretty good as long as no one else is simultaneously falling,
+				# but if someone IS, it looks awful, so that's reason enough to remove it)
+				if (could_fall == Success.Surprise):
+					remove_one_from_animation_server(actor, Anim.bump);
+				if (could_fall == Success.No):
+					set_actor_var(actor, "airborne", -1, chrono);
+					continue;
 	
 	animation_substep(chrono);
 	

@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=463 format=2]
+[gd_resource type="TileSet" load_steps=468 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -429,6 +429,11 @@
 [ext_resource path="res://assets/glass_screw.png" type="Texture" id=427]
 [ext_resource path="res://assets/bomb.png" type="Texture" id=428]
 [ext_resource path="res://assets/floorboards_gold.png" type="Texture" id=429]
+[ext_resource path="res://assets/gravity_east.png" type="Texture" id=430]
+[ext_resource path="res://assets/gravity_north.png" type="Texture" id=431]
+[ext_resource path="res://assets/gravity_south.png" type="Texture" id=432]
+[ext_resource path="res://assets/gravity_west.png" type="Texture" id=433]
+[ext_resource path="res://assets/gravity_halo.png" type="Texture" id=434]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3657,3 +3662,73 @@ frame_7/delay_sec = 0.0
 181/shape_one_way_margin = 0.0
 181/shapes = [  ]
 181/z_index = 0
+182/name = "GravityEast"
+182/texture = ExtResource( 430 )
+182/tex_offset = Vector2( 0, 0 )
+182/modulate = Color( 1, 1, 1, 1 )
+182/region = Rect2( 0, 0, 24, 24 )
+182/tile_mode = 0
+182/occluder_offset = Vector2( 12, 12 )
+182/navigation_offset = Vector2( 12, 12 )
+182/shape_offset = Vector2( 0, 0 )
+182/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+182/shape_one_way = false
+182/shape_one_way_margin = 0.0
+182/shapes = [  ]
+182/z_index = 0
+183/name = "GravityNorth"
+183/texture = ExtResource( 431 )
+183/tex_offset = Vector2( 0, 0 )
+183/modulate = Color( 1, 1, 1, 1 )
+183/region = Rect2( 0, 0, 24, 24 )
+183/tile_mode = 0
+183/occluder_offset = Vector2( 12, 12 )
+183/navigation_offset = Vector2( 12, 12 )
+183/shape_offset = Vector2( 0, 0 )
+183/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+183/shape_one_way = false
+183/shape_one_way_margin = 0.0
+183/shapes = [  ]
+183/z_index = 0
+184/name = "GravitySouth"
+184/texture = ExtResource( 432 )
+184/tex_offset = Vector2( 0, 0 )
+184/modulate = Color( 1, 1, 1, 1 )
+184/region = Rect2( 0, 0, 24, 24 )
+184/tile_mode = 0
+184/occluder_offset = Vector2( 12, 12 )
+184/navigation_offset = Vector2( 12, 12 )
+184/shape_offset = Vector2( 0, 0 )
+184/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+184/shape_one_way = false
+184/shape_one_way_margin = 0.0
+184/shapes = [  ]
+184/z_index = 0
+185/name = "GravityWest"
+185/texture = ExtResource( 433 )
+185/tex_offset = Vector2( 0, 0 )
+185/modulate = Color( 1, 1, 1, 1 )
+185/region = Rect2( 0, 0, 24, 24 )
+185/tile_mode = 0
+185/occluder_offset = Vector2( 12, 12 )
+185/navigation_offset = Vector2( 12, 12 )
+185/shape_offset = Vector2( 0, 0 )
+185/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+185/shape_one_way = false
+185/shape_one_way_margin = 0.0
+185/shapes = [  ]
+185/z_index = 0
+186/name = "GravityHalo"
+186/texture = ExtResource( 434 )
+186/tex_offset = Vector2( 0, 0 )
+186/modulate = Color( 1, 1, 1, 1 )
+186/region = Rect2( 0, 0, 24, 24 )
+186/tile_mode = 0
+186/occluder_offset = Vector2( 12, 12 )
+186/navigation_offset = Vector2( 12, 12 )
+186/shape_offset = Vector2( 0, 0 )
+186/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+186/shape_one_way = false
+186/shape_one_way_margin = 0.0
+186/shapes = [  ]
+186/z_index = 0

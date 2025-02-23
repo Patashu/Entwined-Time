@@ -69,6 +69,7 @@ var joke_goal = null;
 var action_lines_timer : float = 0.0;
 var action_lines_timer_max : float = 0.25;
 var propellor = null;
+var gravity_halo = null;
 var heavy_mimic = null;
 var light_mimic = null;
 var fade_tween = null;
