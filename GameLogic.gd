@@ -627,6 +627,11 @@ func load_game():
 	#savefix("when boulders fly", "when boulders fly (Remix)")
 	#18.4
 	#savefix("Tile Selector [VAR1]", "Tile Selector (Remix)")
+	#18.6
+	if (!save_file.has("version") or save_file["version"] < 1):
+		savefix("The Withering Pit", "The Withering Pit [VAR1]")
+		savefix("The Withering Pit (Insight)", "The Withering Pit")
+		save_file["version"] = 1;
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
@@ -1631,10 +1636,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Elementary")
 	level_filenames.push_back("BlockageEx")
 	level_filenames.push_back("The Time Crystal Pits")
+	level_filenames.push_back("Struggle")
 	level_filenames.push_back("Imaginary Fulcrum")
 	level_filenames.push_back("Crystal Removing Service")
 	level_filenames.push_back("Smuggler")
-	level_filenames.push_back("Frangible")
+	level_filenames.push_back("The Withering Pit")
 	level_filenames.push_back("Switcheroo")
 	level_filenames.push_back("StairwayToHeaven")
 	
@@ -2158,7 +2164,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Fire In The Sky [REV1]")
 	level_filenames.push_back("Death's Door [VAR1]")
 	level_filenames.push_back("Phantom Push [VAR1]")
-	level_filenames.push_back("The Withering Pit")
+	level_filenames.push_back("The Withering Pit [VAR1]")
 	level_filenames.push_back("Downfall")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
