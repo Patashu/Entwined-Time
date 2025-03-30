@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 14, 524290, 5, 14, 196614, 6, 14, 524292, 65540, 14, 262145, 65542, 14, 262145, 131073, 14, 196613, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 655364, 131078, 14, 655362, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 196615, 196608, 14, 262148, 196611, 2, 0, 196616, 1, 0, 196618, 14, 262148, 327680, 14, 262148, 327682, 7, 0, 327687, 8, 0, 327690, 14, 262148, 393217, 14, 196613, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 524292, 393222, 14, 524290, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196615, 458756, 14, 262145, 458758, 14, 262145, 524292, 14, 655362, 524293, 14, 196614, 524294, 14, 655364 )
+
+[node name="@@269" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131075, 186, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Gravitational Pit"
+level_author = "Sandr53"
+level_replay = "Gravitational Pit$mturn=96$xaaxdxzzwaxzxwdxaxzzzzwawsxzxzzsaxdxzxzxzzzawdxaxzzwsxzxzzswdxaxzzwsxzxzzsxdsdsxzzxzzzszdszzxzwxdxzxsdxsasxzzxaxzzsdddxzazzzzsaaa"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

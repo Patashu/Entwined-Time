@@ -631,6 +631,9 @@ func load_game():
 	if (!save_file.has("version") or save_file["version"] < 1):
 		savefix("The Withering Pit", "The Withering Pit [VAR1]")
 		savefix("The Withering Pit (Insight)", "The Withering Pit")
+		savefix("Consecutive Normal Pits [VAR1]", "Consecutive Normal Pits [VAR1] (Insight)")
+		savefix("Consecutive Normal Pits [VAR2]", "Consecutive Normal Pits [VAR1]")
+		savefix("One-Way Bridge", "One-Way Bridge (Insight)")
 		save_file["version"] = 1;
 
 func savefix(before: String, after: String) -> void:
@@ -1933,9 +1936,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Faulty light model")
 	level_filenames.push_back("Pachinko-")
 	level_filenames.push_back("Tractor Beam")
+	level_filenames.push_back("The Vanishing Pit")
 	level_filenames.push_back("Upward Jetstream")
 	level_filenames.push_back("Inside The Box")
-	level_filenames.push_back("Self Destruct")	
+	level_filenames.push_back("Self Destruct")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2146,6 +2150,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Ohm's Law")
 	level_filenames.push_back("Gray Sunset")
 	level_filenames.push_back("Dead Air [Act 1]")
+	level_filenames.push_back("Gravitational Pit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2207,6 +2212,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Invisible Bridge (for Light)- [VAR1]")
 	level_filenames.push_back("Acrobatics (Loop 2)")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("Magenta Flight [VAR1]")
 	level_filenames.push_back("Acrobat's Escape [VAR3]")
 	level_filenames.push_back("Leap of Faith [Space Program] [VAR1]")
 	
@@ -2225,7 +2231,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bad Widget Pit")
 	level_filenames.push_back("The Falling Pit")
 	level_filenames.push_back("The Grounded Pit")
-	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Look It's Another Pit")
 	level_filenames.push_back("The RGB Pit")
 	level_filenames.push_back("The Spikiest Pit [VAR2]")
@@ -2239,12 +2244,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Glass Pit [VAR2]")
 	level_filenames.push_back("The Half-Magenta Pit")
 	level_filenames.push_back("The Half-Magenta Pit [VAR1]")
+	level_filenames.push_back("The Neutron Pit")
 	level_filenames.push_back("The Crate Pit- [VAR1]")
 	level_filenames.push_back("The Eclipse Pit")
 	level_filenames.push_back("The Magenta Pit [VAR5]")
 	level_filenames.push_back("The Twin Pit")
 	level_filenames.push_back("The Magenta Pit [VAR6]")
-	level_filenames.push_back("Consecutive Normal Pits [VAR2]")
+	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Stuck in a Pit [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
@@ -2259,6 +2265,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Board Ring A")
 	level_filenames.push_back("Invisible Void Bridge")
 	level_filenames.push_back("Collaborative Motion")
+	level_filenames.push_back("Gravitron Rescue")
 	level_filenames.push_back("Quantum Entanglement [VAR1]")
 	level_filenames.push_back("Rise As One [VAR1]")
 	level_filenames.push_back("Wall (Insight) [VAR1]")
@@ -2473,6 +2480,15 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR4]")
 	level_filenames.push_back("Not Responding")
 	level_filenames.push_back("So Broken [VAR1]")
+	level_filenames.push_back("Spaghettification")
+	level_filenames.push_back("The Helium Pit")
+	level_filenames.push_back("Bad Roommates")
+	level_filenames.push_back("Kinematic Stability [VAR1]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("Costly Rewinds [VAR1]")
+	level_filenames.push_back("Glass Monolith (glass shortage) [VAR1]")
+	level_filenames.push_back("The Boundless Sky [VAR1] [VAR1]")
+	level_filenames.push_back("Broken Bridge [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

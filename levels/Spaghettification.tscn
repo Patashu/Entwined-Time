@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 66, 0, 1, 66, 0, 2, 66, 0, 3, 66, 0, 4, 66, 0, 5, 66, 0, 6, 66, 0, 65536, 66, 0, 65537, 14, 524290, 65538, 14, 196614, 65539, 14, 196614, 65540, 14, 196614, 65541, 14, 524292, 65542, 66, 0, 131072, 66, 0, 131073, 14, 262145, 131075, 184, 0, 131077, 14, 262145, 131078, 66, 0, 196608, 66, 0, 196609, 14, 262145, 196610, 182, 0, 196611, 1, 0, 196612, 185, 0, 196613, 14, 262145, 196614, 66, 0, 262144, 66, 0, 262145, 14, 262145, 262147, 183, 0, 262149, 14, 262145, 262150, 66, 0, 327680, 66, 0, 327681, 14, 655362, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 655364, 327686, 66, 0, 393216, 66, 0, 393217, 66, 0, 393218, 66, 0, 393219, 66, 0, 393220, 66, 0, 393221, 66, 0, 393222, 66, 0 )
+
+[node name="@@166" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131075, 184, 0, 196610, 182, 0, 196611, 7, 0, 196612, 185, 0, 262147, 183, 0 )
+
+[node name="@@167" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 156, 0, 262146, 2, 0, 262148, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Spaghettification"
+level_author = "Green"
+level_replay = "Spaghettification$mturn=46$dxwxzwxzdxzwxzxzdxwxzwxzxzaxaxzszaxzxzwxwxzaxzaxzsxzaxzdzdxzaxzszsxzxz"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.231373, 0.247059, 0.101961, 1 )
+target_track = 4.0
+setup_replay = ""

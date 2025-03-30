@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196609, 1, 84, 0, 2, 14, 196609, 3, 84, 0, 4, 14, 196609, 5, 84, 0, 6, 84, 0, 7, 84, 0, 8, 84, 0, 9, 84, 0, 10, 84, 0, 11, 84, 0, 12, 14, 196609, 13, 84, 0, 14, 14, 196609, 65536, 14, 262145, 65538, 14, 262145, 65540, 14, 262145, 65544, 85, 0, 65548, 14, 262145, 65550, 14, 262145, 131072, 14, 589826, 131073, 14, 196614, 131074, 14, 655363, 131075, 14, 196614, 131076, 14, 655364, 131079, 83, 0, 131080, 52, 0, 131081, 86, 0, 131084, 14, 589826, 131085, 14, 196614, 131086, 14, 589828, 196608, 14, 262145, 196609, 39, 0, 196610, 86, 0, 196613, 85, 0, 196616, 84, 0, 196620, 14, 327681, 196621, 7, 0, 196622, 14, 262145, 262144, 14, 262145, 262145, 84, 0, 262148, 83, 0, 262149, 39, 0, 262150, 86, 0, 262152, 85, 0, 262155, 83, 0, 262156, 36, 0, 262157, 1, 0, 262158, 14, 262145, 327680, 14, 262145, 327682, 8, 0, 327684, 2, 0, 327685, 84, 0, 327688, 84, 0, 327692, 14, 524290, 327693, 14, 196614, 327694, 14, 589828, 393216, 14, 589826, 393217, 14, 196614, 393218, 14, 524291, 393219, 14, 196614, 393220, 14, 524291, 393221, 14, 196614, 393222, 14, 524291, 393223, 14, 196614, 393224, 14, 524292, 393228, 14, 262145, 393230, 14, 262145, 458752, 14, 262145, 458754, 14, 262145, 458756, 14, 262145, 458758, 14, 262145, 458760, 14, 262145, 458764, 14, 262145, 458766, 14, 262145, 524288, 14, 327681, 524289, 85, 0, 524290, 14, 327681, 524291, 85, 0, 524292, 14, 327681, 524293, 85, 0, 524294, 14, 327681, 524295, 85, 0, 524296, 14, 327681, 524297, 85, 0, 524298, 85, 0, 524299, 85, 0, 524300, 14, 327681, 524301, 85, 0, 524302, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Kinematic Stability [VAR1]"
+level_author = "Green"
+level_replay = "Kinematic Stability [VAR1]$mturn=185$xdxaaxzxzzwxdxzaxzdxzsxzxzsaxaxzxzxdaxaxzxzxzzxdxdddxzxzwxaxzdxzxzzdwxaxzzzddxzwxaxzdxzzsxzxzzdzdszwzxaxdxzwxaxzdxzzsxzxzdxaxwzxzwxaxzdxzxzxzzxazaxaaxzxzzaawxdxzaxzxzxdxzzxzxdwxaxzddxzxzzzawxdxaxzxzzawxaxzzzadxzwxzxzxzaxaxwxzxzxaxdaxzdxzdxzxzzwaxaxzzdsxzdxzzsxzdxzasxzxzzsxdxzzdxzwxd"
+heavy_max_moves = 3.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.0784314, 0.286275, 0.164706, 1 )
+target_track = 6.0
+setup_replay = ""

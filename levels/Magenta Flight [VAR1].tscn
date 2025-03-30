@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 1, 0, 3, 7, 0, 65536, 14, 196609, 65537, 23, 0, 65538, 23, 0, 65539, 23, 0, 65540, 14, 196609, 131072, 14, 262145, 131076, 14, 262145, 196608, 14, 262145, 196612, 14, 262145, 262144, 14, 262145, 262148, 14, 262145, 327680, 14, 262145, 327684, 14, 262145, 393216, 14, 262145, 393220, 14, 262145, 458752, 14, 262145, 458753, 2, 0, 458755, 8, 0, 458756, 14, 262145, 524288, 14, 262145, 524289, 23, 0, 524290, 23, 0, 524291, 23, 0, 524292, 14, 262145, 589824, 14, 262145, 589828, 14, 262145, 655360, 14, 655362, 655361, 14, 196614, 655362, 14, 196614, 655363, 14, 196614, 655364, 14, 655364 )
+
+[node name="@@686" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 458753, 38, 0, 458755, 38, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Magenta Flight [VAR1]"
+level_author = "Slabdrill"
+level_replay = "Magenta Flight [VAR1]$mturn=191$xawaxsxzzxwxaxzwxzxsxwaxzxdxdxzzzaxwzxzzwxzxzdxwxzxwxsxzzzwxdxsxwxdxzzxzzxdxwxzxwxsxzzzwdsxwxaxzdxzzzwxzxwxsxzzzwdsxwxaxzdxzzzwxzxwxsxzzzwdsxwxaxzdxzzzwxzxwxsxzzzwdsxwxaxzdxzzzwxzxwxsxzzzxdxzxzxwxzxwxzzxwxzzxwxzxadaxsxzxsxzxsxzxwxaxwxdxwxaxzzzwxzxzxzxsxzxsxaxwxdxwxaxzzwxzxzxzxsxzxsxaxzxdxwxaxzwxzxzxzxzzzzzzxzxd"
+heavy_max_moves = 7.0
+light_max_moves = 7.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""

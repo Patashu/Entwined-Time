@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 393219, 5, 14, 3, 6, 14, 3, 7, 14, 3, 8, 14, 4, 65536, 14, 262145, 65540, 14, 589825, 65541, 14, 131075, 65542, 14, 131075, 65543, 14, 131075, 65544, 14, 589829, 131072, 14, 262145, 131076, 14, 327681, 131080, 14, 262145, 196608, 14, 262145, 196612, 22, 0, 196614, 3, 0, 196616, 14, 262145, 262144, 14, 589826, 262145, 14, 196614, 262146, 14, 196615, 262147, 23, 0, 262148, 14, 2, 262149, 14, 3, 262150, 14, 3, 262151, 14, 458755, 262152, 14, 655364, 327680, 14, 262145, 327684, 14, 65538, 327685, 14, 65539, 327686, 14, 65539, 327687, 14, 65540, 393216, 14, 262145, 393218, 32, 0, 393220, 14, 589825, 393221, 14, 131075, 393222, 14, 131075, 393223, 14, 589829, 458752, 14, 655362, 458753, 14, 196614, 458754, 14, 196614, 458755, 14, 393219, 458756, 14, 589830, 458757, 107, 0, 458758, 56, 0, 458759, 14, 262145, 524291, 14, 131074, 524292, 14, 786435, 524293, 14, 196614, 524294, 14, 196614, 524295, 14, 655364 )
+
+[node name="@@1263" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196610, 1, 0, 196614, 7, 0, 393217, 2, 0, 393218, 8, 0, 458757, 55, 0, 458758, 78, 0 )
+
+[node name="@@1264" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 458757, 38, 0, 458758, 110, 0 )
+
+[node name="@@1265" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 458757, 77, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Costly Rewinds [VAR1]"
+level_author = "Green"
+level_replay = "Costly Rewinds [VAR1]$mturn=36$dwdwxaxzxwxzdxzxwxzxaxdsxzxdwddxaxzzzxaxaaxzxwxdxzzddxzd"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = "13"
+target_sky = Color( 0.196078, 0.262745, 0.317647, 1 )
+target_track = 3.0
+setup_replay = ""

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 1, 0, 65536, 14, 262148, 65537, 182, 0, 65538, 185, 0, 131072, 7, 0, 196609, -2, 0 )
+
+[node name="@@1177" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 2, 0, 65536, 186, 0, 131072, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Gravitron Rescue"
+level_author = "Slabdrill"
+level_replay = "Gravitron Rescue$mturn=13$xaxdzdxzdxzxzxsxsaxzw"
+heavy_max_moves = 1.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0
+setup_replay = "xszx"

@@ -3,19 +3,18 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196615, 131073, 7, 0, 131074, 2, 0, 131077, 27, 0, 131080, 8, 0, 131081, 1, 0, 196609, 14, 196613, 196610, 14, 524292, 196612, 14, 196609, 196614, 14, 196609, 196616, 14, 524290, 196617, 14, 196615, 262146, 14, 262145, 262148, 14, 262145, 262149, 55, 0, 262150, 14, 262145, 262152, 14, 262145, 327682, 14, 655362, 327683, 14, 196614, 327684, 14, 655363, 327685, 14, 196614, 327686, 14, 655363, 327687, 14, 196614, 327688, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196615, 131073, 7, 0, 131074, 2, 0, 131077, 27, 0, 131080, 8, 0, 131081, 1, 0, 196609, 14, 196613, 196610, 14, 524292, 196612, 14, 196609, 196614, 14, 196609, 196616, 14, 524290, 196617, 14, 196615, 262146, 14, 262145, 262148, 14, 262145, 262150, 14, 262145, 262152, 14, 262145, 327682, 14, 655362, 327683, 14, 196614, 327684, 14, 655363, 327685, 14, 196614, 327686, 14, 655363, 327687, 14, 196614, 327688, 14, 655364 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Consecutive Normal Pits [VAR1]"
 level_author = "Slabdrill"
-level_replay = "Consecutive Normal Pits [VAR1]$mturn=107$xaaaaaxwzxzzzzzsxaddwdxzwxzzxzxzzwdxaxzawxzxzzzdxdxwzxzsxzadwdxzwxzzxzxzwdxaxzawxzxzzzzzaaxddxzzaxzzdxzdxzssxdwdxzzxzzxdxzzwdxzdsxdxzddxzzdxzzzaaxd"
-heavy_max_moves = 5.0
-light_max_moves = 5.0
-clock_turns = "7"
+level_replay = "Consecutive Normal Pits [VAR1]$mturn=261$xwxaxzdaaxzaxzzxzxzxazxaawxaxzaxzaxzzzxzxdzssxdwdxzzxzzxaxzwaxzxzzdxaxzawxzxzaxdxzxsxdwdxzzwaxzzxaxzwaxzxzzzaxzzxzxsaxaxzsxzxzxwxdxasxzzaxzzsxzsssxzawdxzzxzzswzzswxaxzzwaxzxzzdxzxwzxaxzawxzxzzxdxzsxwsxzzxzzwxaxzaxzxaxaxzxzxzssxawdxzzaaxzawxzxzzzdxzssxzadxzzzaxzwaxzxzzzzaaxddxzxzzdwxwxzdxzwxzzxzxssxzddwdxzzaxzzsxzdxwxdxzzwdxzxzzaxdxzdxwxdxzzzaxzdxzdxzxzxdzdxddxzxzzdxdxddxzxzzzaaaxd"
+heavy_max_moves = 4.0
+light_max_moves = 3.0
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0

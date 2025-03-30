@@ -9,37 +9,37 @@ cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 2, 0 )
 
-[node name="@@415" type="TileMap" parent="."]
+[node name="@@1529" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 8, 0 )
 
-[node name="@@416" type="TileMap" parent="."]
+[node name="@@1530" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 7, 0 )
 
-[node name="@@417" type="TileMap" parent="."]
+[node name="@@1531" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 1, 0 )
 
-[node name="@@418" type="TileMap" parent="."]
+[node name="@@1532" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 88, 0 )
 
-[node name="@@419" type="TileMap" parent="."]
+[node name="@@1533" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 0, 102, 0 )
 
-[node name="@@420" type="TileMap" parent="."]
+[node name="@@1534" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -49,9 +49,10 @@ tile_data = PoolIntArray( 0, 124, 0 )
 script = ExtResource( 2 )
 level_name = "True Micro Puzzle 2"
 level_author = "Green"
-level_replay = "True Micro Puzzle 2$mturn=24$xwxaxwaxzsxzzxzaxzwxzwaxwxzwwxzxzsxzxz"
-heavy_max_moves = 3.0
-light_max_moves = 3.0
+level_replay = "True Micro Puzzle 2$mturn=22$xwxwdxzddxzzsdxzzasxzzwxzxzsxzxz"
+heavy_max_moves = 2.0
+light_max_moves = 2.0
 clock_turns = ""
 target_sky = Color( 0.211765, 0.235294, 0.247059, 1 )
 target_track = 7.0
+setup_replay = ""
