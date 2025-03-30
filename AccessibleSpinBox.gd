@@ -7,11 +7,17 @@ func _input(event):
 		return
 	
 	if (event.is_action_pressed("ui_left") or Input.is_action_just_pressed("nonaxis_left")):
-		self.value -= 1;
-		get_viewport().set_input_as_handled();
+		if (Input.is_action_pressed("ctrl") or Input.is_action_pressed("shift")):
+			pass
+		else:
+			self.value -= 1;
+			get_viewport().set_input_as_handled();
 	elif (event.is_action_pressed("ui_right") or Input.is_action_just_pressed("nonaxis_right")):
-		self.value += 1;
-		get_viewport().set_input_as_handled();
+		if (Input.is_action_pressed("ctrl") or Input.is_action_pressed("shift")):
+			pass
+		else:
+			self.value += 1;
+			get_viewport().set_input_as_handled();
 	else:
 		if event is InputEventKey:
 			if event.scancode >= 58 and event.scancode <= 126: #most of the keys, none of the numbers nor -
