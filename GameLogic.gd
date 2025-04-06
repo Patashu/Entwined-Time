@@ -1737,7 +1737,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("Green Adventure [VAR1]")
-	level_filenames.push_back("Fragile Victory")
 	level_filenames.push_back("Gain Leverage")
 	level_filenames.push_back("Verdant Crossroads")
 	level_filenames.push_back("Cement Pit [VAR1]")
@@ -1924,24 +1923,31 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Fragile Victory")
+	level_filenames.push_back("Flamepatch")
 	level_filenames.push_back("Nightfall")
 	level_filenames.push_back("Phaseboards")
+	level_filenames.push_back("Death's Door")
 	level_filenames.push_back("Dead or Alive")
 	level_filenames.push_back("Road to the end")
+	level_filenames.push_back("Spelunking---")
 	level_filenames.push_back("Dirt")
 	level_filenames.push_back("Necessary Lock")
-	level_filenames.push_back("Lazarus Syndrome")
-	level_filenames.push_back("Perpetual Motion Machine")
-	level_filenames.push_back("Explosive Airlock")
+	level_filenames.push_back("Frequent Fryers")
 	level_filenames.push_back("Faulty light model")
+	level_filenames.push_back("Explosive Airlock")
 	level_filenames.push_back("Pachinko-")
-	level_filenames.push_back("Tractor Beam")
-	level_filenames.push_back("The Vanishing Pit")
 	level_filenames.push_back("Upward Jetstream")
-	level_filenames.push_back("Inside The Box")
-	level_filenames.push_back("Self Destruct")
+	level_filenames.push_back("Perpetual Motion Machine")
+	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Firewalkers")
+	level_filenames.push_back("Tractor Beam")
+	level_filenames.push_back("Death's Door [VAR1]")
+	level_filenames.push_back("Ceiling Sockets")
+	level_filenames.push_back("Inside The Box")
+	level_filenames.push_back("Self Destruct")
 	
 	chapter_names.push_back("The Cutting Room Floor (Unused Puzzles)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2024,7 +2030,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Clockwork")
 	level_filenames.push_back("Microstatic")
 	level_filenames.push_back("Tiny Outpost")
-	level_filenames.push_back("Firewalkers")
 	level_filenames.push_back("Inexorable Destruction-")
 	level_filenames.push_back("Sandra's Magic Trick")
 	level_filenames.push_back("Osmosis")
@@ -2086,7 +2091,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Circle Dance")
 	level_filenames.push_back("Spacetime Launch")
 	level_filenames.push_back("Spacetime Launch-")
-	level_filenames.push_back("Flamepatch")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2151,6 +2155,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Gray Sunset")
 	level_filenames.push_back("Dead Air [Act 1]")
 	level_filenames.push_back("Gravitational Pit")
+	level_filenames.push_back("Lazarus Syndrome")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2160,14 +2165,12 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Death's Door")
 	level_filenames.push_back("Meet Heavy (Loop 2)")
 	level_filenames.push_back("Limitations of Love. [VAR1]")
 	level_filenames.push_back("Nomadic [VAR1]")
 	level_filenames.push_back("Jungle Gym")
 	level_filenames.push_back("Jet Engine [VAR1]")
 	level_filenames.push_back("Fire In The Sky [REV1]")
-	level_filenames.push_back("Death's Door [VAR1]")
 	level_filenames.push_back("Phantom Push [VAR1]")
 	level_filenames.push_back("The Withering Pit [VAR1]")
 	level_filenames.push_back("Downfall")
@@ -2489,6 +2492,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Glass Monolith (glass shortage) [VAR1]")
 	level_filenames.push_back("The Boundless Sky [VAR1] [VAR1]")
 	level_filenames.push_back("Broken Bridge [VAR2]")
+	level_filenames.push_back("The Vanishing Pit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2507,7 +2511,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bungee Jumping")
 	level_filenames.push_back("Fickle Flooring")
 	level_filenames.push_back("Hopscorch [VAR3]")
-	level_filenames.push_back("Ceiling Sockets")
 	level_filenames.push_back("Ceiling Sockets [VAR1]")
 	level_filenames.push_back("Chrono Engine")
 	level_filenames.push_back("Halfpipe [VAR1]")
