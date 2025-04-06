@@ -7,19 +7,19 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 1, 0, 65541, 7, 0, 65542, 14, 262145, 131072, 14, 262145, 131073, 20, 0, 131077, 20, 0, 131078, 14, 262145, 196608, 14, 262145, 196609, 20, 0, 196611, 14, 262148, 196613, 20, 0, 196614, 14, 262145, 262144, 14, 262145, 262145, 20, 0, 262149, 20, 0, 262150, 14, 262145, 327680, 14, 262145, 327681, 20, 0, 327685, 20, 0, 327686, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 393219, 3, 14, 3, 4, 14, 4, 5, 7, 0, 6, 14, 196609, 65536, 14, 262145, 65537, 1, 0, 65538, 14, 131074, 65539, 14, 131075, 65540, 14, 131076, 65541, 20, 0, 65542, 14, 262145, 131072, 14, 262145, 131073, 20, 0, 131077, 20, 0, 131078, 14, 262145, 196608, 14, 262145, 196609, 20, 0, 196611, 14, 262148, 196613, 20, 0, 196614, 14, 262145, 262144, 14, 262145, 262145, 20, 0, 262149, 20, 0, 262150, 14, 262145, 327680, 14, 262145, 327681, 20, 0, 327685, 20, 0, 327686, 14, 262145, 393216, 14, 655362, 393217, 14, 196614, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 655364 )
 
-[node name="@@230" type="TileMap" parent="."]
+[node name="@@1073" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131075, 55, 0, 327681, 2, 0, 327685, 8, 0 )
+tile_data = PoolIntArray( 5, 20, 0, 131075, 55, 0, 327681, 2, 0, 327685, 8, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "In Defiance of Time?"
 level_author = "Sandra53"
-level_replay = "In Defiance of Time?$mturn=103$xaaaxdxzzzxzxaaxdxzzaaxdxzzxzzxaxdddxzxzzzxwxdxzaxzwxdzxwxzdxzwsxzxzzxsddxzwxzzxzxzdsxdxzzadxzxzxwxzssaxzxzzzaxwxzdsxzdxzzsssxzxzxwzwxaxzxzzzaddxwxzzzdd"
+level_replay = "In Defiance of Time?$mturn=86$xaaaxdxzzzxzxaaxddxzzxzzxaxdddxzxzzzwxaxzdxzxwxdxzzxzxdwxdxzzxzxdsxwdxzzxzzddxwxzzsaxzxzzdxwxzaddxzxzzzxwxdssxzxzzzaxdsxzdwxzzwxw"
 heavy_max_moves = 4.0
 light_max_moves = 4.0
 clock_turns = "5"

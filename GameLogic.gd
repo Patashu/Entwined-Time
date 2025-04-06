@@ -2306,6 +2306,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Ankh [VAR2]")
 	level_filenames.push_back("Ladderworld- (Glass Shortage)")
 	level_filenames.push_back("Crystalformer")
+	level_filenames.push_back("Swapper")
 	level_filenames.push_back("Elementary [VAR1]")
 	level_filenames.push_back("Island of Stability [VAR1]")
 	level_filenames.push_back("Flaming Coronation [VAR1]")
