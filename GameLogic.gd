@@ -5626,7 +5626,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 			# Strength Rule
 			# Modified by the Light Clumsiness Rule: Light's strength is lowered by 1 when it's in the middle of a multi-push.
 			if !strength_check(actor.strength + strength_modifier, actor_there.heaviness) and !can_eat(actor_there, actor):
-				if (actor.phases_into_actors()):
+				if (actor.phases_into_actors() or (has_ghost_fog and !is_gravity and terrain_in_tile(dest, actor, chrono).has(Tiles.GhostFog))):
 					pushables_there.clear();
 					break;
 				else:
