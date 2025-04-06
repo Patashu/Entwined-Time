@@ -1,4 +1,4 @@
-[gd_scene load_steps=468 format=2]
+[gd_scene load_steps=471 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -434,6 +434,9 @@
 [ext_resource path="res://assets/gravity_south.png" type="Texture" id=432]
 [ext_resource path="res://assets/gravity_west.png" type="Texture" id=433]
 [ext_resource path="res://assets/gravity_halo.png" type="Texture" id=434]
+[ext_resource path="res://assets/superbowl.png" type="Texture" id=435]
+[ext_resource path="res://assets/bowl.png" type="Texture" id=436]
+[ext_resource path="res://assets/no_heavy_light.png" type="Texture" id=437]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1863,3 +1866,15 @@ texture = ExtResource( 433 )
 [node name="GravityHalo" type="Sprite" parent="."]
 position = Vector2( 502, 193 )
 texture = ExtResource( 434 )
+
+[node name="Bowl" type="Sprite" parent="."]
+position = Vector2( 249, 149 )
+texture = ExtResource( 436 )
+
+[node name="Superbowl" type="Sprite" parent="."]
+position = Vector2( 257, 156 )
+texture = ExtResource( 435 )
+
+[node name="NoHeavyLight" type="Sprite" parent="."]
+position = Vector2( 239, 170 )
+texture = ExtResource( 437 )

@@ -72,6 +72,8 @@ var propellor = null;
 var gravity_halo = null;
 var heavy_mimic = null;
 var light_mimic = null;
+var bowl = null;
+var superbowl = null;
 var fade_tween = null;
 
 # faster than string comparisons
@@ -378,6 +380,16 @@ func fall_speed() -> int:
 	if broken and !is_crystal:
 		return 99;
 	return fall_speed;
+	
+func has_sticky_top() -> bool:
+	if (superbowl != null):
+		return true;
+	var has_sticky_top = false;
+	if (actorname == Name.Heavy):
+		has_sticky_top = !has_sticky_top;
+	if (bowl != null):
+		has_sticky_top = !has_sticky_top;
+	return has_sticky_top;
 	
 # because I want Light to float but not cuckoo clocks <w<
 func floats() -> bool:

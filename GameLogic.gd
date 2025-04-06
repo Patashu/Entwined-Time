@@ -375,6 +375,9 @@ enum Tiles {
 	GravitySouth, #184
 	GravityWest, #185
 	GravityHalo, #186
+	Bowl, #187
+	Superbowl, #188
+	NoHeavyLight, #189
 }
 var voidlike_tiles : Array = [];
 
@@ -3780,6 +3783,8 @@ func find_modifiers() -> void:
 		find_modifier(Tiles.HeavyMimic);
 		find_modifier(Tiles.LightMimic);
 		find_modifier(Tiles.GravityHalo);
+		find_modifier(Tiles.Bowl);
+		find_modifier(Tiles.Superbowl);
 
 func find_modifier(id: int) -> void:
 	var layers_tiles = get_used_cells_by_id_all_layers(id);
@@ -3793,6 +3798,10 @@ func find_modifier(id: int) -> void:
 					condition = (actor.pos == tile + Vector2.DOWN) and actor.propellor == null;
 				elif (id == Tiles.GravityHalo):
 					condition = (actor.pos == tile + Vector2.DOWN) and actor.gravity_halo == null;
+				elif (id == Tiles.Bowl):
+					condition = (actor.pos == tile + Vector2.DOWN) and actor.bowl == null;
+				elif (id == Tiles.Superbowl):
+					condition = (actor.pos == tile + Vector2.DOWN) and actor.superbowl == null;
 				elif (id == Tiles.HeavyMimic):
 					condition = (actor.pos == tile + Vector2.DOWN) and actor.heavy_mimic == null;
 				elif (id == Tiles.LightMimic):
@@ -3819,6 +3828,12 @@ func attach_modifier(actor, i, tile, id, chrono):
 				set_actor_var(actor, "airborne", -1, chrono);
 		Tiles.GravityHalo:
 			set_actor_var(actor, "gravity_halo", sprite, chrono);
+			sprite.position += Vector2(0, -cell_size);
+		Tiles.Bowl:
+			set_actor_var(actor, "bowl", sprite, chrono);
+			sprite.position += Vector2(0, -cell_size);
+		Tiles.Superbowl:
+			set_actor_var(actor, "superbowl", sprite, chrono);
 			sprite.position += Vector2(0, -cell_size);
 		Tiles.HeavyMimic:
 			set_actor_var(actor, "heavy_mimic", sprite, chrono);
@@ -4443,7 +4458,7 @@ boost_pad_reentrance: bool = false) -> int:
 		#(FIX: Broken time crystals can't be sticky top'd because they're basically not things
 		#(FIX: If Heavy is being pushed downwards, don't try to sticky top that thing down)
 		#(FIX: Do allow a broken crate to be sticky top'd upwards since we wouldn't push it
-		if actor.actorname == Actor.Name.Heavy and !is_retro:
+		if actor.has_sticky_top() and !is_retro:
 			var sticky_actors = actors_in_tile(actor.pos - dir + Vector2.UP);
 			for sticky_actor in sticky_actors:
 				if (sticky_actor == actor):
@@ -4452,7 +4467,7 @@ boost_pad_reentrance: bool = false) -> int:
 					continue;
 				if (pushers_list.has(sticky_actor)):
 					continue;
-				if (strength_check(actor.strength, sticky_actor.heaviness)
+				if (actor.superbowl != null or strength_check(actor.strength, sticky_actor.heaviness)
 				and (!sticky_actor.broken or !sticky_actor.is_crystal)):
 					sticky_actor.just_moved = true;
 					move_actor_relative(sticky_actor, dir, chrono, hypothetical, false, false, [actor]);
@@ -4512,6 +4527,12 @@ boost_pad_reentrance: bool = false) -> int:
 								attach = true;
 						Tiles.GravityHalo:
 							if (actor.gravity_halo == null):
+								attach = true;
+						Tiles.Bowl:
+							if (actor.bowl == null):
+								attach = true;
+						Tiles.Superbowl:
+							if (actor.superbowl == null):
 								attach = true;
 						Tiles.HeavyMimic:
 							if (actor.heavy_mimic == null):
@@ -4937,7 +4958,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				play_sound("fuzz");
 			elif (old_tile == Tiles.OneUndo):
 				play_sound("rewindnoticed");
-			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne) or (old_tile == Tiles.HeavyMimic or old_tile == Tiles.LightMimic or old_tile == Tiles.GravityHalo)):
+			elif (colours_dictionary.has(old_tile) or (old_tile >= Tiles.Propellor and old_tile <= Tiles.FallOne) or (old_tile == Tiles.HeavyMimic or old_tile == Tiles.LightMimic or old_tile == Tiles.GravityHalo or old_tile == Tiles.Bowl or old_tile == Tiles.Superbowl)):
 				pass;
 			elif (old_tile == Tiles.Continuum || old_tile == Tiles.Spotlight):
 				pass
@@ -5262,6 +5283,11 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					flash_colour = no_foo_flash;
 			Tiles.NoLight:
 				result = no_if_true_yes_if_false(actor.actorname == Actor.Name.Light);
+				if (result == Success.No):
+					flash_terrain = id;
+					flash_colour = no_foo_flash;
+			Tiles.NoHeavyLight:
+				result = no_if_true_yes_if_false(actor.actorname == Actor.Name.Heavy or actor.actorname == Actor.Name.Light);
 				if (result == Success.No):
 					flash_terrain = id;
 					flash_colour = no_foo_flash;
@@ -5705,7 +5731,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					#AD13: Heavy prefers to push crystals up instead of eat them. Sticky top baby ;D
 					#this definitely won't bite me in the ass I want to make a PUZZLE ok
 					if (can_eat(actor, actor_there) or can_eat(actor_there, actor)):
-						if actor.actorname == Actor.Name.Heavy and !is_retro and dir == Vector2.UP:
+						if actor.has_sticky_top() and !is_retro and dir == Vector2.UP:
 							var crystal_carry = move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
 							if (crystal_carry == Success.No):
 								eat_crystal(actor, actor_there, chrono);

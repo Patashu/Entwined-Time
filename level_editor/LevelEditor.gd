@@ -190,6 +190,9 @@ enum Tiles {
 	GravitySouth, #184
 	GravityWest, #185
 	GravityHalo, #186
+	Bowl, #187
+	Superbowl, #188
+	NoHeavyLight, #189
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -488,6 +491,9 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.GravitySouth)
 		picker_array.append(Tiles.GravityWest)
 		picker_array.append(Tiles.GravityHalo)
+		picker_array.append(Tiles.Bowl)
+		picker_array.append(Tiles.Superbowl)
+		picker_array.append(Tiles.NoHeavyLight)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1182,6 +1188,12 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Gravity: Gravity in this tile points in this direction. (Multiple Gravities stack.)"
 		Tiles.GravityHalo:
 			text = "Gravity Halo: Hat. (Attaches to an actor entering or starting in the tile below.) That actor experiences reverse gravity."
+		Tiles.Bowl:
+			text = "Bowl: Hat. (Attaches to an actor entering or starting in the tile below.) That actor's sticky top is toggled."
+		Tiles.Superbowl:
+			text = "Superbowl: Hat. (Attaches to an actor entering or starting in the tile below.) That actor gains sticky top and even actors it's too weak to push get sticky topped."
+		Tiles.NoHeavyLight:
+			text = "No Heavy/Light: Packaged together for your convenience."
 	return text;
 	
 func picker_tooltip() -> void:
@@ -1201,6 +1213,8 @@ func picker_tooltip() -> void:
 		pickertooltip.set_rect_position(Vector2(512-200, pickertooltip.get_rect_position().y));
 	if (pickertooltip.get_rect_position().y + pickertooltip.get_rect_size().y > 300):
 		pickertooltip.set_rect_position(Vector2(pickertooltip.get_rect_position().x, 300-pickertooltip.get_rect_size().y));
+	# round it to nearest integers as a tentative graphical bug fix
+	pickertooltip.set_rect_position(Vector2(round(pickertooltip.get_rect_position().x), round(pickertooltip.get_rect_position().y)));
 	
 func test_level() -> void:
 	var result = serialize_current_level();
