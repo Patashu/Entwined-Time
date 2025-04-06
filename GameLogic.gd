@@ -2484,7 +2484,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Helium Pit")
 	level_filenames.push_back("Bad Roommates")
 	level_filenames.push_back("Kinematic Stability [VAR1]")
-	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2]")
+	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR2] [VAR1]")
 	level_filenames.push_back("Costly Rewinds [VAR1]")
 	level_filenames.push_back("Glass Monolith (glass shortage) [VAR1]")
 	level_filenames.push_back("The Boundless Sky [VAR1] [VAR1]")
