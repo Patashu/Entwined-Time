@@ -1853,6 +1853,40 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Boulder Moving Service")
 	level_filenames.push_back("Rock Glider")
 	
+	chapter_names.push_back("Terraforming");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#402D18"));
+	chapter_tracks.push_back(4);
+	chapter_replacements[chapter_names.size() - 1] = "E";
+	level_filenames.push_back("Fragile Victory")
+	level_filenames.push_back("Flamepatch")
+	level_filenames.push_back("Nightfall")
+	level_filenames.push_back("Phaseboards")
+	level_filenames.push_back("Death's Door")
+	level_filenames.push_back("Dead or Alive")
+	level_filenames.push_back("Road to the end")
+	level_filenames.push_back("Spelunking---")
+	level_filenames.push_back("Dirt")
+	level_filenames.push_back("Necessary Lock")
+	level_filenames.push_back("Crumbling Ladder")
+	level_filenames.push_back("Frequent Fryers")
+	level_filenames.push_back("Faulty light model")
+	level_filenames.push_back("Spontaneous Combustion--")
+	level_filenames.push_back("Explosive Airlock")
+	level_filenames.push_back("Pachinko-")
+	level_filenames.push_back("Upward Jetstream")
+	level_filenames.push_back("Perpetual Motion Machine")
+	
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Firewalkers")
+	level_filenames.push_back("Tractor Beam")
+	level_filenames.push_back("Death's Door [VAR1]")
+	level_filenames.push_back("Ceiling Sockets")
+	level_filenames.push_back("Inside The Box")
+	level_filenames.push_back("Self Destruct")
+	
 	chapter_names.push_back("Victory Lap");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(256, level_filenames.size()));
@@ -1919,38 +1953,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Locke's Conjecture")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
-	
-	chapter_names.push_back("Chapter E - Terraforming (WIP)");
-	chapter_standard_starting_levels.push_back(level_filenames.size());
-	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
-	chapter_skies.push_back(Color("#223C52"));
-	chapter_tracks.push_back(0);
-	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Fragile Victory")
-	level_filenames.push_back("Flamepatch")
-	level_filenames.push_back("Nightfall")
-	level_filenames.push_back("Phaseboards")
-	level_filenames.push_back("Death's Door")
-	level_filenames.push_back("Dead or Alive")
-	level_filenames.push_back("Road to the end")
-	level_filenames.push_back("Spelunking---")
-	level_filenames.push_back("Dirt")
-	level_filenames.push_back("Necessary Lock")
-	level_filenames.push_back("Frequent Fryers")
-	level_filenames.push_back("Faulty light model")
-	level_filenames.push_back("Explosive Airlock")
-	level_filenames.push_back("Pachinko-")
-	level_filenames.push_back("Upward Jetstream")
-	level_filenames.push_back("Perpetual Motion Machine")
-	
-	chapter_advanced_starting_levels.push_back(level_filenames.size());
-	chapter_advanced_unlock_requirements.push_back(0);
-	level_filenames.push_back("Firewalkers")
-	level_filenames.push_back("Tractor Beam")
-	level_filenames.push_back("Death's Door [VAR1]")
-	level_filenames.push_back("Ceiling Sockets")
-	level_filenames.push_back("Inside The Box")
-	level_filenames.push_back("Self Destruct")
 	
 	chapter_names.push_back("The Cutting Room Floor (Unused Puzzles)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2496,7 +2498,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Glass Monolith (glass shortage) [VAR1]")
 	level_filenames.push_back("The Boundless Sky [VAR1] [VAR1]")
 	level_filenames.push_back("Broken Bridge [VAR2]")
+	level_filenames.push_back("Woodskip [VAR2] [VAR1]")
 	level_filenames.push_back("The Vanishing Pit")
+	level_filenames.push_back("Fuzzy Reactor Core")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2876,41 +2880,6 @@ func ready_map() -> void:
 			has_nudges = true;
 		elif (any_layer_has_this_tile(Tiles.NudgeWestGreen)):
 			has_nudges = true;
-	
-	if (is_custom):
-		if (any_layer_has_this_tile(Tiles.Checkpoint)):
-			has_checkpoints = true;
-		elif (any_layer_has_this_tile(Tiles.CheckpointBlue)):
-			has_checkpoints = true;
-		elif (any_layer_has_this_tile(Tiles.CheckpointRed)):
-			has_checkpoints = true;
-			
-		if (any_layer_has_this_tile(Tiles.GreenFog)):
-			has_green_fog = true;
-			
-		if (any_layer_has_this_tile(Tiles.Hole)):
-			has_holes = true;
-		elif (any_layer_has_this_tile(Tiles.GreenHole)):
-			has_holes = true;
-		elif (any_layer_has_this_tile(Tiles.VoidHole)):
-			has_holes = true;
-			
-		if (any_layer_has_this_tile(Tiles.BoostPad)):
-			has_boost_pads = true;
-		elif (any_layer_has_this_tile(Tiles.GreenBoostPad)):
-			has_boost_pads = true;
-			
-		if (any_layer_has_this_tile(Tiles.SlopeNE)):
-			has_slopes = true;
-		elif (any_layer_has_this_tile(Tiles.SlopeNW)):
-			has_slopes = true;
-		elif (any_layer_has_this_tile(Tiles.SlopeSE)):
-			has_slopes = true;
-		elif (any_layer_has_this_tile(Tiles.SlopeSW)):
-			has_slopes = true;
-			
-		if (any_layer_has_this_tile(Tiles.Eclipse)):
-			has_eclipses = true;
 			
 		if (any_layer_has_this_tile(Tiles.PhaseBoardRed)):
 			has_floorboards = true;
@@ -2958,6 +2927,49 @@ func ready_map() -> void:
 		if (has_phaseboards):
 			phaseboards_rotation();
 			
+		if (any_layer_has_this_tile(Tiles.GlassScrew)):
+			has_triggers = true;
+		elif (any_layer_has_this_tile(Tiles.Bomb)):
+			has_triggers = true;
+			
+		if (has_triggers):
+			trigger_rotation();
+	
+	if (is_custom):
+		if (any_layer_has_this_tile(Tiles.Checkpoint)):
+			has_checkpoints = true;
+		elif (any_layer_has_this_tile(Tiles.CheckpointBlue)):
+			has_checkpoints = true;
+		elif (any_layer_has_this_tile(Tiles.CheckpointRed)):
+			has_checkpoints = true;
+			
+		if (any_layer_has_this_tile(Tiles.GreenFog)):
+			has_green_fog = true;
+			
+		if (any_layer_has_this_tile(Tiles.Hole)):
+			has_holes = true;
+		elif (any_layer_has_this_tile(Tiles.GreenHole)):
+			has_holes = true;
+		elif (any_layer_has_this_tile(Tiles.VoidHole)):
+			has_holes = true;
+			
+		if (any_layer_has_this_tile(Tiles.BoostPad)):
+			has_boost_pads = true;
+		elif (any_layer_has_this_tile(Tiles.GreenBoostPad)):
+			has_boost_pads = true;
+			
+		if (any_layer_has_this_tile(Tiles.SlopeNE)):
+			has_slopes = true;
+		elif (any_layer_has_this_tile(Tiles.SlopeNW)):
+			has_slopes = true;
+		elif (any_layer_has_this_tile(Tiles.SlopeSE)):
+			has_slopes = true;
+		elif (any_layer_has_this_tile(Tiles.SlopeSW)):
+			has_slopes = true;
+			
+		if (any_layer_has_this_tile(Tiles.Eclipse)):
+			has_eclipses = true;
+			
 		if (any_layer_has_this_tile(Tiles.GhostFog)):
 			has_ghost_fog = true;
 		elif (any_layer_has_this_tile(Tiles.PurpleFog)):
@@ -2993,14 +3005,6 @@ func ready_map() -> void:
 			has_mimics = true;
 		elif (any_layer_has_this_tile(Tiles.LightMimic)):
 			has_mimics = true;
-			
-		if (any_layer_has_this_tile(Tiles.GlassScrew)):
-			has_triggers = true;
-		elif (any_layer_has_this_tile(Tiles.Bomb)):
-			has_triggers = true;
-			
-		if (has_triggers):
-			trigger_rotation();
 			
 		if (any_layer_has_this_tile(Tiles.GravityEast)):
 			has_gravity = true;
