@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -13,10 +13,8 @@ tile_data = PoolIntArray( 1, 128, 0, 3, 129, 0, 65536, 1, 0, 65537, 8, 0, 65538,
 script = ExtResource( 2 )
 level_name = "Bump"
 level_author = "Sandra53"
-level_replay = "Bump$mturn=61$xwdxdzwdzdxzzxzzadxwdxzaxzzxzzxwazdxwxzzddxwzzwzwazazdxzsxzzxzdxwdxzzsxzzxdxaxzxdxdxz"
+level_replay = "Bump$mturn=25$waxadxzxzzsxzxzxwzxaxaxzxzxddxwzxzzddxa"
 heavy_max_moves = 2.0
 light_max_moves = 2.0
-clock_turns = ""
 target_sky = Color( 0.196078, 0.262745, 0.317647, 1 )
 target_track = 3.0
-setup_replay = ""
