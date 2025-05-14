@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524291, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524291, 9, 14, 196614, 10, 14, 524291, 11, 14, 196614, 12, 14, 524292, 65536, 14, 262145, 65540, 14, 262145, 65544, 14, 262145, 65545, 32, 0, 65546, 14, 327681, 65547, 32, 0, 65548, 14, 262145, 131072, 14, 262145, 131076, 14, 262145, 131080, 14, 262145, 131081, 6, 0, 131083, 6, 0, 131084, 14, 262145, 196608, 14, 262145, 196610, 2, 0, 196612, 14, 262145, 196614, 8, 0, 196616, 14, 262145, 196617, 2, 0, 196618, 0, 0, 196619, 8, 0, 196620, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655363, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 655363, 262153, 14, 196614, 262154, 14, 196614, 262155, 14, 196614, 262156, 14, 655364 )
+
+[node name="@@521" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65545, 29, 0, 65547, 30, 0, 131081, 128, 0, 131083, 129, 0, 196610, 1, 0, 196614, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Out of Body Experience"
+level_author = "Sandra53"
+level_replay = "Out of Body Experience$mturn=22$wdxdwaaxzdwazzxzzzzawxwxwxaxd"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""

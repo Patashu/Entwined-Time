@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 7, 0, 65536, 14, 196609, 65537, 26, 0, 65538, 26, 0, 65539, 26, 0, 65540, 14, 196609, 131072, 14, 262145, 131076, 14, 262145, 196608, 14, 262145, 196612, 14, 262145, 262144, 14, 262145, 262148, 14, 262145, 327680, 14, 262145, 327684, 14, 262145, 393216, 14, 262145, 393217, 27, 0, 393218, 27, 0, 393219, 27, 0, 393220, 14, 262145, 458752, 14, 262145, 458753, 26, 0, 458754, 26, 0, 458755, 26, 0, 458756, 14, 262145, 524288, 14, 655362, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 655364 )
+
+[node name="@@619" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 72, 0, 2, 72, 0, 3, 72, 0, 65537, 72, 0, 65538, 72, 0, 65539, 72, 0, 131073, 72, 0, 131074, 72, 0, 131075, 72, 0, 262146, 129, 0, 327682, 13, 0, 393218, 8, 0, 458753, 2, 0, 458754, 1, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Kickflip"
+level_author = "Green"
+level_replay = "Kickflip$mturn=55$xaxdxzwsxzxzxdzxaxdxzwxzxzxdxzxzxwaxdxzzxzdxsxzxzxdxswxzxzzxdxswxzdxzzxzxdxdzdxwxzdxzzwxzxwxd"
+heavy_max_moves = 1.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""

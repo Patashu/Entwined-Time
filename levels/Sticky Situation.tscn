@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 142, 0, 65536, 7, 0, 65537, 2, 0, 65539, 8, 0, 65540, 1, 0, 131072, 14, 196613, 131073, 14, 196614, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196615 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Sticky Situation"
+level_author = "Green"
+level_replay = "Sticky Situation$mturn=56$xwxwxzaxzxzxwxaxzdxzaxzxzxwxaxzaxzxzxwxdxzxzwxaxzdxzxzdxaxzxzdxaxzwxzxzxwxwxzxzaxwzxzxdzdxdxzdxza"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65542, 14, 262145, 131072, 14, 262145, 131076, 7, 0, 131077, 1, 0, 131078, 14, 262145, 196608, 14, 262145, 196609, 33, 0, 196610, 33, 0, 196611, 14, 196613, 196612, 14, 196614, 196613, 14, 524291, 196614, 14, 655364, 262144, 14, 262145, 262147, 31, 0, 262149, 14, 262145, 327680, 14, 262145, 327681, 6, 0, 327682, 6, 0, 327683, 6, 0, 327684, 6, 0, 327685, 14, 262145, 393216, 14, 262145, 393217, 8, 0, 393218, 2, 0, 393221, 14, 262145, 458752, 14, 655362, 458753, 14, 524291, 458754, 14, 196615, 458756, 14, 196613, 458757, 14, 589828, 524289, 14, 262145, 524290, 66, 0, 524291, 14, 196609, 524292, 66, 0, 524293, 14, 262145, 589825, 14, 262145, 589826, 32, 0, 589827, 14, 262145, 589828, 32, 0, 589829, 14, 262145, 655361, 14, 655362, 655362, 14, 196614, 655363, 14, 655363, 655364, 14, 196614, 655365, 14, 655364 )
+
+[node name="@@571" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 262147, 29, 0, 262148, 29, 0, 524290, 128, 0, 524292, 129, 0, 589826, 2, 0, 589828, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Curious Ascent"
+level_author = "Sandra53"
+level_replay = "Curious Ascent$mturn=158$dxdddaxzxzsaxdxzzsaxzxzxaxasxzxzzzzzzxazxdxaxzssddxzdxzxzxzzzaxaxsxzadxsxzxzzzsxddxzxzzxsdxzxzzxsxaxzxzassdddxsdsxzxzzxzzszzzzsxzxzasxsdxssxaaxzzzxzxzxzzzdxaxssdsxddxzxzzxzzzssxzxzxasxzxzzssxssdsxddxzxzzxzzzxzzxzsssxdxzzzdddxzs"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = "1"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""

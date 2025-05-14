@@ -1954,6 +1954,30 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Chapter M - Mimics (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Imitation")
+	level_filenames.push_back("Help 'Yourself'")
+	level_filenames.push_back("Overcharged")
+	level_filenames.push_back("Bump")
+	level_filenames.push_back("Roommates-")
+	level_filenames.push_back("Mental Scales")
+	level_filenames.push_back("Out of Body Experience")
+	level_filenames.push_back("Dead Ringer")
+	level_filenames.push_back("Colorful Asteroids")
+	level_filenames.push_back("Curious Ascent")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Overcharged [VAR1]")
+	level_filenames.push_back("Overcharged [VAR2]")
+	level_filenames.push_back("Dead Ringer [VAR1]")
+	level_filenames.push_back("Kickflip")
+	level_filenames.push_back("Obtuse Desync")
+	
 	chapter_names.push_back("The Cutting Room Floor (Unused Puzzles)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
@@ -2041,6 +2065,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Soulcrates")
 	level_filenames.push_back("In Defiance of Time-")
 	level_filenames.push_back("Circle Dance-")
+	level_filenames.push_back("Dead Air [Act 1]")
 	level_filenames.push_back("In Defiance of Time [VAR1]")
 	level_filenames.push_back("Unpacking")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2158,7 +2183,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Floor Change (Loop 2)")
 	level_filenames.push_back("Ohm's Law")
 	level_filenames.push_back("Gray Sunset")
-	level_filenames.push_back("Dead Air [Act 1]")
 	level_filenames.push_back("Gravitational Pit")
 	level_filenames.push_back("Lazarus Syndrome")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2312,6 +2336,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Ladderworld- (Glass Shortage)")
 	level_filenames.push_back("Crystalformer")
 	level_filenames.push_back("Swapper")
+	level_filenames.push_back("Acrobatics (Loop 2) [VAR1]")
 	level_filenames.push_back("Elementary [VAR1]")
 	level_filenames.push_back("Island of Stability [VAR1]")
 	level_filenames.push_back("Flaming Coronation [VAR1]")
@@ -2501,6 +2526,22 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Woodskip [VAR2] [VAR1]")
 	level_filenames.push_back("The Vanishing Pit")
 	level_filenames.push_back("Fuzzy Reactor Core")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Green's World (Page 4)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Lockdown")
+	level_filenames.push_back("Lockdown [VAR1]")
+	level_filenames.push_back("Sticky Situation")
+	level_filenames.push_back("The Rising Pit-")
+	level_filenames.push_back("Crumbling Ladder [VAR1]")
+	level_filenames.push_back("Upward Jetstream [VAR1]")
+	level_filenames.push_back("Upward Jetstream [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

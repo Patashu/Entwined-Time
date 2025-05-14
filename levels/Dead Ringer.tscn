@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65539, 2, 0, 65540, 1, 0, 65541, 52, 0, 65542, 7, 0, 65543, 8, 0, 65546, 14, 262145, 131072, 14, 655362, 131073, 14, 524291, 131074, 14, 196614, 131075, 14, 196614, 131076, 14, 196614, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 524291, 131082, 14, 655364, 196609, 14, 262145, 196610, 65, 0, 196613, 3, 0, 196615, 25, 0, 196616, 24, 0, 196617, 14, 262145, 262145, 14, 655362, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 655364 )
+
+[node name="@@538" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131077, 128, 0, 196616, 32, 0 )
+
+[node name="@@539" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131077, 129, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Dead Ringer"
+level_author = "Sandra53"
+level_replay = "Dead Ringer$mturn=89$aaxaaaaaxdddddddxzzzzxzzxddaaxddxzzxzzaaaxzzzxzzzzzzzzzzddaaxaaxzzxddxddxzzxzzddaaxaaxzzxdxdxzxzxaxzzzzxzzzzzzaaaxd"
+heavy_max_moves = 10.0
+light_max_moves = 10.0
+clock_turns = ""
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""

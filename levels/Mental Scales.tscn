@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65546, 14, 262145, 131072, 14, 262145, 131073, 1, 0, 131074, 7, 0, 131082, 14, 262145, 196608, 14, 589824, 196609, 14, 3, 196610, 14, 4, 196618, 14, 262145, 262144, 14, 589825, 262145, 14, 131075, 262146, 14, 131076, 262147, 27, 0, 262148, 14, 2, 262149, 14, 3, 262150, 14, 4, 262154, 14, 262145, 327680, 14, 262145, 327681, 29, 0, 327684, 14, 131074, 327685, 14, 786440, 327686, 14, 131076, 327687, 6, 0, 327688, 6, 0, 327689, 6, 0, 327690, 14, 262145, 393216, 14, 262145, 393217, 29, 0, 393219, 8, 0, 393221, 14, 327681, 393226, 14, 262145, 458752, 14, 262145, 458753, 29, 0, 458755, 2, 0, 458762, 14, 262145, 524288, 14, 589826, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196614, 524293, 14, 196614, 524294, 14, 196614, 524295, 14, 196614, 524296, 14, 196614, 524297, 14, 196614, 524298, 14, 589828, 589824, 14, 262145, 589826, 56, 0, 589827, 56, 0, 589828, 56, 0, 589829, 56, 0, 589830, 56, 0, 589831, 56, 0, 589832, 56, 0, 589834, 14, 262145, 655360, 14, 655362, 655361, 14, 196614, 655362, 14, 196614, 655363, 14, 196614, 655364, 14, 196614, 655365, 14, 196614, 655366, 14, 196614, 655367, 14, 196614, 655368, 14, 196614, 655369, 14, 196614, 655370, 14, 655364 )
+
+[node name="@@506" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 524293, 128, 0, 589826, 28, 0, 589829, 55, 0, 589832, 25, 0 )
+
+[node name="@@507" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 524293, 129, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Mental Scales"
+level_author = "Sandra53"
+level_replay = "Mental Scales$mturn=195$wxaxaxdxwzxzdxdxzdxdxzxzxawxdddxzzzxzzzzzzwxdxzdxwdxzwxwxdxzzxzxzzxwxdxwaxzxwaxwaxzzzzdxaxzaxzzxwxdxzzzzxzzxddaaxdddxwzxzzxzzzxzwxddaxdxaxzdxzxzxzzxaxdxzxzxwxdxzzaaaxzwawxzxzzzzzxzzwxaxzaaxzxzzsxawawdxddddwxzzwdxzzzzzzwaxdwxaxzzddxzzzaxaxzxzzzdxwddxwxaxdxzaxzsxzxzzxwxaxzzzzxzzzawxdxza"
+heavy_max_moves = 8.0
+light_max_moves = 8.0
+clock_turns = "1"
+target_sky = Color( 0.176471, 0.054902, 0.027451, 1 )
+target_track = 9.0
+setup_replay = ""
