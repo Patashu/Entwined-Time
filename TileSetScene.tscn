@@ -1,4 +1,4 @@
-[gd_scene load_steps=471 format=2]
+[gd_scene load_steps=477 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -437,6 +437,12 @@
 [ext_resource path="res://assets/superbowl.png" type="Texture" id=435]
 [ext_resource path="res://assets/bowl.png" type="Texture" id=436]
 [ext_resource path="res://assets/no_heavy_light.png" type="Texture" id=437]
+[ext_resource path="res://assets/bumper_right.png" type="Texture" id=438]
+[ext_resource path="res://assets/bumper_left.png" type="Texture" id=439]
+[ext_resource path="res://assets/bumper_down.png" type="Texture" id=440]
+[ext_resource path="res://assets/bumper_up.png" type="Texture" id=441]
+[ext_resource path="res://assets/spider_web_white.png" type="Texture" id=442]
+[ext_resource path="res://assets/spider_web_lime_green.png" type="Texture" id=443]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -1878,3 +1884,27 @@ texture = ExtResource( 435 )
 [node name="NoHeavyLight" type="Sprite" parent="."]
 position = Vector2( 239, 170 )
 texture = ExtResource( 437 )
+
+[node name="BumperLeft" type="Sprite" parent="."]
+position = Vector2( 441, 129 )
+texture = ExtResource( 439 )
+
+[node name="BumperUp" type="Sprite" parent="."]
+position = Vector2( 441, 118 )
+texture = ExtResource( 441 )
+
+[node name="BumperDown" type="Sprite" parent="."]
+position = Vector2( 445, 132 )
+texture = ExtResource( 440 )
+
+[node name="BumperRight" type="Sprite" parent="."]
+position = Vector2( 452, 125 )
+texture = ExtResource( 438 )
+
+[node name="SpiderWebWhite" type="Sprite" parent="."]
+position = Vector2( 487, 40 )
+texture = ExtResource( 442 )
+
+[node name="SpiderWebLimeGreen" type="Sprite" parent="."]
+position = Vector2( 497, 45 )
+texture = ExtResource( 443 )

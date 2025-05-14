@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=471 format=2]
+[gd_resource type="TileSet" load_steps=477 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -437,6 +437,12 @@
 [ext_resource path="res://assets/superbowl.png" type="Texture" id=435]
 [ext_resource path="res://assets/bowl.png" type="Texture" id=436]
 [ext_resource path="res://assets/no_heavy_light.png" type="Texture" id=437]
+[ext_resource path="res://assets/bumper_down.png" type="Texture" id=438]
+[ext_resource path="res://assets/bumper_up.png" type="Texture" id=439]
+[ext_resource path="res://assets/bumper_right.png" type="Texture" id=440]
+[ext_resource path="res://assets/spider_web_lime_green.png" type="Texture" id=441]
+[ext_resource path="res://assets/spider_web_white.png" type="Texture" id=442]
+[ext_resource path="res://assets/bumper_left.png" type="Texture" id=443]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3777,3 +3783,87 @@ frame_7/delay_sec = 0.0
 189/shape_one_way_margin = 0.0
 189/shapes = [  ]
 189/z_index = 0
+190/name = "BumperLeft"
+190/texture = ExtResource( 443 )
+190/tex_offset = Vector2( 0, 0 )
+190/modulate = Color( 1, 1, 1, 1 )
+190/region = Rect2( 0, 0, 24, 24 )
+190/tile_mode = 0
+190/occluder_offset = Vector2( 12, 12 )
+190/navigation_offset = Vector2( 12, 12 )
+190/shape_offset = Vector2( 0, 0 )
+190/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+190/shape_one_way = false
+190/shape_one_way_margin = 0.0
+190/shapes = [  ]
+190/z_index = 0
+191/name = "BumperUp"
+191/texture = ExtResource( 439 )
+191/tex_offset = Vector2( 0, 0 )
+191/modulate = Color( 1, 1, 1, 1 )
+191/region = Rect2( 0, 0, 24, 24 )
+191/tile_mode = 0
+191/occluder_offset = Vector2( 12, 12 )
+191/navigation_offset = Vector2( 12, 12 )
+191/shape_offset = Vector2( 0, 0 )
+191/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+191/shape_one_way = false
+191/shape_one_way_margin = 0.0
+191/shapes = [  ]
+191/z_index = 0
+192/name = "BumperDown"
+192/texture = ExtResource( 438 )
+192/tex_offset = Vector2( 0, 0 )
+192/modulate = Color( 1, 1, 1, 1 )
+192/region = Rect2( 0, 0, 24, 24 )
+192/tile_mode = 0
+192/occluder_offset = Vector2( 12, 12 )
+192/navigation_offset = Vector2( 12, 12 )
+192/shape_offset = Vector2( 0, 0 )
+192/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+192/shape_one_way = false
+192/shape_one_way_margin = 0.0
+192/shapes = [  ]
+192/z_index = 0
+193/name = "BumperRight"
+193/texture = ExtResource( 440 )
+193/tex_offset = Vector2( 0, 0 )
+193/modulate = Color( 1, 1, 1, 1 )
+193/region = Rect2( 0, 0, 24, 24 )
+193/tile_mode = 0
+193/occluder_offset = Vector2( 12, 12 )
+193/navigation_offset = Vector2( 12, 12 )
+193/shape_offset = Vector2( 0, 0 )
+193/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+193/shape_one_way = false
+193/shape_one_way_margin = 0.0
+193/shapes = [  ]
+193/z_index = 0
+194/name = "SpiderWebWhite"
+194/texture = ExtResource( 442 )
+194/tex_offset = Vector2( 0, 0 )
+194/modulate = Color( 1, 1, 1, 1 )
+194/region = Rect2( 0, 0, 24, 24 )
+194/tile_mode = 0
+194/occluder_offset = Vector2( 12, 12 )
+194/navigation_offset = Vector2( 12, 12 )
+194/shape_offset = Vector2( 0, 0 )
+194/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+194/shape_one_way = false
+194/shape_one_way_margin = 0.0
+194/shapes = [  ]
+194/z_index = 0
+195/name = "SpiderWebLimeGreen"
+195/texture = ExtResource( 441 )
+195/tex_offset = Vector2( 0, 0 )
+195/modulate = Color( 1, 1, 1, 1 )
+195/region = Rect2( 0, 0, 24, 24 )
+195/tile_mode = 0
+195/occluder_offset = Vector2( 12, 12 )
+195/navigation_offset = Vector2( 12, 12 )
+195/shape_offset = Vector2( 0, 0 )
+195/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+195/shape_one_way = false
+195/shape_one_way_margin = 0.0
+195/shapes = [  ]
+195/z_index = 0

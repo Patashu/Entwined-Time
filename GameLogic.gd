@@ -378,6 +378,12 @@ enum Tiles {
 	Bowl, #187
 	Superbowl, #188
 	NoHeavyLight, #189
+	BumperLeft, #190
+	BumperUp, #191
+	BumperDown, #192
+	BumperRight, #193
+	SpiderWebWhite, #194
+	SpiderWebLimeGreen, #195
 }
 var voidlike_tiles : Array = [];
 
@@ -5206,6 +5212,33 @@ func current_tile_is_solid(actor: Actor, dir: Vector2, is_gravity: bool, is_retr
 								flash_terrain = id;
 								flash_colour = no_foo_flash;
 								return Success.No;
+			Tiles.SpiderWebWhite:
+				if (!is_retro):
+					var found: int = 0;
+					var required: int = terrain.count(Tiles.SpiderWebWhite);
+					while animation_server.size() <= animation_substep:
+						animation_server.push_back([]);
+					for a in range (animation_substep+1):
+						for anim in animation_server[a]:
+							if anim[0] == actor and ((anim[1][0] == Anim.move and !anim[1][2]) or anim[1][0] == Anim.bump):
+								found += 1;
+								if (found >= required):
+									flash_terrain = id;
+									flash_colour = no_foo_flash;
+									return Success.No;
+			Tiles.SpiderWebLimeGreen:
+				var found: int = 0;
+				var required: int = terrain.count(Tiles.SpiderWebLimeGreen);
+				while animation_server.size() <= animation_substep:
+					animation_server.push_back([]);
+				for a in range (animation_substep+1):
+					for anim in animation_server[a]:
+						if anim[0] == actor and (anim[1][0] == Anim.move or anim[1][0] == Anim.bump):
+							found += 1;
+							if (found >= required):
+								flash_terrain = id;
+								flash_colour = no_foo_flash;
+								return Success.No;
 		if blocked != Success.Yes:
 			return blocked;
 	return Success.Yes;
@@ -5292,6 +5325,90 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 						add_to_animation_server(actor, [Anim.sfx, "bumper"]);
 						move_actor_relative(actor, -dir, chrono, false, false);
 						maybe_rise(actor, chrono, -dir, false);
+					bumper_counter -= 1;
+					return Success.Surprise;
+				else:
+					bumper_counter -= 1;
+					return Success.No;
+			Tiles.BumperLeft:
+				if (dir == Vector2.LEFT):
+					return Success.No;
+				bumper_counter += 1;
+				if (bumper_counter == 99):
+					if (hypothetical):
+						pass;
+					else:
+						lose("Infinite loop.", null, true, "infloop");
+					bumper_counter -= 1;
+					return Success.Surprise;
+				if (move_actor_relative(actor, Vector2.LEFT, chrono, true, false) == Success.Yes):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Anim.sfx, "bumper"]);
+						move_actor_relative(actor, Vector2.LEFT, chrono, false, false);
+						maybe_rise(actor, chrono, Vector2.LEFT, false);
+					bumper_counter -= 1;
+					return Success.Surprise;
+				else:
+					bumper_counter -= 1;
+					return Success.No;
+			Tiles.BumperUp:
+				if (dir == Vector2.UP):
+					return Success.No;
+				bumper_counter += 1;
+				if (bumper_counter == 99):
+					if (hypothetical):
+						pass;
+					else:
+						lose("Infinite loop.", null, true, "infloop");
+					bumper_counter -= 1;
+					return Success.Surprise;
+				if (move_actor_relative(actor, Vector2.UP, chrono, true, false) == Success.Yes):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Anim.sfx, "bumper"]);
+						move_actor_relative(actor, Vector2.UP, chrono, false, false);
+						maybe_rise(actor, chrono, Vector2.UP, false);
+					bumper_counter -= 1;
+					return Success.Surprise;
+				else:
+					bumper_counter -= 1;
+					return Success.No;
+			Tiles.BumperDown:
+				if (dir == Vector2.DOWN):
+					return Success.No;
+				bumper_counter += 1;
+				if (bumper_counter == 99):
+					if (hypothetical):
+						pass;
+					else:
+						lose("Infinite loop.", null, true, "infloop");
+					bumper_counter -= 1;
+					return Success.Surprise;
+				if (move_actor_relative(actor, Vector2.DOWN, chrono, true, false) == Success.Yes):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Anim.sfx, "bumper"]);
+						move_actor_relative(actor, Vector2.DOWN, chrono, false, false);
+						maybe_rise(actor, chrono, Vector2.DOWN, false);
+					bumper_counter -= 1;
+					return Success.Surprise;
+				else:
+					bumper_counter -= 1;
+					return Success.No;
+			Tiles.BumperRight:
+				if (dir == Vector2.RIGHT):
+					return Success.No;
+				bumper_counter += 1;
+				if (bumper_counter == 99):
+					if (hypothetical):
+						pass;
+					else:
+						lose("Infinite loop.", null, true, "infloop");
+					bumper_counter -= 1;
+					return Success.Surprise;
+				if (move_actor_relative(actor, Vector2.RIGHT, chrono, true, false) == Success.Yes):
+					if (!hypothetical):
+						add_to_animation_server(actor, [Anim.sfx, "bumper"]);
+						move_actor_relative(actor, Vector2.RIGHT, chrono, false, false);
+						maybe_rise(actor, chrono, Vector2.RIGHT, false);
 					bumper_counter -= 1;
 					return Success.Surprise;
 				else:

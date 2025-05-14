@@ -193,6 +193,12 @@ enum Tiles {
 	Bowl, #187
 	Superbowl, #188
 	NoHeavyLight, #189
+	BumperLeft, #190
+	BumperUp, #191
+	BumperDown, #192
+	BumperRight, #193
+	SpiderWebWhite, #194
+	SpiderWebLimeGreen, #195
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -493,7 +499,13 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.GravityHalo)
 		picker_array.append(Tiles.Bowl)
 		picker_array.append(Tiles.Superbowl)
+		picker_array.append(Tiles.BumperLeft)
+		picker_array.append(Tiles.BumperUp)
+		picker_array.append(Tiles.BumperDown)
+		picker_array.append(Tiles.BumperRight)
 		picker_array.append(Tiles.NoHeavyLight)
+		picker_array.append(Tiles.SpiderWebWhite)
+		picker_array.append(Tiles.SpiderWebLimeGreen)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1097,9 +1109,9 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.PhaseBoardCrate:
 			text = "Phase Board Crate: A non-destroyable floorboard that exists whenever any actor besides the real Heavy/Light is asking."
 		Tiles.SpiderWeb:
-			text = "Spider Web: Solid to non-retro moves exiting this tile if the actor has already non-retro moved 1 or more times this turn.  (+1 for each other Spider Web in this tile.)"
+			text = "Spider Web: Solid to non-retro moves exiting this tile if the actor has already non-retro moved 1 or more times this turn. (+1 for each other Spider Web in this tile.)"
 		Tiles.SpiderWebGreen:
-			text = "Green Spider Web: Solid to moves exiting this tile if the actor has already moved 1 or more times this turn.  (+1 for each other Green Spider Web in this tile.)"
+			text = "Green Spider Web: Solid to moves exiting this tile if the actor has already moved 1 or more times this turn. (+1 for each other Green Spider Web in this tile.)"
 		Tiles.NoPush:
 			text = "No Push: Solid to non-retro pushes."
 		Tiles.NoPushGreen:
@@ -1194,6 +1206,18 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Superbowl: Hat. (Attaches to an actor entering or starting in the tile below.) That actor gains sticky top and even actors it's too weak to push get sticky topped."
 		Tiles.NoHeavyLight:
 			text = "No Heavy/Light: Packaged together for your convenience."
+		Tiles.BumperLeft:
+			text = "Bumper Left: Solid. Surprise: If the actor can move left, it does."
+		Tiles.BumperUp:
+			text = "Bumper Up: Solid. Surprise: If the actor can move up, it does."
+		Tiles.BumperDown:
+			text = "Bumper Down: Solid. Surprise: If the actor can move down, it does."
+		Tiles.BumperRight:
+			text = "Bumper Right: Solid. Surprise: If the actor can move right, it does."
+		Tiles.SpiderWebWhite:
+			text = "White Spider Web: Solid to non-retro moves exiting this tile if the actor has already ((non-retro moved) or bumped) 1 or more times this turn. (+1 for each other White Spider Web in this tile.)"
+		Tiles.SpiderWebLimeGreen:
+			text = "Lime Green Spider Web: Solid to moves exiting this tile if the actor has already (moved or bumped) 1 or more times this turn. (+1 for each other Lime Green Spider Web in this tile.)"
 	return text;
 	
 func picker_tooltip() -> void:
