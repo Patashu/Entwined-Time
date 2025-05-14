@@ -3878,7 +3878,7 @@ func calculate_map_size() -> void:
 				map_x_max = tile.x;
 			if tile.y > map_y_max:
 				map_y_max = tile.y;
-	if ((is_custom or (chapter >= custom_past_here -2)) and (map_x_max > map_x_max_max or map_y_max > map_y_max_max+2)):
+	if ((is_custom or chapter >= 16) and (map_x_max > map_x_max_max or map_y_max > map_y_max_max+2)):
 		terrainmap.scale = Vector2(0.5, 0.5);
 	else:
 		terrainmap.scale = Vector2(1.0, 1.0);
