@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196615, 65536, 7, 0, 65537, 29, 0, 131072, 8, 0, 131073, 2, 0, 131074, 64, 0, 196608, 14, 262148, 196609, 12, 0, 196610, 0, 0, 262146, 64, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 393219, 0, 0, 458755, 1, 0, 524291, 12, 0, 524292, 14, 196609, 589828, 14, 262145, 655364, 14, 327681 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Fire In The Sky [REV1] [VAR1]"
+level_author = "cl1694"
+level_replay = "Fire In The Sky [REV1] [VAR1]$mturn=42$xwsxaxzddxwzxzxwxzzxzxaxzxwxaxzdxzxaxdzxzwxaxzdxzxzzxdsxzxzzsxwsxzdxw"
+heavy_max_moves = 2.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.317647, 0.180392, 0.133333, 1 )
+target_track = 1.0
+setup_replay = ""

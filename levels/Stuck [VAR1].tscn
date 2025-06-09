@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 524292, 65536, 14, 262145, 65537, 8, 0, 65541, 7, 0, 65542, 14, 262145, 131072, 14, 589826, 131073, 14, 196615, 131077, 1, 0, 131078, 14, 655362, 131079, 14, 524292, 196608, 14, 262145, 196610, 3, 0, 196612, 2, 0, 196613, 32, 0, 196615, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 524292, 262151, 14, 262145, 327685, 14, 262145, 327686, 52, 0, 327687, 14, 262145, 393221, 14, 655362, 393222, 14, 196614, 393223, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Stuck [VAR1]"
+level_author = "Green"
+level_replay = "Stuck [VAR1]$mturn=86$xdxaxzdxaxzxzxdxzaaxzxzzxdxwxzxzdwaaxdxzzzaxzwxzxzwxdxzaxzxzwxdxzaxwxzxzaxwxzaxzaxzdxzxzxaxdxzxaxaxzzzzszdddazzzwxzzxzxwxzxzxdxwxdxzaxwd"
+heavy_max_moves = 4.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.207843, 0.0901961, 0.192157, 1 )
+target_track = 8.0
+setup_replay = ""

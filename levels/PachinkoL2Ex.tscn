@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -18,11 +18,9 @@ tile_data = PoolIntArray( 262148, 132, 0 )
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Pachinko (Loop 2) [VAR1]"
-level_author = "Slabdrill & cl1394"
+level_author = "Slabdrill & cl1694"
 level_replay = "Pachinko (Loop 2) [VAR1]$mturn=144$aaxwzxzxddxaxzxzaxzxzzswxaxzzdxzxdxwzxzzdzdxdwxaxzdxzwxzzwaxzxzzxzxszxaxdxwxzxzwxaxzwxdxzaxzxzdxzxzsxwaxzsxzzxzdxaaxzzsxzxwxzxzzdxaxzsdxzwxzxzxwxwdxzdxzzsxzwxzdxzxdxzsxzzxwxwdxzdxzzsxzwxzdxzzdxzxwxaxzzswxdxzzdxzxzxzxwaxdxzaxd"
 heavy_max_moves = 2.0
 light_max_moves = 2.0
-clock_turns = ""
 target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
 target_track = 0.0
-setup_replay = ""

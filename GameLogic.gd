@@ -2198,6 +2198,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Gray Sunset")
 	level_filenames.push_back("Gravitational Pit")
 	level_filenames.push_back("Lazarus Syndrome")
+	level_filenames.push_back("Kinetic Hotwire")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2553,6 +2554,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Crumbling Ladder [VAR1]")
 	level_filenames.push_back("Upward Jetstream [VAR1]")
 	level_filenames.push_back("Upward Jetstream [VAR2]")
+	level_filenames.push_back("Stuck [VAR1]")
+	level_filenames.push_back("Orbital Drop [VAR3]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2589,6 +2592,22 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Quantum Entanglement [VAR2] [Low Power]")
 	level_filenames.push_back("[MORESPEEDIERRUN] A Way In-")
 	level_filenames.push_back("[SPEEDRUN] Third Roommate [VAR1]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("cl1694's World");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Woodchunk")
+	level_filenames.push_back("Woodchunk [VAR1]")
+	level_filenames.push_back("Joke Moving Service")
+	level_filenames.push_back("Tile Selector [Low Power]")
+	level_filenames.push_back("Window of Opportunity [VAR1]")
+	level_filenames.push_back("Fire In The Sky [REV1] [VAR1]")
+	level_filenames.push_back("The Eclipse Pit [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -7148,6 +7167,9 @@ func undo_one_event(event: Array, chrono : int) -> void:
 				heavy_undo_buffer.append([]);
 			var events = heavy_undo_buffer[event[1]];
 			events.pop_at(1);
+			# similar to spotlight_fix
+			heavytimeline.current_move -= 1;
+			heavytimeline.add_turn(heavy_undo_buffer[heavy_turn-1], true);
 		Undo.light_undo_event_add:
 			while (light_undo_buffer.size() <= event[1]):
 				light_undo_buffer.append([]);
@@ -7157,6 +7179,9 @@ func undo_one_event(event: Array, chrono : int) -> void:
 				light_undo_buffer.append([]);
 			var events = light_undo_buffer[event[1]];
 			events.pop_at(1);
+			# similar to spotlight_fix
+			lighttimeline.current_move -= 1;
+			lighttimeline.add_turn(light_undo_buffer[light_turn-1], true);
 		Undo.heavy_undo_event_add_locked:
 			while (heavy_undo_buffer.size() <= event[1]):
 				heavy_undo_buffer.append([]);

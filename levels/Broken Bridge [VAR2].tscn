@@ -7,19 +7,19 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 262148, 1, 8, 0, 2, 27, 0, 3, 27, 0, 4, 27, 0, 5, 27, 0, 6, 27, 0, 7, 27, 0, 8, 27, 0, 9, 7, 0, 10, 14, 262148, 65536, 3, 0, 65537, 14, 262148, 65538, 33, 0, 65539, 33, 0, 65540, 33, 0, 65541, 33, 0, 65542, 33, 0, 65543, 33, 0, 65544, 33, 0, 65545, 14, 262148, 131072, 23, 0, 131076, 1, 0, 131078, 32, 0, 196608, 2, 0, 196610, 23, 0, 196611, 23, 0, 196612, 23, 0, 196613, 23, 0, 196614, 23, 0, 196615, 23, 0, 196616, 23, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 196615 )
+tile_data = PoolIntArray( 0, 14, 262148, 1, 8, 0, 2, 27, 0, 3, 27, 0, 4, 27, 0, 5, 27, 0, 6, 27, 0, 7, 27, 0, 8, 27, 0, 9, 27, 0, 10, 7, 0, 11, 14, 262148, 65536, 3, 0, 65537, 14, 262148, 65538, 33, 0, 65539, 33, 0, 65540, 33, 0, 65541, 33, 0, 65542, 33, 0, 65543, 33, 0, 65544, 33, 0, 65545, 33, 0, 65546, 14, 262148, 131072, 23, 0, 131074, 32, 0, 196608, 2, 0, 196609, 1, 0, 196610, 23, 0, 196611, 23, 0, 196612, 23, 0, 196613, 23, 0, 196614, 23, 0, 196615, 23, 0, 196616, 23, 0, 196617, 23, 0, 262144, 14, 196613, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 196614, 262153, 14, 196614, 262154, 14, 196614, 262155, 14, 196615 )
 
-[node name="@@1562" type="TileMap" parent="."]
+[node name="@@265" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 9, 26, 0 )
+tile_data = PoolIntArray( 1, 26, 0, 2, 26, 0, 3, 26, 0, 4, 26, 0, 5, 26, 0, 6, 26, 0, 7, 26, 0, 8, 26, 0, 9, 26, 0, 10, 26, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Broken Bridge [VAR2]"
 level_author = "Green"
-level_replay = "Broken Bridge [VAR2]$mturn=292$wxdaxzdawdwxdaxzaxzzxzzzwxdaxzddxzzxzzzaasxzzxzzzzdwxdaxzwdsxzzxzzxdzxsdwxdaxzzzzxzaxzaxzzxzdawxdaxzdxzzxzswxdaxzzdsxzzxzzzadwxdaxzzzzawdsxzzxzzzawxdaxzwdsxzzxzzzawxdaxzwxdaxzdxzzxsxzzxzzzadwxdaxzzzxzzxaxdxwxaxzxzaxzxzdxwxaaxzxzzdxzxdxzaxzzzzxdwxdaxzzswxdzxwxdaxzzxzzxzaxzddxzaxzzxasxzdxzdxzaxzzadwxdaxzzzsxzzxzdxzdxzdxzaaxzdzdxzzdaxzxaaxsxzzaaxzdawxzaxzzzswxzzxwxaaxzzzwdsxzzdxzxaxzzxzxzxzxzxzxdwdxddxzxdxzzaw"
+level_replay = "Broken Bridge [VAR2]$mturn=397$wxdaxzdawdwxdaxzaxzzxzzzwxdaxzddxzzxzzzaasxzzxzzzzdwxdaxzwdsxzzxzzxdzxsdwxdaxzzzzxzaxzaxzzxzdawxdaxzdxzzxzswxdaxzzdsxzzxzzzadwxdaxzzzzawdsxzzxzzzawxdaxzwdsxzzxzzzawxdaxzwxdaxzdxzzxsxzzxzzzadwxdaxzzzxzzxaxdxwxaxzxzaxzxzdxwxaaxzxzzdxzxdxzaxzzzzxdwxdaxzzswxdzxwxdaxzzxzzxzaxzddxzaxzzzddaaxdxzzdxwaxzzzdaxzxaxzxzzxzxzaxdwaxdddxzaxzzzdaxzxaxzxzzxzxzaxaxdxwdxzaxzzxdxwdxzaxzzxzzaxwxaxzzxzxzxzxzwdxzzddxdwxadxzzsxzzxzadwxadxzzzzxzzdxwadwxzdxzzzzzawwxzxwxdxzzzxzdxzdddxzzxwxddxzxzzddxdxzxwxdxzxzdxzzzswxzdzxwxdxzzzddsxzzxzxddxdxzxwxdxzzzzzaxzdxaaxzxwxdxzadxzdxzaxzzddxzzzsd"
 heavy_max_moves = 5.0
 light_max_moves = 4.0
 clock_turns = ""
