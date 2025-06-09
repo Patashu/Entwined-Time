@@ -7292,12 +7292,12 @@ func meta_undo_a_restart() -> bool:
 				meta_undo_a_restart_mode = true;
 				replay_advance_turn(level_replay.length());
 				end_replay();
-				finish_animations(Chrono.TIMELESS);
+				finish_animations(Chrono.CHAR_UNDO);
 				meta_undo_a_restart_mode = false;
 			1: # Replay (Instant)
 				meta_undo_a_restart_mode = true;
 				replay_advance_turn(level_replay.length());
-				finish_animations(Chrono.TIMELESS);
+				finish_animations(Chrono.CHAR_UNDO);
 				meta_undo_a_restart_mode = false;
 			2: # Replay (Fast)
 				meta_undo_a_restart_mode = true;
@@ -8703,7 +8703,7 @@ func replay_advance_turn(amount: int) -> void:
 			start_specific_replay(replay);
 			for _i in range(target_turn):
 				do_one_replay_turn();
-			finish_animations(Chrono.TIMELESS);
+			finish_animations(Chrono.CHAR_UNDO);
 			calm_down_timelines();
 			replay_interval = old_replay_interval;
 			muted = old_muted;
