@@ -1848,7 +1848,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("when boulders fly")
 	level_filenames.push_back("Surge Surfer")
 	level_filenames.push_back("Centrism")
-	level_filenames.push_back("Springlock System")
+	level_filenames.push_back("Kinetic Hotwire")
 	level_filenames.push_back("Chain Reaction")
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2198,7 +2198,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Gray Sunset")
 	level_filenames.push_back("Gravitational Pit")
 	level_filenames.push_back("Lazarus Syndrome")
-	level_filenames.push_back("Kinetic Hotwire")
+	level_filenames.push_back("Springlock System")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -6510,8 +6510,10 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			elif (heavy_filling_turn_actual > -1):
 				heavy_undo_buffer[heavy_filling_turn_actual].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add, heavy_filling_turn_actual], Chrono.CHAR_UNDO);
-			elif (heavy_turn > -1):
-				heavy_undo_buffer[heavy_turn].push_front(event);
+			else:
+				# 'Negativity' crash prevention
+				if (heavy_turn > -1):
+					heavy_undo_buffer[heavy_turn].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add, heavy_turn], Chrono.CHAR_UNDO);
 		else:
 			while (light_undo_buffer.size() <= light_turn):
@@ -6522,8 +6524,10 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			elif (light_filling_turn_actual > -1):
 				light_undo_buffer[light_filling_turn_actual].push_front(event);
 				add_undo_event([Undo.light_undo_event_add, light_filling_turn_actual], Chrono.CHAR_UNDO);
-			elif (light_turn > -1):
-				light_undo_buffer[light_turn].push_front(event);
+			else:
+				# 'Negativity' crash prevention
+				if (light_turn > -1):
+					light_undo_buffer[light_turn].push_front(event);
 				add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
 	
 	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
@@ -6625,6 +6629,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_one_event(event, chrono);
 		else:
 			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
+			# 'Negativity' crash prevention
 			if (events != null):
 				for event in events:
 					undo_one_event(event, chrono);
@@ -6732,6 +6737,7 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_one_event(event, chrono);
 		else:
 			var events = light_undo_buffer.pop_at(light_turn - 1);
+			# 'Negativity' crash prevention
 			if (events != null):
 				for event in events:
 					undo_one_event(event, chrono);
@@ -6901,6 +6907,7 @@ func update_ghosts() -> void:
 	if (heavy_selected):
 		if (heavy_turn <= 0):
 			return;
+		# 'Negativity' crash prevention
 		if (heavy_undo_buffer.size() <= heavy_turn - 1):
 			return;
 		var events = heavy_undo_buffer[heavy_turn - 1];
@@ -6909,6 +6916,7 @@ func update_ghosts() -> void:
 	else:
 		if (light_turn <= 0):
 			return;
+		# 'Negativity' crash prevention
 		if (light_undo_buffer.size() <= light_turn - 1):
 			return;
 		var events = light_undo_buffer[light_turn - 1];
@@ -7201,6 +7209,7 @@ func undo_one_event(event: Array, chrono : int) -> void:
 				heavy_undo_buffer.append([]);
 			heavy_undo_buffer[event[1]].push_front(event[2]);
 		Undo.light_undo_event_remove:
+			# 'Negativity' crash prevention
 			if (event[1] < 0):
 				lost_void = true;
 				lose("What have you DONE", null, false, "exception");
