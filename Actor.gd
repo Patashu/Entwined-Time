@@ -851,10 +851,11 @@ func _process(delta: float) -> void:
 					thought_bubble.update_ticks(new_ticks);
 					if (newly_lost):
 						gamelogic.play_sound("timesup");
-						ripple = preload("res://Ripple.tscn").instance();
-						ripple_timer = 0;
-						ripple.rect_position += Vector2(12, 12);
-						self.add_child(ripple);
+						if (animation_timer < 99): #don't make ripples while a replay is going fast
+							ripple = preload("res://Ripple.tscn").instance();
+							ripple_timer = 0;
+							ripple.rect_position += Vector2(12, 12);
+							self.add_child(ripple);
 						self.update_graphics();
 					elif new_ticks == 0 and gamelogic.lost:
 						self.update_graphics();
