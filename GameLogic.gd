@@ -6476,8 +6476,8 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	return false;
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
-	#if (debug_prints and chrono < Chrono.META_UNDO):
-	#	print("add_undo_event", " ", event, " ", chrono);
+	if (debug_prints and chrono < Chrono.META_UNDO):
+		print("add_undo_event", " ", event, " ", chrono);
 	
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
@@ -6489,7 +6489,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			elif (heavy_filling_turn_actual > -1):
 				heavy_undo_buffer[heavy_filling_turn_actual].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add, heavy_filling_turn_actual], Chrono.CHAR_UNDO);
-			else:
+			elif (heavy_turn > -1):
 				heavy_undo_buffer[heavy_turn].push_front(event);
 				add_undo_event([Undo.heavy_undo_event_add, heavy_turn], Chrono.CHAR_UNDO);
 		else:
@@ -6501,7 +6501,7 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 			elif (light_filling_turn_actual > -1):
 				light_undo_buffer[light_filling_turn_actual].push_front(event);
 				add_undo_event([Undo.light_undo_event_add, light_filling_turn_actual], Chrono.CHAR_UNDO);
-			else:
+			elif (light_turn > -1):
 				light_undo_buffer[light_turn].push_front(event);
 				add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
 	
@@ -6604,9 +6604,10 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_one_event(event, chrono);
 		else:
 			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
-			for event in events:
-				undo_one_event(event, chrono);
-				add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
+			if (events != null):
+				for event in events:
+					undo_one_event(event, chrono);
+					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
 			
 		if (fuzzed):
 			time_passes(Chrono.TIMELESS);
@@ -6710,9 +6711,10 @@ func character_undo(is_silent: bool = false) -> bool:
 				undo_one_event(event, chrono);
 		else:
 			var events = light_undo_buffer.pop_at(light_turn - 1);
-			for event in events:
-				undo_one_event(event, chrono);
-				add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
+			if (events != null):
+				for event in events:
+					undo_one_event(event, chrono);
+					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
 		
 		if (fuzzed):
 			time_passes(Chrono.TIMELESS);
@@ -6878,11 +6880,15 @@ func update_ghosts() -> void:
 	if (heavy_selected):
 		if (heavy_turn <= 0):
 			return;
+		if (heavy_undo_buffer.size() <= heavy_turn - 1):
+			return;
 		var events = heavy_undo_buffer[heavy_turn - 1];
 		for event in events:
 			undo_one_event(event, Chrono.GHOSTS);
 	else:
 		if (light_turn <= 0):
+			return;
+		if (heavy_undo_buffer.size() <= heavy_turn - 1):
 			return;
 		var events = light_undo_buffer[light_turn - 1];
 		for event in events:
@@ -7068,8 +7074,8 @@ func adjust_winlabel() -> void:
 		tries += 1;
 	
 func undo_one_event(event: Array, chrono : int) -> void:
-	#if (debug_prints):
-	#	print("undo_one_event", " ", event, " ", chrono);
+	if (debug_prints):
+		print("undo_one_event", " ", event, " ", chrono);
 		
 	if (has_void_stars and chrono == Chrono.META_UNDO and event[0] in void_banish_dict):
 		var actor = event[1];
@@ -7935,6 +7941,8 @@ func anything_happened_char(destructive: bool = true) -> bool:
 		var turn = heavy_turn;
 		if (heavy_filling_turn_actual > -1):
 			turn = heavy_filling_turn_actual;
+		if (turn < 0):
+			return false;
 		while (heavy_undo_buffer.size() <= turn):
 			heavy_undo_buffer.append([]);
 		for event in heavy_undo_buffer[turn]:
@@ -7957,6 +7965,8 @@ func anything_happened_char(destructive: bool = true) -> bool:
 		var turn = light_turn;
 		if (light_filling_turn_actual > -1):
 			turn = light_filling_turn_actual;
+		if (turn < 0):
+			return false;
 		while (light_undo_buffer.size() <= turn):
 			light_undo_buffer.append([]);
 		for event in light_undo_buffer[turn]:
@@ -9773,11 +9783,11 @@ func _process(delta: float) -> void:
 			#end_replay(); #done in escape();
 			escape();
 		elif (pressed_or_key_repeated("previous_level")
-		and ((!using_controller or meta_turn <= 0 or won) and (!doing_replay) and (!won or won_cooldown > 0.5))):
+		and ((!using_controller or meta_turn <= 0 or won) and (!doing_replay or !using_controller) and (!won or won_cooldown > 0.5))):
 			end_replay();
 			load_level(-1);
 		elif (pressed_or_key_repeated("next_level")
-		and ((!using_controller or meta_turn <= 0 or won) and (!doing_replay) and (!won or won_cooldown > 0.5))):
+		and ((!using_controller or meta_turn <= 0 or won) and (!doing_replay or !using_controller) and (!won or won_cooldown > 0.5))):
 			end_replay();
 			load_level(1);
 		elif (Input.is_action_just_pressed("toggle_replay")):
