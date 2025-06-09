@@ -7,6 +7,7 @@ onready var pointer : Sprite = holder.get_node("Pointer");
 onready var creditsbutton : Button = holder.get_node("CreditsButton");
 onready var quitbutton : Button = holder.get_node("QuitButton");
 onready var puzzlebutton : Button = holder.get_node("PuzzleButton");
+onready var discordbutton : Button = holder.get_node("DiscordButton");
 var only_mouse = true;
 onready var using_controller = gamelogic.using_controller;
 
@@ -40,6 +41,7 @@ func _ready() -> void:
 	creditsbutton.connect("pressed", self, "_creditsbutton_pressed");
 	quitbutton.connect("pressed", self, "_quitbutton_pressed");
 	puzzlebutton.connect("pressed", self, "_puzzlebutton_pressed");
+	discordbutton.connect("pressed", self, "_discordbutton_pressed");
 	
 	$CutsceneHolder/Panel3.visible = false;
 	cutscene_step();
@@ -50,6 +52,7 @@ func _creditsbutton_pressed() -> void:
 	
 	quitbutton.visible = true;
 	puzzlebutton.visible = true;
+	discordbutton.visible = true;
 	$CutsceneHolder/Panel2.visible = false;
 	
 	var a = preload("res://CreditsModal.tscn").instance();
@@ -66,6 +69,12 @@ func _quitbutton_pressed() -> void:
 		return;
 	
 	get_tree().quit();
+
+func _discordbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	OS.shell_open("https://discord.gg/2mA7h3mYak");
 
 func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):

@@ -1053,31 +1053,40 @@ modulate = Color( 0, 0, 0, 0.478431 )
 margin_left = 47.0
 margin_top = 16.0
 margin_right = 473.0
-margin_bottom = 262.0
+margin_bottom = 283.0
 
 [node name="CreditsButton" type="Button" parent="CutsceneHolder/Panel3/Holder"]
 margin_left = 230.0
 margin_top = 199.0
 margin_right = 295.0
 margin_bottom = 214.0
-focus_neighbour_bottom = NodePath("../QuitButton")
+focus_neighbour_top = NodePath("../PuzzleButton")
 text = "Credits"
+
+[node name="DiscordButton" type="Button" parent="CutsceneHolder/Panel3/Holder"]
+visible = false
+margin_left = 230.0
+margin_top = 221.0
+margin_right = 295.0
+margin_bottom = 236.0
+focus_neighbour_bottom = NodePath("../QuitButton")
+text = "Discord"
 
 [node name="QuitButton" type="Button" parent="CutsceneHolder/Panel3/Holder"]
 visible = false
-margin_left = 211.0
-margin_top = 221.0
-margin_right = 317.0
-margin_bottom = 236.0
-focus_neighbour_top = NodePath("../CreditsButton")
+margin_left = 210.0
+margin_top = 243.0
+margin_right = 316.0
+margin_bottom = 258.0
 text = "Whew, done for now"
 
 [node name="PuzzleButton" type="Button" parent="CutsceneHolder/Panel3/Holder"]
 visible = false
-margin_left = 204.0
-margin_top = 243.0
-margin_right = 323.0
-margin_bottom = 258.0
+margin_left = 203.0
+margin_top = 265.0
+margin_right = 322.0
+margin_bottom = 280.0
+focus_neighbour_bottom = NodePath("../CreditsButton")
 text = "Just one more puzzle..."
 
 [node name="Pointer" type="Sprite" parent="CutsceneHolder/Panel3/Holder"]

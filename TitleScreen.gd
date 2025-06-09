@@ -8,6 +8,7 @@ onready var beginbutton : Button = get_node("Holder/BeginButton");
 onready var controlsbutton : Button = get_node("Holder/ControlsButton");
 onready var settingsbutton : Button = get_node("Holder/SettingsButton");
 onready var creditsbutton : Button = get_node("Holder/CreditsButton");
+onready var discordbutton : Button = get_node("Holder/DiscordButton");
 onready var disclaimer : Label = get_node("Holder/Disclaimer");
 var only_mouse = true;
 var using_controller = false;
@@ -48,6 +49,7 @@ func _ready() -> void:
 	controlsbutton.connect("pressed", self, "_controlsbutton_pressed");
 	settingsbutton.connect("pressed", self, "_settingsbutton_pressed");
 	creditsbutton.connect("pressed", self, "_creditsbutton_pressed");
+	discordbutton.connect("pressed", self, "_discordbutton_pressed");
 	
 	gamelogic.target_track = 10;
 	gamelogic.fadeout_timer_max = 1.0;
@@ -84,6 +86,12 @@ func _creditsbutton_pressed() -> void:
 	var a = preload("res://CreditsModal.tscn").instance();
 	gamelogic.add_to_ui_stack(a, get_parent());
 	
+func _discordbutton_pressed() -> void:
+	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
+		return;
+	
+	OS.shell_open("https://discord.gg/2mA7h3mYak");
+	
 func cutscene_step() -> void:
 	if (cutscene_step_cooldown < 0.1):
 		return;
@@ -98,6 +106,7 @@ func cutscene_step() -> void:
 			controlsbutton.queue_free();
 			settingsbutton.queue_free();
 			creditsbutton.queue_free();
+			discordbutton.queue_free();
 			pointer.queue_free();
 			$Holder/Label.visible = false;
 			disclaimer.visible = false;
