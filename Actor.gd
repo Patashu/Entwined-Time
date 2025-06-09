@@ -156,6 +156,8 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 			else:
 				if !powered:
 					return preload("res://assets/heavy_unpowered.png");
+				elif gamelogic.has_no_move and gamelogic.terrain_in_tile(pos, self, 0).has(LevelEditor.Tiles.NoMove):
+					return preload("res://assets/heavy_unpowered.png");
 				else:
 					if (!is_ghost and gamelogic.heavy_actor != self and heavy_mimic == null and light_mimic == null):
 						return preload("res://assets/heavy_unpowered.png");
@@ -171,6 +173,8 @@ func get_next_texture(skip_powered: bool = false) -> Texture:
 				return preload("res://assets/light_falling.png");
 			else:
 				if !powered:
+					return preload("res://assets/light_unpowered.png");
+				elif gamelogic.has_no_move and gamelogic.terrain_in_tile(pos, self, 0).has(LevelEditor.Tiles.NoMove):
 					return preload("res://assets/light_unpowered.png");
 				else:
 					if (!is_ghost and gamelogic.light_actor != self and heavy_mimic == null and light_mimic == null):

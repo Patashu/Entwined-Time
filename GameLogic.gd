@@ -384,6 +384,7 @@ enum Tiles {
 	BumperRight, #193
 	SpiderWebWhite, #194
 	SpiderWebLimeGreen, #195
+	NoMove, #196
 }
 var voidlike_tiles : Array = [];
 
@@ -1312,7 +1313,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("PushingIt")
 	level_filenames.push_back("Wall")
 	level_filenames.push_back("Tall")
-	level_filenames.push_back("Meet Light-")
+	level_filenames.push_back("Interference")
 	level_filenames.push_back("Braid")
 	level_filenames.push_back("TheFirstPit")
 	level_filenames.push_back("CallACab")
@@ -1990,6 +1991,8 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Lightning Round")
+	level_filenames.push_back("Lightning Snake")
 	level_filenames.push_back("Doormaster")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Cliffs-")
@@ -2734,6 +2737,7 @@ var has_void_stars : bool = false;
 var has_mimics : bool = false;
 var has_triggers : bool = false;
 var has_gravity : bool = false;
+var has_no_move : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2849,7 +2853,11 @@ func ready_map() -> void:
 	has_mimics = false;
 	has_triggers = false;
 	has_gravity = false;
+	has_no_move = false;
 	limited_undo_sprites.clear();
+	
+	if (any_layer_has_this_tile(Tiles.NoMove)):
+		has_no_move = true;
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
 		has_crate_goals = true;
@@ -4623,6 +4631,9 @@ boost_pad_reentrance: bool = false) -> int:
 				[], false, false, null, -1, false, true,
 				true);
 				
+		# no move 'unpowered' check
+		if (has_no_move):
+			add_to_animation_server(actor, [Anim.set_next_texture, actor.get_next_texture(), animation_nonce, actor.facing_left])
 				
 		return success;
 	elif (success != Success.Yes):
@@ -7729,6 +7740,8 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 	var result = Success.No;
 	if actor.broken and !terrain_in_tile(actor.pos, actor, Chrono.MOVE).has(Tiles.ZombieTile):
 		return Success.No;
+	if (has_no_move and !actor.broken and terrain_in_tile(actor.pos, actor, Chrono.MOVE).has(Tiles.NoMove)):
+		return Success.No;
 	if (!valid_voluntary_airborne_move(actor, dir)):
 		result = Success.Surprise;
 	else:
@@ -7769,6 +7782,10 @@ func character_move(dir: Vector2) -> bool:
 		if ((heavy_actor.broken and !terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
+		if (has_no_move and !heavy_actor.broken and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.NoMove)):
+			play_sound("bump");
+			add_to_animation_server(heavy_actor, [Anim.afterimage_at, preload("res://assets/no_move_1.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 0, 0, 1)]);
+			return false;
 		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);
 		if (has_continuums and heavy_turn > 0 and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Continuum)):
@@ -7799,6 +7816,10 @@ func character_move(dir: Vector2) -> bool:
 		var pos = light_actor.pos;
 		if ((light_actor.broken and !terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
+			return false;
+		if (has_no_move and !light_actor.broken and terrain_in_tile(pos, light_actor, Chrono.MOVE).has(Tiles.NoMove)):
+			play_sound("bump");
+			add_to_animation_server(light_actor, [Anim.afterimage_at, preload("res://assets/no_move_1.png"), terrainmap.map_to_world(light_actor.pos), Color(1, 0, 0, 1)]);
 			return false;
 		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);

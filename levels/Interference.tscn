@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65538, 2, 0, 65540, 14, 262145, 131072, 14, 262145, 131074, 14, 262148, 131076, 14, 262145, 196608, 14, 262145, 196610, 196, 0, 196611, 1, 0, 196612, 14, 262145, 262144, 14, 262145, 262146, 14, 196613, 262147, 14, 196614, 262148, 14, 589828, 327680, 14, 262145, 327682, 196, 0, 327684, 14, 262145, 393216, 14, 589824, 393217, 14, 458755, 393218, 14, 196615, 393220, 14, 262145, 458752, 14, 589825, 458753, 14, 131076, 458754, 196, 0, 458756, 14, 262145, 524288, 14, 262145, 524289, 7, 0, 524290, 14, 262148, 524292, 14, 262145, 589824, 14, 262145, 589826, 196, 0, 589828, 14, 262145, 655360, 14, 655362, 655361, 14, 196614, 655362, 14, 196614, 655363, 14, 196614, 655364, 14, 655364 )
+
+[node name="@@1116" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327682, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Interference"
+level_author = "Patashu"
+level_replay = "Interference$mturn=13$asdxssssaxzzzdxw"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

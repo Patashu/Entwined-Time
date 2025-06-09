@@ -199,6 +199,7 @@ enum Tiles {
 	BumperRight, #193
 	SpiderWebWhite, #194
 	SpiderWebLimeGreen, #195
+	NoMove, #196
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -506,6 +507,9 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.NoHeavyLight)
 		picker_array.append(Tiles.SpiderWebWhite)
 		picker_array.append(Tiles.SpiderWebLimeGreen)
+	picker_array.append(Tiles.NoMove) #always do this one
+	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
+		pass
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1218,6 +1222,8 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "White Spider Web: Solid to non-retro moves exiting this tile if the actor has already ((non-retro moved) or bumped) 1 or more times this turn. (+1 for each other White Spider Web in this tile.)"
 		Tiles.SpiderWebLimeGreen:
 			text = "Lime Green Spider Web: Solid to moves exiting this tile if the actor has already (moved or bumped) 1 or more times this turn. (+1 for each other Lime Green Spider Web in this tile.)"
+		Tiles.NoMove:
+			text = "No Move: An unbroken robot cannot initiate a move off this tile."
 	return text;
 	
 func picker_tooltip() -> void:
