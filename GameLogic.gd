@@ -1975,10 +1975,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Mental Scales")
 	level_filenames.push_back("Out of Body Experience")
 	level_filenames.push_back("Dead Ringer")
+	level_filenames.push_back("Phantom Push")
 	level_filenames.push_back("Colorful Asteroids")
 	level_filenames.push_back("Curious Ascent")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Phantom Push [VAR1]")
 	level_filenames.push_back("Overcharged [VAR1]")
 	level_filenames.push_back("Overcharged [VAR2]")
 	level_filenames.push_back("Dead Ringer [VAR1]")
@@ -2209,7 +2211,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Jungle Gym")
 	level_filenames.push_back("Jet Engine [VAR1]")
 	level_filenames.push_back("Fire In The Sky [REV1]")
-	level_filenames.push_back("Phantom Push [VAR1]")
 	level_filenames.push_back("The Withering Pit [VAR1]")
 	level_filenames.push_back("Downfall")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2239,7 +2240,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Heavy Vertical")
 	level_filenames.push_back("Side Shuffle")
 	level_filenames.push_back("Heaven [REV1]")
-	level_filenames.push_back("Phantom Push")
 	level_filenames.push_back("Clockwork [VAR1]")
 	level_filenames.push_back("Light Boots")
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
