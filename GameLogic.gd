@@ -1,7 +1,7 @@
 extends Node
 class_name GameLogic
 
-var debug_prints : bool = false;
+#var debug_prints : bool = true;
 
 onready var levelscene : Node2D = get_node("/root/LevelScene"); #this one runs before SupercCaling so it's safe!
 onready var underterrainfolder : Node2D = levelscene.get_node("UnderTerrainFolder");
@@ -125,6 +125,8 @@ enum Undo {
 	spotlight_fix, #29
 	heavy_surprise_abyss_chimed, #30
 	light_surprise_abyss_chimed, #31
+	heavy_undo_event_add_continuum, #32
+	light_undo_event_add_continuum, #33
 }
 
 # and same for animations
@@ -6476,8 +6478,8 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	return false;
 
 func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
-	if (debug_prints and chrono < Chrono.META_UNDO):
-		print("add_undo_event", " ", event, " ", chrono);
+	#if (debug_prints and chrono < Chrono.META_UNDO):
+	#	print("add_undo_event", " ", event, " ", chrono);
 	
 	if chrono == Chrono.MOVE:
 		if (heavy_selected):
@@ -6888,7 +6890,7 @@ func update_ghosts() -> void:
 	else:
 		if (light_turn <= 0):
 			return;
-		if (heavy_undo_buffer.size() <= heavy_turn - 1):
+		if (light_undo_buffer.size() <= light_turn - 1):
 			return;
 		var events = light_undo_buffer[light_turn - 1];
 		for event in events:
@@ -7074,8 +7076,8 @@ func adjust_winlabel() -> void:
 		tries += 1;
 	
 func undo_one_event(event: Array, chrono : int) -> void:
-	if (debug_prints):
-		print("undo_one_event", " ", event, " ", chrono);
+	#if (debug_prints and chrono <= Chrono.META_UNDO):
+	#	print("undo_one_event", " ", event, " ", chrono);
 		
 	if (has_void_stars and chrono == Chrono.META_UNDO and event[0] in void_banish_dict):
 		var actor = event[1];
@@ -7141,10 +7143,20 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			while (heavy_undo_buffer.size() <= event[1]):
 				heavy_undo_buffer.append([]);
 			heavy_undo_buffer[event[1]].pop_front();
+		Undo.heavy_undo_event_add_continuum:
+			while (heavy_undo_buffer.size() <= event[1]):
+				heavy_undo_buffer.append([]);
+			var events = heavy_undo_buffer[event[1]];
+			events.pop_at(1);
 		Undo.light_undo_event_add:
 			while (light_undo_buffer.size() <= event[1]):
 				light_undo_buffer.append([]);
 			light_undo_buffer[event[1]].pop_front();
+		Undo.light_undo_event_add_continuum:
+			while (light_undo_buffer.size() <= event[1]):
+				light_undo_buffer.append([]);
+			var events = light_undo_buffer[event[1]];
+			events.pop_at(1);
 		Undo.heavy_undo_event_add_locked:
 			while (heavy_undo_buffer.size() <= event[1]):
 				heavy_undo_buffer.append([]);
@@ -7895,22 +7907,44 @@ func character_move(dir: Vector2) -> bool:
 				if anything_happened_char():
 					adjust_turn(true, 1, Chrono.MOVE, true, continuum);
 					if (continuum):
-						#now eliminate oldest turn change since it's not real
 						var events = meta_undo_buffer[meta_undo_buffer.size() - 1];
+						#now eliminate newest turn change since it's not real
 						for event in events:
 							if (event[0] == Undo.heavy_turn):
 								events.erase(event);
 								break;
+						# and we also need to eliminate its corresponding heavy_undo_event_add
+						for e in range(events.size() - 1, -1, -1):
+							var event = events[e];
+							if (event[0] == Undo.heavy_undo_event_add):
+								events.erase(event);
+								break;
+						# so when we pop a continuum,
+						# we delete the old x_turn, and add a new one at the end.
+						# or in esence, we're adding undo events BEFORE the last event.
+						# x_undo_event_add_continuum respects this.
+						for e in range(events.size()):
+							var event = events[e];
+							if (event[0] == Undo.heavy_undo_event_add):
+								event[0] = Undo.heavy_undo_event_add_continuum;
 			else:
 				if anything_happened_char():
 					adjust_turn(false, 1, Chrono.MOVE, true, continuum);
 					if (continuum):
-						#now eliminate oldest turn change since it's not real
 						var events = meta_undo_buffer[meta_undo_buffer.size() - 1];
 						for event in events:
 							if (event[0] == Undo.light_turn):
 								events.erase(event);
 								break;
+						for e in range(events.size() - 1, -1, -1):
+							var event = events[e];
+							if (event[0] == Undo.light_undo_event_add):
+								events.erase(event);
+								break;
+						for e in range(events.size()):
+							var event = events[e];
+							if (event[0] == Undo.light_undo_event_add):
+								event[0] = Undo.light_undo_event_add_continuum;
 		else:
 			seemingly_nothing_happened = true;
 			result = Success.No;
@@ -8865,6 +8899,7 @@ func update_info_labels() -> void:
 
 func animation_substep(chrono: int) -> void:
 	animation_substep += 1;
+	#if (!debug_prints):
 	add_undo_event([Undo.animation_substep], chrono);
 
 func add_to_animation_server(actor: ActorBase, animation: Array, with_priority: bool = false) -> void:
