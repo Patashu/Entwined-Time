@@ -4370,8 +4370,8 @@ boost_pad_reentrance: bool = false) -> int:
 			was_push = pushers_list.size() > 0;
 			was_fall = is_gravity;
 		actor.pos = pos;
-		if (chrono < Chrono.TIMELESS and !actor.is_crystal):
-			if (actor.is_character and dir.length() > 1 and chrono == Chrono.MOVE):
+		if (chrono < Chrono.TIMELESS and actor.is_character):
+			if (dir.length() > 1 and chrono == Chrono.MOVE):
 				achievement_get("What");
 			if (pos.x <= -9 or pos.x >= map_x_max + 9):
 				achievement_get("FarLands");
