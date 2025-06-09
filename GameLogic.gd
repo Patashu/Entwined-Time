@@ -8009,8 +8009,9 @@ func anything_happened_char(destructive: bool = true) -> bool:
 		var turn = heavy_turn;
 		if (heavy_filling_turn_actual > -1):
 			turn = heavy_filling_turn_actual;
+		# 'Negativity' crash prevention
 		if (turn < 0):
-			return false;
+			return true;
 		while (heavy_undo_buffer.size() <= turn):
 			heavy_undo_buffer.append([]);
 		for event in heavy_undo_buffer[turn]:
@@ -8033,8 +8034,9 @@ func anything_happened_char(destructive: bool = true) -> bool:
 		var turn = light_turn;
 		if (light_filling_turn_actual > -1):
 			turn = light_filling_turn_actual;
+		# 'Negativity' crash prevention
 		if (turn < 0):
-			return false;
+			return true;
 		while (light_undo_buffer.size() <= turn):
 			light_undo_buffer.append([]);
 		for event in light_undo_buffer[turn]:
