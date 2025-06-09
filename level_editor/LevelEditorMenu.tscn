@@ -118,6 +118,6 @@ margin_right = 160.0
 margin_bottom = 122.0
 focus_neighbour_right = NodePath("../ExitEditorButton")
 focus_neighbour_bottom = NodePath("../CopyLevelButton")
-text = "New Level"
+text = "Clear Level"
 
 [node name="Pointer" type="Sprite" parent="Holder"]

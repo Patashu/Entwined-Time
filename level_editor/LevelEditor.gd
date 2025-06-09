@@ -660,7 +660,7 @@ func new_level() -> void:
 	change_layer(0);
 	for layer in terrain_layers:
 		layer.clear();
-	floating_text("Level reset");
+	floating_text("Level cleared");
 
 func shift_all_layers(shift: Vector2) -> void:
 	for layer in terrain_layers:
