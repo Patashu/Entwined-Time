@@ -105,11 +105,17 @@ func _yourreplaybutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
 	# must be kept in sync with GameLogic
+	if (Input.is_action_pressed("shift")):
+		_savereplaybutton_pressed();
+	elif (Input.is_action_pressed("ctrl")):
+		gamelogic.unwin();
+	else:
+		if (gamelogic.doing_replay):
+			# intentional difference from GameLogic, since this doesn't turn into an 'End Replay' button
+			gamelogic.end_replay();
+		gamelogic.start_saved_replay();
+		gamelogic.update_info_labels();
 	destroy();
-	if (gamelogic.doing_replay):
-		gamelogic.end_replay();
-	gamelogic.start_saved_replay();
-	gamelogic.update_info_labels();
 	
 func _authorsreplaybutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -121,6 +127,7 @@ func _authorsreplaybutton_pressed() -> void:
 func _savereplaybutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
 		return;
+		# must be kept in sync with GameLogic
 	if (!gamelogic.save_file["levels"].has(gamelogic.level_name)):
 		gamelogic.save_file["levels"][gamelogic.level_name] = {};
 	gamelogic.save_file["levels"][gamelogic.level_name]["replay"] = gamelogic.annotate_replay(gamelogic.user_replay);
@@ -249,6 +256,14 @@ func _process(delta: float) -> void:
 		else:
 			pastereplaybutton.disabled = true;
 			pastereplaybutton.text = "Paste Replay";
+			
+	#constantly check for shift/ctrl
+	if (Input.is_action_pressed("shift")):
+		yourreplaybutton.text = "Save Replay"
+	elif (Input.is_action_pressed("ctrl")):
+		yourreplaybutton.text = "Unwin"
+	else:
+		yourreplaybutton.text = "Your Replay"
 
 func _draw() -> void:
 	draw_rect(Rect2(0, 0,

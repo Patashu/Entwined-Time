@@ -9773,24 +9773,22 @@ func _process(delta: float) -> void:
 			#end_replay(); #done in escape();
 			escape();
 		elif (pressed_or_key_repeated("previous_level")
-		and (!using_controller or ((!doing_replay or won) and (!won or won_cooldown > 0.5)))):
-			if (!using_controller or won or lost or meta_turn <= 0):
-				end_replay();
-				load_level(-1);
-			else:
-				play_sound("bump");
+		and ((!using_controller or meta_turn <= 0 or won) and (!doing_replay) and (!won or won_cooldown > 0.5))):
+			end_replay();
+			load_level(-1);
 		elif (pressed_or_key_repeated("next_level")
-		and (!using_controller or ((!doing_replay or won) and (!won or won_cooldown > 0.5)))):
-			if (!using_controller or won or lost or meta_turn <= 0):
-				end_replay();
-				load_level(1);
-			else:
-				play_sound("bump");
+		and ((!using_controller or meta_turn <= 0 or won) and (!doing_replay) and (!won or won_cooldown > 0.5))):
+			end_replay();
+			load_level(1);
 		elif (Input.is_action_just_pressed("toggle_replay")):
 			user_pressed_toggle_replay();
-		elif (doing_replay and pressed_or_key_repeated("replay_back1")):
+		elif (pressed_or_key_repeated("replay_back1")):
+			if (!doing_replay):
+				user_pressed_toggle_replay();
 			replay_advance_turn(-1);
-		elif (doing_replay and pressed_or_key_repeated("replay_fwd1")):
+		elif (pressed_or_key_repeated("replay_fwd1")):
+			if (!doing_replay):
+				user_pressed_toggle_replay();
 			replay_advance_turn(1);
 		elif (doing_replay and Input.is_action_just_pressed("replay_pause")):
 			pause_replay();
@@ -9821,8 +9819,8 @@ func _process(delta: float) -> void:
 			adjust_next_replay_time(old_replay_interval);
 			update_info_labels();
 		elif (Input.is_action_just_pressed("start_saved_replay")):
+			# must be kept in sync with Menu
 			if (Input.is_action_pressed("shift")):
-				# must be kept in sync with Menu
 				if (user_replay != ""):
 					if (!save_file["levels"].has(level_name)):
 						save_file["levels"][level_name] = {};
@@ -9832,7 +9830,6 @@ func _process(delta: float) -> void:
 			elif (Input.is_action_pressed("ctrl")):
 				unwin();
 			else:
-				# must be kept in sync with Menu
 				start_saved_replay();
 				update_info_labels();
 		elif (Input.is_action_just_pressed("start_replay")):
