@@ -855,6 +855,7 @@ func _process(delta: float) -> void:
 						ripple_timer = 0;
 						ripple.rect_position += Vector2(12, 12);
 						self.add_child(ripple);
+						self.update_graphics();
 					elif new_ticks == 0 and gamelogic.lost:
 						self.update_graphics();
 					elif (amount < 0):
