@@ -6512,8 +6512,12 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 				add_undo_event([Undo.heavy_undo_event_add, heavy_filling_turn_actual], Chrono.CHAR_UNDO);
 			else:
 				# 'Negativity' crash prevention
-				if (heavy_turn > -1):
+				if (heavy_turn >= -1*heavy_undo_buffer.size()):
 					heavy_undo_buffer[heavy_turn].push_front(event);
+				else:
+					lost_void = true;
+					lose("What have you DONE", null, false, "exception");
+					return
 				add_undo_event([Undo.heavy_undo_event_add, heavy_turn], Chrono.CHAR_UNDO);
 		else:
 			while (light_undo_buffer.size() <= light_turn):
@@ -6526,8 +6530,12 @@ func add_undo_event(event: Array, chrono: int = Chrono.MOVE) -> void:
 				add_undo_event([Undo.light_undo_event_add, light_filling_turn_actual], Chrono.CHAR_UNDO);
 			else:
 				# 'Negativity' crash prevention
-				if (light_turn > -1):
+				if (light_turn >= -1*light_undo_buffer.size()):
 					light_undo_buffer[light_turn].push_front(event);
+				else:
+					lost_void = true;
+					lose("What have you DONE", null, false, "exception");
+					return
 				add_undo_event([Undo.light_undo_event_add, light_turn], Chrono.CHAR_UNDO);
 	
 	if (chrono == Chrono.MOVE || chrono == Chrono.CHAR_UNDO):
@@ -6628,13 +6636,16 @@ func character_undo(is_silent: bool = false) -> bool:
 					continue
 				undo_one_event(event, chrono);
 		else:
-			var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 			# 'Negativity' crash prevention
-			if (events != null):
+			if heavy_undo_buffer.size() != 0 and (heavy_turn - 1) >= (-1*heavy_undo_buffer.size()):
+				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 				for event in events:
 					undo_one_event(event, chrono);
 					add_undo_event([Undo.heavy_undo_event_remove, heavy_turn, event], Chrono.CHAR_UNDO);
-			
+			else:
+				lost_void = true;
+				lose("What have you DONE", null, false, "exception");
+				return true;
 		if (fuzzed):
 			time_passes(Chrono.TIMELESS);
 		else:
@@ -6736,13 +6747,16 @@ func character_undo(is_silent: bool = false) -> bool:
 					continue
 				undo_one_event(event, chrono);
 		else:
-			var events = light_undo_buffer.pop_at(light_turn - 1);
 			# 'Negativity' crash prevention
-			if (events != null):
+			if light_undo_buffer.size() != 0 and (light_turn - 1) >= (-1*light_undo_buffer.size()):
+				var events = light_undo_buffer.pop_at(light_turn - 1);
 				for event in events:
 					undo_one_event(event, chrono);
 					add_undo_event([Undo.light_undo_event_remove, light_turn, event], Chrono.CHAR_UNDO);
-		
+			else:
+				lost_void = true;
+				lose("What have you DONE", null, false, "exception");
+				return true;
 		if (fuzzed):
 			time_passes(Chrono.TIMELESS);
 		else:
@@ -6908,7 +6922,9 @@ func update_ghosts() -> void:
 		if (heavy_turn <= 0):
 			return;
 		# 'Negativity' crash prevention
-		if (heavy_undo_buffer.size() <= heavy_turn - 1):
+		if (heavy_undo_buffer.size() == 0 or (heavy_turn - 1) < -1*heavy_undo_buffer.size()):
+			lost_void = true;
+			lose("What have you DONE", null, false, "exception");
 			return;
 		var events = heavy_undo_buffer[heavy_turn - 1];
 		for event in events:
@@ -6917,7 +6933,9 @@ func update_ghosts() -> void:
 		if (light_turn <= 0):
 			return;
 		# 'Negativity' crash prevention
-		if (light_undo_buffer.size() <= light_turn - 1):
+		if (light_undo_buffer.size() == 0 or (light_turn - 1) < -1*light_undo_buffer.size()):
+			lost_void = true;
+			lose("What have you DONE", null, false, "exception");
 			return;
 		var events = light_undo_buffer[light_turn - 1];
 		for event in events:
@@ -7199,23 +7217,23 @@ func undo_one_event(event: Array, chrono : int) -> void:
 				light_undo_buffer.append([]);
 			light_locked_turns[event[1]].pop_front();
 		Undo.heavy_undo_event_remove:
-			# 'Negativity' crash prevention
-			if (event[1] < 0):
-				lost_void = true;
-				lose("What have you DONE", null, false, "exception");
-				return;
 			# meta undo an undo creates a char undo event but not a meta undo event, it's special!
 			while (heavy_undo_buffer.size() <= event[1]):
 				heavy_undo_buffer.append([]);
-			heavy_undo_buffer[event[1]].push_front(event[2]);
-		Undo.light_undo_event_remove:
 			# 'Negativity' crash prevention
-			if (event[1] < 0):
+			if (heavy_undo_buffer.size() == 0 or event[1] < -1*heavy_undo_buffer.size()):
 				lost_void = true;
 				lose("What have you DONE", null, false, "exception");
 				return;
+			heavy_undo_buffer[event[1]].push_front(event[2]);
+		Undo.light_undo_event_remove:
 			while (light_undo_buffer.size() <= event[1]):
 				light_undo_buffer.append([]);
+			# 'Negativity' crash prevention
+			if (light_undo_buffer.size() == 0 or event[1] < -1*light_undo_buffer.size()):
+				lost_void = true;
+				lose("What have you DONE", null, false, "exception");
+				return;
 			light_undo_buffer[event[1]].push_front(event[2]);
 		Undo.animation_substep:
 			# don't need to emit a new event as meta undoing and beyond is a teleport
@@ -8009,11 +8027,13 @@ func anything_happened_char(destructive: bool = true) -> bool:
 		var turn = heavy_turn;
 		if (heavy_filling_turn_actual > -1):
 			turn = heavy_filling_turn_actual;
-		# 'Negativity' crash prevention
-		if (turn < 0):
-			return true;
 		while (heavy_undo_buffer.size() <= turn):
 			heavy_undo_buffer.append([]);
+		# 'Negativity' crash prevention
+		if (turn < -1*heavy_undo_buffer.size()):
+			lost_void = true;
+			lose("What have you DONE", null, false, "exception");
+			return true;
 		for event in heavy_undo_buffer[turn]:
 			if event[0] != Undo.animation_substep:
 				return true;
@@ -8034,11 +8054,13 @@ func anything_happened_char(destructive: bool = true) -> bool:
 		var turn = light_turn;
 		if (light_filling_turn_actual > -1):
 			turn = light_filling_turn_actual;
-		# 'Negativity' crash prevention
-		if (turn < 0):
-			return true;
 		while (light_undo_buffer.size() <= turn):
 			light_undo_buffer.append([]);
+		# 'Negativity' crash prevention
+		if (turn < -1*light_undo_buffer.size()):
+			lost_void = true;
+			lose("What have you DONE", null, false, "exception");
+			return true;
 		for event in light_undo_buffer[turn]:
 			if event[0] != Undo.animation_substep:
 				return true;
