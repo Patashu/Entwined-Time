@@ -2601,6 +2601,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Kinetic Hotwire [VAR1]")
 	level_filenames.push_back("Woodchunk")
 	level_filenames.push_back("Woodchunk [VAR1]")
 	level_filenames.push_back("Joke Moving Service")
