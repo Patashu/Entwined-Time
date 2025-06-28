@@ -8100,7 +8100,7 @@ func character_move(dir: Vector2) -> bool:
 			result = Success.No;
 	if (result != Success.No or nonstandard_won or voidlike_puzzle):
 		append_replay(chr);
-		if (nonstandard_won and won):
+		if (nonstandard_won and won and !doing_replay):
 			var levels_save_data = save_file["levels"];
 			var level_save_data = levels_save_data[level_name];
 			level_save_data["replay"] = annotate_replay(user_replay);
