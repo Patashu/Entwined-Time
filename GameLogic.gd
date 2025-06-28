@@ -392,6 +392,7 @@ enum Tiles {
 	BlueGlassBlock, #199
 	FloorboardsBlue, #200
 	RepairStationBlue, #201
+	OneMoveGreen, #202
 }
 var voidlike_tiles : Array = [];
 
@@ -2899,6 +2900,10 @@ func ready_map() -> void:
 	
 	if (any_layer_has_this_tile(Tiles.NoMove)):
 		has_no_move = true;
+	elif (any_layer_has_this_tile(Tiles.OneMove)):
+		has_no_move = true;
+	elif (any_layer_has_this_tile(Tiles.OneMoveGreen)):
+		has_no_move = true;
 	
 	if (any_layer_has_this_tile(Tiles.CrateGoal)):
 		has_crate_goals = true;
@@ -5114,7 +5119,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 				if actor.pos == pos:
 					update_night_and_stars(actor, terrain_in_tile(pos, actor, chrono));
 		
-		if (has_triggers and (new_tile == -1 or new_tile == Tiles.NoUndo) and chrono < Chrono.META_UNDO and !hypothetical):
+		if (has_triggers and (new_tile == -1 or new_tile == Tiles.NoUndo or new_tile == Tiles.NoMove) and chrono < Chrono.META_UNDO and !hypothetical):
 			var terrain = terrain_in_tile(pos, actor, chrono);
 			for i in range(layer, -1, -1):
 				var tile_i = terrain[i];
@@ -7848,10 +7853,19 @@ func valid_voluntary_airborne_move(actor: Actor, dir: Vector2) -> bool:
 func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 	animation_substep(Chrono.MOVE);
 	# TODO: refactor with character_move
+	var pos = actor.pos;
+	var leaving_one_move = -1;
+	var leaving_one_move_green = -1;
+	var terrain = terrain_in_tile(actor.pos, actor, Chrono.MOVE);
+	if (has_no_move):
+		if (terrain.has(Tiles.OneMove)):
+			leaving_one_move = terrain.find(Tiles.OneMove);
+		elif (terrain.has(Tiles.OneMoveGreen)):
+			leaving_one_move_green = terrain.find(Tiles.OneMoveGreen);
 	var result = Success.No;
-	if actor.broken and !terrain_in_tile(actor.pos, actor, Chrono.MOVE).has(Tiles.ZombieTile):
+	if actor.broken and !terrain.has(Tiles.ZombieTile):
 		return Success.No;
-	if (has_no_move and !actor.broken and terrain_in_tile(actor.pos, actor, Chrono.MOVE).has(Tiles.NoMove)):
+	if (has_no_move and !actor.broken and terrain.has(Tiles.NoMove)):
 		return Success.No;
 	if (!valid_voluntary_airborne_move(actor, dir)):
 		result = Success.Surprise;
@@ -7871,6 +7885,11 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 			# should be 'if actor.actorname == Actor.Name.Heavy' but it desyncs Brutalist Absurdism
 			if heavy_selected and !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 0, Chrono.MOVE);
+	if (result != Success.No):
+		if (leaving_one_move > -1):
+			maybe_change_terrain(actor, pos, leaving_one_move, false, Greenness.Mundane, Chrono.MOVE, Tiles.NoMove);
+		elif (leaving_one_move_green > -1):
+			maybe_change_terrain(actor, pos, leaving_one_move_green, false, Greenness.Green, Chrono.MOVE, Tiles.NoMove);
 	return result;
 
 func character_move(dir: Vector2) -> bool:
@@ -7890,16 +7909,24 @@ func character_move(dir: Vector2) -> bool:
 	var result = false;
 	if heavy_selected:
 		var pos = heavy_actor.pos;
-		if ((heavy_actor.broken and !terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
+		var terrain = terrain_in_tile(pos, heavy_actor, Chrono.MOVE);
+		var leaving_one_move = -1;
+		var leaving_one_move_green = -1;
+		if (has_no_move):
+			if (terrain.has(Tiles.OneMove)):
+				leaving_one_move = terrain.find(Tiles.OneMove);
+			elif (terrain.has(Tiles.OneMoveGreen)):
+				leaving_one_move_green = terrain.find(Tiles.OneMoveGreen);
+		if ((heavy_actor.broken and !terrain.has(Tiles.ZombieTile)) or (heavy_turn >= heavy_max_moves and heavy_max_moves >= 0)):
 			play_sound("bump");
 			return false;
-		if (has_no_move and !heavy_actor.broken and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.NoMove)):
+		if (has_no_move and !heavy_actor.broken and terrain.has(Tiles.NoMove)):
 			play_sound("bump");
 			add_to_animation_server(heavy_actor, [Anim.afterimage_at, preload("res://assets/no_move_1.png"), terrainmap.map_to_world(heavy_actor.pos), Color(1, 0, 0, 1)]);
 			return false;
 		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);
-		if (has_continuums and heavy_turn > 0 and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Continuum)):
+		if (has_continuums and heavy_turn > 0 and terrain.has(Tiles.Continuum)):
 			heavy_turn -= 1;
 			heavytimeline.current_move -= 1;
 			continuum = true;
@@ -7915,26 +7942,38 @@ func character_move(dir: Vector2) -> bool:
 					if (event[0] == Undo.heavy_turn):
 						events.erase(event);
 				play_sound("continuum");
-				maybe_change_terrain(heavy_actor, pos, terrain_in_tile(pos, heavy_actor, Chrono.MOVE).find(Tiles.Continuum), false, true, Chrono.CHAR_UNDO, -1);
+				maybe_change_terrain(heavy_actor, pos, terrain.find(Tiles.Continuum), false, true, Chrono.CHAR_UNDO, -1);
 			else:
 				heavy_turn += 1;
 				heavytimeline.current_move += 1;
 		if (result != Success.No):
-			if (has_eclipses and terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.Eclipse)):
+			if (has_eclipses and terrain.has(Tiles.Eclipse)):
 				fuzzed = true;
 				play_sound("eclipse");
+			if (leaving_one_move > -1):
+				maybe_change_terrain(heavy_actor, pos, leaving_one_move, false, Greenness.Mundane, Chrono.MOVE, Tiles.NoMove);
+			elif (leaving_one_move_green > -1):
+				maybe_change_terrain(heavy_actor, pos, leaving_one_move_green, false, Greenness.Green, Chrono.MOVE, Tiles.NoMove);
 	else:
 		var pos = light_actor.pos;
-		if ((light_actor.broken and !terrain_in_tile(pos, heavy_actor, Chrono.MOVE).has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
+		var terrain = terrain_in_tile(pos, heavy_actor, Chrono.MOVE);
+		var leaving_one_move = -1;
+		var leaving_one_move_green = -1;
+		if (has_no_move):
+			if (terrain.has(Tiles.OneMove)):
+				leaving_one_move = terrain.find(Tiles.OneMove);
+			elif (terrain.has(Tiles.OneMoveGreen)):
+				leaving_one_move_green = terrain.find(Tiles.OneMoveGreen);
+		if ((light_actor.broken and !terrain.has(Tiles.ZombieTile)) or (light_turn >= light_max_moves and light_max_moves >= 0)):
 			play_sound("bump");
 			return false;
-		if (has_no_move and !light_actor.broken and terrain_in_tile(pos, light_actor, Chrono.MOVE).has(Tiles.NoMove)):
+		if (has_no_move and !light_actor.broken and terrain.has(Tiles.NoMove)):
 			play_sound("bump");
 			add_to_animation_server(light_actor, [Anim.afterimage_at, preload("res://assets/no_move_1.png"), terrainmap.map_to_world(light_actor.pos), Color(1, 0, 0, 1)]);
 			return false;
 		finish_animations(Chrono.MOVE);
 		maybe_pulse_phase_blocks(Chrono.MOVE);
-		if (has_continuums and light_turn > 0 and terrain_in_tile(pos, light_actor, Chrono.MOVE).has(Tiles.Continuum)):
+		if (has_continuums and light_turn > 0 and terrain.has(Tiles.Continuum)):
 			light_turn -= 1;
 			lighttimeline.current_move -= 1;
 			continuum = true;
@@ -7950,14 +7989,18 @@ func character_move(dir: Vector2) -> bool:
 					if (event[0] == Undo.light_turn):
 						events.erase(event);
 				play_sound("continuum");
-				maybe_change_terrain(light_actor, pos, terrain_in_tile(pos, light_actor, Chrono.MOVE).find(Tiles.Continuum), false, true, Chrono.CHAR_UNDO, -1);
+				maybe_change_terrain(light_actor, pos, terrain.find(Tiles.Continuum), false, true, Chrono.CHAR_UNDO, -1);
 			else:
 				light_turn += 1;
 				lighttimeline.current_move += 1;
 		if (result != Success.No):
-			if (has_eclipses and terrain_in_tile(pos, light_actor, Chrono.MOVE).has(Tiles.Eclipse)):
+			if (has_eclipses and terrain.has(Tiles.Eclipse)):
 				fuzzed = true;
 				play_sound("eclipse");
+			if (leaving_one_move > -1):
+				maybe_change_terrain(light_actor, pos, leaving_one_move, false, Greenness.Mundane, Chrono.MOVE, Tiles.NoMove);
+			elif (leaving_one_move_green > -1):
+				maybe_change_terrain(light_actor, pos, leaving_one_move_green, false, Greenness.Green, Chrono.MOVE, Tiles.NoMove);
 	if (result == Success.Yes):
 		if (!heavy_selected):
 			play_sound("lightstep")

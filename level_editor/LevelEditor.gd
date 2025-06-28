@@ -205,6 +205,7 @@ enum Tiles {
 	BlueGlassBlock, #199
 	FloorboardsBlue, #200
 	RepairStationBlue, #201
+	OneMoveGreen, #202
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -515,7 +516,8 @@ func initialize_picker_array() -> void:
 	picker_array.append(Tiles.NoMove) #always do this one
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
 		pass
-		#picker_array.append(Tiles.OneMove)
+		picker_array.append(Tiles.OneMove)
+		picker_array.append(Tiles.OneMoveGreen)
 		#picker_array.append(Tiles.AnchorPoint)
 		picker_array.append(Tiles.BlueGlassBlock)
 		picker_array.append(Tiles.FloorboardsBlue)
@@ -1235,7 +1237,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.NoMove:
 			text = "No Move: An unbroken robot cannot initiate a move off this tile."
 		Tiles.OneMove:
-			text = "One Move: Turns into a No Move after a robot initiates a move off this tile."
+			text = "One Move: Turns into a No Move after a robot initiates a move from this tile. (Triggers and can be destroyed by Glass Screws/Bombs.)"
 		Tiles.AnchorPoint:
 			text = "Anchor Point: Actors exiting this tile remember the absolute position instead of the direction they moved."
 		Tiles.BlueGlassBlock:
@@ -1244,6 +1246,8 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Blue Floorboards: A Floorboards that, when broken, saves position relative to the actor that broke it instead of absolute position. This is copied by Glass Screws/Bombs."
 		Tiles.RepairStationBlue:
 			text = "Blue Repair Station: A Repair Station that, when broken, saves position relative to the actor that broke it instead of absolute position. This is copied by Glass Screws/Bombs."
+		Tiles.OneMoveGreen:
+			text = "One Move Green: As One Move, but greenly."
 	return text;
 	
 func picker_tooltip() -> void:
