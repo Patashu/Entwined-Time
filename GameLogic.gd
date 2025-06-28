@@ -1997,34 +1997,47 @@ func initialize_level_list() -> void:
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Lightning Round")
 	level_filenames.push_back("Lightning Snake")
-	level_filenames.push_back("Doormaster")
+	level_filenames.push_back("Cold Roommates")
+	level_filenames.push_back("Beware of Pit")
+	level_filenames.push_back("Acrobatics-")
+	level_filenames.push_back("Acrobatics- [VAR1]")
+	level_filenames.push_back("Acrobatics--")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Cliffs-")
-	level_filenames.push_back("Rise As One")
-	level_filenames.push_back("Jello Kiddie Pool")
-	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
-	level_filenames.push_back("Noisemaker")
-	level_filenames.push_back("Doomsday Clock")
-	level_filenames.push_back("Do A Barrel Roll")
-	level_filenames.push_back("Time Travel")
-	level_filenames.push_back("Green Sokoban")
-	level_filenames.push_back("Void Sokoban")
-	level_filenames.push_back("Clockwork-")
 	level_filenames.push_back("Consecutive Normal Pits")
 	level_filenames.push_back("Soft Landing")
+	level_filenames.push_back("Noisemaker")
+	level_filenames.push_back("Green Sokoban")
 	level_filenames.push_back("Skippity")
 	level_filenames.push_back("Skippity [VAR1]")
 	level_filenames.push_back("Yet Another Crate Pit")
 	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
-	level_filenames.push_back("Grounded Downhill")
-	level_filenames.push_back("Grounded Uphill")
 	level_filenames.push_back("Tiny Roast")
 	level_filenames.push_back("Jewellery Theft")
-	level_filenames.push_back("Tres Crates")
 	level_filenames.push_back("The Glass Pit- [VAR1]")
 	level_filenames.push_back("The Glass Pit- [VAR2]")
 	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Hot Soup [VAR2]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("The Cutting Room Floor (Custom Elements)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Rise As One")
+	level_filenames.push_back("Jello Kiddie Pool")
+	level_filenames.push_back("Jello Kiddie Pool [VAR1]")
+	level_filenames.push_back("Doomsday Clock")
+	level_filenames.push_back("Do A Barrel Roll")
+	level_filenames.push_back("Time Travel")
+	level_filenames.push_back("Void Sokoban")
+	level_filenames.push_back("Clockwork-")
+	level_filenames.push_back("Grounded Downhill")
+	level_filenames.push_back("Grounded Uphill")
+	level_filenames.push_back("Tres Crates")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2556,6 +2569,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Upward Jetstream [VAR2]")
 	level_filenames.push_back("Stuck [VAR1]")
 	level_filenames.push_back("Orbital Drop [VAR3]")
+	level_filenames.push_back("Delay Circuit [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

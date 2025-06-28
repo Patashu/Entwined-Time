@@ -135,9 +135,17 @@ script = ExtResource( 8 )
 [node name="Button3" type="Button" parent="Holder/CommunityLevelsHolder"]
 margin_left = 102.0
 margin_top = 54.0
-margin_right = 212.0
+margin_right = 149.0
 margin_bottom = 69.0
-text = "(Variants and Buffs)"
+text = "Variants"
+script = ExtResource( 8 )
+
+[node name="Button7" type="Button" parent="Holder/CommunityLevelsHolder"]
+margin_left = 152.0
+margin_top = 54.0
+margin_right = 244.0
+margin_bottom = 69.0
+text = "Custom Elements"
 script = ExtResource( 8 )
 
 [node name="Label2" type="Label" parent="Holder/CommunityLevelsHolder"]

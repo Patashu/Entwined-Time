@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 2, 1, 14, 4, 2, 7, 0, 3, 14, 2, 4, 14, 4, 65536, 14, 65538, 65537, 14, 65540, 65538, 196, 0, 65539, 14, 65538, 65540, 14, 65540, 131072, 14, 589825, 131073, 14, 131076, 131075, 14, 131074, 131076, 14, 589829, 196608, 14, 262145, 196609, 196, 0, 196610, 196, 0, 196611, 196, 0, 196612, 14, 262145, 262144, 14, 262145, 262145, 2, 0, 262146, 1, 0, 262147, 8, 0, 262148, 14, 262145, 327680, 14, 655362, 327681, 14, 196614, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Acrobatics?"
+level_author = "Patashu"
+level_replay = "Acrobatics?$mturn=29$xawxdxzxwxwxaxsxzwxzxaxzsxzwxwxaxsxzwxzxaxzsxzwxzz"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.0235294, 0.129412, 0.219608, 1 )
+target_track = 2.0
+setup_replay = ""
