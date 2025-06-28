@@ -157,7 +157,7 @@ func fill(buffer: Array, continuum: bool = false) -> void:
 
 func get_animation_nonce_for_event(event) -> int:
 	if event[0] == GameLogic.Undo.move:
-		return event[6];
+		return event[7];
 	elif event[0] == GameLogic.Undo.set_actor_var:
 		return event[5];
 	elif event[0] == GameLogic.Undo.change_terrain:

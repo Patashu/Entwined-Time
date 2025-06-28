@@ -2780,6 +2780,7 @@ var has_mimics : bool = false;
 var has_triggers : bool = false;
 var has_gravity : bool = false;
 var has_no_move : bool = false;
+var has_anchor : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2896,6 +2897,7 @@ func ready_map() -> void:
 	has_triggers = false;
 	has_gravity = false;
 	has_no_move = false;
+	has_anchor = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.NoMove)):
@@ -2920,6 +2922,9 @@ func ready_map() -> void:
 		# note: if I add Superpush to ch9, I would need to move this up top
 		if (any_layer_has_this_tile(Tiles.Fuzz)):
 			fuzz_rotation();
+		
+		if (any_layer_has_this_tile(Tiles.AnchorPoint)):
+			has_anchor = true;
 		
 		if (any_layer_has_this_tile(Tiles.Floorboards)):
 			has_floorboards = true;
@@ -4465,8 +4470,13 @@ boost_pad_reentrance: bool = false) -> int:
 				if (actor.facing_left):
 					set_actor_var(actor, "facing_left", false, Chrono.MOVE);
 		
-		add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of, animation_nonce],
-		chrono_for_maybe_green_actor(actor, chrono));
+		var undo_dir = dir;
+		if (has_anchor and terrain_in_tile(old_pos, actor, chrono).has(Tiles.AnchorPoint)):
+			add_undo_event([Undo.move, actor, old_pos, was_push, was_fall, phased_out_of, true, animation_nonce],
+			chrono_for_maybe_green_actor(actor, chrono));
+		else:
+			add_undo_event([Undo.move, actor, dir, was_push, was_fall, phased_out_of, false, animation_nonce],
+			chrono_for_maybe_green_actor(actor, chrono));
 		
 		# hole check
 		if (has_holes and chrono < Chrono.META_UNDO):
@@ -7185,9 +7195,13 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			#hypothetical: bool, is_gravity: bool, is_retro: bool = false,
 			#pushers_list: Array = [], was_fall = false, was_push = false, phased_out_of: Array = null) -> int:
 			var actor = event[1];
-			var animation_nonce = event[6];
+			var is_absolute = event[6];
+			var animation_nonce = event[7];
 			if (chrono < Chrono.META_UNDO and actor.in_stars):
 				add_to_animation_server(actor, [Anim.undo_immunity, event[6]]);
+			elif (is_absolute):
+				move_actor_relative(actor, event[2] - actor.pos, chrono, false, false, true, [], event[3], event[4], event[5],
+				animation_nonce);
 			else:
 				move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5],
 				animation_nonce);
@@ -8198,7 +8212,7 @@ func banish_time_crystals() -> void:
 		for actor in banished_time_crystals.keys():
 			var dir = Vector2(-9, -9) - actor.pos;
 			actor.pos = Vector2(-9, -9);
-			add_undo_event([Undo.move, actor, dir, false, false, null, -1],
+			add_undo_event([Undo.move, actor, dir, false, false, null, false, -1],
 			chrono_for_maybe_green_actor(actor, max(banished_time_crystals[actor], Chrono.CHAR_UNDO)));
 		banished_time_crystals.clear();
 

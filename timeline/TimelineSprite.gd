@@ -74,6 +74,18 @@ func get_texture_for_event(event: Array, size: int) -> Texture:
 	#add_undo_event([Undo.set_actor_var, actor, prop, old_value], chrono);
 	match (event[0]):
 		GameLogic.Undo.move:
+			var is_absolute = event[6];
+			if (is_absolute):
+				if (event[5].size() > 0):
+					if size == 8:
+						return preload("res://timeline/timeline-anchor-phase-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-anchor-phase-12.png");
+				else:
+					if size == 8:
+						return preload("res://timeline/timeline-anchor-8.png");
+					elif size == 12:
+						return preload("res://timeline/timeline-anchor-12.png");
 			var dir = event[2];
 			if dir == Vector2.LEFT:
 				if (event[5].size() > 0):
