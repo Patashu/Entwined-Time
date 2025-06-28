@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=482 format=2]
+[gd_resource type="TileSet" load_steps=487 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -447,6 +447,11 @@
 [ext_resource path="res://assets/no_move_2.png" type="Texture" id=445]
 [ext_resource path="res://assets/no_move_3.png" type="Texture" id=446]
 [ext_resource path="res://assets/no_move_1.png" type="Texture" id=447]
+[ext_resource path="res://assets/anchor_point.png" type="Texture" id=448]
+[ext_resource path="res://assets/floorboards_blue.png" type="Texture" id=449]
+[ext_resource path="res://assets/repair_station_blue.png" type="Texture" id=450]
+[ext_resource path="res://assets/one_move.png" type="Texture" id=451]
+[ext_resource path="res://assets/blue_glass_block.png" type="Texture" id=452]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -3896,3 +3901,73 @@ frame_7/delay_sec = 0.0
 196/shape_one_way_margin = 0.0
 196/shapes = [  ]
 196/z_index = 0
+197/name = "OneMove"
+197/texture = ExtResource( 451 )
+197/tex_offset = Vector2( 0, 0 )
+197/modulate = Color( 1, 1, 1, 1 )
+197/region = Rect2( 0, 0, 24, 24 )
+197/tile_mode = 0
+197/occluder_offset = Vector2( 12, 12 )
+197/navigation_offset = Vector2( 12, 12 )
+197/shape_offset = Vector2( 0, 0 )
+197/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+197/shape_one_way = false
+197/shape_one_way_margin = 0.0
+197/shapes = [  ]
+197/z_index = 0
+198/name = "AnchorPoint"
+198/texture = ExtResource( 448 )
+198/tex_offset = Vector2( 0, 0 )
+198/modulate = Color( 1, 1, 1, 1 )
+198/region = Rect2( 0, 0, 24, 24 )
+198/tile_mode = 0
+198/occluder_offset = Vector2( 12, 12 )
+198/navigation_offset = Vector2( 12, 12 )
+198/shape_offset = Vector2( 0, 0 )
+198/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+198/shape_one_way = false
+198/shape_one_way_margin = 0.0
+198/shapes = [  ]
+198/z_index = 0
+199/name = "BlueGlassBlock"
+199/texture = ExtResource( 452 )
+199/tex_offset = Vector2( 0, 0 )
+199/modulate = Color( 1, 1, 1, 1 )
+199/region = Rect2( 0, 0, 24, 24 )
+199/tile_mode = 0
+199/occluder_offset = Vector2( 12, 12 )
+199/navigation_offset = Vector2( 12, 12 )
+199/shape_offset = Vector2( 0, 0 )
+199/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+199/shape_one_way = false
+199/shape_one_way_margin = 0.0
+199/shapes = [  ]
+199/z_index = 0
+200/name = "FloorboardsBlue"
+200/texture = ExtResource( 449 )
+200/tex_offset = Vector2( 0, 0 )
+200/modulate = Color( 1, 1, 1, 1 )
+200/region = Rect2( 0, 0, 24, 24 )
+200/tile_mode = 0
+200/occluder_offset = Vector2( 12, 12 )
+200/navigation_offset = Vector2( 12, 12 )
+200/shape_offset = Vector2( 0, 0 )
+200/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+200/shape_one_way = false
+200/shape_one_way_margin = 0.0
+200/shapes = [  ]
+200/z_index = 0
+201/name = "RepairStationBlue"
+201/texture = ExtResource( 450 )
+201/tex_offset = Vector2( 0, 0 )
+201/modulate = Color( 1, 1, 1, 1 )
+201/region = Rect2( 0, 0, 24, 24 )
+201/tile_mode = 0
+201/occluder_offset = Vector2( 12, 12 )
+201/navigation_offset = Vector2( 12, 12 )
+201/shape_offset = Vector2( 0, 0 )
+201/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+201/shape_one_way = false
+201/shape_one_way_margin = 0.0
+201/shapes = [  ]
+201/z_index = 0

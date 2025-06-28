@@ -387,6 +387,11 @@ enum Tiles {
 	SpiderWebWhite, #194
 	SpiderWebLimeGreen, #195
 	NoMove, #196
+	OneMove, #197
+	AnchorPoint, #198
+	BlueGlassBlock, #199
+	FloorboardsBlue, #200
+	RepairStationBlue, #201
 }
 var voidlike_tiles : Array = [];
 

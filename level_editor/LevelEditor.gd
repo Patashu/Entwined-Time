@@ -200,6 +200,11 @@ enum Tiles {
 	SpiderWebWhite, #194
 	SpiderWebLimeGreen, #195
 	NoMove, #196
+	OneMove, #197
+	AnchorPoint, #198
+	BlueGlassBlock, #199
+	FloorboardsBlue, #200
+	RepairStationBlue, #201
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -510,6 +515,11 @@ func initialize_picker_array() -> void:
 	picker_array.append(Tiles.NoMove) #always do this one
 	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
 		pass
+		#picker_array.append(Tiles.OneMove)
+		#picker_array.append(Tiles.AnchorPoint)
+		#picker_array.append(Tiles.BlueGlassBlock)
+		#picker_array.append(Tiles.FloorboardsBlue)
+		#picker_array.append(Tiles.RepairStationBlue)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1224,6 +1234,16 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Lime Green Spider Web: Solid to moves exiting this tile if the actor has already (moved or bumped) 1 or more times this turn. (+1 for each other Lime Green Spider Web in this tile.)"
 		Tiles.NoMove:
 			text = "No Move: An unbroken robot cannot initiate a move off this tile."
+		Tiles.OneMove:
+			text = "One Move: Turns into a No Move after a robot initiates a move off this tile."
+		Tiles.AnchorPoint:
+			text = "Anchor Point: Actors exiting this tile remember the absolute position instead of the direction they moved."
+		Tiles.BlueGlassBlock:
+			text = "Blue Glass Block: A Glass Block that, when broken, saves position relative to the actor that broke it instead of absolute position. This is copied by Glass Screws/Bombs."
+		Tiles.FloorboardsBlue:
+			text = "Blue Floorboards: A Floorboards that, when broken, saves position relative to the actor that broke it instead of absolute position. This is copied by Glass Screws/Bombs."
+		Tiles.RepairStationBlue:
+			text = "Blue Repair Station: A Repair Station that, when broken, saves position relative to the actor that broke it instead of absolute position. This is copied by Glass Screws/Bombs."
 	return text;
 	
 func picker_tooltip() -> void:
