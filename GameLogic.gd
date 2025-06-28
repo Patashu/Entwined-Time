@@ -2918,6 +2918,8 @@ func ready_map() -> void:
 		
 		if (any_layer_has_this_tile(Tiles.Floorboards)):
 			has_floorboards = true;
+		elif (any_layer_has_this_tile(Tiles.FloorboardsBlue)):
+			has_floorboards = true;
 		elif (any_layer_has_this_tile(Tiles.GreenFloorboards)):
 			has_floorboards = true;
 		elif (any_layer_has_this_tile(Tiles.VoidFloorboards)):
@@ -2949,6 +2951,8 @@ func ready_map() -> void:
 			has_phase_lightning = true;
 			
 		if (any_layer_has_this_tile(Tiles.RepairStation)):
+			has_repair_stations = true;
+		elif (any_layer_has_this_tile(Tiles.RepairStationBlue)):
 			has_repair_stations = true;
 		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
 			has_repair_stations = true;
@@ -4463,7 +4467,7 @@ boost_pad_reentrance: bool = false) -> int:
 		if (has_holes and chrono < Chrono.META_UNDO):
 			var actors = actors_in_tile(pos);
 			var terrain = terrain_in_tile(pos, actor, chrono);
-			if (terrain.has(Tiles.Floorboards) or terrain.has(Tiles.MagentaFloorboards) or terrain.has(Tiles.GreenFloorboards) or terrain.has(Tiles.VoidFloorboards) or terrain.has(Tiles.GoldFloorboards)):
+			if (terrain.has(Tiles.Floorboards) or terrain.has(Tiles.MagentaFloorboards) or terrain.has(Tiles.GreenFloorboards) or terrain.has(Tiles.VoidFloorboards) or terrain.has(Tiles.GoldFloorboards) or terrain.has(Tiles.FloorboardsBlue)):
 				pass
 			else:
 				for actor_there in actors:
@@ -4485,6 +4489,10 @@ boost_pad_reentrance: bool = false) -> int:
 					Tiles.Floorboards:
 						if (chrono < Chrono.META_UNDO and !is_retro):
 							maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1);
+						break;
+					Tiles.FloorboardsBlue:
+						if (chrono < Chrono.META_UNDO and !is_retro):
+							maybe_change_terrain(actor, old_pos, i, hypothetical, Greenness.Mundane, chrono, -1, -2, -1, false, true);
 						break;
 					Tiles.MagentaFloorboards:
 						if (chrono < Chrono.META_UNDO):
@@ -4810,7 +4818,7 @@ func check_checkpoints(chrono: int) -> void:
 						undo_one_event(event, Chrono.CHAR_UNDO);
 					elif (event[0] == Undo.change_terrain):
 						var old_tile = event[4];
-						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
+						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationBlue || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
 							check_abyss_chimes();
 					elif (event[0] == Undo.set_actor_var):
 						if event[2] == "broken":
@@ -4941,8 +4949,8 @@ func all_rotation(candidates: Array) -> void:
 				else:
 					floorboard_counts[tile] = 0;
 
-var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards, Tiles.GoldFloorboards];
-var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true, Tiles.GoldFloorboards: true};
+var floorboards_ids = [Tiles.Floorboards, Tiles.MagentaFloorboards, Tiles.GreenFloorboards, Tiles.VoidFloorboards, Tiles.GoldFloorboards, Tiles.FloorboardsBlue];
+var floorboards_dict = {Tiles.Floorboards: true, Tiles.MagentaFloorboards: true, Tiles.GreenFloorboards: true, Tiles.VoidFloorboards: true, Tiles.GoldFloorboards: true, Tiles.FloorboardsBlue: true};
 var rotateable_phaseboards_ids = [Tiles.PhaseBoardRed, Tiles.PhaseBoardBlue, Tiles.PhaseBoardGray, Tiles.PhaseBoardVoid, Tiles.PhaseBoardPurple, Tiles.PhaseBoardDeath, Tiles.PhaseBoardLife];
 var phaseboards_dict = {Tiles.PhaseBoardRed: true, Tiles.PhaseBoardBlue: true, Tiles.PhaseBoardGray: true, Tiles.PhaseBoardVoid: true, Tiles.PhaseBoardPurple: true, Tiles.PhaseBoardDeath: true, Tiles.PhaseBoardLife: true, Tiles.PhaseBoardHeavy: true, Tiles.PhaseBoardLight: true, Tiles.PhaseBoardCrate: true, Tiles.PhaseBoardEast: true, Tiles.PhaseBoardNorth: true, Tiles.PhaseBoardSouth: true, Tiles.PhaseBoardWest: true};
 
@@ -5001,7 +5009,7 @@ func find_or_create_layer_having_this_tile(pos: Vector2, assumed_old_tile: int) 
 	return terrain_layers.size() - 1;
 
 func maybe_change_terrain(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int,
-chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -1, is_trigger: bool = false) -> int:
+chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -1, is_trigger: bool = false, is_relative: bool = false) -> int:
 	if (chrono == Chrono.GHOSTS):
 		# TODO: the ghost will technically be on the wrong layer but, whatever, too much of a pain in the ass to fix rn
 		# (I think the solution would be to programatically have one Node2D between each presentation TileMap and put it in the right folder)
@@ -5037,10 +5045,13 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		if (animation_nonce == -1):
 			animation_nonce = animation_nonce_fountain_dispense();
 		
-		add_undo_event([Undo.change_terrain, actor, pos, layer, old_tile, new_tile, animation_nonce], chrono);
+		var undo_pos = pos;
+		if (is_relative):
+			undo_pos = pos - actor.pos;
+		add_undo_event([Undo.change_terrain, actor, undo_pos, layer, old_tile, new_tile, is_relative, animation_nonce], chrono);
 		# TODO: presentation/data terrain layer update (see notes)
 		# ~~encasement layering/unlayering~~ just kidding, chronofrag time (AD11)
-		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked or new_tile == Tiles.GreenGlassBlock or new_tile == Tiles.VoidGlassBlock:
+		if new_tile == Tiles.GlassBlock or new_tile == Tiles.GlassBlockCracked or new_tile == Tiles.GreenGlassBlock or new_tile == Tiles.VoidGlassBlock or new_tile == Tiles.BlueGlassBlock:
 			add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 			if (chrono < Chrono.META_UNDO):
 				for actor in actors:
@@ -5048,7 +5059,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 					if actor.pos == pos and !actor.broken and actor.durability <= Durability.PITS:
 						actor.post_mortem = Durability.PITS;
 						set_actor_var(actor, "broken", true, chrono);
-		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards or new_tile == Tiles.RepairStation or new_tile == Tiles.RepairStationGray:
+		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards or new_tile == Tiles.FloorboardsBlue or new_tile == Tiles.RepairStation or new_tile == Tiles.RepairStationBlue or new_tile == Tiles.RepairStationGray:
 			add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 		else:
 			# ughh duplicated coooode
@@ -5108,24 +5119,24 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			for i in range(layer, -1, -1):
 				var tile_i = terrain[i];
 				if (tile_i == Tiles.GlassScrew or tile_i == Tiles.Bomb):
-					detonate_trigger(actor, pos, i, hypothetical, green_terrain, chrono, -1, is_trigger);
+					detonate_trigger(actor, pos, i, hypothetical, green_terrain, chrono, -1, is_trigger, is_relative);
 					break
 		
 	return Success.Surprise;
 
 func detonate_trigger(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int,
-chrono: int, new_tile: int, is_trigger: bool = false) -> void:
+chrono: int, new_tile: int, is_trigger: bool, is_relative: bool) -> void:
 	var terrain_layer = terrain_layers[layer];
 	var old_tile = terrain_layer.get_cellv(pos);
 	# Only non-bombs or chain reactions break an extra tile for the initial break.
 	if (is_trigger or old_tile != Tiles.Bomb):
-		maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1, -2, -1, true);
+		maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
 	# have to check terrain now because another trigger might have changed it in the above line
 	var terrain = terrain_in_tile(pos, actor, chrono);
 	for k in range(terrain.size()):
 		var tile_k = terrain[k];
 		if (tile_k != -1 and tile_k != Tiles.NoUndo and tile_k != Tiles.OneUndo):
-			maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1, -2, -1, true);
+			maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
 			break;
 	if (old_tile == Tiles.Bomb):
 		#on all orthogonal four tiles, if they contain a bomb, blow up that bomb too
@@ -5134,7 +5145,7 @@ chrono: int, new_tile: int, is_trigger: bool = false) -> void:
 			for d1 in range(terrain_d.size()):
 				var tile_d1 = terrain_d[d1];
 				if (tile_d1 == Tiles.Bomb):
-					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1, true);
+					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1, true, is_relative);
 
 var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
 
@@ -5642,6 +5653,11 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 				# rule I've been thinking about for a while - things lighter than iron can't break glass
 				if (actor.heaviness >= Heaviness.IRON):
 					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Mundane, chrono, -1);
+				else:
+					return Success.No;
+			Tiles.BlueGlassBlock:
+				if (actor.heaviness >= Heaviness.IRON):
+					result = maybe_change_terrain(actor, pos, i, hypothetical, Greenness.Mundane, chrono, -1, -2, -1, false, true);
 				else:
 					return Success.No;
 			Tiles.GlassBlockCracked:
@@ -6486,6 +6502,8 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 		# if any repair station exists, or any Undo.change_terrain will creare a repair station, there's still hope
 		if (any_layer_has_this_tile(Tiles.RepairStation)):
 			return true;
+		if (any_layer_has_this_tile(Tiles.RepairStationBlue)):
+			return true;
 		if (any_layer_has_this_tile(Tiles.RepairStationGreen)):
 			return true;
 		if (any_layer_has_this_tile(Tiles.RepairStationGray)):
@@ -6498,7 +6516,7 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 				for event in turn:
 					if event[0] == Undo.change_terrain:
 						var old_tile = event[4];
-						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
+						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationBlue || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
 							return true;
 	# not edge cases: chrono, actor colour (since we always check)
 	# yes edge cases: could be a locked turn or a fuzz doubled turn
@@ -7187,7 +7205,10 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var layer = event[3];
 			var old_tile = event[4];
 			var new_tile = event[5];
-			var animation_nonce = event[6];
+			var is_relative = event[6];
+			var animation_nonce = event[7];
+			if (is_relative):
+				pos += actor.pos;
 			maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile, new_tile, animation_nonce);
 		
 	# undo events that should not
@@ -8574,7 +8595,11 @@ func time_passes(chrono: int) -> void:
 				continue;
 			if (actor.broken):
 				var terrain = terrain_in_tile(actor.pos, actor, chrono);
-				if (terrain.has(Tiles.RepairStation)):
+				if (terrain.has(Tiles.RepairStationBlue)):
+					set_actor_var(actor, "broken", false, chrono);
+					maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStationBlue), false, false, chrono, -1, -2, -1, false, true);
+					check_abyss_chimes();
+				elif (terrain.has(Tiles.RepairStation)):
 					set_actor_var(actor, "broken", false, chrono);
 					maybe_change_terrain(actor, actor.pos, terrain.find(Tiles.RepairStation), false, false, chrono, -1);
 					check_abyss_chimes();

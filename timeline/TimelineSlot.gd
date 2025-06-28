@@ -161,7 +161,7 @@ func get_animation_nonce_for_event(event) -> int:
 	elif event[0] == GameLogic.Undo.set_actor_var:
 		return event[5];
 	elif event[0] == GameLogic.Undo.change_terrain:
-		return event[6];
+		return event[7];
 	elif event[0] == GameLogic.Undo.tick:
 		return event[3];
 	return -1;

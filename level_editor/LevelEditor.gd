@@ -517,9 +517,9 @@ func initialize_picker_array() -> void:
 		pass
 		#picker_array.append(Tiles.OneMove)
 		#picker_array.append(Tiles.AnchorPoint)
-		#picker_array.append(Tiles.BlueGlassBlock)
-		#picker_array.append(Tiles.FloorboardsBlue)
-		#picker_array.append(Tiles.RepairStationBlue)
+		picker_array.append(Tiles.BlueGlassBlock)
+		picker_array.append(Tiles.FloorboardsBlue)
+		picker_array.append(Tiles.RepairStationBlue)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
