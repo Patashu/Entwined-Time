@@ -7970,7 +7970,7 @@ func character_move(dir: Vector2) -> bool:
 				maybe_change_terrain(heavy_actor, pos, leaving_one_move_green, false, Greenness.Green, Chrono.MOVE, Tiles.NoMove);
 	else:
 		var pos = light_actor.pos;
-		var terrain = terrain_in_tile(pos, heavy_actor, Chrono.MOVE);
+		var terrain = terrain_in_tile(pos, light_actor, Chrono.MOVE);
 		var leaving_one_move = -1;
 		var leaving_one_move_green = -1;
 		if (has_no_move):
