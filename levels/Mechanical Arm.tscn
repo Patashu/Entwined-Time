@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131082, 115, 0, 196618, 115, 0, 262154, 115, 0, 327690, 115, 0, 393222, 2, 0, 393224, 8, 0, 393226, 115, 0, 393228, 32, 0, 458753, 14, 196613, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 196614, 458759, 14, 196614, 458760, 14, 196614, 458761, 14, 196615, 458762, 115, 0 )
+
+[node name="@@1420" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131082, 115, 0, 196618, 115, 0, 262150, 199, 0, 262151, 199, 0, 262152, 199, 0, 262154, 115, 0, 327690, 115, 0, 393222, 1, 0, 393224, 7, 0, 393226, 115, 0, 458762, 115, 0 )
+
+[node name="@@1421" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131082, 39, 0, 196618, 39, 0, 262154, 39, 0, 327690, 39, 0, 393226, 39, 0, 458762, 39, 0 )
+
+[node name="@@1422" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131082, 55, 0, 196618, 55, 0, 262154, 55, 0, 327690, 55, 0, 393226, 55, 0, 458762, 55, 0 )
+
+[node name="@@1423" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131082, 115, 0, 196618, 115, 0, 262154, 115, 0, 327690, 115, 0, 393226, 115, 0, 458762, 115, 0 )
+
+[node name="@@1424" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131075, 180, 0, 131082, 65, 0, 196610, 180, 0, 196612, 180, 0, 196618, 65, 0, 262147, 180, 0, 262154, 65, 0, 327682, 180, 0, 327684, 180, 0, 327690, 65, 0, 393219, 180, 0, 393226, 65, 0, 458762, 65, 0 )
+
+[node name="@@1425" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 65, 0, 1, 65, 0, 2, 65, 0, 3, 65, 0, 4, 65, 0, 5, 65, 0, 6, 65, 0, 7, 65, 0, 8, 65, 0, 9, 65, 0, 10, 65, 0, 65536, 65, 0, 65546, 65, 0, 131072, 65, 0, 131082, 56, 0, 196608, 65, 0, 196618, 56, 0, 262144, 65, 0, 262154, 56, 0, 327680, 65, 0, 327690, 56, 0, 393216, 65, 0, 393226, 56, 0, 458752, 65, 0, 458762, 56, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Mechanical Arm"
+level_author = "Slabdrill"
+level_replay = "Mechanical Arm$mturn=192$axaawxzxzwxaaaxzwaxwzxzwxaxzdxzxzswxaxzdxzxzswxaxzzzzzzxzzzzaxawxzxzaxaxzswxzxzzdxdwzaaaxaxaxzxzxzdxaxwxaxzzxzzaxwxaxzaxaxzswxzxzaxaxzswxzxzzzwxawzwzxddxzzxzxzzzzxzwxdxzwxaaaawxzxzxdxdxzswxzxzzwxddzaaxwxaxzzxzzzzwxzxzxzxdxaxwzzaaxwxaxzdxzxzswxaxzdxzxzswxaxzzzzsxwzwzwzzzzzzzxzsaxa"
+heavy_max_moves = 22.0
+light_max_moves = 22.0
+clock_turns = "1,1,1,1,1,1"
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

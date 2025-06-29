@@ -1971,6 +1971,19 @@ func initialize_level_list() -> void:
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
+	chapter_names.push_back("Chapter R - Relativity (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Anchor Moving Service")
+	level_filenames.push_back("Dig")
+	level_filenames.push_back("Hazardous Materials")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Mechanical Arm")
+	
 	chapter_names.push_back("Chapter M - Mimics (WIP)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
