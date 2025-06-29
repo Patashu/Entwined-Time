@@ -1091,11 +1091,11 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.ColourNative:
 			text = "Native Colour: A Colour that will change actors back to their native Time Colour. (For example, a Crate would become Gray, and Light would become Blurple.)";
 		Tiles.RepairStation:
-			text = "Repair Station: When time passes, after clocks tick, repair an unbroken actor experiencing time in this tile, consuming this."
+			text = "Repair Station: When time passes, after clocks tick, repair a broken actor experiencing time in this tile, consuming this."
 		Tiles.RepairStationGray:
-			text = "Repair Station: When time passes following a move, after clocks tick, repair an unbroken actor in this tile, consuming this."
+			text = "Repair Station: When time passes following a move, after clocks tick, repair a broken actor in this tile, consuming this."
 		Tiles.RepairStationGreen:
-			text = "Repair Station: When time passes, after clocks tick, repair an unbroken actor in this tile (greenly), consuming this (greenly)."
+			text = "Repair Station: When time passes, after clocks tick, repair a broken actor in this tile (greenly), consuming this (greenly)."
 		Tiles.ZombieTile:
 			text = "Zombie Tile: Broken robots can make moves from this tile."
 		Tiles.HeavyMimic:
@@ -1235,9 +1235,9 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.SpiderWebLimeGreen:
 			text = "Lime Green Spider Web: Solid to moves exiting this tile if the actor has already (moved or bumped) 1 or more times this turn. (+1 for each other Lime Green Spider Web in this tile.)"
 		Tiles.NoMove:
-			text = "No Move: An unbroken robot cannot initiate a move off this tile."
+			text = "No Move: An unbroken robot (including mimics) cannot initiate a move off this tile."
 		Tiles.OneMove:
-			text = "One Move: Turns into a No Move after a robot initiates a move from this tile. (Triggers and can be destroyed by Glass Screws/Bombs.)"
+			text = "One Move: Turns into a No Move after a robot (including mimics) initiates a move from this tile. (Triggers and can be destroyed by Glass Screws/Bombs.)"
 		Tiles.AnchorPoint:
 			text = "Anchor Point: Actors exiting this tile remember the absolute position instead of the direction they moved."
 		Tiles.BlueGlassBlock:
