@@ -5856,6 +5856,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		#	tiny_pushables_there.push_back(actor_there);
 		elif (actor_there.is_hole()):
 			continue;
+		elif actor == actor_there or pushers_list.has(actor_there):
+			# don't try to push yourself e.g. if moving 0,0 e.g. due to anchor point
+			continue;
 		elif actor_there.pushable():
 			pushables_there.push_back(actor_there);
 	
