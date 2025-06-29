@@ -7215,7 +7215,10 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			if (chrono < Chrono.META_UNDO and actor.in_stars):
 				add_to_animation_server(actor, [Anim.undo_immunity, event[6]]);
 			elif (is_absolute):
-				move_actor_relative(actor, event[2] - actor.pos, chrono, false, false, true, [], event[3], event[4], event[5],
+				var pos = actor.pos;
+				if (chrono == Chrono.GHOSTS):
+					pos = get_ghost_that_hasnt_moved(actor).pos;
+				move_actor_relative(actor, event[2] - pos, chrono, false, false, true, [], event[3], event[4], event[5],
 				animation_nonce);
 			else:
 				move_actor_relative(actor, -event[2], chrono, false, false, true, [], event[3], event[4], event[5],
@@ -7242,7 +7245,10 @@ func undo_one_event(event: Array, chrono : int) -> void:
 			var is_relative = event[6];
 			var animation_nonce = event[7];
 			if (is_relative):
-				pos += actor.pos;
+				if (chrono == Chrono.GHOSTS):
+					pos += get_ghost_that_hasnt_moved(actor).pos;
+				else:
+					pos += actor.pos;
 			maybe_change_terrain(actor, pos, layer, false, false, chrono, old_tile, new_tile, animation_nonce);
 		
 	# undo events that should not
