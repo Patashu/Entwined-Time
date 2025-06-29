@@ -5881,8 +5881,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		#	tiny_pushables_there.push_back(actor_there);
 		elif (actor_there.is_hole()):
 			continue;
-		elif actor == actor_there or pushers_list.has(actor_there):
+		elif actor == actor_there:
 			# don't try to push yourself e.g. if moving 0,0 e.g. due to anchor point
+			# (to prevent light from special moves wooden crate downwards, we can't check pushers_list.has(actor_there as well)
 			continue;
 		elif actor_there.pushable():
 			pushables_there.push_back(actor_there);
