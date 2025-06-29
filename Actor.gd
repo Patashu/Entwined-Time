@@ -1060,6 +1060,8 @@ func _process(delta: float) -> void:
 					gamelogic.undo_effect_strength = 0.4;
 					gamelogic.undo_effect_per_second = gamelogic.undo_effect_strength*(1);
 					gamelogic.undo_effect_color = color;
+				32: #nonce
+					gamelogic.broadcast_animation_nonce(current_animation[1]);
 			if (is_done):
 				animations.pop_front();
 				animation_timer = 0;

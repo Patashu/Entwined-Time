@@ -163,6 +163,7 @@ enum Anim {
 	stall, #29
 	dust, #30
 	time_bubble, #31
+	nonce, #32
 }
 
 enum TimeColour {
@@ -393,6 +394,7 @@ enum Tiles {
 	FloorboardsBlue, #200
 	RepairStationBlue, #201
 	OneMoveGreen, #202
+	TerrainLock, #203
 }
 var voidlike_tiles : Array = [];
 
@@ -2781,6 +2783,7 @@ var has_triggers : bool = false;
 var has_gravity : bool = false;
 var has_no_move : bool = false;
 var has_anchor : bool = false;
+var has_terrain_lock : bool = false;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2898,6 +2901,7 @@ func ready_map() -> void:
 	has_gravity = false;
 	has_no_move = false;
 	has_anchor = false;
+	has_terrain_lock = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.NoMove)):
@@ -3126,6 +3130,9 @@ func ready_map() -> void:
 			has_gravity = true;
 		elif (any_layer_has_this_tile(Tiles.GravityHalo)):
 			has_gravity = true;
+			
+		if (any_layer_has_this_tile(Tiles.TerrainLock)):
+			has_terrain_lock = true;
 	
 	calculate_map_size();
 	make_actors();
@@ -5040,6 +5047,11 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		return Success.Surprise;
 	
 	if (!hypothetical):
+		if (chrono < Chrono.META_UNDO and has_terrain_lock and terrain_in_tile(pos, actor, chrono).has(Tiles.TerrainLock)):
+			add_to_animation_server(actor, [Anim.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.TerrainLock), terrainmap.map_to_world(pos), Color.red]);
+			add_to_animation_server(actor, [Anim.nonce, animation_nonce]);
+			return Success.No;
+		
 		var terrain_layer = terrain_layers[layer];
 		var old_tile = terrain_layer.get_cellv(pos);
 		if (assumed_old_tile != -2 and assumed_old_tile != old_tile):

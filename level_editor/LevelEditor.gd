@@ -206,6 +206,7 @@ enum Tiles {
 	FloorboardsBlue, #200
 	RepairStationBlue, #201
 	OneMoveGreen, #202
+	TerrainLock, #203
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -522,6 +523,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.BlueGlassBlock)
 		picker_array.append(Tiles.FloorboardsBlue)
 		picker_array.append(Tiles.RepairStationBlue)
+		picker_array.append(Tiles.TerrainLock)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1248,6 +1250,8 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "Blue Repair Station: A Repair Station that, when broken, saves position relative to the actor that broke it instead of absolute position. This is copied by Glass Screws/Bombs."
 		Tiles.OneMoveGreen:
 			text = "One Move Green: As One Move, but greenly."
+		Tiles.TerrainLock:
+			text = "Terrain Lock: Terrain cannot be created or destroyed here."
 	return text;
 	
 func picker_tooltip() -> void:
