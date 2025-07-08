@@ -656,6 +656,10 @@ func load_game():
 		savefix("Consecutive Normal Pits [VAR2]", "Consecutive Normal Pits [VAR1]")
 		savefix("One-Way Bridge", "One-Way Bridge (Insight)")
 		save_file["version"] = 1;
+	#v19.5
+	if (!save_file.has("version") or save_file["version"] < 2):
+		savefix("Acrobatics? [VAR1]", "Isometric Exercise")
+		save_file["version"] = 2;
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
@@ -2037,8 +2041,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Lightning Snake")
 	level_filenames.push_back("Cold Roommates")
 	level_filenames.push_back("Beware of Pit")
+	level_filenames.push_back("Isometric Exercise")
 	level_filenames.push_back("Acrobatics-")
-	level_filenames.push_back("Acrobatics- [VAR1]")
 	level_filenames.push_back("Acrobatics--")
 	level_filenames.push_back("Hot Soup")
 	level_filenames.push_back("Cliffs-")
