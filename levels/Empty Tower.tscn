@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 66, 0, 2, 7, 0, 3, 1, 0, 5, 66, 0, 65536, 66, 0, 65538, 198, 0, 65539, 198, 0, 65541, 66, 0, 131072, 66, 0, 131074, 2, 0, 131075, 8, 0, 131077, 66, 0, 196608, 66, 0, 196613, 66, 0, 262144, 66, 0, 262149, 66, 0, 327680, 66, 0, 327685, 66, 0, 393216, 66, 0, 393221, 66, 0, 458752, 66, 0, 458757, 66, 0, 524288, 66, 0, 524293, 66, 0, 589824, 66, 0, 589825, 66, 0, 589826, 66, 0, 589827, 66, 0, 589828, 66, 0, 589829, 66, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Empty Tower"
+level_author = "Slabdrill"
+level_replay = "Empty Tower$mturn=49$wxaxsxzxzzssxaxzxzxzssxaxzzasxaxzzssxzzxzzwxaxaxzxzsxaxzassxaxzzxzzaaxzwz"
+heavy_max_moves = 6.0
+light_max_moves = 6.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

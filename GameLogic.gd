@@ -1986,11 +1986,19 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Anchor Moving Service")
-	level_filenames.push_back("Dig")
+	level_filenames.push_back("Blue Ghost")
 	level_filenames.push_back("Hazardous Materials")
+	level_filenames.push_back("Dig")
+	level_filenames.push_back("Pushing It Blue")
+	level_filenames.push_back("Vine")
+	level_filenames.push_back("Makeshift Ladder")
+	level_filenames.push_back("Anchor Moving Service")
+	level_filenames.push_back("Anchor Lock")
+	level_filenames.push_back("Empty Tower")
+	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Vine [VAR1]")
 	level_filenames.push_back("Mechanical Arm")
 	
 	chapter_names.push_back("Chapter M - Mimics (WIP)");
@@ -2122,6 +2130,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("In Defiance of Time-")
 	level_filenames.push_back("Circle Dance-")
 	level_filenames.push_back("Dead Air [Act 1]")
+	level_filenames.push_back("Dead Air [Act 2]")
 	level_filenames.push_back("In Defiance of Time [VAR1]")
 	level_filenames.push_back("Unpacking")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
@@ -2653,6 +2662,19 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Window of Opportunity [VAR1]")
 	level_filenames.push_back("Fire In The Sky [REV1] [VAR1]")
 	level_filenames.push_back("The Eclipse Pit [VAR1]")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("Journeyless Fragments");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Kelrn Ocrwh")
+	level_filenames.push_back("Kelrn Ocryt")
+	level_filenames.push_back("Normality")
+	level_filenames.push_back("Maneuver")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 2, 7, 0, 4, 14, 262148, 65536, 23, 0, 393216, 199, 0, 393217, 199, 0, 393218, 199, 0, 393219, 199, 0, 393220, 199, 0, 458754, 8, 0, 524288, 14, 196613, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196615 )
+
+[node name="@@306" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 458754, 39, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Makeshift Ladder"
+level_author = "Slabdrill"
+level_replay = "Makeshift Ladder$mturn=74$xwwzdwaazdddwaaaazddwaddzawzaaadwazwadsddwzwazawzsaaawdwzwazwawzwdzdwzwdwzw"
+heavy_max_moves = 0.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
+target_track = 6.0
+setup_replay = ""

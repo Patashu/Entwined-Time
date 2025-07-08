@@ -1095,9 +1095,9 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.RepairStation:
 			text = "Repair Station: When time passes, after clocks tick, repair a broken actor experiencing time in this tile, consuming this."
 		Tiles.RepairStationGray:
-			text = "Repair Station: When time passes following a move, after clocks tick, repair a broken actor in this tile, consuming this."
+			text = "Gray Repair Station: When time passes following a move, after clocks tick, repair a broken actor in this tile, consuming this."
 		Tiles.RepairStationGreen:
-			text = "Repair Station: When time passes, after clocks tick, repair a broken actor in this tile (greenly), consuming this (greenly)."
+			text = "Green Repair Station: When time passes, after clocks tick, repair a broken actor in this tile (greenly), consuming this (greenly)."
 		Tiles.ZombieTile:
 			text = "Zombie Tile: Broken robots can make moves from this tile."
 		Tiles.HeavyMimic:

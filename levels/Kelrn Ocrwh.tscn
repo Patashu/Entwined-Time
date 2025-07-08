@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 14, 196613, 2, 14, 196615, 6, 14, 262148, 8, 14, 196609, 10, 14, 262148, 12, 14, 196609, 65536, 14, 196609, 65544, 14, 655362, 65545, 14, 196615, 65547, 14, 196613, 65548, 14, 589828, 131072, 14, 262145, 131076, 14, 262148, 131078, 14, 2, 131079, 14, 4, 131084, 14, 327681, 196608, 14, 327681, 196611, 14, 262148, 196614, 14, 131074, 196615, 14, 131076, 262145, 14, 262148, 262148, 14, 262148, 327682, 14, 262148, 327686, 14, 524290, 327687, 14, 196615, 327689, 2, 0, 327691, 8, 0, 393219, 14, 524290, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 589828, 393224, 14, 524290, 393225, 14, 196614, 393226, 14, 524291, 393227, 14, 196614, 393228, 14, 524292, 458752, 1, 0, 458755, 14, 327681, 458758, 14, 589826, 458759, 14, 196614, 458760, 14, 589828, 458762, 14, 327681, 458764, 14, 327681, 524288, 7, 0, 524292, 14, 262148, 524294, 14, 327681, 524296, 14, 327681, 524299, 14, 262148 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Kelrn Ocrwh"
+level_author = "Skai"
+level_replay = "Kelrn Ocrwh$mturn=216$xawaaaxawxzxzwaaxzzzzxaxaxzzzzzxzaazzaawaxaaxzzzzawaxwaxzzzxwxdwdxzzzzzaxdsxadadzzzzzaxzzzzzdssxzawawaxzzzdxzazaxzawaxzzzzzwdxzzzawawaxaxzzzzzxzxddzxwxwaxzwdxzzzssxzzdxzzdzxwxdxzwxwzxzxdzxzzsxazzxzxwaaaxwzzxzzzzxwdxddsssxzzdxzzzzdsxwxdxzzwaaxzzzzwazzwawaaxdzxzzzzzxaxaxzzzasdxz"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

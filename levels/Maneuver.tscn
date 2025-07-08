@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 1, 7, 0, 65536, 159, 0, 65537, 159, 0, 131072, 2, 0, 131073, 8, 0 )
+
+[node name="@@199" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65536, 186, 0, 65537, 186, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Maneuver"
+level_author = "Skai"
+level_replay = "Maneuver$mturn=8$xsxdcxzxwzwzwz"
+heavy_max_moves = 1.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0, 0, 0, 1 )
+target_track = 18.0
+setup_replay = ""
