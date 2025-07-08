@@ -10062,7 +10062,11 @@ func _process(delta: float) -> void:
 		var dir = Vector2.ZERO;
 		
 		if (doing_replay and replay_timer > next_replay and !replay_paused):
-			do_one_replay_turn();
+			if (unit_test_mode):
+				for i in range(10):
+					do_one_replay_turn();
+			else:
+				do_one_replay_turn();
 			update_info_labels();
 		
 		if (won and Input.is_action_just_pressed("ui_accept")):
