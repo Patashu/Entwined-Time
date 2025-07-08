@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -19,10 +19,8 @@ tile_data = PoolIntArray( 196610, 2, 0, 196612, 8, 0, 262146, 1, 0, 262148, 7, 0
 script = ExtResource( 2 )
 level_name = "Blue Ghost"
 level_author = "Sandra53"
-level_replay = ""
+level_replay = "Blue Ghost$mturn=40$dwxaxzwxzxzxwxdxaxzwxaxzdxzzwxaxzzasxdzdxzsdwxzxzdxwzxzzzxaxs"
 heavy_max_moves = 4.0
 light_max_moves = 4.0
-clock_turns = ""
 target_sky = Color( 0.247059, 0.537255, 0.572549, 1 )
 target_track = 2.0
-setup_replay = ""
