@@ -169,8 +169,8 @@ enum Anim {
 
 enum TimeColour {
 	Gray,
-	Purple,
-	Blurple,
+	Crimson,
+	Teal,
 	Magenta,
 	Red,
 	Blue,
@@ -178,7 +178,7 @@ enum TimeColour {
 	Void,
 	Cyan,
 	Orange,
-	Yellow,
+	Purple,
 	White,
 }
 
@@ -659,7 +659,12 @@ func load_game():
 	#v19.5
 	if (!save_file.has("version") or save_file["version"] < 2):
 		savefix("Acrobatics? [VAR1]", "Isometric Exercise")
+		savefix("The Yellow Pit", "The Purple Pit")
+		savefix("The Yellow Pit (Remix)", "The Purple Pit (Remix)")
 		save_file["version"] = 2;
+		
+	savefix("The Yellow Pit", "The Purple Pit")
+	savefix("The Yellow Pit (Remix)", "The Purple Pit (Remix)")
 
 func savefix(before: String, after: String) -> void:
 	if (save_file.has("levels") and save_file["levels"].has(before) and !save_file["levels"].has(after)):
@@ -2326,7 +2331,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Checkpoint Pit")
 	level_filenames.push_back("The Greenish Pit")
 	level_filenames.push_back("The Voidish Pit")
-	level_filenames.push_back("The Yellow Pit")
+	level_filenames.push_back("The Purple Pit")
 	level_filenames.push_back("The Crate Pit-")
 	level_filenames.push_back("Bad Widget Pit")
 	level_filenames.push_back("The Falling Pit")
@@ -3919,11 +3924,11 @@ Tiles.ColourMagenta: TimeColour.Magenta,
 Tiles.ColourGray: TimeColour.Gray,
 Tiles.ColourGreen: TimeColour.Green,
 Tiles.ColourVoid: TimeColour.Void,
-Tiles.ColourPurple: TimeColour.Purple,
-Tiles.ColourBlurple: TimeColour.Blurple,
+Tiles.ColourPurple: TimeColour.Crimson,
+Tiles.ColourBlurple: TimeColour.Teal,
 Tiles.ColourCyan: TimeColour.Cyan,
 Tiles.ColourOrange: TimeColour.Orange,
-Tiles.ColourYellow: TimeColour.Yellow,
+Tiles.ColourYellow: TimeColour.Purple,
 Tiles.ColourWhite: TimeColour.White,
 Tiles.ColourNative: -1
 }
@@ -8336,27 +8341,27 @@ func time_passes(chrono: int) -> void:
 			#AD06: Characters are Purple, other actors are Gray. (But with time colours you can make your own arbitrary rules!
 	#		Red: Time passes only when red moves forward.
 	#		Blue: Time passes only when blue moves forward.
-	#		Purple: The default colour of Heavy. Time passes except when Heavy is undoing.
-	#		Blurple: The default colour of Light. Time passes except when Light is undoing.
+	#		Crimson - was Purple: The default colour of Heavy. Time passes except when Heavy is undoing.
+	#		Teal - was Blurple: The default colour of Light. Time passes except when Light is undoing.
 	#		Gray: The default unrendered colour of non-character actors. Time passes when a character moves forward and doesn't when a character undoes.
 	#		Green: Time always passes, AND undo events are not generated/stored for this actor, AND if a green character takes a turn and no events are made, turn is not incremented. (So, having actor be green is equivalent to a no-time-shenanigans version of Entwined Time where time just always moves forward and you need to meta-undo to claw it back.) (Alternatively, I might have turns work as normal but there's a sentinel value for 'no turns, no timeline' like 100, since -1 actually will mean something)
 	#		Void: Time always passes AND time passes after a meta-undo AND undo events AND meta undo events are not generated/stored for this actor, AND if a void actor takes a turn and no events are made, turn/meta-turn is not incremented. (In the main campaign this will probably only be used for the void cuckoo clock in the final level.)
 	#		Magenta: Time always passes.
 	#		Orange: Time passes if Red is moving or undoing.
 	#		Cyan: Time passes if Blue is moving or undoing.
-	#		Yellow: Time passes if a character is undoing.
+	#		Purple - was Yellow: Time passes if a character is undoing.
 	#		White: Time never passes.
 			match actor.time_colour:
 				TimeColour.Gray:
 					if (chrono == Chrono.MOVE):
 						time_actors.push_back(actor);
-				TimeColour.Purple:
+				TimeColour.Crimson:
 					if (chrono == Chrono.MOVE):
 						time_actors.push_back(actor);
 					else:
 						if (!heavy_selected):
 							time_actors.push_back(actor);
-				TimeColour.Blurple:
+				TimeColour.Teal:
 					if (chrono == Chrono.MOVE):
 						time_actors.push_back(actor);
 					else:
@@ -8380,7 +8385,7 @@ func time_passes(chrono: int) -> void:
 				TimeColour.Orange:
 					if heavy_selected:
 						time_actors.push_back(actor);
-				TimeColour.Yellow:
+				TimeColour.Purple:
 					if (chrono == Chrono.CHAR_UNDO):
 						time_actors.push_back(actor);
 			# White: No

@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,11 +17,10 @@ tile_data = PoolIntArray( 0, 43, 0, 1, 43, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "The Yellow Pit (Remix)"
+level_name = "The Purple Pit (Remix)"
 level_author = "Slabdrill"
-level_replay = "The Yellow Pit (Remix)$mturn=7$wdxszdzxz"
+level_replay = "The Purple Pit (Remix)$mturn=7$wdxszdzxz"
 heavy_max_moves = 4.0
 light_max_moves = 4.0
-clock_turns = ""
 target_sky = Color( 0.215686, 0.160784, 0.309804, 1 )
 target_track = 6.0
