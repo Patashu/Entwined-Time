@@ -243,6 +243,11 @@ _global_script_classes=[ {
 "class": "TransitionToTheEnd",
 "language": "GDScript",
 "path": "res://TransitionToTheEnd.gd"
+}, {
+"base": "Node",
+"class": "TurnToggler",
+"language": "GDScript",
+"path": "res://TurnToggler.gd"
 } ]
 _global_script_class_icons={
 "AccessibleSpinBox": "",
@@ -291,7 +296,8 @@ _global_script_class_icons={
 "TimelineSprite": "",
 "TimelineViewer": "",
 "TitleScreen": "",
-"TransitionToTheEnd": ""
+"TransitionToTheEnd": "",
+"TurnToggler": ""
 }
 
 [application]

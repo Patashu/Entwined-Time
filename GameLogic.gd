@@ -164,6 +164,7 @@ enum Anim {
 	dust, #30
 	time_bubble, #31
 	nonce, #32
+	turn_toggle, #33
 }
 
 enum TimeColour {
@@ -1264,6 +1265,12 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlock, Color(1, 1, 1, 0.8));
 		terrainmap.tile_set.tile_set_modulate(Tiles.GlassBlockCracked, Color(1, 1, 1, 0.8));
 		terrainmap.tile_set.tile_set_texture(Tiles.NoUndo, preload("res://assets/one_undo.png"));
+		if (meta_turn % 2 == 0):
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenOdd, preload("res://assets/turn_toggle_5.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenEven, preload("res://assets/turn_toggle_1.png"));
+		else:
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenOdd, preload("res://assets/turn_toggle_1.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenEven, preload("res://assets/turn_toggle_5.png"));
 	else:
 		terrainmap.tile_set.tile_set_texture(Tiles.LightGoal, preload("res://assets/light_goal.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.HeavyGoal, preload("res://assets/heavy_goal.png"));
@@ -1279,6 +1286,8 @@ func tile_changes(level_editor: bool = false) -> void:
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardLife, preload("res://assets/phase_board_life.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardDeath, preload("res://assets/phase_board_death.png"));
 		terrainmap.tile_set.tile_set_texture(Tiles.PhaseBoardVoid, preload("res://assets/phase_board_void.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenOdd, preload("res://assets/turn_toggle_5.png"));
+		terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenEven, preload("res://assets/turn_toggle_1.png"));
 	
 func assert_tile_enum() -> void:
 	for i in range (Tiles.size()):
@@ -2797,6 +2806,8 @@ var has_gravity : bool = false;
 var has_no_move : bool = false;
 var has_anchor : bool = false;
 var has_terrain_lock : bool = false;
+var has_turn_toggle : bool = false;
+var turn_toggler : TurnToggler = null;
 var limited_undo_sprites = {};
 
 func ready_map() -> void:
@@ -2915,6 +2926,7 @@ func ready_map() -> void:
 	has_no_move = false;
 	has_anchor = false;
 	has_terrain_lock = false;
+	has_turn_toggle = false;
 	limited_undo_sprites.clear();
 	
 	if (any_layer_has_this_tile(Tiles.NoMove)):
@@ -3146,6 +3158,14 @@ func ready_map() -> void:
 			
 		if (any_layer_has_this_tile(Tiles.TerrainLock)):
 			has_terrain_lock = true;
+			
+		if (any_layer_has_this_tile(Tiles.PhaseWallGreenOdd)):
+			has_turn_toggle = true;
+		elif (any_layer_has_this_tile(Tiles.PhaseWallGreenEven)):
+			has_turn_toggle = true;
+		if (has_turn_toggle):
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenOdd, preload("res://assets/turn_toggle_5.png"));
+			terrainmap.tile_set.tile_set_texture(Tiles.PhaseWallGreenEven, preload("res://assets/turn_toggle_1.png"));
 	
 	calculate_map_size();
 	make_actors();
@@ -6993,6 +7013,10 @@ func finish_animations(chrono: int) -> void:
 	heavytimeline.finish_animations();
 	lighttimeline.finish_animations();
 
+	if (is_instance_valid(turn_toggler)):
+		turn_toggler.timer = turn_toggler.timer_max;
+		turn_toggler._process(0);
+
 func update_ghosts() -> void:
 	for ghost in ghosts:
 		ghost.queue_free();
@@ -8731,6 +8755,9 @@ func time_passes(chrono: int) -> void:
 			if actor.actorname == Actor.Name.Boulder:
 				actor.boulder_moved_horizontally_this_turn = false;
 	
+	if (has_turn_toggle):
+		add_to_animation_server(null, [Anim.turn_toggle, meta_turn])
+	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?
 	# 29th Feb 2024: not actually sure I want 'tiebreak by x' because then the esoterica of 'does light or heavy fall first?' is now
@@ -9261,6 +9288,14 @@ func handle_global_animation(animation: Array) -> void:
 				sprite.centered = false;
 				sprite.frame_timer_max = 0.08;
 				overactorsparticles.add_child(sprite);
+				
+	if (animation[0] == Anim.turn_toggle):
+		if (is_instance_valid(turn_toggler)):
+			turn_toggler.timer = turn_toggler.timer_max;
+			turn_toggler._process(0);
+		turn_toggler = TurnToggler.new();
+		turn_toggler.meta_turn = meta_turn;
+		add_child(turn_toggler);
 
 func update_animation_server(skip_globals: bool = false) -> void:
 	# don't interrupt ongoing animations
@@ -9287,7 +9322,7 @@ func update_animation_server(skip_globals: bool = false) -> void:
 	var animations = animation_server.pop_front();
 	for animation in animations:
 		if animation[0] == null:
-			if !skip_globals:
+			if !skip_globals or animation[1][0] == Anim.turn_toggle:
 				handle_global_animation(animation[1]);
 		else:
 			animation[0].animations.push_back(animation[1]);
