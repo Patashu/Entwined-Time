@@ -254,6 +254,7 @@ func _communitylevelsbutton_pressed() -> void:
 		return;
 	
 	var stylebox = preload("res://heavy_styleboxtexture.tres")
+	holder.add_stylebox_override("normal", preload("res://default_styleboxtexture.tres"));
 	in_community_puzzles = !in_community_puzzles;
 	searchbox.visible = in_community_puzzles;
 	if (in_community_puzzles):
@@ -427,7 +428,7 @@ func prepare_chapter() -> void:
 	community_levels_landing_state = -1;
 	
 	var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];
-	var requires_advanced_levels = (chapter == 2);
+	var requires_advanced_levels = (!in_community_puzzles and chapter == 2);
 	if (requires_advanced_levels):
 		holder.add_stylebox_override("normal", preload("res://dark_styleboxtexture.tres"));
 	else:

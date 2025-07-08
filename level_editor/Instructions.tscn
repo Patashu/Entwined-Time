@@ -16,7 +16,7 @@ theme = ExtResource( 2 )
 custom_styles/normal = ExtResource( 1 )
 text = "Level Editor Instructions:
 (It requires keyboard + mouse, sorry.)
-* Go to the puzzle you want to make an edit of and enter the Level Editor, or use 'New Level', or 'Paste Level'.
+* Go to the puzzle you want to make an edit of and enter the Level Editor, or use 'Clear Level', or 'Paste Level'.
 * Left click to draw, right click to eyedrop currently highlighted tile.
 * You can open Tab to select any tile (only shows tiles in chapters you've unlocked).
 * Scrollwheel moves between adjacent tiles (as ordered by Tab). 
