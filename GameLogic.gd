@@ -2009,6 +2009,10 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(0);
 	level_filenames.push_back("Vine [VAR1]")
 	level_filenames.push_back("Mechanical Arm")
+	level_filenames.push_back("Anchorbatics")
+	level_filenames.push_back("Bypass")
+	level_filenames.push_back("Ambulance")
+	level_filenames.push_back("Return Points")
 	
 	chapter_names.push_back("Chapter M - Mimics (WIP)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2035,6 +2039,24 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Dead Ringer [VAR1]")
 	level_filenames.push_back("Kickflip")
 	level_filenames.push_back("Obtuse Desync")
+	
+	chapter_names.push_back("Chapter P - Purple...? (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Meet Flight")
+	level_filenames.push_back("Meet Purple")
+	level_filenames.push_back("Flight and Stomp")
+	level_filenames.push_back("The Other Pit")
+	level_filenames.push_back("The Bridge is Green and Purple")
+	level_filenames.push_back("Floating Existence")
+	level_filenames.push_back("Primer")
+	level_filenames.push_back("Meet White")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("Primer [VAR1]")
 	
 	chapter_names.push_back("The Cutting Room Floor (Unused Puzzles)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2261,6 +2283,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Gravitational Pit")
 	level_filenames.push_back("Lazarus Syndrome")
 	level_filenames.push_back("Springlock System")
+	level_filenames.push_back("Dead Air [Skit 1]")	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2685,6 +2708,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Kelrn Ocryt")
 	level_filenames.push_back("Normality")
 	level_filenames.push_back("Maneuver")
+	level_filenames.push_back("Maneuver [VAR1]")
+	level_filenames.push_back("Abnormality")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 393219, 3, 14, 3, 4, 14, 458755, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 393219, 11, 14, 3, 12, 14, 458755, 13, 14, 196614, 14, 14, 524292, 65536, 14, 262145, 65537, 32, 0, 65538, 14, 65538, 65539, 14, 65539, 65540, 14, 65540, 65541, 198, 0, 65542, 198, 0, 65543, 198, 0, 65544, 198, 0, 65545, 198, 0, 65546, 14, 65538, 65547, 14, 65539, 65548, 14, 65540, 65549, 7, 0, 65550, 14, 262145, 131072, 14, 655362, 131073, 14, 196614, 131074, 14, 720899, 131075, 14, 131075, 131076, 14, 786435, 131077, 14, 196614, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 196614, 131081, 14, 196614, 131082, 14, 720899, 131083, 14, 131075, 131084, 14, 786435, 131085, 14, 196614, 131086, 14, 655364 )
+
+[node name="@@380" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65543, 3, 0 )
+
+[node name="@@381" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65541, 2, 0, 65543, 1, 0, 65545, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Bypass"
+level_author = "Green"
+level_replay = "Bypass$mturn=114$ddaaxaaxzxdaxzdxzzzxdxzaaxzzzzdxdxzdxdxzxzxaxzxaxzzxddxddxzxadxzaxzzzxzzaxzxzxddxddxzxaxzdxzzzdaxadxdxzzxzxzaddxzdxzzzxzdxdxdxdaxzzxzzxzxdxdaxaxzzxzdxddxzxzxzxddxzxzzzxddxzaa"
+heavy_max_moves = 4.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

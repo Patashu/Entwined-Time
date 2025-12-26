@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 524292, 65536, 14, 262145, 65546, 14, 262145, 131072, 14, 262145, 131082, 14, 262145, 196608, 14, 262145, 196618, 14, 262145, 262144, 14, 262145, 262149, 14, 196609, 262154, 14, 262145, 327680, 14, 262145, 327682, 3, 0, 327683, 8, 0, 327685, 14, 262145, 327687, 2, 0, 327688, 3, 0, 327690, 14, 262145, 393216, 14, 327681, 393218, 14, 262148, 393221, 14, 327681, 393224, 14, 262148, 393226, 14, 327681 )
+
+[node name="@@11139" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327682, 43, 0, 327683, 43, 0, 327687, 43, 0, 327688, 43, 0 )
+
+[node name="@@11140" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327681, 1, 0, 327689, 7, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Meet Purple"
+level_author = "Plushloler"
+level_replay = "Meet Purple$mturn=29$wdxwaazwdddddxwzwxdxzaaaaaaaxdxszza"
+heavy_max_moves = 10.0
+light_max_moves = 10.0
+target_sky = Color( 0.219608, 0.133333, 0.321569, 1 )
+target_track = 0.0

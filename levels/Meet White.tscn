@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 262148, 4, 3, 0, 8, 14, 262148, 65538, 2, 0, 65542, 8, 0, 131074, 14, 262148, 131078, 14, 262148, 262144, 14, 262148, 262152, 14, 262148, 327681, 1, 0, 327687, 7, 0, 393218, 14, 262148, 393222, 14, 262148 )
+
+[node name="@@399" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 4, 68, 0, 65538, 68, 0, 65542, 68, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Meet White"
+level_author = "Plushloler"
+level_replay = "Meet White$mturn=90$ddxawxdxzaxzxwxwxzxzxasxzzxsxwdxzxzaxzxzzaxasxasxaaxzxzxdxaxzzwxzzzzzxzxzwxzxzxasxsaxzzszdsxssddxzzwxzzzzxzdxaxwxzzxzzdxzzxzsxssddddd"
+heavy_max_moves = 3.0
+light_max_moves = 7.0
+clock_turns = ""
+target_sky = Color( 0.819608, 0.760784, 0.698039, 1 )
+target_track = 5.0
+setup_replay = ""

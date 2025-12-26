@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 1, 7, 0, 4, 8, 0, 65536, 14, 262148 )
+
+[node name="@@10706" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 4, 43, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Meet Flight"
+level_author = "Plushloler"
+level_replay = "Meet Flight$mturn=3$xaaa"
+heavy_max_moves = 0.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.219608, 0.133333, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""

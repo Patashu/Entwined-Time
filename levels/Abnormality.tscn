@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 3, 7, 0, 65539, 1, 0, 196611, 123, 0, 262147, 123, 0, 327680, 2, 0, 327681, 8, 0, 393216, 14, 196613, 393217, 14, 196615 )
+
+[node name="@@1866" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327680, 39, 0, 327681, 39, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Abnormality"
+level_author = "Skai"
+level_replay = "Abnormality$mturn=76$xwxdwxddzaaaxwxzzssxzdwdzaawaxzzaxzzaxzssxzzzaawaxzzaxzzaxzssxzzzaaaaxzzawxzxzaxwxzxzzzzsssxzzxzzz"
+heavy_max_moves = 4.0
+light_max_moves = 3.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 9.0
+setup_replay = ""

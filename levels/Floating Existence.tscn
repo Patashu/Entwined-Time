@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 393217, 8, 0, 393227, 2, 0, 458752, 14, 2, 458753, 14, 3, 458754, 14, 3, 458755, 14, 4, 458761, 14, 2, 458762, 14, 3, 458763, 14, 3, 458764, 14, 4, 524288, 14, 131074, 524289, 14, 131075, 524290, 14, 131075, 524291, 14, 131076, 524297, 14, 131074, 524298, 14, 131075, 524299, 14, 131075, 524300, 14, 131076 )
+
+[node name="@@7082" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 1, 7, 0, 11, 1, 0, 393217, 43, 0, 393227, 35, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Floating Existence"
+level_author = "Plushloler"
+level_replay = "Floating Existence$mturn=82$xdddddddddxwaaxzzzzzzzzzxzzzwxdxzazxaxswxzxzxaxswxdzdxzxzzzxswxdxzxaxswxzxzxazzxswxdxzxaxsxzwdxzzzzzzxaaaaaaaaaas"
+heavy_max_moves = 6.0
+light_max_moves = 14.0
+clock_turns = ""
+target_sky = Color( 0.219608, 0.133333, 0.321569, 1 )
+target_track = 4.0
+setup_replay = ""
