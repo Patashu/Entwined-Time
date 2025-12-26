@@ -1341,7 +1341,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("PushingIt")
 	level_filenames.push_back("Wall")
 	level_filenames.push_back("Tall")
-	level_filenames.push_back("Interference")
+	level_filenames.push_back("Down the Tubes")
 	level_filenames.push_back("Braid")
 	level_filenames.push_back("TheFirstPit")
 	level_filenames.push_back("CallACab")
@@ -2042,6 +2042,7 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Interference")
 	level_filenames.push_back("Lightning Round")
 	level_filenames.push_back("Lightning Snake")
 	level_filenames.push_back("Cold Roommates")
