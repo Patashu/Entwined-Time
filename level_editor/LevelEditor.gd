@@ -1105,7 +1105,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.LightMimic:
 			text = "Light Mimic:  Hat. (Attaches to an actor entering or starting in the tile below.) After Light moves, all Light Mimics attempt the same move too. (Mimics don't activate time crystals, goals, checkpoints and don't care about one rewind/no rewind/fuzz.)"
 		Tiles.GhostFog:
-			text = "Ghost Fog: If an Actor fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
+			text = "Ghost Fog: If an Actor is strong enough but fails to (not due to gravity) push into this tile, the Actor still moves (thus merging with any Actors already on this tile)."
 		Tiles.Eclipse:
 			text = "Eclipse: If you make a move or rewind from this tile, time does not pass."
 		Tiles.PhaseBoardRed:
