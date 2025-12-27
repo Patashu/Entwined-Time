@@ -7,19 +7,25 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65538, 196, 0, 65539, 196, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 196, 0, 131074, 196, 0, 131075, 196, 0, 131076, 14, 262145, 196608, 14, 262145, 196609, 7, 0, 196611, 1, 0, 196612, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 655364 )
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65538, 196, 0, 65539, 196, 0, 65540, 14, 262145, 131072, 14, 262145, 131073, 196, 0, 131074, 196, 0, 131075, 196, 0, 131076, 14, 327681, 196608, 14, 262145, 196609, 7, 0, 196611, 1, 0, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196615 )
 
-[node name="@@1149" type="TileMap" parent="."]
+[node name="@@315" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
 tile_data = PoolIntArray( 131074, 29, 0, 196609, 2, 0, 196611, 8, 0 )
 
+[node name="@@316" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 196611, 202, 0 )
+
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Lightning Round"
 level_author = "Patashu"
-level_replay = "Lightning Round$mturn=16$xaxdxzxzxwxdawxdxdzdxzzxzd"
+level_replay = "Lightning Round$mturn=20$xawxddxzzxzzxwxdawxdxdzdxzzxzd"
 heavy_max_moves = 4.0
 light_max_moves = 2.0
 clock_turns = ""

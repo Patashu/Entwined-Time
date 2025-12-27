@@ -2400,6 +2400,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Wall (Insight) [VAR1]")
 	level_filenames.push_back("Hopscorch [VAR2]")
 	level_filenames.push_back("Timeless Bridge [VAR2]")
+	level_filenames.push_back("Lightning Round-")
 	level_filenames.push_back("Slippery Glass [VAR2]")
 	level_filenames.push_back("Over-Destination [VAR1]")
 	level_filenames.push_back("Spelunking-- [VAR3]")

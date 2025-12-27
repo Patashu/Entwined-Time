@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 524292, 65536, 14, 262145, 65537, 196, 0, 65538, 196, 0, 65539, 196, 0, 65540, 14, 327681, 131072, 14, 262145, 131073, 196, 0, 131074, 196, 0, 131075, 196, 0, 131076, 66, 0, 196608, 14, 262145, 196609, 7, 0, 196611, 1, 0, 196612, 66, 0, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196615 )
+
+[node name="@@387" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 131074, 29, 0, 196609, 2, 0, 196611, 8, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Lightning Round? (Remix)"
+level_author = "Slabdrill"
+level_replay = "Lightning Round? (Remix)$mturn=22$xawxddxzxwxzxzzzxdxdxwxdxzzxazazzd"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.133333, 0.235294, 0.321569, 1 )
+target_track = 0.0
+setup_replay = ""
