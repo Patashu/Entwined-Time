@@ -4,9 +4,9 @@ class_name TimeBubble
 var timer = 0;
 var time_colour = 5;
 # PERF: static/global/const or something
-var time_colours = [Color("808080"), Color("FF2A00"), Color("26C8FF"), Color("FF00DC"),
+var time_colours = [Color("808080"), Color("B76B5B"), Color("5F8FBF"), Color("FF00DC"),
 Color("FF0000"), Color("0094FF"), Color("A9F05F"), Color("404040"),
-Color("00FFFF"), Color("FF6A00"), Color("5400FF"), Color("FFFFFF")];
+Color("00FFFF"), Color("FF6A00"), Color("7A00CC"), Color("FFFFFF")];
 var label = null;
 var flash_timer = 0.0;
 var flash_timer_max = 0.0;
