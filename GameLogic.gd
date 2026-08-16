@@ -396,6 +396,7 @@ enum Tiles {
 	RepairStationBlue, #201
 	OneMoveGreen, #202
 	TerrainLock, #203
+	GreenBomb, #204
 }
 var voidlike_tiles : Array = [];
 
@@ -3237,6 +3238,8 @@ func ready_map() -> void:
 			has_triggers = true;
 		elif (any_layer_has_this_tile(Tiles.Bomb)):
 			has_triggers = true;
+		elif (any_layer_has_this_tile(Tiles.GreenBomb)):
+			has_triggers = true;
 			
 		if (has_triggers):
 			trigger_rotation();
@@ -5161,7 +5164,7 @@ func fuzz_rotation() -> void:
 	
 func trigger_rotation() -> void:
 	all_rotation([Tiles.GlassScrew]);
-	all_rotation([Tiles.Bomb]);
+	all_rotation([Tiles.Bomb, Tiles.GreenBomb]);
 	
 func all_rotation(candidates: Array) -> void:
 	var floorboard_counts = {};
@@ -5189,6 +5192,8 @@ func set_cellv_maybe_rotation(id: int, tile: Vector2, layer: int) -> void:
 		set_cellv_rotation(id, tile, layer, [Tiles.Fuzz]);
 	elif id == Tiles.Bomb:
 		set_cellv_rotation(id, tile, layer, [Tiles.Bomb]);
+	elif id == Tiles.GreenBomb:
+		set_cellv_rotation(id, tile, layer, [Tiles.GreenBomb]);
 	elif id == Tiles.GlassScrew:
 		set_cellv_rotation(id, tile, layer, [Tiles.GlassScrew]);
 	else:
@@ -5353,7 +5358,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 			var terrain = terrain_in_tile(pos, actor, chrono);
 			for i in range(layer, -1, -1):
 				var tile_i = terrain[i];
-				if (tile_i == Tiles.GlassScrew or tile_i == Tiles.Bomb):
+				if (tile_i == Tiles.GlassScrew or tile_i == Tiles.Bomb or tile_i == Tiles.GreenBomb):
 					detonate_trigger(actor, pos, i, hypothetical, green_terrain, chrono, -1, is_trigger, is_relative);
 					break
 		
@@ -5376,23 +5381,27 @@ chrono: int, new_tile: int, is_trigger: bool, is_relative: bool) -> void:
 	var terrain_layer = terrain_layers[layer];
 	var old_tile = terrain_layer.get_cellv(pos);
 	# First always break the trigger.
-	maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
+	# If it's a green bomb, upgrade the break to green.
+	var terrain_for_self_break = green_terrain;
+	if (old_tile == Tiles.GreenBomb and terrain_for_self_break < Greenness.Green):
+		terrain_for_self_break = Greenness.Green;
+	maybe_change_terrain(actor, pos, layer, hypothetical, terrain_for_self_break, chrono, -1, -2, -1, true, is_relative);
 	# Then, only non-bombs or chain reactions break an extra tile for the initial break.
 	# (Have to check terrain now because another trigger might have changed it in the above line.)
-	if (is_trigger or old_tile != Tiles.Bomb):
+	if (is_trigger or (old_tile != Tiles.Bomb and old_tile != Tiles.GreenBomb)):
 		var terrain = terrain_in_tile(pos, actor, chrono);
 		for k in range(terrain.size()):
 			var tile_k = terrain[k];
 			if (tile_k != -1 and tile_k != Tiles.NoUndo and tile_k != Tiles.OneUndo):
 				maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
 				break;
-	if (old_tile == Tiles.Bomb):
+	if (old_tile == Tiles.Bomb or old_tile == Tiles.GreenBomb):
 		#on all orthogonal four tiles, if they contain a bomb, blow up that bomb too
 		for d in directions:
 			var terrain_d = terrain_in_tile(pos+d, actor, chrono);
 			for d1 in range(terrain_d.size()):
 				var tile_d1 = terrain_d[d1];
-				if (tile_d1 == Tiles.Bomb):
+				if (tile_d1 == Tiles.Bomb or tile_d1 == Tiles.GreenBomb):
 					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1, true, is_relative);
 	detonate_trigger_counter -= 1;
 

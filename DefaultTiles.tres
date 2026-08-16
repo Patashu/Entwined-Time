@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=489 format=2]
+[gd_resource type="TileSet" load_steps=490 format=2]
 
 [ext_resource path="res://assets/light_goal.png" type="Texture" id=1]
 [ext_resource path="res://assets/key.png" type="Texture" id=2]
@@ -454,6 +454,7 @@
 [ext_resource path="res://assets/blue_glass_block.png" type="Texture" id=452]
 [ext_resource path="res://assets/one_move_green.png" type="Texture" id=453]
 [ext_resource path="res://assets/terrain_lock.png" type="Texture" id=454]
+[ext_resource path="res://assets/green_bomb.png" type="Texture" id=455]
 
 [sub_resource type="AnimatedTexture" id=1]
 frames = 3
@@ -4001,3 +4002,17 @@ frame_7/delay_sec = 0.0
 203/shape_one_way_margin = 0.0
 203/shapes = [  ]
 203/z_index = 0
+204/name = "GreenBomb"
+204/texture = ExtResource( 455 )
+204/tex_offset = Vector2( 0, 0 )
+204/modulate = Color( 1, 1, 1, 1 )
+204/region = Rect2( 0, 0, 24, 24 )
+204/tile_mode = 0
+204/occluder_offset = Vector2( 12, 12 )
+204/navigation_offset = Vector2( 12, 12 )
+204/shape_offset = Vector2( 0, 0 )
+204/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+204/shape_one_way = false
+204/shape_one_way_margin = 0.0
+204/shapes = [  ]
+204/z_index = 0

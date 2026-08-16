@@ -207,6 +207,7 @@ enum Tiles {
 	RepairStationBlue, #201
 	OneMoveGreen, #202
 	TerrainLock, #203
+	GreenBomb, #204
 }
 
 onready var gamelogic = get_tree().get_root().find_node("LevelScene", true, false).gamelogic;
@@ -524,6 +525,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.FloorboardsBlue)
 		picker_array.append(Tiles.RepairStationBlue)
 		picker_array.append(Tiles.TerrainLock)
+		picker_array.append(Tiles.GreenBomb)
 	
 	for i in range(picker_array.size()):
 		var x = i % 21;
@@ -1252,6 +1254,8 @@ func tooltip_for_tile(tile: int) -> String:
 			text = "One Move Green: As One Move, but greenly."
 		Tiles.TerrainLock:
 			text = "Terrain Lock: Terrain cannot be created or destroyed here."
+		Tiles.GreenBomb:
+			text = "Green Bomb: A bomb that destroys itself greenly. (Doesn't upgrade the destruction of other things to greenly, and is cross-compatible both ways with regular Bombs.)"
 	return text;
 	
 func picker_tooltip() -> void:
