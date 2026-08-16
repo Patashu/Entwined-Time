@@ -8685,16 +8685,23 @@ func time_passes(chrono: int) -> void:
 				continue;
 			
 			# multi-falling stack check
-			if (i < (size - 1)):
-				var next_actor = gravity_actors[i+1];
-				# BUG: All other actors in this tile might not be immediately adjacent, so we have to check until pos.y changes...
-				if actor.pos != next_actor.pos:
-					clear_just_moveds = true;
-				else:
+			# All other actors in this tile might not be immediately adjacent, so we have to check until pos.y changes...
+			clear_just_moveds = true;
+			for j in range(1, size-i):
+				var next_actor = gravity_actors[i+j];
+				if (actor.pos.y != next_actor.pos.y):
+					break;
+				if actor.pos == next_actor.pos:
+					clear_just_moveds = false;
 					actor.just_moved = true;
 					just_moveds.append(actor);
-			else:
-				clear_just_moveds = true;
+					if (j > 1):
+						# and when we do find one, we have to make sure it's next
+						# (then it will look for and chain to the next also in this tile and so on)
+						var temp = gravity_actors[i+1];
+						gravity_actors[i+1] = gravity_actors[i+j];
+						gravity_actors[i+j] = temp;
+					break;
 			
 			var gravity_dir = calculate_gravity_for(actor, chrono, actor.pos);
 			if (gravity_dir == Vector2.ZERO):
