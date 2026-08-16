@@ -7,27 +7,28 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 14, 196613, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196615, 65536, 28, 0, 65537, 33, 0, 65538, 6, 0, 65539, 6, 0, 65540, 6, 0, 65541, 6, 0, 65542, 33, 0, 65543, 25, 0, 131072, 28, 0, 131074, 6, 0, 131075, 6, 0, 131076, 6, 0, 131077, 6, 0, 131079, 25, 0, 196608, 28, 0, 196610, 6, 0, 196611, 6, 0, 196612, 6, 0, 196613, 6, 0, 196615, 25, 0, 262144, 28, 0, 262145, 1, 0, 262146, 6, 0, 262147, 6, 0, 262148, 6, 0, 262149, 6, 0, 262150, 7, 0, 262151, 25, 0, 262157, 32, 0, 327680, 14, 2, 327681, 14, 4, 327682, 6, 0, 327683, 6, 0, 327684, 6, 0, 327685, 6, 0, 327686, 14, 2, 327687, 14, 4, 327693, 14, 196609, 393216, 14, 65538, 393217, 14, 65540, 393218, 6, 0, 393219, 6, 0, 393220, 6, 0, 393221, 6, 0, 393222, 14, 65538, 393223, 14, 65540, 393229, 14, 262145, 458752, 14, 131074, 458753, 14, 786435, 458754, 14, 196614, 458755, 14, 196614, 458756, 14, 196614, 458757, 14, 196614, 458758, 14, 720899, 458759, 14, 131076, 458765, 14, 327681 )
+tile_data = PoolIntArray( 2, 14, 196613, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 196614, 13, 14, 196614, 14, 14, 196614, 15, 14, 196614, 16, 14, 196614, 17, 14, 196614, 18, 14, 196614, 19, 14, 196614, 20, 14, 196614, 21, 14, 196615, 65544, 28, 0, 65545, 33, 0, 65546, 6, 0, 65547, 6, 0, 65548, 6, 0, 65549, 6, 0, 65551, 25, 0, 131080, 28, 0, 131082, 6, 0, 131083, 6, 0, 131084, 6, 0, 131085, 6, 0, 131087, 25, 0, 196616, 28, 0, 196618, 6, 0, 196619, 6, 0, 196620, 6, 0, 196621, 6, 0, 196623, 25, 0, 262146, 32, 0, 262152, 28, 0, 262153, 1, 0, 262154, 6, 0, 262155, 6, 0, 262156, 6, 0, 262157, 6, 0, 262158, 7, 0, 262159, 25, 0, 262165, 32, 0, 327682, 14, 196609, 327688, 14, 2, 327689, 14, 4, 327690, 6, 0, 327691, 6, 0, 327692, 6, 0, 327693, 6, 0, 327694, 14, 2, 327695, 14, 4, 327701, 14, 196609, 393218, 14, 262145, 393224, 14, 65538, 393225, 14, 65540, 393226, 6, 0, 393227, 6, 0, 393228, 6, 0, 393229, 6, 0, 393230, 14, 65538, 393231, 14, 65540, 393237, 14, 262145, 458752, -2, 0, 458754, 14, 327681, 458760, 14, 131074, 458761, 14, 786435, 458762, 14, 196614, 458763, 14, 196614, 458764, 14, 196614, 458765, 14, 196614, 458766, 14, 720899, 458767, 14, 131076, 458773, 14, 327681, 458775, -2, 0 )
 
-[node name="@@3089" type="TileMap" parent="."]
+[node name="@@9712" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 196611, 38, 0, 196612, 38, 0, 262147, 38, 0, 262148, 38, 0 )
+tile_data = PoolIntArray( 65538, 28, 0, 65557, 25, 0, 131074, 28, 0, 131093, 25, 0, 196610, 28, 0, 196619, 38, 0, 196620, 38, 0, 196629, 25, 0, 262146, 28, 0, 262155, 38, 0, 262156, 38, 0, 262165, 25, 0 )
 
-[node name="@@3090" type="TileMap" parent="."]
+[node name="@@9713" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 131075, 2, 0, 131076, 8, 0, 196611, 15, 0, 196612, 15, 0, 262147, 15, 0, 262148, 15, 0 )
+tile_data = PoolIntArray( 131083, 2, 0, 131084, 8, 0, 196619, 15, 0, 196620, 15, 0, 262155, 15, 0, 262156, 15, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Woodskip"
 level_author = "Slabdrill"
-level_replay = "Woodskip$mturn=210$xdsaaxdxwasxddxdddsxaxzzzzzzzzxsxzzwxzxddxwxzzaxwaxzxzxzxzzsxddxawwxzxzzdxssssawxsaaxzxzzzzzzxzzzzzzzaxwzwzwxdsxzxsddwxsaxzxzxsaxsxawddsdwxzxzzxaxdsxzxsxdaxzxzxsxdaxzxzzzxzzaxzaxawwxzxzzasxaxzzzzzxwxzxwxzzzzzzzzzxwxzzxzzzxsswxwdxzzzdssxwdxzxzxzdsxddxzxzxwdsxddxzzwxzsaxzzzzssddxzzzzzzzzzaaxd"
+level_replay = "Woodskip$mturn=433$asdxdsxzdwdxzxzzzaxzaasddxzdxzzwdxdwxzzxzzzzxaaaxzsxzzzzzzsxwdxzxwxwxzzzxdxdssxzzdwddxzzxzxzzddddaxsawwxaaxzzdwaaxwwxzzzzzxzzzxdssawwxaaxzzzzzzzzaxzzxaxzxzzzddwwxaaxzzzzxsxsddaxzxzzzzddddxwxzzxzxzzssddwwxdxzzdxzzxwxzxzdswxdxzzzwaxzaaxssxzzxzzxaaaxassxzzxzzaxaaaxssxzzxzzaxaaaxssxzzxzzzzzssxzwwdxzzxzzzxzzzzzzzxaxdssxwwdxzzzwwxzxaxwsxzxzxdxwsxzxzzzzzzzzxzzssxaxddsxzxzxdxaxaxzsxzxzxdxaxaxzsxzzzxzzzsxwxaxzxzxswxaxzzxzzzxzxzzdddxwzxzxsxwaassdxdxzzzzzzzzwxzzddxzwxwxzaxwxzwxaxzddxwzwzwxdxzwzxzzxzzddxdxzdxdxzxzzxzzzzxwxzxzwxzxzxdxdddddwddxdxzzzxzdddddxdxzdxdxzdxdxzdxdxzxzzzzxzzzzzzsxzzzzzzxzdxddddd"
 heavy_max_moves = 22.0
 light_max_moves = 22.0
 clock_turns = ""
-target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_sky = Color( 0.317647, 0.25098, 0.145098, 1 )
 target_track = 5.0
+setup_replay = ""

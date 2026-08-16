@@ -2388,6 +2388,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Left Pit")
 	level_filenames.push_back("The Flipped Pit")
+	level_filenames.push_back("The Flipped Pit [VAR1]")
 	level_filenames.push_back("The Solo Pit")
 	level_filenames.push_back("The Steel Crate Pit")
 	level_filenames.push_back("The Green Fire Pit")
@@ -2450,6 +2451,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Carrying It [VAR1]-")
 	level_filenames.push_back("Tile Selector")
 	level_filenames.push_back("Uphill but there's fire")
+	level_filenames.push_back("Inline Expansion")
 	level_filenames.push_back("[SPEEDRUN] Snake Pit [VAR1]")
 	level_filenames.push_back("Rough Terrain [VAR1]")
 	level_filenames.push_back("Car Engine [VAR1]")
@@ -2458,6 +2460,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Snake Chute [VAR1]")
 	level_filenames.push_back("Ankh [VAR2]")
 	level_filenames.push_back("Ladderworld- (Glass Shortage)")
+	level_filenames.push_back("Conveyor-")
 	level_filenames.push_back("Crystalformer")
 	level_filenames.push_back("Swapper")
 	level_filenames.push_back("Acrobatics (Loop 2) [VAR1]")
@@ -2515,6 +2518,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Right Way In")
 	level_filenames.push_back("Orbital Drop [VAR1]")
 	level_filenames.push_back("Orbital Drop [VAR2]")
+	level_filenames.push_back("Permify-")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2534,6 +2538,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Rough Terrain [VAR3]")
 	level_filenames.push_back("Foot Wiggle [VAR5]")
 	level_filenames.push_back("Engine Room [VAR2]")
+	level_filenames.push_back("Permify- [VAR1]")
 	level_filenames.push_back("Friendship Paradox [VAR2]")
 	level_filenames.push_back("Elevator Pitch [VAR1]")
 	level_filenames.push_back("Elevator Pitch 4")
@@ -2676,6 +2681,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Inevitable Demise [VAR1]")
 	level_filenames.push_back("Magenta Flight [VAR2]")
 	level_filenames.push_back("The Withering Pit [VAR2]")
+	level_filenames.push_back("Graduation [VAR6]")
+	level_filenames.push_back("Joke---")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2730,6 +2737,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Fire In The Sky [REV1] [VAR1]")
 	level_filenames.push_back("The Eclipse Pit [VAR1]")
 	level_filenames.push_back("Unpacking [VAR1]")
+	level_filenames.push_back("Permify- [VAR2]")
+	level_filenames.push_back("Conveyor- [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
