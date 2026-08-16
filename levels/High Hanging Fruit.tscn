@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -25,10 +25,8 @@ tile_data = PoolIntArray( 327683, 1, 0, 327684, 7, 0 )
 script = ExtResource( 2 )
 level_name = "High Hanging Fruit"
 level_author = "Plushloler"
-level_replay = "Meet White$mturn=90$ddxawxdxzaxzxwxwxzxzxasxzzxsxwdxzxzaxzxzzaxasxasxaaxzxzxdxaxzzwxzzzzzxzxzwxzxzxasxsaxzzszdsxssddxzzwxzzzzxzdxaxwxzzxzzdxzzxzsxssddddd"
+level_replay = "High Hanging Fruit$mturn=66$awxaaxzwxzxzxwxzxzxwxasxzxasxwxdxzaxzzxwxzxzwxzxwxzzaaawzzzxzzxwxaxzzdddddzxzzddxwxdxzwdxzzzxzzaa"
 heavy_max_moves = 11.0
 light_max_moves = 11.0
-clock_turns = ""
 target_sky = Color( 0.819608, 0.760784, 0.698039, 1 )
 target_track = 5.0
-setup_replay = ""
