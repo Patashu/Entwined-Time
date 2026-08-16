@@ -135,9 +135,22 @@ func _prevbutton_pressed() -> void:
 		chapter = posmod(int(chapter) - gamelogic.custom_past_here, gamelogic.chapter_names.size() - gamelogic.custom_past_here) + gamelogic.custom_past_here;
 	else:
 		chapter = posmod(int(chapter), gamelogic.custom_past_here);
+		slide_chapter_until_its_not_too_far_ahead_in_the_future(-1);
 	prepare_chapter();
 	update_focus_neighbors();
 	prevbutton.grab_focus();
+
+func slide_chapter_until_its_not_too_far_ahead_in_the_future(impulse: int) -> void:
+	var puzzles_completed = gamelogic.puzzles_completed;
+	for i in range(999):
+		if (chapter == 0): #always safe to be on. I think this is redundant but just for my sanity.
+			return
+		var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];
+		unlock_requirement -= 24; # let the player see a LITTLE into the future.
+		if ((gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) or puzzles_completed >= unlock_requirement):
+			return
+		chapter += impulse;
+		chapter = posmod(int(chapter), gamelogic.custom_past_here);
 
 func _nextbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
@@ -157,6 +170,7 @@ func _nextbutton_pressed() -> void:
 		chapter = posmod(int(chapter) - gamelogic.custom_past_here, gamelogic.chapter_names.size() - gamelogic.custom_past_here) + gamelogic.custom_past_here;
 	else:
 		chapter = posmod(int(chapter), gamelogic.custom_past_here);
+		slide_chapter_until_its_not_too_far_ahead_in_the_future(1);
 	prepare_chapter();
 	update_focus_neighbors();
 	nextbutton.grab_focus();
