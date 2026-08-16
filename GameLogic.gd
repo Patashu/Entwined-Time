@@ -6762,7 +6762,7 @@ func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 				for event in turn:
 					if event[0] == Undo.change_terrain:
 						var old_tile = event[4];
-						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationBlue || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
+						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationBlue || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray || old_tile == Tiles.RepairStationBumper):
 							return true;
 	# not edge cases: chrono, actor colour (since we always check)
 	# yes edge cases: could be a locked turn or a fuzz doubled turn
