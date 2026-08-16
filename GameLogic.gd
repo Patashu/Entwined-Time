@@ -7693,8 +7693,8 @@ func meta_undo(is_silent: bool = false) -> bool:
 		cut_sound();
 		play_sound("metaundo");
 	just_did_meta();
-	adjust_meta_turn(-1, Chrono.META_UNDO);
 	var result = meta_undo_replay();
+	adjust_meta_turn(-1, Chrono.META_UNDO);
 	preserving_meta_redo_inputs = false;
 	return result;
 
