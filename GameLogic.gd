@@ -2484,7 +2484,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Tile Selector")
 	level_filenames.push_back("Uphill but there's fire")
 	level_filenames.push_back("Inline Expansion")
-	level_filenames.push_back("[SPEEDRUN] Snake Pit [VAR1]")
+	level_filenames.push_back("Snake Pit [VAR1] [SPEEDRUN]")
 	level_filenames.push_back("Rough Terrain [VAR1]")
 	level_filenames.push_back("Car Engine [VAR1]")
 	level_filenames.push_back("Acrobatics 3- Metallic Boogaloo")
