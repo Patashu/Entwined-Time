@@ -5607,8 +5607,7 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					return Success.No;
 			Tiles.Fan:
 				if (!hypothetical):
-					if (actor.airborne < 1):
-						set_actor_var(actor, "airborne", 2, chrono);
+					set_actor_var(actor, "airborne", 2, chrono);
 				return Success.Surprise;
 			Tiles.Bumper:
 				bumper_counter += 1;
@@ -6547,17 +6546,17 @@ animation_nonce: int = -1, is_retro: bool = false, _retro_old_value = null) -> v
 		
 		# going to try this to fix a dinged bug - don't make undo events for dinged, since it's purely visual
 		if (prop != "dinged"):
-			# and now to fix some airborne bugs, all revolving around 2:
+			# and now to fix some airborne bugs, all revolving around 2 (which is just '1 but don't start falling at end of turn it was originally applied'):
+			# Ignore going between 2/1, 1/2 and 2/2.
 			# if you go to 2, emit an event to 1 instead.
-			#If you go from 2 to 1, ignore it.
-			#If you go from 2 to anything else, pretend you came from 1.
+			# if you go from 2 to anything else, pretend you came from 1.
 			
 			if (prop == "airborne"):
-				if (value == 2):
+				if (value >= 1 and old_value >= 1):
+					pass
+				elif (value == 2):
 					value = 1;
 					add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
-				elif (value == 1 and old_value == 2):
-					pass
 				elif (old_value == 2):
 					old_value = 1;
 					add_undo_event([Undo.set_actor_var, actor, prop, old_value, value, animation_nonce], chrono_for_maybe_green_actor(actor, chrono));
