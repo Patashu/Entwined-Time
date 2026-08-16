@@ -5375,16 +5375,17 @@ chrono: int, new_tile: int, is_trigger: bool, is_relative: bool) -> void:
 		return;
 	var terrain_layer = terrain_layers[layer];
 	var old_tile = terrain_layer.get_cellv(pos);
-	# Only non-bombs or chain reactions break an extra tile for the initial break.
+	# First always break the trigger.
+	maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
+	# Then, only non-bombs or chain reactions break an extra tile for the initial break.
+	# (Have to check terrain now because another trigger might have changed it in the above line.)
 	if (is_trigger or old_tile != Tiles.Bomb):
-		maybe_change_terrain(actor, pos, layer, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
-	# have to check terrain now because another trigger might have changed it in the above line
-	var terrain = terrain_in_tile(pos, actor, chrono);
-	for k in range(terrain.size()):
-		var tile_k = terrain[k];
-		if (tile_k != -1 and tile_k != Tiles.NoUndo and tile_k != Tiles.OneUndo):
-			maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
-			break;
+		var terrain = terrain_in_tile(pos, actor, chrono);
+		for k in range(terrain.size()):
+			var tile_k = terrain[k];
+			if (tile_k != -1 and tile_k != Tiles.NoUndo and tile_k != Tiles.OneUndo):
+				maybe_change_terrain(actor, pos, k, hypothetical, green_terrain, chrono, -1, -2, -1, true, is_relative);
+				break;
 	if (old_tile == Tiles.Bomb):
 		#on all orthogonal four tiles, if they contain a bomb, blow up that bomb too
 		for d in directions:
