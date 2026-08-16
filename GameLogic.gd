@@ -7263,6 +7263,8 @@ func adjust_meta_turn(amount: int, chrono: int) -> void:
 	#	print("=== IT IS NOW META TURN " + str(meta_turn) + " ===");
 	update_ghosts();
 	check_won(chrono);
+	if (has_turn_toggle and amount != 0):
+		add_to_animation_server(null, [Anim.turn_toggle, meta_turn])
 	
 func check_won(chrono: int) -> void:
 	won = false;
@@ -8972,9 +8974,6 @@ func time_passes(chrono: int) -> void:
 		for actor in actors:
 			if actor.actorname == Actor.Name.Boulder:
 				actor.boulder_moved_horizontally_this_turn = false;
-	
-	if (has_turn_toggle):
-		add_to_animation_server(null, [Anim.turn_toggle, meta_turn])
 	
 func bottom_up(a, b) -> bool:
 	# TODO: make this tiebreak by x, then by layer or id, so I can use it as a stable sort in general?

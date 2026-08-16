@@ -15,7 +15,7 @@ func _process(delta: float) -> void:
 	timer += delta;
 	var timer_clamped = clamp(timer, 0, timer_max);
 	var index = ceil((timer_clamped/timer_max) * (sprites.size() - 1));
-	var index_2 = sprites.size() - index;
+	var index_2 = (sprites.size()-1) - index;
 	if (meta_turn % 2 == 1):
 		var temp = index;
 		index = index_2;
