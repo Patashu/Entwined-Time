@@ -6896,8 +6896,11 @@ func character_undo(is_silent: bool = false) -> bool:
 					continue
 				undo_one_event(event, chrono);
 		else:
+			# '(Cry)Stall' crash prevention
+			if (heavy_turn > heavy_undo_buffer.size()):
+				pass
 			# 'Negativity' crash prevention
-			if heavy_undo_buffer.size() != 0 and (heavy_turn - 1) >= (-1*heavy_undo_buffer.size()):
+			elif heavy_undo_buffer.size() != 0 and (heavy_turn - 1) >= (-1*heavy_undo_buffer.size()):
 				var events = heavy_undo_buffer.pop_at(heavy_turn - 1);
 				for event in events:
 					undo_one_event(event, chrono);
@@ -7007,8 +7010,11 @@ func character_undo(is_silent: bool = false) -> bool:
 					continue
 				undo_one_event(event, chrono);
 		else:
+			# '(Cry)Stall' crash prevention
+			if (light_turn > light_undo_buffer.size()):
+				pass
 			# 'Negativity' crash prevention
-			if light_undo_buffer.size() != 0 and (light_turn - 1) >= (-1*light_undo_buffer.size()):
+			elif light_undo_buffer.size() != 0 and (light_turn - 1) >= (-1*light_undo_buffer.size()):
 				var events = light_undo_buffer.pop_at(light_turn - 1);
 				for event in events:
 					undo_one_event(event, chrono);
@@ -7183,23 +7189,21 @@ func update_ghosts() -> void:
 		actor.next_ghost = null;
 	# overlaps with character_undo a lot, but I'll try to limit the damage
 	if (heavy_selected):
-		if (heavy_turn <= 0):
+		# '(Cry)Stall' crash prevention
+		if (heavy_turn <= 0 or heavy_turn > heavy_undo_buffer.size()):
 			return;
 		# 'Negativity' crash prevention
 		if (heavy_undo_buffer.size() == 0 or (heavy_turn - 1) < -1*heavy_undo_buffer.size()):
-			lost_void = true;
-			lose("What have you DONE", null, false, "exception");
 			return;
 		var events = heavy_undo_buffer[heavy_turn - 1];
 		for event in events:
 			undo_one_event(event, Chrono.GHOSTS);
 	else:
-		if (light_turn <= 0):
+		# '(Cry)Stall' crash prevention
+		if (light_turn <= 0 or light_turn > light_undo_buffer.size()):
 			return;
 		# 'Negativity' crash prevention
 		if (light_undo_buffer.size() == 0 or (light_turn - 1) < -1*light_undo_buffer.size()):
-			lost_void = true;
-			lose("What have you DONE", null, false, "exception");
 			return;
 		var events = light_undo_buffer[light_turn - 1];
 		for event in events:
@@ -8979,7 +8983,7 @@ func toggle_replay() -> void:
 var double_unit_test_mode : bool = false;
 var unit_test_mode_do_second_pass : bool = false;
 # puzzles that cause Godot errors in their replays, due to time crystal bugs I haven't fixed yet
-var unit_test_blacklist = {"Cut And Paste": true, "(Cry)Stall": true}
+var unit_test_blacklist = {} #{"Cut And Paste": true, "(Cry)Stall": true}
 	
 func do_one_replay_turn() -> void:
 	if (!doing_replay):
