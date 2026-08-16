@@ -540,6 +540,7 @@ var animation_nonce_fountain : int = 0;
 #replay system
 var replay_timer : float = 0.0;
 var user_replay : String  = "";
+var user_replay_before_gain_insight = "";
 var user_replay_before_restarts : Array = [];
 var meta_redo_inputs : String = "";
 var preserving_meta_redo_inputs : bool = false;
@@ -7649,9 +7650,11 @@ func undo_one_event(event: Array, chrono : int) -> void:
 		Undo.light_surprise_abyss_chimed:
 			lighttimeline.end_fade();
 
-func meta_undo_a_restart() -> bool:
+func meta_undo_a_restart(force_type : int = -1) -> bool:
 	var meta_undo_a_restart_type = 2;
-	if (save_file.has("meta_undo_a_restart")):
+	if (force_type >= 0):
+		meta_undo_a_restart_type = force_type;
+	elif (save_file.has("meta_undo_a_restart")):
 		meta_undo_a_restart_type = int(save_file["meta_undo_a_restart"]);
 	if (meta_undo_a_restart_type == 4): #No
 		return false;
@@ -8104,6 +8107,7 @@ func load_level(impulse: int, ignore_locked: bool = false) -> void:
 		if child is TileMap:
 			terrain_layers.push_front(child);
 	
+	user_replay_before_gain_insight = "";
 	setup_chapter_etc();
 	ready_map();
 
@@ -9824,15 +9828,27 @@ func gain_insight() -> void:
 			in_insight_level = false;
 		else:
 			in_insight_level = true;
+		var temp_replay = "";
+		# new overdue feature: remember user_replay through gaining and losing insight
+		if (in_insight_level):
+			temp_replay = user_replay;
+		else:
+			temp_replay = user_replay_before_gain_insight;
 		if (!unit_test_mode):
 			end_replay();
 		level_replay = "";
 		load_level(0);
+		if (in_insight_level):
+			user_replay_before_gain_insight = temp_replay;
+		elif temp_replay != "":
+			user_replay_before_restarts.push_back(temp_replay);
+			meta_undo_a_restart(0);
+			update_info_labels(); #not 100% sure why I need another of these only here but hey
+		finish_animations(Chrono.TIMELESS);
 		cut_sound();
 		play_sound("usegreenality");
 		undo_effect_strength = 0.5;
 		undo_effect_per_second = undo_effect_strength*(1/0.5);
-		finish_animations(Chrono.TIMELESS);
 		undo_effect_color = Color("A9F05F");
 	
 func serialize_current_level() -> String:
