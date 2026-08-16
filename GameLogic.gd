@@ -507,6 +507,8 @@ var lost : bool = false;
 var lost_void : bool = false;
 var won_fade_started : bool = false;
 var joke_portals_present : bool = false;
+var heavy_goal_present : bool = true;
+var light_goal_present : bool = true;
 var cell_size : int = 24;
 var undo_effect_strength : float = 0;
 var undo_effect_per_second : float = 0;
@@ -3087,6 +3089,9 @@ func ready_map() -> void:
 	has_turn_toggle = false;
 	limited_undo_sprites.clear();
 	
+	heavy_goal_present = any_layer_has_this_tile(Tiles.HeavyGoal) or (any_layer_has_this_tile(Tiles.ChronoHelixRed) and any_layer_has_this_tile(Tiles.ChronoHelixBlue));
+	light_goal_present = any_layer_has_this_tile(Tiles.LightGoal) or (any_layer_has_this_tile(Tiles.ChronoHelixRed) and any_layer_has_this_tile(Tiles.ChronoHelixBlue));
+	
 	if (any_layer_has_this_tile(Tiles.NoMove)):
 		has_no_move = true;
 	elif (any_layer_has_this_tile(Tiles.OneMove)):
@@ -4003,6 +4008,7 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 			
 			if (actor.actorname == Actor.Name.HeavyGoalJoke):
 				joke_portals_present = true;
+				heavy_goal_present = true;
 				# manifest a goal to live here
 				var goal = Goal.new();
 				goal.gamelogic = self;
@@ -4018,6 +4024,7 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 				actor.add_child(goal);
 			elif (actor.actorname == Actor.Name.LightGoalJoke):
 				joke_portals_present = true;
+				light_goal_present = true;
 				# manifest a goal to live here
 				var goal = Goal.new();
 				goal.gamelogic = self;
@@ -4496,6 +4503,9 @@ func animation_nonce_fountain_dispense() -> int:
 	return result;
 	
 func heavy_goal_here(pos: Vector2, terrain: Array) -> bool:
+	#always true if there was never a heavy goal in the puzzle, else puzzle would be trivially impossible
+	if (!heavy_goal_present):
+		return true
 	if (!joke_portals_present):
 		return terrain.has(Tiles.HeavyGoal);
 	else:
@@ -4505,6 +4515,9 @@ func heavy_goal_here(pos: Vector2, terrain: Array) -> bool:
 		return false;
 	
 func light_goal_here(pos: Vector2, terrain: Array) -> bool:
+	#always true if there was never a light goal in the puzzle, else puzzle would be trivially impossible
+	if (!light_goal_present):
+		return true
 	if (!joke_portals_present):
 		return terrain.has(Tiles.LightGoal);
 	else:
