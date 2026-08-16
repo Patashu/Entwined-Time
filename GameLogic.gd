@@ -2935,6 +2935,7 @@ func refresh_puzzles_completed() -> void:
 
 var falling_bug : bool = false;
 var falling_bug_2 : bool = false;
+var has_helixes : bool = false;
 var has_crate_goals : bool = false;
 var has_phase_walls : bool = false;
 var has_phase_lightning : bool = false;
@@ -3089,8 +3090,14 @@ func ready_map() -> void:
 	has_turn_toggle = false;
 	limited_undo_sprites.clear();
 	
-	heavy_goal_present = any_layer_has_this_tile(Tiles.HeavyGoal) or (any_layer_has_this_tile(Tiles.ChronoHelixRed) and any_layer_has_this_tile(Tiles.ChronoHelixBlue));
-	light_goal_present = any_layer_has_this_tile(Tiles.LightGoal) or (any_layer_has_this_tile(Tiles.ChronoHelixRed) and any_layer_has_this_tile(Tiles.ChronoHelixBlue));
+	has_helixes = (any_layer_has_this_tile(Tiles.ChronoHelixRed) and any_layer_has_this_tile(Tiles.ChronoHelixBlue));
+	has_crate_goals = any_layer_has_this_tile(Tiles.CrateGoal);
+	heavy_goal_present = any_layer_has_this_tile(Tiles.HeavyGoal) or any_layer_has_this_tile(Tiles.HeavyGoalJoke) or has_helixes;
+	light_goal_present = any_layer_has_this_tile(Tiles.LightGoal) or any_layer_has_this_tile(Tiles.LightGoalJoke) or has_helixes;
+	#when just making test puzzles, don't instantly win bc that's annoying...
+	if (!heavy_goal_present and !light_goal_present and !has_crate_goals and !has_helixes):
+		heavy_goal_present = true;
+		light_goal_present = true;
 	
 	if (any_layer_has_this_tile(Tiles.NoMove)):
 		has_no_move = true;
@@ -3098,9 +3105,6 @@ func ready_map() -> void:
 		has_no_move = true;
 	elif (any_layer_has_this_tile(Tiles.OneMoveGreen)):
 		has_no_move = true;
-	
-	if (any_layer_has_this_tile(Tiles.CrateGoal)):
-		has_crate_goals = true;
 		
 	if (any_layer_has_this_tile(Tiles.TheNight) or any_layer_has_this_tile(Tiles.TheStars)):
 		has_night_or_stars = true;
@@ -4008,7 +4012,6 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 			
 			if (actor.actorname == Actor.Name.HeavyGoalJoke):
 				joke_portals_present = true;
-				heavy_goal_present = true;
 				# manifest a goal to live here
 				var goal = Goal.new();
 				goal.gamelogic = self;
@@ -4024,7 +4027,6 @@ func extract_actors(id: int, actorname: int, heaviness: int, strength: int, dura
 				actor.add_child(goal);
 			elif (actor.actorname == Actor.Name.LightGoalJoke):
 				joke_portals_present = true;
-				light_goal_present = true;
 				# manifest a goal to live here
 				var goal = Goal.new();
 				goal.gamelogic = self;
@@ -5254,6 +5256,8 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		if (chrono < Chrono.META_UNDO and has_terrain_lock and terrain_in_tile(pos, actor, chrono).has(Tiles.TerrainLock)):
 			add_to_animation_server(actor, [Anim.afterimage_at, terrainmap.tile_set.tile_get_texture(Tiles.TerrainLock), terrainmap.map_to_world(pos), Color.red]);
 			add_to_animation_server(actor, [Anim.nonce, animation_nonce]);
+			if (has_repair_stations):
+				check_abyss_chimes();
 			return Success.No;
 		
 		var terrain_layer = terrain_layers[layer];
@@ -5353,6 +5357,8 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 					detonate_trigger(actor, pos, i, hypothetical, green_terrain, chrono, -1, is_trigger, is_relative);
 					break
 		
+	if (has_repair_stations):
+		check_abyss_chimes();
 	return Success.Surprise;
 
 # infinite loop variable
