@@ -2040,14 +2040,48 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Kickflip")
 	level_filenames.push_back("Obtuse Desync")
 	
-	chapter_names.push_back("Chapter S0 - Simul (WIP)");
+	chapter_names.push_back("Chapter S0 - Two Plus One (WIP)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	level_filenames.push_back("S0-0 - Two Of Them")
+	level_filenames.push_back("S0-1 - Stepping Stool")
+	level_filenames.push_back("S0-2 - Available")
+	level_filenames.push_back("S0-3 - Nope")
+	level_filenames.push_back("S0-4 - Pushing Them")
+	level_filenames.push_back("S0-5 - Private Cab")
+	level_filenames.push_back("S0-6 - Conduit")
+	level_filenames.push_back("S0-7 - Carrying Them")
+	level_filenames.push_back("S0-8 - Haul")
+	level_filenames.push_back("S0-9 - Get Unstuck")
+	level_filenames.push_back("S0-10 - Guard")
+	level_filenames.push_back("S0-11 - Throw Long")
+	level_filenames.push_back("S0-12 - Booster Seat")
+	level_filenames.push_back("S0-13 - Chute")
+	chapter_advanced_unlock_requirements.push_back(0);
 	level_filenames.push_back("Self-Appointment")
 	level_filenames.push_back("Mimic Moving Service")
+	
+	chapter_names.push_back("Chapter S1 - Obstacles (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("S1-0 - Stay Sharp")
+	level_filenames.push_back("S1-1 - Watch Your Step")
+	level_filenames.push_back("S1-2 - Conga")
+	level_filenames.push_back("S1-3 - Lava Walkers")
+	level_filenames.push_back("S1-4 - Lamb to the Slaughter")
+	level_filenames.push_back("S1-5 - Leap Of Faith")
+	level_filenames.push_back("S1-6 - Heat")
+	level_filenames.push_back("S1-7 - Moonwalk")
+	level_filenames.push_back("S1-8 - Shared Firewall")
+	level_filenames.push_back("S1-9 - Need You Now")
+	level_filenames.push_back("S1-10 - Attention")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2094,12 +2128,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Skippity [VAR1]")
 	level_filenames.push_back("Yet Another Crate Pit")
 	level_filenames.push_back("Yet Another Crate Pit [VAR1]")
+	level_filenames.push_back("Hot Soup [VAR1]")
 	level_filenames.push_back("Tiny Roast")
-	level_filenames.push_back("Jewellery Theft")
 	level_filenames.push_back("The Glass Pit- [VAR1]")
 	level_filenames.push_back("The Glass Pit- [VAR2]")
-	level_filenames.push_back("Hot Soup [VAR1]")
-	level_filenames.push_back("Hot Soup [VAR2]")
+	level_filenames.push_back("Jewellery Theft")
+
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

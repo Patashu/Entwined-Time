@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="TileMap" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 196614, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 196614, 13, 14, 196614, 14, 14, 196614, 15, 14, 196614, 16, 14, 196614, 17, 14, 196614, 18, 14, 524292, 65536, 14, 262145, 65537, 29, 0, 65540, 129, 0, 65554, 14, 262145, 131072, 14, 262145, 131073, 29, 0, 131074, 2, 0, 131075, 8, 0, 131076, 8, 0, 131081, 1, 0, 131088, 7, 0, 131089, 32, 0, 131090, 14, 262145, 196608, 14, 655362, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 196614, 196614, 14, 196614, 196615, 14, 196614, 196616, 14, 196614, 196617, 14, 196615, 196618, 12, 0, 196619, 12, 0, 196620, 12, 0, 196621, 12, 0, 196622, 12, 0, 196623, 12, 0, 196624, 14, 196613, 196625, 14, 196614, 196626, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "S1-9 - Need You Now"
+level_author = "enzopuzzlesolver"
+level_replay = "S1-9 - Need You Now$mturn=76$wxaxzddxzwxzxzxzdxdxdxdxdxdxzzzwaaaxzzzxzzzzdxdxdxdxzzwaaaxzzddaxzxzzdxzxzzddxzzxzzddxddxzzddxddxzzddxzzzz"
+heavy_max_moves = 4.0
+light_max_moves = 3.0
+target_sky = Color( 0.733333, 0.309804, 0.168627, 1 )
+target_track = 1.0

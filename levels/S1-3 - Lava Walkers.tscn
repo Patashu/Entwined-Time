@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 524292, 9, 14, 524290, 10, 14, 196614, 11, 14, 196614, 12, 14, 196614, 13, 14, 196614, 14, 14, 196614, 15, 14, 524292, 65536, 14, 262145, 65537, 30, 0, 65543, 14, 655362, 65544, 14, 196614, 65545, 14, 655364, 65551, 14, 262145, 131072, 14, 262145, 131073, 30, 0, 131077, 1, 0, 131080, 29, 0, 131084, 128, 0, 131087, 14, 262145, 196608, 14, 262145, 196609, 30, 0, 196610, 8, 0, 196612, 2, 0, 196613, 14, 196609, 196616, 29, 0, 196619, 14, 196609, 196620, 2, 0, 196622, 7, 0, 196623, 14, 262145, 262144, 14, 655362, 262145, 14, 196614, 262146, 14, 196614, 262147, 14, 196614, 262148, 14, 196614, 262149, 14, 655364, 262150, 12, 0, 262151, 12, 0, 262152, 12, 0, 262153, 12, 0, 262154, 12, 0, 262155, 14, 655362, 262156, 14, 196614, 262157, 14, 196614, 262158, 14, 196614, 262159, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "S1-3 - Lava Walkers"
+level_author = "enzopuzzlesolver"
+level_replay = "S1-3 - Lava Walkers$mturn=49$xdwddxwxzxwxzzxwxzxzzzxddsxwddxzdxdxzzzddssxzzzaaaxzzdddxzzzsxzdxzd"
+heavy_max_moves = 5.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.733333, 0.309804, 0.168627, 1 )
+target_track = 1.0
+setup_replay = ""

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 196614, 4, 14, 196614, 5, 14, 196614, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65536, 14, 262145, 65537, 129, 0, 65543, 1, 0, 65544, 14, 262145, 131072, 14, 262145, 131073, 8, 0, 131076, 2, 0, 131077, 14, 524290, 131078, 14, 196614, 131079, 14, 196614, 131080, 14, 655364, 196608, 14, 655362, 196609, 14, 524291, 196610, 14, 196614, 196611, 14, 196614, 196612, 14, 196614, 196613, 14, 589828, 262145, 14, 262145, 262146, 8, 0, 262148, 7, 0, 262149, 14, 262145, 327681, 14, 655362, 327682, 14, 196614, 327683, 14, 196614, 327684, 14, 196614, 327685, 14, 655364 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "S0-1 - Stepping Stool"
+level_author = "enzopuzzlesolver"
+level_replay = "S0-1 - Stepping Stool$mturn=15$xddxwaaxzzddxzzzddd"
+heavy_max_moves = 3.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.215686, 0.419608, 0.698039, 1 )
+target_track = 0.0
+setup_replay = ""

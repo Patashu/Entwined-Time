@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 8, 14, 524290, 9, 14, 196614, 10, 14, 196614, 11, 14, 196614, 12, 14, 196614, 13, 14, 196614, 14, 14, 196614, 15, 14, 196614, 16, 14, 524292, 65544, 14, 262145, 65552, 14, 262145, 131080, 14, 262145, 131082, 129, 0, 131088, 14, 262145, 196608, 14, 524290, 196609, 14, 196614, 196610, 14, 196614, 196611, 14, 524292, 196616, 14, 262145, 196617, 8, 0, 196618, 8, 0, 196624, 14, 262145, 262144, 14, 262145, 262145, 7, 0, 262147, 14, 655362, 262148, 14, 196614, 262149, 14, 196614, 262150, 14, 196614, 262151, 14, 196614, 262152, 14, 655363, 262153, 14, 196614, 262154, 14, 196615, 262160, 14, 262145, 327680, 14, 655362, 327681, 14, 524292, 327682, 32, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0, 327688, 0, 0, 327689, 0, 0, 327690, 0, 0, 327693, 1, 0, 327696, 14, 262145, 393217, 14, 655362, 393218, 14, 196614, 393219, 14, 196614, 393220, 14, 196614, 393221, 14, 196614, 393222, 14, 196614, 393223, 14, 196614, 393224, 14, 196614, 393225, 14, 196614, 393226, 14, 196614, 393227, 14, 196614, 393228, 14, 196614, 393229, 14, 196614, 393230, 14, 196614, 393231, 14, 196614, 393232, 14, 655364 )
+
+[node name="@@12747" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327693, 2, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "S1-8 - Shared Firewall"
+level_author = "enzopuzzlesolver"
+level_replay = "S1-8 - Shared Firewall$mturn=41$xddaxwzxzxwzxzxwzwzddxdxzxaxzxzxddxdxzxaxaxzxzdxdxzxaxaxzzzzzawa"
+heavy_max_moves = 2.0
+light_max_moves = 5.0
+clock_turns = ""
+target_sky = Color( 0.733333, 0.309804, 0.168627, 1 )
+target_track = 1.0
+setup_replay = ""
