@@ -6058,7 +6058,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 	
 	# handle pushing
 	var actors_there = actors_in_tile(dest);
-	if (has_ghost_fog and is_retro and terrain_in_tile(dest).has(Tiles.PurpleFog)):
+	if (has_ghost_fog and is_retro and terrain_in_tile(dest, actor, chrono).has(Tiles.PurpleFog)):
 		actors_there = [];
 	var pushables_there = [];
 	#var tiny_pushables_there = [];
@@ -7289,9 +7289,9 @@ func check_won(chrono: int) -> void:
 			break;
 	
 	# don't win the game during a undo unless this is a voidlike puzzle
-	# (but we did want to get this far to update visual effects)
+	# (but keep going to complete all effects)
 	if (chrono == Chrono.META_UNDO and !voidlike_puzzle):
-		return;
+		locked = true;
 	
 	if (!locked and !light_actor.broken and !heavy_actor.broken
 	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos, heavy_actor, chrono))
