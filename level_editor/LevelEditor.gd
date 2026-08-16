@@ -921,7 +921,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.ColourMagenta:
 			text = "Magenta: Colour. (Attaches to the first actor to enter or start in its tile it can modify.) Always experiences time."
 		Tiles.WoodenCrate:
-			text = "Wooden Crate: Actor. Heaviness: Wood. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead (failing if the Wooden Crate has Durability of Spikes or higher)."
+			text = "Wooden Crate: Actor. Heaviness: Wooden. Strength: Wood. Durability: Nothing. Fall speed: Infinite. Native Time Colour: Gray. When unbroken Light fails to push an unstacked Wooden Crate, Light tries again by pushing it up instead. When unbroken Heavy fails to push an unstacked Wooden Crate, Heavy tries again by breaking it instead (failing if the Wooden Crate has Durability of Spikes or higher)."
 		Tiles.GlassBlock:
 			text = "Glass Block: Solid to moves entering or exiting its tile. Surprise: If the actor is Iron weight or greater, the Glass Block breaks. When a Glass Block unbreaks, it breaks any actors that don't have Unbreakable durability."
 		Tiles.ColourGreen:
@@ -1027,7 +1027,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.VoidFloorboards:
 			text = "Void Floorboards: A Floorboards that can be destroyed also by retroactive moves and undos, and that does not create rewind OR undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.Hole:
-			text = "Hole: Actor. Heaviness: Infinite. Strength: None. Durabilty: Unbreakable. Fall Speed: 0. Native Time Color: Gray. Not solid. When a non-Unbreakable actor enters an unbroken Hole, it breaks. If that actor was an unbroken crate or boulder, the Hole breaks. Holes (broken or unbroken) are solid to moves of broken actors exiting its tile, including itself. Holes get disabled by Floorboards on their tile."
+			text = "Hole: Actor. Heaviness: Infinite. Strength: None. Durability: Unbreakable. Fall Speed: 0. Native Time Color: Gray. Not solid. When a non-Unbreakable actor enters an unbroken Hole, it breaks. If that actor was an unbroken crate or boulder, the Hole breaks. Holes (broken or unbroken) are solid to moves of broken actors exiting its tile, including itself. Holes get disabled by Floorboards on their tile."
 		Tiles.GreenHole:
 			text = "Green Hole: A Hole, but when it breaks an actor it does not create a rewind event. Also has Native Time Color: Green."
 		Tiles.VoidHole:
@@ -1167,7 +1167,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.GateOfDemise:
 			text = "Gate of Demise: Solid. When a robot is permanently broken (no broken rewind events for that robot or repair stations exist in the puzzle or in any timeline): Gates of Demise become Void and open voidly. (Puzzles containing 'Void' will record undos in their replays.)";
 		Tiles.VoidSingularity:
-			text = "Void Singularity: When time pases, after repair stations, actors experiencing time here experience a void banish (all undo events for this actor about position, state changes, clock ticking, time colour changes and stat modifiers are erased. Notably, all other kinds of undo events, rewind events, timeline modifications, and changes to tiles caused by this actor are NOT erased.) (Puzzles containing 'Void' will record undos in their replays.)"
+			text = "Void Singularity: When time passes, after repair stations, actors experiencing time here experience a void banish (all undo events for this actor about position, state changes, clock ticking, time colour changes and stat modifiers are erased. Notably, all other kinds of undo events, rewind events, timeline modifications, and changes to tiles caused by this actor are NOT erased.) (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidWall:
 			text = "Void Wall: Solid to undo events. (Puzzles containing 'Void' will record undos in their replays.)"
 		Tiles.VoidFire:
