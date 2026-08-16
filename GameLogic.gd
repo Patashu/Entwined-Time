@@ -6067,7 +6067,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 				add_to_animation_server(actor, [Anim.afterimage_at, terrainmap.tile_set.tile_get_texture(flash_terrain), terrainmap.map_to_world(actor.pos), flash_colour]);
 			return Success.No;
 		elif (leave_attempt == Success.Surprise):
-			current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono, false);
+			current_tile_is_solid(actor, dir, is_gravity, is_retro, chrono, hypothetical);
 			return Success.Surprise;
 		var solidity_check = try_enter_terrain(actor, dest, dir, hypothetical, is_gravity, is_retro, chrono, pushers_list, was_push);
 		if (solidity_check != Success.Yes):
