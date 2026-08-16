@@ -5342,8 +5342,18 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 		
 	return Success.Surprise;
 
+# infinite loop variable
+var detonate_trigger_counter: int = 0;
+
 func detonate_trigger(actor: Actor, pos: Vector2, layer: int, hypothetical: bool, green_terrain: int,
 chrono: int, new_tile: int, is_trigger: bool, is_relative: bool) -> void:
+	detonate_trigger_counter += 1;
+	if (lost or detonate_trigger_counter == 99):
+		# always lose even when hypothetical, I think?
+		if (!lost):
+			lose("Infinite loop.", null, true, "infloop");
+		detonate_trigger_counter -= 1;
+		return;
 	var terrain_layer = terrain_layers[layer];
 	var old_tile = terrain_layer.get_cellv(pos);
 	# Only non-bombs or chain reactions break an extra tile for the initial break.
@@ -5364,6 +5374,7 @@ chrono: int, new_tile: int, is_trigger: bool, is_relative: bool) -> void:
 				var tile_d1 = terrain_d[d1];
 				if (tile_d1 == Tiles.Bomb):
 					detonate_trigger(actor, pos+d, d1, hypothetical, green_terrain, chrono, -1, true, is_relative);
+	detonate_trigger_counter -= 1;
 
 var directions = [Vector2.RIGHT, Vector2.UP, Vector2.DOWN, Vector2.LEFT];
 
