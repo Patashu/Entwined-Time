@@ -945,7 +945,7 @@ func tooltip_for_tile(tile: int) -> String:
 		Tiles.CuckooClock:
 			text = "Cuckoo Clock: Actor. Heaviness: Wooden. Strength: Wooden. Durability: Nothing. Fall speed: 1. Native Time Colour: Gray. To start a puzzle with ticks: Fill out Clock Turns field with a comma separated list, and turns will be assigned to clocks in layer+reading order. When experiencing time, after green fire, if it has ticks and isn't broken, decrease ticks by 1. When a cuckoo clock strikes exactly 0, and isn't broken, and it's not during a fuzz undo: You lose."
 		Tiles.TheNight:
-			text = "Night: Actors inside Night don't experience time passing (except for being burned by fire and green fire)."
+			text = "Night: Actors inside Night don't experience time passing."
 		Tiles.TheStars:
 			text = "Stars: Actors inside Stars are immune to rewind events."
 		Tiles.SteelCrate:
