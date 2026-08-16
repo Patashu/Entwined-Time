@@ -1849,7 +1849,6 @@ func initialize_level_list() -> void:
 	chapter_advanced_unlock_requirements.push_back(8);
 	level_filenames.push_back("Clocksmasher")
 	level_filenames.push_back("Woodskip")
-	level_filenames.push_back("Unstacking Station")
 	level_filenames.push_back("Wooden Glass")
 	level_filenames.push_back("Donk [VAR2]")
 	level_filenames.push_back("Bunker Door [VAR1]")
