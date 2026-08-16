@@ -2054,6 +2054,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Floating Existence")
 	level_filenames.push_back("Primer")
 	level_filenames.push_back("Meet White")
+	level_filenames.push_back("High Hanging Fruit")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	level_filenames.push_back("Primer [VAR1]")
@@ -2126,6 +2127,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Daredevils [VAR1]")
 	level_filenames.push_back("Broken Bridge [VAR1]")
 	level_filenames.push_back("TimelessBridgeEx")
+	level_filenames.push_back("Down the Tubes (Loop 2)")
 	level_filenames.push_back("Light Moooving Service [VAR1]")
 	level_filenames.push_back("Leap of Faith [Space Program]")
 	level_filenames.push_back("Booster Seat [VAR1]")
@@ -2391,6 +2393,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Fuzzy Parkour [VAR1]")
+	level_filenames.push_back("Generic Enclosed 2x2 Level")
 	level_filenames.push_back("Board Ring A")
 	level_filenames.push_back("Invisible Void Bridge")
 	level_filenames.push_back("Collaborative Motion")
@@ -2516,6 +2519,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Inverse Nudge Chain")
 	level_filenames.push_back("Crate Sorting Facility")
 	level_filenames.push_back("Impossible Chime")
+	level_filenames.push_back("Impossible Chime [VAR1]")
 	level_filenames.push_back("Joke-")
 	level_filenames.push_back("[SPEEDRUN] A Way In-")
 	level_filenames.push_back("Entropy Extractor")
@@ -2643,6 +2647,9 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Stuck [VAR1]")
 	level_filenames.push_back("Orbital Drop [VAR3]")
 	level_filenames.push_back("Delay Circuit [VAR1]")
+	level_filenames.push_back("The Continuous Pit")
+	level_filenames.push_back("Finesse")
+	level_filenames.push_back("Inevitable Demise [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
