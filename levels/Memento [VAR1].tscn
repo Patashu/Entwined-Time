@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 393219, 4, 14, 3, 5, 14, 4, 65536, 14, 262145, 65537, 7, 0, 65538, 8, 0, 65539, 14, 65538, 65540, 14, 65539, 65541, 14, 65540, 131072, 14, 262145, 131073, 26, 0, 131074, 14, 196613, 131075, 14, 720899, 131076, 14, 131075, 131077, 14, 589829, 196608, 14, 262145, 196612, 54, 0, 196613, 14, 262145, 262144, 14, 262145, 262148, 54, 0, 262149, 14, 262145, 327680, 14, 262145, 327681, 6, 0, 327682, 54, 0, 327683, 6, 0, 327684, 14, 196613, 327685, 14, 589828, 393216, 14, 262145, 393217, 5, 0, 393219, 5, 0, 393220, 54, 0, 393221, 14, 262145, 458752, 14, 262145, 458753, 5, 0, 458754, 2, 0, 458755, 5, 0, 458756, 54, 0, 458757, 14, 262145, 524288, 14, 655362, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196614, 524293, 14, 655364 )
+
+[node name="@@10832" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 65538, 22, 0, 131073, 5, 0, 196609, 5, 0, 262145, 5, 0, 327681, 54, 0, 327682, 23, 0, 327683, 54, 0, 458754, 1, 0 )
+
+[node name="@@10833" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 458754, 19, 0, 458755, 22, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Memento [VAR1]"
+level_author = "xxuurruuii"
+level_replay = "Memento [VAR1]$mturn=33$awwwwwzzzzzzwdsdawzzzzxaxwwdzzzawas"
+heavy_max_moves = 6.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.164706, 0.121569, 0.509804, 1 )
+target_track = 2.0
+setup_replay = ""

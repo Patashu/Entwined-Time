@@ -2682,8 +2682,12 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Magenta Flight [VAR2]")
 	level_filenames.push_back("The Withering Pit [VAR2]")
 	level_filenames.push_back("Graduation [VAR6]")
+	level_filenames.push_back("Graduation [VAR7]")
 	level_filenames.push_back("Joke---")
-	level_filenames.push_back("Temporal Staircase [VAr1]")
+	level_filenames.push_back("Temporal Staircase [VAR1]")
+	level_filenames.push_back("Carrying It [VAR1] (Loop 2) [VAR1]")
+	level_filenames.push_back("Return Points [VAR2]")
+	level_filenames.push_back("Haircomb")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2742,6 +2746,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Conveyor- [VAR1]")
 	level_filenames.push_back("[SPEEDIESTRUN] A Way In-")
 	level_filenames.push_back("Temporal Staircase")
+	level_filenames.push_back("Return Points [VAR1]")
+	level_filenames.push_back("Foot Wiggle [VAR6]")
+	level_filenames.push_back("Woodskip [VAR2] [VAR2]")
+	level_filenames.push_back("Invisible Void Bridge [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2756,6 +2764,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Invisible Bridge (For Crate-)")
 	level_filenames.push_back("A Box Package")
 	level_filenames.push_back("Deconstruct [VAR1]")
+	level_filenames.push_back("Memento [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

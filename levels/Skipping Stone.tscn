@@ -13,9 +13,9 @@ tile_data = PoolIntArray( 0, 14, 524290, 1, 14, 196614, 2, 14, 196614, 3, 14, 19
 script = ExtResource( 2 )
 level_name = "Skipping Stone"
 level_author = "Green"
-level_replay = "Skipping Stone$mturn=320$xwaaxaxzxzaxzzwxzxzdxaxzdxzaxzaxzxwxaxzaxzxzdxaxzwddxzaxzxzaxzzwaaxzaxzdwaxzxzzzzxaxzdaxzxzzaaxaxzsdxzxzzdaxaxdxzaxzzwdaxzaxzzzxzxzzdwdaxaxzzzzdxzaxzddxzaxzwddxzxaxaxzwxzxzxaxzxzaxzzwxzxzzdxaxdxzxasdxaxzzzdsadxzaxzzzzaaxzxdaxaxzzzxzxzxaxdasxzxzxaxzwdaxzxzzzzxaxddwxzxzzzsxaxzsddxzxzzzxaxddxzaxzxzaxdwxzxzdxaxzxzaxzzxzaxddwxzxzzsxaxzddxzaxzzxzxdwxazaxzdaxzxzaxaxzzzxzaxddwxzxzzzsxaxzsddxzxzzzxaxddxzaxzxzaxdwxzxzzsxaxzddxzxzxaxzzxzxdxaxdxzxzzxwxzxzaxwazxzxzzwxdxzaxzxzxwxzxzwzxzdddxa"
+level_replay = "Skipping Stone$mturn=198$xwaaxaxzxzaxzzwxzxzdxaxzdxzaxzxzaxawaaxzxzxaxzzwxzxzzxaxaxzxaaddxaxzzzzdxzaxzxzaxzwsaaxzaxzzzzaxzxddxaxwaaxzaxzzzwxzxzxaxswdxzaxzzxzxzxaxasxzxzzdxaxaxzxzaxaxzzzdwddxzaxzzxzxzwxaxzzdxzaxdwxzxzzddaxaxzzzxzaxddwxzxzzzsxazxzxazxsxaxzdxzaxdwxzxzzsxaxzddxzxzxaxzzxzxddxaxzzzwazxzaxzzxzwxdxzaxzwxzxzzdddxa"
 heavy_max_moves = 1.0
-light_max_moves = 7.0
+light_max_moves = 6.0
 clock_turns = ""
 target_sky = Color( 0.196078, 0.262745, 0.317647, 1 )
 target_track = 3.0

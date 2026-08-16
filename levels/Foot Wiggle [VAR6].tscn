@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 5, 14, 524290, 6, 14, 196614, 7, 14, 196614, 8, 14, 524292, 65541, 14, 262145, 65542, 7, 0, 65544, 14, 262145, 131077, 14, 589824, 131078, 14, 4, 131080, 14, 262145, 196613, 14, 589825, 196614, 14, 131076, 196616, 14, 262145, 262149, 14, 262145, 262152, 14, 262145, 327685, 14, 589824, 327686, 14, 4, 327688, 14, 262145, 393216, 14, 524290, 393217, 14, 196614, 393218, 14, 524291, 393219, 14, 196614, 393220, 14, 524291, 393221, 14, 720899, 393222, 14, 589829, 393224, 14, 262145, 458752, 14, 262145, 458754, 14, 327681, 458756, 14, 327681, 458758, 14, 327681, 458760, 14, 262145, 524288, 14, 262145, 524296, 14, 262145, 589824, 14, 262145, 589825, 30, 0, 589826, 30, 0, 589827, 30, 0, 589828, 30, 0, 589829, 30, 0, 589830, 30, 0, 589831, 30, 0, 589832, 14, 262145, 655360, 14, 655362, 655361, 14, 196614, 655362, 14, 196614, 655363, 14, 196614, 655364, 14, 196614, 655365, 14, 196614, 655366, 14, 196614, 655367, 14, 196614, 655368, 14, 655364 )
+
+[node name="@@11450" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 524292, 8, 0, 589825, 1, 0, 589828, 2, 0, 589831, 29, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Foot Wiggle [VAR6]"
+level_author = "cl1694"
+level_replay = "Foot Wiggle [VAR6]$mturn=248$xdxwxzxzdxaxdxzxwxaxzzwxzxzxaxzdxzaxdxzxwxaxzzwxzxzzsaxdxwxzxzzxdxwxzxzdxaxwdxzxwxdxzzzzzwaxzxzzsxaxaxzdxwxzxzxwxzzsaxzxzxwzaxaxzxdxaxwxzxzwxaxzzwxzxzzsdxaxwxzxzzxdxaxzxwxdxzdwxzxzzxaxzxzxaxdxwxzaxzzwdxzxwxdxzzzzwaxzxzzsxaxaxzdxwxzxzxwxzzwaxzsxzzzxzxsxaxaxzxaxdxwxzxzzzxaxawxzxzzaxaxdxzxwxaxzzwxzxzzsdxaxwxzxzwxaxzzwxzdxzadxzxzxaxzxzxaxdxwxzxzzxaxwdxzxwxdxzzzzwaxzaxzzsaxzdxwxzxzxwxzxzxzsaxsxzzxzxzxaxaaaaa"
+heavy_max_moves = 5.0
+light_max_moves = 1.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""
