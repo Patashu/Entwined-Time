@@ -1527,7 +1527,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("InvisibleBridgeCrate")
 	level_filenames.push_back("Jenga")
 	
-	chapter_names.push_back("There Are Many Colours");
+	chapter_names.push_back("They Are Many Colours");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(40);
 	chapter_tracks.push_back(6);
