@@ -2683,6 +2683,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Withering Pit [VAR2]")
 	level_filenames.push_back("Graduation [VAR6]")
 	level_filenames.push_back("Joke---")
+	level_filenames.push_back("Temporal Staircase [VAr1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2739,6 +2740,22 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Unpacking [VAR1]")
 	level_filenames.push_back("Permify- [VAR2]")
 	level_filenames.push_back("Conveyor- [VAR1]")
+	level_filenames.push_back("[SPEEDIESTRUN] A Way In-")
+	level_filenames.push_back("Temporal Staircase")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
+	chapter_names.push_back("xxuurruuii's World");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(24, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Clockwork [VAR2]")
+	level_filenames.push_back("A Blue Package")
+	level_filenames.push_back("Invisible Bridge (For Crate-)")
+	level_filenames.push_back("A Box Package")
+	level_filenames.push_back("Deconstruct [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

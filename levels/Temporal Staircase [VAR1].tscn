@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 1, 0, 65546, 7, 0, 458752, 52, 0, 458753, 2, 0, 458755, 8, 0, 458756, 52, 0, 524288, 14, 196613, 524289, 14, 196614, 524290, 14, 196614, 524291, 14, 196614, 524292, 14, 196615 )
+
+[node name="@@10469" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 2, 203, 0, 65546, 203, 0, 458753, 38, 0, 458754, 180, 0, 458755, 38, 0, 524288, 203, 0, 524289, 203, 0, 524290, 203, 0, 524291, 203, 0, 524292, 203, 0 )
+
+[node name="@@10470" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327683, 200, 0 )
+
+[node name="@@10471" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 327683, 180, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Temporal Staircase [VAR1]"
+level_author = "Green"
+level_replay = "Temporal Staircase [VAR1]$mturn=271$xawxdxzaxzwxzdxzxzxwxaxzdxzxzxzwxdxzaxzdxzaxzxdxwxzzxzdxwaxzxzzwxdxzadxzwxzxzdxzxzxddxdxzxzxzxwxadxzdxzzwaxzxzwxdxzaxzwxzzaxzxdxdxzzasxzaxzzxzdxdwxzxzxdxzxzdxdwxzxzxaxdxzxzzaxzxzxdxdwxzxzdxwzdxzxzxzdaxdxzzxzwxaxzdxzwdxzxzzxaxaazzwxzxwxaxzzxzdxdxzxzxwxdxzwxdxzaxzdxzaxzwxzxzxaxzxzxddxazxzzxdxdxzxzwxwxaxzdxzaxzdxzwxzxzxaxzxzxaxdzxzxdxdxzaxzxzxdxwxdxzaxzzxzwxdxzwxaxzdxzaxzdxzwxzxzzxwxaxzdxzzaxzwxzxzwxazxzxdxaxzdxzdxzxzxwxdxzaxzdxzdzxzwxzzzzzz"
+heavy_max_moves = 1.0
+light_max_moves = 2.0
+clock_turns = ""
+target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_track = 3.0
+setup_replay = ""
