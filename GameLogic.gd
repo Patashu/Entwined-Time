@@ -2074,7 +2074,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("S1-1 - Watch Your Step")
 	level_filenames.push_back("S1-2 - Conga")
 	level_filenames.push_back("S1-3 - Lava Walkers")
-	level_filenames.push_back("S1-4 - Lamb to the Slaughter")
+	level_filenames.push_back("S1-4 - Lamb To The Slaughter")
 	level_filenames.push_back("S1-5 - Leap Of Faith")
 	level_filenames.push_back("S1-6 - Heat")
 	level_filenames.push_back("S1-7 - Moonwalk")
