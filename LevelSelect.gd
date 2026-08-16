@@ -235,6 +235,12 @@ func setup_landing_page() -> void:
 		yy = 13;
 		yyy = 14;
 	
+	# this is, what, final final final squish???
+	if amount > 30:
+		y_max = 16;
+		yy = 13;
+		yyy = 13;
+	
 	for a in range(amount):
 		var a2 = gamelogic.custom_past_here + a;
 		var button = Button.new();
@@ -570,6 +576,14 @@ func prepare_chapter() -> void:
 		y_max = 15;
 		yy = 13;
 		yyy = 14;
+		
+	# this is, what, final final final squish???
+	if (advanced_end - normal_start) > 30:
+		#don't feel like figuring this second part out atm :D
+		# or ((advanced_end - advanced_start) >= 14 and (advanced_start - normal_start) >= 12):
+		y_max = 16;
+		yy = 13;
+		yyy = 13;
 		
 	var standard_label = null;
 	if (advanced_end - advanced_start > 0):

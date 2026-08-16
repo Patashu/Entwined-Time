@@ -2263,6 +2263,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Circle Dance")
 	level_filenames.push_back("Spacetime Launch")
 	level_filenames.push_back("Spacetime Launch-")
+	level_filenames.push_back("Remote Controlled Cobblestone")
+	level_filenames.push_back("Spitroast")
+	level_filenames.push_back("Compact Complex")
+	level_filenames.push_back("Blast Furnace")
+	level_filenames.push_back("Roofing Services")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2272,11 +2277,6 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Remote Controlled Cobblestone")
-	level_filenames.push_back("Spitroast")
-	level_filenames.push_back("Compact Complex")
-	level_filenames.push_back("Blast Furnace")
-	level_filenames.push_back("Roofing Services")
 	level_filenames.push_back("Mini Geode")
 	level_filenames.push_back("Inexorable Destruction")
 	level_filenames.push_back("Survival Section")
@@ -2291,6 +2291,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Mini Way In-")
 	level_filenames.push_back("Minidane")
 	level_filenames.push_back("Mini Cascade")
+	level_filenames.push_back("Super Basic Sokoban")
+	level_filenames.push_back("Sandra Embraces The Void")
+	level_filenames.push_back("Selfie")
+	level_filenames.push_back("Give me a Break")
+	level_filenames.push_back("Another Light-")
+	level_filenames.push_back("Lost Height")
+	level_filenames.push_back("Green Glass [VAR1.1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2300,13 +2307,6 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	level_filenames.push_back("Super Basic Sokoban")
-	level_filenames.push_back("Sandra Embraces The Void")
-	level_filenames.push_back("Selfie")
-	level_filenames.push_back("Give me a Break")
-	level_filenames.push_back("Another Light-")
-	level_filenames.push_back("Lost Height")
-	level_filenames.push_back("Green Glass [VAR1.1]")
 	level_filenames.push_back("Bounce Castle")
 	level_filenames.push_back("Passing Through Matter")
 	level_filenames.push_back("Lego Tower")
