@@ -2285,7 +2285,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Gravitational Pit")
 	level_filenames.push_back("Lazarus Syndrome")
 	level_filenames.push_back("Springlock System")
-	level_filenames.push_back("Dead Air [Skit 1]")	
+	level_filenames.push_back("Dead Air [Skit 1]")
+	level_filenames.push_back("Loophole")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2650,6 +2651,8 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Continuous Pit")
 	level_filenames.push_back("Finesse")
 	level_filenames.push_back("Inevitable Demise [VAR1]")
+	level_filenames.push_back("Magenta Flight [VAR2]")
+	level_filenames.push_back("The Withering Pit [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
