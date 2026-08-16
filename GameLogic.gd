@@ -8658,7 +8658,8 @@ func time_passes(chrono: int) -> void:
 	# For each actor in the list, in order of lowest down to highest up, repeat the following loop until nothing happens:
 	# * If airborne is -1 and it COULD push-move down, set airborne to (1 for light, 0 for heavy).
 	# * If airborne is 0, push-move down (unless this actor is light and already has this loop). If the push-move fails, set airborne to -1.
-	time_actors.sort_custom(self, "bottom_up");
+	var gravity_actors = time_actors.duplicate();
+	gravity_actors.sort_custom(self, "bottom_up");
 	var something_happened = true;
 	var tries = 99;
 	# just_moved logic for stacked actors falling together without clipping through e.g. Heavies sticky topping them down:
@@ -8672,9 +8673,9 @@ func time_passes(chrono: int) -> void:
 		animation_substep(chrono);
 		tries -= 1;
 		something_happened = false;
-		var size = time_actors.size();
+		var size = gravity_actors.size();
 		for i in range(size):
-			var actor = time_actors[i];
+			var actor = gravity_actors[i];
 			var skip = false;
 			if (actor.fall_speed() >= 0 and has_fallen[actor] >= actor.fall_speed()):
 				skip = true;
@@ -8685,7 +8686,8 @@ func time_passes(chrono: int) -> void:
 			
 			# multi-falling stack check
 			if (i < (size - 1)):
-				var next_actor = time_actors[i+1];
+				var next_actor = gravity_actors[i+1];
+				# BUG: All other actors in this tile might not be immediately adjacent, so we have to check until pos.y changes...
 				if actor.pos != next_actor.pos:
 					clear_just_moveds = true;
 				else:
