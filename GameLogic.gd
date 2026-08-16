@@ -5415,20 +5415,8 @@ func calculate_gravity_for(actor: Actor, chrono: int, pos: Vector2) -> Vector2:
 		return Vector2.DOWN;
 
 func maybe_rise(actor: Actor, chrono: int, dir: Vector2, care_about_falling : bool = true):
-	var dir_check = dir.y < 0;
-	if (has_gravity):
-		var gravity = calculate_gravity_for(actor, chrono, actor.pos);
-		if (gravity != Vector2.DOWN):
-			dir_check = true;
-			if (dir_check and gravity.y < 0):
-				dir_check = dir.y < 0;
-			if (dir_check and gravity.y > 0):
-				dir_check = dir.y > 0;
-			if (dir_check and gravity.x < 0):
-				dir_check = dir.x < 0;
-			if (dir_check and gravity.x > 0):
-				dir_check = dir.x > 0;
-	
+	var gravity_dir = calculate_gravity_for(actor, Chrono.MOVE, actor.pos).normalized();
+	var dir_check = dir.normalized() == gravity_dir*-1;
 	if (dir_check and !is_suspended(actor, chrono) and actor.fall_speed() != 0 and (!care_about_falling or actor.airborne == -1 or !actor.is_character)):
 		set_actor_var(actor, "airborne", 2, chrono);
 
@@ -6222,7 +6210,9 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					else:
 						move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
 						# 'allow a power crate/chrono helix to be lifted up' clause.
-						if (!actor_there.is_character and actor_there.fall_speed() != 0 and dir == Vector2.UP and strength_check(actor_there.strength, actor.heaviness)):
+						var gravity_dir = calculate_gravity_for(actor, Chrono.MOVE, actor.pos).normalized();
+						var dir_check = dir.normalized() == gravity_dir*-1;
+						if (!actor_there.is_character and actor_there.fall_speed() != 0 and dir_check and strength_check(actor_there.strength, actor.heaviness)):
 							set_actor_var(actor_there, "airborne", 2, chrono);
 				for actor_there in pushables_there:
 					actor_there.just_moved = false;
@@ -8157,11 +8147,11 @@ func try_move_mimic(actor: Actor, dir: Vector2) -> int:
 		else:
 			play_sound("heavystep")
 		var gravity_dir = calculate_gravity_for(actor, Chrono.MOVE, actor.pos).normalized();
-		if (dir == gravity_dir*-1):
+		if (dir.normalized() == gravity_dir*-1):
 			if !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 2, Chrono.MOVE);
-		elif (dir == gravity_dir):
-			# should be 'if actor.actorname == Actor.Name.Heavy' but it desyncs Brutalist Absurdism
+		elif (dir.normalized() == gravity_dir):
+			# BUG: should be 'if actor.actorname == Actor.Name.Heavy' but it desyncs Brutalist Absurdism
 			if heavy_selected and !is_suspended(actor, Chrono.MOVE):
 				set_actor_var(actor, "airborne", 0, Chrono.MOVE);
 	if (result != Success.No):
@@ -8290,12 +8280,12 @@ func character_move(dir: Vector2) -> bool:
 			gravity_dir = calculate_gravity_for(heavy_actor, Chrono.MOVE, heavy_actor.pos).normalized();
 		else:
 			gravity_dir = calculate_gravity_for(light_actor, Chrono.MOVE, light_actor.pos).normalized();
-		if (dir == gravity_dir*-1):
+		if (dir.normalized() == gravity_dir*-1):
 			if heavy_selected and !is_suspended(heavy_actor, Chrono.MOVE):
 				set_actor_var(heavy_actor, "airborne", 2, Chrono.MOVE);
 			elif !heavy_selected and !is_suspended(light_actor, Chrono.MOVE):
 				set_actor_var(light_actor, "airborne", 2, Chrono.MOVE);
-		elif (dir == gravity_dir):
+		elif (dir.normalized() == gravity_dir):
 			if heavy_selected and !is_suspended(heavy_actor, Chrono.MOVE):
 				set_actor_var(heavy_actor, "airborne", 0, Chrono.MOVE);
 			#AD10: Light floats gracefully downwards
