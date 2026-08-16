@@ -273,9 +273,9 @@ func setup_landing_page() -> void:
 			y = 0;
 			x += 1;
 		
-		# will anyone ever see this??
-		if (beat_REALLY_all):
-			holder.flash();
+	# will anyone ever see this??
+	if (beat_REALLY_all):
+		holder.flash();
 
 func _communitylevelsbutton_pressed() -> void:
 	if (gamelogic.ui_stack.size() > 0 and gamelogic.ui_stack[gamelogic.ui_stack.size() - 1] != self):
