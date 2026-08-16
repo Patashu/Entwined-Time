@@ -369,7 +369,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.CuckooClock);
 		picker_array.append(Tiles.TheNight);
 		picker_array.append(Tiles.TheStars);
-	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
+	if (puzzles >= 256):
 		picker_array.append(Tiles.SteelCrate);
 		picker_array.append(Tiles.PowerCrate);
 		picker_array.append(Tiles.ColourVoid);
@@ -515,7 +515,7 @@ func initialize_picker_array() -> void:
 		picker_array.append(Tiles.SpiderWebWhite)
 		picker_array.append(Tiles.SpiderWebLimeGreen)
 	picker_array.append(Tiles.NoMove) #always do this one
-	if (puzzles >= gamelogic.chapter_standard_unlock_requirements[12]):
+	if (puzzles >= 256):
 		pass
 		picker_array.append(Tiles.OneMove)
 		picker_array.append(Tiles.OneMoveGreen)
