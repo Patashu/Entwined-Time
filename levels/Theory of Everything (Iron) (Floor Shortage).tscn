@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 2, 0, 65536, 8, 0, 131072, 3, 0, 131080, 7, 0, 131081, 1, 0, 196608, -2, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Theory of Everything (Iron) (Floor Shortage)"
+level_author = "Slabdrill"
+level_replay = "Theory of Everything (Iron)$mturn=313$dsxdxzsxzssxzzxzsxasxzdxzzdaxzzaxzdxzxzsxddsxzdxzzzwxzsxzddsxzdxzzzdwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzzxzsxzxzwz"
+heavy_max_moves = 2.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.258824, 0.286275, 0.278431, 1 )
+target_track = 5.0
+setup_replay = ""

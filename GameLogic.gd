@@ -2040,6 +2040,17 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Kickflip")
 	level_filenames.push_back("Obtuse Desync")
 	
+	chapter_names.push_back("Chapter S0 - Simul (WIP)");
+	chapter_standard_starting_levels.push_back(level_filenames.size());
+	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
+	chapter_skies.push_back(Color("#223C52"));
+	chapter_tracks.push_back(0);
+	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
+	level_filenames.push_back("Self-Appointment")
+	level_filenames.push_back("Mimic Moving Service")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
+	chapter_advanced_unlock_requirements.push_back(0);
+	
 	chapter_names.push_back("Chapter P - Purple...? (WIP)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
 	chapter_standard_unlock_requirements.push_back(min(36, level_filenames.size()));
@@ -2287,6 +2298,11 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Springlock System")
 	level_filenames.push_back("Dead Air [Skit 1]")
 	level_filenames.push_back("Loophole")
+	level_filenames.push_back("Love Letter 0 - Pillbox")
+	level_filenames.push_back("Love Letter 1 - Pillbox-")
+	level_filenames.push_back("Love Letter 1 - Limbo")
+	level_filenames.push_back("Love Letter 1 - Limbo [VAR1]")
+	level_filenames.push_back("Mind Control")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2317,6 +2333,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Foot Wiggle [VAR4]")
 	level_filenames.push_back("Graduation [VAR3]")
 	level_filenames.push_back("Spelunking-- [VAR2]")
+	level_filenames.push_back("Theory of Everything (Iron) (Floor Shortage)")
 	level_filenames.push_back("Pittance [VAR1]")
 	
 	chapter_names.push_back("Slabdrill's World (Training Dojo)");
@@ -2332,6 +2349,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Side Shuffle")
 	level_filenames.push_back("Heaven [REV1]")
 	level_filenames.push_back("Clockwork [VAR1]")
+	level_filenames.push_back("Robotic Ground")
 	level_filenames.push_back("Light Boots")
 	level_filenames.push_back("Bonfire (Insight) [VAR1]")
 	level_filenames.push_back("Acrobatics but it's forced [VAR1]")
@@ -2396,6 +2414,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Fuzzy Parkour [VAR1]")
 	level_filenames.push_back("Generic Enclosed 2x2 Level")
 	level_filenames.push_back("Board Ring A")
+	level_filenames.push_back("[SPEEDRUN] Acrobatics")
 	level_filenames.push_back("Invisible Void Bridge")
 	level_filenames.push_back("Collaborative Motion")
 	level_filenames.push_back("Gravitron Rescue")
@@ -2428,7 +2447,10 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Downwards Momentum [VAR1]")
+	level_filenames.push_back("Carrying It [VAR1]-")
 	level_filenames.push_back("Tile Selector")
+	level_filenames.push_back("Uphill but there's fire")
+	level_filenames.push_back("[SPEEDRUN] Snake Pit [VAR1]")
 	level_filenames.push_back("Rough Terrain [VAR1]")
 	level_filenames.push_back("Car Engine [VAR1]")
 	level_filenames.push_back("Acrobatics 3- Metallic Boogaloo")
@@ -2465,6 +2487,7 @@ func initialize_level_list() -> void:
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
 	level_filenames.push_back("Invisible Bridge (for Heavy) Magenta")
+	level_filenames.push_back("Isolated Electricity")
 	level_filenames.push_back("Double Glazed [VAR2]")
 	level_filenames.push_back("Steel Crates Tutorial [VAR1]")
 	level_filenames.push_back("Impostor Syndrome")
@@ -2706,6 +2729,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Window of Opportunity [VAR1]")
 	level_filenames.push_back("Fire In The Sky [REV1] [VAR1]")
 	level_filenames.push_back("The Eclipse Pit [VAR1]")
+	level_filenames.push_back("Unpacking [VAR1]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	

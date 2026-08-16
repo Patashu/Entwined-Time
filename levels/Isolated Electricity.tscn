@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
+
+[node name="" type="TileMap"]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 24, 24 )
+format = 1
+tile_data = PoolIntArray( 0, 1, 0, 3, 7, 0, 131075, 8, 0, 196611, 66, 0, 262144, 2, 0, 327680, 65, 0 )
+
+[node name="LevelInfo" type="Node" parent="."]
+script = ExtResource( 2 )
+level_name = "Isolated Electricity"
+level_author = "Slabdrill"
+level_replay = "Isolated Electricity$mturn=271$dxasssxzwasxzzzaaxzzzasxzssxzzdaxzdxzdaxzdxzdaxzdxzdaxzsxzwdsxzzzxzzdsxassxzzzsxzaxzzzdxzaxzzdxzszzsaxzzsaxzsxzdaxzdxzdaxzdxzdaxzsxzwdsxzzdxzzdsxzssxzzzsxzaxzzzdxzaxzzdxzaxzzadzwaxzsxzdwasxzzaxzzasxzssxzzzaxzaxzdxzzaxzzzasxzzasaxzzdzzswaxzdxzdwasxzzaxzzasxzssxzzzaxzaxzdxzzaxzzzdsxzxzzsxaxzsxzzsssxzdsxzzaxzzsxzzxzsxadsxzwdsxzzxzzssxaxzzzsxzaxzzssxzzzxzzw"
+heavy_max_moves = 7.0
+light_max_moves = 4.0
+clock_turns = ""
+target_sky = Color( 0.156863, 0.266667, 0.164706, 1 )
+target_track = 1.0
+setup_replay = ""
