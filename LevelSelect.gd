@@ -141,13 +141,21 @@ func _prevbutton_pressed() -> void:
 	prevbutton.grab_focus();
 
 func slide_chapter_until_its_not_too_far_ahead_in_the_future(impulse: int) -> void:
-	var puzzles_completed = gamelogic.puzzles_completed;
+	var puzzles = gamelogic.puzzles_completed;
+	if gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]:
+		puzzles += 99999;
+	elif gamelogic.save_file["levels"].has("Chrono Lab Reactor") and gamelogic.save_file["levels"]["Chrono Lab Reactor"].has("won") and gamelogic.save_file["levels"]["Chrono Lab Reactor"]["won"]:
+		puzzles += 99999;
+	if (puzzles >= 999):
+		return #safe!
+		
+	#ok, player is mortal, let's do actual check.
 	for i in range(999):
 		if (chapter == 0): #always safe to be on. I think this is redundant but just for my sanity.
 			return
 		var unlock_requirement = gamelogic.chapter_standard_unlock_requirements[chapter];
 		unlock_requirement -= 24; # let the player see a LITTLE into the future.
-		if ((gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) or puzzles_completed >= unlock_requirement):
+		if (puzzles >= unlock_requirement):
 			return
 		chapter += impulse;
 		chapter = posmod(int(chapter), gamelogic.custom_past_here);
