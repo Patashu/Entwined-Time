@@ -10296,6 +10296,11 @@ func _process(delta: float) -> void:
 			end_replay();
 			if (in_insight_level):
 				gain_insight();
+			elif (level_name == "Secret Passage" and !doing_replay):
+				# Literal secret passage :D
+				if (puzzles_completed < 80):
+					puzzles_completed = 80;
+				load_level_direct(level_filenames.find("TheFuzz"));
 			elif (level_name == "A Way In?" and !doing_replay):
 				ending_cutscene_1();
 			elif last_level_of_section():

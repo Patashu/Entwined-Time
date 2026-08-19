@@ -691,10 +691,6 @@ func prepare_chapter() -> void:
 				button.add_stylebox_override("focus", stylebox);
 				button.add_stylebox_override("disabled", stylebox);
 				button.add_stylebox_override("normal", stylebox);
-				buttons_by_xy[Vector2(x, y)] = button;
-				holder.add_child(button);
-				button.rect_position.x = round(xx + xxx*x);
-				button.rect_position.y = round(yy + yyy*y);
 				button.level_number = i + advanced_start;
 				var level_name = gamelogic.level_names[button.level_number];
 				var level_string = str(i);
@@ -703,16 +699,25 @@ func prepare_chapter() -> void:
 				button.text = level_string + "X - " + level_name;
 				button.theme = holder.theme;
 				button.levelselect = self;
+				
+				# shuffled some code around, hopefully this is ok...
+				if (chapter == 4):
+					if (level_name == "Secret Passage"):
+						button.modulate = Color(1, 1, 1, 0); #get it?
+						y -= 1; #hiding :)
+				
+				buttons_by_xy[Vector2(x, y)] = button;
+				holder.add_child(button);
+				button.rect_position.x = round(xx + xxx*x);
+				button.rect_position.y = round(yy + yyy*y);
+				
 				if (x == 0 and y == 1): # the first button
 					button.grab_focus();
 				if (button.level_number == gamelogic.level_number): # button corresponding to the current level
 					button.grab_focus();
-					
-				if (chapter == 4):
-					if (level_name == "Secret Passage"):
-						button.modulate = Color(1, 1, 1, 0); #get it?
+				
 				# lock Chrono Lab Reactor if not seen yet
-				elif (chapter == 11):
+				if (chapter == 11):
 					if (level_name == "Chrono Lab Reactor"):
 						if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and !gamelogic.save_file["levels"].has(level_name)):
 							button.text = "???";
