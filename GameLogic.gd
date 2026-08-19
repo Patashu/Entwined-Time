@@ -1488,13 +1488,13 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Bonfire")
 	level_filenames.push_back("TrophyCabinetEx2")
 	level_filenames.push_back("TripleJump")
+	level_filenames.push_back("Firefighters (ladder shortage)")
 	level_filenames.push_back("FootWiggleEx")
 	level_filenames.push_back("FootWiggleEx2")
 	level_filenames.push_back("RocketEngine")
 	level_filenames.push_back("JetEngine")
 	level_filenames.push_back("PhotonDrive")
 	level_filenames.push_back("CarEngine")
-	level_filenames.push_back("Firefighters (ladder shortage)")
 	
 	chapter_names.push_back("Iron Crates");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
