@@ -6238,8 +6238,10 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					#this definitely won't bite me in the ass I want to make a PUZZLE ok
 					if (can_eat(actor, actor_there) or can_eat(actor_there, actor)):
 						if actor.has_sticky_top() and !is_retro and dir == Vector2.UP:
+							var old_pos = actor_there.pos;
 							var crystal_carry = move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
-							if (crystal_carry != Success.Yes):
+							# eat crystals that don't move
+							if (actor_there.pos == old_pos):
 								eat_crystal(actor, actor_there, chrono);
 						else:
 							eat_crystal(actor, actor_there, chrono);
