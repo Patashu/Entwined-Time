@@ -7,13 +7,13 @@
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
-tile_data = PoolIntArray( 0, 2, 0, 65536, 8, 0, 131072, 3, 0, 131080, 7, 0, 131081, 1, 0, 196608, -2, 0 )
+tile_data = PoolIntArray( 0, 2, 0, 65536, 8, 0, 131072, 3, 0, 131075, 7, 0, 131076, 1, 0, 196608, -2, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
 level_name = "Theory of Everything (Iron) (Floor Shortage)"
 level_author = "Slabdrill"
-level_replay = "Theory of Everything (Iron)$mturn=313$dsxdxzsxzssxzzxzsxasxzdxzzdaxzzaxzdxzxzsxddsxzdxzzzwxzsxzddsxzdxzzzdwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzzxzsxzxzwz"
+level_replay = "Theory of Everything (Iron) (Floor Shortage)$mturn=133$dsxdxzsxzssxzzxzsxasxzdxzzdaxzzaxzdxzxzsxddsxzdxzzzwxzsxzddsxzdxzzzdwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzxzsxzzwaasxzsxzdxzaxzzzzwxzsxzddsdxzdxzzzwaxzsxzzxzsxzxzwz"
 heavy_max_moves = 2.0
 light_max_moves = 4.0
 clock_turns = ""

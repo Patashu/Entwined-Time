@@ -2358,7 +2358,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Downfall")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
-	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	level_filenames.push_back("Invisible Bridge (for Heavy) [VAR3]")
 	level_filenames.push_back("Heavy Fuzzing Service [VAR1]")
 	level_filenames.push_back("Void Recovery")
@@ -2371,6 +2370,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Spelunking-- [VAR2]")
 	level_filenames.push_back("Theory of Everything (Iron) (Floor Shortage)")
 	level_filenames.push_back("Pittance [VAR1]")
+	level_filenames.push_back("The Flipped Pit [VAR1]")
 	
 	chapter_names.push_back("Slabdrill's World (Training Dojo)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2423,8 +2423,6 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Last Pit [VAR3]")
 	level_filenames.push_back("The Joke Pit")
 	level_filenames.push_back("The Left Pit")
-	level_filenames.push_back("The Flipped Pit")
-	level_filenames.push_back("The Flipped Pit [VAR1]")
 	level_filenames.push_back("The Solo Pit")
 	level_filenames.push_back("The Steel Crate Pit")
 	level_filenames.push_back("The Green Fire Pit")
@@ -2436,6 +2434,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("The Eclipse Pit")
 	level_filenames.push_back("The Magenta Pit [VAR5]")
 	level_filenames.push_back("The Twin Pit")
+	level_filenames.push_back("The Flipped Pit")
 	level_filenames.push_back("The Magenta Pit [VAR6]")
 	level_filenames.push_back("Consecutive Normal Pits [VAR1]")
 	level_filenames.push_back("Stuck in a Pit [VAR1]")
@@ -2474,6 +2473,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Campfrost [VAR2]")
 	level_filenames.push_back("Heavy Moving Service- [VAR1]")
 	level_filenames.push_back("Graduation [VAR1]")
+	level_filenames.push_back("Quantum Entanglement [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
@@ -2786,6 +2786,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("Foot Wiggle [VAR6]")
 	level_filenames.push_back("Woodskip [VAR2] [VAR2]")
 	level_filenames.push_back("Invisible Void Bridge [VAR2]")
+	level_filenames.push_back("Ankh [VAR1] [VAR2]")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
 	
