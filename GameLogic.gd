@@ -6134,7 +6134,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 		pushers_list.append(actor);
 		for actor_there in pushables_there:
 			# chrono helix bump check
-			if (actor_there.actorname == Actor.Name.ChronoHelixRed):
+			if (!nonstandard_won and actor_there.actorname == Actor.Name.ChronoHelixRed):
 				if actor.actorname == Actor.Name.ChronoHelixBlue:
 					nonstandard_won = true;
 					check_won(chrono);
@@ -6144,7 +6144,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					add_to_animation_server(actor, [Anim.set_next_texture, actor.get_next_texture(), -1, actor.facing_left]);
 					add_to_animation_server(actor_there, [Anim.set_next_texture, actor_there.get_next_texture(), -1, actor_there.facing_left]);
 					return Success.No;
-			elif (actor_there.actorname == Actor.Name.ChronoHelixBlue):
+			elif (!nonstandard_won and actor_there.actorname == Actor.Name.ChronoHelixBlue):
 				if actor.actorname == Actor.Name.ChronoHelixRed:
 					nonstandard_won = true;
 					add_to_animation_server(actor_there, [Anim.bump, -dir, -1]);
@@ -7288,6 +7288,7 @@ func adjust_meta_turn(amount: int, chrono: int) -> void:
 		add_to_animation_server(null, [Anim.turn_toggle, meta_turn])
 	
 func check_won(chrono: int) -> void:
+	var old_won = won;
 	won = false;
 	var locked = false;
 	
@@ -7339,7 +7340,7 @@ func check_won(chrono: int) -> void:
 	and heavy_goal_here(heavy_actor.pos, terrain_in_tile(heavy_actor.pos, heavy_actor, chrono))
 	and light_goal_here(light_actor.pos, terrain_in_tile(light_actor.pos, light_actor, chrono))) or nonstandard_won:
 		won = true;
-		if (won and test_mode):
+		if (won and !old_won and test_mode):
 			var level_info = terrainmap.get_node_or_null("LevelInfo");
 			if (level_info != null):
 				level_info.level_replay = annotate_replay(user_replay);
