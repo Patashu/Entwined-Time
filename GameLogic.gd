@@ -7342,9 +7342,11 @@ func check_won(chrono: int) -> void:
 			if (!levels_save_data.has(level_name)):
 				levels_save_data[level_name] = {};
 			var level_save_data = levels_save_data[level_name];
+			var just_won = false;
 			if (level_save_data.has("won") and level_save_data["won"]):
 				pass
 			else:
+				just_won = true;
 				level_save_data["won"] = true;
 				levelstar.previous_modulate = Color(1, 1, 1, 0);
 				levelstar.flash();
@@ -7354,7 +7356,8 @@ func check_won(chrono: int) -> void:
 						if (level_is_extra):
 							advanced_puzzles_completed += 1;
 					specific_puzzles_completed[level_number] = true;
-			if (!level_save_data.has("replay")):
+			# if the level wasn't won or lacked a replay, save it. else save only a better replay.
+			if (just_won or !level_save_data.has("replay")):
 				level_save_data["replay"] = annotate_replay(user_replay);
 			else:
 				var old_replay = level_save_data["replay"];
