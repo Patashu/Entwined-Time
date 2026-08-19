@@ -1851,10 +1851,10 @@ func initialize_level_list() -> void:
 	
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(8);
-	level_filenames.push_back("Clocksmasher")
-	level_filenames.push_back("Woodskip")
 	level_filenames.push_back("Wooden Glass")
 	level_filenames.push_back("Donk [VAR2]")
+	level_filenames.push_back("Woodskip")
+	level_filenames.push_back("Clocksmasher")
 	level_filenames.push_back("Bunker Door [VAR1]")
 	level_filenames.push_back("One at a Time [VAR1]")
 	level_filenames.push_back("Low Ceiling")
@@ -4201,7 +4201,7 @@ func calculate_map_size() -> void:
 				map_x_max = tile.x;
 			if tile.y > map_y_max:
 				map_y_max = tile.y;
-	if ((is_custom or chapter >= 16) and (map_x_max > map_x_max_max or map_y_max > map_y_max_max+2)):
+	if ((is_custom or chapter >= 12) and (map_x_max > map_x_max_max or map_y_max > map_y_max_max+2)):
 		terrainmap.scale = Vector2(0.5, 0.5);
 	else:
 		terrainmap.scale = Vector2(1.0, 1.0);
