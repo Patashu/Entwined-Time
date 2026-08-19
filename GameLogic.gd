@@ -3160,16 +3160,10 @@ func ready_map() -> void:
 		elif (any_layer_has_this_tile(Tiles.PhaseLightningPurple)):
 			has_phase_lightning = true;
 			
-		if (any_layer_has_this_tile(Tiles.RepairStation)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationBlue)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationGray)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationGreen)):
-			has_repair_stations = true;
-		elif (any_layer_has_this_tile(Tiles.RepairStationBumper)):
-			has_repair_stations = true;
+		for candidate in repair_stations_list:
+			if (any_layer_has_this_tile(candidate)):
+				has_repair_stations = true;
+				break;
 			
 		if (any_layer_has_this_tile(Tiles.Boulder)):
 			has_boulders = true;
@@ -5039,6 +5033,16 @@ func adjust_turn(is_heavy: bool, amount: int, chrono : int, adjust_current_move:
 		#if (debug_prints):
 		#	print("=== IT IS NOW LIGHT TURN " + str(light_turn) + " ===");
 		
+var repair_stations_list = [Tiles.RepairStation,
+Tiles.RepairStationBlue,
+Tiles.RepairStationGreen,
+Tiles.RepairStationBumper,
+Tiles.RepairStationGray];
+func is_repair_station(id: int) -> bool:
+	if (!has_repair_stations):
+		return false;
+	return repair_stations_list.find(id) >= 0;
+		
 func check_checkpoints(chrono: int) -> void:
 	if (heavy_turn > 0):
 		var terrain = terrain_in_tile(heavy_actor.pos, heavy_actor, chrono);
@@ -5052,7 +5056,7 @@ func check_checkpoints(chrono: int) -> void:
 						undo_one_event(event, Chrono.CHAR_UNDO);
 					elif (event[0] == Undo.change_terrain):
 						var old_tile = event[4];
-						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationBlue || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray):
+						if is_repair_station(old_tile):
 							check_abyss_chimes();
 					elif (event[0] == Undo.set_actor_var):
 						if event[2] == "broken":
@@ -5302,7 +5306,7 @@ chrono: int, new_tile: int, assumed_old_tile: int = -2, animation_nonce: int = -
 					if actor.pos == pos and !actor.broken and actor.durability <= Durability.PITS:
 						actor.post_mortem = Durability.PITS;
 						set_actor_var(actor, "broken", true, chrono);
-		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards or new_tile == Tiles.FloorboardsBlue or new_tile == Tiles.RepairStation or new_tile == Tiles.RepairStationBlue or new_tile == Tiles.RepairStationGray:
+		elif new_tile == Tiles.Floorboards or new_tile == Tiles.MagentaFloorboards or is_repair_station(new_tile):
 			add_to_animation_server(actor, [Anim.unshatter, terrainmap.map_to_world(pos), old_tile, new_tile, animation_nonce]);
 		else:
 			# ughh duplicated coooode
@@ -6774,23 +6778,16 @@ func check_abyss_chimes(actor: Actor = null) -> bool:
 func actor_has_broken_event_anywhere(actor: Actor) -> bool:
 	if (has_repair_stations):
 		# if any repair station exists, or any Undo.change_terrain will creare a repair station, there's still hope
-		if (any_layer_has_this_tile(Tiles.RepairStation)):
-			return true;
-		if (any_layer_has_this_tile(Tiles.RepairStationBlue)):
-			return true;
-		if (any_layer_has_this_tile(Tiles.RepairStationGreen)):
-			return true;
-		if (any_layer_has_this_tile(Tiles.RepairStationGray)):
-			return true;
-		if (any_layer_has_this_tile(Tiles.RepairStationBumper)):
-			return true;
+		for candidate in repair_stations_list:
+			if (any_layer_has_this_tile(candidate)):
+				return true;
 		var buffers = [heavy_undo_buffer, light_undo_buffer, heavy_locked_turns, light_locked_turns];
 		for buffer in buffers:
 			for turn in buffer:
 				for event in turn:
 					if event[0] == Undo.change_terrain:
 						var old_tile = event[4];
-						if (old_tile == Tiles.RepairStation || old_tile == Tiles.RepairStationBlue || old_tile == Tiles.RepairStationGreen || old_tile == Tiles.RepairStationGray || old_tile == Tiles.RepairStationBumper):
+						if (is_repair_station(old_tile)):
 							return true;
 	# not edge cases: chrono, actor colour (since we always check)
 	# yes edge cases: could be a locked turn or a fuzz doubled turn
