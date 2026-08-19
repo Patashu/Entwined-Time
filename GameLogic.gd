@@ -5726,6 +5726,14 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 					bumper_counter -= 1;
 					return Success.No;
 			Tiles.Passage:
+				bumper_counter += 1;
+				if (bumper_counter == 99):
+					if (hypothetical):
+						pass;
+					else:
+						lose("Infinite loop.", null, true, "infloop");
+					bumper_counter -= 1;
+					return Success.Surprise;
 				var factor = 2;
 				while Tiles.Passage in terrain_in_tile(actor.pos + dir*factor, actor, chrono):
 					factor += 1;
@@ -5734,10 +5742,20 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 						add_to_animation_server(actor, [Anim.sfx, "unlock"]);
 						move_actor_relative(actor, dir*factor, chrono, false, false)
 						maybe_rise(actor, chrono, dir*factor, false);
+					bumper_counter -= 1;
 					return Success.Surprise;
 				else:
+					bumper_counter -= 1;
 					return Success.No;
 			Tiles.GreenPassage:
+				bumper_counter += 1;
+				if (bumper_counter == 99):
+					if (hypothetical):
+						pass;
+					else:
+						lose("Infinite loop.", null, true, "infloop");
+					bumper_counter -= 1;
+					return Success.Surprise;
 				var factor = 2;
 				while Tiles.GreenPassage in terrain_in_tile(actor.pos + dir*factor, actor, chrono):
 					factor += 1;
@@ -5746,8 +5764,10 @@ func try_enter_terrain(actor: Actor, pos: Vector2, dir: Vector2, hypothetical: b
 						add_to_animation_server(actor, [Anim.sfx, "unlock"]);
 						move_actor_relative(actor, dir*factor, max(Chrono.CHAR_UNDO, chrono), false, false)
 						maybe_rise(actor, chrono, dir*factor, false);
+					bumper_counter -= 1;
 					return Success.Surprise;
 				else:
+					bumper_counter -= 1;
 					return Success.No;
 			Tiles.NoHeavy:
 				result = no_if_true_yes_if_false(actor.actorname == Actor.Name.Heavy);
