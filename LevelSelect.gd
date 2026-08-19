@@ -708,8 +708,11 @@ func prepare_chapter() -> void:
 				if (button.level_number == gamelogic.level_number): # button corresponding to the current level
 					button.grab_focus();
 					
+				if (chapter == 4):
+					if (level_name == "Secret Passage"):
+						button.modulate = Color(1, 1, 1, 0); #get it?
 				# lock Chrono Lab Reactor if not seen yet
-				if (chapter == 11):
+				elif (chapter == 11):
 					if (level_name == "Chrono Lab Reactor"):
 						if (!(gamelogic.save_file.has("unlock_everything") and gamelogic.save_file["unlock_everything"]) and !gamelogic.save_file["levels"].has(level_name)):
 							button.text = "???";
