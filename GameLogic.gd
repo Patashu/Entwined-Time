@@ -6235,7 +6235,7 @@ func try_enter(actor: Actor, dir: Vector2, chrono: int, can_push: bool, hypothet
 					if (can_eat(actor, actor_there) or can_eat(actor_there, actor)):
 						if actor.has_sticky_top() and !is_retro and dir == Vector2.UP:
 							var crystal_carry = move_actor_relative(actor_there, dir, chrono, hypothetical, is_gravity, false, pushers_list);
-							if (crystal_carry == Success.No):
+							if (crystal_carry != Success.Yes):
 								eat_crystal(actor, actor_there, chrono);
 						else:
 							eat_crystal(actor, actor_there, chrono);
