@@ -2049,7 +2049,6 @@ func initialize_level_list() -> void:
 	chapter_skies.push_back(Color("#223C52"));
 	chapter_tracks.push_back(0);
 	chapter_replacements[chapter_names.size() - 1] = "CUSTOM";
-	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	level_filenames.push_back("S0-0 - Two Of Them")
 	level_filenames.push_back("S0-1 - Stepping Stool")
 	level_filenames.push_back("S0-2 - Available")
@@ -2064,9 +2063,10 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("S0-11 - Throw Long")
 	level_filenames.push_back("S0-12 - Booster Seat")
 	level_filenames.push_back("S0-13 - Chute")
+	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
-	level_filenames.push_back("Self-Appointment")
-	level_filenames.push_back("Mimic Moving Service")
+	level_filenames.push_back("S0-0X - Self-Appointment")
+	level_filenames.push_back("S0-1X - Mimic Moving Service")
 	
 	chapter_names.push_back("Chapter S1 - Obstacles (WIP)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());
@@ -2086,6 +2086,7 @@ func initialize_level_list() -> void:
 	level_filenames.push_back("S1-9 - Need You Now")
 	chapter_advanced_starting_levels.push_back(level_filenames.size());
 	chapter_advanced_unlock_requirements.push_back(0);
+	level_filenames.push_back("S1-0X - Lamb To The Slaughter [VAR1]")
 	
 	chapter_names.push_back("Chapter P - Purple...? (WIP)");
 	chapter_standard_starting_levels.push_back(level_filenames.size());

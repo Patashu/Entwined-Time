@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -17,12 +17,10 @@ tile_data = PoolIntArray( 4, 128, 0, 131076, 2, 0 )
 
 [node name="LevelInfo" type="Node" parent="."]
 script = ExtResource( 2 )
-level_name = "Self-Appointment"
+level_name = "S0-0X - Self-Appointment"
 level_author = "Slabdrill"
-level_replay = "Self-Appointment$mturn=15$xwdxdxzzaaxzxzzaxaxaxzd"
+level_replay = "S0-0X - Self-Appointment$mturn=15$xwdxdxzzaaxzxzzaxaxaxzd"
 heavy_max_moves = 1.0
 light_max_moves = 2.0
-clock_turns = ""
-target_sky = Color( 0.109804, 0.239216, 0.0980392, 1 )
+target_sky = Color( 0.223529, 0.447059, 0.756863, 1 )
 target_track = 3.0
-setup_replay = ""

@@ -3,7 +3,7 @@
 [ext_resource path="res://DefaultTiles.tres" type="TileSet" id=1]
 [ext_resource path="res://levels/LevelInfo.gd" type="Script" id=2]
 
-[node name="" type="TileMap"]
+[node name="TileMap" type="TileMap"]
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -22,7 +22,5 @@ level_author = "enzopuzzlesolver"
 level_replay = "S0-7 - Carrying Them$mturn=19$xwxdxzasxzxzzxddxddxazzzxzzw"
 heavy_max_moves = 4.0
 light_max_moves = 2.0
-clock_turns = ""
-target_sky = Color( 0.215686, 0.419608, 0.698039, 1 )
+target_sky = Color( 0.223529, 0.447059, 0.756863, 1 )
 target_track = 0.0
-setup_replay = ""
